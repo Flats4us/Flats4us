@@ -5,7 +5,7 @@ namespace Flats4us.Entities
     public class Flats4usContext : DbContext
     {
         public virtual DbSet<Tenant> Tenants { get; set; }
-        public virtual DbSet<Flat> Flats { get; set; }
+        public virtual DbSet<Flat> Flats { get; set; } 
         public virtual DbSet<Rent> Rents { get; set; }
 
         public Flats4usContext() { }
