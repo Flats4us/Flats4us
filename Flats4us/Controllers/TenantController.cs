@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/tenant")]
+    [Route("api/[controller]")]
     [ApiController]
     public class TenantController : ControllerBase
     {
@@ -18,18 +18,18 @@ namespace Flats4us.Controllers
             _tenantService = tenantService;
         }
 
-        // GET
+        // GET: api/Tenant
         [HttpGet]
-        public async Task<IActionResult> GetTenantsList()
+        public async Task<IActionResult> Get()
         {
             var tenants = await _tenantService.GetAllTenantsAsync();
 
             return Ok(tenants);
         }
 
-        // GET BY ID
+        // GET api/Tenant/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTenantById(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var tenant = await _tenantService.GetTenantByIdAsync(id);
             if (tenant == null) 
@@ -38,9 +38,9 @@ namespace Flats4us.Controllers
                 return Ok(tenant);
         }
         
-        // INSERT
+        // POST api/Tenant
         [HttpPost]
-        public async Task<IActionResult> AddTenant(TenantDTO body)
+        public async Task<IActionResult> Post([FromBody] TenantDTO body)
         {
             var result = await _tenantService.AddTenantAsync(body);
             if (result == 1)
@@ -48,10 +48,10 @@ namespace Flats4us.Controllers
             else
                 return Conflict();
         }
-        
-        // UPDATE
+
+        // PUT api/Tenant/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTenant(int id, [FromBody] TenantDTO body)
+        public async Task<IActionResult> Put(int id, [FromBody] TenantDTO body)
         {
             var tenant = await _tenantService.UpdateTenantAsync(id, body);
             if (tenant is null)
@@ -60,9 +60,9 @@ namespace Flats4us.Controllers
                 return Ok();
         }
 
-        // DELETE
+        // DELETE api/Tenant/{id}
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTenant(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var tenant = await _tenantService.DeleteTenantAsync(id);
             if (tenant is null)
