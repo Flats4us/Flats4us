@@ -12,16 +12,20 @@ namespace Flats4us.Controllers
     public class TenantController : ControllerBase
     {
         private readonly ITenantService _tenantService;
+        private readonly ILogger<TenantController> _logger;
 
-        public TenantController(ITenantService tenantService)
+        public TenantController(ITenantService tenantService, 
+                                ILogger<TenantController> logger)
         {
             _tenantService = tenantService;
+            _logger = logger;
         }
 
         // GET: api/Tenant
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogInformation("Getting tenants list");
             var tenants = await _tenantService.GetAllTenantsAsync();
 
             return Ok(tenants);
@@ -31,6 +35,7 @@ namespace Flats4us.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
+            _logger.LogInformation("Getting tenant - id: {id}", id);
             var tenant = await _tenantService.GetTenantByIdAsync(id);
             if (tenant == null) 
                 return BadRequest("Tenant not found");
@@ -42,6 +47,7 @@ namespace Flats4us.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] TenantDTO body)
         {
+            _logger.LogInformation("Posting tenant - body: {@body}", body);
             var result = await _tenantService.AddTenantAsync(body);
             if (result == 1)
                 return Created("", "");
@@ -53,6 +59,7 @@ namespace Flats4us.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] TenantDTO body)
         {
+            _logger.LogInformation("Updating tenant - id: {id}, body: {@body}", id, body);
             var tenant = await _tenantService.UpdateTenantAsync(id, body);
             if (tenant is null)
                 return BadRequest("Tenant not found");
@@ -64,6 +71,7 @@ namespace Flats4us.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            _logger.LogInformation("Deleting tenant - id: {id}", id);
             var tenant = await _tenantService.DeleteTenantAsync(id);
             if (tenant is null)
                 return BadRequest("Tenant not found");
