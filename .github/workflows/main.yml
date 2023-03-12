@@ -3,6 +3,8 @@ name: Lint and Format Check
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
 
 jobs:
   lint:
@@ -10,9 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Change working directory
+        run: |
+          cd ./angular
 
       - name: Set up Node.js
-        working-directory: ./angular
         uses: actions/setup-node@v2-beta
         with:
           node-version: '16.x'
