@@ -1,92 +1,93 @@
-<div style="width: 500px; margin: auto;">
-    <div *ngIf="currentTenant" class="edit-form">
-      <h4>Tenant</h4>
-      <form>
-        <div class="form-group">
-          <label for="tenantId">ID</label>
-          <input
-            type="text"
-            class="form-control"
-            id="tenantId"
-            [(ngModel)]="currentTenant.tenantId"
-            name="tenantId"
-            disabled
-          />
-        </div>
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            [(ngModel)]="currentTenant.name"
-            name="name"
-          />
-        </div>
-        <div class="form-group">
-            <label for="surname">Surname</label>
-            <input
-              type="text"
-              class="form-control"
-              id="surname"
-              [(ngModel)]="currentTenant.surname"
-              name="surname"
-            />
-          </div>
-          <div class="form-group">
-            <label for="addressLine1">Address:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addressLine1"
-              [(ngModel)]="currentTenant.addressLine1"
-              name="addressLine1"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              id="addressLine2"
-              [(ngModel)]="currentTenant.addressLine2"
-              name="addressLine2"
-            />
-          </div>
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control"
-              id="addressLine3"
-              [(ngModel)]="currentTenant.addressLine3"
-              name="addressLine3"
-            />
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="email"
-              [(ngModel)]="currentTenant.email"
-              name="email"
-            />
-          </div>
-          <div class="form-group">
-            <label for="phoneNumber">Phone Number:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="phoneNumber"
-              [(ngModel)]="currentTenant.phoneNumber"
-              name="phoneNumber"
-            />
-          </div>
-  
-      </form>
-  
-      <button type="button" class="btn btn-danger" (click)="updateTenant()" >Update</button>
-      <button type="button" class="btn btn-warning" (click)="deleteTenant()">Delete</button>
+<div style="width: 500px; margin: auto">
+	<div *ngIf="currentTenant" class="edit-form">
+		<h4>Tenant</h4>
+		<form>
+			<div class="form-group">
+				<label for="tenantId">ID</label>
+				<input
+					type="text"
+					class="form-control"
+					id="tenantId"
+					[(ngModel)]="currentTenant.tenantId"
+					name="tenantId"
+					disabled
+				/>
+			</div>
+			<div class="form-group">
+				<label for="name">Name</label>
+				<input
+					type="text"
+					class="form-control"
+					id="name"
+					[(ngModel)]="currentTenant.name"
+					name="name"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="surname">Surname</label>
+				<input
+					type="text"
+					class="form-control"
+					id="surname"
+					[(ngModel)]="currentTenant.surname"
+					name="surname"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="addressLine1">Address:</label>
+				<input
+					type="text"
+					class="form-control"
+					id="addressLine1"
+					[(ngModel)]="currentTenant.addressLine1"
+					name="addressLine1"
+				/>
+			</div>
+			<div class="form-group">
+				<input
+					type="text"
+					class="form-control"
+					id="addressLine2"
+					[(ngModel)]="currentTenant.addressLine2"
+					name="addressLine2"
+				/>
+			</div>
+			<div class="form-group">
+				<input
+					type="text"
+					class="form-control"
+					id="addressLine3"
+					[(ngModel)]="currentTenant.addressLine3"
+					name="addressLine3"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input
+					type="text"
+					class="form-control"
+					id="email"
+					[(ngModel)]="currentTenant.email"
+					name="email"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="phoneNumber">Phone Number:</label>
+				<input
+					type="text"
+					class="form-control"
+					id="phoneNumber"
+					[(ngModel)]="currentTenant.phoneNumber"
+					name="phoneNumber"
+				/>
+			</div>
+		</form>
 
-    </div>
-  
-  </div>
+		<button type="button" class="btn btn-danger" (click)="updateTenant()">
+			Update
+		</button>
+		<button type="button" class="btn btn-warning" (click)="deleteTenant()">
+			Delete
+		</button>
+	</div>
+</div>
