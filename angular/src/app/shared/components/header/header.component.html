@@ -1,30 +1,58 @@
-<nav class="bg-gray-800 sticky top-0 z-50">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="flex items-center justify-between h-16">
-			<div class="flex items-center">
-				<div class="flex-shrink-0">
-					<a href="#" class="text-white font-bold text-lg">Flats4Us</a>
-				</div>
-				<div class="hidden md:block">
-					<div class="ml-10 flex items-baseline">
-						<a
-							href="/"
-							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-							>Home</a
-						>
-						<a
-							href="/about"
-							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-							>About</a
-						>
-						<a
-							href="/contact"
-							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-							>Contact</a
-						>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</nav>
+<mat-toolbar class="custom-toolbar">
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+  <div class="spacer-icon"></div>
+  <a href="" class="title"><b>Flats4Us</b></a>
+
+  <div class="spacer" ></div>
+  <div class="start-navbar-button" *ngIf="!IsUserLoggedIn">
+    <button class="button-log" mat-stroked-button>LOGOWANIE</button>
+    <button class="button-sign" mat-stroked-button>REJESTRACJA</button>
+  </div>
+
+  <div class="all-navbar-button" *ngIf="IsUserLoggedIn">
+    <button class="button-main-page custom-button" mat-stroked-button>STRONA GŁÓWNA</button>
+    <button class="button-favorite" mat-stroked-button>ULUBIONE</button>
+    <button class="button-search" mat-stroked-button>SZUKAJ WSPÓŁLOKATORA</button>
+    <button class="button-settings" mat-stroked-button>USTAWIENIA</button>
+  </div>
+
+  <div class="photo" *ngIf="IsUserLoggedIn">
+  <img class="your-photo" src="../../assets/1.jpg" alt=""></div>
+  <div class="name" *ngIf="IsUserLoggedIn">
+  <a class="your-profile" href="#">Twój profil</a></div>
+
+
+</mat-toolbar>
+
+
+
+<!--<nav class="bg-gray-800 sticky top-0 z-50">-->
+<!--	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">-->
+<!--		<div class="flex items-center justify-between h-16">-->
+<!--			<div class="flex items-center">-->
+<!--				<div class="flex-shrink-0">-->
+<!--					<a href="#" class="text-white font-bold text-lg">Flats4Us</a>-->
+<!--				</div>-->
+<!--				<div class="hidden md:block">-->
+<!--					<div class="ml-10 flex items-baseline">-->
+<!--						<a-->
+<!--							href="/"-->
+<!--							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"-->
+<!--							>Home</a-->
+<!--						>-->
+<!--						<a-->
+<!--							href="/about"-->
+<!--							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"-->
+<!--							>About</a-->
+<!--						>-->
+<!--						<a-->
+<!--							href="/contact"-->
+<!--							class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"-->
+<!--							>Contact</a-->
+<!--						>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</nav>-->
