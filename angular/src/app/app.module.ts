@@ -1,27 +1,26 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreateComponent } from './components/create/create.component';
-import { DetailsComponent } from './components/details/details.component';
-import { ListComponent } from './components/list/list.component';
-
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { FooterModule } from './shared/components/footer/footer.module';
+import { HeaderModule } from './shared/components/header/header.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateComponent,
-    DetailsComponent,
-    ListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    HeaderModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
