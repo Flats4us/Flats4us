@@ -1,46 +1,45 @@
 .title {
-  font-family: cursive;
+	font-family: cursive;
 }
 
 .spacer {
-  flex: 1 1 auto;
+	flex: 1 1 auto;
 }
 
 .spacer-icon {
-  flex: 0.02;
+	flex: 0.02;
 }
 
 .custom-toolbar {
-  background-color: #FBBB8B;
+	background-color: #fbbb8b;
 }
 
 .button-log,
 .button-sign {
-  border-radius: 30px;
-  margin-right: 20px;
-
+	border-radius: 30px;
+	margin-right: 20px;
 }
 
 .button-sign {
-  margin-right: 50px;
+	margin-right: 50px;
 }
 
 .custom-button,
 .button-favorite,
 .button-search,
 .button-settings {
-  margin-right: 10px;
-  margin-left: 10px;
-  border-radius: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	border-radius: 10px;
 }
 
 .button-settings {
-  margin-right: 50px;
+	margin-right: 50px;
 }
 
 .your-photo {
-  border-radius: 100%;
-  width: 40px;
-  height: 40px;
-  margin-right: 20px;
+	border-radius: 100%;
+	width: 40px;
+	height: 40px;
+	margin-right: 20px;
 }
