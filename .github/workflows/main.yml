@@ -1,13 +1,9 @@
-name: Lint and Format Check
-
 on:
   pull_request:
-    branches: [main]
   push:
-    branches: [main]
 
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +27,7 @@ jobs:
         working-directory: ./angular
         run: npm run lint
 
-      - name: Run Prettier check
+      - name: Run Prettier
         working-directory: ./angular
         run: npm run prettier:check
+      
