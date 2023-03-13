@@ -1,41 +1,44 @@
-.title{
+.title {
   font-family: cursive;
 }
 
-.spacer{
+.spacer {
   flex: 1 1 auto;
 }
-.spacer-icon{
+
+.spacer-icon {
   flex: 0.02;
 }
-.custom-toolbar{
+
+.custom-toolbar {
   background-color: #FBBB8B;
 }
 
 .button-log,
-.button-sign{
+.button-sign {
   border-radius: 30px;
   margin-right: 20px;
 
 }
-.button-sign{
+
+.button-sign {
   margin-right: 50px;
 }
 
 .custom-button,
 .button-favorite,
 .button-search,
-.button-settings{
+.button-settings {
   margin-right: 10px;
   margin-left: 10px;
   border-radius: 10px;
 }
 
-.button-settings{
+.button-settings {
   margin-right: 50px;
 }
 
-.your-photo{
+.your-photo {
   border-radius: 100%;
   width: 40px;
   height: 40px;
