@@ -1,24 +1,24 @@
 <mat-toolbar class="custom-toolbar">
   <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
   <div class="spacer-icon"></div>
-  <a href="" class="title"><b>Flats4Us</b></a>
+  <a href="#" class="title"><b>Flats4Us</b></a>
 
   <div class="spacer" ></div>
-  <div class="start-navbar-button" *ngIf="!IsUserLoggedIn">
+  <div *ngIf="!isUserLoggedIn" class="start-navbar-button" >
     <button class="button-log" mat-stroked-button>LOGOWANIE</button>
     <button class="button-sign" mat-stroked-button>REJESTRACJA</button>
   </div>
 
-  <div class="all-navbar-button" *ngIf="IsUserLoggedIn">
+  <div *ngIf="isUserLoggedIn" class="all-navbar-button" >
     <button class="button-main-page custom-button" mat-stroked-button>STRONA GŁÓWNA</button>
     <button class="button-favorite" mat-stroked-button>ULUBIONE</button>
     <button class="button-search" mat-stroked-button>SZUKAJ WSPÓŁLOKATORA</button>
     <button class="button-settings" mat-stroked-button>USTAWIENIA</button>
   </div>
 
-  <div class="photo" *ngIf="IsUserLoggedIn">
+  <div *ngIf="isUserLoggedIn" class="photo" >
   <img class="your-photo" src="../../assets/1.jpg" alt=""></div>
-  <div class="name" *ngIf="IsUserLoggedIn">
+  <div  class="name" >
   <a class="your-profile" href="#">Twój profil</a></div>
 
 
