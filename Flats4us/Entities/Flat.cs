@@ -11,17 +11,17 @@ namespace Flats4us.Entities
 
         [Required]
         [MaxLength(60)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
         [MaxLength(60)]
-        public string AddressLine1 { get; set; }
+        public string? AddressLine1 { get; set; }
 
         [MaxLength(60)]
-        public string AddressLine2 { get; set; }
+        public string? AddressLine2 { get; set; }
 
         [MaxLength(60)]
-        public string AddressLine3 { get; set; }
+        public string? AddressLine3 { get; set; }
 
         [Required]
         [MaxLength(5)]
