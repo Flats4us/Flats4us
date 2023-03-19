@@ -8,8 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
-import { AuthModule } from './auth/auth.module';
-
 
 @NgModule({
 	declarations: [AppComponent],
@@ -20,8 +18,7 @@ import { AuthModule } from './auth/auth.module';
 		HttpClientModule,
 		BrowserAnimationsModule,
 		HeaderModule,
-		FooterModule,
-    AuthModule
+		FooterModule
 	],
 	providers: [],
 	bootstrap: [AppComponent],
