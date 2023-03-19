@@ -21,13 +21,7 @@
 		<a *ngIf="isUserLoggedIn" class="your-profile" href="#">Twój profil</a>
 	</div>
 </mat-toolbar>
-<mat-sidenav
-	*ngIf="isUserLoggedIn"
-	#sidenav
-	mode="side"
-	[opened]="showMenu"
-	[@sidenav]="showMenu ? 'open' : 'closed'"
->
+<mat-sidenav *ngIf="isUserLoggedIn" #sidenav mode="side" [opened]="showMenu">
 	<mat-nav-list>
 		<a mat-list-item href="#">
 			<mat-icon class="mat-icon-vertical-align">start</mat-icon> Start</a
