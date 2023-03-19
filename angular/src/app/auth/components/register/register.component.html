@@ -1,50 +1,64 @@
 <div class="container">
-    <mat-card>
-        <mat-card-title>REJESTRACJA</mat-card-title>
-        <mat-card-content>
-            <form>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-label>Imie</mat-label>
-                        <input matInput name="name" required>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-label>Nazwisko</mat-label>
-                        <input matInput name="surname" required>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-label>Adres email</mat-label>
-                        <input matInput name="email" required>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-label>Hasło</mat-label>
-                        <input matInput name="password" [type]="hidePassword ? 'password' : 'text'"
-                            formControlName="password" required>
-                        <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' :
-                            'visibility'}}</mat-icon>
-                    </mat-form-field>
-                    <p>Użyj przynajmniej 8 znaków, w tym jednocześnie liter, cyfr i symboli</p>
-                </div>
-                <div class="form-group">
-                    <mat-form-field>
-                        <mat-label>Powtórz hasło</mat-label>
-                        <input matInput name="confirmPassword" [type]="hideConfirmPasword ? 'password' : 'text'"
-                            formControlName="password" required>
-                        <mat-icon matSuffix (click)="hideConfirmPasword = !hideConfirmPasword">{{hideConfirmPasword ?
-                            'visibility_off' : 'visibility'}}</mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="buttons">
-                    <button mat-raised-button type="submit">ZAREJESTRUJ SIĘ</button>
-                    <button mat-raised-button routerLink="/login">MOŻESZ TEŻ SIĘ ZALOGOWAĆ</button>
-                </div>
-            </form>
-        </mat-card-content>
-    </mat-card>
+	<mat-card>
+		<mat-card-title>REJESTRACJA</mat-card-title>
+		<mat-card-content>
+			<form>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>Imie</mat-label>
+						<input matInput name="name" required />
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>Nazwisko</mat-label>
+						<input matInput name="surname" required />
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>Adres email</mat-label>
+						<input matInput name="email" required />
+					</mat-form-field>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>Hasło</mat-label>
+						<input
+							matInput
+							name="password"
+							[type]="hidePassword ? 'password' : 'text'"
+							formControlName="password"
+							required
+						/>
+						<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+							hidePassword ? "visibility_off" : "visibility"
+						}}</mat-icon>
+					</mat-form-field>
+					<p>Użyj przynajmniej 8 znaków, w tym jednocześnie liter, cyfr i symboli</p>
+				</div>
+				<div class="form-group">
+					<mat-form-field>
+						<mat-label>Powtórz hasło</mat-label>
+						<input
+							matInput
+							name="confirmPassword"
+							[type]="hideConfirmPasword ? 'password' : 'text'"
+							formControlName="password"
+							required
+						/>
+						<mat-icon matSuffix (click)="hideConfirmPasword = !hideConfirmPasword">{{
+							hideConfirmPasword ? "visibility_off" : "visibility"
+						}}</mat-icon>
+					</mat-form-field>
+				</div>
+				<div class="buttons">
+					<button mat-raised-button type="submit">ZAREJESTRUJ SIĘ</button>
+					<button mat-raised-button routerLink="/login">
+						MOŻESZ TEŻ SIĘ ZALOGOWAĆ
+					</button>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
 </div>

@@ -20,7 +20,7 @@ import { HeaderModule } from './shared/components/header/header.module';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
-		AuthModule
+		AuthModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
