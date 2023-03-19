@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 		MatCardModule,
 		MatFormFieldModule,
 		MatIconModule,
-		MatInputModule
+		MatInputModule,
 	],
 })
 export class RegisterModule {}
