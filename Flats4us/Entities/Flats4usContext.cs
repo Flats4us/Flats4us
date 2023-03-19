@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Entities
 {
-    public class Flats4usContext : DbContext
+    public class Flats4usContext : IdentityDbContext
     {
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<Flat> Flats { get; set; }
@@ -14,6 +15,8 @@ namespace Flats4us.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Tenant>().HasData( 
                 new 
                 {   TenantId = 1,
