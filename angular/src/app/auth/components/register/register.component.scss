@@ -15,13 +15,33 @@
 }
 
 .buttons button {
-	margin-bottom: 10px;
 	width: 50%;
+	margin-bottom: 10px;
 }
 
-.buttons button:first-child {
+.buttons .btn-submit {
 	background-color: #6200ee;
 	color: #fff;
+	border-style: solid;
+	border-color: #6200ee;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttons .btn-submit:hover {
+	background-color: #fff;
+	color: #6200ee;
+}
+
+.buttons .btn-log-in {
+	background-color: #fff;
+	color: #6200ee;
+	border-style: solid;
+	border-color: #fff;
+	transition: border-color 0.3s ease;
+}
+
+.buttons .btn-log-in:hover {
+	border-color: #6200ee;
 }
 
 mat-card-title {
