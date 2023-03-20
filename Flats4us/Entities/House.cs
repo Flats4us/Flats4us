@@ -3,10 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public class Flat : Property
+    public class House : Property
     {
         [Required]
         [Column("NumberOfRooms")]
         public int NumberOfRooms { get; set; }
+
+        [Required]
+        public int NumberOfFloors { get; set; }
+
+        [Required]
+        public int ParcelSurface { get; set; }
     }
 }
