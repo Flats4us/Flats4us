@@ -6,4 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	styleUrls: ['./register.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent {}
+export class RegisterComponent {
+	hidePassword = true;
+	hideConfirmPasword = true;
+}
