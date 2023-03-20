@@ -5,51 +5,11 @@
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class classmodelsfirstpart : Migration
+    public partial class classmodelspropertyinheritancetest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine3",
-                table: "Tenant",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine2",
-                table: "Tenant",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine3",
-                table: "Flat",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine2",
-                table: "Flat",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60);
-
             migrationBuilder.CreateTable(
                 name: "Equipment",
                 columns: table => new
@@ -71,7 +31,12 @@ namespace Flats4us.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surface = table.Column<int>(type: "int", nullable: false),
-                    MaxInhabitants = table.Column<int>(type: "int", nullable: false)
+                    MaxInhabitants = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfRooms = table.Column<int>(type: "int", nullable: true),
+                    NumberOfFloors = table.Column<int>(type: "int", nullable: true),
+                    ParcelSurface = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,54 +120,6 @@ namespace Flats4us.Migrations
 
             migrationBuilder.DropTable(
                 name: "Property");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine3",
-                table: "Tenant",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine2",
-                table: "Tenant",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine3",
-                table: "Flat",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "AddressLine2",
-                table: "Flat",
-                type: "nvarchar(60)",
-                maxLength: 60,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(60)",
-                oldMaxLength: 60,
-                oldNullable: true);
         }
     }
 }
