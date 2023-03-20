@@ -6,4 +6,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+	showMenu = false;
+	isUserLoggedIn = true;
+
+	toggleMenu() {
+		this.showMenu = !this.showMenu;
+	}
+}

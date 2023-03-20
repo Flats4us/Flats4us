@@ -1,0 +1,62 @@
+.mat-toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.custom-toolbar {
+	background-color: #830dd7;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.button-log,
+.button-sign {
+	border-radius: 30px;
+	margin-right: 20px;
+}
+
+.button-sign {
+	margin-right: 50px;
+}
+
+.your-photo {
+	border-radius: 100%;
+	width: 40px;
+	height: 40px;
+	margin-right: 20px;
+}
+
+.mat-sidenav-container {
+	height: 100%;
+}
+
+.mat-sidenav {
+	width: 200px;
+}
+
+.mat-icon-vertical-align {
+	vertical-align: middle;
+	font-size: 20px;
+}
+
+.icon-menu {
+	display: flex;
+	align-items: center;
+}
+
+mat-icon {
+	align-items: center;
+}
+
+.mat-nav-list {
+	margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+	.mat-sidenav {
+		width: 80%;
+	}
+}
