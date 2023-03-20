@@ -26,6 +26,10 @@ namespace Flats4us.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Property>()
+                .HasDiscriminator()
+                .IsComplete();
+
             //modelbuilder.entity<tenant>().hasdata(
             //    new
             //    {
