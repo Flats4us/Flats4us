@@ -7,10 +7,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public showMenu = false;
-	public isUserLoggedIn = true;
+	isUserLoggedIn = true;
 
-	public toggleMenu() {
-		this.showMenu = !this.showMenu;
-	}
+  showOptions1 = false;
+  showOptions2 = false;
+  showOptions3 = false;
+  showOptions4 = false;
+
 }
