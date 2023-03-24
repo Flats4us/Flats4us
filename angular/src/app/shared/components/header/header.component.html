@@ -1,19 +1,48 @@
 <mat-toolbar class="custom-toolbar">
 	<mat-icon
-		*ngIf="!isUserLoggedIn"
 		aria-hidden="false"
 		aria-label="Example home icon"
 		fontIcon="home"
 	></mat-icon>
-	<button mat-icon-button (click)="toggleMenu()">
-		<mat-icon class="icon-menu" *ngIf="isUserLoggedIn">menu</mat-icon>
-	</button>
 	<a href="#" class="title"><b>Flats4Us</b></a>
-	<div class="spacer"></div>
-	<div *ngIf="!isUserLoggedIn" class="start-navbar-button">
+  <div class="spacer"></div>
+  <div *ngIf="isUserLoggedIn" class="full-navbar-button spacer" >
+    <div>
+    <button  class="options" (mouseover)="showOptions1 = true" (mouseleave)="showOptions1 = false" mat-stroked-button>DODATKOWE OPCJE</button>
+    <div class="additional-buttons" *ngIf="showOptions1" >
+      <button mat-stroked-button>Дополнительная кнопка 1</button>
+      <button mat-stroked-button>Дополнительная кнопка 2</button>
+    </div>
+    </div>
+    <div>
+    <button class="news" (click)="showOptions2 = !showOptions2" mat-stroked-button>WIADOMOŚCI</button>
+    <div class="additional-buttons" *ngIf="showOptions2" style="display: flex; flex-direction: column;">
+      <button mat-stroked-button>Дополнительная кнопка 1</button>
+      <button mat-stroked-button>Дополнительная кнопка 2</button>
+    </div>
+    </div>
+    <div>
+    <button  class="search" (click)="showOptions3 = !showOptions3" mat-stroked-button>WYSZUKIWARKA</button>
+      <div class="additional-buttons" *ngIf="showOptions3" style="display: flex; flex-direction: column;">
+        <button mat-stroked-button>Дополнительная кнопка 1</button>
+        <button mat-stroked-button>Дополнительная кнопка 2</button>
+      </div>
+  </div>
+    <div>
+    <button class="settings" (click)="showOptions4 = !showOptions4" mat-stroked-button>USTAWIENIA</button>
+    <div class="additional-buttons" *ngIf="showOptions4" style="display: flex; flex-direction: column;">
+      <button mat-stroked-button>Дополнительная кнопка 1</button>
+      <button mat-stroked-button>Дополнительная кнопка 2</button>
+    </div>
+    </div>
+  </div>
+
+
+	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
 		<button class="button-log" mat-stroked-button>LOGOWANIE</button>
 		<button class="button-sign" mat-stroked-button>REJESTRACJA</button>
 	</div>
+
 	<div *ngIf="isUserLoggedIn" class="photo">
 		<img class="your-photo" src="../../assets/1.jpg" alt="" />
 	</div>
@@ -21,19 +50,5 @@
 		<a *ngIf="isUserLoggedIn" class="your-profile" href="#">Twój profil</a>
 	</div>
 </mat-toolbar>
-<mat-sidenav *ngIf="isUserLoggedIn" #sidenav mode="side" [opened]="showMenu">
-	<mat-nav-list>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">start</mat-icon> Start</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">map</mat-icon> Mapa ofert</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">telegram</mat-icon> Wiadomości</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">person</mat-icon> Konto</a
-		>
-	</mat-nav-list>
-</mat-sidenav>
+
+
