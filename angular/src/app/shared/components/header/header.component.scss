@@ -1,11 +1,28 @@
-.mat-toolbar {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
 
 .custom-toolbar {
 	background-color: #830dd7;
+}
+
+.full-navbar-button{
+  display: flex;
+  //justify-content: space-between;
+  align-items: center;
+}
+
+.settings,
+.search,
+.news,
+.options{
+  position: relative;
+  border-radius: 30px;
+  margin-left: 20px;
+}
+
+.additional-buttons{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
 }
 
 .spacer {
@@ -29,34 +46,13 @@
 	margin-right: 20px;
 }
 
-.mat-sidenav-container {
-	height: 100%;
-}
-
-.mat-sidenav {
-	width: 200px;
-}
-
 .mat-icon-vertical-align {
 	vertical-align: middle;
 	font-size: 20px;
-}
-
-.icon-menu {
-	display: flex;
-	align-items: center;
 }
 
 mat-icon {
 	align-items: center;
 }
 
-.mat-nav-list {
-	margin-top: 20px;
-}
 
-@media (max-width: 600px) {
-	.mat-sidenav {
-		width: 80%;
-	}
-}
