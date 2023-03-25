@@ -1,4 +1,4 @@
-<main class="container">
+<main class="mx-auto pt-1 w-3/5 md:w-1/2 lg:w-1/4">
 	<h1>Zaloguj się</h1>
 
 	<form>
@@ -7,13 +7,12 @@
 			<input matInput name="login" required />
 		</mat-form-field>
 
-		<mat-form-field appearance="outline">
+		<mat-form-field class="no-border-style" appearance="outline">
 			<mat-label>Password</mat-label>
 			<input
 				matInput
 				name="password"
 				[type]="hidePassword ? 'password' : 'text'"
-				formControlName="password"
 				required
 			/>
 			<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
@@ -21,7 +20,7 @@
 			}}</mat-icon>
 		</mat-form-field>
 
-		<p>Forgot password? <a>Click here</a></p>
+		<a href="" id="reset-password">Zapomniałeś hasła?</a>
 
 		<div class="buttons">
 			<button mat-flat-button class="btn-loginSubmit" type="submit">Login</button>

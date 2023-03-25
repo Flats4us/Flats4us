@@ -1,11 +1,5 @@
-.container {
-	margin: auto;
-	width: 50%;
-	padding: 10px;
-}
-
 h1 {
-	font-size: 24px;
+	font-size: 30px;
 	margin-top: 16px;
 	text-align: center;
 }
@@ -14,6 +8,15 @@ mat-form-field {
 	width: 100%;
 	margin: 16px 0;
 }
+
+::-ms-reveal {
+	display: none;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+	border-right: none !important;
+}
+
 .buttons {
 	display: flex;
 	flex-direction: column;
@@ -21,7 +24,7 @@ mat-form-field {
 }
 
 .buttons button {
-	width: 50%;
+	width: 100%;
 	margin-bottom: 10px;
 }
 
@@ -33,7 +36,8 @@ mat-form-field {
 	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.buttons .btn-loginSubmit:hover {
+.buttons .btn-loginSubmit:hover,
+.buttons .btn-loginSubmit:focus {
 	background-color: #f3f4f6;
 	color: #000000;
 }
@@ -46,7 +50,12 @@ mat-form-field {
 	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.buttons .btn-register:hover {
+.buttons .btn-register:hover,
+.buttons .btn-register:focus {
 	background-color: #fff;
 	color: #6200ee;
+}
+
+#reset-password {
+	text-decoration: underline;
 }

@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
 	declarations: [LoginComponent],
@@ -14,6 +15,7 @@ import { MatListModule } from '@angular/material/list';
 		MatInputModule,
 		MatButtonModule,
 		MatListModule,
+		MatIconModule,
 	],
 	exports: [LoginComponent],
 })
