@@ -3,7 +3,7 @@
 	background-color: #830dd7;
 }
 
-.full-navbar-button{
+.full-main-button{
   display: flex;
   //justify-content: space-between;
   align-items: center;
@@ -12,17 +12,34 @@
 .settings,
 .search,
 .news,
-.options{
+.options,
+.language{
   position: relative;
   border-radius: 30px;
   margin-left: 20px;
 }
 
-.additional-buttons{
+.parent-button {
+  position: relative;
+}
+
+.additional-buttons {
   position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  z-index: 1;
+}
+
+.child-button{
+  display: block;
+  border-radius: 20px;
+  margin-top: 15px;
+}
+
+.mode{
+  margin-left: 20px;
 }
 
 .spacer {
