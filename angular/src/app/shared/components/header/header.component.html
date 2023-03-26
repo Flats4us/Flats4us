@@ -1,19 +1,107 @@
 <mat-toolbar class="custom-toolbar">
 	<mat-icon
-		*ngIf="!isUserLoggedIn"
 		aria-hidden="false"
 		aria-label="Example home icon"
 		fontIcon="home"
 	></mat-icon>
-	<button mat-icon-button (click)="toggleMenu()">
-		<mat-icon class="icon-menu" *ngIf="isUserLoggedIn">menu</mat-icon>
-	</button>
 	<a href="#" class="title"><b>Flats4Us</b></a>
 	<div class="spacer"></div>
-	<div *ngIf="!isUserLoggedIn" class="start-navbar-button">
-		<button class="button-log" mat-stroked-button>LOGOWANIE</button>
-		<button class="button-sign" mat-stroked-button>REJESTRACJA</button>
+	<div *ngIf="isUserLoggedIn" class="full-main-button spacer">
+		<div
+			class="parent-button"
+			(mouseenter)="showOptions1 = true"
+			(mouseleave)="showOptions1 = false"
+		>
+			<button class="options main-button" mat-stroked-button>
+				DODATKOWE OPCJE
+			</button>
+			<div class="additional-buttons" *ngIf="showOptions1">
+				<button class="child-button" mat-stroked-button>OBSERWOWANE</button>
+				<button class="child-button" mat-stroked-button>MAPA OFERT</button>
+				<button class="child-button" mat-stroked-button>OSTATNIO OGLĄDANE</button>
+				<button class="child-button" mat-stroked-button>OPINIE</button>
+				<button class="child-button" mat-stroked-button>PŁATNOŚCI</button>
+				<button
+					class="child-button"
+					*ngIf="isUserLoggedInAsStudent"
+					mat-stroked-button
+				>
+					MOJE WYNAJMY
+				</button>
+				<button
+					class="child-button"
+					*ngIf="!isUserLoggedInAsStudent"
+					mat-stroked-button
+				>
+					MOJE NIERUCHOMOŚCI
+				</button>
+				<button class="child-button" mat-stroked-button>SPORY</button>
+				<button class="child-button" mat-stroked-button>KALENDARZ</button>
+			</div>
+		</div>
+		<div
+			class="parent-button"
+			(mouseenter)="showOptions2 = true"
+			(mouseleave)="showOptions2 = false"
+		>
+			<button class="news main-button" mat-stroked-button>WIADOMOŚCI</button>
+			<div class="additional-buttons" *ngIf="showOptions2">
+				<button class="child-button" mat-stroked-button>
+					WIDOMOŚĆI Z WŁAŚCICIELEM
+				</button>
+				<button class="child-button" mat-stroked-button>
+					WIDOMOŚĆI Z WSPÓŁLOKATORAMI
+				</button>
+			</div>
+		</div>
+		<div class="parent-button" (click)="showOptions3 = !showOptions3">
+			<button class="search main-button" mat-stroked-button>WYSZUKIWARKA</button>
+			<div class="additional-buttons" *ngIf="showOptions3">
+				<button class="child-button" mat-stroked-button></button>
+			</div>
+		</div>
+		<div
+			class="parent-button"
+			(mouseenter)="showOptions4 = true"
+			(mouseleave)="showOptions4 = false"
+		>
+			<button class="settings main-button" mat-stroked-button>USTAWIENIA</button>
+			<div class="additional-buttons" *ngIf="showOptions4">
+				<button class="child-button" mat-stroked-button>ZMIANA HASŁA</button>
+				<button class="child-button" mat-stroked-button>ZMIANA MAILA</button>
+			</div>
+		</div>
+		<div
+			class="parent-button"
+			(mouseenter)="showOptions5 = true"
+			(mouseleave)="showOptions5 = false"
+		>
+			<button class="language main-button" mat-stroked-button>
+				ZMIANA JĘZYKU
+			</button>
+			<div class="additional-buttons" *ngIf="showOptions5">
+				<mat-radio-group aria-label="Select an option">
+					<mat-radio-button class="child-button" value="1"
+						>ANGIELSKI</mat-radio-button
+					>
+					<mat-radio-button class="child-button" value="2">POLSKI</mat-radio-button>
+				</mat-radio-group>
+			</div>
+		</div>
+		<div class="mode">
+			<mat-slide-toggle>Dark mode</mat-slide-toggle>
+		</div>
 	</div>
+
+	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
+		<button class="button-log" (click)="logIn()" mat-stroked-button>
+			LOGOWANIE
+		</button>
+		<button class="button-sign" (click)="signIn()" mat-stroked-button>
+			REJESTRACJA
+		</button>
+	</div>
+
 	<div *ngIf="isUserLoggedIn" class="photo">
 		<img class="your-photo" src="../../assets/1.jpg" alt="" />
 	</div>
@@ -21,20 +109,3 @@
 		<a *ngIf="isUserLoggedIn" class="your-profile" href="#">Twój profil</a>
 	</div>
 </mat-toolbar>
-<mat-sidenav *ngIf="isUserLoggedIn" #sidenav mode="side" [opened]="showMenu">
-	<mat-nav-list>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">start</mat-icon> Start</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">map</mat-icon> Mapa ofert</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">telegram</mat-icon>
-			Wiadomości</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">person</mat-icon> Konto</a
-		>
-	</mat-nav-list>
-</mat-sidenav>
