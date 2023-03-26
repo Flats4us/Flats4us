@@ -1,5 +1,6 @@
 <mat-toolbar class="custom-toolbar">
 	<mat-icon
+		class="home"
 		aria-hidden="false"
 		aria-label="Example home icon"
 		fontIcon="home"
@@ -109,6 +110,8 @@
 		<img class="your-photo" src="../../assets/1.jpg" alt="" />
 	</div>
 	<div class="name">
-		<a *ngIf="isUserLoggedIn" class="your-profile" href="#">Twój profil</a>
+		<a *ngIf="isUserLoggedIn" class="your-profile" href="profile/profile"
+			>Twój profil</a
+		>
 	</div>
 </mat-toolbar>
