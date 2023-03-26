@@ -1,47 +1,45 @@
-
 .custom-toolbar {
 	background-color: #830dd7;
 }
 
-.full-main-button{
-  display: flex;
-  //justify-content: space-between;
-  align-items: center;
+.full-main-button {
+	display: flex;
+	//justify-content: space-between;
+	align-items: center;
 }
 
 .settings,
 .search,
 .news,
 .options,
-.language{
-  position: relative;
-  border-radius: 30px;
-  margin-left: 20px;
+.language {
+	position: relative;
+	border-radius: 30px;
+	margin-left: 20px;
 }
 
 .parent-button {
-  position: relative;
-
+	position: relative;
 }
 
 .additional-buttons {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
-.child-button{
-  background-color: #830dd7;
-  display: block;
-  border-radius: 20px;
-  margin-top: 15px;
+.child-button {
+	background-color: #830dd7;
+	display: block;
+	border-radius: 20px;
+	margin-top: 15px;
 }
 
-.mode{
-  margin-left: 20px;
+.mode {
+	margin-left: 20px;
 }
 
 .spacer {
@@ -73,5 +71,3 @@
 mat-icon {
 	align-items: center;
 }
-
-
