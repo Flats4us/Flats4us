@@ -14,8 +14,8 @@
 .options,
 .language {
 	position: relative;
-	border-radius: 30px;
-	margin-left: 20px;
+	border-radius: 25px;
+	margin-left: 25px;
 }
 
 .parent-button {
@@ -27,7 +27,7 @@
 	top: 100%;
 	left: 0;
 	display: flex;
-	z-index: 9999;
+	z-index: 999;
 	flex-direction: column;
 	justify-content: center;
 }
