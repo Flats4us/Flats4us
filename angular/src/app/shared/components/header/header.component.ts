@@ -21,9 +21,9 @@ export class HeaderComponent {
 	constructor(private router: Router) {}
 
 	logIn() {
-		this.router.navigate(['/login']);
+		this.router.navigate(['auth/login']);
 	}
 	signIn() {
-		this.router.navigate(['/register']);
+		this.router.navigate(['auth/register']);
 	}
 }
