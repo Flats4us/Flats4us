@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent  {
+export class HeaderComponent {
 	isUserLoggedIn = true;
 	isUserLoggedInAsStudent = true;
 
@@ -16,7 +16,7 @@ export class HeaderComponent  {
 	showOptions3 = false;
 	showOptions4 = false;
 	showOptions5 = false;
-  selectedLanguage: string = 'ENGLISH';
+	selectedLanguage: string = 'ENGLISH';
 
 	constructor(private router: Router) {}
 
