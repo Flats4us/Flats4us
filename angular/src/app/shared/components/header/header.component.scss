@@ -21,18 +21,20 @@
 
 .parent-button {
   position: relative;
+
 }
 
 .additional-buttons {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .child-button{
+  background-color: #830dd7;
   display: block;
   border-radius: 20px;
   margin-top: 15px;
