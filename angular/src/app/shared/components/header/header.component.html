@@ -10,8 +10,15 @@
     <div class="parent-button" (mouseenter)="showOptions1 = true" (mouseleave)="showOptions1 = false">
     <button  class="options main-button"  mat-stroked-button>DODATKOWE OPCJE</button>
     <div class="additional-buttons" *ngIf="showOptions1" >
-      <button class="child-button" mat-stroked-button>Дополнительная кнопка 1</button>
-      <button class="child-button" mat-stroked-button>Дополнительная кнопка 2</button>
+      <button class="child-button" mat-stroked-button>OBSERWOWANE</button>
+      <button class="child-button" mat-stroked-button>MAPA OFERT</button>
+      <button class="child-button" mat-stroked-button>OSTATNIO OGLĄDANE</button>
+      <button class="child-button" mat-stroked-button>OPINIE</button>
+      <button class="child-button" mat-stroked-button>PŁATNOŚCI</button>
+      <button class="child-button" *ngIf="!isUserLoggedInAsStudent" mat-stroked-button>MOJE WYNAJMY</button>
+      <button class="child-button" *ngIf="isUserLoggedInAsStudent" mat-stroked-button>MOJE NIERUCHOMOŚCI</button>
+      <button class="child-button" mat-stroked-button>SPORY</button>
+      <button class="child-button" mat-stroked-button>KALENDARZ</button>
     </div>
     </div>
     <div class="parent-button" (mouseenter)="showOptions2 = true" (mouseleave)="showOptions2 = false">
@@ -21,11 +28,10 @@
       <button class="child-button" mat-stroked-button>WIDOMOŚĆI Z WSPÓŁLOKATORAMI</button>
     </div>
     </div>
-    <div class="parent-button" (mouseenter)="showOptions3 = true" (mouseleave)="showOptions3 = false">
+    <div class="parent-button" (click)="showOptions3 = !showOptions3">
     <button  class="search main-button"  mat-stroked-button>WYSZUKIWARKA</button>
       <div class="additional-buttons" *ngIf="showOptions3">
-        <button class="child-button" mat-stroked-button>Дополнительная кнопка 1</button>
-        <button class="child-button" mat-stroked-button>Дополнительная кнопка 2</button>
+        <button class="child-button" mat-stroked-button></button>
       </div>
   </div>
     <div class="parent-button" (mouseenter)="showOptions4 = true" (mouseleave)="showOptions4 = false">
@@ -51,8 +57,8 @@
 
 
 	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
-		<button  class="button-log" (click)="logIN()" mat-stroked-button>LOGOWANIE</button>
-		<button class="button-sign" mat-stroked-button>REJESTRACJA</button>
+		<button  class="button-log" (click)="logIn()" mat-stroked-button>LOGOWANIE</button>
+		<button class="button-sign" (click)="signIn()" mat-stroked-button>REJESTRACJA</button>
 	</div>
 
 	<div *ngIf="isUserLoggedIn" class="photo">
