@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	selectedLanguage: string = 'ENGLISH';
+	selectedLanguage = 'ENGLISH';
 	isUserLoggedIn = true;
 	isUserLoggedInAsStudent = true;
 
