@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+	selectedLanguage: string = 'ENGLISH';
 	isUserLoggedIn = true;
 	isUserLoggedInAsStudent = true;
 
@@ -16,7 +17,6 @@ export class HeaderComponent {
 	showOptions3 = false;
 	showOptions4 = false;
 	showOptions5 = false;
-	selectedLanguage: string = 'ENGLISH';
 
 	constructor(private router: Router) {}
 
