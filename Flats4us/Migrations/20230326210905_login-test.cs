@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class logintest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,20 @@ namespace Flats4us.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tenant", x => x.TenantId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +112,15 @@ namespace Flats4us.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "UserId", "PasswordHash", "Username" },
+                values: new object[,]
+                {
+                    { 1, "$2a$11$YywTkmrlCXEi6YcgIwESL.X14eBtVuU7QZLuc7TFZE3TQQwoxrAIW", "Dominik" },
+                    { 2, "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nIiwiZXhwIjoxNjc5OTQwNzM5fQ.T7-HLhSAbF9yeLdgngkyXF-_8_f0sGtMuMbmOvaEr6ZH9IFLhCLYkZ9KpxSejezyqJSNaTxRcnsy3F8rpFIEPQ", "testuser" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Rent",
                 columns: new[] { "RentId", "DurationInMonths", "FlatId", "PricePerMonth", "StartDate", "TenantId" },
                 values: new object[,]
@@ -122,6 +145,9 @@ namespace Flats4us.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Rent");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Flat");

@@ -1,6 +1,7 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +24,7 @@ namespace Flats4us.Controllers
 
         // GET: api/Tenant
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             _logger.LogInformation("Getting tenants list");
