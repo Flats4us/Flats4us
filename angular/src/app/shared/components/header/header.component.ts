@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 	isUserLoggedIn = true;
-	isUserLoggedInAsStudent = false;
+	isUserLoggedInAsStudent = true;
 
 	showOptions1 = false;
 	showOptions2 = false;

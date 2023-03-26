@@ -23,14 +23,14 @@
 				<button class="child-button" mat-stroked-button>PŁATNOŚCI</button>
 				<button
 					class="child-button"
-					*ngIf="!isUserLoggedInAsStudent"
+					*ngIf="isUserLoggedInAsStudent"
 					mat-stroked-button
 				>
 					MOJE WYNAJMY
 				</button>
 				<button
 					class="child-button"
-					*ngIf="isUserLoggedInAsStudent"
+					*ngIf="!isUserLoggedInAsStudent"
 					mat-stroked-button
 				>
 					MOJE NIERUCHOMOŚCI
