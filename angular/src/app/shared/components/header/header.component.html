@@ -80,7 +80,7 @@
 				ZMIANA JĘZYKU
 			</button>
 			<div class="additional-buttons" *ngIf="showOptions5">
-				<mat-radio-group aria-label="Select an option">
+				<mat-radio-group aria-label="Select an option" [(ngModel)]="selectedLanguage">
 					<mat-radio-button class="child-button" value="1"
 						>ANGIELSKI</mat-radio-button
 					>
