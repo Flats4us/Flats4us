@@ -9,18 +9,23 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-	isUserLoggedIn = false;
+	isUserLoggedIn = true;
+  isUserLoggedInAsStudent = false;
 
   showOptions1 = false;
   showOptions2 = false;
   showOptions3 = false;
   showOptions4 = false;
   showOptions5 = false;
+  isUserLoggedInAsOwnerButton: any;
 
   constructor(private router: Router) { }
 
-  logIN() {
+  logIn() {
     this.router.navigate(['/login']);
+  }
+  signIn() {
+    this.router.navigate(['/register']);
   }
 
 }
