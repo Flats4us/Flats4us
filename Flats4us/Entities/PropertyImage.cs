@@ -12,6 +12,7 @@ namespace Flats4us.Entities
 
         public string? Title { get; set; }
 
+        // serwer plikow
         [Required]
         public byte[] ImageData { get; set; }
 
