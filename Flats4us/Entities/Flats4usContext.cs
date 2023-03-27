@@ -10,15 +10,34 @@ namespace Flats4us.Entities
         //public virtual DbSet<Flat> Flats { get; set; }
         //public virtual DbSet<Rent> Rents { get; set; }
         //
-
-        public virtual DbSet<Property> Properties { get; set; }
+        public virtual DbSet<Advertisement> Advertisements { get; set; }
+        public virtual DbSet<Argument> Arguments { get; set; }
+        public virtual DbSet<ArgumentMessage> ArgumentMessages { get; set; }
+        public virtual DbSet<Equipment> Equipments { get; set; }
         public virtual DbSet<Flat> Flats { get; set; }
-        public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<House> Houses { get; set; }
+        public virtual DbSet<Intervention> Interventions { get; set; }
+        public virtual DbSet<Meeting> Meetings { get; set; }
+        public virtual DbSet<Moderator> Moderators { get; set; }
+        public virtual DbSet<Offer> Offers { get; set; }
+        public virtual DbSet<OfferInterest> OfferInterests { get; set; }
+        public virtual DbSet<Owner> Owners { get; set; }
+        public virtual DbSet<OwnerStudent> OwnerStudents { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<PersonOpinion> PersonOpinions { get; set; }
+        public virtual DbSet<Promotion> Promotions { get; set; }
+        public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<PropertyEquipment> PropertyEquipments { get; set; }
         public virtual DbSet<PropertyImage> PropertyImages { get; set; }
-        public virtual DbSet<Equipment> Equipments { get; set; }
-
+        public virtual DbSet<Rent> Rents { get; set; }
+        public virtual DbSet<RentOpinion> RentOpinions { get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Seeker> Seekers { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<StudentMeeting> StudentMeetings { get; set; }
+        public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<Tenant> Tenants { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         public Flats4usContext() { }
 
