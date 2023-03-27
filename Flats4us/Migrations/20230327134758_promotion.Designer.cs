@@ -4,6 +4,7 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    partial class Flats4usContextModelSnapshot : ModelSnapshot
+    [Migration("20230327134758_promotion")]
+    partial class promotion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,74 +53,6 @@ namespace Flats4us.Migrations
                     b.ToTable("Advertisement");
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ArgumentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InterventionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ModeratorDecisionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OwnerAcceptanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("TenantAcceptanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InterventionId");
-
-                    b.HasIndex("OfferId");
-
-                    b.ToTable("Argument");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ArgumentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArgumentId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("ArgumentMessage");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.Equipment", b =>
                 {
                     b.Property<int>("Id")
@@ -134,31 +69,6 @@ namespace Flats4us.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Equipment");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Intervention", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ModeratorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModeratorId");
-
-                    b.ToTable("Intervention");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
@@ -799,45 +709,6 @@ namespace Flats4us.Migrations
                     b.Navigation("Moderator");
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Intervention", "Intervention")
-                        .WithMany()
-                        .HasForeignKey("InterventionId");
-
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithMany()
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Intervention");
-
-                    b.Navigation("Offer");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Argument", null)
-                        .WithMany("ArgumentMessages")
-                        .HasForeignKey("ArgumentId");
-
-                    b.HasOne("Flats4us.Entities.OwnerStudent", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Intervention", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Moderator", null)
-                        .WithMany("Interventions")
-                        .HasForeignKey("ModeratorId");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
                 {
                     b.HasOne("Flats4us.Entities.Offer", "Offer")
@@ -1006,11 +877,6 @@ namespace Flats4us.Migrations
                         .HasForeignKey("RentId");
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.Navigation("ArgumentMessages");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.Offer", b =>
                 {
                     b.Navigation("Meetings");
@@ -1035,11 +901,6 @@ namespace Flats4us.Migrations
 
                     b.Navigation("RentOpinion")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
-                {
-                    b.Navigation("Interventions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Student", b =>
