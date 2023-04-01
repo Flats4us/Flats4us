@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
+import { EmailChangeModule } from './emailChange/emailChange.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { HeaderModule } from './shared/components/header/header.module';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
+		EmailChangeModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
