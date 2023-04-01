@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
@@ -25,5 +26,49 @@ namespace Flats4us.Services
         }
 
 
+
+
+
+        public async Task<User> RegisterAsync(UserDto request)
+        {
+            // Verify that the requested username does not already exist in the database
+            var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Username == request.Username);
+            if (existingUser != null)
+            {
+                throw new Exception("Username already exists");
+            }
+
+            // Verify that the username and password meet the length requirements
+            if (request.Username.Length < 6 || request.Username.Length > 20)
+            {
+                throw new Exception("Username must be between 6 and 20 characters");
+            }
+            if (request.Password.Length < 8 || request.Password.Length > 50)
+            {
+                throw new Exception("Password must be between 8 and 50 characters");
+            }
+
+            // Verify that the password contains at least one uppercase letter, one lowercase letter, and one digit
+            if (!request.Password.Any(char.IsUpper) || !request.Password.Any(char.IsLower) || !request.Password.Any(char.IsDigit))
+            {
+                throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+            }
+
+            // Hash the password
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+
+            // Create a new user object
+            User user = new User()
+            {
+                Username = request.Username,
+                PasswordHash = passwordHash
+            };
+
+            // Add the user to the database
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
     }
 }

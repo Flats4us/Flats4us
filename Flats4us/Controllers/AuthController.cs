@@ -27,15 +27,17 @@ namespace Flats4us.Controllers
 
 
         [HttpPost("register")]
-        public ActionResult<User> Register(UserDto request)
+        public async Task<ActionResult<User>> RegisterAsync(UserDto request)
         {
-            string passwordHash
-                = BCrypt.Net.BCrypt.HashPassword(request.Password);
-
-            user.Username = request.Username;
-            user.PasswordHash = passwordHash;
-
-            return Ok(user);
+            try
+            {
+                var user = await _userService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
