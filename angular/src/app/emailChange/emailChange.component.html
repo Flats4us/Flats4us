@@ -1,1 +1,44 @@
-<h1>emailChange works!</h1>
+<mat-card>
+	<h1>Zmiana adresu email</h1>
+	<mat-card-content class="mx-auto pt-1 w-2/3 md:w-1/2">
+		<mat-stepper orientation="vertical" #stepper>
+			<mat-step [stepControl]="firstFormGroup">
+				<form [formGroup]="firstFormGroup">
+					<ng-template matStepLabel>Wprowadź nowy adres email</ng-template>
+					<mat-form-field>
+						<mat-label>Email</mat-label>
+						<input matInput name="email" value="s22900@pjwstk.edu.pl" required />
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperNext>Dalej</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step [stepControl]="secondFormGroup">
+				<form [formGroup]="secondFormGroup">
+					<ng-template matStepLabel>Wprowadź hasło</ng-template>
+					<mat-form-field class="no-border-style">
+						<mat-label>Hasło</mat-label>
+						<input
+							matInput
+							name="password"
+							[type]="hidePassword ? 'password' : 'text'"
+							required
+						/>
+						<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+							hidePassword ? "visibility_off" : "visibility"
+						}}</mat-icon>
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperPrevious>Wstecz</button>
+						<button mat-button matStepperNext>Dalej</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step>
+				<ng-template matStepLabel>Gotowe</ng-template>
+				<p>Adres email został poprawnie zmieniony.</p>
+			</mat-step>
+		</mat-stepper>
+	</mat-card-content>
+</mat-card>
