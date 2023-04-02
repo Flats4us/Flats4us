@@ -11,21 +11,24 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import {MatMenuModule} from "@angular/material/menu";
+
 
 @NgModule({
 	declarations: [HeaderComponent],
-	imports: [
-		CommonModule,
-		MatToolbarModule,
-		MatIconModule,
-		MatButtonModule,
-		BrowserAnimationsModule,
-		MatSidenavModule,
-		MatListModule,
-		MatRadioModule,
-		MatSlideToggleModule,
-		FormsModule,
-	],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatMenuModule,
+  ],
 	exports: [HeaderComponent],
 })
 export class HeaderModule {}
