@@ -1,47 +1,45 @@
-
 .custom-toolbar {
-	background-color: #830dd7;
+	background-color: #fbbb8b;
 }
 
-.full-main-button{
-  display: flex;
-  //justify-content: space-between;
-  align-items: center;
+.title {
+	font-family: "Rockwell Extra Bold";
+	font-size: 35px;
+	margin-left: 10px;
+}
+
+.full-main-button {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .settings,
-.search,
-.news,
+.tidings,
 .options,
-.language{
-  position: relative;
-  border-radius: 30px;
-  margin-left: 20px;
+.map {
+	margin-left: 25px;
 }
 
-.parent-button {
-  position: relative;
-
+.change-lang {
+	background-color: #fbbb8b;
+	margin-left: 100px;
+}
+.icon-sun {
+	margin-left: 30px;
+	margin-right: 10px;
+	font-size: 10px;
+	width: 30px;
+	height: 30px;
 }
 
-.additional-buttons {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.arrow {
+	width: 5px;
+	height: 5px;
 }
-
-.child-button{
-  background-color: #830dd7;
-  display: block;
-  border-radius: 20px;
-  margin-top: 15px;
-}
-
-.mode{
-  margin-left: 20px;
+.icon-moon {
+	width: 30px;
+	height: 30px;
 }
 
 .spacer {
@@ -63,6 +61,10 @@
 	width: 40px;
 	height: 40px;
 	margin-right: 20px;
+	margin-left: 60px;
+}
+.your-profile {
+	margin-right: 50px;
 }
 
 .mat-icon-vertical-align {
@@ -70,8 +72,6 @@
 	font-size: 20px;
 }
 
-mat-icon {
+.mat-icon {
 	align-items: center;
 }
-
-
