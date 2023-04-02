@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
 	isUserLoggedIn = true;
 
-  isUserLoggedInAsStudent = true;
-  isMenuOpen = false;
+	isUserLoggedInAsStudent = true;
 	constructor(private router: Router) {}
 
 	logIn() {
