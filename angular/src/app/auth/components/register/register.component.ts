@@ -7,6 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-	hidePassword = true;
-	hideConfirmPasword = true;
+	public hidePassword = true;
+	public hideConfirmPasword = true;
 }
