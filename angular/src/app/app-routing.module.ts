@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainSiteComponent } from './main-site/main-site/main-site.component';
 
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 const routes: Routes = [
+	{ path: 'start', component: MainSiteComponent },
 	{
 		path: 'auth',
 		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
