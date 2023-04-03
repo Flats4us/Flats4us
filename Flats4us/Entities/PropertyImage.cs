@@ -12,9 +12,8 @@ namespace Flats4us.Entities
 
         public string? Title { get; set; }
 
-        // serwer plikow
         [Required]
-        public byte[] ImageData { get; set; }
+        public string? ImagePath { get; set; }
 
         public virtual Property Property { get; set; }
     }
