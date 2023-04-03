@@ -18,12 +18,11 @@ namespace Flats4us.Entities
     public class OwnerStudent : User
     {
         [Required]
-        public byte[] Photo { get; set; }
+        public string? PhotoPath { get; set; }
 
         [Required]
         public bool ActivityStatus { get; set; }
 
-        // ???
         [Required]
         public string? DocumentPath { get; set; }
 
@@ -36,13 +35,5 @@ namespace Flats4us.Entities
         [Required]
         public DateTime DocumentExpireDate { get; set; }
 
-        //public virtual ICollection<PersonOpinion> ReceivedRatings { get; set; }
-        //public virtual ICollection<PersonOpinion> IssuedRatings { get; set; }
-
-        public OwnerStudent()
-        {
-            //ReceivedRatings = new HashSet<PersonOpinion>();
-           // IssuedRatings = new HashSet<PersonOpinion>();
-        }
     }
 }

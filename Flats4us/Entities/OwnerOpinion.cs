@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("PersonOpinion")]
-    public class PersonOpinion
+    [Table("OwnerOpinion")]
+    public class OwnerOpinion
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -38,8 +38,8 @@ namespace Flats4us.Entities
         [Required]
         public bool Check7 { get; set; }
 
-        //public virtual OwnerStudent Evaluated { get; set; }
+        public virtual Owner Evaluated { get; set; }
 
-        //public virtual OwnerStudent Evaluator { get; set; }
+        public virtual Student Evaluator { get; set; }
     }
 }
