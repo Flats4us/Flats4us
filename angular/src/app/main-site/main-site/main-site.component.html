@@ -1,0 +1,321 @@
+<main>
+	<div class="container">
+		<div class="box2">
+			<mat-icon>location_on</mat-icon>
+			<input
+				type="text"
+				placeholder="Miasto"
+				aria-label="Text"
+				matInput
+				[matAutocomplete]="autoCities"
+			/>
+			<mat-autocomplete #autoCities="matAutocomplete">
+				<mat-option *ngFor="let city of cities" [value]="city.value">
+					{{ city.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon>directions_walk</mat-icon>
+			<input
+				type="text"
+				placeholder="Maksymalna odległość"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoDistances"
+			/>
+			<mat-autocomplete #autoDistances="matAutocomplete">
+				<mat-option *ngFor="let distance of distances" [value]="distance.value">
+					{{ distance.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon>home</mat-icon>
+			<input
+				type="text"
+				placeholder="Rodzaj nieruchomości"
+				aria-label="Text"
+				matInput
+				[matAutocomplete]="autoProperties"
+			/>
+
+			<mat-autocomplete #autoProperties="matAutocomplete">
+				<mat-option *ngFor="let property of properties" [value]="property.value">
+					{{ property.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon> vertical_align_bottom</mat-icon>
+			<input
+				type="number"
+				placeholder="Cena minimalna"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoPriceMin"
+			/>
+
+			<mat-autocomplete #autoPriceMin="matAutocomplete">
+				<mat-option *ngFor="let price of priceMaxs" [value]="price.value">
+					{{ price.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon> vertical_align_top</mat-icon>
+			<input
+				type="number"
+				placeholder="Cena maksymalna"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoPriceMax"
+			/>
+
+			<mat-autocomplete #autoPriceMax="matAutocomplete">
+				<mat-option *ngFor="let price of priceMaxs" [value]="price.value">
+					{{ price.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+			<button
+				(click)="showFilters()"
+				mat-icon-button
+				matTooltip="Pokaż więcej filtrów"
+				aria-label="Filter_list button"
+			>
+				<mat-icon>filter_list</mat-icon>
+			</button>
+			<button
+				(click)="search()"
+				mat-icon-button
+				matTooltip="Szukaj ofert"
+				aria-label="Search button"
+			>
+				<mat-icon>search</mat-icon>
+			</button>
+		</div>
+		<div *ngIf="showMoreFilters" class="box3">
+			<mat-icon> vertical_align_bottom</mat-icon>
+			<input
+				type="number"
+				placeholder="Powierzchnia od"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoAreaFrom"
+			/>
+
+			<mat-autocomplete #autoAreaFrom="matAutocomplete">
+				<mat-option *ngFor="let area of areaFroms" [value]="area.value">
+					{{ area.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon> vertical_align_top</mat-icon>
+			<input
+				type="number"
+				placeholder="Powierzchnia do"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoAreaTo"
+			/>
+
+			<mat-autocomplete #autoAreaTo="matAutocomplete">
+				<mat-option *ngFor="let area of areaTos" [value]="area.value">
+					{{ area.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+			<mat-icon>history</mat-icon>
+			<input
+				type="number"
+				placeholder="Rok budowy"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoYearOfBuild"
+			/>
+
+			<mat-autocomplete #autoYearOfBuild="matAutocomplete">
+				<mat-option
+					*ngFor="let yearOfBuild of yearOfBuilds"
+					[value]="yearOfBuild.value"
+				>
+					{{ yearOfBuild.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon>weekend</mat-icon>
+			<input
+				type="number"
+				placeholder="Liczba pokoi"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoNumberOfRooms"
+			/>
+
+			<mat-autocomplete #autoNumberOfRooms="matAutocomplete">
+				<mat-option
+					*ngFor="let numberOfRoom of numberOfRooms"
+					[value]="numberOfRoom.value"
+				>
+					{{ numberOfRoom.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+
+			<mat-icon>location_city</mat-icon>
+			<input
+				type="number"
+				placeholder="Liczba pięter"
+				aria-label="Number"
+				matInput
+				[matAutocomplete]="autoNumberOfFloors"
+			/>
+
+			<mat-autocomplete #autoNumberOfFloors="matAutocomplete">
+				<mat-option
+					*ngFor="let numberOfFloor of numberOfFloors"
+					[value]="numberOfFloor.value"
+				>
+					{{ numberOfFloor.viewValue }}
+				</mat-option>
+			</mat-autocomplete>
+		</div>
+	</div>
+
+	<div class="container2">
+		<div class="box">
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 1 </mat-card-header>
+				<mat-card-subtitle
+					>Wola
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 1"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 2 </mat-card-header>
+				<mat-card-subtitle
+					>Mokotów
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 2"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 3 </mat-card-header>
+				<mat-card-subtitle
+					>Bemowo
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 3"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 4 </mat-card-header>
+				<mat-card-subtitle
+					>Bielany
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 4"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<div class="box">
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 1 </mat-card-header>
+				<mat-card-subtitle
+					>Wola
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 1"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 2 </mat-card-header>
+				<mat-card-subtitle
+					>Mokotów
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 2"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 3 </mat-card-header>
+				<mat-card-subtitle
+					>Bemowo
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 3"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+			<mat-card class="card">
+				<mat-card-header> Mieszkanie 4 </mat-card-header>
+				<mat-card-subtitle
+					>Bielany
+					<div class="sub">Cena: 2500 zł</div></mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="./assets/mieszkanie.jpg"
+					alt="Mieszkanie 4"
+				/>
+				<mat-card-content>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua.
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+</main>
