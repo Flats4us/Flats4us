@@ -56,11 +56,6 @@
 	margin-right: 50px;
 }
 
-.logo {
-	width: 150px;
-	height: 70px;
-}
-
 .your-photo {
 	border-radius: 100%;
 	width: 40px;
@@ -69,10 +64,21 @@
 	margin-left: 60px;
 }
 .your-profile {
-	margin-right: 30px;
+	margin-right: 50px;
 }
 
 .mat-icon-vertical-align {
 	vertical-align: middle;
 	font-size: 20px;
+}
+
+.mat-icon {
+	align-items: center;
+}
+
+.logo {
+	width: 100px;
+	height: 50px;
+	margin-right: 20px;
+	margin-left: 20px;
 }
