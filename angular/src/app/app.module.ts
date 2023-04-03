@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
+import { MainSiteModule } from './main-site/main-site/main-site.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { HeaderModule } from './shared/components/header/header.module';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
+		MainSiteModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
