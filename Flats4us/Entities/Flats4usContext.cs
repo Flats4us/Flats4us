@@ -4,12 +4,6 @@ namespace Flats4us.Entities
 {
     public class Flats4usContext : DbContext
     {
-
-        // EXAMPLES
-        //public virtual DbSet<Tenant> Tenants { get; set; }
-        //public virtual DbSet<Flat> Flats { get; set; }
-        //public virtual DbSet<Rent> Rents { get; set; }
-        //
         public virtual DbSet<Advertisement> Advertisements { get; set; }
         public virtual DbSet<Argument> Arguments { get; set; }
         public virtual DbSet<ArgumentMessage> ArgumentMessages { get; set; }
