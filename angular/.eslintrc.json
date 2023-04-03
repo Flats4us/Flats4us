@@ -27,6 +27,30 @@
 						"prefix": "app",
 						"style": "kebab-case"
 					}
+				],
+				"@typescript-eslint/naming-convention": [
+					"error",
+					{
+						"selector": "interface",
+						"format": ["PascalCase"],
+						"custom": {
+							"regex": "^I[A-Z]",
+							"match": true
+						}
+					},
+					{
+						"selector": "enumMember",
+						"format": ["UPPER_CASE"]
+					}
+				],
+				"@typescript-eslint/explicit-member-accessibility": [
+					"error",
+					{
+						"accessibility": "explicit",
+						"overrides": {
+							"constructors": "no-public"
+						}
+					}
 				]
 			}
 		},
