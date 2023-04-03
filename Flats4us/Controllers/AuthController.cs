@@ -52,7 +52,7 @@ namespace Flats4us.Controllers
 
             string token = CreateToken(user);
 
-        return Ok(token);    
+            return Ok(token);    
         }
 
         private string CreateToken(User user)

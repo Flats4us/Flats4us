@@ -39,9 +39,9 @@ namespace Flats4us.Services
             }
 
             // Verify that the username and password meet the length requirements
-            if (request.Username.Length < 6 || request.Username.Length > 20)
+            if (request.Username.Length < User.MinUsernameLenght || request.Username.Length > User.MaxUsernameLenght)
             {
-                throw new Exception("Username must be between 6 and 20 characters");
+                throw new Exception($"Username must be between {User.MinUsernameLenght} and {User.MaxUsernameLenght} characters");
             }
             if (request.Password.Length < 8 || request.Password.Length > 50)
             {

@@ -6,12 +6,19 @@ namespace Flats4us.Entities
     [Table("User")]
     public class User
     {
+        public const int MinUsernameLenght = 6;
+        public const int MaxUsernameLenght = 30;
+
+        public const int MinPasswordLenght = 6;
+        public const int MaxPasswordeLenght = 30;
+
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
         [Required]
-        [MaxLength(30)]
-        [MinLength(6)]
+        [MaxLength(MaxUsernameLenght)]
+        [MinLength(MinUsernameLenght)]
         public string Username { get; set; }
 
         [Required]
