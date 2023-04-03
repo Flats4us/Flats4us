@@ -22,9 +22,9 @@ namespace Flats4us.Entities
         public virtual DbSet<Offer> Offers { get; set; }
         public virtual DbSet<OfferInterest> OfferInterests { get; set; }
         public virtual DbSet<Owner> Owners { get; set; }
+        public virtual DbSet<OwnerOpinion> OwnerOpinions { get; set; }
         public virtual DbSet<OwnerStudent> OwnerStudents { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
-        public virtual DbSet<PersonOpinion> PersonOpinions { get; set; }
         public virtual DbSet<Promotion> Promotions { get; set; }
         public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<PropertyEquipment> PropertyEquipments { get; set; }
@@ -35,6 +35,7 @@ namespace Flats4us.Entities
         public virtual DbSet<Seeker> Seekers { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentMeeting> StudentMeetings { get; set; }
+        public virtual DbSet<StudentOpinion> StudentOpinions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<Tenant> Tenants { get; set; }
         public virtual DbSet<User> Users { get; set; }
