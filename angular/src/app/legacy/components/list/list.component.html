@@ -1,0 +1,41 @@
+<div class="list row">
+	<div class="col-md-12">
+		<h4>Tenant List</h4>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Name</th>
+					<th scope="col">Surname</th>
+					<th scope="col" style="min-width: 150px">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let tenant of tenants">
+					<th scope="row">{{ tenant.tenantId }}</th>
+					<td>
+						<b>{{ tenant.name }}</b>
+					</td>
+					<td>{{ tenant.surname }}</td>
+					<td>
+						<button
+							type="button"
+							class="btn btn-danger"
+							routerLink="/tenant/{{ tenant.tenantId }}"
+						>
+							Edit
+						</button>
+						<button
+							type="button"
+							class="btn btn-warning"
+							(click)="deleteTenant(tenant.tenantId)"
+						>
+							Delete
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

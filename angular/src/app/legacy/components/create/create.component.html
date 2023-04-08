@@ -1,0 +1,85 @@
+<div style="width: 500px; margin: auto">
+	<div class="submit-form">
+		<div *ngIf="!isTenantAdded">
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<input
+					class="form-control"
+					id="name"
+					required
+					[(ngModel)]="tenant.name"
+					name="name"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="surname">Surname:</label>
+				<input
+					class="form-control"
+					id="surname"
+					required
+					[(ngModel)]="tenant.surname"
+					name="surname"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="addressLine1">Address:</label>
+				<input
+					class="form-control"
+					id="addressLine1"
+					required
+					[(ngModel)]="tenant.addressLine1"
+					name="addressLine1"
+				/>
+			</div>
+
+			<div class="form-group">
+				<input
+					class="form-control"
+					id="addressLine2"
+					[(ngModel)]="tenant.addressLine2"
+					name="addressLine2"
+				/>
+			</div>
+
+			<div class="form-group">
+				<input
+					class="form-control"
+					id="addressLine3"
+					[(ngModel)]="tenant.addressLine3"
+					name="addressLine3"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input
+					class="form-control"
+					id="email"
+					required
+					[(ngModel)]="tenant.email"
+					name="email"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label for="phoneNumber">Phone number:</label>
+				<input
+					class="form-control"
+					id="phoneNumber"
+					required
+					[(ngModel)]="tenant.phoneNumber"
+					name="phoneNumber"
+				/>
+			</div>
+
+			<button (click)="addTenant()" class="btn btn-success">Create</button>
+		</div>
+
+		<div *ngIf="isTenantAdded">
+			<h3>New tenant added!</h3>
+			<button class="btn btn-success" (click)="newTenant()">+ Add More</button>
+		</div>
+	</div>
+</div>
