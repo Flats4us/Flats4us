@@ -1,16 +1,24 @@
 <mat-toolbar class="custom-toolbar">
-	<mat-icon
-		class="home"
-		aria-hidden="false"
-		aria-label="Example home icon"
-		fontIcon="home"
-	></mat-icon>
-	<a href="#" class="title"><b>Flats4Us</b></a>
+	<a href="#"
+		><mat-icon
+			class="home"
+			aria-hidden="false"
+			aria-label="Example home icon"
+			fontIcon="home"
+		></mat-icon
+	></a>
+	<a href="#"
+		><img
+			class="logo"
+			id="logo-header"
+			src="./assets/logoFlats4Us.png"
+			alt="Company Logo"
+	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
 		<button class="map" mat-menu-item>MAPA OFERT <mat-icon>map</mat-icon></button>
 		<button class="tidings" mat-menu-item [matMenuTriggerFor]="tidings">
-			WIADOMOŚCI
+			<mat-icon>speaker_notes</mat-icon>WIADOMOŚCI
 		</button>
 		<mat-menu #tidings="matMenu">
 			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
@@ -22,20 +30,11 @@
 		<mat-menu #settings="matMenu">
 			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
 			<button mat-menu-item>ZMIEŃ HASŁO</button>
-			<button mat-menu-item [matMenuTriggerFor]="payments">PŁATNOŚCI</button>
 			<button mat-menu-item [matMenuTriggerFor]="help_center">
 				CENTRUM POMOCY
 			</button>
-			<button mat-menu-item>REGULAMIN</button>
-			<button mat-menu-item>WYLOGUJ SIĘ</button>
 		</mat-menu>
 
-		<mat-menu #payments="matMenu">
-			<button mat-menu-item>HISTORIA PŁATNOŚCI</button>
-			<button mat-menu-item>METODY PŁATNOŚCI</button>
-			<button mat-menu-item>OPŁATY</button>
-			<button mat-menu-item>KAUCJA</button>
-		</mat-menu>
 		<mat-menu #help_center="matMenu">
 			<button mat-menu-item>WYŚLIJ ZGŁOSZENIE DO MODERATORA</button>
 		</mat-menu>
@@ -48,10 +47,6 @@
 			<button mat-menu-item>OBSERWOWANE OFERTY</button>
 			<button mat-menu-item>OSTATNIO OGLĄDANE OFERTY</button>
 			<button mat-menu-item>OPINIE</button>
-			<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>MOJE WYNAJMY</button>
-			<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
-				MOJE NIERUCHOMOŚCI
-			</button>
 			<button mat-menu-item>UTWÓRZ NOWY SPÓR</button>
 			<button mat-menu-item>KALENDARZ</button>
 			<button
@@ -61,7 +56,6 @@
 			>
 				WSPÓŁLOKATORZY
 			</button>
-			<button mat-menu-item>EDYTUJ PROFIL</button>
 		</mat-menu>
 		<mat-menu #roommates="matMenu">
 			<button mat-menu-item>MOJE WYBORY</button>
@@ -79,6 +73,31 @@
 		<img class="icon-moon" src="../../assets/moon.png" alt="Moon" />
 	</div>
 
+	<div *ngIf="isUserLoggedIn" class="photo">
+		<img class="your-photo" src="../../assets/1.jpg" alt="" />
+	</div>
+	<div>
+		<button class="your-profile" mat-menu-item [matMenuTriggerFor]="my_profile">
+			MÓJ PROFIL
+		</button>
+	</div>
+	<mat-menu #my_profile="matMenu">
+		<button (click)="profile()" mat-menu-item>MÓJ PROFIL</button>
+		<button mat-menu-item>EDYTUJ PROFIL</button>
+		<button mat-menu-item [matMenuTriggerFor]="payments">PŁATNOŚCI</button>
+		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>MOJE WYNAJMY</button>
+		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
+			MOJE NIERUCHOMOŚCI
+		</button>
+		<button mat-menu-item>WYLOGUJ SIĘ</button>
+	</mat-menu>
+
+	<mat-menu #payments="matMenu">
+		<button mat-menu-item>HISTORIA PŁATNOŚCI</button>
+		<button mat-menu-item>OPŁATY</button>
+		<button mat-menu-item>KAUCJA</button>
+	</mat-menu>
+
 	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
 		<button class="button-log" (click)="logIn()" mat-stroked-button>
 			LOGOWANIE
@@ -86,14 +105,5 @@
 		<button class="button-sign" (click)="signIn()" mat-stroked-button>
 			REJESTRACJA
 		</button>
-	</div>
-
-	<div *ngIf="isUserLoggedIn" class="photo">
-		<img class="your-photo" src="../../assets/1.jpg" alt="" />
-	</div>
-	<div class="name">
-		<a *ngIf="isUserLoggedIn" class="your-profile" href="profile/profile"
-			>Twój profil</a
-		>
 	</div>
 </mat-toolbar>
