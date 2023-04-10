@@ -19,4 +19,7 @@ export class HeaderComponent {
 	signIn() {
 		this.router.navigate(['auth/register']);
 	}
+	profile() {
+		this.router.navigate(['profile/profile']);
+	}
 }
