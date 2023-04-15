@@ -1,26 +1,32 @@
 <mat-card>
-  <h1>Zmiana adresu email</h1>
-  <mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2">
-    <form>
-      <mat-form-field class="no-border-style" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput name="email" value="s22900@pjwstk.edu.pl" required />
-      </mat-form-field>
+	<h1>Zmiana adresu email</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2">
+		<form>
+			<mat-form-field class="no-border-style" appearance="outline">
+				<mat-label>Email</mat-label>
+				<input matInput name="email" value="s22900@pjwstk.edu.pl" required />
+			</mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Enter your password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
+			<mat-form-field appearance="fill">
+				<mat-label>Enter your password</mat-label>
+				<input matInput [type]="hide ? 'password' : 'text'" />
+				<button
+					mat-icon-button
+					matSuffix
+					(click)="hide = !hide"
+					[attr.aria-label]="'Hide password'"
+					[attr.aria-pressed]="hide"
+				>
+					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+				</button>
+			</mat-form-field>
 
-      <div class="buttons">
-        <button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
-        <button mat-flat-button class="btn-cancel" routerLink="/profile/1">
-          Anuluj
-        </button>
-      </div>
-    </form>
-  </mat-card-content>
+			<div class="buttons">
+				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
+				<button mat-flat-button class="btn-cancel" routerLink="/profile/1">
+					Anuluj
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
 </mat-card>
