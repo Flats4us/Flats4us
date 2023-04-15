@@ -8,13 +8,5 @@ import { FormBuilder, Validators } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailChangeComponent {
-	firstFormGroup = this._formBuilder.group({
-		firstCtrl: ['', Validators.required],
-	});
-	secondFormGroup = this._formBuilder.group({
-		secondCtrl: ['', Validators.required],
-	});
-	hidePassword = true;
-
-	constructor(private _formBuilder: FormBuilder) {}
+  hide = true;
 }
