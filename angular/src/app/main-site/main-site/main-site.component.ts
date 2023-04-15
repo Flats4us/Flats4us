@@ -1,12 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+
+
+export interface CitiesGroup {
+	region: string;
+	cities: string[];
+}
 
 interface Area {
 	value: Number;
-	viewValue: string;
-}
-
-interface City {
-	value: string;
 	viewValue: string;
 }
 
@@ -31,7 +36,7 @@ interface Floor {
 }
 
 interface Year {
-	value: number;
+	value: string;
 	viewValue: string;
 }
 
@@ -40,65 +45,178 @@ interface Property {
 	viewValue: string;
 }
 
+export const _filter = (opt: string[], value: string): string[] => {
+	const filterValue = value.toLowerCase();
+
+	return opt.filter(item => item.toLowerCase().includes(filterValue));
+};
+
 @Component({
 	selector: 'app-main-site',
 	templateUrl: './main-site.component.html',
 	styleUrls: ['./main-site.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainSiteComponent {
+
+export class MainSiteComponent implements OnInit {
+
 	showMoreFilters = false;
+	numberOfRecords = 143084;
 
 	showFilters() {
 		if (this.showMoreFilters) this.showMoreFilters = false;
 		else this.showMoreFilters = true;
 	}
-	search() {}
+	getDescription(numberOfRecords: number) {
+		if (numberOfRecords == 1) {
+			return `${numberOfRecords} oferta`
+		}
+		else if ((numberOfRecords > 1 && numberOfRecords <= 4) || (numberOfRecords > 20 && (numberOfRecords % 10 > 1 && numberOfRecords % 10 <= 4))) {
+			return `${numberOfRecords} oferty`
+		}
+		else {
+			return `${numberOfRecords} ofert`
+		}
+	}
 
-	cities: City[] = [
-		{ value: 'Warszawa', viewValue: 'Warszawa' },
-		{ value: 'Poznań', viewValue: 'Poznań' },
-		{ value: 'Kraków', viewValue: 'Kraków' },
-	];
+	search() { }
+
+	citiesForm = this._formBuilder.group({
+		citiesGroup: '',
+	});
+
+	citiesGroups: CitiesGroup[] = [{
+		region: 'dolnośląskie',
+		cities: ['Legnica', 'Strzegom', 'Wrocław']
+	}, {
+		region: 'kujawsko-pomorskie',
+		cities: []
+	}, {
+		region: 'lubelskie',
+		cities: []
+	}, {
+		region: 'lubuskie',
+		cities: []
+	}, {
+		region: 'łódzkie',
+		cities: []
+	}, {
+		region: 'małopolskie',
+		cities: []
+	}, {
+		region: 'mazowieckie',
+		cities: ['Ostrołęka', 'Płock', 'Radom', 'Warszawa']
+	}, {
+		region: 'opolskie',
+		cities: []
+	}, {
+		region: 'podkarpackie',
+		cities: []
+	}, {
+		region: 'podlaskie',
+		cities: []
+	}, {
+		region: 'pomorskie',
+		cities: []
+	}, {
+		region: 'śląskie',
+		cities: []
+	}, {
+		region: 'świętokrzyskie',
+		cities: []
+	}, {
+		region: 'warmińsko-mazurskie',
+		cities: []
+	}, {
+		region: 'wielkopolskie',
+		cities: []
+	}, {
+		region: 'zachodniopomorskie',
+		cities: []
+	}];
+
+	citiesGroupOptions!: Observable<CitiesGroup[]>;
+
+	constructor(private _formBuilder: FormBuilder) { }
+
+	ngOnInit() {
+		this.citiesGroupOptions = this.citiesForm.get('citiesGroup')!.valueChanges.pipe(
+			startWith(''),
+			map(value => this._filterGroup(value || '')),
+		);
+	}
+
+	private _filterGroup(value: string): CitiesGroup[] {
+		if (value) {
+			return this.citiesGroups
+				.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
+				.filter(group => group.cities.length > 0);
+		}
+
+		return this.citiesGroups;
+	}
+
 	areaFroms: Area[] = [
 		{ value: 0, viewValue: '0 m²' },
+		{ value: 20, viewValue: '20 m²' },
 		{ value: 40, viewValue: '40 m²' },
-		{ value: 80, viewValue: '80 m²' },
-	];
-	areaTos: Area[] = [
-		{ value: 40, viewValue: '40 m²' },
+		{ value: 60, viewValue: '60 m²' },
 		{ value: 80, viewValue: '80 m²' },
 		{ value: 100, viewValue: '100 m²' },
+		{ value: 120, viewValue: '120 m²' },
+	];
+	areaTos: Area[] = [
+		{ value: 20, viewValue: '20 m²' },
+		{ value: 40, viewValue: '40 m²' },
+		{ value: 60, viewValue: '60 m²' },
+		{ value: 80, viewValue: '80 m²' },
+		{ value: 100, viewValue: '100 m²' },
+		{ value: 120, viewValue: '120 m²' },
+		{ value: 140, viewValue: '140 m²' },
 	];
 	priceMaxs: Price[] = [
 		{ value: 1000, viewValue: '1000 zł' },
 		{ value: 2000, viewValue: '2000 zł' },
 		{ value: 3000, viewValue: '3000 zł' },
+		{ value: 4000, viewValue: '4000 zł' },
+		{ value: 5000, viewValue: '5000 zł' },
+		{ value: 6000, viewValue: '6000 zł' },
+		{ value: 7000, viewValue: '7000 zł' },
 	];
 	numberOfRooms: Room[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
-		{ value: 3, viewValue: '>2' },
+		{ value: 3, viewValue: '3' },
+		{ value: 4, viewValue: '4' },
+		{ value: 5, viewValue: '5' },
+		{ value: 6, viewValue: '6' },
+		{ value: 7, viewValue: '7' },
 	];
 	distances: Distance[] = [
-		{ value: 1, viewValue: '0 km' },
-		{ value: 2, viewValue: '5 km' },
-		{ value: 3, viewValue: '10 km' },
-		{ value: 4, viewValue: '15 km' },
-		{ value: 5, viewValue: '25 km' },
-		{ value: 6, viewValue: '50 km' },
-		{ value: 7, viewValue: '75 km' },
+		{ value: 0, viewValue: '0 km' },
+		{ value: 5, viewValue: '5 km' },
+		{ value: 10, viewValue: '10 km' },
+		{ value: 15, viewValue: '15 km' },
+		{ value: 25, viewValue: '25 km' },
+		{ value: 50, viewValue: '50 km' },
+		{ value: 75, viewValue: '75 km' },
 	];
 	numberOfFloors: Floor[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
-		{ value: 3, viewValue: '>2' },
+		{ value: 3, viewValue: '3' },
+		{ value: 4, viewValue: '4' },
+		{ value: 5, viewValue: '5' },
+		{ value: 10, viewValue: '10' },
+		{ value: 20, viewValue: '20' },
+		{ value: 50, viewValue: '40' },
+		{ value: 100, viewValue: '80' },
 	];
 	yearOfBuilds: Year[] = [
-		{ value: 1, viewValue: 'do 1950' },
-		{ value: 2, viewValue: '1950-1989' },
-		{ value: 3, viewValue: '1990-2010' },
-		{ value: 4, viewValue: 'po 2010' },
+		{ value: 'do 1950', viewValue: 'do 1950' },
+		{ value: 'od 1950 do 1989', viewValue: 'od 1950 do 1989' },
+		{ value: 'od 1990 do 2010', viewValue: 'od 1990 do 2010' },
+		{ value: 'od 2010', viewValue: 'od 2010' },
 	];
 	properties: Property[] = [
 		{ value: 'Kawalerka', viewValue: 'Kawalerka' },
