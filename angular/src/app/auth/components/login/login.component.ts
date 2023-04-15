@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-login',
@@ -7,5 +8,17 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-	hidePassword = true;
+	hide = true;
+	loginForm: FormGroup;
+
+	constructor(private fb: FormBuilder) {
+		this.loginForm = this.fb.group({
+			login: ['', Validators.required],
+			password: ['', Validators.required],
+		});
+	}
+
+	onSubmit() {
+		console.log(this.loginForm.value);
+	}
 }

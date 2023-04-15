@@ -1,32 +1,38 @@
-<main class="mx-auto pt-1 w-3/5 md:w-1/2 lg:w-1/4">
+<mat-card>
 	<h1>Zaloguj się</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+			<mat-form-field appearance="outline">
+				<mat-label>Login</mat-label>
+				<input matInput formControlName="login" required />
+			</mat-form-field>
 
-	<form>
-		<mat-form-field appearance="outline">
-			<mat-label>Login</mat-label>
-			<input matInput name="login" required />
-		</mat-form-field>
+			<mat-form-field class="no-border-style" appearance="outline">
+				<mat-label>Hasło</mat-label>
+				<input
+					formControlName="password"
+					matInput
+					[type]="hide ? 'password' : 'text'"
+				/>
+				<button
+					mat-icon-button
+					matSuffix
+					(click)="hide = !hide"
+					[attr.aria-label]="'Hide password'"
+					[attr.aria-pressed]="hide"
+				>
+					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+				</button>
+			</mat-form-field>
 
-		<mat-form-field class="no-border-style" appearance="outline">
-			<mat-label>Password</mat-label>
-			<input
-				matInput
-				name="password"
-				[type]="hidePassword ? 'password' : 'text'"
-				required
-			/>
-			<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
-				hidePassword ? "visibility_off" : "visibility"
-			}}</mat-icon>
-		</mat-form-field>
+			<a href="" id="reset-password">Zapomniałeś hasła?</a>
 
-		<a href="" id="reset-password">Zapomniałeś hasła?</a>
-
-		<div class="buttons">
-			<button mat-flat-button class="btn-loginSubmit" type="submit">Login</button>
-			<button mat-flat-button class="btn-register" routerLink="/register">
-				Rejestracja
-			</button>
-		</div>
-	</form>
-</main>
+			<div class="buttons">
+				<button mat-flat-button class="btn-loginSubmit" type="submit">Login</button>
+				<button mat-flat-button class="btn-register" routerLink="../register">
+					Rejestracja
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>
