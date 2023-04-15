@@ -9,6 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
 	declarations: [MainSiteComponent],
@@ -21,7 +26,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatCardModule,
 		MatButtonModule,
 		MatTooltipModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatInputModule,
+		MatSlideToggleModule,
+		MatChipsModule,
+		MatDividerModule
 	],
 	exports: [MainSiteComponent],
 })
-export class MainSiteModule {}
+export class MainSiteModule { }
