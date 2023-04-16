@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-header',
@@ -7,10 +8,18 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public showMenu = false;
-	public isUserLoggedIn = true;
+	isUserLoggedIn = true;
+	isUserLoggedInAsStudent = true;
 
-	public toggleMenu() {
-		this.showMenu = !this.showMenu;
+	constructor(private router: Router) {}
+
+	logIn() {
+		this.router.navigate(['auth/login']);
+	}
+	signIn() {
+		this.router.navigate(['auth/register']);
+	}
+	profile() {
+		this.router.navigate(['profile/profile']);
 	}
 }

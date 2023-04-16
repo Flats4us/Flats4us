@@ -1,40 +1,109 @@
 <mat-toolbar class="custom-toolbar">
-	<mat-icon
-		*ngIf="!isUserLoggedIn"
-		aria-hidden="false"
-		aria-label="Example home icon"
-		fontIcon="home"
-	></mat-icon>
-	<button mat-icon-button (click)="toggleMenu()">
-		<mat-icon class="icon-menu" *ngIf="isUserLoggedIn">menu</mat-icon>
-	</button>
-	<a href="#" class="title"><b>Flats4Us</b></a>
+	<a href="#"
+		><mat-icon
+			class="home"
+			aria-hidden="false"
+			aria-label="Example home icon"
+			fontIcon="home"
+		></mat-icon
+	></a>
+	<a href="#"
+		><img
+			class="logo"
+			id="logo-header"
+			src="./assets/logoFlats4Us.png"
+			alt="Company Logo"
+	/></a>
 	<div class="spacer"></div>
-	<div *ngIf="!isUserLoggedIn" class="start-navbar-button">
-		<button class="button-log" mat-stroked-button>LOGOWANIE</button>
-		<button class="button-sign" mat-stroked-button>REJESTRACJA</button>
+	<div *ngIf="isUserLoggedIn" class="full-main-button">
+		<button class="map" mat-menu-item>MAPA OFERT <mat-icon>map</mat-icon></button>
+		<button class="tidings" mat-menu-item [matMenuTriggerFor]="tidings">
+			WIADOMOŚCI
+		</button>
+		<mat-menu #tidings="matMenu">
+			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
+			<button mat-menu-item>WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
+		</mat-menu>
+		<button class="settings" mat-menu-item [matMenuTriggerFor]="settings">
+			USTAWIENIA
+		</button>
+		<mat-menu #settings="matMenu">
+			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
+			<button mat-menu-item>ZMIEŃ HASŁO</button>
+			<button mat-menu-item [matMenuTriggerFor]="help_center">
+				CENTRUM POMOCY
+			</button>
+		</mat-menu>
+
+		<mat-menu #help_center="matMenu">
+			<button mat-menu-item>WYŚLIJ ZGŁOSZENIE DO MODERATORA</button>
+		</mat-menu>
+
+		<button class="options" mat-menu-item [matMenuTriggerFor]="extended">
+			DODATKOWE
+		</button>
+
+		<mat-menu #extended="matMenu">
+			<button mat-menu-item>OBSERWOWANE OFERTY</button>
+			<button mat-menu-item>OSTATNIO OGLĄDANE OFERTY</button>
+			<button mat-menu-item>OPINIE</button>
+			<button mat-menu-item>UTWÓRZ NOWY SPÓR</button>
+			<button mat-menu-item>KALENDARZ</button>
+			<button
+				*ngIf="isUserLoggedInAsStudent"
+				mat-menu-item
+				[matMenuTriggerFor]="roommates"
+			>
+				WSPÓŁLOKATORZY
+			</button>
+		</mat-menu>
+		<mat-menu #roommates="matMenu">
+			<button mat-menu-item>MOJE WYBORY</button>
+			<button mat-menu-item>WYBORY W KTÓRYCH MNIE WYBRANO</button>
+		</mat-menu>
+
+		<select class="change-lang">
+			<option value="pl">PL</option>
+			<option value="EN">EN</option>
+		</select>
+		<img class="icon-sun" src="../../assets/sun.png" alt="Sun" />
+		<div class="mode">
+			<mat-slide-toggle> </mat-slide-toggle>
+		</div>
+		<img class="icon-moon" src="../../assets/moon.png" alt="Moon" />
 	</div>
+
 	<div *ngIf="isUserLoggedIn" class="photo">
 		<img class="your-photo" src="../../assets/1.jpg" alt="" />
 	</div>
-	<div class="name">
-		<a *ngIf="isUserLoggedIn" class="your-profile" href="#">Twój profil</a>
+	<div>
+		<button class="your-profile" mat-menu-item [matMenuTriggerFor]="my_profile">
+			MÓJ PROFIL
+		</button>
+	</div>
+	<mat-menu #my_profile="matMenu">
+		<button (click)="profile()" mat-menu-item>MÓJ PROFIL</button>
+		<button mat-menu-item>EDYTUJ PROFIL</button>
+		<button mat-menu-item [matMenuTriggerFor]="payments">PŁATNOŚCI</button>
+		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>MOJE WYNAJMY</button>
+		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
+			MOJE NIERUCHOMOŚCI
+		</button>
+		<button mat-menu-item>WYLOGUJ SIĘ</button>
+	</mat-menu>
+
+	<mat-menu #payments="matMenu">
+		<button mat-menu-item>HISTORIA PŁATNOŚCI</button>
+		<button mat-menu-item>OPŁATY</button>
+		<button mat-menu-item>KAUCJA</button>
+	</mat-menu>
+
+	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
+		<button class="button-log" (click)="logIn()" mat-stroked-button>
+			LOGOWANIE
+		</button>
+		<button class="button-sign" (click)="signIn()" mat-stroked-button>
+			REJESTRACJA
+		</button>
 	</div>
 </mat-toolbar>
-<mat-sidenav *ngIf="isUserLoggedIn" #sidenav mode="side" [opened]="showMenu">
-	<mat-nav-list>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">start</mat-icon> Start</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">map</mat-icon> Mapa ofert</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">telegram</mat-icon>
-			Wiadomości</a
-		>
-		<a mat-list-item href="#">
-			<mat-icon class="mat-icon-vertical-align">person</mat-icon> Konto</a
-		>
-	</mat-nav-list>
-</mat-sidenav>

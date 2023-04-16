@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -19,6 +21,8 @@ import { MatListModule } from '@angular/material/list';
 		BrowserAnimationsModule,
 		MatSidenavModule,
 		MatListModule,
+		MatMenuModule,
+		MatSlideToggleModule,
 	],
 	exports: [HeaderComponent],
 })
