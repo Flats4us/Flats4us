@@ -16,6 +16,5 @@ export class ProfileComponent {
 			map((params) => params.get('id')),
 			filter(Boolean)
 		);
-		this.id$.subscribe((id) => console.warn(id));
 	}
 }
