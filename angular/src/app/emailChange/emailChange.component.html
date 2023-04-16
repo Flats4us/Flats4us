@@ -4,7 +4,8 @@
 		<form [formGroup]="emailChangeForm" (ngSubmit)="onSubmit()">
 			<mat-form-field class="no-border-style" appearance="outline">
 				<mat-label>Email</mat-label>
-				<input matInput formControlName="email" required />
+				<input matInput formControlName="email" required email />
+				<mat-error> Niepoprawny adres e-mail </mat-error>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -16,6 +17,7 @@
 				/>
 				<button
 					mat-icon-button
+					type="button"
 					matSuffix
 					(click)="hide = !hide"
 					[attr.aria-label]="'Hide password'"
@@ -23,11 +25,24 @@
 				>
 					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
 				</button>
+				<mat-error> Pole jest wymagane </mat-error>
 			</mat-form-field>
 
 			<div class="buttons">
-				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
-				<button mat-flat-button class="btn-cancel" routerLink="/profile/1">
+				<button
+					mat-flat-button
+					class="btn-submit"
+					type="submit"
+					[disabled]="!emailChangeForm.valid"
+				>
+					Zapisz
+				</button>
+				<button
+					mat-flat-button
+					class="btn-cancel"
+					type="button"
+					routerLink="/profile/1"
+				>
 					Anuluj
 				</button>
 			</div>

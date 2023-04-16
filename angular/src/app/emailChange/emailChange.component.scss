@@ -40,8 +40,14 @@ mat-form-field {
 }
 
 .buttons .btn-submit:hover,
-.buttons .btn-loginSubmit:focus {
+.buttons .btn-submit:focus {
 	background-color: #f3f4f6;
+	color: #000000;
+}
+
+.buttons .btn-submit:disabled {
+	background-color: #b8b8b8;
+	border-color: #b8b8b8;
 	color: #000000;
 }
 

@@ -1,10 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-	FormBuilder,
-	FormControl,
-	FormGroup,
-	Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-email-change',
@@ -14,12 +9,11 @@ import {
 })
 export class EmailChangeComponent {
 	hide = true;
-	favoriteColorControl = new FormControl('');
 	emailChangeForm: FormGroup;
 
 	constructor(private fb: FormBuilder) {
 		this.emailChangeForm = this.fb.group({
-			email: ['s22900@pjwstk.edu.pl', Validators.required],
+			email: ['s22900@pjwstk.edu.pl', [Validators.required, Validators.email]],
 			password: ['', Validators.required],
 		});
 	}
