@@ -5,7 +5,6 @@
 			<mat-form-field class="no-border-style" appearance="outline">
 				<mat-label>Email</mat-label>
 				<input matInput formControlName="email" required email />
-				<mat-error> Niepoprawny adres e-mail </mat-error>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
@@ -25,7 +24,6 @@
 				>
 					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
 				</button>
-				<mat-error> Pole jest wymagane </mat-error>
 			</mat-form-field>
 
 			<div class="buttons">
@@ -37,12 +35,7 @@
 				>
 					Zapisz
 				</button>
-				<button
-					mat-flat-button
-					class="btn-cancel"
-					type="button"
-					routerLink="/profile/1"
-				>
+				<button mat-flat-button class="btn-cancel" type="button" routerLink="../">
 					Anuluj
 				</button>
 			</div>

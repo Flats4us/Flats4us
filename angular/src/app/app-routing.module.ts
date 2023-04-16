@@ -7,23 +7,14 @@ const routes: Routes = [
 		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
 	},
 	{
-		path: 'passwordChange',
+		path: 'profile',
 		loadChildren: () =>
-			import('./settings/components/passwordChange/passwordChange.module').then(
-				(m) => m.PasswordChangeModule
-			),
+      import('./profile/profile.module').then((m) => m.ProfileModule),
 	},
 	{
 		path: 'settings',
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
-	},
-	{
-		path: 'emailChange',
-		loadChildren: () =>
-			import('./settings/components/emailChange/emailChange.module').then(
-				(m) => m.EmailChangeModule
-			),
 	},
 ];
 

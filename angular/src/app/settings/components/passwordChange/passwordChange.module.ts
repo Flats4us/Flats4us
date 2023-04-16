@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PasswordChangeComponent } from './passwordChange.component';
-import { PasswordChangeRoutingModule } from './passwordChange-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,11 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 @NgModule({
 	declarations: [PasswordChangeComponent],
 	imports: [
 		CommonModule,
-		PasswordChangeRoutingModule,
 		MatFormFieldModule,
 		MatDividerModule,
 		MatButtonModule,
@@ -25,6 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 		MatCardModule,
 		MatStepperModule,
 		ReactiveFormsModule,
+		MatSnackBarModule,
+		RouterLink,
 	],
 	exports: [PasswordChangeComponent],
 })

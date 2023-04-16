@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-email-change',
@@ -11,7 +12,7 @@ export class EmailChangeComponent {
 	public hide = true;
 	public emailChangeForm: FormGroup;
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
 		this.emailChangeForm = this.fb.group({
 			email: ['s22900@pjwstk.edu.pl', [Validators.required, Validators.email]],
 			password: ['', Validators.required],
@@ -19,7 +20,8 @@ export class EmailChangeComponent {
 	}
 
 	public onSubmit() {
-		// eslint-disable-next-line no-console
-		console.log(this.emailChangeForm.value);
+		this.snackBar.open('Pomyślnie zmieniono adres mailowy!', 'Zamknij', {
+			duration: 2000,
+		});
 	}
 }

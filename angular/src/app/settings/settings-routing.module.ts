@@ -6,11 +6,11 @@ import { PasswordChangeComponent } from './components/passwordChange/passwordCha
 
 const routes: Routes = [
 	{
-		path: 'emailChange',
+		path: 'email-change',
 		component: EmailChangeComponent,
 	},
 	{
-		path: 'passwordChange',
+		path: 'password-change',
 		component: PasswordChangeComponent,
 	},
 ];
