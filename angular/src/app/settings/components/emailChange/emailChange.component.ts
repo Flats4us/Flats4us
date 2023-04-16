@@ -8,8 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailChangeComponent {
-	hide = true;
-	emailChangeForm: FormGroup;
+	public hide = true;
+	public emailChangeForm: FormGroup;
 
 	constructor(private fb: FormBuilder) {
 		this.emailChangeForm = this.fb.group({
@@ -18,7 +18,8 @@ export class EmailChangeComponent {
 		});
 	}
 
-	onSubmit() {
+	public onSubmit() {
+    // eslint-disable-next-line no-console
 		console.log(this.emailChangeForm.value);
 	}
 }
