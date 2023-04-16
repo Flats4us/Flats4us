@@ -19,7 +19,7 @@ export class EmailChangeComponent {
 	}
 
 	public onSubmit() {
-    // eslint-disable-next-line no-console
+		// eslint-disable-next-line no-console
 		console.log(this.emailChangeForm.value);
 	}
 }
