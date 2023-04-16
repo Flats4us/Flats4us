@@ -59,3 +59,9 @@ mat-form-field {
 #reset-password {
 	text-decoration: underline;
 }
+
+.buttons .btn-loginSubmit:disabled {
+	background-color: #b8b8b8;
+	border-color: #b8b8b8;
+	color: #000000;
+}

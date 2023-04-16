@@ -2,9 +2,10 @@
 	<h1>Zaloguj się</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-			<mat-form-field appearance="outline">
-				<mat-label>Login</mat-label>
-				<input matInput formControlName="login" required />
+			<mat-form-field class="no-border-style" appearance="outline">
+				<mat-label>Email</mat-label>
+				<input matInput formControlName="email" required email />
+				<mat-error> Niepoprawny adres e-mail </mat-error>
 			</mat-form-field>
 
 			<mat-form-field class="no-border-style" appearance="outline">
@@ -17,6 +18,7 @@
 				<button
 					mat-icon-button
 					matSuffix
+					type="button"
 					(click)="hide = !hide"
 					[attr.aria-label]="'Hide password'"
 					[attr.aria-pressed]="hide"
@@ -28,8 +30,20 @@
 			<a href="" id="reset-password">Zapomniałeś hasła?</a>
 
 			<div class="buttons">
-				<button mat-flat-button class="btn-loginSubmit" type="submit">Login</button>
-				<button mat-flat-button class="btn-register" routerLink="../register">
+				<button
+					mat-flat-button
+					class="btn-loginSubmit"
+					type="submit"
+					[disabled]="!loginForm.valid"
+				>
+					Login
+				</button>
+				<button
+					mat-flat-button
+					class="btn-register"
+					type="button"
+					routerLink="../register"
+				>
 					Rejestracja
 				</button>
 			</div>
