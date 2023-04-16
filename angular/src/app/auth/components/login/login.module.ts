@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
 	declarations: [LoginComponent],
@@ -22,6 +23,7 @@ import { RouterLink } from '@angular/router';
 		ReactiveFormsModule,
 		MatCardModule,
 		RouterLink,
+		MatSnackBarModule,
 	],
 	exports: [LoginComponent],
 })

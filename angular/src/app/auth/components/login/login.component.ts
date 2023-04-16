@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent {
 	hide = true;
 	loginForm: FormGroup;
 
-	constructor(private fb: FormBuilder) {
+	constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
 		this.loginForm = this.fb.group({
 			email: ['', Validators.required],
 			password: ['', Validators.required],
@@ -19,6 +20,8 @@ export class LoginComponent {
 	}
 
 	onSubmit() {
-		console.log(this.loginForm.value);
+		this.snackBar.open('Zalogowano pomyślnie!', 'Zamknij', {
+			duration: 2000,
+		});
 	}
 }
