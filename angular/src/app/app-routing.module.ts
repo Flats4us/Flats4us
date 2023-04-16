@@ -18,6 +18,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./profile/profile.module').then((m) => m.ProfileModule),
 	},
+	{
+		path: 'emailChange',
+		loadChildren: () =>
+			import('./emailChange/emailChange.module').then((m) => m.EmailChangeModule),
+	},
 ];
 
 @NgModule({
