@@ -9,19 +9,21 @@ const routes: Routes = [
 	{
 		path: 'passwordChange',
 		loadChildren: () =>
-			import('./passwordChange/passwordChange.module').then(
+			import('./settings/components/passwordChange/passwordChange.module').then(
 				(m) => m.PasswordChangeModule
 			),
 	},
 	{
-		path: 'profile',
+		path: 'settings',
 		loadChildren: () =>
-			import('./profile/profile.module').then((m) => m.ProfileModule),
+			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
 	{
 		path: 'emailChange',
 		loadChildren: () =>
-			import('./emailChange/emailChange.module').then((m) => m.EmailChangeModule),
+			import('./settings/components/emailChange/emailChange.module').then(
+				(m) => m.EmailChangeModule
+			),
 	},
 ];
 
