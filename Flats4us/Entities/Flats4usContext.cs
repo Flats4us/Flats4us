@@ -44,6 +44,26 @@ namespace Flats4us.Entities
                 .HasDiscriminator()
                 .IsComplete();
 
+            modelBuilder.Entity<StudentOpinion>()
+                .HasOne(x => x.Evaluated)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StudentOpinion>()
+                .HasOne(x => x.Evaluator)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OwnerOpinion>()
+                .HasOne(x => x.Evaluated)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OwnerOpinion>()
+                .HasOne(x => x.Evaluator)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
             //modelbuilder.entity<tenant>().hasdata(
             //    new
             //    {
