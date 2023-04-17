@@ -1,0 +1,43 @@
+<mat-card>
+	<h1>Ankieta</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/5">
+		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
+			<div>
+				<mat-label>1. Jak często imprezuję? {{ partyy }} </mat-label>
+				<mat-slider min="0" max="5" step="1">
+					<input matSliderThumb formControlName="party" />
+				</mat-slider>
+			</div>
+			<div>
+				<mat-label>2. Jak często sprzątam w mieszkaniu? </mat-label>
+				<mat-slider min="0" max="5" step="1">
+					<input matSliderThumb formControlName="tidy" />
+				</mat-slider>
+			</div>
+			<div>
+				<mat-label>3. Palę papierosy? </mat-label>
+				<mat-slider min="0" max="5" step="1">
+					<input matSliderThumb formControlName="smoke" />
+				</mat-slider>
+			</div>
+			<div>
+				<mat-label class="left">4. Jestem towarzyski? </mat-label>
+				<mat-slider class="text-right" min="0" max="5" step="1">
+					<input matSliderThumb formControlName="social" />
+				</mat-slider>
+			</div>
+			<div>
+				<mat-label>5. Posiadam zwierzę? </mat-label>
+				<mat-slide-toggle formControlName="petOwner"></mat-slide-toggle>
+			</div>
+			<div>
+				<mat-label>6. Jestem weganinem? </mat-label>
+				<mat-slide-toggle formControlName="veganPerson"></mat-slide-toggle>
+			</div>
+			<div>
+				<mat-label>7. Szukam współlokatora? </mat-label>
+				<mat-slide-toggle formControlName="lookingForRoommates"></mat-slide-toggle>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>
