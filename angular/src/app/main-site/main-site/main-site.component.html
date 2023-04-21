@@ -1,15 +1,31 @@
 <main>
+	<div class="container-3">
+			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
+	</div>
 	<div class="container">
 
 		<div class="box2">
 
-			<div class="boxIcon1"><mat-icon>location_on</mat-icon></div>
+			<!-- <div class="boxIcon1"><mat-icon>location_on</mat-icon></div> -->
+
+			<form class="example-form" [formGroup]="citiesForm">
+				<mat-form-field class="example-full-width" appearance="fill">
+					<mat-label>Województwo</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>location_on</mat-icon></div></span>
+					<mat-select formControlName="regionsGroup" (selectionChange)="changeRegion($event)">
+						<mat-option *ngFor="let region of regions" [value]="region.value">
+							{{region.viewValue}}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</form>
 
 			<form class="example-form" [formGroup]="citiesForm">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Miejsowość</mat-label>
 					<input type="text" placeholder="Miejsowość" aria-label="Text" matInput formControlName="citiesGroup"
 						[matAutocomplete]="autoCity">
+						<span matPrefix><div class="boxIcon"><mat-icon>location_on</mat-icon></div></span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup *ngFor="let group of citiesGroupOptions | async" [label]="group.region">
 							<mat-option *ngFor="let city of group.cities" [value]="city">
@@ -20,11 +36,12 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon"><mat-icon>directions_walk</mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon>directions_walk</mat-icon></div> -->
 
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Odległość</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>directions_walk</mat-icon></div></span>
 					<mat-select>
 						<mat-option *ngFor="let distance of distances" [value]="distance.value">
 							{{distance.viewValue}}
@@ -33,11 +50,12 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon"><mat-icon>home</mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon>home</mat-icon></div> -->
 
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Rodzaj nieruchomości</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>home</mat-icon></div></span>
 					<mat-select>
 						<mat-option *ngFor="let property of properties" [value]="property.value">
 							{{property.viewValue}}
@@ -46,10 +64,11 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon"><mat-icon></mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon></mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Cena minimalna</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>attach_money</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Cena minimalna" aria-label="Number" matInput
 						[matAutocomplete]="autoPriceMin">
 					<span matSuffix>zł</span>
@@ -61,11 +80,12 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon2"><mat-icon>minimize</mat-icon></div>
+			<!-- <div class="boxIcon2"><mat-icon>minimize</mat-icon></div> -->
 
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Cena maksymalna</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>attach_money</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Cena maksymalna" aria-label="Number" matInput
 						[matAutocomplete]="autoPriceMin">
 					<span matSuffix>zł</span>
@@ -91,10 +111,11 @@
 			</div>
 		</div>
 		<div *ngIf="showMoreFilters" class="box3">
-			<div class="boxIcon1"><mat-icon></mat-icon></div>
+			<!-- <div class="boxIcon1"><mat-icon></mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Powierzchnia od</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>straighten</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Powierzchnia od" aria-label="Number" matInput
 						[matAutocomplete]="autoAreaFrom">
 					<span matSuffix>m²</span>
@@ -106,10 +127,11 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon2"><mat-icon>minimize</mat-icon></div>
+			<!-- <div class="boxIcon2"><mat-icon>minimize</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Powierzchnia do</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>straighten</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Powierzchnia do" aria-label="Number" matInput
 						[matAutocomplete]="autoAreaTo">
 					<span matSuffix>m²</span>
@@ -120,10 +142,11 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-			<div class="boxIcon"><mat-icon>history</mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon>history</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Lata budowy</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>history</mat-icon></div></span>
 					<input type="text" placeholder="Lata budowy" aria-label="Text" matInput
 						[matAutocomplete]="autoYearOfBuild">
 					<mat-autocomplete #autoYearOfBuild="matAutocomplete">
@@ -134,10 +157,11 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon"><mat-icon>meeting_room</mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon>meeting_room</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Min. liczba pokoi</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>meeting_room</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Min. liczba pokoi" aria-label="Number" matInput
 						[matAutocomplete]="autoNumberOfRooms">
 					<mat-autocomplete #autoNumberOfRooms="matAutocomplete">
@@ -148,10 +172,11 @@
 				</mat-form-field>
 			</form>
 
-			<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
+			<!-- <div class="boxIcon"><mat-icon>location_city</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Maks. liczba pięter</mat-label>
+					<span matPrefix><div class="boxIcon"><mat-icon>location_city</mat-icon></div></span>
 					<input type="number" min="1" placeholder="Maks. liczba pięter" aria-label="Number" matInput
 						[matAutocomplete]="autoNumberOfFloors">
 					<mat-autocomplete #autoNumberOfFloors="matAutocomplete">
@@ -162,13 +187,12 @@
 				</mat-form-field>
 			</form>
 			<div class='batch2'>
-				<mat-slide-toggle>Winda</mat-slide-toggle>
+				<mat-slide-toggle matTooltip="Winda"><span matPrefix><div class="boxIcon"><mat-icon>elevator</mat-icon></div></span></mat-slide-toggle>
 			</div>
 		</div>
 	</div>
 
-	<div class="container2">
-		<div class="box">
+	<div class="container-2">
 			<mat-card class="card">
 				<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 				<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
@@ -319,6 +343,5 @@
 					</mat-chip-listbox>
 				</mat-card-content>
 			</mat-card>
-		</div>
 	</div>
 </main>
