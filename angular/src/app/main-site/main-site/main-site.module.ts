@@ -14,6 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
 	declarations: [MainSiteComponent],
@@ -31,7 +35,10 @@ import { MatDividerModule } from '@angular/material/divider';
 		MatInputModule,
 		MatSlideToggleModule,
 		MatChipsModule,
-		MatDividerModule
+		MatDividerModule,
+		BrowserModule,
+		BrowserAnimationsModule,
+		HttpClientModule
 	],
 	exports: [MainSiteComponent],
 })
