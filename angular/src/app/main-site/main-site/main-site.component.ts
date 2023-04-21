@@ -1,13 +1,19 @@
-import { ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, OnChanges } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 
 export interface CitiesGroup {
 	region: string;
 	cities: string[];
+}
+
+interface Region {
+	value: string;
+	viewValue: string;
 }
 
 interface Area {
@@ -58,10 +64,11 @@ export const _filter = (opt: string[], value: string): string[] => {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class MainSiteComponent implements OnInit {
+export class MainSiteComponent implements OnInit, OnChanges {
 
 	showMoreFilters = false;
 	numberOfRecords = 143084;
+	selectedRegion = '';
 
 	showFilters() {
 		if (this.showMoreFilters) this.showMoreFilters = false;
@@ -79,15 +86,20 @@ export class MainSiteComponent implements OnInit {
 		}
 	}
 
+	changeRegion(event: any) {
+		this.selectedRegion = event.value;
+	}
+
 	search() { }
 
 	citiesForm = this._formBuilder.group({
 		citiesGroup: '',
+		regionsGroup: ''
 	});
 
 	citiesGroups: CitiesGroup[] = [{
 		region: 'dolnośląskie',
-		cities: ['Legnica', 'Strzegom', 'Wrocław']
+		cities: []
 	}, {
 		region: 'kujawsko-pomorskie',
 		cities: []
@@ -105,7 +117,7 @@ export class MainSiteComponent implements OnInit {
 		cities: []
 	}, {
 		region: 'mazowieckie',
-		cities: ['Ostrołęka', 'Płock', 'Radom', 'Warszawa']
+		cities: []
 	}, {
 		region: 'opolskie',
 		cities: []
@@ -136,10 +148,40 @@ export class MainSiteComponent implements OnInit {
 	}];
 
 	citiesGroupOptions!: Observable<CitiesGroup[]>;
+	
+	public regionCityArray: RegionCity[] = [];
+	constructor(private _formBuilder: FormBuilder, private http: HttpClient) {
+		this.http.get('./assets/wojewodztwa_miasta.csv', {responseType: 'text'})
+		.subscribe(
+			data => {
+				let csvToRowArray = data.split("\n");
+				for (let index = 1; index < csvToRowArray.length - 1; index++) {
+					let row = csvToRowArray[index].split(";");
+					let lowerCaseRegion = row[2].trim().toLowerCase();
+					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
+					
+					this.citiesGroups.filter(group => group.region == lowerCaseRegion)
+					.map(group => group.cities.push(row[1]))};
+				
+				console.log(this.regionCityArray);
+			},
+			error => {
+				console.log(error);
+			}
+			);
+		}
+	
 
-	constructor(private _formBuilder: FormBuilder) { }
+	ngOnChanges(){
+
+		this.citiesForm.get('regionsGroup')!.valueChanges.subscribe(selectedValue =>
+			selectedValue === null ? this.selectedRegion = '' : this.selectedRegion = selectedValue 
+		);
+		console.log(this.selectedRegion);
+	}
 
 	ngOnInit() {
+
 		this.citiesGroupOptions = this.citiesForm.get('citiesGroup')!.valueChanges.pipe(
 			startWith(''),
 			map(value => this._filterGroup(value || '')),
@@ -149,12 +191,30 @@ export class MainSiteComponent implements OnInit {
 	private _filterGroup(value: string): CitiesGroup[] {
 		if (value) {
 			return this.citiesGroups
-				.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
-				.filter(group => group.cities.length > 0);
+			.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
+			.filter(group => group.cities.length > 0 && group.region === this.selectedRegion);
 		}
-
-		return this.citiesGroups;
+		return this.citiesGroups.filter(group => group.region === this.selectedRegion);
 	}
+
+	regions: Region[] = [
+		{ value: 'dolnośląskie', viewValue: 'dolnośląskie' },
+		{ value: 'kujawsko-pomorskie', viewValue: 'kujawsko-pomorskie' },
+		{ value: 'lubelskie', viewValue: 'lubelskie' },
+		{ value: 'lubuskie', viewValue: 'lubuskie' },
+		{ value: 'łódzkie', viewValue: 'łódzkie' },
+		{ value: 'małopolskie', viewValue: 'małopolskie' },
+		{ value: 'mazowieckie', viewValue: 'mazowieckie' },
+		{ value: 'opolskie', viewValue: 'opolskie' },
+		{ value: 'podkarpackie', viewValue: 'podkarpackie' },
+		{ value: 'podlaskie', viewValue: 'podlaskie' },
+		{ value: 'pomorskie', viewValue: 'pomorskie' },
+		{ value: 'śląskie', viewValue: 'śląskie' },
+		{ value: 'świętokrzyskie', viewValue: 'świętokrzyskie' },
+		{ value: 'warmińsko-mazurskie', viewValue: 'warmińsko-mazurskie' },
+		{ value: 'wielkopolskie', viewValue: 'wielkopolskie' },
+		{ value: 'zachodniopomorskie', viewValue: 'zachodniopomorskie' }
+	];
 
 	areaFroms: Area[] = [
 		{ value: 0, viewValue: '0 m²' },
@@ -223,4 +283,16 @@ export class MainSiteComponent implements OnInit {
 		{ value: 'Mieszkanie', viewValue: 'Mieszkanie' },
 		{ value: 'Pokój', viewValue: 'Pokój' },
 	];
+  }
+  
+  export class RegionCity{
+	region: string;
+	city: string;
+
+  
+	constructor(region: string, city: string){
+	  this.region = region;
+	  this.city = city;
+	}
 }
+  
