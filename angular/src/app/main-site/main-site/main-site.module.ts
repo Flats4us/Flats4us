@@ -17,29 +17,30 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-	declarations: [MainSiteComponent],
-	imports: [
-		CommonModule,
-		MatFormFieldModule,
-		MatSelectModule,
-		MatAutocompleteModule,
-		MatIconModule,
-		MatCardModule,
-		MatButtonModule,
-		MatTooltipModule,
-		FormsModule,
-		ReactiveFormsModule,
-		MatInputModule,
-		MatSlideToggleModule,
-		MatChipsModule,
-		MatDividerModule,
-		BrowserModule,
-		BrowserAnimationsModule,
-		HttpClientModule
-	],
-	exports: [MainSiteComponent],
+  declarations: [MainSiteComponent],
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTooltipModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatDividerModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    RouterModule,
+  ],
+  exports: [MainSiteComponent],
 })
-export class MainSiteModule { }
+export class MainSiteModule {}
