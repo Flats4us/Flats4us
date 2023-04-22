@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 export interface CitiesGroup {
@@ -54,7 +55,7 @@ interface Property {
 export const _filter = (opt: string[], value: string): string[] => {
 	const filterValue = value.toLowerCase();
 
-	return opt.filter(item => item.toLowerCase().includes(filterValue));
+	return opt.filter(item => item.toLowerCase().startsWith(filterValue));
 };
 
 @Component({
@@ -148,36 +149,35 @@ export class MainSiteComponent implements OnInit, OnChanges {
 	}];
 
 	citiesGroupOptions!: Observable<CitiesGroup[]>;
-	
-	public regionCityArray: RegionCity[] = [];
-	constructor(private _formBuilder: FormBuilder, private http: HttpClient) {
-		this.http.get('./assets/wojewodztwa_miasta.csv', {responseType: 'text'})
-		.subscribe(
-			data => {
-				let csvToRowArray = data.split("\n");
-				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					let row = csvToRowArray[index].split(";");
-					let lowerCaseRegion = row[2].trim().toLowerCase();
-					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
-					
-					this.citiesGroups.filter(group => group.region == lowerCaseRegion)
-					.map(group => group.cities.push(row[1]))};
-				
-				console.log(this.regionCityArray);
-			},
-			error => {
-				console.log(error);
-			}
-			);
-		}
-	
 
-	ngOnChanges(){
+	public regionCityArray: RegionCity[] = [];
+	constructor(private _formBuilder: FormBuilder, private http: HttpClient, private router:Router) {
+		this.http.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
+			.subscribe(
+				data => {
+					let csvToRowArray = data.split("\n");
+					for (let index = 1; index < csvToRowArray.length - 1; index++) {
+						let row = csvToRowArray[index].split(";");
+						let lowerCaseRegion = row[2].trim().toLowerCase();
+						this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
+
+						this.citiesGroups.filter(group => group.region == lowerCaseRegion)
+							.map(group => group.cities.push(row[1]))
+					};
+
+					console.log(this.regionCityArray);
+				},
+				error => {
+					console.log(error);
+				}
+			);
+	}
+
+	ngOnChanges() {
 
 		this.citiesForm.get('regionsGroup')!.valueChanges.subscribe(selectedValue =>
-			selectedValue === null ? this.selectedRegion = '' : this.selectedRegion = selectedValue 
+			selectedValue === null ? this.selectedRegion = '' : this.selectedRegion = selectedValue
 		);
-		console.log(this.selectedRegion);
 	}
 
 	ngOnInit() {
@@ -189,12 +189,18 @@ export class MainSiteComponent implements OnInit, OnChanges {
 	}
 
 	private _filterGroup(value: string): CitiesGroup[] {
+
 		if (value) {
 			return this.citiesGroups
-			.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
-			.filter(group => group.cities.length > 0 && group.region === this.selectedRegion);
+				.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
+				.filter(group => group.cities.length > 0 && group.region === this.selectedRegion);
 		}
 		return this.citiesGroups.filter(group => group.region === this.selectedRegion);
+	}
+
+	navigateToFlat(){
+		
+		this.router.navigate(['/']);
 	}
 
 	regions: Region[] = [
@@ -283,16 +289,16 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 'Mieszkanie', viewValue: 'Mieszkanie' },
 		{ value: 'Pokój', viewValue: 'Pokój' },
 	];
-  }
-  
-  export class RegionCity{
+}
+
+export class RegionCity {
 	region: string;
 	city: string;
 
-  
-	constructor(region: string, city: string){
-	  this.region = region;
-	  this.city = city;
+
+	constructor(region: string, city: string) {
+		this.region = region;
+		this.city = city;
 	}
 }
-  
+
