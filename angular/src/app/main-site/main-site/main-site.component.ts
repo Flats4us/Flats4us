@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-
+import { Router } from '@angular/router';
 
 export interface CitiesGroup {
 	region: string;
@@ -54,7 +54,7 @@ interface Property {
 export const _filter = (opt: string[], value: string): string[] => {
 	const filterValue = value.toLowerCase();
 
-	return opt.filter(item => item.toLowerCase().includes(filterValue));
+	return opt.filter((item) => item.toLowerCase().startsWith(filterValue));
 };
 
 @Component({
@@ -63,9 +63,7 @@ export const _filter = (opt: string[], value: string): string[] => {
 	styleUrls: ['./main-site.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class MainSiteComponent implements OnInit, OnChanges {
-
 	showMoreFilters = false;
 	numberOfRecords = 143084;
 	selectedRegion = '';
@@ -76,13 +74,16 @@ export class MainSiteComponent implements OnInit, OnChanges {
 	}
 	getDescription(numberOfRecords: number) {
 		if (numberOfRecords == 1) {
-			return `${numberOfRecords} oferta`
-		}
-		else if ((numberOfRecords > 1 && numberOfRecords <= 4) || (numberOfRecords > 20 && (numberOfRecords % 10 > 1 && numberOfRecords % 10 <= 4))) {
-			return `${numberOfRecords} oferty`
-		}
-		else {
-			return `${numberOfRecords} ofert`
+			return `${numberOfRecords} oferta`;
+		} else if (
+			(numberOfRecords > 1 && numberOfRecords <= 4) ||
+			(numberOfRecords > 20 &&
+				numberOfRecords % 10 > 1 &&
+				numberOfRecords % 10 <= 4)
+		) {
+			return `${numberOfRecords} oferty`;
+		} else {
+			return `${numberOfRecords} ofert`;
 		}
 	}
 
@@ -90,111 +91,148 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		this.selectedRegion = event.value;
 	}
 
-	search() { }
+	search() {}
 
 	citiesForm = this._formBuilder.group({
 		citiesGroup: '',
-		regionsGroup: ''
+		regionsGroup: '',
 	});
 
-	citiesGroups: CitiesGroup[] = [{
-		region: 'dolnośląskie',
-		cities: []
-	}, {
-		region: 'kujawsko-pomorskie',
-		cities: []
-	}, {
-		region: 'lubelskie',
-		cities: []
-	}, {
-		region: 'lubuskie',
-		cities: []
-	}, {
-		region: 'łódzkie',
-		cities: []
-	}, {
-		region: 'małopolskie',
-		cities: []
-	}, {
-		region: 'mazowieckie',
-		cities: []
-	}, {
-		region: 'opolskie',
-		cities: []
-	}, {
-		region: 'podkarpackie',
-		cities: []
-	}, {
-		region: 'podlaskie',
-		cities: []
-	}, {
-		region: 'pomorskie',
-		cities: []
-	}, {
-		region: 'śląskie',
-		cities: []
-	}, {
-		region: 'świętokrzyskie',
-		cities: []
-	}, {
-		region: 'warmińsko-mazurskie',
-		cities: []
-	}, {
-		region: 'wielkopolskie',
-		cities: []
-	}, {
-		region: 'zachodniopomorskie',
-		cities: []
-	}];
+	citiesGroups: CitiesGroup[] = [
+		{
+			region: 'dolnośląskie',
+			cities: [],
+		},
+		{
+			region: 'kujawsko-pomorskie',
+			cities: [],
+		},
+		{
+			region: 'lubelskie',
+			cities: [],
+		},
+		{
+			region: 'lubuskie',
+			cities: [],
+		},
+		{
+			region: 'łódzkie',
+			cities: [],
+		},
+		{
+			region: 'małopolskie',
+			cities: [],
+		},
+		{
+			region: 'mazowieckie',
+			cities: [],
+		},
+		{
+			region: 'opolskie',
+			cities: [],
+		},
+		{
+			region: 'podkarpackie',
+			cities: [],
+		},
+		{
+			region: 'podlaskie',
+			cities: [],
+		},
+		{
+			region: 'pomorskie',
+			cities: [],
+		},
+		{
+			region: 'śląskie',
+			cities: [],
+		},
+		{
+			region: 'świętokrzyskie',
+			cities: [],
+		},
+		{
+			region: 'warmińsko-mazurskie',
+			cities: [],
+		},
+		{
+			region: 'wielkopolskie',
+			cities: [],
+		},
+		{
+			region: 'zachodniopomorskie',
+			cities: [],
+		},
+	];
 
 	citiesGroupOptions!: Observable<CitiesGroup[]>;
-	
+
 	public regionCityArray: RegionCity[] = [];
-	constructor(private _formBuilder: FormBuilder, private http: HttpClient) {
-		this.http.get('./assets/wojewodztwa_miasta.csv', {responseType: 'text'})
-		.subscribe(
-			data => {
-				let csvToRowArray = data.split("\n");
-				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					let row = csvToRowArray[index].split(";");
-					let lowerCaseRegion = row[2].trim().toLowerCase();
-					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
-					
-					this.citiesGroups.filter(group => group.region == lowerCaseRegion)
-					.map(group => group.cities.push(row[1]))};
-				
-				console.log(this.regionCityArray);
-			},
-			error => {
-				console.log(error);
-			}
+	constructor(
+		private _formBuilder: FormBuilder,
+		private http: HttpClient,
+		private router: Router
+	) {
+		this.http
+			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
+			.subscribe(
+				(data) => {
+					let csvToRowArray = data.split('\n');
+					for (let index = 1; index < csvToRowArray.length - 1; index++) {
+						let row = csvToRowArray[index].split(';');
+						let lowerCaseRegion = row[2].trim().toLowerCase();
+						this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
+
+						this.citiesGroups
+							.filter((group) => group.region == lowerCaseRegion)
+							.map((group) => group.cities.push(row[1]));
+					}
+
+					console.log(this.regionCityArray);
+				},
+				(error) => {
+					console.log(error);
+				}
 			);
-		}
-	
+	}
 
-	ngOnChanges(){
-
-		this.citiesForm.get('regionsGroup')!.valueChanges.subscribe(selectedValue =>
-			selectedValue === null ? this.selectedRegion = '' : this.selectedRegion = selectedValue 
-		);
-		console.log(this.selectedRegion);
+	ngOnChanges() {
+		this.citiesForm
+			.get('regionsGroup')!
+			.valueChanges.subscribe((selectedValue) =>
+				selectedValue === null
+					? (this.selectedRegion = '')
+					: (this.selectedRegion = selectedValue)
+			);
 	}
 
 	ngOnInit() {
-
-		this.citiesGroupOptions = this.citiesForm.get('citiesGroup')!.valueChanges.pipe(
-			startWith(''),
-			map(value => this._filterGroup(value || '')),
-		);
+		this.citiesGroupOptions = this.citiesForm
+			.get('citiesGroup')!
+			.valueChanges.pipe(
+				startWith(''),
+				map((value) => this._filterGroup(value || ''))
+			);
 	}
 
 	private _filterGroup(value: string): CitiesGroup[] {
 		if (value) {
 			return this.citiesGroups
-			.map(group => ({ region: group.region, cities: _filter(group.cities, value) }))
-			.filter(group => group.cities.length > 0 && group.region === this.selectedRegion);
+				.map((group) => ({
+					region: group.region,
+					cities: _filter(group.cities, value),
+				}))
+				.filter(
+					(group) => group.cities.length > 0 && group.region === this.selectedRegion
+				);
 		}
-		return this.citiesGroups.filter(group => group.region === this.selectedRegion);
+		return this.citiesGroups.filter(
+			(group) => group.region === this.selectedRegion
+		);
+	}
+
+	navigateToFlat() {
+		this.router.navigate(['/']);
 	}
 
 	regions: Region[] = [
@@ -213,7 +251,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 'świętokrzyskie', viewValue: 'świętokrzyskie' },
 		{ value: 'warmińsko-mazurskie', viewValue: 'warmińsko-mazurskie' },
 		{ value: 'wielkopolskie', viewValue: 'wielkopolskie' },
-		{ value: 'zachodniopomorskie', viewValue: 'zachodniopomorskie' }
+		{ value: 'zachodniopomorskie', viewValue: 'zachodniopomorskie' },
 	];
 
 	areaFroms: Area[] = [
@@ -283,16 +321,14 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 'Mieszkanie', viewValue: 'Mieszkanie' },
 		{ value: 'Pokój', viewValue: 'Pokój' },
 	];
-  }
-  
-  export class RegionCity{
+}
+
+export class RegionCity {
 	region: string;
 	city: string;
 
-  
-	constructor(region: string, city: string){
-	  this.region = region;
-	  this.city = city;
+	constructor(region: string, city: string) {
+		this.region = region;
+		this.city = city;
 	}
 }
-  
