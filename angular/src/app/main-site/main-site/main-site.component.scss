@@ -12,11 +12,11 @@ main {
 
 	// background-color: #f7f4f2;
 	// opacity: 1;
-	// background-image:  linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b), 
-	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b), 
-	// linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b), 
-	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b), 
-	// linear-gradient(60deg, #fbbc8b77 25%, transparent 25.5%, transparent 75%, #fbbc8b77 75%, #fbbc8b77), 
+	// background-image:  linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
+	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
+	// linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
+	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
+	// linear-gradient(60deg, #fbbc8b77 25%, transparent 25.5%, transparent 75%, #fbbc8b77 75%, #fbbc8b77),
 	// linear-gradient(60deg, #fbbc8b77 25%, transparent 25.5%, transparent 75%, #fbbc8b77 75%, #fbbc8b77);
 	// background-size: 80px 140px;
 	// background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
@@ -29,7 +29,7 @@ main {
 .card {
 	height: auto;
 	min-width: 200px;
-	max-width: 500px
+	max-width: 500px;
 }
 
 .card-full-width {
@@ -38,7 +38,6 @@ main {
 
 .card:hover {
 	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.255);
-	;
 }
 
 .container-2 {
@@ -143,7 +142,6 @@ mat-card-content {
 	width: 100%;
 }
 
-
 .batch-full-width {
 	width: 100%;
 }
@@ -184,20 +182,15 @@ mat-form-field {
 	padding: 5px;
 }
 
-
 @media screen and (max-width: 992px) {
 	.container {
 		max-width: 300px;
 	}
 
-	;
-
 	.container-2 {
 		// max-width: 300px;
 		grid-template-columns: repeat(2, 1fr);
 	}
-
-	;
 }
 
 @media screen and (max-width: 600px) {
@@ -205,14 +198,8 @@ mat-form-field {
 		max-width: 300px;
 	}
 
-	;
-
 	.container-2 {
 		// max-width: 300px;
 		grid-template-columns: repeat(1, 1fr);
 	}
-
-	;
 }
-
-
