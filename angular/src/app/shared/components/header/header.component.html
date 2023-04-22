@@ -74,11 +74,8 @@
 	</div>
 
 	<div *ngIf="isUserLoggedIn" class="photo">
-		<img class="your-photo" src="../../assets/1.jpg" alt="" />
-	</div>
-	<div>
 		<button class="your-profile" mat-menu-item [matMenuTriggerFor]="my_profile">
-			MÓJ PROFIL
+			<img class="your-photo" src="../../assets/1.jpg" alt="" />
 		</button>
 	</div>
 	<mat-menu #my_profile="matMenu">
