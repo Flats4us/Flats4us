@@ -17,7 +17,7 @@ interface Region {
 }
 
 interface Area {
-	value: Number;
+	value: number;
 	viewValue: string;
 }
 
@@ -91,6 +91,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		this.selectedRegion = event.value;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	search() {}
 
 	citiesForm = this._formBuilder.group({
@@ -177,10 +178,10 @@ export class MainSiteComponent implements OnInit, OnChanges {
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
 			.subscribe(
 				(data) => {
-					let csvToRowArray = data.split('\n');
+					const csvToRowArray = data.split('\n');
 					for (let index = 1; index < csvToRowArray.length - 1; index++) {
-						let row = csvToRowArray[index].split(';');
-						let lowerCaseRegion = row[2].trim().toLowerCase();
+						const row = csvToRowArray[index].split(';');
+						const lowerCaseRegion = row[2].trim().toLowerCase();
 						this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
 
 						this.citiesGroups
@@ -198,8 +199,8 @@ export class MainSiteComponent implements OnInit, OnChanges {
 
 	ngOnChanges() {
 		this.citiesForm
-			.get('regionsGroup')!
-			.valueChanges.subscribe((selectedValue) =>
+			.get('regionsGroup')
+			?.valueChanges.subscribe((selectedValue) =>
 				selectedValue === null
 					? (this.selectedRegion = '')
 					: (this.selectedRegion = selectedValue)
