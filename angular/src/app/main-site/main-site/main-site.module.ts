@@ -17,8 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule} from '@angular/router';
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
 	declarations: [MainSiteComponent],
@@ -40,8 +39,8 @@ import { RouterModule} from '@angular/router';
 		BrowserModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-		RouterModule
+		RouterModule,
 	],
 	exports: [MainSiteComponent],
 })
-export class MainSiteModule { }
+export class MainSiteModule {}
