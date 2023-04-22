@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
 		MatDividerModule,
 		BrowserModule,
 		BrowserAnimationsModule,
-		HttpClientModule
+		HttpClientModule,
+		RouterModule
 	],
 	exports: [MainSiteComponent],
 })
