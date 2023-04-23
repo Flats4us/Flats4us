@@ -8,24 +8,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import {MatRadioModule} from "@angular/material/radio";
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {MatMenuModule} from "@angular/material/menu";
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
 	declarations: [HeaderComponent],
-    imports: [
-        CommonModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        BrowserAnimationsModule,
-        MatSidenavModule,
-        MatListModule,
-        MatRadioModule,
-        MatSlideToggleModule,
-        MatMenuModule,
-    ],
+	imports: [
+		CommonModule,
+		MatToolbarModule,
+		MatIconModule,
+		MatButtonModule,
+		BrowserAnimationsModule,
+		MatSidenavModule,
+		MatListModule,
+		MatRadioModule,
+		MatSlideToggleModule,
+		MatMenuModule,
+	],
 	exports: [HeaderComponent],
 })
 export class HeaderModule {}
