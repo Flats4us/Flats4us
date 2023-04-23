@@ -8,10 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { FormsModule } from '@angular/forms';
-import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -23,10 +19,6 @@ import { MatMenuModule } from '@angular/material/menu';
 		BrowserAnimationsModule,
 		MatSidenavModule,
 		MatListModule,
-		MatRadioModule,
-		MatSlideToggleModule,
-		FormsModule,
-		MatMenuModule,
 	],
 	exports: [HeaderComponent],
 })
