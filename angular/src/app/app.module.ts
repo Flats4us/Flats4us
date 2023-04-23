@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
 import { MainSiteModule } from './main-site/main-site/main-site.module';
+import {OwnerFormModule} from "./owner-form/owner-form.module";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { MainSiteModule } from './main-site/main-site/main-site.module';
 		HeaderModule,
 		FooterModule,
 		MainSiteModule,
+    OwnerFormModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
