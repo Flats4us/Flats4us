@@ -19,6 +19,10 @@ import { HeaderModule } from './shared/components/header/header.module';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
+<<<<<<< HEAD
+=======
+		MainSiteModule
+>>>>>>> 8c3981c (PoprawionyRevert)
 	],
 	providers: [],
 	bootstrap: [AppComponent],
