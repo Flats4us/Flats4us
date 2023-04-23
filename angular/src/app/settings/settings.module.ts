@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SettingsRoutingModule } from './settings-routing.module';
-import { EmailChangeModule } from './components/emailChange/emailChange.module';
-import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
 import { CommonModule } from '@angular/common';
 import { StudentSurveyComponent } from './components/student-survey/student-survey.component';
 import { MatCardModule } from '@angular/material/card';
@@ -11,22 +9,27 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { HttpClientModule } from "@angular/common/http";
+import { JsonFormComponent } from './components/json-form/json-form.component';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
-	declarations: [StudentSurveyComponent],
-	imports: [
-		CommonModule,
-		SettingsRoutingModule,
-		EmailChangeModule,
-		PasswordChangeModule,
-		MatCardModule,
-		MatSliderModule,
-		FormsModule,
-		MatListModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSlideToggleModule,
-	],
+	declarations: [StudentSurveyComponent, JsonFormComponent],
+  imports: [
+    CommonModule,
+    SettingsRoutingModule,
+    MatCardModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    FormsModule,
+    MatListModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    HttpClientModule,
+    MatButtonModule
+  ]
 })
 export class SettingsModule {}
