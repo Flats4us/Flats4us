@@ -3,21 +3,20 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OwnerFormComponent } from './owner-form.component';
 
 describe('OwnerFormComponent', () => {
-  let component: OwnerFormComponent;
-  let fixture: ComponentFixture<OwnerFormComponent>;
+	let component: OwnerFormComponent;
+	let fixture: ComponentFixture<OwnerFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ OwnerFormComponent ]
-    })
-    .compileComponents();
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
+			declarations: [OwnerFormComponent],
+		}).compileComponents();
 
-    fixture = TestBed.createComponent(OwnerFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+		fixture = TestBed.createComponent(OwnerFormComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });
