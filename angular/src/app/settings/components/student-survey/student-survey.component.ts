@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnInit,
-	Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
@@ -41,7 +36,6 @@ export class StudentSurveyComponent implements OnInit {
 		this.http
 			.get<IJsonFormData>('../../assets/survey.json')
 			.subscribe((formData: IJsonFormData) => {
-				console.log(formData);
 				this.formData = formData;
 			});
 	}
