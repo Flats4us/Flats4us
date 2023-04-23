@@ -5,7 +5,7 @@ import {
 	Input,
 	SimpleChanges,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 export interface IRoot {
 	questions: IQuestion[];
