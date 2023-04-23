@@ -8,18 +8,18 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	isUserLoggedIn = true;
-	isUserLoggedInAsStudent = true;
+	public isUserLoggedIn = true;
+	public isUserLoggedInAsStudent = true;
 
 	constructor(private router: Router) {}
 
-	logIn() {
+	public logIn() {
 		this.router.navigate(['auth/login']);
 	}
-	signIn() {
+	public signIn() {
 		this.router.navigate(['auth/register']);
 	}
-	profile() {
+	public profile() {
 		this.router.navigate(['profile/profile']);
 	}
 }
