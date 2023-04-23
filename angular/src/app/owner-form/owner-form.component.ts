@@ -7,16 +7,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OwnerFormComponent {
-	smokingYes!: boolean;
-	smokingNo!: boolean;
-	smokingNotImportant!: boolean;
-	partingYes!: boolean;
-	partingNo!: boolean;
-	partingNotImportant!: boolean;
-	animalsYes!: boolean;
-	animalsNo!: boolean;
-	animalsNotImportant!: boolean;
-	genderM!: boolean;
-	genderW!: boolean;
-	genderNotImportant!: boolean;
+	public smokingYes!: boolean;
+	public smokingNo!: boolean;
+	public smokingNotImportant!: boolean;
+  public partingYes!: boolean;
+  public partingNo!: boolean;
+  public partingNotImportant!: boolean;
+  public animalsYes!: boolean;
+  public animalsNo!: boolean;
+  public animalsNotImportant!: boolean;
+  public genderM!: boolean;
+  public genderW!: boolean;
+  public genderNotImportant!: boolean;
 }
