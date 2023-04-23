@@ -6,47 +6,47 @@ import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-export interface CitiesGroup {
+export interface ICitiesGroup {
 	region: string;
 	cities: string[];
 }
 
-interface Region {
+interface IRegion {
 	value: string;
 	viewValue: string;
 }
 
-interface Area {
+interface IArea {
 	value: number;
 	viewValue: string;
 }
 
-interface Room {
+interface IRoom {
 	value: number;
 	viewValue: string;
 }
 
-interface Price {
+interface IPrice {
 	value: number;
 	viewValue: string;
 }
 
-interface Distance {
+interface IDistance {
 	value: number;
 	viewValue: string;
 }
 
-interface Floor {
+interface IFloor {
 	value: number;
 	viewValue: string;
 }
 
-interface Year {
+interface IYear {
 	value: string;
 	viewValue: string;
 }
 
-interface Property {
+interface IProperty {
 	value: string;
 	viewValue: string;
 }
@@ -64,15 +64,15 @@ export const _filter = (opt: string[], value: string): string[] => {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainSiteComponent implements OnInit, OnChanges {
-	showMoreFilters = false;
-	numberOfRecords = 143084;
-	selectedRegion = '';
+	public showMoreFilters = false;
+	public numberOfRecords = 143084;
+	public selectedRegion = '';
 
-	showFilters() {
+	public showFilters() {
 		if (this.showMoreFilters) this.showMoreFilters = false;
 		else this.showMoreFilters = true;
 	}
-	getDescription(numberOfRecords: number) {
+	public getDescription(numberOfRecords: number) {
 		if (numberOfRecords == 1) {
 			return `${numberOfRecords} oferta`;
 		} else if (
@@ -87,19 +87,19 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		}
 	}
 
-	changeRegion(event: any) {
+	public changeRegion(event: any) {
 		this.selectedRegion = event.value;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
-	search() {}
+	public search() {}
 
-	citiesForm = this._formBuilder.group({
+	public citiesForm = this._formBuilder.group({
 		citiesGroup: '',
 		regionsGroup: '',
 	});
 
-	citiesGroups: CitiesGroup[] = [
+	public citiesGroups: ICitiesGroup[] = [
 		{
 			region: 'dolnośląskie',
 			cities: [],
@@ -166,38 +166,31 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		},
 	];
 
-	citiesGroupOptions!: Observable<CitiesGroup[]>;
+	public citiesGroupOptions!: Observable<ICitiesGroup[]>;
 
 	public regionCityArray: RegionCity[] = [];
 	constructor(
 		private _formBuilder: FormBuilder,
-		private http: HttpClient,
-		private router: Router
+		private _http: HttpClient,
+		private _router: Router
 	) {
-		this.http
+		this._http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe(
-				(data) => {
-					const csvToRowArray = data.split('\n');
-					for (let index = 1; index < csvToRowArray.length - 1; index++) {
-						const row = csvToRowArray[index].split(';');
-						const lowerCaseRegion = row[2].trim().toLowerCase();
-						this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
+			.subscribe((data) => {
+				const csvToRowArray = data.split('\n');
+				for (let index = 1; index < csvToRowArray.length - 1; index++) {
+					const row = csvToRowArray[index].split(';');
+					const lowerCaseRegion = row[2].trim().toLowerCase();
+					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
 
-						this.citiesGroups
-							.filter((group) => group.region == lowerCaseRegion)
-							.map((group) => group.cities.push(row[1]));
-					}
-
-					console.log(this.regionCityArray);
-				},
-				(error) => {
-					console.log(error);
+					this.citiesGroups
+						.filter((group) => group.region == lowerCaseRegion)
+						.map((group) => group.cities.push(row[1]));
 				}
-			);
+			});
 	}
 
-	ngOnChanges() {
+	public ngOnChanges() {
 		this.citiesForm
 			.get('regionsGroup')
 			?.valueChanges.subscribe((selectedValue) =>
@@ -207,7 +200,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 			);
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.citiesGroupOptions = this.citiesForm
 			.get('citiesGroup')!
 			.valueChanges.pipe(
@@ -216,7 +209,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 			);
 	}
 
-	private _filterGroup(value: string): CitiesGroup[] {
+	private _filterGroup(value: string): ICitiesGroup[] {
 		if (value) {
 			return this.citiesGroups
 				.map((group) => ({
@@ -232,11 +225,11 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		);
 	}
 
-	navigateToFlat() {
-		this.router.navigate(['/']);
+	public navigateToFlat() {
+		this._router.navigate(['/']);
 	}
 
-	regions: Region[] = [
+	public regions: IRegion[] = [
 		{ value: 'dolnośląskie', viewValue: 'dolnośląskie' },
 		{ value: 'kujawsko-pomorskie', viewValue: 'kujawsko-pomorskie' },
 		{ value: 'lubelskie', viewValue: 'lubelskie' },
@@ -255,7 +248,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 'zachodniopomorskie', viewValue: 'zachodniopomorskie' },
 	];
 
-	areaFroms: Area[] = [
+	public areaFroms: IArea[] = [
 		{ value: 0, viewValue: '0 m²' },
 		{ value: 20, viewValue: '20 m²' },
 		{ value: 40, viewValue: '40 m²' },
@@ -264,7 +257,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 100, viewValue: '100 m²' },
 		{ value: 120, viewValue: '120 m²' },
 	];
-	areaTos: Area[] = [
+	public areaTos: IArea[] = [
 		{ value: 20, viewValue: '20 m²' },
 		{ value: 40, viewValue: '40 m²' },
 		{ value: 60, viewValue: '60 m²' },
@@ -273,7 +266,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 120, viewValue: '120 m²' },
 		{ value: 140, viewValue: '140 m²' },
 	];
-	priceMaxs: Price[] = [
+	public priceMaxs: IPrice[] = [
 		{ value: 1000, viewValue: '1000 zł' },
 		{ value: 2000, viewValue: '2000 zł' },
 		{ value: 3000, viewValue: '3000 zł' },
@@ -282,7 +275,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 6000, viewValue: '6000 zł' },
 		{ value: 7000, viewValue: '7000 zł' },
 	];
-	numberOfRooms: Room[] = [
+	public numberOfRooms: IRoom[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
 		{ value: 3, viewValue: '3' },
@@ -291,7 +284,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 6, viewValue: '6' },
 		{ value: 7, viewValue: '7' },
 	];
-	distances: Distance[] = [
+	public distances: IDistance[] = [
 		{ value: 0, viewValue: '0 km' },
 		{ value: 5, viewValue: '5 km' },
 		{ value: 10, viewValue: '10 km' },
@@ -300,7 +293,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 50, viewValue: '50 km' },
 		{ value: 75, viewValue: '75 km' },
 	];
-	numberOfFloors: Floor[] = [
+	public numberOfFloors: IFloor[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
 		{ value: 3, viewValue: '3' },
@@ -311,13 +304,13 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		{ value: 50, viewValue: '40' },
 		{ value: 100, viewValue: '80' },
 	];
-	yearOfBuilds: Year[] = [
+	public yearOfBuilds: IYear[] = [
 		{ value: 'do 1950', viewValue: 'do 1950' },
 		{ value: 'od 1950 do 1989', viewValue: 'od 1950 do 1989' },
 		{ value: 'od 1990 do 2010', viewValue: 'od 1990 do 2010' },
 		{ value: 'od 2010', viewValue: 'od 2010' },
 	];
-	properties: Property[] = [
+	public properties: IProperty[] = [
 		{ value: 'Kawalerka', viewValue: 'Kawalerka' },
 		{ value: 'Mieszkanie', viewValue: 'Mieszkanie' },
 		{ value: 'Pokój', viewValue: 'Pokój' },
@@ -325,11 +318,11 @@ export class MainSiteComponent implements OnInit, OnChanges {
 }
 
 export class RegionCity {
-	region: string;
-	city: string;
+	private _region: string;
+	private _city: string;
 
 	constructor(region: string, city: string) {
-		this.region = region;
-		this.city = city;
+		this._region = region;
+		this._city = city;
 	}
 }
