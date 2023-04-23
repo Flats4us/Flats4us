@@ -1,84 +1,78 @@
 .custom-toolbar {
-	background-color: #fbbb8b;
+  background-color: #fbbb8b;
 }
 
 .title {
-	font-family: "Rockwell Extra Bold";
-	font-size: 35px;
-	margin-left: 10px;
+  font-family: "Rockwell Extra Bold";
+  font-size: 35px;
+  margin-left: 10px;
 }
 
 .full-main-button {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .settings,
 .tidings,
 .options,
 .map {
-	margin-left: 25px;
+  margin-left: 25px;
 }
 
 .change-lang {
-	background-color: #fbbb8b;
-	margin-left: 100px;
+  background-color: #fbbb8b;
+  margin-left: 100px;
 }
 .icon-sun {
-	margin-left: 30px;
-	margin-right: 10px;
-	font-size: 10px;
-	width: 30px;
-	height: 30px;
+  margin-left: 30px;
+  margin-right: 10px;
+  font-size: 10px;
+  width: 30px;
+  height: 30px;
 }
 
 .arrow {
-	width: 5px;
-	height: 5px;
+  width: 5px;
+  height: 5px;
 }
 .icon-moon {
-	width: 30px;
-	height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .spacer {
-	flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .button-log,
 .button-sign {
-	border-radius: 30px;
-	margin-right: 20px;
+  border-radius: 30px;
+  margin-right: 20px;
 }
 
 .button-sign {
-	margin-right: 50px;
-}
-
-.your-photo {
-	border-radius: 100%;
-	width: 40px;
-	height: 40px;
-	margin-right: 20px;
-	margin-left: 60px;
-}
-.your-profile {
-	margin-right: 50px;
-}
-
-.mat-icon-vertical-align {
-	vertical-align: middle;
-	font-size: 20px;
-}
-
-.mat-icon {
-	align-items: center;
+  margin-right: 50px;
 }
 
 .logo {
-	width: 100px;
-	height: 50px;
-	margin-right: 20px;
-	margin-left: 20px;
+  width: 150px;
+  height: 70px;
+}
+
+.your-photo {
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  margin-left: 60px;
+}
+.your-profile {
+  margin-right: 30px;
+}
+
+.mat-icon-vertical-align {
+  vertical-align: middle;
+  font-size: 20px;
 }
