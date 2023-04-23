@@ -20,10 +20,6 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
-<<<<<<< HEAD
-=======
-		MainSiteModule
->>>>>>> 8c3981c (PoprawionyRevert)
 	],
 	providers: [],
 	bootstrap: [AppComponent],
