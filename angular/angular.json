@@ -33,6 +33,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -96,6 +101,11 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/styles"
+              ]
+            },
             "scripts": []
           }
         },
@@ -114,6 +124,7 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-      ]
+    ],
+    "analytics": false
   }
 }

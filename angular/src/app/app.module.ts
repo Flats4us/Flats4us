@@ -20,7 +20,7 @@ import { MainSiteModule } from './main-site/main-site/main-site.module';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
-		MainSiteModule,
+		MainSiteModule
 	],
 	providers: [],
 	bootstrap: [AppComponent],
