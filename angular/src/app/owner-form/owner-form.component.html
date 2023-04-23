@@ -1,50 +1,58 @@
 <mat-card>
-  <mat-card-header class="title">
-    <mat-card-title >ANKIETA WŁAŚCICIELA</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <h2>1.Wynajmuję pokój czy całe mieszkanie?</h2>
-    <mat-radio-group class="firs-option" aria-label="Select an option">
-      <mat-radio-button value="1">Pokój</mat-radio-button>
-      <mat-radio-button value="2">Mieszkanie</mat-radio-button>
-    </mat-radio-group>
-    <h2>2.Dla ilu osób wynajmuję pokój/mieszkanie? </h2>
-    <mat-radio-group class="second-option" aria-label="Select an option">
-      <mat-radio-button value="1">1</mat-radio-button>
-      <mat-radio-button value="2">2</mat-radio-button>
-      <mat-radio-button value="3">3</mat-radio-button>
-      <mat-radio-button value="4">Więcej</mat-radio-button>
-    </mat-radio-group>
-    <h2>3.Jakie mam preferencje wobec najemcy?</h2>
-    <div>
-    <h3>Pali papierosy</h3>
-      <section class="section">
-        <mat-checkbox class="checkbox" [(ngModel)]="smokingYes">Tak</mat-checkbox>
-        <mat-checkbox class="checkbox" [(ngModel)]="smokingNo">Nie</mat-checkbox>
-        <mat-checkbox class="checkbox" [(ngModel)]="smokingNotImportant">Bez znaczenia</mat-checkbox>
-      </section>
-    </div>
-    <div>
-    <h3>Imprezuję</h3>
-      <section class="section1">
-        <mat-checkbox class="checkbox" [(ngModel)]="partingYes">Tak</mat-checkbox>
-        <mat-checkbox class="checkbox" [(ngModel)]="partingNo">Nie</mat-checkbox>
-        <mat-checkbox class="checkbox" [(ngModel)]="partingNotImportant">Bez znaczenia</mat-checkbox>
-      </section>
-    </div>
-    <h3>Zwierzęta</h3>
-    <section class="section2">
-      <mat-checkbox class="checkbox" [(ngModel)]="animalsYes">Tak</mat-checkbox>
-      <mat-checkbox class="checkbox" [(ngModel)]="animalsNo">Nie</mat-checkbox>
-      <mat-checkbox class="checkbox" [(ngModel)]="animalsNotImportant">Bez znaczenia</mat-checkbox>
-    </section>
-      <div>
-    <h3>Płeć</h3>
-        <section class="section3">
-        <mat-checkbox class="checkboxS" [(ngModel)]="genderW">K</mat-checkbox>
-        <mat-checkbox class="checkboxS" [(ngModel)]="genderM">M</mat-checkbox>
-        <mat-checkbox class="checkboxS" [(ngModel)]="genderNotImportant">Bez znaczenia</mat-checkbox>
-        </section>
-    </div>
-  </mat-card-content>
+	<mat-card-header class="title">
+		<mat-card-title>ANKIETA WŁAŚCICIELA</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<h2>1.Wynajmuję pokój czy całe mieszkanie?</h2>
+		<mat-radio-group class="firs-option" aria-label="Select an option">
+			<mat-radio-button value="1">Pokój</mat-radio-button>
+			<mat-radio-button value="2">Mieszkanie</mat-radio-button>
+		</mat-radio-group>
+		<h2>2.Dla ilu osób wynajmuję pokój/mieszkanie?</h2>
+		<mat-radio-group class="second-option" aria-label="Select an option">
+			<mat-radio-button value="1">1</mat-radio-button>
+			<mat-radio-button value="2">2</mat-radio-button>
+			<mat-radio-button value="3">3</mat-radio-button>
+			<mat-radio-button value="4">Więcej</mat-radio-button>
+		</mat-radio-group>
+		<h2>3.Jakie mam preferencje wobec najemcy?</h2>
+		<div>
+			<h3>Pali papierosy</h3>
+			<section class="section">
+				<mat-checkbox class="checkbox" [(ngModel)]="smokingYes">Tak</mat-checkbox>
+				<mat-checkbox class="checkbox" [(ngModel)]="smokingNo">Nie</mat-checkbox>
+				<mat-checkbox class="checkbox" [(ngModel)]="smokingNotImportant"
+					>Bez znaczenia</mat-checkbox
+				>
+			</section>
+		</div>
+		<div>
+			<h3>Imprezuję</h3>
+			<section class="section1">
+				<mat-checkbox class="checkbox" [(ngModel)]="partingYes">Tak</mat-checkbox>
+				<mat-checkbox class="checkbox" [(ngModel)]="partingNo">Nie</mat-checkbox>
+				<mat-checkbox class="checkbox" [(ngModel)]="partingNotImportant"
+					>Bez znaczenia</mat-checkbox
+				>
+			</section>
+		</div>
+		<h3>Zwierzęta</h3>
+		<section class="section2">
+			<mat-checkbox class="checkbox" [(ngModel)]="animalsYes">Tak</mat-checkbox>
+			<mat-checkbox class="checkbox" [(ngModel)]="animalsNo">Nie</mat-checkbox>
+			<mat-checkbox class="checkbox" [(ngModel)]="animalsNotImportant"
+				>Bez znaczenia</mat-checkbox
+			>
+		</section>
+		<div>
+			<h3>Płeć</h3>
+			<section class="section3">
+				<mat-checkbox class="checkboxS" [(ngModel)]="genderW">K</mat-checkbox>
+				<mat-checkbox class="checkboxS" [(ngModel)]="genderM">M</mat-checkbox>
+				<mat-checkbox class="checkboxS" [(ngModel)]="genderNotImportant"
+					>Bez znaczenia</mat-checkbox
+				>
+			</section>
+		</div>
+	</mat-card-content>
 </mat-card>
