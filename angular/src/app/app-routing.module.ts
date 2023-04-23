@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+mport { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainSiteComponent } from './main-site/main-site/main-site.component';
 import { OwnerFormComponent } from './owner-form/owner-form.component';
