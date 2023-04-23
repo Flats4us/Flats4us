@@ -1,0 +1,66 @@
+.title{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  font-size: 35px;
+  font-family: Verdana;
+  margin-bottom: 20px;
+}
+
+
+h2{
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h3{
+  font-size: 20px;
+  margin-left: 350px;
+  display: inline;
+  vertical-align: middle;
+  margin-right: 90px;
+}
+
+.firs-option{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.second-option{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+mat-radio-button{
+  font-size: 20px;
+}
+mat-radio-button {
+  margin: 0 90px 30px 90px ;
+}
+
+
+.section,
+.section1,
+.section2,
+.section3{
+  display: inline;
+}
+.section1{
+  margin-left: 37px;
+}
+.section2{
+  margin-left: 37px;
+}
+.section3{
+  margin-left: 85px;
+}
+.checkbox{
+  margin-right: 50px;
+}
+
+.checkboxS{
+  margin-right: 63px;
+}
+
+
