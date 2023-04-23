@@ -70,6 +70,15 @@ mat-form-field {
 }
 
 .mat-slider,
-.mat-slide-toggle {
+.mat-slide-toggle,
+.mat-form-field {
 	text-align: right;
+}
+
+div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+	font-size: 12px;
 }

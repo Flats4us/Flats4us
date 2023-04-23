@@ -1,0 +1,45 @@
+{
+  "questions" : [
+    {
+      "id" : 1,
+      "title" : "pytanie_właścicela",
+      "content" : "Czy palisz?",
+      "type" : {
+        "type_name" : "checkbox",
+        "answers" : [
+          {
+            "id_answer" : "1",
+            "text" : "Tak"
+          },
+          {
+            "id_answer" : "2",
+            "text" :"Nie"
+          }
+        ]
+      }
+    },
+    {
+      "id" : 2,
+      "title" : "pytanie_studenta",
+      "content" : "Jak często imprezujesz?",
+      "type" : {
+        "type_name" : "slider",
+        "answers" : {
+          "min" : 0,
+          "max" : 10
+        }
+      }
+    },
+    {
+      "id" : 3,
+      "title" : "pytanie_studenta",
+      "content" : "Jak często imprezujesz?",
+      "type" : {
+        "type_name" : "text",
+        "answers" : {
+          "type_answer" : "Integer"
+        }
+      }
+    }
+  ]
+}
