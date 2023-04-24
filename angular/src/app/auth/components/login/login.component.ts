@@ -9,8 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-	hide = true;
-	loginForm: FormGroup;
+	public hide = true;
+	public loginForm: FormGroup;
 
 	constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
 		this.loginForm = this.fb.group({
@@ -19,7 +19,7 @@ export class LoginComponent {
 		});
 	}
 
-	onSubmit() {
+	public onSubmit() {
 		this.snackBar.open('Zalogowano pomyślnie!', 'Zamknij', {
 			duration: 2000,
 		});
