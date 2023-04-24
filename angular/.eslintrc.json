@@ -12,6 +12,7 @@
 			],
 			"rules": {
 				"no-console": "error",
+				"curly": "error",
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
