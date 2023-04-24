@@ -1,10 +1,10 @@
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
-	ChangeDetectionStrategy,
-	Component,
-	OnInit,
-	Input,
-} from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IJsonFormData } from '../json-form/json-form.component';
@@ -17,7 +17,7 @@ import { IJsonFormData } from '../json-form/json-form.component';
 })
 export class StudentSurveyComponent implements OnInit {
 	public studentSurveyForm: FormGroup;
-	public partyy = 1;
+	public party!: number;
 	public tidy!: number;
 	public smoke!: number;
 	public social!: number;
@@ -31,9 +31,18 @@ export class StudentSurveyComponent implements OnInit {
 	) {
 		this.studentSurveyForm = this.fb.group({
 			party: 0,
+			tidy: 0,
+			smoke: 0,
+			social: 0,
+			petOwner: 0,
+			veganPerson: 0,
+			lookingForRoommates: new FormControl(false),
+			maxNumberOfRoommates: ['', Validators.required],
+			minRoommateAge: ['', Validators.required],
+			maxRoommateAge: ['', Validators.required],
 		});
 		this.studentSurveyForm.controls['party'].valueChanges.subscribe((value) => {
-			this.partyy = value;
+			this.party = value;
 		});
 	}
 
@@ -41,7 +50,6 @@ export class StudentSurveyComponent implements OnInit {
 		this.http
 			.get<IJsonFormData>('../../assets/survey.json')
 			.subscribe((formData: IJsonFormData) => {
-				console.log(formData);
 				this.formData = formData;
 			});
 	}
