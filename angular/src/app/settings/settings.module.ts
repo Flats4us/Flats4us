@@ -13,6 +13,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { HttpClientModule } from "@angular/common/http";
 import { JsonFormComponent } from './components/json-form/json-form.component';
 import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
 	declarations: [StudentSurveyComponent, JsonFormComponent],
@@ -29,7 +30,8 @@ import { MatButtonModule } from "@angular/material/button";
     MatInputModule,
     MatSlideToggleModule,
     HttpClientModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ]
 })
 export class SettingsModule {}
