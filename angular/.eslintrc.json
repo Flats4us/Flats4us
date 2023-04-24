@@ -13,6 +13,7 @@
 			"rules": {
 				"no-console": "error",
 				"curly": "error",
+				"max-classes-per-file": ["error", 1],
 				"@angular-eslint/directive-selector": [
 					"error",
 					{
