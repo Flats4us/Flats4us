@@ -26,3 +26,9 @@ export class RegionCity {
 		this.city = city;
 	}
 }
+
+	constructor(region: string, city: string) {
+		this.region = region;
+		this.city = city;
+	}
+}
