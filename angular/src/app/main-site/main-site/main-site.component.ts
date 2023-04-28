@@ -363,7 +363,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 60, viewValue: '60 m²' },
 		{ value: 80, viewValue: '80 m²' },
 		{ value: 100, viewValue: '100 m²' },
-		{ value: 120, viewValue: '120 m²' }
+		{ value: 120, viewValue: '120 m²' },
 	];
 	public areaTos: INumeric[] = [
 		{ value: 20, viewValue: '20 m²' },
@@ -372,7 +372,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 80, viewValue: '80 m²' },
 		{ value: 100, viewValue: '100 m²' },
 		{ value: 120, viewValue: '120 m²' },
-		{ value: 140, viewValue: '140 m²' }
+		{ value: 140, viewValue: '140 m²' },
 	];
 	public priceMaxs: INumeric[] = [
 		{ value: 1000, viewValue: '1000 zł' },
@@ -381,7 +381,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 4000, viewValue: '4000 zł' },
 		{ value: 5000, viewValue: '5000 zł' },
 		{ value: 6000, viewValue: '6000 zł' },
-		{ value: 7000, viewValue: '7000 zł' }
+		{ value: 7000, viewValue: '7000 zł' },
 	];
 	public numberOfRooms: INumeric[] = [
 		{ value: 1, viewValue: '1' },
@@ -390,7 +390,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 4, viewValue: '4' },
 		{ value: 5, viewValue: '5' },
 		{ value: 6, viewValue: '6' },
-		{ value: 7, viewValue: '7' }
+		{ value: 7, viewValue: '7' },
 	];
 	public distances: INumeric[] = [
 		{ value: 0, viewValue: '0 km' },
@@ -399,7 +399,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 15, viewValue: '15 km' },
 		{ value: 25, viewValue: '25 km' },
 		{ value: 50, viewValue: '50 km' },
-		{ value: 75, viewValue: '75 km' }
+		{ value: 75, viewValue: '75 km' },
 	];
 	public numberOfFloors: INumeric[] = [
 		{ value: 1, viewValue: '1' },
@@ -410,7 +410,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 10, viewValue: '10' },
 		{ value: 20, viewValue: '20' },
 		{ value: 50, viewValue: '40' },
-		{ value: 100, viewValue: '80' }
+		{ value: 100, viewValue: '80' },
 	];
 	public yearOfBuilds: IText[] = [
 		{ value: 'do 1950' },
