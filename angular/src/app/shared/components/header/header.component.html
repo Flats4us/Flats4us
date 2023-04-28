@@ -16,16 +16,21 @@
 	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
-		<button class="map" mat-menu-item>MAPA OFERT <mat-icon>map</mat-icon></button>
+		<button class="map" mat-menu-item>
+			<span><mat-icon>map</mat-icon></span
+			>MAPA OFERT
+		</button>
 		<button class="tidings" mat-menu-item [matMenuTriggerFor]="tidings">
-			<mat-icon>speaker_notes</mat-icon>WIADOMOŚCI
+			<span><mat-icon>speaker_notes</mat-icon></span
+			>WIADOMOŚCI
 		</button>
 		<mat-menu #tidings="matMenu">
 			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
 			<button mat-menu-item>WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
 		</mat-menu>
 		<button class="settings" mat-menu-item [matMenuTriggerFor]="settings">
-			USTAWIENIA
+			<span><mat-icon>settings</mat-icon></span
+			>USTAWIENIA
 		</button>
 		<mat-menu #settings="matMenu">
 			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
@@ -66,11 +71,11 @@
 			<option value="pl">PL</option>
 			<option value="EN">EN</option>
 		</select>
-		<img class="icon-sun" src="../../assets/sun.svg" alt="Sun" />
+		<span><img class="icon-sun" src="../../assets/sun.svg" alt="Sun" /></span>
 		<div class="mode">
 			<mat-slide-toggle> </mat-slide-toggle>
 		</div>
-		<img class="icon-moon" src="../../assets/moon.svg" alt="Moon" />
+		<span><img class="icon-moon" src="../../assets/moon.svg" alt="Moon" /></span>
 	</div>
 
 	<div *ngIf="isUserLoggedIn" class="photo">

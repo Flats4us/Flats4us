@@ -20,6 +20,6 @@ export class HeaderComponent {
 		this.router.navigate(['auth/register']);
 	}
 	public profile() {
-		this.router.navigate(['profile/profile']);
+		this.router.navigate(['profile/id']);
 	}
 }
