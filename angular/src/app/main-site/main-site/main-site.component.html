@@ -1,11 +1,10 @@
 <main>
+	<div class="container-4">
 	<div class="container-3">
 		<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
 	</div>
 	<div class="container">
 		<div class="box2">
-			<!-- <div class="boxIcon1"><mat-icon>location_on</mat-icon></div> -->
-
 			<form class="example-form" [formGroup]="citiesForm">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Województwo</mat-label>
@@ -17,7 +16,7 @@
 						(selectionChange)="changeRegion($event)"
 					>
 						<mat-option *ngFor="let region of regions" [value]="region.value">
-							{{ region.viewValue }}
+							{{ region.value }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -49,9 +48,6 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon"><mat-icon>directions_walk</mat-icon></div> -->
-
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Odległość</mat-label>
@@ -65,9 +61,6 @@
 					</mat-select>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon"><mat-icon>home</mat-icon></div> -->
-
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Rodzaj nieruchomości</mat-label>
@@ -76,13 +69,11 @@
 					</span>
 					<mat-select>
 						<mat-option *ngFor="let property of properties" [value]="property.value">
-							{{ property.viewValue }}
+							{{ property.value }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon"><mat-icon></mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Cena minimalna</mat-label>
@@ -105,9 +96,6 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon2"><mat-icon>minimize</mat-icon></div> -->
-
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Cena maksymalna</mat-label>
@@ -142,7 +130,6 @@
 				</button>
 
 				<button
-					(click)="search()"
 					mat-icon-button
 					matTooltip="Szukaj ofert"
 					aria-label="Search button"
@@ -154,7 +141,6 @@
 			</div>
 		</div>
 		<div *ngIf="showMoreFilters" class="box3">
-			<!-- <div class="boxIcon1"><mat-icon></mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Powierzchnia od</mat-label>
@@ -177,8 +163,6 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon2"><mat-icon>minimize</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Powierzchnia do</mat-label>
@@ -201,7 +185,6 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-			<!-- <div class="boxIcon"><mat-icon>history</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Lata budowy</mat-label>
@@ -217,13 +200,11 @@
 					/>
 					<mat-autocomplete #autoYearOfBuild="matAutocomplete">
 						<mat-option *ngFor="let year of yearOfBuilds" [value]="year.value">
-							{{ year.viewValue }}
+							{{ year.value }}
 						</mat-option>
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon"><mat-icon>meeting_room</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Min. liczba pokoi</mat-label>
@@ -245,8 +226,6 @@
 					</mat-autocomplete>
 				</mat-form-field>
 			</form>
-
-			<!-- <div class="boxIcon"><mat-icon>location_city</mat-icon></div> -->
 			<form class="example-form">
 				<mat-form-field class="example-full-width" appearance="fill">
 					<mat-label>Maks. liczba pięter</mat-label>
@@ -277,10 +256,10 @@
 			</div>
 		</div>
 	</div>
+	</div>
 
 	<div class="container-2">
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
@@ -314,7 +293,6 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
@@ -348,7 +326,6 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
@@ -382,7 +359,6 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
@@ -416,7 +392,6 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
@@ -450,7 +425,6 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-header>Wynajmę mieszkanie 2 pokojowe 35 m2</mat-card-header>
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
 			<img
 				mat-card-image
