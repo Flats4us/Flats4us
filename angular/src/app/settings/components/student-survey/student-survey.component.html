@@ -4,7 +4,7 @@
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<div>
-				<mat-label>1. Jak często imprezuję? </mat-label>
+				<mat-label>1. {{ question }} </mat-label>
 				<mat-slider min="0" max="5" step="1">
 					<input matSliderThumb formControlName="party" />
 				</mat-slider>
@@ -39,13 +39,13 @@
 				<mat-label>7. Szukam współlokatora? </mat-label>
 				<mat-slide-toggle formControlName="lookingForRoommates"></mat-slide-toggle>
 			</div>
-			<div>
+			<div *ngIf="showLookingForRoommates">
 				<mat-label>8. Jaką liczbę współlokatorów akceptuję? </mat-label>
 				<mat-form-field class="h-1/2" appearance="outline">
 					<input formControlName="maxNumberOfRoommates" matInput />
 				</mat-form-field>
 			</div>
-			<div>
+			<div *ngIf="showLookingForRoommates">
 				<mat-label>9. Preferowana płeć współlokatora </mat-label>
 				<section class="example-section">
 					<mat-checkbox class="example-margin">K</mat-checkbox>
@@ -53,19 +53,19 @@
 					<mat-checkbox class="example-margin">NB</mat-checkbox>
 				</section>
 			</div>
-			<div>
+			<div *ngIf="showLookingForRoommates">
 				<mat-label>10. Minimalny wiek współlokatora </mat-label>
 				<mat-form-field class="h-1/2" appearance="outline">
 					<input formControlName="minRoommateAge" matInput />
 				</mat-form-field>
 			</div>
-			<div>
+			<div *ngIf="showLookingForRoommates">
 				<mat-label>10. Maksymalny wiek współlokatora </mat-label>
 				<mat-form-field class="h-1/2" appearance="outline">
 					<input formControlName="maxRoommateAge" matInput />
 				</mat-form-field>
 			</div>
-			<div class="buttons">
+			<div *ngIf="showLookingForRoommates" class="buttons">
 				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
 				<button mat-flat-button class="btn-cancel" type="button" routerLink="../">
 					Anuluj
