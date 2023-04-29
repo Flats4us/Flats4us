@@ -11,12 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
-import { JsonFormComponent } from './components/json-form/json-form.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
-	declarations: [StudentSurveyComponent, JsonFormComponent],
+	declarations: [StudentSurveyComponent],
 	imports: [
 		CommonModule,
 		SettingsRoutingModule,
