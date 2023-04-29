@@ -16,6 +16,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
+	{
+		path: 'ownerForm',
+		loadChildren: () =>
+			import('./owner-form/owner-form.module').then((m) => m.OwnerFormModule),
+	},
 ];
 
 @NgModule({

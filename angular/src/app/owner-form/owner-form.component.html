@@ -1,0 +1,66 @@
+<mat-card>
+	<mat-card-header class="title">
+		<mat-card-title>ANKIETA WŁAŚCICIELA</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<h2>1.Wynajmuję pokój czy całe mieszkanie?</h2>
+		<mat-radio-group class="firs-option" aria-label="Select an option">
+			<mat-radio-button value="1">Pokój</mat-radio-button>
+			<mat-radio-button value="2">Mieszkanie</mat-radio-button>
+		</mat-radio-group>
+		<h2>2.Dla ilu osób wynajmuję pokój/mieszkanie?</h2>
+		<mat-radio-group class="second-option" aria-label="Select an option">
+			<mat-radio-button value="1">1</mat-radio-button>
+			<mat-radio-button value="2">2</mat-radio-button>
+			<mat-radio-button value="3">3</mat-radio-button>
+			<mat-radio-button value="4">Więcej</mat-radio-button>
+		</mat-radio-group>
+		<h2>3.Jakie mam preferencje wobec najemcy?</h2>
+		<div class="column">
+			<div class="smoked">
+				<h3 class="title-h3">Pali papierosy</h3>
+
+				<mat-radio-group class="option" name="smoked" aria-label="Select an option">
+					<mat-radio-button value="1">Tak</mat-radio-button>
+					<mat-radio-button value="2">Nie</mat-radio-button>
+					<mat-radio-button value="3">Bez znaczenia</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div class="animals">
+				<h3 class="title-h3">Zwierzęta</h3>
+
+				<mat-radio-group
+					class="option1"
+					name="animals"
+					aria-label="Select an option"
+				>
+					<mat-radio-button value="1">Tak</mat-radio-button>
+					<mat-radio-button value="2">Nie</mat-radio-button>
+					<mat-radio-button value="3">Bez znaczenia</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div class="party">
+				<h3 class="title-h3">Imprezuję</h3>
+
+				<mat-radio-group class="option2" name="party" aria-label="Select an option">
+					<mat-radio-button value="1">Tak</mat-radio-button>
+					<mat-radio-button value="2">Nie</mat-radio-button>
+					<mat-radio-button value="3">Bez znaczenia</mat-radio-button>
+				</mat-radio-group>
+			</div>
+			<div class="gender">
+				<h3 class="title-h3">Płeć</h3>
+
+				<mat-radio-group
+					class="option3"
+					name="gender"
+					aria-label="Select an option"
+				>
+					<mat-radio-button value="1">M</mat-radio-button>
+					<mat-radio-button value="2">K</mat-radio-button>
+					<mat-radio-button value="3">Bez znaczenia</mat-radio-button>
+				</mat-radio-group>
+			</div>
+		</div>
+	</mat-card-content>
+</mat-card>
