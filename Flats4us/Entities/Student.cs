@@ -14,7 +14,7 @@ namespace Flats4us.Entities
         public string? StudentNumber { get; set;}
 
         [Required]
-        public string? University { get;}//tutaj ma nie być settera?
+        public string? University { get;}
 
         public virtual Survey Survey { get; set; }
 
