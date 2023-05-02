@@ -2,7 +2,7 @@
 
 namespace Flats4us.Entities
 {
-    public class Student : OwnerStudent
+    public class Student : OwnerStudent //abstract
     {
         [Required]
         public int YearOfBirth { get; set; }
@@ -14,7 +14,7 @@ namespace Flats4us.Entities
         public string? StudentNumber { get; set;}
 
         [Required]
-        public string? University { get;}
+        public string? University { get;}//tutaj ma nie być settera?
 
         public virtual Survey Survey { get; set; }
 

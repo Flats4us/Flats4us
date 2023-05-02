@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
     [Table("OwnerOpinion")]
-    public class OwnerOpinion
+    public class OwnerOpinion //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -42,4 +44,6 @@ namespace Flats4us.Entities
 
         public virtual Student Evaluator { get; set; }
     }
+
+
 }
