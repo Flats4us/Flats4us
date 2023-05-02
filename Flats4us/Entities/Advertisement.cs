@@ -47,8 +47,7 @@ namespace Flats4us.Entities
                 Image = new byte[] { 0x12, 0x34, 0x56, 0x78 },
                 Price = 470,
                 EndDate = DateTime.Parse("2023-06-29")
-            }
-            );
+            });
         }
     }
 }
