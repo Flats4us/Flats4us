@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Flats4us.Entities
 {
     [Table("StudentOpinion")]
-    public class StudentOpinion
+    public class StudentOpinion //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
