@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { filter, map, Observable } from 'rxjs';
 
 @Component({
-	selector: 'app-profile',
+	selector: 'app-offer-details',
 	templateUrl: './offer-details.component.html',
 	styleUrls: ['./offer-details.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
