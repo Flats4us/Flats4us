@@ -18,12 +18,6 @@ namespace Flats4us.Entities
 
         public virtual Property Property { get; set; }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<PropertyImage>().HasData(
-            new PropertyImage { Id = 1, Title = "Living room", ImagePath = "images/livingroom.jpg" },
-            new PropertyImage { Id = 2, Title = "Kitchen", ImagePath = "images/kitchen.jpg" },
-            new PropertyImage { Id = 3, Title = "Bedroom", ImagePath = "images/bedroom.jpg" });
-        }
+
     }
 }
