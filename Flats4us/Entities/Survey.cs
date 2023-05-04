@@ -66,58 +66,6 @@ namespace Flats4us.Entities
 
         public virtual Student Student { get; set; }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Survey>().HasData(
-            new Survey
-            {
-                Smoking = false,
-                Animal = false,
-                Vegan = true,
-                Party = 8,
-                Tidiness = 9,
-                Loudness = 4,
-                Sociability = 7,
-                Helpfulness = 6,
-                Roommate = true,
-                MaxNumberOfRoommates = 2,
-                RoommateGender = Gender.Female,
-                MinRoommateAge = 20,
-                MaxRoommateAge = 25,
-            },
-            new Survey
-            {
-                Smoking = true,
-                Animal = false,
-                Vegan = false,
-                Party = 5,
-                Tidiness = 6,
-                Loudness = 7,
-                Sociability = 8,
-                Helpfulness = 9,
-                Roommate = false,
-                MaxNumberOfRoommates = 1,
-                RoommateGender = Gender.Male,
-                MinRoommateAge = 22,
-                MaxRoommateAge = 30
-            },
-            new Survey
-            {
-                Smoking = false,
-                Animal = true,
-                Vegan = false,
-                Party = 9,
-                Tidiness = 8,
-                Loudness = 3,
-                Sociability = 6,
-                Helpfulness = 7,
-                Roommate = true,
-                MaxNumberOfRoommates = 3,
-                RoommateGender = Gender.Both,
-                MinRoommateAge = 18,
-                MaxRoommateAge = 25
-            });
 
-        }
     }
 }

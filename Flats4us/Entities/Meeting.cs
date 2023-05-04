@@ -21,31 +21,6 @@ namespace Flats4us.Entities
 
         public virtual Offer Offer { get; set; }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Meeting>().HasData(
-            new Meeting
-            {
-                Id = 1,
-                Date = DateTime.Now,
-                Address = "First meeting address",
-                Reason = "First meeting reason"
-            },
-            new Meeting
-            {
-                Id = 2,
-                Date = DateTime.Now.AddDays(1),
-                Address = "Second meeting address",
-                Reason = "Second meeting reason"
-            },
-            new Meeting
-            {
-                Id = 3,
-                Date = DateTime.Now.AddDays(2),
-                Address = "Third meeting address",
-                Reason = "Third meeting reason"
-            });
 
-        }
     }
 }

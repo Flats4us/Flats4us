@@ -19,27 +19,6 @@ namespace Flats4us.Entities
 
         public virtual OwnerStudent Sender { get; set; }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Advertisement>().HasData(
-            new ArgumentMessage
-            {
-                Id = 1,
-                Date = DateTime.Now,
-                Content = "First argument message",
-            },
-            new ArgumentMessage
-            {
-                Id = 2,
-                Date = DateTime.Now.AddDays(-1),
-                Content = "Second argument message"
-            },
-            new ArgumentMessage
-            {
-                Id = 3,
-                Date = DateTime.Now.AddDays(-2),
-                Content = "Third argument message"
-            });
-        }
+
     }
 }

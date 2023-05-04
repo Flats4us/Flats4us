@@ -17,28 +17,6 @@ namespace Flats4us.Entities
         public DateTime Date { get; set; }
 
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        modelBuilder.Entity<Intervention>().HasData(
-            new Intervention
-            {
-                Id = 1,
-                Description = "Intervention 1",
-                Date = new DateTime(2023, 04, 12)
-            },
-            new Intervention
-            {
-                Id = 2,
-                Description = "Intervention 2",
-                Date = new DateTime(2023, 05, 01)
-            },
-            new Intervention
-            {
-                Id = 3,
-                Description = "Intervention 3",
-                Date = new DateTime(2023, 01, 20)
-            }
-            );
-        }
+
     }
 }
