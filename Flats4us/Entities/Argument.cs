@@ -43,37 +43,6 @@ namespace Flats4us.Entities
             ArgumentMessages = new HashSet<ArgumentMessage>();
         }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Advertisement>().HasData(
-            new Argument
-            {
-                Id = 1,
-                StartDate = new DateTime(2023, 05, 01),
-                OwnerAcceptanceDate = new DateTime(2023, 05, 02),
-                TenantAcceptanceDate = new DateTime(2023, 05, 03),
-                ArgumentStatus = ArgumentStatus.Ongoing,
-                ModeratorDecisionDate = new DateTime(2023, 05, 04)
-            },
-            new Argument
-            {
-                Id = 2,
-                StartDate = new DateTime(2023, 05, 02),
-                OwnerAcceptanceDate = new DateTime(2023, 05, 03),
-                TenantAcceptanceDate = new DateTime(2023, 05, 04),
-                ArgumentStatus = ArgumentStatus.Resolved,
-                ModeratorDecisionDate = new DateTime(2023, 05, 05)
-            },
-            new Argument
-            {
-                Id = 3,
-                StartDate = new DateTime(2023, 05, 03),
-                OwnerAcceptanceDate = new DateTime(2023, 05, 04),
-                TenantAcceptanceDate = new DateTime(2023, 05, 05),
-                ArgumentStatus = ArgumentStatus.ResolvedByMod,
-                ModeratorDecisionDate = new DateTime(2023, 05, 06)
-            }); ;
 
-        }
     }
 }

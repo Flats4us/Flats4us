@@ -32,12 +32,6 @@ namespace Flats4us.Entities
         {
             OtherTenants = new HashSet<Student>();
         }
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Rent>().HasData(
-            new Payment { Id = 1, WhatFor = WhatFor.Rent, Price = 1000 },
-            new Payment { Id = 2, WhatFor = WhatFor.Deposit, Price = 500 },
-            new Payment { Id = 3, WhatFor = WhatFor.Repairs, Price = 250 });
-        }
+
     }
 }
