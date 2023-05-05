@@ -5,16 +5,13 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { IArea } from '../../shared/models/main-site.models';
+import { INumeric } from '../../shared/models/main-site.models';
+import { IText } from '../../shared/models/main-site.models';
 import { ICitiesGroup } from '../../shared/models/main-site.models';
-import { IDistance } from '../../shared/models/main-site.models';
-import { IFloor } from '../../shared/models/main-site.models';
-import { IPrice } from '../../shared/models/main-site.models';
-import { IProperty } from '../../shared/models/main-site.models';
-import { IRegion } from '../../shared/models/main-site.models';
-import { IRoom } from '../../shared/models/main-site.models';
-import { IYear } from '../../shared/models/main-site.models';
+import { IDistrictsGroup } from '../../shared/models/main-site.models';
 import { RegionCity } from '../../shared/models/main-site.models';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 export const filter = (opt: string[], value: string): string[] => {
 	const filterValue = value.toLowerCase();
@@ -32,6 +29,7 @@ export class MainSiteComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 143084;
 	public selectedRegion = '';
+	public selectedCity = '';
 
 	public showFilters() {
 		if (this.showMoreFilters) {
@@ -59,10 +57,130 @@ export class MainSiteComponent implements OnInit {
 		this.selectedRegion = event.value;
 	}
 
-	public citiesForm = this.formBuilder.group({
-		citiesGroup: '',
-		regionsGroup: '',
-	});
+	public changeCity(event: any) {
+		this.selectedCity = event.value;
+	}
+
+	public onSubmit() {
+		if (this.mainSiteForm.valid) {
+			this.router.navigate(['/']);
+		}
+	}
+
+	public mainSiteForm: FormGroup = new FormGroup({});
+
+	public citiesGroupOptions!: Observable<ICitiesGroup[]>;
+	public districtGroupOptions!: Observable<IDistrictsGroup[]>;
+
+	public regionCityArray: RegionCity[] = [];
+
+	constructor(
+		private formBuilder: FormBuilder,
+		private http: HttpClient,
+		private router: Router
+	) {
+		this.mainSiteForm = formBuilder.group({
+			regionsGroup: new FormControl('', Validators.required),
+			citiesGroup: new FormControl('', Validators.required),
+			distance: new FormControl('', Validators.required),
+			property: new FormControl('', Validators.required),
+			minPrice: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+			maxPrice: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+			districtsGroup: new FormControl(''),
+			minArea: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+			maxArea: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+			year: new FormControl('', []),
+			rooms: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+			floors: new FormControl('', [
+				Validators.min(0),
+				Validators.pattern('^[0-9]*$'),
+			]),
+		});
+		this.http
+			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
+			.subscribe((data) => {
+				const csvToRowArray = data.split('\n');
+				for (let index = 1; index < csvToRowArray.length - 1; index++) {
+					const row = csvToRowArray[index].split(';');
+					const lowerCaseRegion = row[2].trim().toLowerCase();
+					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
+
+					this.citiesGroups
+						.filter((group) => group.region == lowerCaseRegion)
+						.map((group) => group.cities.push(row[1]));
+				}
+			});
+	}
+
+	public ngOnInit() {
+		this.mainSiteForm
+			.get('regionsGroup')
+			?.valueChanges.subscribe((selectedValue) =>
+				selectedValue === null
+					? (this.selectedRegion = '')
+					: (this.selectedRegion = selectedValue)
+			);
+
+		this.citiesGroupOptions = this.mainSiteForm
+			.get('citiesGroup')!
+			.valueChanges.pipe(
+				startWith(''),
+				map((value) => this.filterCitiesGroup(value || ''))
+			);
+		this.mainSiteForm
+			.get('citiesGroup')
+			?.valueChanges.subscribe((selectedValue) =>
+				selectedValue === null
+					? (this.selectedCity = '')
+					: (this.selectedCity = selectedValue)
+			);
+		this.districtGroupOptions = this.mainSiteForm
+			.get('districtsGroup')!
+			.valueChanges.pipe(
+				startWith(''),
+				map((value) => this.filterDistrictsGroup(value || ''))
+			);
+	}
+
+	private filterCitiesGroup(value: string): ICitiesGroup[] {
+		return this.citiesGroups
+			.map((group) => ({
+				region: group.region,
+				cities: filter(group.cities, value),
+			}))
+			.filter(
+				(group) => group.cities.length > 0 && group.region === this.selectedRegion
+			);
+	}
+	private filterDistrictsGroup(value: string): IDistrictsGroup[] {
+		return this.districtGroups
+			.map((group) => ({
+				city: group.city,
+				districts: filter(group.districts, value),
+			}))
+			.filter(
+				(group) => group.districts.length > 0 && group.city === this.selectedCity
+			);
+	}
+
+	public navigateToFlat() {
+		this.router.navigate(['/']);
+	}
 
 	public citiesGroups: ICitiesGroup[] = [
 		{
@@ -131,63 +249,95 @@ export class MainSiteComponent implements OnInit {
 		},
 	];
 
-	public citiesGroupOptions!: Observable<ICitiesGroup[]>;
+	public districtGroups: IDistrictsGroup[] = [
+		{
+			city: 'Warszawa',
+			districts: [
+				'Bemowo',
+				'Białołęka',
+				'Bielany',
+				'Mokotów',
+				'Ochota',
+				'Praga-Południe',
+				'Praga-Północ',
+				'Rembertów',
+				'Śródmieście',
+				'Targówek',
+				'Ursus',
+				'Ursynów',
+				'Wawer',
+				'Wesoła',
+				'Wilanów',
+				'Włochy',
+				'Wola',
+				'Żoliborz',
+			],
+		},
+		{
+			city: 'Gdańsk',
+			districts: [
+				'Aniołki',
+				'Brętowo',
+				'Brzeźno',
+				'Chełm',
+				'Jasień',
+				'Kokoszki',
+				'Krakowiec-Górki Zachodnie',
+				'Letnica',
+				'Matarnia',
+				'Młyniska',
+				'Nowy Port',
+				'Oliwa',
+				'Olszynka',
+				'Orunia-Św. Wojciech-Lipce',
+				'Osowa',
+				'Piecki-Migowo',
+				'Przeróbka',
+				'Przymorze Małe',
+				'Przymorze Wielkie',
+				'Rudniki',
+				'Siedlce',
+				'Stogi',
+				'Strzyża',
+				'Suchanino',
+				'Śródmieście',
+				'Ujeścisko-Łostowice',
+				'VII Dwór',
+				'Wrzeszcz Dolny',
+				'Wrzeszcz Górny',
+				'Wyspa Sobieszewska',
+				'Wzgórze Mickiewicza',
+				'Zaspa-Młyniec',
+				'Zaspa-Rozstaje',
+				'Żabianka-Wejhera-Jelitkowo-Tysiąclecia',
+			],
+		},
+		{
+			city: 'Kraków',
+			districts: [
+				'Stare Miasto',
+				'Grzegórzki',
+				'Prądnik Czerwony',
+				'Prądnik Biały',
+				'Krowodrza',
+				'Bronowice',
+				'Zawierzyniec',
+				'Dębniki',
+				'Łagiewniki-Borek Fałęcki',
+				'Swoszowice',
+				'Podgórze Duchackie',
+				'Bieżanów-Prokocim',
+				'Podgórze',
+				'Czyżyny',
+				'Mistrzejowice',
+				'Bieńczyce',
+				'Wzgórze Krzesławickie',
+				'Nowa Huta',
+			],
+		},
+	];
 
-	public regionCityArray: RegionCity[] = [];
-	constructor(
-		private formBuilder: FormBuilder,
-		private http: HttpClient,
-		private router: Router
-	) {
-		this.http
-			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe((data) => {
-				const csvToRowArray = data.split('\n');
-				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					const row = csvToRowArray[index].split(';');
-					const lowerCaseRegion = row[2].trim().toLowerCase();
-					this.regionCityArray.push(new RegionCity(lowerCaseRegion, row[1]));
-
-					this.citiesGroups
-						.filter((group) => group.region == lowerCaseRegion)
-						.map((group) => group.cities.push(row[1]));
-				}
-			});
-	}
-
-	public ngOnInit() {
-		this.citiesForm
-			.get('regionsGroup')
-			?.valueChanges.subscribe((selectedValue) =>
-				selectedValue === null
-					? (this.selectedRegion = '')
-					: (this.selectedRegion = selectedValue)
-			);
-
-		this.citiesGroupOptions = this.citiesForm
-			.get('citiesGroup')!
-			.valueChanges.pipe(
-				startWith(''),
-				map((value) => this.filterGroup(value || ''))
-			);
-	}
-
-	private filterGroup(value: string): ICitiesGroup[] {
-		return this.citiesGroups
-			.map((group) => ({
-				region: group.region,
-				cities: filter(group.cities, value),
-			}))
-			.filter(
-				(group) => group.cities.length > 0 && group.region === this.selectedRegion
-			);
-	}
-
-	public navigateToFlat() {
-		this.router.navigate(['/']);
-	}
-
-	public regions: IRegion[] = [
+	public regions: IText[] = [
 		{ value: 'dolnośląskie' },
 		{ value: 'kujawsko-pomorskie' },
 		{ value: 'lubelskie' },
@@ -206,7 +356,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 'zachodniopomorskie' },
 	];
 
-	public areaFroms: IArea[] = [
+	public areaFroms: INumeric[] = [
 		{ value: 0, viewValue: '0 m²' },
 		{ value: 20, viewValue: '20 m²' },
 		{ value: 40, viewValue: '40 m²' },
@@ -215,7 +365,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 100, viewValue: '100 m²' },
 		{ value: 120, viewValue: '120 m²' },
 	];
-	public areaTos: IArea[] = [
+	public areaTos: INumeric[] = [
 		{ value: 20, viewValue: '20 m²' },
 		{ value: 40, viewValue: '40 m²' },
 		{ value: 60, viewValue: '60 m²' },
@@ -224,7 +374,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 120, viewValue: '120 m²' },
 		{ value: 140, viewValue: '140 m²' },
 	];
-	public priceMaxs: IPrice[] = [
+	public priceMaxs: INumeric[] = [
 		{ value: 1000, viewValue: '1000 zł' },
 		{ value: 2000, viewValue: '2000 zł' },
 		{ value: 3000, viewValue: '3000 zł' },
@@ -233,7 +383,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 6000, viewValue: '6000 zł' },
 		{ value: 7000, viewValue: '7000 zł' },
 	];
-	public numberOfRooms: IRoom[] = [
+	public numberOfRooms: INumeric[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
 		{ value: 3, viewValue: '3' },
@@ -242,7 +392,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 6, viewValue: '6' },
 		{ value: 7, viewValue: '7' },
 	];
-	public distances: IDistance[] = [
+	public distances: INumeric[] = [
 		{ value: 0, viewValue: '0 km' },
 		{ value: 5, viewValue: '5 km' },
 		{ value: 10, viewValue: '10 km' },
@@ -251,7 +401,7 @@ export class MainSiteComponent implements OnInit {
 		{ value: 50, viewValue: '50 km' },
 		{ value: 75, viewValue: '75 km' },
 	];
-	public numberOfFloors: IFloor[] = [
+	public numberOfFloors: INumeric[] = [
 		{ value: 1, viewValue: '1' },
 		{ value: 2, viewValue: '2' },
 		{ value: 3, viewValue: '3' },
@@ -262,13 +412,13 @@ export class MainSiteComponent implements OnInit {
 		{ value: 50, viewValue: '40' },
 		{ value: 100, viewValue: '80' },
 	];
-	public yearOfBuilds: IYear[] = [
+	public yearOfBuilds: IText[] = [
 		{ value: 'do 1950' },
 		{ value: 'od 1950 do 1989' },
 		{ value: 'od 1990 do 2010' },
 		{ value: 'od 2010' },
 	];
-	public properties: IProperty[] = [
+	public properties: IText[] = [
 		{ value: 'Kawalerka' },
 		{ value: 'Mieszkanie' },
 		{ value: 'Pokój' },

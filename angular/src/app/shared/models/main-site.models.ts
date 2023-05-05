@@ -3,41 +3,18 @@ export interface ICitiesGroup {
 	cities: string[];
 }
 
-export interface IRegion {
+export interface IDistrictsGroup {
+	city: string;
+	districts: string[];
+}
+
+export interface IText {
 	value: string;
 }
 
-export interface IArea {
+export interface INumeric {
 	value: number;
 	viewValue: string;
-}
-
-export interface IRoom {
-	value: number;
-	viewValue: string;
-}
-
-export interface IPrice {
-	value: number;
-	viewValue: string;
-}
-
-export interface IDistance {
-	value: number;
-	viewValue: string;
-}
-
-export interface IFloor {
-	value: number;
-	viewValue: string;
-}
-
-export interface IYear {
-	value: string;
-}
-
-export interface IProperty {
-	value: string;
 }
 
 export class RegionCity {
