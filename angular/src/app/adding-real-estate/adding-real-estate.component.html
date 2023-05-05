@@ -1,0 +1,62 @@
+<mat-card>
+  <mat-card-header>
+     <h1 class="title">Utwórz nieruchomość</h1>
+  </mat-card-header>
+  <mat-card-content>
+
+    
+    <form>
+      <label>Typ nieruchomości:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Select an option</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option>None</mat-option>
+        <mat-option value="option1">Mieszkanie</mat-option>
+        <mat-option value="option2">Dom</mat-option>
+        <mat-option value="option3">Pokój</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </form>
+      <form>
+    <label>Adres:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Adres</mat-label>
+      <input matInput placeholder="Warszawa, ul. Polna 5 m.12">
+      <mat-icon matSuffix>location_on</mat-icon>
+    </mat-form-field>
+      </form>
+
+    <form>
+    <label>Metraż:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Metraż</mat-label>
+      <input matInput placeholder="45 m2">
+    </mat-form-field>
+    </form>
+
+    <form>
+    <label>Max. l. mieszkańców:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Max. l. mieszkańców</mat-label>
+      <input matInput placeholder="4">
+    </mat-form-field>
+    </form>
+
+    <form>
+    <label>Wyposarzenie:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Wyposarzenie</mat-label>
+      <input matInput placeholder="Brak">
+    </mat-form-field>
+    </form>
+
+    <form>
+    <label>Liczba pokoi:</label>
+    <mat-form-field appearance="fill">
+      <mat-label>Liczba pokoi</mat-label>
+      <input matInput placeholder="3">
+    </mat-form-field>
+    </form>
+
+  </mat-card-content>
+</mat-card>
