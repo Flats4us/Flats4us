@@ -1,15 +1,6 @@
-export interface ICitiesGroup {
-	region: string;
-	cities: string[];
-}
-
-export interface IDistrictsGroup {
-	city: string;
-	districts: string[];
-}
-
-export interface IText {
-	value: string;
+export interface IGroup {
+	whole: string;
+	parts: string[];
 }
 
 export interface INumeric {
@@ -17,12 +8,7 @@ export interface INumeric {
 	viewValue: string;
 }
 
-export class RegionCity {
-	private region: string;
-	private city: string;
-
-	constructor(region: string, city: string) {
-		this.region = region;
-		this.city = city;
-	}
+export interface IRegionCity {
+	region: string;
+	city: string;
 }
