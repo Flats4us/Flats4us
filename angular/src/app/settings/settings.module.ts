@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SettingsRoutingModule } from './settings-routing.module';
-import { CommonModule } from '@angular/common';
 import { StudentSurveyComponent } from './components/student-survey/student-survey.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
@@ -13,8 +12,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
 import { EmailChangeModule } from './components/emailChange/emailChange.module';
+import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
 	declarations: [StudentSurveyComponent],

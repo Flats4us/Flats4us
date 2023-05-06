@@ -18,10 +18,6 @@ const routes: Routes = [
 		path: 'password-change',
 		component: PasswordChangeComponent,
 	},
-	{
-		path: 'student-survey',
-		component: StudentSurveyComponent,
-	},
 ];
 
 @NgModule({
