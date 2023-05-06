@@ -39,7 +39,7 @@ import { RouterModule } from '@angular/router';
 		BrowserModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-		RouterModule
+		RouterModule,
 	],
 	exports: [MainSiteComponent],
 })
