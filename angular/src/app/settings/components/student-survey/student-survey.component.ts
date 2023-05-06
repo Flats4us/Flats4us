@@ -34,10 +34,6 @@ export class StudentSurveyComponent implements OnInit {
 	) {}
 
 	public ngOnInit(): void {
-		this.question = 'testowanko';
-		this.snackBar.open('Pomyślnie zmieniono adres mailowy!', 'Zamknij', {
-			duration: 2000,
-		});
 		this.http.get('../../assets/survey.json').subscribe((data) => {
 			this.parsedData = JSON.parse(JSON.stringify(data));
 			this.question = this.parsedData.questions.find(
