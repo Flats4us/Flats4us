@@ -1,4 +1,4 @@
-<main>
+<div class="mainsite">
 	<form class="container-4" [formGroup]="mainSiteForm" (ngSubmit)="onSubmit()">
 		<div class="container-3">
 			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
@@ -10,13 +10,9 @@
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
 					</span>
-					<mat-select
-						id="region"
-						formControlName="regionsGroup"
-						(selectionChange)="changeRegion($event)"
-					>
-						<mat-option *ngFor="let region of regions" [value]="region.value">
-							{{ region.value }}
+					<mat-select id="region" formControlName="regionsGroup">
+						<mat-option *ngFor="let region of regions" [value]="region">
+							{{ region }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -38,13 +34,9 @@
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
 							*ngFor="let group of citiesGroupOptions | async"
-							[label]="group.region"
+							[label]="group.whole"
 						>
-							<mat-option
-								*ngFor="let city of group.cities"
-								[value]="city"
-								(selectionChange)="changeCity($event)"
-							>
+							<mat-option *ngFor="let city of group.parts" [value]="city">
 								{{ city }}
 							</mat-option>
 						</mat-optgroup>
@@ -69,8 +61,8 @@
 						<div class="boxIcon"><mat-icon>home</mat-icon></div>
 					</span>
 					<mat-select id="property" formControlName="property">
-						<mat-option *ngFor="let property of properties" [value]="property.value">
-							{{ property.value }}
+						<mat-option *ngFor="let property of properties" [value]="property">
+							{{ property }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -84,7 +76,6 @@
 						id="minPrice"
 						formControlName="minPrice"
 						type="number"
-						min="1"
 						placeholder="Cena minimalna"
 						aria-label="Number"
 						matInput
@@ -107,7 +98,6 @@
 						id="maxPrice"
 						formControlName="maxPrice"
 						type="number"
-						min="1"
 						placeholder="Cena maksymalna"
 						aria-label="Number"
 						matInput
@@ -141,7 +131,6 @@
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-
 					{{ getDescription(numberOfRecords) }}
 				</div>
 			</div>
@@ -163,9 +152,9 @@
 					<mat-autocomplete #autoDistrict="matAutocomplete">
 						<mat-optgroup
 							*ngFor="let group2 of districtGroupOptions | async"
-							[label]="group2.city"
+							[label]="group2.whole"
 						>
-							<mat-option *ngFor="let district of group2.districts" [value]="district">
+							<mat-option *ngFor="let district of group2.parts" [value]="district">
 								{{ district }}
 							</mat-option>
 						</mat-optgroup>
@@ -181,7 +170,6 @@
 						id="minArea"
 						ormControlName="minArea"
 						type="number"
-						min="1"
 						placeholder="Powierzchnia od"
 						aria-label="Number"
 						matInput
@@ -204,7 +192,6 @@
 						id="maxArea"
 						formControlName="maxArea"
 						type="number"
-						min="1"
 						placeholder="Powierzchnia do"
 						aria-label="Number"
 						matInput
@@ -223,20 +210,11 @@
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>history</mat-icon></div>
 					</span>
-					<input
-						id="year"
-						formControlName="year"
-						type="text"
-						placeholder="Lata budowy"
-						aria-label="Text"
-						matInput
-						[matAutocomplete]="autoYearOfBuild"
-					/>
-					<mat-autocomplete #autoYearOfBuild="matAutocomplete">
-						<mat-option *ngFor="let year of yearOfBuilds" [value]="year.value">
-							{{ year.value }}
+					<mat-select id="year" formControlName="year">
+						<mat-option *ngFor="let year of yearOfBuilds" [value]="year">
+							{{ year }}
 						</mat-option>
-					</mat-autocomplete>
+					</mat-select>
 				</mat-form-field>
 
 				<mat-form-field class="example-full-width" appearance="fill">
@@ -248,7 +226,6 @@
 						id="rooms"
 						formControlName="rooms"
 						type="number"
-						min="1"
 						placeholder="Min. liczba pokoi"
 						aria-label="Number"
 						matInput
@@ -270,7 +247,6 @@
 						id="floors"
 						formControlName="floors"
 						type="number"
-						min="1"
 						placeholder="Maks. liczba pięter"
 						aria-label="Number"
 						matInput
@@ -532,4 +508,4 @@
 			</mat-card-content>
 		</mat-card>
 	</div>
-</main>
+</div>
