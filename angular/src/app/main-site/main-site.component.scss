@@ -1,4 +1,4 @@
-main {
+.mainsite {
 	background-color: #ffffff;
 	display: flex;
 	flex-wrap: wrap;
@@ -8,7 +8,6 @@ main {
 	text-decoration: none;
 	color: #333333;
 	padding-top: 0px;
-	// padding-top: 40px;
 	justify-content: center;
 }
 
@@ -138,12 +137,6 @@ mat-card-content {
 .boxIcon2 {
 	padding-top: 5px;
 }
-
-// .example-form {
-// 	min-width: 50px;
-// 	max-width: 300px;
-// 	width: 100%;
-// }
 
 .example-full-width {
 	width: 100%;
