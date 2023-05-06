@@ -13,6 +13,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
+import { EmailChangeModule } from './components/emailChange/emailChange.module';
 
 @NgModule({
 	declarations: [StudentSurveyComponent],
@@ -31,6 +33,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 		HttpClientModule,
 		MatButtonModule,
 		MatCheckboxModule,
+		EmailChangeModule,
+		PasswordChangeModule,
 	],
 })
 export class SettingsModule {}

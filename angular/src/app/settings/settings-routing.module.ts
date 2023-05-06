@@ -6,10 +6,10 @@ import { EmailChangeComponent } from './components/emailChange/emailChange.compo
 import { PasswordChangeComponent } from './components/passwordChange/passwordChange.component';
 
 const routes: Routes = [
-  {
-    path: 'student-survey',
-    component: StudentSurveyComponent,
-  },
+	{
+		path: 'student-survey',
+		component: StudentSurveyComponent,
+	},
 	{
 		path: 'email-change',
 		component: EmailChangeComponent,
