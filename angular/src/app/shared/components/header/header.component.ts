@@ -19,7 +19,7 @@ export class HeaderComponent {
 	public signIn() {
 		this.router.navigate(['auth/register']);
 	}
-	public profile() {
-		this.router.navigate(['profile/id']);
+	public profile(id: string) {
+		this.router.navigate(['profile/', id]);
 	}
 }

@@ -18,7 +18,7 @@
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
 		<button class="map" mat-menu-item>
 			<span><mat-icon>map</mat-icon></span
-			>MAPA OFERT
+			>MAPA
 		</button>
 		<button class="tidings" mat-menu-item [matMenuTriggerFor]="tidings">
 			<span><mat-icon>speaker_notes</mat-icon></span
@@ -45,6 +45,7 @@
 		</mat-menu>
 
 		<button class="options" mat-menu-item [matMenuTriggerFor]="extended">
+			<span><mat-icon>arrow_drop_down</mat-icon></span>
 			DODATKOWE
 		</button>
 
@@ -71,11 +72,11 @@
 			<option value="pl">PL</option>
 			<option value="EN">EN</option>
 		</select>
-		<span><img class="icon-sun" src="../../assets/sun.svg" alt="Sun" /></span>
+		<span><i class="far fa-sun"></i> </span>
 		<div class="mode">
 			<mat-slide-toggle> </mat-slide-toggle>
 		</div>
-		<span><img class="icon-moon" src="../../assets/moon.svg" alt="Moon" /></span>
+		<span><i class="far fa-moon"></i> </span>
 	</div>
 
 	<div *ngIf="isUserLoggedIn" class="photo">
@@ -84,7 +85,7 @@
 		</button>
 	</div>
 	<mat-menu #my_profile="matMenu">
-		<button (click)="profile()" mat-menu-item>MÓJ PROFIL</button>
+		<button (click)="profile('1')" mat-menu-item>MÓJ PROFIL</button>
 		<button mat-menu-item>EDYTUJ PROFIL</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">PŁATNOŚCI</button>
 		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>MOJE WYNAJMY</button>
