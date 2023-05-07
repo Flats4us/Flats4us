@@ -1,1 +1,51 @@
-<p>login works!</p>
+<mat-card>
+	<h1>Zaloguj się</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
+		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+			<mat-form-field class="no-border-style" appearance="outline">
+				<mat-label>Email</mat-label>
+				<input matInput formControlName="email" required email />
+			</mat-form-field>
+
+			<mat-form-field class="no-border-style" appearance="outline">
+				<mat-label>Hasło</mat-label>
+				<input
+					formControlName="password"
+					matInput
+					[type]="hide ? 'password' : 'text'"
+				/>
+				<button
+					mat-icon-button
+					matSuffix
+					type="button"
+					(click)="hide = !hide"
+					[attr.aria-label]="'Hide password'"
+					[attr.aria-pressed]="hide"
+				>
+					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+				</button>
+			</mat-form-field>
+
+			<a href="" id="reset-password">Zapomniałeś hasła?</a>
+
+			<div class="buttons">
+				<button
+					mat-flat-button
+					class="btn-loginSubmit"
+					type="submit"
+					[disabled]="!loginForm.valid"
+				>
+					Login
+				</button>
+				<button
+					mat-flat-button
+					class="btn-register"
+					type="button"
+					routerLink="../register"
+				>
+					Rejestracja
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>
