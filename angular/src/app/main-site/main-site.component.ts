@@ -26,23 +26,10 @@ export const filter = (opt: string[], value: string): string[] => {
 export class MainSiteComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 143084;
+	public isElevator = false;
 
 	public showFilters() {
 		this.showMoreFilters = !this.showMoreFilters;
-	}
-	public getDescription(numberOfRecords: number) {
-		if (numberOfRecords == 1) {
-			return `${numberOfRecords} oferta`;
-		} else if (
-			(numberOfRecords > 1 && numberOfRecords <= 4) ||
-			(numberOfRecords > 20 &&
-				numberOfRecords % 10 > 1 &&
-				numberOfRecords % 10 <= 4)
-		) {
-			return `${numberOfRecords} oferty`;
-		} else {
-			return `${numberOfRecords} ofert`;
-		}
 	}
 
 	public onSubmit() {
@@ -94,6 +81,7 @@ export class MainSiteComponent implements OnInit {
 				Validators.min(0),
 				Validators.pattern('^[0-9]*$'),
 			]),
+			elevator: new FormControl(''),
 		});
 		this.http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
@@ -128,6 +116,9 @@ export class MainSiteComponent implements OnInit {
 				startWith(''),
 				map((value) => this.filterDistrictsGroup(value || ''))
 			);
+		this.mainSiteForm
+			.get('elevator')
+			?.valueChanges.subscribe((value) => (this.isElevator = value));
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {

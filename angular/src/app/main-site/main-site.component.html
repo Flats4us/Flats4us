@@ -131,7 +131,7 @@
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-					{{ getDescription(numberOfRecords) }}
+					<div [appGetDescription]="numberOfRecords"></div>
 				</div>
 			</div>
 			<div *ngIf="showMoreFilters" class="box3">
