@@ -7,6 +7,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { IQuestionsData } from './questions-data.interface';
 
 @Component({
 	selector: 'app-student-survey',
@@ -15,10 +16,9 @@ import { HttpClient } from '@angular/common/http';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentSurveyComponent implements OnInit {
-	public question = 'test';
+	public questions: any[] = [];
 	public studentSurveyForm: FormGroup;
 	public showLookingForRoommates = false;
-	public parsedData: any;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -41,18 +41,22 @@ export class StudentSurveyComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.http.get('../../assets/survey.json').subscribe((data) => {
-			this.parsedData = JSON.parse(JSON.stringify(data));
-			this.question = this.parsedData.questions.find(
-				(q: { id: number }) => q.id === 3
-			).content;
-			this.cdr.detectChanges();
-		});
+		this.http
+			.get<IQuestionsData>('../../assets/survey.json')
+			.subscribe((data) => {
+				this.questions = data.questions;
+				this.cdr.detectChanges();
+			});
 
 		this.studentSurveyForm
 			.get('lookingForRoommates')
 			?.valueChanges.subscribe((value) => (this.showLookingForRoommates = value));
 	}
+
+	public getQuestionById(id: number) {
+		return this.questions.find((question) => question.id === id).content;
+	}
+
 	public onSubmit() {
 		this.snackBar.open('Pomyślnie wypełniono ankietę!', 'Zamknij', {
 			duration: 2000,
