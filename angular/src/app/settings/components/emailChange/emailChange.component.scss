@@ -12,14 +12,6 @@ mat-form-field {
 	margin: 2px 0;
 }
 
-::-ms-reveal {
-	display: none;
-}
-
-::ng-deep .mdc-notched-outline__notch {
-	border-right: none !important;
-}
-
 .buttons {
 	display: flex;
 	flex-direction: column;

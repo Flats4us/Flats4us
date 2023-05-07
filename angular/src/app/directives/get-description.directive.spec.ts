@@ -1,8 +1,12 @@
-// import { GetDescriptionDirective } from './get-description.directive';
+import { GetDescriptionDirective } from './get-description.directive';
 
-// describe('GetDescriptionDirective', () => {
-//   it('should create an instance', () => {
-//     const directive = new GetDescriptionDirective();
-//     expect(directive).toBeTruthy();
-//   });
-// });
+const testElement = {
+	nativeElement: document.createElement('div'),
+};
+
+describe('GetDescriptionDirective', () => {
+	it('should create an instance', () => {
+		const directive = new GetDescriptionDirective(testElement);
+		expect(directive).toBeTruthy();
+	});
+});
