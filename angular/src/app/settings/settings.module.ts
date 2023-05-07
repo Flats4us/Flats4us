@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SettingsRoutingModule } from './settings-routing.module';
-import { StudentSurveyComponent } from '../profile/student-survey/student-survey.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
