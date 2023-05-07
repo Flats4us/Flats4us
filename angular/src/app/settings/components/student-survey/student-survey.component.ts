@@ -16,14 +16,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class StudentSurveyComponent implements OnInit {
 	public question = 'test';
-	public studentSurveyForm!: FormGroup;
+	public studentSurveyForm: FormGroup;
 	public showLookingForRoommates = false;
-	public party!: number;
-	public tidy!: number;
-	public smoke!: number;
-	public social!: number;
-
-	//public formData!: IJsonFormData;
 	public parsedData: any;
 
 	constructor(
@@ -31,17 +25,7 @@ export class StudentSurveyComponent implements OnInit {
 		private snackBar: MatSnackBar,
 		private http: HttpClient,
 		private cdr: ChangeDetectorRef
-	) {}
-
-	public ngOnInit(): void {
-		this.http.get('../../assets/survey.json').subscribe((data) => {
-			this.parsedData = JSON.parse(JSON.stringify(data));
-			this.question = this.parsedData.questions.find(
-				(q: { id: number }) => q.id === 3
-			).content;
-			this.cdr.detectChanges();
-		});
-
+	) {
 		this.studentSurveyForm = this.formBuilder.group({
 			party: 0,
 			tidy: 0,
@@ -54,15 +38,23 @@ export class StudentSurveyComponent implements OnInit {
 			maxRoommateAge: ['', Validators.required],
 			lookingForRoommates: [''],
 		});
+	}
+
+	public ngOnInit(): void {
+		this.http.get('../../assets/survey.json').subscribe((data) => {
+			this.parsedData = JSON.parse(JSON.stringify(data));
+			this.question = this.parsedData.questions.find(
+				(q: { id: number }) => q.id === 3
+			).content;
+			this.cdr.detectChanges();
+		});
 
 		this.studentSurveyForm
 			.get('lookingForRoommates')
-			?.valueChanges.subscribe((value) => {
-				this.showLookingForRoommates = value;
-			});
+			?.valueChanges.subscribe((value) => (this.showLookingForRoommates = value));
 	}
 	public onSubmit() {
-		this.snackBar.open('Pomyślnie zmieniono adres mailowy!', 'Zamknij', {
+		this.snackBar.open('Pomyślnie wypełniono ankietę!', 'Zamknij', {
 			duration: 2000,
 		});
 	}
