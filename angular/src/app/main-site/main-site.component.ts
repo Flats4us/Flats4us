@@ -74,7 +74,7 @@ export class MainSiteComponent implements OnInit {
 			]),
 			year: new FormControl(''),
 			rooms: new FormControl('', [
-				Validators.min(0),
+				Validators.min(1),
 				Validators.pattern('^[0-9]*$'),
 			]),
 			floors: new FormControl('', [
