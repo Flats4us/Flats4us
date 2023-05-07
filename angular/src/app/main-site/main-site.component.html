@@ -33,7 +33,7 @@
 					</span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group of citiesGroupOptions | async"
+							*ngFor="let group of citiesGroupOptions$ | async"
 							[label]="group.whole"
 						>
 							<mat-option *ngFor="let city of group.parts" [value]="city">
@@ -151,7 +151,7 @@
 					</span>
 					<mat-autocomplete #autoDistrict="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group2 of districtGroupOptions | async"
+							*ngFor="let group2 of districtGroupOptions$ | async"
 							[label]="group2.whole"
 						>
 							<mat-option *ngFor="let district of group2.parts" [value]="district">
