@@ -22,4 +22,7 @@ export class HeaderComponent {
 	public profile(id: string) {
 		this.router.navigate(['profile/', id]);
 	}
+  public mainPage() {
+    this.router.navigate(['mainPage']);
+  }
 }
