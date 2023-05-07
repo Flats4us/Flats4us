@@ -45,3 +45,10 @@ mat-radio-button {
 .option3 {
 	margin-left: 49px;
 }
+.smoked,
+.party,
+.animals,
+.gender {
+	display: flex;
+	justify-content: space-between;
+}
