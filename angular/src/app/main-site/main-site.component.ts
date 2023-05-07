@@ -26,7 +26,6 @@ export const filter = (opt: string[], value: string): string[] => {
 export class MainSiteComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 143084;
-	public isElevator = false;
 
 	public showFilters() {
 		this.showMoreFilters = !this.showMoreFilters;
@@ -40,8 +39,8 @@ export class MainSiteComponent implements OnInit {
 
 	public mainSiteForm: FormGroup = new FormGroup({});
 
-	public citiesGroupOptions!: Observable<IGroup[]>;
-	public districtGroupOptions!: Observable<IGroup[]>;
+	public citiesGroupOptions$?: Observable<IGroup[]>;
+	public districtGroupOptions$?: Observable<IGroup[]>;
 
 	public regionCityArray: IRegionCity[] = [];
 
@@ -103,22 +102,19 @@ export class MainSiteComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.citiesGroupOptions = this.mainSiteForm
-			.get('citiesGroup')!
-			.valueChanges.pipe(
+		this.citiesGroupOptions$ = this.mainSiteForm
+			.get('citiesGroup')
+			?.valueChanges.pipe(
 				startWith(''),
 				map((value) => this.filterCitiesGroup(value || ''))
 			);
 
-		this.districtGroupOptions = this.mainSiteForm
-			.get('districtsGroup')!
-			.valueChanges.pipe(
+		this.districtGroupOptions$ = this.mainSiteForm
+			.get('districtsGroup')
+			?.valueChanges.pipe(
 				startWith(''),
 				map((value) => this.filterDistrictsGroup(value || ''))
 			);
-		this.mainSiteForm
-			.get('elevator')
-			?.valueChanges.subscribe((value) => (this.isElevator = value));
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
