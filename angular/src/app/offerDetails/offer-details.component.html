@@ -1,1 +1,50 @@
-<p>Offer details works!</p>
+<mat-card>
+	<mat-card-header>
+		<mat-card-title class="text-2xl">
+			Mieszkanie 45m<sup>2</sup> Wola
+		</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<div class="div1">
+			<gallery gallerize [items]="images"></gallery>
+		</div>
+		<mat-chip-listbox>
+			<mat-chip class="orange">Szczegóły oferty</mat-chip>
+			<mat-chip class="gray">Cena: 2000 zł/msc</mat-chip>
+		</mat-chip-listbox>
+		<div class="container1">
+			<div>
+				<p>Data wystawienia:</p>
+				<p>Adres:</p>
+				<p>Metraż:</p>
+			</div>
+			<div>
+				<p>12-12-20022</p>
+				<p>ul. Warszawska 1</p>
+				<p>45 m<sup>2</sup></p>
+			</div>
+			<div>
+				<p>Okres wynajęcia:</p>
+				<p>Max. liczba mieszkańców:</p>
+				<p>Wyposażenie:</p>
+			</div>
+			<div>
+				<p>12 miesięcy</p>
+				<p>2</p>
+				<p>-</p>
+			</div>
+		</div>
+		<mat-chip-listbox>
+			<mat-chip class="orange">Opis</mat-chip>
+		</mat-chip-listbox>
+		<p>
+			Wynajmę mieszkanie 45 m2 położone w cichej zielonej okolicy w pionkach.
+			Mieszkanie składa się z dwóch pokoi, łazienki, widnej kuchni i balkonu.
+			Położone jest na czwartym piętrze bloku po termomodernizacji.
+		</p>
+		<div class="container2">
+			<div class="sliders"></div>
+			<div class="side-bar"></div>
+		</div>
+	</mat-card-content>
+</mat-card>

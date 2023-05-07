@@ -1,0 +1,43 @@
+mat-chip.orange {
+	font-size: 25px;
+	padding: 25px;
+	margin-right: 40px;
+	background-color: #fbbb8b;
+}
+
+mat-chip.gray {
+	font-size: 25px;
+	padding: 25px;
+	background-color: #c4c4c4;
+}
+
+gallery {
+	max-width: 70%;
+	margin: 0 auto;
+	background-color: #c4c4c4;
+	border: 1px solid #000000;
+	padding: 10px;
+}
+
+.container1 {
+	display: flex;
+}
+
+.container1 > div {
+	flex: 1;
+	margin-right: 20px;
+}
+
+.container2 {
+	display: flex;
+}
+
+.sliders {
+	flex-basis: 66.66%;
+	background-color: #f0f0f0;
+}
+
+.side-bar {
+	flex-basis: 33.33%;
+	background-color: #dcdcdc;
+}
