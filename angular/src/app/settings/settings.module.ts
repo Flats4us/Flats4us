@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SettingsRoutingModule } from './settings-routing.module';
-import { StudentSurveyComponent } from './components/student-survey/student-survey.component';
+import { StudentSurveyComponent } from '../profile/student-survey/student-survey.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { PasswordChangeModule } from './components/passwordChange/passwordChange
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-	declarations: [StudentSurveyComponent],
+	declarations: [],
 	imports: [
 		CommonModule,
 		SettingsRoutingModule,
