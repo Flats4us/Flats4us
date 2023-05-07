@@ -1,15 +1,15 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 
 @Directive({
 	selector: '[appGetDescription]',
 })
-export class GetDescriptionDirective implements OnInit {
+export class GetDescriptionDirective implements OnChanges {
 	@Input('appGetDescription')
-	public count!: number;
+	public count = 0;
 
 	constructor(private el: ElementRef) {}
 
-	public ngOnInit() {
+	public ngOnChanges() {
 		this.el.nativeElement.textContent = this.getDescription(this.count);
 	}
 
