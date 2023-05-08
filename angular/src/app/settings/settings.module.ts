@@ -1,39 +1,24 @@
-import { NgModule } from '@angular/core';
-import { SettingsRoutingModule } from './settings-routing.module';
-import { MatCardModule } from '@angular/material/card';
-import { MatSliderModule } from '@angular/material/slider';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatListModule } from '@angular/material/list';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { EmailChangeModule } from './components/emailChange/emailChange.module';
-import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+
+import { EmailChangeModule } from './components/emailChange/emailChange.module';
+import { HelpCenterModule } from './components/help-center/help-center.module';
+import { NotificationsModule } from './components/notifications/notifications.module';
+import { PasswordChangeModule } from './components/passwordChange/passwordChange.module';
+import { SettingsRoutingModule } from './settings-routing.module';
+import { SettingsComponent } from './settings.component';
 
 @NgModule({
-	declarations: [],
+	declarations: [SettingsComponent],
 	imports: [
 		CommonModule,
 		SettingsRoutingModule,
-		MatCardModule,
-		MatSliderModule,
-		MatSnackBarModule,
-		FormsModule,
-		MatListModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatInputModule,
-		MatSlideToggleModule,
-		HttpClientModule,
-		MatButtonModule,
-		MatCheckboxModule,
+		NotificationsModule,
 		EmailChangeModule,
 		PasswordChangeModule,
+		HelpCenterModule,
+		MatCardModule,
 	],
 })
 export class SettingsModule {}
