@@ -2,7 +2,7 @@
 
 namespace Flats4us.Entities
 {
-    public class Student : OwnerStudent
+    public class Student : OwnerStudent //abstract
     {
         [Required]
         public int YearOfBirth { get; set; }

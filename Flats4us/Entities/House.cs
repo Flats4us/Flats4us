@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public class House : Property
+    public class House : Property //not abstract
     {
         [Required]
         [Column("NumberOfRooms")]
@@ -14,5 +15,7 @@ namespace Flats4us.Entities
 
         [Required]
         public int ParcelSurface { get; set; }
+
+
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
@@ -12,5 +14,6 @@ namespace Flats4us.Entities
         [Required]
         [MaxLength(60)]
         public string? Name { get; set; }
+
     }
 }

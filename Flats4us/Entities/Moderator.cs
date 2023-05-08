@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
@@ -8,7 +9,7 @@ namespace Flats4us.Entities
         dept2
     }
 
-    public class Moderator : User
+    public class Moderator : User //not abstract
     {
         [Required]
         public DateTime HireDate { get; set; }
@@ -22,5 +23,8 @@ namespace Flats4us.Entities
         {
             Interventions = new HashSet<Intervention>();
         }
+
+
+
     }
 }

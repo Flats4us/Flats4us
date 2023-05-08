@@ -1,4 +1,5 @@
 ﻿using Flats4us.Migrations;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,7 @@ namespace Flats4us.Entities
     }
 
     [Table("Argument")]
-    public class Argument
+    public class Argument          //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -41,5 +42,7 @@ namespace Flats4us.Entities
         {
             ArgumentMessages = new HashSet<ArgumentMessage>();
         }
+
+
     }
 }

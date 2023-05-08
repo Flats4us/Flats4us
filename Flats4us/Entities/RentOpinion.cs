@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Flats4us.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Entities
 {
@@ -46,5 +48,7 @@ namespace Flats4us.Entities
         public int ComplianceWithOffer { get; set; }
 
         public virtual Rent Rent { get; set; }
+
+
     }
 }

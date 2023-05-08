@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
     [Table("OfferInterest")]
-    public class OfferInterest
+    public class OfferInterest  //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -20,5 +21,6 @@ namespace Flats4us.Entities
 
         public virtual Offer Offer { get; set; }
         public virtual Seeker Seeker { get; set; }
+
     }
 }

@@ -15,7 +15,7 @@ namespace Flats4us.Entities
         NotVerified
     }
 
-    public class OwnerStudent : User
+    public class OwnerStudent : User //abstract
     {
         [Required]
         public string? PhotoPath { get; set; }

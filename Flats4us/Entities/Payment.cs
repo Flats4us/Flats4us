@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
@@ -11,7 +13,7 @@ namespace Flats4us.Entities
     }
 
     [Table("Payment")]
-    public class Payment
+    public class Payment //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -24,5 +26,6 @@ namespace Flats4us.Entities
 
         public virtual Student Student { get; set; }
         public virtual Offer Offer { get; set; }
+ 
     }
 }

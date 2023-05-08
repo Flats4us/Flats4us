@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
@@ -12,7 +14,7 @@ namespace Flats4us.Entities
 
 
     [Table("Survey")]
-    public class Survey
+    public class Survey //ankieta do studenta
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [ForeignKey("Student")]
@@ -41,7 +43,7 @@ namespace Flats4us.Entities
 
         // Scale 1-10
         [Required]
-        public int Sociability { get; set;}
+        public int Sociability { get; set; }
 
         // Scale 1-10
         [Required]
@@ -63,5 +65,7 @@ namespace Flats4us.Entities
         public int MaxRoommateAge { get; set; }
 
         public virtual Student Student { get; set; }
+
+
     }
 }

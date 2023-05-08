@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
 namespace Flats4us.Entities
 {
     [Table("PropertyImage")]
-    public class PropertyImage
+    public class PropertyImage  //to jest do property
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -16,5 +17,7 @@ namespace Flats4us.Entities
         public string? ImagePath { get; set; }
 
         public virtual Property Property { get; set; }
+
+
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    public class Owner : OwnerStudent
+    public class Owner : OwnerStudent //not abstract
     {
         [Required]
         public string? BankAccount { get; set; }
@@ -19,5 +20,7 @@ namespace Flats4us.Entities
             IssuedRatings = new HashSet<OwnerOpinion>();
             ReceivedRatings = new HashSet<StudentOpinion>();
         }
+
+
     }
 }

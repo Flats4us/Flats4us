@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
     [Table("Intervention")]
-    public class Intervention
+    public class Intervention  //not abstract
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -14,5 +15,8 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime Date { get; set; }
+
+
+
     }
 }

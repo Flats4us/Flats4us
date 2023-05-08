@@ -1,6 +1,9 @@
-﻿namespace Flats4us.Entities
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Flats4us.Entities
 {
-    public class Seeker : Student
+    public class Seeker : Student //not abstract
     {
+
     }
 }

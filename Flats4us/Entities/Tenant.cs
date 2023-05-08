@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
@@ -8,11 +9,13 @@ namespace Flats4us.Entities
         Alone
     }
 
-    public class Tenant : Student
+    public class Tenant : Student //not abstract
     {
         [Required]
         public RoommatesStatus RoommatesStatus { get; set; }
 
         public virtual ICollection<Rent> Rents { get; set; }
+
+
     }
 }
