@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 
 namespace Flats4us.Entities
 {
@@ -9,24 +7,29 @@ namespace Flats4us.Entities
     public class Rent
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RentId { get; set; }
-
-        [Required]
-        public int TenantId { get; set; }
-
-        [Required]
-        public int FlatId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
 
         [Required]
-        public int DurationInMonths { get; set; }
+        public int? LengthInMonths { get; set; }
 
         [Required]
-        public float PricePerMonth { get; set; }
+        public string? ContractInformations { get; set; }
+
+        public virtual RentOpinion RentOpinion { get; set; }
 
         public virtual Tenant Tenant { get; set; }
-        public virtual Flat Flat { get; set; }
+
+        public virtual Offer Offer { get; set; }
+
+        public virtual ICollection<Student> OtherTenants { get; set; }
+
+        public Rent()
+        {
+            OtherTenants = new HashSet<Student>();
+        }
+
     }
 }

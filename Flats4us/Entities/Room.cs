@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public class Flat : Property
+    public class Room : Property
     {
         [Required]
-        [Column("NumberOfRooms")]
-        public int NumberOfRooms { get; set; }
+        public string? Name { get; set; }
     }
 }
