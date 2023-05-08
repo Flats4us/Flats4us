@@ -1,0 +1,55 @@
+.settings {
+	display: flex;
+	flex-direction: row;
+}
+mat-card {
+	width: 200px;
+	padding: 20px;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	margin-bottom: 10px;
+}
+
+nav ul li a {
+	display: block;
+	position: relative;
+	padding-bottom: 5px;
+	color: #fbbb8b;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+nav ul li a.active {
+	font-weight: 600;
+}
+
+nav ul li a::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 0;
+	background-color: #fbbb8b;
+	transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
+	width: 100%;
+}
+
+nav ul li a.active::after {
+	width: 100%;
+}
+
+.router-outlet {
+	flex-grow: 1;
+	padding: 20px;
+}
