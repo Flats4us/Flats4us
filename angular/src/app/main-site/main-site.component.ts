@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { IGroup } from '../shared/models/main-site.models';
 import { IRegionCity } from '../shared/models/main-site.models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 export const filter = (opt: string[], value: string): string[] => {
 	const filterValue = value.toLowerCase();
@@ -23,9 +24,18 @@ export const filter = (opt: string[], value: string): string[] => {
 	styleUrls: ['./main-site.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainSiteComponent implements OnInit {
+export class MainSiteComponent implements OnInit, OnChanges {
 	public showMoreFilters = false;
-	public numberOfRecords = 143084;
+	public numberOfRecords = 14585;
+	public selectedDistance = 0;
+
+	@Input()
+	public selectedCity = '';
+	public setSelectedCity(event: MatAutocompleteSelectedEvent) {
+		this.selectedCity = event.option.value;
+	}
+
+	private selectedCity2 = new BehaviorSubject<string>('Warszawa');
 
 	public showFilters() {
 		this.showMoreFilters = !this.showMoreFilters;
@@ -80,7 +90,7 @@ export class MainSiteComponent implements OnInit {
 				Validators.min(0),
 				Validators.pattern('^[0-9]*$'),
 			]),
-			elevator: new FormControl(''),
+			equipment: new FormControl(''),
 		});
 		this.http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
@@ -115,6 +125,18 @@ export class MainSiteComponent implements OnInit {
 				startWith(''),
 				map((value) => this.filterDistrictsGroup(value || ''))
 			);
+
+		this.mainSiteForm.get('distance')?.setValue(0);
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (
+			!this.districtGroups.find(
+				(value) => value.whole === changes['selectedCity'].currentValue
+			)
+		) {
+			this.mainSiteForm.get('districtsGroup')?.disable();
+		}
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -381,7 +403,7 @@ export class MainSiteComponent implements OnInit {
 		'od 1950 do 1989',
 		'od 1990 do 2010',
 		'od 2010',
-		'wszystkie',
 	];
-	public properties: string[] = ['Kawalerka', 'Mieszkanie', 'Pokój'];
+	public properties: string[] = ['Dom', 'Kawalerka', 'Mieszkanie', 'Pokój'];
+	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
 }
