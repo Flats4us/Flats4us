@@ -1,11 +1,14 @@
 <div class="mainsite">
 	<form class="container-4" [formGroup]="mainSiteForm" (ngSubmit)="onSubmit()">
 		<div class="container-3">
-			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
+			<h1>
+				Znajdź mieszkanie, pokój lub dom do wynajęcia <br />
+				{{ selectedCity }}
+			</h1>
 		</div>
 		<div class="container">
 			<div class="box2">
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Województwo</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
@@ -17,7 +20,7 @@
 					</mat-select>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Miejscowość</mat-label>
 					<input
 						id="city"
@@ -31,7 +34,10 @@
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
 					</span>
-					<mat-autocomplete #autoCity="matAutocomplete">
+					<mat-autocomplete
+						#autoCity="matAutocomplete"
+						(optionSelected)="setSelectedCity($event)"
+					>
 						<mat-optgroup
 							*ngFor="let group of citiesGroupOptions$ | async"
 							[label]="group.whole"
@@ -43,7 +49,7 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Odległość</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>directions_walk</mat-icon></div>
@@ -55,20 +61,20 @@
 					</mat-select>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Rodzaj nieruchomości</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>home</mat-icon></div>
 					</span>
-					<mat-select id="property" formControlName="property">
+					<mat-select id="property" formControlName="property" multiple>
 						<mat-option *ngFor="let property of properties" [value]="property">
 							{{ property }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
-					<mat-label>Cena minimalna</mat-label>
+				<mat-form-field appearance="fill">
+					<mat-label>Cena min.</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>attach_money</mat-icon></div>
 					</span>
@@ -76,12 +82,12 @@
 						id="minPrice"
 						formControlName="minPrice"
 						type="number"
-						placeholder="Cena minimalna"
+						placeholder="Cena min."
 						aria-label="Number"
 						matInput
 						[matAutocomplete]="autoPriceMin"
 					/>
-					<span matSuffix>zł</span>
+					<span class="suffix" class="suffix" matSuffix>zł</span>
 					<mat-autocomplete #autoPriceMin="matAutocomplete">
 						<mat-option *ngFor="let price of priceMaxs" [value]="price.value">
 							{{ price.viewValue }}
@@ -89,8 +95,8 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
-					<mat-label>Cena maksymalna</mat-label>
+				<mat-form-field appearance="fill">
+					<mat-label>Cena maks.</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>attach_money</mat-icon></div>
 					</span>
@@ -98,12 +104,12 @@
 						id="maxPrice"
 						formControlName="maxPrice"
 						type="number"
-						placeholder="Cena maksymalna"
+						placeholder="Cena maks."
 						aria-label="Number"
 						matInput
 						[matAutocomplete]="autoPriceMin"
 					/>
-					<span matSuffix>zł</span>
+					<span class="suffix" matSuffix>zł</span>
 					<mat-autocomplete #autoPriceMin="matAutocomplete">
 						<mat-option *ngFor="let price of priceMaxs" [value]="price.value">
 							{{ price.viewValue }}
@@ -113,16 +119,18 @@
 
 				<div class="batch">
 					<button
+						class="boxIcon2"
 						type="button"
 						(click)="showFilters()"
 						mat-icon-button
 						matTooltip="Pokaż więcej filtrów"
 						aria-label="Filter_list button"
 					>
-						<div><mat-icon>filter_list</mat-icon></div>
+						<mat-icon>filter_list</mat-icon>
 					</button>
 
 					<button
+						class="boxIcon2"
 						type="submit"
 						mat-icon-button
 						matTooltip="Szukaj ofert"
@@ -131,11 +139,11 @@
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-					<div [appGetDescription]="numberOfRecords"></div>
+					<div class="boxIcon" [appGetDescription]="numberOfRecords"></div>
 				</div>
 			</div>
 			<div *ngIf="showMoreFilters" class="box3">
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Dzielnica</mat-label>
 					<input
 						id="district"
@@ -161,7 +169,7 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Powierzchnia od</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
@@ -175,7 +183,7 @@
 						matInput
 						[matAutocomplete]="autoAreaFrom"
 					/>
-					<span matSuffix>m²</span>
+					<span matSuffix class="suffix">m²</span>
 					<mat-autocomplete #autoAreaFrom="matAutocomplete">
 						<mat-option *ngFor="let area of areaFroms" [value]="area.value">
 							{{ area.viewValue }}
@@ -183,7 +191,7 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Powierzchnia do</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
@@ -197,7 +205,7 @@
 						matInput
 						[matAutocomplete]="autoAreaTo"
 					/>
-					<span matSuffix>m²</span>
+					<span matSuffix class="suffix">m²</span>
 					<mat-autocomplete #autoAreaTo="matAutocomplete">
 						<mat-option *ngFor="let area of areaTos" [value]="area.value">
 							{{ area.viewValue }}
@@ -205,19 +213,19 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Lata budowy</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>history</mat-icon></div>
 					</span>
-					<mat-select id="year" formControlName="year">
+					<mat-select id="year" formControlName="year" multiple>
 						<mat-option *ngFor="let year of yearOfBuilds" [value]="year">
 							{{ year }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Min. liczba pokoi</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>meeting_room</mat-icon></div>
@@ -238,7 +246,7 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<mat-form-field class="example-full-width" appearance="fill">
+				<mat-form-field appearance="fill">
 					<mat-label>Maks. liczba pięter</mat-label>
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
@@ -259,16 +267,17 @@
 					</mat-autocomplete>
 				</mat-form-field>
 
-				<div class="batch2">
-					<mat-slide-toggle
-						matTooltip="Winda"
-						id="elevator"
-						formControlName="elevator"
-						><span matPrefix>
-							<div class="boxIcon"><mat-icon>elevator</mat-icon></div>
-						</span></mat-slide-toggle
-					>
-				</div>
+				<mat-form-field appearance="fill">
+					<mat-label>Wyposażenie</mat-label>
+					<span matPrefix>
+						<div class="boxIcon"><mat-icon>category</mat-icon></div>
+					</span>
+					<mat-select id="equipment" formControlName="equipment" multiple>
+						<mat-option *ngFor="let equipment of equipment" [value]="equipment">
+							{{ equipment }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
 			</div>
 		</div>
 		<div
