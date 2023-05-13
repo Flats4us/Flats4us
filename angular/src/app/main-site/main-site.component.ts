@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Input, SimpleChanges } from '@angular/core';
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -34,8 +34,6 @@ export class MainSiteComponent implements OnInit, OnChanges {
 	public setSelectedCity(event: MatAutocompleteSelectedEvent) {
 		this.selectedCity = event.option.value;
 	}
-
-	private selectedCity2 = new BehaviorSubject<string>('Warszawa');
 
 	public showFilters() {
 		this.showMoreFilters = !this.showMoreFilters;
@@ -132,7 +130,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (
 			!this.districtGroups.find(
-				(value) => value.whole === changes['selectedCity'].currentValue
+				(value) => value.whole === changes['selectedCity'].currentValue()
 			)
 		) {
 			this.mainSiteForm.get('districtsGroup')?.disable();
