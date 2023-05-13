@@ -64,19 +64,6 @@
 	width: 100%;
 	height: fit-content;
 	padding-bottom: 20px;
-
-	// Propozycja tła pod formularz na stronie głównej
-
-	// background-color: #f7f4f2;
-	// opacity: 1;
-	// background-image:  linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
-	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
-	// linear-gradient(30deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
-	// linear-gradient(150deg, #fbbc8b 12%, transparent 12.5%, transparent 87%, #fbbc8b 87.5%, #fbbc8b),
-	// linear-gradient(60deg, #fbbc8b77 25%, transparent 25.5%, transparent 75%, #fbbc8b77 75%, #fbbc8b77),
-	// linear-gradient(60deg, #fbbc8b77 25%, transparent 25.5%, transparent 75%, #fbbc8b77 75%, #fbbc8b77);
-	// background-size: 80px 140px;
-	// background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
 
 .box2 {
@@ -111,18 +98,9 @@ mat-card-content {
 
 .batch {
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
-}
-
-.batch2 {
-	display: flex;
-	justify-content: space-around;
-	padding-top: 10px;
-	padding-right: 5px;
-	min-width: 150px;
-	max-width: 300px;
-	width: 100%;
+	align-items: center;
+	padding-bottom: 25px;
 }
 
 .batch-full-width {
@@ -133,12 +111,15 @@ mat-card-content {
 	text-align: center;
 }
 
-.boxIcon1 {
+.boxIcon {
 	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .boxIcon2 {
-	padding-top: 5px;
+	transform: scale(1.3);
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
 .example-full-width {
@@ -161,6 +142,17 @@ mat-form-field {
 
 .error-text {
 	color: #ff0000;
+}
+
+.suffix {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.description {
+	display: flex;
+	justify-content: center;
+	// padding-bottom: 25px;
 }
 
 @media screen and (max-width: 992px) {

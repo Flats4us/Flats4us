@@ -1,4 +1,10 @@
-import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
+import {
+	Directive,
+	ElementRef,
+	Input,
+	OnChanges,
+	SimpleChanges,
+} from '@angular/core';
 
 @Directive({
 	selector: '[appGetDescription]',
@@ -9,22 +15,23 @@ export class GetDescriptionDirective implements OnChanges {
 
 	constructor(private el: ElementRef) {}
 
-	public ngOnChanges() {
-		this.el.nativeElement.textContent = this.getDescription(this.count);
+	public ngOnChanges(changes: SimpleChanges) {
+		this.el.nativeElement.textContent = this.getDescription(
+			changes['count'].currentValue
+		);
 	}
 
 	public getDescription(numberOfRecords: number) {
-		if (numberOfRecords == 1) {
-			return `${numberOfRecords} oferta`;
-		} else if (
-			(numberOfRecords > 1 && numberOfRecords <= 4) ||
-			(numberOfRecords > 20 &&
-				numberOfRecords % 10 > 1 &&
-				numberOfRecords % 10 <= 4)
-		) {
-			return `${numberOfRecords} oferty`;
-		} else {
-			return `${numberOfRecords} ofert`;
+		switch (true) {
+			case numberOfRecords == 1:
+				return `${numberOfRecords} oferta`;
+			case (numberOfRecords > 1 && numberOfRecords <= 4) ||
+				(numberOfRecords > 20 &&
+					numberOfRecords % 10 > 1 &&
+					numberOfRecords % 10 <= 4):
+				return `${numberOfRecords} oferty`;
+			default:
+				return `${numberOfRecords} ofert`;
 		}
 	}
 }
