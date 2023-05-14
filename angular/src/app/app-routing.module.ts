@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+
 const routes: Routes = [
 	{
 		path: 'auth',
@@ -21,6 +23,7 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./main-site/main-site.module').then((m) => m.MainSiteModule),
 	},
+	{ path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
