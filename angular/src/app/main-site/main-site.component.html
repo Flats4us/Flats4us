@@ -1,10 +1,7 @@
 <div class="mainsite">
 	<form class="container-4" [formGroup]="mainSiteForm" (ngSubmit)="onSubmit()">
 		<div class="container-3">
-			<h1>
-				Znajdź mieszkanie, pokój lub dom do wynajęcia <br />
-				{{ selectedCity }}
-			</h1>
+			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
 		</div>
 		<div class="container">
 			<div class="box2">
@@ -34,10 +31,7 @@
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
 					</span>
-					<mat-autocomplete
-						#autoCity="matAutocomplete"
-						(optionSelected)="setSelectedCity($event)"
-					>
+					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
 							*ngFor="let group of citiesGroupOptions$ | async"
 							[label]="group.whole"

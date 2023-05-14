@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Input, SimpleChanges } from '@angular/core';
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { INumeric } from '../shared/models/main-site.models';
@@ -10,13 +10,6 @@ import { IGroup } from '../shared/models/main-site.models';
 import { IRegionCity } from '../shared/models/main-site.models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-
-export const filter = (opt: string[], value: string): string[] => {
-	const filterValue = value.toLowerCase();
-
-	return opt.filter((item) => item.toLowerCase().includes(filterValue));
-};
 
 @Component({
 	selector: 'app-main-site',
@@ -24,26 +17,11 @@ export const filter = (opt: string[], value: string): string[] => {
 	styleUrls: ['./main-site.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainSiteComponent implements OnInit, OnChanges {
+export class MainSiteComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 14585;
 	public selectedDistance = 0;
-
-	@Input()
 	public selectedCity = '';
-	public setSelectedCity(event: MatAutocompleteSelectedEvent) {
-		this.selectedCity = event.option.value;
-	}
-
-	public showFilters() {
-		this.showMoreFilters = !this.showMoreFilters;
-	}
-
-	public onSubmit() {
-		if (this.mainSiteForm.valid) {
-			this.router.navigate(['/']);
-		}
-	}
 
 	public mainSiteForm: FormGroup = new FormGroup({});
 
@@ -109,39 +87,55 @@ export class MainSiteComponent implements OnInit, OnChanges {
 			});
 	}
 
+	public filter = (opt: string[], value: string): string[] => {
+		const filterValue = value.toLowerCase();
+
+		return opt.filter((item) => item.toLowerCase().includes(filterValue));
+	};
+
+	public showFilters() {
+		this.showMoreFilters = !this.showMoreFilters;
+	}
+
+	public onSubmit() {
+		if (this.mainSiteForm.valid) {
+			this.router.navigate(['/']);
+		}
+	}
+
 	public ngOnInit() {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				startWith(''),
-				map((value) => this.filterCitiesGroup(value || ''))
+				tap((value) => (value === null ? (value = '') : value)),
+				map((value) => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				startWith(''),
-				map((value) => this.filterDistrictsGroup(value || ''))
+				tap((value) => (value === null ? (value = '') : value)),
+				map((value) => this.filterDistrictsGroup(value))
 			);
 
 		this.mainSiteForm.get('distance')?.setValue(0);
-	}
+		this.mainSiteForm.get('districtsGroup')?.disable();
 
-	public ngOnChanges(changes: SimpleChanges): void {
-		if (
-			!this.districtGroups.find(
-				(value) => value.whole === changes['selectedCity'].currentValue()
-			)
-		) {
-			this.mainSiteForm.get('districtsGroup')?.disable();
-		}
+		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe((value) => {
+			if (this.districtGroups.find((distr) => distr.whole === value)) {
+				this.mainSiteForm.get('districtsGroup')?.enable();
+			} else {
+				this.mainSiteForm.get('districtsGroup')?.disable();
+				this.mainSiteForm.get('districtsGroup')?.setValue('');
+			}
+		});
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
 		return this.citiesGroups
 			.map((group) => ({
 				whole: group.whole,
-				parts: filter(group.parts, value),
+				parts: this.filter(group.parts, value),
 			}))
 			.filter(
 				(group) =>
@@ -153,7 +147,7 @@ export class MainSiteComponent implements OnInit, OnChanges {
 		return this.districtGroups
 			.map((group) => ({
 				whole: group.whole,
-				parts: filter(group.parts, value),
+				parts: this.filter(group.parts, value),
 			}))
 			.filter(
 				(group) =>
