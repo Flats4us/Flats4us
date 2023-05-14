@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+
 const routes: Routes = [
 	{
 		path: 'auth',
 		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+	},
+	{
+		path: 'start',
+		loadChildren: () => import('./start/start.module').then((m) => m.StartModule),
 	},
 	{
 		path: 'profile',
@@ -16,11 +22,7 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
-	{
-		path: 'offert',
-		loadChildren: () =>
-			import('./offert/offert.module').then((m) => m.OffertModule),
-	},
+	{ path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
