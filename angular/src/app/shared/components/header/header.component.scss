@@ -1,13 +1,13 @@
 .custom-toolbar {
 	background-color: #fbbb8b;
+	height: 100px;
 }
 
-.title {
-	font-family: "Rockwell Extra Bold";
-	font-size: 35px;
-	margin-left: 10px;
+.logo {
+	margin-top: 55px;
+	width: 150px;
+	height: 150px;
 }
-
 .full-main-button {
 	display: flex;
 	justify-content: space-between;
@@ -25,9 +25,10 @@
 	background-color: #fbbb8b;
 	margin-left: 100px;
 }
-.fa-sun {
+.sun {
 	margin-left: 30px;
-	margin-right: 10px;
+	margin-right: 5px;
+	margin-top: 12px;
 	font-size: 25px;
 	width: 30px;
 	height: 30px;
@@ -38,8 +39,9 @@
 	width: 5px;
 	height: 5px;
 }
-.fa-moon {
-	margin-left: 15px;
+.moon {
+	margin-left: 5px;
+	margin-top: 12px;
 	font-size: 25px;
 	width: 30px;
 	height: 30px;
@@ -57,11 +59,6 @@
 
 .button-sign {
 	margin-right: 50px;
-}
-
-.logo {
-	width: 150px;
-	height: 70px;
 }
 
 .your-photo {
