@@ -308,6 +308,14 @@
 			>
 				Nie określono rodzaju nieruchomości!
 			</div>
+			<div
+				class="error-text"
+				*ngIf="mainSiteForm.controls['minPrice'].errors?.['isNumeric']||mainSiteForm.controls['maxPrice'].errors?.['isNumeric']||
+			mainSiteForm.controls['minArea'].errors?.['isNumeric']||mainSiteForm.controls['maxPrice'].errors?.['isNumeric']||
+			mainSiteForm.controls['rooms'].errors?.['isNumeric']||mainSiteForm.controls['floors'].errors?.['isNumeric']"
+			>
+				Nie wprowadzono wartości liczbowej!
+			</div>
 		</div>
 	</form>
 

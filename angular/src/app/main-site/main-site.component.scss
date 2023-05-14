@@ -140,6 +140,10 @@ mat-form-field {
 	padding: 5px;
 }
 
+.alert {
+	text-align: center;
+}
+
 .error-text {
 	color: #ff0000;
 }
@@ -152,7 +156,6 @@ mat-form-field {
 .description {
 	display: flex;
 	justify-content: center;
-	// padding-bottom: 25px;
 }
 
 @media screen and (max-width: 992px) {
