@@ -31,6 +31,11 @@
 					<span matPrefix>
 						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
 					</span>
+					<span matSuffix class="suffix">
+						<div class="boxIcon">
+							<mat-icon (click)="showMap()" matTooltip="Pokaż mapę">map</mat-icon>
+						</div>
+					</span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
 							*ngFor="let group of citiesGroupOptions$ | async"

@@ -113,6 +113,10 @@ export class MainSiteComponent implements OnInit {
 		this.showMoreFilters = !this.showMoreFilters;
 	}
 
+	public showMap() {
+		this.router.navigate(['/']);
+	}
+
 	public onSubmit() {
 		this.router.navigate(['/']);
 	}
