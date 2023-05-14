@@ -1,8 +1,13 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import {
+	AbstractControl,
+	FormBuilder,
+	ValidationErrors,
+	ValidatorFn,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { INumeric } from '../shared/models/main-site.models';
@@ -42,29 +47,29 @@ export class MainSiteComponent implements OnInit {
 			property: new FormControl('', Validators.required),
 			minPrice: new FormControl('', [
 				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			maxPrice: new FormControl('', [
 				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			districtsGroup: new FormControl(''),
 			minArea: new FormControl('', [
 				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			maxArea: new FormControl('', [
 				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			year: new FormControl(''),
 			rooms: new FormControl('', [
 				Validators.min(1),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			floors: new FormControl('', [
 				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
+				this.createIsNumericValidator(),
 			]),
 			equipment: new FormControl(''),
 		});
@@ -87,6 +92,17 @@ export class MainSiteComponent implements OnInit {
 			});
 	}
 
+	public createIsNumericValidator(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			const value = control.value;
+
+			const isNumeric = /^[0-9]*$/.test(value);
+			const inputValid = isNumeric;
+
+			return !inputValid ? { isNumeric: true } : null;
+		};
+	}
+
 	public filter = (opt: string[], value: string): string[] => {
 		const filterValue = value.toLowerCase();
 
@@ -98,23 +114,21 @@ export class MainSiteComponent implements OnInit {
 	}
 
 	public onSubmit() {
-		if (this.mainSiteForm.valid) {
-			this.router.navigate(['/']);
-		}
+		this.router.navigate(['/']);
 	}
 
 	public ngOnInit() {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				tap((value) => (value === null ? (value = '') : value)),
+				filter((value) => (value === null ? (value = '') : value)),
 				map((value) => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				tap((value) => (value === null ? (value = '') : value)),
+				filter((value) => (value === null ? (value = '') : value)),
 				map((value) => this.filterDistrictsGroup(value))
 			);
 
@@ -125,8 +139,8 @@ export class MainSiteComponent implements OnInit {
 			if (this.districtGroups.find((distr) => distr.whole === value)) {
 				this.mainSiteForm.get('districtsGroup')?.enable();
 			} else {
-				this.mainSiteForm.get('districtsGroup')?.disable();
 				this.mainSiteForm.get('districtsGroup')?.setValue('');
+				this.mainSiteForm.get('districtsGroup')?.disable();
 			}
 		});
 	}
