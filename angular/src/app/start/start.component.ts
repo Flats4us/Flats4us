@@ -31,11 +31,6 @@ export class StartComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private http: HttpClient,
-		private router: Router
-	) {
-		this.mainSiteForm = formBuilder.group({
-			regionsGroup: new FormControl('', Validators.required),
-			citiesGroup: new FormControl('', Validators.required),
 			distance: new FormControl(0, Validators.required),
 			property: new FormControl('', Validators.required),
 			minPrice: new FormControl('', [Validators.min(0)]),
