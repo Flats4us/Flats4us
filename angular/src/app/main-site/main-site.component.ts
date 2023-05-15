@@ -125,14 +125,14 @@ export class MainSiteComponent implements OnInit {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				filter((value) => (value === null ? (value = '') : value)),
+				filter((value) => value !== null),
 				map((value) => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				filter((value) => (value === null ? (value = '') : value)),
+				filter((value) => value !== null),
 				map((value) => this.filterDistrictsGroup(value))
 			);
 
