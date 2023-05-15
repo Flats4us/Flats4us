@@ -1,45 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    [Table("Tenant")]
-    public class Tenant
+    public enum RoommatesStatus
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TenantId { get; set; }
+        Roommate,
+        Alone
+    }
 
+    public class Tenant : Student //not abstract
+    {
         [Required]
-        [MaxLength(30)]
-        public string Name { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        public string Surname { get; set; }
-
-        [Required]
-        [MaxLength(60)]
-        public string AddressLine1 { get; set; }
-
-        [MaxLength(60)]
-        public string AddressLine2 { get; set; }
-
-        [MaxLength(60)]
-        public string AddressLine3 { get; set; }
-
-        [Required]
-        [MaxLength(50)]
-        public string Email { get; set;}
-
-        [Required]
-        [MaxLength(15)]
-        public string PhoneNumber { get; set; }
+        public RoommatesStatus RoommatesStatus { get; set; }
 
         public virtual ICollection<Rent> Rents { get; set; }
 
-        public Tenant()
-        { 
-            Rents = new HashSet<Rent>();
-        }
+
     }
 }

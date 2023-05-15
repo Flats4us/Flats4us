@@ -61,7 +61,7 @@ export class AuthService {
 			.post<IAuthTokenResponse>('/api/auth/refresh', { token })
 			.pipe(
 				tap((response) => this.setToken(response)),
-				catchError((error) => {
+				catchError((_error) => {
 					this.authTokenSubject.next(null);
 					localStorage.removeItem('authToken');
 					localStorage.removeItem('authTokenExpirationTime');

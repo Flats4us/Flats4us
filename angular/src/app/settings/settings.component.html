@@ -1,0 +1,25 @@
+<div class="settings">
+	<mat-card>
+		<nav>
+			<ul>
+				<li>
+					<a routerLink="notifications" routerLinkActive="active">Notifications</a>
+				</li>
+				<li>
+					<a routerLink="password-change" routerLinkActive="active"
+						>Password Change</a
+					>
+				</li>
+				<li>
+					<a routerLink="email-change" routerLinkActive="active">Email Change</a>
+				</li>
+				<li>
+					<a routerLink="help-center" routerLinkActive="active">Help Center</a>
+				</li>
+			</ul>
+		</nav>
+	</mat-card>
+	<div class="router-outlet">
+		<router-outlet></router-outlet>
+	</div>
+</div>
