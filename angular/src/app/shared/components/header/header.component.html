@@ -8,14 +8,14 @@
 	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
-		<button class="start" (click)="mainPage()">
+		<a class="start" routerLink="/">
 			<mat-icon
 				class="home"
 				aria-hidden="false"
 				aria-label="Example home icon"
 				fontIcon="home"
 			></mat-icon>
-		</button>
+		</a>
 
 		<button class="map" mat-menu-item>
 			<span><mat-icon>map</mat-icon></span
