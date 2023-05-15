@@ -150,11 +150,6 @@ export class StartComponent implements OnInit {
 		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
 			this.mainSiteForm.get('citiesGroup')?.reset();
 		});
-		this.mainSiteForm.get('minPrice')?.valueChanges.subscribe((value) => {
-			if (document.getElementById('minPrice')?.innerText === 'a') {
-				this.mainSiteForm.get('minPrice')?.reset();
-			}
-		});
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
