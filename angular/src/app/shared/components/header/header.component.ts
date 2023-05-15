@@ -10,10 +10,4 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
 	public isUserLoggedIn = true;
 	public isUserLoggedInAsStudent = true;
-
-	constructor(private router: Router) {}
-
-	public profile(id: string) {
-		this.router.navigate(['profile/', id]);
-	}
 }
