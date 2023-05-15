@@ -13,12 +13,6 @@ export class HeaderComponent {
 
 	constructor(private router: Router) {}
 
-	public logIn() {
-		this.router.navigate(['auth/login']);
-	}
-	public signIn() {
-		this.router.navigate(['auth/register']);
-	}
 	public profile(id: string) {
 		this.router.navigate(['profile/', id]);
 	}

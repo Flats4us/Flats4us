@@ -103,10 +103,10 @@
 	</mat-menu>
 
 	<div *ngIf="!isUserLoggedIn" class="start-navbar-button spacer">
-		<button class="button-log" (click)="logIn()" mat-stroked-button>
+		<button class="button-log" routerLink="/login" mat-stroked-button>
 			LOGOWANIE
 		</button>
-		<button class="button-sign" (click)="signIn()" mat-stroked-button>
+		<button class="button-sign" routerLink="/register" mat-stroked-button>
 			REJESTRACJA
 		</button>
 	</div>
