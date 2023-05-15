@@ -22,11 +22,6 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
-	{
-		path: 'home',
-		loadChildren: () =>
-			import('./main-site/main-site.module').then((m) => m.MainSiteModule),
-	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
