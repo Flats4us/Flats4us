@@ -7,12 +7,12 @@ import {
 	ValidatorFn,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { INumeric } from '../shared/models/main-site.models';
-import { IGroup } from '../shared/models/main-site.models';
-import { IRegionCity } from '../shared/models/main-site.models';
+import { INumeric } from './models/start-site.models';
+import { IGroup } from './models/start-site.models';
+import { IRegionCity } from './models/start-site.models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
@@ -125,15 +125,19 @@ export class StartComponent implements OnInit {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				filter((value) => value !== null),
-				map((value) => this.filterCitiesGroup(value))
+				map((value) =>
+					value === null ? this.filterCitiesGroup('') : this.filterCitiesGroup(value)
+				)
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				filter((value) => value !== null),
-				map((value) => this.filterDistrictsGroup(value))
+				map((value) =>
+					value === null
+						? this.filterDistrictsGroup('')
+						: this.filterDistrictsGroup(value)
+				)
 			);
 
 		this.mainSiteForm.get('distance')?.setValue(0);
