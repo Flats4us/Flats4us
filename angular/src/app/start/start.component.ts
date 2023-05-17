@@ -1,13 +1,8 @@
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import {
-	AbstractControl,
-	FormBuilder,
-	ValidationErrors,
-	ValidatorFn,
-} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { INumeric } from './models/start-site.models';
@@ -43,32 +38,14 @@ export class StartComponent implements OnInit {
 			citiesGroup: new FormControl('', Validators.required),
 			distance: new FormControl(0, Validators.required),
 			property: new FormControl('', Validators.required),
-			minPrice: new FormControl('', [
-				Validators.min(0),
-				this.createIsNumericValidator(),
-			]),
-			maxPrice: new FormControl('', [
-				Validators.min(0),
-				this.createIsNumericValidator(),
-			]),
+			minPrice: new FormControl('', [Validators.min(0)]),
+			maxPrice: new FormControl('', [Validators.min(0)]),
 			districtsGroup: new FormControl(''),
-			minArea: new FormControl('', [
-				Validators.min(0),
-				this.createIsNumericValidator(),
-			]),
-			maxArea: new FormControl('', [
-				Validators.min(0),
-				this.createIsNumericValidator(),
-			]),
+			minArea: new FormControl('', [Validators.min(0)]),
+			maxArea: new FormControl('', [Validators.min(0)]),
 			year: new FormControl(''),
-			rooms: new FormControl('', [
-				Validators.min(1),
-				this.createIsNumericValidator(),
-			]),
-			floors: new FormControl('', [
-				Validators.min(0),
-				this.createIsNumericValidator(),
-			]),
+			rooms: new FormControl('', [Validators.min(1)]),
+			floors: new FormControl('', [Validators.min(0)]),
 			equipment: new FormControl(''),
 		});
 		this.http
@@ -88,17 +65,6 @@ export class StartComponent implements OnInit {
 						.map((group) => group.parts.push(row[1]));
 				}
 			});
-	}
-
-	public createIsNumericValidator(): ValidatorFn {
-		return (control: AbstractControl): ValidationErrors | null => {
-			const value = control.value;
-
-			const isNumeric = /^[0-9]*$/.test(value);
-			const inputValid = isNumeric;
-
-			return !inputValid ? { isNumeric: true } : null;
-		};
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -131,7 +97,7 @@ export class StartComponent implements OnInit {
 			.get('districtsGroup')
 			?.valueChanges.pipe(
 				map((value) => value ?? ''),
-				map((value) => this.filterCitiesGroup(value))
+				map((value) => this.filterDistrictsGroup(value))
 			);
 
 		this.mainSiteForm.get('districtsGroup')?.disable();
