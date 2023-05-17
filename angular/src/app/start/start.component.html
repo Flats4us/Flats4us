@@ -29,7 +29,7 @@
 						id="city"
 						type="text"
 						placeholder="Miejscowość"
-						aria-label="Text"
+						aria-label="City"
 						matInput
 						formControlName="citiesGroup"
 						[matAutocomplete]="autoCity"
@@ -95,7 +95,7 @@
 						formControlName="minPrice"
 						type="number"
 						placeholder="Cena min."
-						aria-label="Number"
+						aria-label="MinimalPrice"
 						matInput
 						[matAutocomplete]="autoPriceMin"
 					/>
@@ -123,7 +123,7 @@
 						formControlName="maxPrice"
 						type="number"
 						placeholder="Cena maks."
-						aria-label="Number"
+						aria-label="MaximalPrice"
 						matInput
 						[matAutocomplete]="autoPriceMin"
 					/>
@@ -147,7 +147,8 @@
 						(click)="showFilters()"
 						mat-icon-button
 						matTooltip="Pokaż więcej filtrów"
-						aria-label="Filter_list button"
+						id="showMoreFilters"
+						aria-label="ShowMoreFilters"
 					>
 						<mat-icon>filter_list</mat-icon>
 					</button>
@@ -158,7 +159,8 @@
 						(click)="showMap()"
 						mat-icon-button
 						matTooltip="Pokaż mapę"
-						aria-label="ShowMap button"
+						id="showMap"
+						aria-label="ShowMap"
 					>
 						<mat-icon>map</mat-icon>
 					</button>
@@ -168,7 +170,8 @@
 						type="submit"
 						mat-icon-button
 						matTooltip="Szukaj ofert"
-						aria-label="Search button"
+						id="search"
+						aria-label="SearchForOffers"
 						[disabled]="!mainSiteForm.valid"
 					>
 						<mat-icon>search</mat-icon>
@@ -183,7 +186,7 @@
 						id="district"
 						type="text"
 						placeholder="Dzielnica"
-						aria-label="Text"
+						aria-label="District"
 						matInput
 						formControlName="districtsGroup"
 						[matAutocomplete]="autoDistrict"
@@ -213,7 +216,7 @@
 						formControlName="minArea"
 						type="number"
 						placeholder="Powierzchnia od"
-						aria-label="Number"
+						aria-label="MinimalArea"
 						matInput
 						[matAutocomplete]="autoAreaFrom"
 					/>
@@ -241,7 +244,7 @@
 						formControlName="maxArea"
 						type="number"
 						placeholder="Powierzchnia do"
-						aria-label="Number"
+						aria-label="MaximalArea"
 						matInput
 						[matAutocomplete]="autoAreaTo"
 					/>
@@ -281,7 +284,7 @@
 						formControlName="rooms"
 						type="number"
 						placeholder="Min. liczba pokoi"
-						aria-label="Number"
+						aria-label="NumberOfRooms"
 						matInput
 						[matAutocomplete]="autoNumberOfRooms"
 					/>
@@ -308,7 +311,7 @@
 						formControlName="floors"
 						type="number"
 						placeholder="Maks. liczba pięter"
-						aria-label="Number"
+						aria-label="NumberOfFloors"
 						matInput
 						[matAutocomplete]="autoNumberOfFloors"
 					/>
