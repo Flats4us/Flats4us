@@ -7,7 +7,7 @@ import {
 	ValidatorFn,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { INumeric } from './models/start-site.models';
@@ -123,19 +123,15 @@ export class StartComponent implements OnInit {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				map((value) =>
-					value === null ? this.filterCitiesGroup('') : this.filterCitiesGroup(value)
-				)
+				map((value) => value ?? ''),
+				map((value) => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				map((value) =>
-					value === null
-						? this.filterDistrictsGroup('')
-						: this.filterDistrictsGroup(value)
-				)
+				map((value) => value ?? ''),
+				map((value) => this.filterCitiesGroup(value))
 			);
 
 		this.mainSiteForm.get('districtsGroup')?.disable();
