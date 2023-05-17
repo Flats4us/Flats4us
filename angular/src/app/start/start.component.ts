@@ -25,8 +25,6 @@ import { Validators } from '@angular/forms';
 export class StartComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 14585;
-	public selectedDistance = 0;
-	public selectedCity = '';
 
 	public mainSiteForm: FormGroup = new FormGroup({});
 
@@ -43,7 +41,7 @@ export class StartComponent implements OnInit {
 		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
-			distance: new FormControl('', Validators.required),
+			distance: new FormControl(0, Validators.required),
 			property: new FormControl('', Validators.required),
 			minPrice: new FormControl('', [
 				Validators.min(0),
@@ -140,7 +138,6 @@ export class StartComponent implements OnInit {
 				)
 			);
 
-		this.mainSiteForm.get('distance')?.setValue(0);
 		this.mainSiteForm.get('districtsGroup')?.disable();
 
 		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe((value) => {
