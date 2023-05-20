@@ -2,66 +2,34 @@
 	<h1>Ankieta</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
-			<div>
-				<mat-label>1. {{ getQuestionById(2) }} </mat-label>
-				<mat-slider min="0" max="5" step="1">
-					<input matSliderThumb formControlName="party" />
+			<div *ngFor="let question of questions; let i = index">
+				<mat-label>{{ i }} {{ question.content }} </mat-label>
+				<mat-slider
+					*ngIf="question.type_name === 'SLIDER'"
+					min="0"
+					max="5"
+					step="1"
+				>
+					<input matSliderThumb />
 				</mat-slider>
-			</div>
-			<div>
-				<mat-label>2. {{ getQuestionById(3) }} </mat-label>
-				<mat-slider min="0" max="5" step="1">
-					<input matSliderThumb formControlName="tidy" />
-				</mat-slider>
-			</div>
-			<div>
-				<mat-label>3. {{ getQuestionById(4) }} </mat-label>
-				<mat-slider min="0" max="5" step="1">
-					<input matSliderThumb formControlName="smoke" />
-				</mat-slider>
-			</div>
-			<div>
-				<mat-label class="left">4. {{ getQuestionById(5) }} </mat-label>
-				<mat-slider class="text-right" min="0" max="5" step="1">
-					<input matSliderThumb formControlName="social" />
-				</mat-slider>
-			</div>
-			<div>
-				<mat-label>5. {{ getQuestionById(6) }} </mat-label>
-				<mat-slide-toggle formControlName="petOwner"></mat-slide-toggle>
-			</div>
-			<div>
-				<mat-label>6. {{ getQuestionById(7) }} </mat-label>
-				<mat-slide-toggle formControlName="veganPerson"></mat-slide-toggle>
-			</div>
-			<div>
-				<mat-label>7. {{ getQuestionById(8) }} </mat-label>
-				<mat-slide-toggle formControlName="lookingForRoommates"></mat-slide-toggle>
-			</div>
-			<div *ngIf="showLookingForRoommates">
-				<mat-label>8. {{ getQuestionById(9) }} </mat-label>
-				<mat-form-field class="h-1/2" appearance="outline">
-					<input formControlName="maxNumberOfRoommates" matInput />
+				<mat-form-field
+					*ngIf="question.type_name === 'FORM'"
+					class="h-1/2"
+					appearance="outline"
+				>
+					<input matInput />
 				</mat-form-field>
-			</div>
-			<div *ngIf="showLookingForRoommates">
-				<mat-label>9. {{ getQuestionById(10) }} </mat-label>
-				<section class="example-section">
-					<mat-checkbox class="example-margin">K</mat-checkbox>
-					<mat-checkbox class="example-margin">M</mat-checkbox>
+				<mat-slide-toggle
+					*ngIf="question.type_name === 'SWITCH'"
+				></mat-slide-toggle>
+				<section *ngIf="question.type_name === 'CHECKBOX'" class="example-section">
+					<mat-checkbox class="example-margin">{{
+						question.answers[0]
+					}}</mat-checkbox>
+					<mat-checkbox class="example-margin">{{
+						question.answers[1]
+					}}</mat-checkbox>
 				</section>
-			</div>
-			<div *ngIf="showLookingForRoommates">
-				<mat-label>10. {{ getQuestionById(11) }} </mat-label>
-				<mat-form-field class="h-1/2" appearance="outline">
-					<input formControlName="minRoommateAge" matInput />
-				</mat-form-field>
-			</div>
-			<div *ngIf="showLookingForRoommates">
-				<mat-label>11. {{ getQuestionById(12) }} </mat-label>
-				<mat-form-field class="h-1/2" appearance="outline">
-					<input formControlName="maxRoommateAge" matInput />
-				</mat-form-field>
 			</div>
 			<div class="buttons">
 				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
