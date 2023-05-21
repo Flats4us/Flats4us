@@ -4,7 +4,7 @@
 		"title": "STUDENT",
 		"content": "Jaką często imprezuję?",
 		"formControlName": "partyFrequency",
-		"type_name": "SLIDER",
+		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
 	{
@@ -12,7 +12,7 @@
 		"title": "STUDENT",
 		"content": "Jak często sprzątam w mieszkaniu?",
 		"formControlName": "cleaningFrequency",
-		"type_name": "SLIDER",
+		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
 	{
@@ -20,7 +20,7 @@
 		"title": "STUDENT",
 		"content": "Palę papierosy?",
 		"formControlName": "smokeCigarettes",
-		"type_name": "SLIDER",
+		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
 	{
@@ -28,7 +28,7 @@
 		"title": "STUDENT",
 		"content": "Jestem towarzyski?",
 		"formControlName": "sociable",
-		"type_name": "SLIDER",
+		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
 	{
@@ -36,7 +36,7 @@
 		"title": "STUDENT",
 		"content": "Posiadam zwierzę?",
 		"formControlName": "havePet",
-		"type_name": "SWITCH",
+		"typeName": "SWITCH",
 		"answers": []
 	},
 	{
@@ -44,7 +44,7 @@
 		"title": "STUDENT",
 		"content": "Jestem weganinem?",
 		"formControlName": "vegan",
-		"type_name": "SWITCH",
+		"typeName": "SWITCH",
 		"answers": []
 	},
 	{
@@ -52,7 +52,7 @@
 		"title": "STUDENT",
 		"content": "Szukam współlokatora?",
 		"formControlName": "lookingForRoommate",
-		"type_name": "FORM",
+		"typeName": "SWITCH",
 		"answers": []
 	},
 	{
@@ -60,7 +60,7 @@
 		"title": "STUDENT",
 		"content": "Jaką liczbę współlokatorów akceptuję?",
 		"formControlName": "acceptedRoommatesCount",
-		"type_name": "FORM",
+		"typeName": "FORM",
 		"answers": []
 	},
 	{
@@ -68,7 +68,7 @@
 		"title": "STUDENT",
 		"content": "Preferowana płeć współlokatora",
 		"formControlName": "preferredRoommateGender",
-		"type_name": "CHECKBOX",
+		"typeName": "CHECKBOX",
 		"answers": ["K", "M"]
 	},
 	{
@@ -76,7 +76,7 @@
 		"title": "STUDENT",
 		"content": "Minimalny wiek współlokatora?",
 		"formControlName": "minRoommateAge",
-		"type_name": "FORM",
+		"typeName": "FORM",
 		"answers": "boolean"
 	},
 	{
@@ -84,7 +84,7 @@
 		"title": "STUDENT",
 		"content": "Maksymalny wiek współlokatora?",
 		"formControlName": "maxRoommateAge",
-		"type_name": "FORM",
+		"typeName": "FORM",
 		"answers": "boolean"
 	}
 ]

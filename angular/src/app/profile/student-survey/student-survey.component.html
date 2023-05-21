@@ -3,33 +3,37 @@
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<div *ngFor="let question of questions; let i = index">
-				<mat-label>{{ i }} {{ question.content }} </mat-label>
-				<mat-slider
-					*ngIf="question.type_name === 'SLIDER'"
-					min="0"
-					max="5"
-					step="1"
+				<ng-container
+					*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"
 				>
-					<input matSliderThumb />
-				</mat-slider>
-				<mat-form-field
-					*ngIf="question.type_name === 'FORM'"
-					class="h-1/2"
-					appearance="outline"
-				>
-					<input matInput />
-				</mat-form-field>
-				<mat-slide-toggle
-					*ngIf="question.type_name === 'SWITCH'"
-				></mat-slide-toggle>
-				<section *ngIf="question.type_name === 'CHECKBOX'" class="example-section">
-					<mat-checkbox class="example-margin">{{
-						question.answers[0]
-					}}</mat-checkbox>
-					<mat-checkbox class="example-margin">{{
-						question.answers[1]
-					}}</mat-checkbox>
-				</section>
+					<mat-label>{{ i + 1 }}. {{ question.content }} "</mat-label>
+					<mat-slider
+						*ngIf="question.typeName === 'SLIDER'"
+						min="0"
+						max="5"
+						step="1"
+					>
+						<input matSliderThumb />
+					</mat-slider>
+					<mat-form-field
+						*ngIf="question.typeName === 'FORM'"
+						class="h-1/2"
+						appearance="outline"
+					>
+						<input matInput />
+					</mat-form-field>
+					<mat-slide-toggle
+						*ngIf="question.typeName === 'SWITCH'"
+					></mat-slide-toggle>
+					<section *ngIf="question.typeName === 'CHECKBOX'" class="example-section">
+						<mat-checkbox class="example-margin">{{
+							question.answers[0]
+						}}</mat-checkbox>
+						<mat-checkbox class="example-margin">{{
+							question.answers[1]
+						}}</mat-checkbox>
+					</section>
+				</ng-container>
 			</div>
 			<div class="buttons">
 				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>

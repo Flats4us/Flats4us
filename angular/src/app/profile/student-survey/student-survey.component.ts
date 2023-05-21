@@ -7,6 +7,7 @@ import {
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { IQuestionsData } from './questions-data.interface';
 
 @Component({
 	selector: 'app-student-survey',
@@ -15,9 +16,8 @@ import { HttpClient } from '@angular/common/http';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentSurveyComponent implements OnInit {
-	public questions: any[] = [];
+	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
-	public showLookingForRoommates = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -30,29 +30,22 @@ export class StudentSurveyComponent implements OnInit {
 		this.http.get<[]>('../../assets/JSON.json').subscribe((data) => {
 			this.questions = data;
 			this.cdr.detectChanges();
+
+			this.studentSurveyForm = this.formBuilder.group({
+				lookingForRoommate: [''],
+			});
+			this.questions.forEach((question) =>
+				this.studentSurveyForm.addControl(
+					question.formControlName,
+					new FormControl('')
+				)
+			);
 		});
-
-		//this.studentSurveyForm = this.generateSurveyForm();
-
-		this.studentSurveyForm
-			.get('lookingForRoommates')
-			?.valueChanges.subscribe((value) => (this.showLookingForRoommates = value));
 	}
 
 	public onSubmit() {
 		this.snackBar.open('Pomyślnie wypełniono ankietę!', 'Zamknij', {
 			duration: 2000,
 		});
-	}
-
-	private generateSurveyForm(): FormGroup {
-		const baseForm = this.formBuilder.group({});
-		while (this.questions.length == 0) {
-			/* empty */
-		}
-		this.questions.forEach((question) => {
-			baseForm.addControl(question.formControlName, new FormControl(''));
-		});
-		return baseForm;
 	}
 }
