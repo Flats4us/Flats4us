@@ -1,6 +1,6 @@
 ﻿namespace Flats4us.Entities
 {
-    public class Seeker : Student
+    public class OpinionStudentOwner
     {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Flats4us.Entities
 {
-    public class Student : OwnerStudent //abstract
+    public abstract class Student : OwnerStudent
     {
         [Required]
         public int YearOfBirth { get; set; }
@@ -11,23 +11,24 @@ namespace Flats4us.Entities
         public int Age { get; set; }
 
         [Required]
-        public string? StudentNumber { get; set;}
+        public string StudentNumber { get; set; }
 
         [Required]
-        public string? University { get;}
+        public string University { get; set; }
 
-        public virtual Survey Survey { get; set; }
+        public string Facebook { get; set; }
 
-        public virtual ICollection<Payment> Payments { get; set; }
-        public virtual ICollection<OwnerOpinion> IssuedRatings { get; set; }
-        public virtual ICollection<StudentOpinion> ReceivedRatings { get; set; }
+        public string Twitter { get; set; }
+
+        public string Instagram { get; set; }
+
+        public virtual SurveyStudent SurveyStudent { get; set; }
+
+        public virtual ICollection<Interest> Interests { get; set; }
 
         public Student()
         {
-            Payments = new HashSet<Payment>();
-            IssuedRatings = new HashSet<OwnerOpinion>();
-            ReceivedRatings = new HashSet<StudentOpinion>();
+            this.Interests = new HashSet<Interest>();
         }
-
     }
 }

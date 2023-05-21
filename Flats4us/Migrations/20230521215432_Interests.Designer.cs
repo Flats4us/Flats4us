@@ -4,6 +4,7 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    partial class Flats4usContextModelSnapshot : ModelSnapshot
+    [Migration("20230521215432_Interests")]
+    partial class Interests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace Flats4us.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Flats4us.Entities.Interest", b =>
+            modelBuilder.Entity("Flats4us.Entities.Interests", b =>
                 {
                     b.Property<int>("InterestId")
                         .ValueGeneratedOnAdd()
@@ -37,58 +40,6 @@ namespace Flats4us.Migrations
                     b.HasKey("InterestId");
 
                     b.ToTable("Interests");
-
-                    b.HasData(
-                        new
-                        {
-                            InterestId = 1,
-                            Name = "Sailing"
-                        },
-                        new
-                        {
-                            InterestId = 2,
-                            Name = "Painting"
-                        },
-                        new
-                        {
-                            InterestId = 3,
-                            Name = "Photography"
-                        },
-                        new
-                        {
-                            InterestId = 4,
-                            Name = "Cooking"
-                        },
-                        new
-                        {
-                            InterestId = 5,
-                            Name = "Gardening"
-                        },
-                        new
-                        {
-                            InterestId = 6,
-                            Name = "Playing Guitar"
-                        },
-                        new
-                        {
-                            InterestId = 7,
-                            Name = "Reading Books"
-                        },
-                        new
-                        {
-                            InterestId = 8,
-                            Name = "Hiking"
-                        },
-                        new
-                        {
-                            InterestId = 9,
-                            Name = "Dancing"
-                        },
-                        new
-                        {
-                            InterestId = 10,
-                            Name = "Yoga"
-                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
@@ -176,7 +127,7 @@ namespace Flats4us.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("InterestStudent", b =>
+            modelBuilder.Entity("InterestsStudent", b =>
                 {
                     b.Property<int>("InterestsInterestId")
                         .HasColumnType("int");
@@ -188,7 +139,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentsUserId");
 
-                    b.ToTable("InterestStudent");
+                    b.ToTable("InterestsStudent");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
@@ -204,11 +155,11 @@ namespace Flats4us.Migrations
                         new
                         {
                             UserId = 1,
-                            AccountCreationDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreationDate = new DateTime(2023, 5, 11, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3581),
                             City = "Warszawa",
                             Email = "maciej.kowalski@gmail.com",
                             Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastLoginDate = new DateTime(2023, 5, 21, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3621),
                             Name = "Maciej",
                             Number = 47,
                             Password = "mkowalski123",
@@ -216,16 +167,16 @@ namespace Flats4us.Migrations
                             PostalCode = "00-000",
                             Street = "Długa",
                             Surname = "Kowalski",
-                            HireDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            HireDate = new DateTime(2023, 5, 11, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3622)
                         },
                         new
                         {
                             UserId = 2,
-                            AccountCreationDate = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreationDate = new DateTime(2023, 5, 16, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3627),
                             City = "Gdańsk",
                             Email = "katarzyna.nowak@gmail.com",
                             Flat = 3,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastLoginDate = new DateTime(2023, 5, 20, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3628),
                             Name = "Katarzyna",
                             Number = 10,
                             Password = "knowak123",
@@ -233,16 +184,16 @@ namespace Flats4us.Migrations
                             PostalCode = "80-000",
                             Street = "Kwiatowa",
                             Surname = "Nowak",
-                            HireDate = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            HireDate = new DateTime(2023, 5, 16, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3630)
                         },
                         new
                         {
                             UserId = 3,
-                            AccountCreationDate = new DateTime(2023, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreationDate = new DateTime(2023, 5, 14, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3632),
                             City = "Kraków",
                             Email = "adam.kowalczyk@gmail.com",
                             Flat = 6,
-                            LastLoginDate = new DateTime(2023, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastLoginDate = new DateTime(2023, 5, 19, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3634),
                             Name = "Adam",
                             Number = 20,
                             Password = "akowalczyk789",
@@ -250,16 +201,16 @@ namespace Flats4us.Migrations
                             PostalCode = "30-001",
                             Street = "Słoneczna",
                             Surname = "Kowalczyk",
-                            HireDate = new DateTime(2023, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            HireDate = new DateTime(2023, 5, 14, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3636)
                         },
                         new
                         {
                             UserId = 4,
-                            AccountCreationDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreationDate = new DateTime(2023, 5, 18, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3637),
                             City = "Warszawa",
                             Email = "magdalena.wojcik@gmail.com",
                             Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastLoginDate = new DateTime(2023, 5, 20, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3639),
                             Name = "Magdalena",
                             Number = 15,
                             Password = "mwojcik456",
@@ -267,7 +218,7 @@ namespace Flats4us.Migrations
                             PostalCode = "02-000",
                             Street = "Ogrodowa",
                             Surname = "Wójcik",
-                            HireDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            HireDate = new DateTime(2023, 5, 18, 23, 54, 31, 979, DateTimeKind.Local).AddTicks(3640)
                         });
                 });
 
@@ -334,118 +285,31 @@ namespace Flats4us.Migrations
                         new
                         {
                             UserId = 5,
-                            AccountCreationDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AccountCreationDate = new DateTime(2023, 5, 11, 23, 54, 31, 980, DateTimeKind.Local).AddTicks(8516),
                             City = "Warszawa",
-                            Email = "filip.dobrej@gmail.com",
-                            Flat = 3,
-                            LastLoginDate = new DateTime(2023, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Filip",
-                            Number = 7,
-                            Password = "fdobrej123",
+                            Email = "maciej.kowalski@gmail.com",
+                            Flat = 2,
+                            LastLoginDate = new DateTime(2023, 5, 21, 23, 54, 31, 980, DateTimeKind.Local).AddTicks(8540),
+                            Name = "Maciej",
+                            Number = 47,
+                            Password = "mkowalski123",
                             PhoneNumber = "456736829",
                             PostalCode = "00-000",
-                            Street = "Krótka",
-                            Surname = "Dobrej",
+                            Street = "Długa",
+                            Surname = "Kowalski",
                             ActivityStatus = false,
                             Age = 22,
                             DocumentExpireDate = new DateTime(2024, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DocumentPath = "/documents/1",
-                            DocumentType = 1,
+                            DocumentType = 0,
                             Facebook = "",
                             Instagram = "",
                             PhotoPath = "/profile/1",
-                            StudentNumber = "s22023",
+                            StudentNumber = "s22523",
                             Twitter = "",
                             University = "PJATK",
                             VerificationStatus = 0,
                             YearOfBirth = 2001
-                        },
-                        new
-                        {
-                            UserId = 6,
-                            AccountCreationDate = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Poznań",
-                            Email = "alicja.dabrowska@gmail.com",
-                            Flat = 4,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Alicja",
-                            Number = 9,
-                            Password = "adabrowska789",
-                            PhoneNumber = "601234567",
-                            PostalCode = "60-001",
-                            Street = "Kościuszki",
-                            Surname = "Dąbrowska",
-                            ActivityStatus = true,
-                            Age = 28,
-                            DocumentExpireDate = new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/2",
-                            DocumentType = 2,
-                            Facebook = "https://www.facebook.com/alicja.dabrowska",
-                            Instagram = "https://www.instagram.com/alicja_dabrowska/",
-                            PhotoPath = "/profile/2",
-                            StudentNumber = "s23423",
-                            Twitter = "",
-                            University = "Uniwersytet Warszawski",
-                            VerificationStatus = 0,
-                            YearOfBirth = 1995
-                        },
-                        new
-                        {
-                            UserId = 7,
-                            AccountCreationDate = new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Kraków",
-                            Email = "dominik.kowalczyk@gmail.com",
-                            Flat = 1,
-                            LastLoginDate = new DateTime(2023, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dominik",
-                            Number = 12,
-                            Password = "dkowalczyk456",
-                            PhoneNumber = "712345678",
-                            PostalCode = "30-002",
-                            Street = "Szkolna",
-                            Surname = "Kowalczyk",
-                            ActivityStatus = true,
-                            Age = 25,
-                            DocumentExpireDate = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/3",
-                            DocumentType = 0,
-                            Facebook = "https://www.facebook.com/dominik.kowalczyk",
-                            Instagram = "https://www.instagram.com/dominik_kowalczyk/",
-                            PhotoPath = "/profile/3",
-                            StudentNumber = "s22345",
-                            Twitter = "",
-                            University = "AGH University of Science and Technology",
-                            VerificationStatus = 0,
-                            YearOfBirth = 1998
-                        },
-                        new
-                        {
-                            UserId = 8,
-                            AccountCreationDate = new DateTime(2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Warszawa",
-                            Email = "natalia.wojcik@gmail.com",
-                            Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Natalia",
-                            Number = 5,
-                            Password = "nwojcik789",
-                            PhoneNumber = "601234567",
-                            PostalCode = "02-001",
-                            Street = "Kwiatowa",
-                            Surname = "Wójcik",
-                            ActivityStatus = true,
-                            Age = 23,
-                            DocumentExpireDate = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/4",
-                            DocumentType = 2,
-                            Facebook = "",
-                            Instagram = "https://www.instagram.com/natalia_wojcik/",
-                            PhotoPath = "/profile/4",
-                            StudentNumber = "s22890",
-                            Twitter = "https://twitter.com/nwojcik",
-                            University = "University of Warsaw",
-                            VerificationStatus = 0,
-                            YearOfBirth = 2000
                         });
                 });
 
@@ -460,9 +324,9 @@ namespace Flats4us.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("InterestStudent", b =>
+            modelBuilder.Entity("InterestsStudent", b =>
                 {
-                    b.HasOne("Flats4us.Entities.Interest", null)
+                    b.HasOne("Flats4us.Entities.Interests", null)
                         .WithMany()
                         .HasForeignKey("InterestsInterestId")
                         .OnDelete(DeleteBehavior.Cascade)

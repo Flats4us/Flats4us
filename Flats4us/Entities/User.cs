@@ -3,30 +3,36 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("User")]
-    public class User //abstract
+    public abstract class User
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         [Required]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string? Surname { get; set; }
+        public string Surname { get; set; }
 
         [Required]
-        public string? Address { get; set; }
+        public string Street { get; set; }
 
         [Required]
-        public string? City { get; set; }
+        public int Number { get; set; }
+
+        public int Flat { get; set; }
 
         [Required]
-        public string? PhoneNumber { get; set; }
+        public string City { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string? Email { get; set; }
+        public string PostalCode { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
         public DateTime AccountCreationDate { get; set; }
@@ -35,6 +41,8 @@ namespace Flats4us.Entities
         public DateTime LastLoginDate { get; set; }
 
         [Required]
-        public string? Password { get; set; }
+        public string Password { get; set; }
+
+
     }
 }
