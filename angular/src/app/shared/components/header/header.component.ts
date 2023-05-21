@@ -10,4 +10,6 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
 	public isUserLoggedIn = true;
 	public isUserLoggedInAsStudent = true;
+
+	public id = '';
 }

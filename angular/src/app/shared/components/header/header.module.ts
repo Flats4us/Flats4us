@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
+import { RouterLink } from '@angular/router';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -25,6 +26,7 @@ import { MatMenuModule } from '@angular/material/menu';
 		MatRadioModule,
 		MatSlideToggleModule,
 		MatMenuModule,
+		RouterLink,
 	],
 	exports: [HeaderComponent],
 })
