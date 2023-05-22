@@ -1,11 +1,50 @@
-.mat-toolbar {
+.custom-toolbar {
+	background-color: #fbbb8b;
+	height: 100px;
+}
+
+.logo {
+	margin-top: 55px;
+	width: 150px;
+	height: 150px;
+}
+.full-main-button {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.custom-toolbar {
-	background-color: #830dd7;
+.settings,
+.tidings,
+.options,
+.map {
+	margin-left: 25px;
+}
+
+.change-lang {
+	background-color: #fbbb8b;
+	margin-left: 100px;
+}
+.sun {
+	margin-left: 30px;
+	margin-right: 5px;
+	margin-top: 12px;
+	font-size: 25px;
+	width: 30px;
+	height: 30px;
+}
+
+.arrow {
+	margin-left: 30px;
+	width: 5px;
+	height: 5px;
+}
+.moon {
+	margin-left: 5px;
+	margin-top: 12px;
+	font-size: 25px;
+	width: 30px;
+	height: 30px;
 }
 
 .spacer {
@@ -27,36 +66,18 @@
 	width: 40px;
 	height: 40px;
 	margin-right: 20px;
+	margin-left: 60px;
+}
+.your-profile {
+	margin-right: 30px;
 }
 
-.mat-sidenav-container {
-	height: 100%;
-}
-
-.mat-sidenav {
-	width: 200px;
-}
-
-.mat-icon-vertical-align {
+span {
 	vertical-align: middle;
 	font-size: 20px;
 }
 
-.icon-menu {
-	display: flex;
-	align-items: center;
-}
-
-mat-icon {
-	align-items: center;
-}
-
-.mat-nav-list {
-	margin-top: 20px;
-}
-
-@media (max-width: 600px) {
-	.mat-sidenav {
-		width: 80%;
-	}
+.full-main-button button {
+	width: auto;
+	height: auto;
 }
