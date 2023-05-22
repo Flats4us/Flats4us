@@ -7,7 +7,8 @@
 					><!--*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"-->
 
 					<mat-label>{{ i + 1 }}. {{ question.content }} "</mat-label>
-					<mat-slider discrete
+					<mat-slider
+						discrete
 						*ngIf="question.typeName === 'SLIDER'"
 						min="0"
 						max="5"
