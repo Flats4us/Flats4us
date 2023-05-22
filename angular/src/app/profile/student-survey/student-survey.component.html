@@ -4,10 +4,10 @@
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<div *ngFor="let question of questions; let i = index">
 				<ng-container
-					*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"
-				>
+					><!--*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"-->
+
 					<mat-label>{{ i + 1 }}. {{ question.content }} "</mat-label>
-					<mat-slider
+					<mat-slider discrete
 						*ngIf="question.typeName === 'SLIDER'"
 						min="0"
 						max="5"
