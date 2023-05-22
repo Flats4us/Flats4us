@@ -12,6 +12,8 @@ namespace Flats4us.Entities
         public DbSet<SurveyStudent> SurveyStudents { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Interest> Interests { get; set; }
+        public DbSet<OpinionStudentStudent> StudentStudentOpinions { get; set; }
+        public DbSet<OpinionOwnerStudent> OwnerStudentOpinions { get; set; }
 
         public Flats4usContext() { }
 
@@ -21,6 +23,41 @@ namespace Flats4us.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OpinionStudentStudent>()
+                .HasOne(x => x.Evaluated)
+                .WithMany(x => x.ReceivedStudentStudentOpinions)
+                .HasForeignKey(x => x.EvaluatedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OpinionStudentStudent>()
+                .HasOne(x => x.Evaluator)
+                .WithMany(x => x.IssuedStudentStudentOpinions)
+                .HasForeignKey(x => x.EvaluatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OpinionOwnerStudent>()
+                .HasOne(x => x.Evaluated)
+                .WithMany(x => x.ReceivedOwnertStudentOpinions)
+                .HasForeignKey(x => x.EvaluatedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OpinionOwnerStudent>()
+                .HasOne(x => x.Evaluator)
+                .WithMany(x => x.IssuedOwnerStudentOpinions)
+                .HasForeignKey(x => x.EvaluatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OpinionStudentOwner>()
+                .HasOne(x => x.Evaluator)
+                .WithMany(x => x.IssuedStudentOwnerOpinions)
+                .HasForeignKey(x => x.EvaluatorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OpinionStudentOwner>()
+                .HasOne(x => x.Evaluated)
+                .WithMany(x => x.ReceivedStudentOwnerOpinions)
+                .HasForeignKey(x => x.EvaluatedId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Moderator>().HasData(
                new //Moderator

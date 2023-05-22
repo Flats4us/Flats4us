@@ -26,9 +26,18 @@ namespace Flats4us.Entities
 
         public virtual ICollection<Interest> Interests { get; set; }
 
+        public virtual ICollection<OpinionStudentStudent> ReceivedStudentStudentOpinions { get; set; }
+        public virtual ICollection<OpinionStudentStudent> IssuedStudentStudentOpinions { get; set; }
+        public virtual ICollection<OpinionOwnerStudent> ReceivedOwnertStudentOpinions { get; set; }
+        public virtual ICollection<OpinionStudentOwner> IssuedStudentOwnerOpinions { get; set; }
+
         public Student()
         {
             this.Interests = new HashSet<Interest>();
+            this.ReceivedStudentStudentOpinions= new HashSet<OpinionStudentStudent>();
+            this.IssuedStudentStudentOpinions= new HashSet<OpinionStudentStudent>();
+            this.ReceivedOwnertStudentOpinions = new HashSet<OpinionOwnerStudent>();
+            this.IssuedStudentOwnerOpinions = new HashSet<OpinionStudentOwner>();
         }
     }
 }

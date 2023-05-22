@@ -9,5 +9,14 @@ namespace Flats4us.Entities
 
         [Required]
         public string TitleDeedPath { get; set; }
+
+        public virtual ICollection<OpinionOwnerStudent> IssuedOwnerStudentOpinions { get; set; }
+        public virtual ICollection<OpinionStudentOwner> ReceivedStudentOwnerOpinions { get; set; }
+
+        public Owner()
+        {
+            this.IssuedOwnerStudentOpinions = new HashSet<OpinionOwnerStudent>();
+            this.ReceivedStudentOwnerOpinions= new HashSet<OpinionStudentOwner>();
+        }
     }
 }
