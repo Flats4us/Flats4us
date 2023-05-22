@@ -61,8 +61,8 @@ export class StartComponent implements OnInit {
 					});
 
 					this.citiesGroups
-						.filter((group) => group.whole == lowerCaseRegion)
-						.map((group) => group.parts.push(row[1]));
+						.find((group) => group.whole == lowerCaseRegion)
+						?.parts.push(row[1]);
 				}
 			});
 	}
