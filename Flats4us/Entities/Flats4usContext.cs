@@ -249,13 +249,6 @@ namespace Flats4us.Entities
                }
             );
 
-            modelBuilder.Entity<SurveyStudent>().HasData(
-               new //SurveyStudent
-               {
-                   SurveyStudentId = 5,
-                   test = 1
-               }
-            );
 
             //.UsingEntity(j => j
             //    .ToTable("UserTechnology")
