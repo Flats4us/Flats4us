@@ -10,6 +10,7 @@ import { IGroup } from './models/start-site.models';
 import { IRegionCity } from './models/start-site.models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @Component({
 	selector: 'app-start',
@@ -20,6 +21,10 @@ import { Validators } from '@angular/forms';
 export class StartComponent implements OnInit {
 	public showMoreFilters = false;
 	public numberOfRecords = 14585;
+	public numberOfRecordsDesc: INumeric = {
+		value: this.numberOfRecords,
+		viewValue: '' + this.numberOfRecords,
+	};
 
 	public mainSiteForm: FormGroup = new FormGroup({});
 
@@ -31,7 +36,8 @@ export class StartComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private http: HttpClient,
-		private router: Router
+		private router: Router,
+		private matPaginatorIntl: MatPaginatorIntl
 	) {
 		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -86,6 +92,27 @@ export class StartComponent implements OnInit {
 	}
 
 	public ngOnInit() {
+		this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
+		this.matPaginatorIntl.itemsPerPageLabel = '';
+		this.matPaginatorIntl.lastPageLabel = 'ostatnia strona';
+		this.matPaginatorIntl.nextPageLabel = 'następna strona';
+		this.matPaginatorIntl.previousPageLabel = 'poprzednia strona';
+		this.matPaginatorIntl.getRangeLabel = (
+			page: number,
+			pageSize: number,
+			length: number
+		) => {
+			if (length == 0 || pageSize == 0) {
+				return `0 z ${length} ofert`;
+			}
+			length = Math.max(length, 0);
+			const startIndex = page * pageSize;
+			const endIndex =
+				startIndex < length
+					? Math.min(startIndex + pageSize, length)
+					: startIndex + pageSize;
+			return `${startIndex + 1} - ${endIndex} z ${length} ofert`;
+		};
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(

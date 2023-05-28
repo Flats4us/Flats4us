@@ -16,6 +16,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { GetDescriptionDirective } from '../directives/get-description.directive';
+import {
+	MatPaginatorIntl,
+	MatPaginatorModule,
+} from '@angular/material/paginator';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -34,7 +38,9 @@ import { GetDescriptionDirective } from '../directives/get-description.directive
 		MatChipsModule,
 		MatDividerModule,
 		StartRoutingModule,
+		MatPaginatorModule,
 	],
 	exports: [StartComponent],
+	providers: [MatPaginatorIntl],
 })
 export class StartModule {}
