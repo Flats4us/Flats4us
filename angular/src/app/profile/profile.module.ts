@@ -20,9 +20,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
+import { OwnerSurveyComponent } from './owner-survey/owner-survey.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
-	declarations: [ProfileComponent, StudentSurveyComponent],
+	declarations: [ProfileComponent, StudentSurveyComponent, OwnerSurveyComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,
@@ -43,6 +45,7 @@ import { PasswordChangeModule } from '../settings/components/passwordChange/pass
 		MatCheckboxModule,
 		EmailChangeModule,
 		PasswordChangeModule,
+		MatRadioModule,
 	],
 	exports: [ProfileComponent],
 })

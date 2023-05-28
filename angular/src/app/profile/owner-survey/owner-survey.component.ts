@@ -13,11 +13,11 @@ import { tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-student-survey',
-	templateUrl: './student-survey.component.html',
-	styleUrls: ['./student-survey.component.scss'],
+	templateUrl: './owner-survey.component.html',
+	styleUrls: ['./owner-survey.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentSurveyComponent implements OnInit {
+export class OwnerSurveyComponent implements OnInit {
 	public questions$: Observable<IQuestionsData[]>;
 	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
@@ -30,7 +30,7 @@ export class StudentSurveyComponent implements OnInit {
 	) {}
 
 	public ngOnInit() {
-		this.questions$ = this.http.get<[]>('../../assets/student-survey.json').pipe(
+		this.questions$ = this.http.get<[]>('../../assets/owner-survey.json').pipe(
 			tap((data) => {
 				this.questions = data;
 				this.cdr.detectChanges();
