@@ -8,6 +8,8 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-student-survey',
@@ -16,6 +18,7 @@ import { IQuestionsData } from './questions-data.interface';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentSurveyComponent implements OnInit {
+	public questions$: Observable<IQuestionsData[]>;
 	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
 
@@ -27,14 +30,19 @@ export class StudentSurveyComponent implements OnInit {
 	) {}
 
 	public ngOnInit() {
-		this.http.get<[]>('../../assets/JSON.json').subscribe((data) => {
-			this.questions = data;
-			this.cdr.detectChanges();
+		this.questions$ = this.http.get<[]>('../../assets/JSON.json').pipe(
+			tap((data) => {
+				this.questions = data;
+				this.cdr.detectChanges();
+			})
+		);
 
-			this.studentSurveyForm = this.formBuilder.group({
-				lookingForRoommate: [''],
-			});
-			this.questions.forEach((question) =>
+		this.studentSurveyForm = this.formBuilder.group({
+			lookingForRoommate: [''],
+		});
+
+		this.questions$.subscribe((questions) => {
+			questions.forEach((question) =>
 				this.studentSurveyForm.addControl(
 					question.formControlName,
 					new FormControl('')

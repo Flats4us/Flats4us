@@ -4,6 +4,7 @@
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<div *ngFor="let question of questions; let i = index">
 				<ng-container
+					*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"
 					><!--*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"-->
 
 					<mat-label>{{ i + 1 }}. {{ question.content }} "</mat-label>
