@@ -170,7 +170,7 @@
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-					<div class="boxIcon" [appGetDescription]="numberOfRecords"></div>
+					<!-- <div class="boxIcon" [appGetDescription]="numberOfRecords"></div> -->
 				</div>
 			</div>
 			<div *ngIf="showMoreFilters" class="box3">
@@ -323,8 +323,15 @@
 				</mat-form-field>
 			</div>
 		</div>
+		<mat-paginator
+			id="paginator"
+			[length]="numberOfRecordsDesc.viewValue"
+			[pageSize]="10"
+			[pageSizeOptions]="[5, 10, 25, 100]"
+			aria-label="Paginator"
+		>
+		</mat-paginator>
 	</form>
-
 	<div class="container-2">
 		<mat-card class="card" (click)="navigateToFlat()">
 			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
