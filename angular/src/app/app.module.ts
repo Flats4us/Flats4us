@@ -8,9 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, NotFoundComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
