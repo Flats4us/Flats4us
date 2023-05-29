@@ -1,26 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("Advertisement")]
-    public class Advertisement //not abstract
+    public class Advertisement
     {
-
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int AdvertisementId { get; set; }
 
         [Required]
-        public byte[] Image { get; set; }
+        public string BannerPath { get; set; }
 
         [Required]
         public int Price { get; set; }
 
+        // In Days
         [Required]
-        public DateTime EndDate { get; set; }
+        public int Duration { get; set; }
 
-        public virtual Moderator Moderator { get; set; }
-
+        public Moderator Moderator { get; set; }
     }
 }

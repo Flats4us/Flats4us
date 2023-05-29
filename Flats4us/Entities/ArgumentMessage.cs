@@ -1,24 +1,27 @@
-﻿using Flats4us.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("ArgumentMessage")]
-    public class ArgumentMessage  //not abstract
+    public class ArgumentMessage
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int ArgumentMessageId { get; set; }
+
+        [Required]
+        public string Topic { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
-        public string? Content { get; set; }
+        public string Content { get; set; }
 
-        public virtual OwnerStudent Sender { get; set; }
+        [Required]
+        public Sender Sender { get; set; }
 
-
+        public virtual Argument Argument { get; set; }
     }
 }

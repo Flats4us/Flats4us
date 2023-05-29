@@ -1,33 +1,60 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("Property")]
-    public class Property //abstract 
+    public abstract class Property
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int PropertyId { get; set; }
 
         [Required]
-        public string? Address { get; set; }
+        public string Province { get; set; }
+
+        public string District { get; set; }
 
         [Required]
-        public int Surface { get; set; }
+        public string Street { get; set; }
 
         [Required]
-        public int MaxInhabitants { get; set; }
+        public int Number { get; set; }
 
+        public int Flat { get; set; }
 
-        public virtual ICollection<PropertyEquipment> PropertyEquipments { get; set; }
-        public virtual ICollection<PropertyImage> PropertyImages { get; set; }
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string PostalCode { get; set; }
+
+        [Required]
+        public int Area { get; set; }
+
+        // TODO: Zdjęcia przchowywałbym w odpowiednich folderach po id nieruchomości
+
+        [Required]
+        public int MaxNumberOfInhabitants { get; set; }
+
+        [Required]
+        public int ConstructionYear { get; set; }
+
+        [Required]
+        public bool Elevator { get; set; }
+
+        [Required]
+        public string TitleDeedPath { get; set; }
+
+        [Required]
+        public VerificationStatus VerificationStatus { get; set; }
+
+        public virtual ICollection<Equipment> Equipment { get; set; }
+        public virtual ICollection<Offer> Offers { get; set; }
 
         public Property()
         {
-            PropertyEquipments = new HashSet<PropertyEquipment>();
-            PropertyImages = new HashSet<PropertyImage>();
+            this.Equipment = new HashSet<Equipment>();
+            this.Offers = new HashSet<Offer>();
         }
-
     }
 }

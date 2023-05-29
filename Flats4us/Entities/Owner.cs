@@ -1,26 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    public class Owner : OwnerStudent //not abstract
+    public class Owner : OwnerStudent
     {
         [Required]
-        public string? BankAccount { get; set; }
+        public string BankAccount { get; set; }
 
-        [Required]
-        public string? TitleDeedPath { get; set; }
-
-        public virtual ICollection<OwnerOpinion> IssuedRatings { get; set; }
-
-        public virtual ICollection<StudentOpinion> ReceivedRatings { get; set; }
+        public virtual ICollection<OpinionOwnerStudent> IssuedOwnerStudentOpinions { get; set; }
+        public virtual ICollection<OpinionStudentOwner> ReceivedStudentOwnerOpinions { get; set; }
+        public virtual ICollection<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
 
         public Owner()
         {
-            IssuedRatings = new HashSet<OwnerOpinion>();
-            ReceivedRatings = new HashSet<StudentOpinion>();
+            this.IssuedOwnerStudentOpinions = new HashSet<OpinionOwnerStudent>();
+            this.ReceivedStudentOwnerOpinions = new HashSet<OpinionStudentOwner>();
+            this.OwnerOfferSurveys = new HashSet<SurveyOwnerOffer>();
         }
-
-
     }
 }

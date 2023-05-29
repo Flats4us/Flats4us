@@ -1,37 +1,39 @@
-﻿using Flats4us.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("Rent")]
-    public class Rent //not abstract
+    public class Rent
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int RentId { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
 
         [Required]
-        public int? LengthInMonths { get; set; }
+        public DateTime PaymentDate { get; set; }
+
+        // In Months
+        [Required]
+        public int RentPeriod { get; set; }
 
         [Required]
-        public string? ContractInformations { get; set; }
+        public string ContractInfo { get; set; }
 
-        public virtual RentOpinion RentOpinion { get; set; }
+        public virtual OpinionRent OpinionRent { get; set; }
+
+        public virtual Offer Offers { get; set; }
 
         public virtual Tenant Tenant { get; set; }
 
-        public virtual Offer Offer { get; set; }
-
+        [NotMapped]
         public virtual ICollection<Student> OtherTenants { get; set; }
 
         public Rent()
         {
             OtherTenants = new HashSet<Student>();
         }
-
     }
 }

@@ -1,26 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("OfferInterest")]
-    public class OfferInterest  //not abstract
+    public class OfferInterest
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        [Required]
-        public int OfferId { get; set; }
-
-        [Required]
-        public int SeekerId { get; set; }
+        public int OfferInterestId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
-        public virtual Offer Offer { get; set; }
-        public virtual Seeker Seeker { get; set; }
+        public Seeker Seeker { get; set; }
 
+        public Offer Offer { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 using Flats4us.Entities;
-//using Flats4us.Services;
+using Flats4us.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Flats4usContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn")));
 
-//builder.Services.AddScoped<ITenantService, TenantService>();
+builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
