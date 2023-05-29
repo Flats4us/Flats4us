@@ -42,7 +42,5 @@ namespace Flats4us.Entities
 
         [Required]
         public string Password { get; set; }
-
-
     }
 }

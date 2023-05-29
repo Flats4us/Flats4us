@@ -7,5 +7,12 @@ namespace Flats4us.Entities
     {
         [Required]
         public RoommatesStatus RoommatesStatus { get; set; }
+
+        public virtual ICollection<Rent> Rents { get; set; }
+
+        public Tenant()
+        {
+            this.Rents = new HashSet<Rent>();
+        }
     }
 }

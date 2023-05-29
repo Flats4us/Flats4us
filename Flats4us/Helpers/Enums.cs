@@ -15,6 +15,12 @@
         Rented
     }
 
+    public enum Sender
+    {
+        Student,
+        Owner
+    }
+
     public enum ArgumentStatus
     {
         Ongoing,
@@ -22,12 +28,6 @@
         Unfounded,
         ResolvedByMod,
         UnfoundedByMod
-    }
-
-    public enum Department
-    {
-        dept1,
-        dept2
     }
 
     public enum DocumentType

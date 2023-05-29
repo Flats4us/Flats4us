@@ -8,12 +8,35 @@ namespace Flats4us.Entities
 {
     public class Flats4usContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<SurveyStudent> SurveyStudents { get; set; }
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<Argument> Arguments { get; set; }
+        public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
+        public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
+        public DbSet<Flat> Flats { get; set; }
+        public DbSet<House> Houses { get; set; }
         public DbSet<Interest> Interests { get; set; }
-        public DbSet<OpinionStudentStudent> StudentStudentOpinions { get; set; }
+        public DbSet<Meeting> Meetings { get; set; }
+        public DbSet<Moderator> Moderators { get; set; }
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<OfferInterest> OfferInterests { get; set; }
+        public DbSet<OfferPromotion> OfferPromotions { get; set; }
         public DbSet<OpinionOwnerStudent> OwnerStudentOpinions { get; set; }
+        public DbSet<OpinionRent> RentOpinions { get; set; }
+        public DbSet<OpinionStudentOwner> StudentOwnerOpinions { get; set; }
+        public DbSet<OpinionStudentStudent> StudentStudentOpinions { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<OwnerStudent> OwnerStudents { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Property> Properties { get; set; }
+        public DbSet<Rent> Rents { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Seeker> Seekers { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
+        public DbSet<SurveyStudent> StudentSurveys { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public Flats4usContext() { }
 

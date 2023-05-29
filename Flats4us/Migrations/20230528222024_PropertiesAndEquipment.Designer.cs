@@ -4,6 +4,7 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    partial class Flats4usContextModelSnapshot : ModelSnapshot
+    [Migration("20230528222024_PropertiesAndEquipment")]
+    partial class PropertiesAndEquipment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,135 +37,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("PropertiesPropertyId");
 
-                    b.ToTable("EquipmentProperty", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Advertisement", b =>
-                {
-                    b.Property<int>("AdvertisementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdvertisementId"));
-
-                    b.Property<string>("BannerPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ModeratorUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.HasKey("AdvertisementId");
-
-                    b.HasIndex("ModeratorUserId");
-
-                    b.ToTable("Advertisements", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.Property<int>("ArgumentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentId"));
-
-                    b.Property<int?>("ArgumentInterventionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArgumentStatus")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("MederatorDecisionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OwnerAcceptanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StudentAcceptanceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("StudentUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArgumentId");
-
-                    b.HasIndex("ArgumentInterventionId");
-
-                    b.HasIndex("OfferId");
-
-                    b.HasIndex("StudentUserId");
-
-                    b.ToTable("Arguments", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
-                {
-                    b.Property<int>("ArgumentInterventionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentInterventionId"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Justification")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ModeratorUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ArgumentInterventionId");
-
-                    b.HasIndex("ModeratorUserId");
-
-                    b.ToTable("ArgumentInterventions", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
-                {
-                    b.Property<int>("ArgumentMessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentMessageId"));
-
-                    b.Property<int>("ArgumentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Sender")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Topic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ArgumentMessageId");
-
-                    b.HasIndex("ArgumentId");
-
-                    b.ToTable("ArgumentMessages", (string)null);
+                    b.ToTable("EquipmentProperty");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Equipment", b =>
@@ -179,7 +54,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("EquipmentId");
 
-                    b.ToTable("Equipment", (string)null);
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Interest", b =>
@@ -196,7 +71,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("InterestId");
 
-                    b.ToTable("Interests", (string)null);
+                    b.ToTable("Interests");
 
                     b.HasData(
                         new
@@ -251,118 +126,6 @@ namespace Flats4us.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
-                {
-                    b.Property<int>("MeetingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MeetingId"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Place")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MeetingId");
-
-                    b.HasIndex("OfferId");
-
-                    b.ToTable("Meetings", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Offer", b =>
-                {
-                    b.Property<int>("OfferId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfferId"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Decription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberOfInterested")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OfferStatus")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PropertyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Regulations")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RentalPeriod")
-                        .HasColumnType("int");
-
-                    b.HasKey("OfferId");
-
-                    b.HasIndex("PropertyId");
-
-                    b.ToTable("Offers", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OfferInterest", b =>
-                {
-                    b.Property<int>("OfferInterestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OfferInterestId"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SeekerUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OfferInterestId");
-
-                    b.HasIndex("OfferId");
-
-                    b.HasIndex("SeekerUserId");
-
-                    b.ToTable("OfferInterests", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
-                {
-                    b.Property<int>("OfferPromotionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PricePerDay")
-                        .HasColumnType("int");
-
-                    b.HasKey("OfferPromotionId");
-
-                    b.ToTable("OfferPromotions", (string)null);
-                });
-
             modelBuilder.Entity("Flats4us.Entities.OpinionOwnerStudent", b =>
                 {
                     b.Property<int>("OpinionOwnerStudentId")
@@ -392,44 +155,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("OwnerStudentOpinions", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OpinionRent", b =>
-                {
-                    b.Property<int>("OpinionRentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ComplianceWithOffer")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Decoration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Equipment")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Location")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Neighbors")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Noisiness")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParkingSpace")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Tidiness")
-                        .HasColumnType("int");
-
-                    b.HasKey("OpinionRentId");
-
-                    b.ToTable("RentOpinions", (string)null);
+                    b.ToTable("OwnerStudentOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionStudentOwner", b =>
@@ -461,7 +187,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("StudentOwnerOpinions", (string)null);
+                    b.ToTable("OpinionStudentOwner");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionStudentStudent", b =>
@@ -493,36 +219,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("StudentStudentOpinions", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Payment", b =>
-                {
-                    b.Property<int>("PaymentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OfferId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentPurpose")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("OfferId");
-
-                    b.HasIndex("StudentUserId");
-
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("StudentStudentOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Property", b =>
@@ -547,10 +244,6 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("District")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Elevator")
                         .HasColumnType("bit");
 
@@ -567,10 +260,6 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -584,77 +273,11 @@ namespace Flats4us.Migrations
 
                     b.HasKey("PropertyId");
 
-                    b.ToTable("Properties", (string)null);
+                    b.ToTable("Properties");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Property");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Rent", b =>
-                {
-                    b.Property<int>("RentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RentId"));
-
-                    b.Property<string>("ContractInfo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OffersOfferId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RentPeriod")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TenantUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RentId");
-
-                    b.HasIndex("OffersOfferId");
-
-                    b.HasIndex("TenantUserId");
-
-                    b.ToTable("Rents", (string)null);
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.SurveyOwnerOffer", b =>
-                {
-                    b.Property<int>("SurveyOwnerOfferId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Animals")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfInhabitants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OwnerUserId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Parties")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Smoking")
-                        .HasColumnType("bit");
-
-                    b.HasKey("SurveyOwnerOfferId");
-
-                    b.HasIndex("OwnerUserId");
-
-                    b.ToTable("OwnerOfferSurveys", (string)null);
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
@@ -697,7 +320,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("SurveyStudentId");
 
-                    b.ToTable("StudentSurveys", (string)null);
+                    b.ToTable("SurveyStudents");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.User", b =>
@@ -758,7 +381,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
@@ -777,22 +400,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentsUserId");
 
-                    b.ToTable("InterestStudent", (string)null);
-                });
-
-            modelBuilder.Entity("MeetingStudent", b =>
-                {
-                    b.Property<int>("MeetingsMeetingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentsUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MeetingsMeetingId", "StudentsUserId");
-
-                    b.HasIndex("StudentsUserId");
-
-                    b.ToTable("MeetingStudent", (string)null);
+                    b.ToTable("InterestStudent");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Flat", b =>
@@ -805,7 +413,7 @@ namespace Flats4us.Migrations
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("int");
 
-                    b.ToTable("Properties", null, t =>
+                    b.ToTable("Properties", t =>
                         {
                             t.Property("NumberOfRooms")
                                 .HasColumnName("Flat_NumberOfRooms");
@@ -921,49 +529,65 @@ namespace Flats4us.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.OwnerStudent", b =>
+            modelBuilder.Entity("Flats4us.Entities.Owner", b =>
                 {
                     b.HasBaseType("Flats4us.Entities.User");
 
                     b.Property<bool>("ActivityStatus")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("DocumentExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DocumentPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DocumentType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhotoPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VerificationStatus")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("OwnerStudent");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Owner", b =>
-                {
-                    b.HasBaseType("Flats4us.Entities.OwnerStudent");
 
                     b.Property<string>("BankAccount")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DocumentExpireDate")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DocumentType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhotoPath")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VerificationStatus")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Owner");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Student", b =>
                 {
-                    b.HasBaseType("Flats4us.Entities.OwnerStudent");
+                    b.HasBaseType("Flats4us.Entities.User");
+
+                    b.Property<bool>("ActivityStatus")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit");
 
                     b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DocumentExpireDate")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentPath")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DocumentType")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int");
 
                     b.Property<string>("Facebook")
@@ -972,6 +596,11 @@ namespace Flats4us.Migrations
 
                     b.Property<string>("Instagram")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoPath")
+                        .IsRequired()
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentNumber")
@@ -985,6 +614,10 @@ namespace Flats4us.Migrations
                     b.Property<string>("University")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VerificationStatus")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int");
 
                     b.Property<int>("YearOfBirth")
                         .HasColumnType("int");
@@ -1015,17 +648,17 @@ namespace Flats4us.Migrations
                             Street = "Krótka",
                             Surname = "Dobrej",
                             ActivityStatus = false,
+                            Age = 22,
                             DocumentExpireDate = new DateTime(2024, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DocumentPath = "/documents/1",
                             DocumentType = 1,
-                            PhotoPath = "/profile/1",
-                            VerificationStatus = 0,
-                            Age = 22,
                             Facebook = "",
                             Instagram = "",
+                            PhotoPath = "/profile/1",
                             StudentNumber = "s22023",
                             Twitter = "",
                             University = "PJATK",
+                            VerificationStatus = 0,
                             YearOfBirth = 2001
                         },
                         new
@@ -1044,17 +677,17 @@ namespace Flats4us.Migrations
                             Street = "Kościuszki",
                             Surname = "Dąbrowska",
                             ActivityStatus = true,
+                            Age = 28,
                             DocumentExpireDate = new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DocumentPath = "/documents/2",
                             DocumentType = 2,
-                            PhotoPath = "/profile/2",
-                            VerificationStatus = 0,
-                            Age = 28,
                             Facebook = "https://www.facebook.com/alicja.dabrowska",
                             Instagram = "https://www.instagram.com/alicja_dabrowska/",
+                            PhotoPath = "/profile/2",
                             StudentNumber = "s23423",
                             Twitter = "",
                             University = "Uniwersytet Warszawski",
+                            VerificationStatus = 0,
                             YearOfBirth = 1995
                         },
                         new
@@ -1073,17 +706,17 @@ namespace Flats4us.Migrations
                             Street = "Szkolna",
                             Surname = "Kowalczyk",
                             ActivityStatus = true,
+                            Age = 25,
                             DocumentExpireDate = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DocumentPath = "/documents/3",
                             DocumentType = 0,
-                            PhotoPath = "/profile/3",
-                            VerificationStatus = 0,
-                            Age = 25,
                             Facebook = "https://www.facebook.com/dominik.kowalczyk",
                             Instagram = "https://www.instagram.com/dominik_kowalczyk/",
+                            PhotoPath = "/profile/3",
                             StudentNumber = "s22345",
                             Twitter = "",
                             University = "AGH University of Science and Technology",
+                            VerificationStatus = 0,
                             YearOfBirth = 1998
                         },
                         new
@@ -1102,29 +735,19 @@ namespace Flats4us.Migrations
                             Street = "Kwiatowa",
                             Surname = "Wójcik",
                             ActivityStatus = true,
+                            Age = 23,
                             DocumentExpireDate = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DocumentPath = "/documents/4",
                             DocumentType = 2,
-                            PhotoPath = "/profile/4",
-                            VerificationStatus = 0,
-                            Age = 23,
                             Facebook = "",
                             Instagram = "https://www.instagram.com/natalia_wojcik/",
+                            PhotoPath = "/profile/4",
                             StudentNumber = "s22890",
                             Twitter = "https://twitter.com/nwojcik",
                             University = "University of Warsaw",
+                            VerificationStatus = 0,
                             YearOfBirth = 2000
                         });
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
-                {
-                    b.HasBaseType("Flats4us.Entities.Student");
-
-                    b.Property<int>("RoommatesStatus")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Tenant");
                 });
 
             modelBuilder.Entity("EquipmentProperty", b =>
@@ -1140,112 +763,6 @@ namespace Flats4us.Migrations
                         .HasForeignKey("PropertiesPropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Advertisement", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Moderator", "Moderator")
-                        .WithMany("Advertisements")
-                        .HasForeignKey("ModeratorUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Moderator");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.HasOne("Flats4us.Entities.ArgumentIntervention", "ArgumentIntervention")
-                        .WithMany()
-                        .HasForeignKey("ArgumentInterventionId");
-
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithMany("Arguments")
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Student", "Student")
-                        .WithMany("Arguments")
-                        .HasForeignKey("StudentUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ArgumentIntervention");
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Moderator", "Moderator")
-                        .WithMany("ArgumentInterventions")
-                        .HasForeignKey("ModeratorUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Moderator");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Argument", "Argument")
-                        .WithMany("ArgumentMessages")
-                        .HasForeignKey("ArgumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Argument");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Offer", null)
-                        .WithMany("Meetings")
-                        .HasForeignKey("OfferId");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Offer", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Property", "Property")
-                        .WithMany("Offers")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OfferInterest", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithMany("OfferInterests")
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Seeker", "Seeker")
-                        .WithMany("OfferInterests")
-                        .HasForeignKey("SeekerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("Seeker");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithMany("OfferPromotions")
-                        .HasForeignKey("OfferPromotionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionOwnerStudent", b =>
@@ -1265,17 +782,6 @@ namespace Flats4us.Migrations
                     b.Navigation("Evaluated");
 
                     b.Navigation("Evaluator");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.OpinionRent", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Rent", "Rent")
-                        .WithOne("OpinionRent")
-                        .HasForeignKey("Flats4us.Entities.OpinionRent", "OpinionRentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Rent");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionStudentOwner", b =>
@@ -1316,63 +822,6 @@ namespace Flats4us.Migrations
                     b.Navigation("Evaluator");
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.Payment", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithMany("Payments")
-                        .HasForeignKey("OfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Student", "Student")
-                        .WithMany("Payments")
-                        .HasForeignKey("StudentUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Rent", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Offer", "Offers")
-                        .WithMany("Rents")
-                        .HasForeignKey("OffersOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Tenant", "Tenant")
-                        .WithMany("Rents")
-                        .HasForeignKey("TenantUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offers");
-
-                    b.Navigation("Tenant");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.SurveyOwnerOffer", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Owner", "Owner")
-                        .WithMany("OwnerOfferSurveys")
-                        .HasForeignKey("OwnerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Offer", "Offer")
-                        .WithOne("SurveyOwnerOffer")
-                        .HasForeignKey("Flats4us.Entities.SurveyOwnerOffer", "SurveyOwnerOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Offer");
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
                 {
                     b.HasOne("Flats4us.Entities.Student", "Student")
@@ -1399,80 +848,18 @@ namespace Flats4us.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MeetingStudent", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Meeting", null)
-                        .WithMany()
-                        .HasForeignKey("MeetingsMeetingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Flats4us.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
-                {
-                    b.Navigation("ArgumentMessages");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Offer", b =>
-                {
-                    b.Navigation("Arguments");
-
-                    b.Navigation("Meetings");
-
-                    b.Navigation("OfferInterests");
-
-                    b.Navigation("OfferPromotions");
-
-                    b.Navigation("Payments");
-
-                    b.Navigation("Rents");
-
-                    b.Navigation("SurveyOwnerOffer")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Property", b =>
-                {
-                    b.Navigation("Offers");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Rent", b =>
-                {
-                    b.Navigation("OpinionRent")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
-                {
-                    b.Navigation("Advertisements");
-
-                    b.Navigation("ArgumentInterventions");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.Owner", b =>
                 {
                     b.Navigation("IssuedOwnerStudentOpinions");
-
-                    b.Navigation("OwnerOfferSurveys");
 
                     b.Navigation("ReceivedStudentOwnerOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Student", b =>
                 {
-                    b.Navigation("Arguments");
-
                     b.Navigation("IssuedStudentOwnerOpinions");
 
                     b.Navigation("IssuedStudentStudentOpinions");
-
-                    b.Navigation("Payments");
 
                     b.Navigation("ReceivedOwnertStudentOpinions");
 
@@ -1480,16 +867,6 @@ namespace Flats4us.Migrations
 
                     b.Navigation("SurveyStudent")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Seeker", b =>
-                {
-                    b.Navigation("OfferInterests");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
-                {
-                    b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618
         }

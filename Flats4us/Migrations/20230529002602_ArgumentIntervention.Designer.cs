@@ -4,6 +4,7 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    partial class Flats4usContextModelSnapshot : ModelSnapshot
+    [Migration("20230529002602_ArgumentIntervention")]
+    partial class ArgumentIntervention
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("PropertiesPropertyId");
 
-                    b.ToTable("EquipmentProperty", (string)null);
+                    b.ToTable("EquipmentProperty");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Advertisement", b =>
@@ -62,7 +65,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("ModeratorUserId");
 
-                    b.ToTable("Advertisements", (string)null);
+                    b.ToTable("Advertisements");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Argument", b =>
@@ -105,7 +108,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentUserId");
 
-                    b.ToTable("Arguments", (string)null);
+                    b.ToTable("Arguments");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
@@ -123,14 +126,9 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModeratorUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("ArgumentInterventionId");
 
-                    b.HasIndex("ModeratorUserId");
-
-                    b.ToTable("ArgumentInterventions", (string)null);
+                    b.ToTable("ArgumentInterventions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
@@ -162,7 +160,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("ArgumentId");
 
-                    b.ToTable("ArgumentMessages", (string)null);
+                    b.ToTable("ArgumentMessages");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Equipment", b =>
@@ -179,7 +177,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("EquipmentId");
 
-                    b.ToTable("Equipment", (string)null);
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Interest", b =>
@@ -196,7 +194,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("InterestId");
 
-                    b.ToTable("Interests", (string)null);
+                    b.ToTable("Interests");
 
                     b.HasData(
                         new
@@ -277,7 +275,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("OfferId");
 
-                    b.ToTable("Meetings", (string)null);
+                    b.ToTable("Meetings");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Offer", b =>
@@ -318,7 +316,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Offers", (string)null);
+                    b.ToTable("Offers");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OfferInterest", b =>
@@ -344,7 +342,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("SeekerUserId");
 
-                    b.ToTable("OfferInterests", (string)null);
+                    b.ToTable("OfferInterests");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
@@ -360,7 +358,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("OfferPromotionId");
 
-                    b.ToTable("OfferPromotions", (string)null);
+                    b.ToTable("OfferPromotions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionOwnerStudent", b =>
@@ -392,7 +390,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("OwnerStudentOpinions", (string)null);
+                    b.ToTable("OwnerStudentOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionRent", b =>
@@ -429,7 +427,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("OpinionRentId");
 
-                    b.ToTable("RentOpinions", (string)null);
+                    b.ToTable("RentOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionStudentOwner", b =>
@@ -461,7 +459,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("StudentOwnerOpinions", (string)null);
+                    b.ToTable("StudentOwnerOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionStudentStudent", b =>
@@ -493,7 +491,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("EvaluatorId");
 
-                    b.ToTable("StudentStudentOpinions", (string)null);
+                    b.ToTable("StudentStudentOpinions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Payment", b =>
@@ -522,7 +520,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentUserId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Property", b =>
@@ -584,7 +582,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("PropertyId");
 
-                    b.ToTable("Properties", (string)null);
+                    b.ToTable("Properties");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Property");
 
@@ -624,7 +622,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("TenantUserId");
 
-                    b.ToTable("Rents", (string)null);
+                    b.ToTable("Rents");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyOwnerOffer", b =>
@@ -654,7 +652,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("OwnerUserId");
 
-                    b.ToTable("OwnerOfferSurveys", (string)null);
+                    b.ToTable("OwnerOfferSurveys");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
@@ -697,7 +695,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("SurveyStudentId");
 
-                    b.ToTable("StudentSurveys", (string)null);
+                    b.ToTable("StudentSurveys");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.User", b =>
@@ -758,7 +756,7 @@ namespace Flats4us.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
@@ -777,7 +775,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentsUserId");
 
-                    b.ToTable("InterestStudent", (string)null);
+                    b.ToTable("InterestStudent");
                 });
 
             modelBuilder.Entity("MeetingStudent", b =>
@@ -792,7 +790,7 @@ namespace Flats4us.Migrations
 
                     b.HasIndex("StudentsUserId");
 
-                    b.ToTable("MeetingStudent", (string)null);
+                    b.ToTable("MeetingStudent");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Flat", b =>
@@ -805,7 +803,7 @@ namespace Flats4us.Migrations
                     b.Property<int>("NumberOfRooms")
                         .HasColumnType("int");
 
-                    b.ToTable("Properties", null, t =>
+                    b.ToTable("Properties", t =>
                         {
                             t.Property("NumberOfRooms")
                                 .HasColumnName("Flat_NumberOfRooms");
@@ -1178,17 +1176,6 @@ namespace Flats4us.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
-                {
-                    b.HasOne("Flats4us.Entities.Moderator", "Moderator")
-                        .WithMany("ArgumentInterventions")
-                        .HasForeignKey("ModeratorUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Moderator");
-                });
-
             modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
                 {
                     b.HasOne("Flats4us.Entities.Argument", "Argument")
@@ -1451,8 +1438,6 @@ namespace Flats4us.Migrations
             modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
                 {
                     b.Navigation("Advertisements");
-
-                    b.Navigation("ArgumentInterventions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Owner", b =>
