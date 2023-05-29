@@ -8,4 +8,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AddingRealEstateComponent {
 	public selected = '';
+
+	public selectedFiles: File[] = [];
+
+	onFileSelected(event: any) {
+		const files: FileList = event.target.files;
+		for (let i = 0; i < files.length; i++) {
+			this.selectedFiles.push(files[i]);
+		}
+	}
 }

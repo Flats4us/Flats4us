@@ -8,7 +8,6 @@
 			<mat-form-field appearance="fill">
 				<mat-label>Select an option</mat-label>
 				<mat-select [(value)]="selected">
-					<mat-option>None</mat-option>
 					<mat-option value="option1">Mieszkanie</mat-option>
 					<mat-option value="option2">Dom</mat-option>
 					<mat-option value="option3">Pokój</mat-option>
@@ -28,7 +27,7 @@
 			<label>Metraż:</label>
 			<mat-form-field appearance="fill">
 				<mat-label>Metraż</mat-label>
-				<input matInput placeholder="45 m2" />
+				<input matInput type="number" placeholder="45 m2" />
 			</mat-form-field>
 		</form>
 
@@ -36,7 +35,7 @@
 			<label>Max. l. mieszkańców:</label>
 			<mat-form-field appearance="fill">
 				<mat-label>Max. l. mieszkańców</mat-label>
-				<input matInput placeholder="4" />
+				<input matInput type="number" placeholder="4" />
 			</mat-form-field>
 		</form>
 
@@ -52,8 +51,17 @@
 			<label>Liczba pokoi:</label>
 			<mat-form-field appearance="fill">
 				<mat-label>Liczba pokoi</mat-label>
-				<input matInput placeholder="3" />
+				<input matInput type="number" placeholder="3" />
 			</mat-form-field>
 		</form>
+		<div class="button">
+			<input
+				type="file"
+				(change)="onFileSelected($event)"
+				accept="image/*"
+				multiple
+			/>
+			<button class="add-offer">DODAJ OFERTĘ</button>
+		</div>
 	</mat-card-content>
 </mat-card>

@@ -17,5 +17,20 @@ mat-form-field {
 
 form {
 	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-bottom: 16px;
+}
+
+.button {
+	display: flex;
 	justify-content: space-between;
+}
+
+.add-offer {
+	font-size: 18px;
+	padding: 10px 20px;
+	border-radius: 30px;
+	width: 200px;
+	background-color: #fbbb8b;
 }
