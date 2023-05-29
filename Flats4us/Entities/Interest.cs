@@ -1,22 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Entities
 {
-    public class Equipment
+    public class Interest
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int EquipmentId { get; set; }
+        public int InterestId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        public virtual ICollection<Property> Properties { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
 
-        public Equipment()
+        public Interest()
         {
-            this.Properties = new HashSet<Property>();
+            this.Students = new HashSet<Student>();
         }
     }
 }

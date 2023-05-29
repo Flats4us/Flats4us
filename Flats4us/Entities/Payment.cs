@@ -1,31 +1,23 @@
-﻿using Flats4us.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public enum WhatFor
-    {
-        Rent,
-        Deposit,
-        Repairs
-    }
-
-    [Table("Payment")]
-    public class Payment //not abstract
+    public class Payment
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int PaymentId { get; set; }
 
         [Required]
-        public WhatFor WhatFor { get; set; }
+        public PaymentPurpose PaymentPurpose { get; set; }
 
         [Required]
-        public int Price { get; set; }
+        public int Amount { get; set; }
 
         public virtual Student Student { get; set; }
+
+        // TODO: Przypisanie powinno być chyba do wynajmu nie oferty
         public virtual Offer Offer { get; set; }
- 
     }
 }

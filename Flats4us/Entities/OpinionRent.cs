@@ -1,23 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Flats4us.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("RentOpinion")]
-    public class RentOpinion
+    public class OpinionRent
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [ForeignKey("Rent")]
-        public int Id { get; set; }
+        public int OpinionRentId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         // Scale 1-10
         [Required]
-        public int Localization { get; set; }
+        public int Location { get; set; }
 
         // Scale 1-10
         [Required]
@@ -29,7 +25,7 @@ namespace Flats4us.Entities
 
         // Scale 1-10
         [Required]
-        public int ParkingPlace { get; set; }
+        public int ParkingSpace { get; set; }
 
         // Scale 1-10
         [Required]
@@ -41,14 +37,12 @@ namespace Flats4us.Entities
 
         // Scale 1-10
         [Required]
-        public int Loudness { get; set; }
+        public int Noisiness { get; set; }
 
         // Scale 1-10
         [Required]
         public int ComplianceWithOffer { get; set; }
 
         public virtual Rent Rent { get; set; }
-
-
     }
 }
