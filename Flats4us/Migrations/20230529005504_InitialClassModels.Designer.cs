@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20230528235610_Rent")]
-    partial class Rent
+    [Migration("20230529005504_InitialClassModels")]
+    partial class InitialClassModels
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,106 @@ namespace Flats4us.Migrations
                     b.ToTable("Advertisements");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
+                {
+                    b.Property<int>("ArgumentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentId"));
+
+                    b.Property<int?>("ArgumentInterventionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArgumentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MederatorDecisionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OfferId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OwnerAcceptanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StudentAcceptanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StudentUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArgumentId");
+
+                    b.HasIndex("ArgumentInterventionId");
+
+                    b.HasIndex("OfferId");
+
+                    b.HasIndex("StudentUserId");
+
+                    b.ToTable("Arguments");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
+                {
+                    b.Property<int>("ArgumentInterventionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentInterventionId"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Justification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ModeratorUserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArgumentInterventionId");
+
+                    b.HasIndex("ModeratorUserId");
+
+                    b.ToTable("ArgumentInterventions");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
+                {
+                    b.Property<int>("ArgumentMessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArgumentMessageId"));
+
+                    b.Property<int>("ArgumentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ArgumentMessageId");
+
+                    b.HasIndex("ArgumentId");
+
+                    b.ToTable("ArgumentMessages");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Equipment", b =>
                 {
                     b.Property<int>("EquipmentId")
@@ -100,58 +200,6 @@ namespace Flats4us.Migrations
                     b.HasKey("InterestId");
 
                     b.ToTable("Interests");
-
-                    b.HasData(
-                        new
-                        {
-                            InterestId = 1,
-                            Name = "Sailing"
-                        },
-                        new
-                        {
-                            InterestId = 2,
-                            Name = "Painting"
-                        },
-                        new
-                        {
-                            InterestId = 3,
-                            Name = "Photography"
-                        },
-                        new
-                        {
-                            InterestId = 4,
-                            Name = "Cooking"
-                        },
-                        new
-                        {
-                            InterestId = 5,
-                            Name = "Gardening"
-                        },
-                        new
-                        {
-                            InterestId = 6,
-                            Name = "Playing Guitar"
-                        },
-                        new
-                        {
-                            InterestId = 7,
-                            Name = "Reading Books"
-                        },
-                        new
-                        {
-                            InterestId = 8,
-                            Name = "Hiking"
-                        },
-                        new
-                        {
-                            InterestId = 9,
-                            Name = "Dancing"
-                        },
-                        new
-                        {
-                            InterestId = 10,
-                            Name = "Yoga"
-                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
@@ -248,6 +296,22 @@ namespace Flats4us.Migrations
                     b.HasIndex("SeekerUserId");
 
                     b.ToTable("OfferInterests");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
+                {
+                    b.Property<int>("OfferPromotionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PricePerDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("OfferPromotionId");
+
+                    b.ToTable("OfferPromotions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionOwnerStudent", b =>
@@ -736,76 +800,6 @@ namespace Flats4us.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Moderator");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 1,
-                            AccountCreationDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Warszawa",
-                            Email = "maciej.kowalski@gmail.com",
-                            Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Maciej",
-                            Number = 47,
-                            Password = "mkowalski123",
-                            PhoneNumber = "456736829",
-                            PostalCode = "00-000",
-                            Street = "Długa",
-                            Surname = "Kowalski",
-                            HireDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = 2,
-                            AccountCreationDate = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Gdańsk",
-                            Email = "katarzyna.nowak@gmail.com",
-                            Flat = 3,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Katarzyna",
-                            Number = 10,
-                            Password = "knowak123",
-                            PhoneNumber = "512345678",
-                            PostalCode = "80-000",
-                            Street = "Kwiatowa",
-                            Surname = "Nowak",
-                            HireDate = new DateTime(2023, 5, 16, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = 3,
-                            AccountCreationDate = new DateTime(2023, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Kraków",
-                            Email = "adam.kowalczyk@gmail.com",
-                            Flat = 6,
-                            LastLoginDate = new DateTime(2023, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Adam",
-                            Number = 20,
-                            Password = "akowalczyk789",
-                            PhoneNumber = "601234567",
-                            PostalCode = "30-001",
-                            Street = "Słoneczna",
-                            Surname = "Kowalczyk",
-                            HireDate = new DateTime(2023, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            UserId = 4,
-                            AccountCreationDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Warszawa",
-                            Email = "magdalena.wojcik@gmail.com",
-                            Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Magdalena",
-                            Number = 15,
-                            Password = "mwojcik456",
-                            PhoneNumber = "712345678",
-                            PostalCode = "02-000",
-                            Street = "Ogrodowa",
-                            Surname = "Wójcik",
-                            HireDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OwnerStudent", b =>
@@ -884,124 +878,6 @@ namespace Flats4us.Migrations
                     b.HasBaseType("Flats4us.Entities.Student");
 
                     b.HasDiscriminator().HasValue("Seeker");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 5,
-                            AccountCreationDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Warszawa",
-                            Email = "filip.dobrej@gmail.com",
-                            Flat = 3,
-                            LastLoginDate = new DateTime(2023, 5, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Filip",
-                            Number = 7,
-                            Password = "fdobrej123",
-                            PhoneNumber = "456736829",
-                            PostalCode = "00-000",
-                            Street = "Krótka",
-                            Surname = "Dobrej",
-                            ActivityStatus = false,
-                            DocumentExpireDate = new DateTime(2024, 5, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/1",
-                            DocumentType = 1,
-                            PhotoPath = "/profile/1",
-                            VerificationStatus = 0,
-                            Age = 22,
-                            Facebook = "",
-                            Instagram = "",
-                            StudentNumber = "s22023",
-                            Twitter = "",
-                            University = "PJATK",
-                            YearOfBirth = 2001
-                        },
-                        new
-                        {
-                            UserId = 6,
-                            AccountCreationDate = new DateTime(2022, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Poznań",
-                            Email = "alicja.dabrowska@gmail.com",
-                            Flat = 4,
-                            LastLoginDate = new DateTime(2023, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Alicja",
-                            Number = 9,
-                            Password = "adabrowska789",
-                            PhoneNumber = "601234567",
-                            PostalCode = "60-001",
-                            Street = "Kościuszki",
-                            Surname = "Dąbrowska",
-                            ActivityStatus = true,
-                            DocumentExpireDate = new DateTime(2025, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/2",
-                            DocumentType = 2,
-                            PhotoPath = "/profile/2",
-                            VerificationStatus = 0,
-                            Age = 28,
-                            Facebook = "https://www.facebook.com/alicja.dabrowska",
-                            Instagram = "https://www.instagram.com/alicja_dabrowska/",
-                            StudentNumber = "s23423",
-                            Twitter = "",
-                            University = "Uniwersytet Warszawski",
-                            YearOfBirth = 1995
-                        },
-                        new
-                        {
-                            UserId = 7,
-                            AccountCreationDate = new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Kraków",
-                            Email = "dominik.kowalczyk@gmail.com",
-                            Flat = 1,
-                            LastLoginDate = new DateTime(2023, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dominik",
-                            Number = 12,
-                            Password = "dkowalczyk456",
-                            PhoneNumber = "712345678",
-                            PostalCode = "30-002",
-                            Street = "Szkolna",
-                            Surname = "Kowalczyk",
-                            ActivityStatus = true,
-                            DocumentExpireDate = new DateTime(2024, 5, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/3",
-                            DocumentType = 0,
-                            PhotoPath = "/profile/3",
-                            VerificationStatus = 0,
-                            Age = 25,
-                            Facebook = "https://www.facebook.com/dominik.kowalczyk",
-                            Instagram = "https://www.instagram.com/dominik_kowalczyk/",
-                            StudentNumber = "s22345",
-                            Twitter = "",
-                            University = "AGH University of Science and Technology",
-                            YearOfBirth = 1998
-                        },
-                        new
-                        {
-                            UserId = 8,
-                            AccountCreationDate = new DateTime(2023, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            City = "Warszawa",
-                            Email = "natalia.wojcik@gmail.com",
-                            Flat = 2,
-                            LastLoginDate = new DateTime(2023, 5, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Natalia",
-                            Number = 5,
-                            Password = "nwojcik789",
-                            PhoneNumber = "601234567",
-                            PostalCode = "02-001",
-                            Street = "Kwiatowa",
-                            Surname = "Wójcik",
-                            ActivityStatus = true,
-                            DocumentExpireDate = new DateTime(2025, 5, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DocumentPath = "/documents/4",
-                            DocumentType = 2,
-                            PhotoPath = "/profile/4",
-                            VerificationStatus = 0,
-                            Age = 23,
-                            Facebook = "",
-                            Instagram = "https://www.instagram.com/natalia_wojcik/",
-                            StudentNumber = "s22890",
-                            Twitter = "https://twitter.com/nwojcik",
-                            University = "University of Warsaw",
-                            YearOfBirth = 2000
-                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
@@ -1040,6 +916,53 @@ namespace Flats4us.Migrations
                     b.Navigation("Moderator");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
+                {
+                    b.HasOne("Flats4us.Entities.ArgumentIntervention", "ArgumentIntervention")
+                        .WithMany()
+                        .HasForeignKey("ArgumentInterventionId");
+
+                    b.HasOne("Flats4us.Entities.Offer", "Offer")
+                        .WithMany("Arguments")
+                        .HasForeignKey("OfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Flats4us.Entities.Student", "Student")
+                        .WithMany("Arguments")
+                        .HasForeignKey("StudentUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ArgumentIntervention");
+
+                    b.Navigation("Offer");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ArgumentIntervention", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Moderator", "Moderator")
+                        .WithMany("ArgumentInterventions")
+                        .HasForeignKey("ModeratorUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Moderator");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ArgumentMessage", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Argument", "Argument")
+                        .WithMany("ArgumentMessages")
+                        .HasForeignKey("ArgumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Argument");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
                 {
                     b.HasOne("Flats4us.Entities.Offer", null)
@@ -1075,6 +998,17 @@ namespace Flats4us.Migrations
                     b.Navigation("Offer");
 
                     b.Navigation("Seeker");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Offer", "Offer")
+                        .WithMany("OfferPromotions")
+                        .HasForeignKey("OfferPromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Offer");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OpinionOwnerStudent", b =>
@@ -1243,11 +1177,20 @@ namespace Flats4us.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Argument", b =>
+                {
+                    b.Navigation("ArgumentMessages");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Offer", b =>
                 {
+                    b.Navigation("Arguments");
+
                     b.Navigation("Meetings");
 
                     b.Navigation("OfferInterests");
+
+                    b.Navigation("OfferPromotions");
 
                     b.Navigation("Payments");
 
@@ -1271,6 +1214,8 @@ namespace Flats4us.Migrations
             modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
                 {
                     b.Navigation("Advertisements");
+
+                    b.Navigation("ArgumentInterventions");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Owner", b =>
@@ -1284,6 +1229,8 @@ namespace Flats4us.Migrations
 
             modelBuilder.Entity("Flats4us.Entities.Student", b =>
                 {
+                    b.Navigation("Arguments");
+
                     b.Navigation("IssuedStudentOwnerOpinions");
 
                     b.Navigation("IssuedStudentStudentOpinions");
