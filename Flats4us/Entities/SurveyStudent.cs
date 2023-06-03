@@ -1,4 +1,5 @@
 ﻿using Flats4us.Helpers.Enums;
+using Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,14 +8,17 @@ namespace Flats4us.Entities
     public class SurveyStudent
     {
         [ForeignKey("Student")]
+        [SurveyIgnore]
         public int SurveyStudentId { get; set; }
 
         // Scale 1-10
         [Required]
+        [SurveySlider(1, 10)]
         public int Party { get; set; }
 
         // Scale 1-10
         [Required]
+        [SurveySlider(1, 10)]
         public int Tidiness { get; set; }
 
         // Yes/No
@@ -23,6 +27,7 @@ namespace Flats4us.Entities
 
         // Scale 1-10
         [Required]
+        [SurveySlider(1, 10)]
         public int Sociability { get; set; }
 
         // Yes/No
