@@ -323,213 +323,128 @@
 				</mat-form-field>
 			</div>
 		</div>
+	</form>
+	<div class="container-5" *ngIf="!isSubmitted">
+		<div class="container-3">
+			<h1>Promowane <span class="colour_text">oferty</span></h1>
+		</div>
+		<div class="container-2">
+			<mat-card
+				class="card"
+				*ngFor="let offer of promotedFlatOffers"
+				(click)="navigateToFlat(offer.url)"
+			>
+				<mat-card-subtitle
+					>{{ offer.regionCity.city }}, {{ offer.district }}</mat-card-subtitle
+				>
+				<img
+					mat-card-image
+					class="imgs"
+					src="{{ offer.imgSource }}"
+					alt="Mieszkanie"
+				/>
+				<mat-card-content>
+					<mat-chip-listbox>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>attach_money</mat-icon>
+								<span>Cena: {{ offer.price }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>add</mat-icon><span>Czynsz: {{ offer.rent }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>straighten</mat-icon>
+								<span>Powierzchnia: {{ offer.area }} m²</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>meeting_room</mat-icon>
+								<span>Liczba pokoi: {{ offer.rooms }}</span>
+							</div>
+						</mat-chip>
+					</mat-chip-listbox>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+	<div *ngIf="isSubmitted">
+		<table mat-table [dataSource]="dataSource">
+			<ng-container matColumnDef="photo">
+				<th mat-header-cell *matHeaderCellDef>Zdjęcie podglądowe</th>
+				<td mat-cell *matCellDef="let element">
+					<img class="image" src="{{ element.imgSource }}" />
+				</td>
+			</ng-container>
+
+			<ng-container matColumnDef="region">
+				<th mat-header-cell *matHeaderCellDef>Województwo</th>
+				<td mat-cell *matCellDef="let element">{{ element.regionCity.region }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="city">
+				<th mat-header-cell *matHeaderCellDef>Miasto</th>
+				<td mat-cell *matCellDef="let element">{{ element.regionCity.city }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="district">
+				<th mat-header-cell *matHeaderCellDef>Dzielnica</th>
+				<td mat-cell *matCellDef="let element">{{ element.district }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="price">
+				<th mat-header-cell *matHeaderCellDef>Cena</th>
+				<td mat-cell *matCellDef="let element">{{ element.price }} zł/mc</td>
+			</ng-container>
+
+			<ng-container matColumnDef="rent">
+				<th mat-header-cell *matHeaderCellDef>Czynsz</th>
+				<td mat-cell *matCellDef="let element">{{ element.rent }} zł/mc</td>
+			</ng-container>
+
+			<ng-container matColumnDef="area">
+				<th mat-header-cell *matHeaderCellDef>Powierzchnia</th>
+				<td mat-cell *matCellDef="let element">{{ element.area }} m²</td>
+			</ng-container>
+
+			<ng-container matColumnDef="rooms">
+				<th mat-header-cell *matHeaderCellDef>Liczba pokoi</th>
+				<td mat-cell *matCellDef="let element">{{ element.rooms }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="favorite">
+				<th mat-header-cell *matHeaderCellDef></th>
+				<td mat-cell *matCellDef="let element">
+					<button
+						class="boxIcon3"
+						type="button"
+						(click)="addToFavorite()"
+						mat-icon-button
+						matTooltip="Dodaj do ulubionych"
+						id="addToFavorite"
+						aria-label="AddToFavorite"
+					>
+						<mat-icon>favorite_border</mat-icon>
+					</button>
+				</td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+		</table>
+	</div>
+	<div [hidden]="!isSubmitted">
 		<mat-paginator
-			id="paginator"
-			[length]="numberOfRecordsDesc.viewValue"
-			[pageSize]="10"
-			[pageSizeOptions]="[5, 10, 25, 100]"
+			[pageSizeOptions]="[5, 10, 20, 100]"
+			id="paginator2"
+			showFirstLastButtons
 			aria-label="Paginator"
 		>
 		</mat-paginator>
-	</form>
-	<div class="container-2">
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
 	</div>
 </div>

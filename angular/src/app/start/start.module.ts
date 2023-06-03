@@ -15,11 +15,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { GetDescriptionDirective } from '../directives/get-description.directive';
+import { GetDescriptionDirective } from './directives/get-description.directive';
 import {
 	MatPaginatorIntl,
 	MatPaginatorModule,
 } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -39,6 +40,7 @@ import {
 		MatDividerModule,
 		StartRoutingModule,
 		MatPaginatorModule,
+		MatTableModule,
 	],
 	exports: [StartComponent],
 	providers: [MatPaginatorIntl],
