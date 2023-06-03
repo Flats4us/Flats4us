@@ -13,17 +13,15 @@
 						min="0"
 						max="5"
 						step="1"
-						formControlName="{{ question.formControlName }}"
 					>
-						<input matSliderThumb />
+						<input formControlName="{{ question.formControlName }}" matSliderThumb />
 					</mat-slider>
 					<mat-form-field
 						*ngIf="question.typeName === 'FORM'"
 						class="h-1/2"
 						appearance="outline"
-						formControlName="{{ question.formControlName }}"
 					>
-						<input matInput />
+						<input formControlName="{{ question.formControlName }}" matInput />
 					</mat-form-field>
 					<mat-slide-toggle
 						*ngIf="question.typeName === 'SWITCH'"
