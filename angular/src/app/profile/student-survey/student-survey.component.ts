@@ -1,15 +1,9 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnInit,
-	ChangeDetectorRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-student-survey',
@@ -25,17 +19,11 @@ export class StudentSurveyComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
-		private http: HttpClient,
-		private cdr: ChangeDetectorRef
+		private http: HttpClient
 	) {}
 
 	public ngOnInit() {
-		this.questions$ = this.http.get<[]>('../../assets/student-survey.json').pipe(
-			tap((data) => {
-				this.questions = data;
-				this.cdr.detectChanges();
-			})
-		);
+		this.questions$ = this.getQuestions();
 
 		this.studentSurveyForm = this.formBuilder.group({
 			lookingForRoommate: [''],
@@ -49,6 +37,10 @@ export class StudentSurveyComponent implements OnInit {
 				)
 			);
 		});
+	}
+
+	public getQuestions(): Observable<IQuestionsData[]> {
+		return this.http.get<IQuestionsData[]>('../../assets/student-survey.json');
 	}
 
 	public onSubmit() {
