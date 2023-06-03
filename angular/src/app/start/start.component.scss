@@ -169,15 +169,19 @@ table {
 	width: 100%;
 }
 
+tr.coloured_row:hover {
+	background-color: #fbbc8b16;
+}
+
 .image {
 	width: auto;
 	height: 100%;
 	max-height: 40vh;
 }
 
-.image:hover {
-	box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.255);
-}
+// .image:hover {
+// 	box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.255);
+// }
 
 /* Chrome, Safari, Edge, Opera */
 input[matinput]::-webkit-outer-spin-button,
