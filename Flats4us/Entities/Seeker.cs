@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Flats4us.Entities
+﻿namespace Flats4us.Entities
 {
-    public class Seeker : Student //not abstract
+    public class Seeker : Student
     {
+        public virtual ICollection<OfferInterest> OfferInterests { get; set; }
 
+        public Seeker()
+        {
+            this.OfferInterests = new HashSet<OfferInterest>();
+        }
     }
 }

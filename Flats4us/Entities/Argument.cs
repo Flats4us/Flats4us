@@ -1,48 +1,38 @@
-﻿using Flats4us.Migrations;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Flats4us.Helpers.Enums;
 
 namespace Flats4us.Entities
 {
-    public enum ArgumentStatus
+    public class Argument
     {
-        Ongoing,
-        Resolved,
-        Unfounded,
-        ResolvedByMod,
-        UnfoundedByMod
-    }
-
-    [Table("Argument")]
-    public class Argument          //not abstract
-    {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int ArgumentId { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime OwnerAcceptanceDate { get; set; }
+        public DateTime StudentAcceptanceDate { get; set; }
 
-        public DateTime TenantAcceptanceDate { get; set; }
+        public DateTime OwnerAcceptanceDate { get; set; }
 
         [Required]
         public ArgumentStatus ArgumentStatus { get; set; }
 
-        public DateTime ModeratorDecisionDate { get; set; }
+        public DateTime MederatorDecisionDate { get; set; }
 
         public virtual Offer Offer { get; set; }
 
-        public virtual Intervention? Intervention { get; set; }
+        public virtual Student Student { get; set; }
+
+        public virtual ArgumentIntervention? ArgumentIntervention { get; set; }
 
         public virtual ICollection<ArgumentMessage> ArgumentMessages { get; set; }
 
         public Argument()
         {
-            ArgumentMessages = new HashSet<ArgumentMessage>();
+            this.ArgumentMessages= new HashSet<ArgumentMessage>();
         }
-
-
     }
 }

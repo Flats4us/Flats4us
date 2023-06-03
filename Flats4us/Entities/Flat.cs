@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    public class Flat : Property //not  abstract
+    public class Flat : Property
     {
         [Required]
-        [Column("NumberOfRooms")]
         public int NumberOfRooms { get; set; }
 
-
+        [Required]
+        public int Floor { get; set; }
     }
 }

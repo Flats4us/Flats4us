@@ -1,26 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    [Table("Meeting")]
-    public class Meeting //not abstract
+    public class Meeting
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int MeetingId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
-        public string? Address { get; set; }
+        public string Place { get; set; }
 
         [Required]
-        public string? Reason { get; set; }
+        public string Reason { get; set; }
 
-        public virtual Offer Offer { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
 
-
+        public Meeting()
+        {
+            this.Students = new HashSet<Student>();
+        }
     }
 }

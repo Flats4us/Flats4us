@@ -1,60 +1,55 @@
-﻿using Flats4us.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Flats4us.Helpers.Enums;
 
 namespace Flats4us.Entities
 {
-    public enum OfferStatus
+    public class Offer
     {
-        Current,
-        Outdated,
-        Suspended,
-        Rented
-    }
-
-    [Table("Offer")]
-    public class Offer //abstract
-    {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int OfferId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
-        public OfferStatus OfferStatus { get; }
+        public OfferStatus OfferStatus { get; set; }
 
         [Required]
         public int Price { get; set; }
 
         [Required]
-        public string? Description { get; set; }
+        public string Decription { get; set;}
 
+        // In Months 
         [Required]
         public int RentalPeriod { get; set; }
 
         [Required]
-        public int NumberOfIntrested { get; set; }
+        public int NumberOfInterested { get; set; }
 
         [Required]
-        public string? Regulations { get; set; }
+        public string Regulations { get; set; }
 
         public virtual Property Property { get; set; }
+        public virtual SurveyOwnerOffer SurveyOwnerOffer { get; set; }
 
-        public virtual ICollection<Rent> Rentals { get; set; }
-        public virtual ICollection<Meeting> Meetings { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
-        public virtual ICollection<Promotion> Promotions { get; set; }
+        public virtual ICollection<Meeting> Meetings { get; set; }
+        public virtual ICollection<OfferInterest> OfferInterests { get; set; }
+        public virtual ICollection<Rent> Rents { get; set; }
+        public virtual ICollection<OfferPromotion> OfferPromotions { get; set; }
+        public virtual ICollection<Argument> Arguments { get; set; }
 
         public Offer()
         {
-            Rentals = new HashSet<Rent>();
-            Meetings = new HashSet<Meeting>();
-            Payments = new HashSet<Payment>();
-            Promotions = new HashSet<Promotion>();
+            this.Payments = new HashSet<Payment>();
+            this.Meetings = new HashSet<Meeting>();
+            this.OfferInterests = new HashSet<OfferInterest>();
+            this.Rents = new HashSet<Rent>();
+            this.OfferPromotions = new HashSet<OfferPromotion>();
+            this.Arguments = new HashSet<Argument>();
         }
-
-
     }
 }
