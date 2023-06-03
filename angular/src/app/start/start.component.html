@@ -170,7 +170,6 @@
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-					<!-- <div class="boxIcon" [appGetDescription]="numberOfRecords"></div> -->
 				</div>
 			</div>
 			<div *ngIf="showMoreFilters" class="box3">
@@ -374,27 +373,32 @@
 		</div>
 	</div>
 	<div *ngIf="isSubmitted">
+		<div class="container-3">
+			<h1>
+				Znaleziono
+				<span class="colour_text" [appGetDescription]="numberOfRecords"></span>
+				<br />{{ chosenRegion }}, {{ chosenCity }}
+			</h1>
+		</div>
 		<table mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="photo">
 				<th mat-header-cell *matHeaderCellDef>Zdjęcie podglądowe</th>
-				<td mat-cell *matCellDef="let element">
-					<img class="image" src="{{ element.imgSource }}" />
+				<td
+					mat-cell
+					*matCellDef="let element"
+					(click)="showDescription(element.url)"
+				>
+					<img
+						class="image"
+						src="{{ element.imgSource }}"
+						matTooltip="Zobacz szczegóły"
+					/>
 				</td>
 			</ng-container>
 
-			<ng-container matColumnDef="region">
-				<th mat-header-cell *matHeaderCellDef>Województwo</th>
-				<td mat-cell *matCellDef="let element">{{ element.regionCity.region }}</td>
-			</ng-container>
-
-			<ng-container matColumnDef="city">
-				<th mat-header-cell *matHeaderCellDef>Miasto</th>
-				<td mat-cell *matCellDef="let element">{{ element.regionCity.city }}</td>
-			</ng-container>
-
-			<ng-container matColumnDef="district">
-				<th mat-header-cell *matHeaderCellDef>Dzielnica</th>
-				<td mat-cell *matCellDef="let element">{{ element.district }}</td>
+			<ng-container matColumnDef="type">
+				<th mat-header-cell *matHeaderCellDef>Rodzaj nieruchomości</th>
+				<td mat-cell *matCellDef="let element">{{ element.type }}</td>
 			</ng-container>
 
 			<ng-container matColumnDef="price">

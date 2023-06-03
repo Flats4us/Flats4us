@@ -22,4 +22,5 @@ export interface IFlatOffer {
 	rooms: number;
 	url: string;
 	imgSource: string;
+	type: string;
 }
