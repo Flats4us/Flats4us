@@ -388,11 +388,7 @@
 					*matCellDef="let element"
 					(click)="showDescription(element.url)"
 				>
-					<img
-						class="image"
-						src="{{ element.imgSource }}"
-						matTooltip="Zobacz szczegóły"
-					/>
+					<img class="image" src="{{ element.imgSource }}" />
 				</td>
 			</ng-container>
 
@@ -439,7 +435,13 @@
 			</ng-container>
 
 			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-			<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+			<tr
+				mat-row
+				*matRowDef="let row; columns: displayedColumns"
+				class="coloured_row"
+				(click)="showDescription('#')"
+				matTooltip="Zobacz szczegóły"
+			></tr>
 		</table>
 	</div>
 	<div [hidden]="!isSubmitted">
