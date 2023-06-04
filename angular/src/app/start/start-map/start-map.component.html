@@ -1,1 +1,10 @@
+<div class="search">
+	<input
+		type="text"
+		placeholder="Search..."
+		[(ngModel)]="search"
+		(keydown.enter)="onSubmit()"
+	/>
+	<button (click)="onSubmit()">Submit</button>
+</div>
 <div id="map"></div>
