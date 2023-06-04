@@ -25,6 +25,9 @@ import { RouterLink } from '@angular/router';
 		MatListModule,
 		MatRadioModule,
 		MatSlideToggleModule,
+		MatMenuModule,
 		RouterLink,
 	],
+	exports: [HeaderComponent],
+})
 export class HeaderModule {}
