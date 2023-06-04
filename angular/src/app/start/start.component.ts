@@ -10,7 +10,7 @@ import { FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
 	INumeric,
 	IGroup,
@@ -122,9 +122,9 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public dataSource = new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
 
-	public chosenRegion = '';
-	public chosenCity = '';
-	public chosenDistrict = '';
+	public chosenRegionString = '';
+	public chosenCityString = '';
+	public chosenDistrictString = '';
 
 	@ViewChild(MatPaginator)
 	public paginator: MatPaginator = new MatPaginator(
@@ -136,6 +136,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 		private formBuilder: FormBuilder,
 		private http: HttpClient,
 		private router: Router,
+		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl
 	) {
 		this.mainSiteForm = formBuilder.group({
@@ -183,7 +184,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 	}
 
 	public showMap() {
-		this.router.navigate(['start/map']);
+		this.router.navigate(['map'], { relativeTo: this.route });
 	}
 
 	public addToFavorite() {
@@ -195,13 +196,19 @@ export class StartComponent implements AfterViewInit, OnInit {
 	}
 
 	public onSubmit() {
-		this.chosenRegion = this.mainSiteForm.get('regionsGroup')?.value;
-		this.chosenCity = this.mainSiteForm.get('citiesGroup')?.value;
-		this.chosenDistrict =
+		this.chosenRegionString = this.mainSiteForm
+			.get('regionsGroup')
+			?.value.toString();
+		this.chosenCityString = this.mainSiteForm
+			.get('citiesGroup')
+			?.value.toString();
+		this.chosenDistrictString =
 			this.mainSiteForm.get('districtsGroup')?.value == null
 				? ''
-				: ', ' + this.mainSiteForm.get('districtsGroup')?.value;
-		this.isSubmitted = true;
+				: ', ' + this.mainSiteForm.get('districtsGroup')?.value.toString();
+		if (this.mainSiteForm.valid) {
+			this.isSubmitted = true;
+		}
 	}
 
 	public ngAfterViewInit() {
