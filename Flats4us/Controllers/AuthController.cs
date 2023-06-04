@@ -1,12 +1,14 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flats4us.Controllers
 {
@@ -55,11 +57,40 @@ namespace Flats4us.Controllers
             return Ok(token);    
         }
 
+
+        [HttpGet("profile")]
+        [Authorize]
+        public async Task<ActionResult<UserDto>> GetUserProfile()
+        {
+            // Get the user ID from the token
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            // Retrieve the user's information from the database or any other data source
+            var user = await _userService.GetUserByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Create a UserDto object with the required properties
+            var userDto = new UserDto
+            {
+                Id = user.UserId,
+                Username = user.Username,
+                Password = user.PasswordHash // Note: This is not recommended in production scenarios
+            };
+
+            return Ok(userDto);
+        }
+
+
+
         private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()) // Add the user ID claim
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

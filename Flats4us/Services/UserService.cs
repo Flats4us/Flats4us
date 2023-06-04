@@ -70,5 +70,17 @@ namespace Flats4us.Services
 
             return user;
         }
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            return user;
+        }
+        public async Task<User> GetUserById(string userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => Convert.ToString(u.UserId) == userId);
+
+            return user;
+        }
+
     }
 }
