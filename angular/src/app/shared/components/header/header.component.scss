@@ -25,24 +25,19 @@
 	background-color: #fbbb8b;
 	margin-left: 100px;
 }
-.sun {
+.icon-sun {
 	margin-left: 30px;
-	margin-right: 5px;
-	margin-top: 12px;
-	font-size: 25px;
+	margin-right: 10px;
+	font-size: 10px;
 	width: 30px;
 	height: 30px;
 }
 
 .arrow {
-	margin-left: 30px;
 	width: 5px;
 	height: 5px;
 }
-.moon {
-	margin-left: 5px;
-	margin-top: 12px;
-	font-size: 25px;
+.icon-moon {
 	width: 30px;
 	height: 30px;
 }
@@ -66,7 +61,10 @@
 	width: 40px;
 	height: 40px;
 	margin-right: 20px;
-	margin-left: 60px;
+}
+
+.mat-sidenav-container {
+	height: 100%;
 }
 .your-profile {
 	margin-right: 30px;
