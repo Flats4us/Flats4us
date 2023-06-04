@@ -163,7 +163,6 @@
 						matTooltip="Szukaj ofert"
 						aria-label="SearchForOffers"
 					>
-						<!-- [disabled]="!mainSiteForm.valid" -->
 						<mat-icon>search</mat-icon>
 					</button>
 				</div>
@@ -324,7 +323,7 @@
 				<mat-card-subtitle
 					>{{ offer.regionCity.city }}, {{ offer.district }}</mat-card-subtitle
 				>
-				<img mat-card-image class="imgs" [src]="offer.imgSource" alt="Mieszkanie" />
+				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="offer.imgSource" />
 				<mat-card-content>
 					<mat-chip-listbox>
 						<mat-chip>
