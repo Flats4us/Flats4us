@@ -2,48 +2,44 @@
 	<h1>Ankieta</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
-			<div *ngFor="let question of questions; let i = index">
-				<ng-container
-					*ngIf="i < 7 || studentSurveyForm.get('lookingForRoommate')?.value"
-				>
-					<mat-label>{{ i + 1 }}. {{ question.content }}</mat-label>
+			<div *ngFor="let question of questions$ | async; let i = index">
+				<ng-container *ngIf="i < 7 || studentSurveyForm.get('16')?.value">
+					<mat-label>{{ i + 1 }}. {{ question.content }} </mat-label>
+
 					<mat-slider
-						discrete
 						*ngIf="question.typeName === 'SLIDER'"
+						discrete
 						min="0"
 						max="5"
 						step="1"
-						formControlName="{{ question.formControlName }}"
 					>
-						<input matSliderThumb />
+						<input [formControlName]="question.id" matSliderThumb />
 					</mat-slider>
+
 					<mat-form-field
 						*ngIf="question.typeName === 'FORM'"
 						class="h-1/2"
 						appearance="outline"
-						formControlName="{{ question.formControlName }}"
 					>
-						<input matInput />
+						<input [formControlName]="question.id" matInput />
 					</mat-form-field>
-
-					<mat-radio-group *ngIf="question.typeName === 'RADIOBUTTON'">
-						<mat-radio-button>{{ question.answers[0] }}</mat-radio-button>
-						<mat-radio-button>{{ question.answers[1] }}</mat-radio-button>
-					</mat-radio-group>
 
 					<mat-slide-toggle
 						*ngIf="question.typeName === 'SWITCH'"
-						formControlName="{{ question.formControlName }}"
+						[formControlName]="question.id"
 					></mat-slide-toggle>
 
 					<section *ngIf="question.typeName === 'CHECKBOX'" class="example-section">
-						<mat-checkbox class="example-margin">{{
-							question.answers[0]
-						}}</mat-checkbox>
-						<mat-checkbox class="example-margin">{{
-							question.answers[1]
+						<mat-checkbox *ngFor="let answer of question.answers">{{
+							answer
 						}}</mat-checkbox>
 					</section>
+
+					<mat-radio-group *ngIf="question.typeName === 'RADIOBUTTON'">
+						<mat-radio-button *ngFor="let answer of question.answers">{{
+							answer
+						}}</mat-radio-button>
+					</mat-radio-group>
 				</ng-container>
 			</div>
 			<div class="buttons">

@@ -2,17 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
-import { StudentSurveyComponent } from './student-survey/student-survey.component';
-import { OwnerSurveyComponent } from './owner-survey/owner-survey.component';
+import { SurveyComponent } from './survey/survey.component';
 
 const routes: Routes = [
 	{
 		path: 'student-survey',
-		component: StudentSurveyComponent,
+		component: SurveyComponent,
 	},
 	{
 		path: 'owner-survey',
-		component: OwnerSurveyComponent,
+		component: SurveyComponent,
 	},
 	{
 		path: ':id',

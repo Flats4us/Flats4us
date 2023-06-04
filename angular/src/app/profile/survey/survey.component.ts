@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-student-survey',
-	templateUrl: './student-survey.component.html',
-	styleUrls: ['./student-survey.component.scss'],
+	templateUrl: './survey.component.html',
+	styleUrls: ['./survey.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentSurveyComponent implements OnInit {
+export class SurveyComponent implements OnInit {
 	public questions$: Observable<IQuestionsData[]>;
 	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
@@ -20,27 +20,29 @@ export class StudentSurveyComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
 		private http: HttpClient
-	) {}
+	) {
+		this.studentSurveyForm = this.formBuilder.group({
+			lookingForRoommate: [''],
+		});
+	}
 
 	public ngOnInit() {
 		this.questions$ = this.getQuestions();
 
-		this.studentSurveyForm = this.formBuilder.group({
-			lookingForRoommate: [''],
-		});
-
-		this.questions$.subscribe((questions) => {
+		this.questions$.subscribe((questions) =>
 			questions.forEach((question) =>
-				this.studentSurveyForm.addControl(
-					question.formControlName,
-					new FormControl('')
-				)
-			);
-		});
+				this.studentSurveyForm.addControl(String(question.id), new FormControl(''))
+			)
+		);
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {
-		return this.http.get<IQuestionsData[]>('../../assets/student-survey.json');
+		const urlSegments = window.location.href.split('/');
+		if (urlSegments[urlSegments.length - 1] === 'student-survey') {
+			return this.http.get<IQuestionsData[]>('../../assets/student-survey.json');
+		} else {
+			return this.http.get<IQuestionsData[]>('../../assets/owner-survey.json');
+		}
 	}
 
 	public onSubmit() {

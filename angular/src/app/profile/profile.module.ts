@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { StudentSurveyComponent } from './student-survey/student-survey.component';
+import { SurveyComponent } from './survey/survey.component';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -20,11 +20,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
-import { OwnerSurveyComponent } from './owner-survey/owner-survey.component';
 import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
-	declarations: [ProfileComponent, StudentSurveyComponent, OwnerSurveyComponent],
+	declarations: [ProfileComponent, SurveyComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,
