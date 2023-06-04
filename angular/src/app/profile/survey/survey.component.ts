@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
 import { Observable } from 'rxjs';
 
-enum TypeName {
+export enum TypeName {
 	RADIOBUTTON = 'RADIOBUTTON',
 	FORM = 'FORM',
 	SWITCH = 'SWITCH',
