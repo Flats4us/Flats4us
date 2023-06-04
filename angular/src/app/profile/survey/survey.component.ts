@@ -1,9 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
 import { Observable } from 'rxjs';
+
+enum TypeName {
+	RADIOBUTTON = 'RADIOBUTTON',
+	FORM = 'FORM',
+	SWITCH = 'SWITCH',
+	SLIDER = 'SLIDER',
+	CHECKBOX = 'CHECKBOX',
+}
 
 @Component({
 	selector: 'app-student-survey',
@@ -15,6 +23,7 @@ export class SurveyComponent implements OnInit {
 	public questions$: Observable<IQuestionsData[]>;
 	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
+	public TypeName: typeof TypeName = TypeName;
 
 	constructor(
 		private formBuilder: FormBuilder,

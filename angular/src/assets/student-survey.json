@@ -19,7 +19,6 @@
 		"id": 12,
 		"title": "STUDENT",
 		"content": "Palę papierosy?",
-		"formControlName": "smokeCigarettes",
 		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
@@ -27,7 +26,6 @@
 		"id": 13,
 		"title": "STUDENT",
 		"content": "Jestem towarzyski?",
-		"formControlName": "sociable",
 		"typeName": "SLIDER",
 		"answers": [1, 10]
 	},
@@ -35,7 +33,6 @@
 		"id": 14,
 		"title": "STUDENT",
 		"content": "Posiadam zwierzę?",
-		"formControlName": "havePet",
 		"typeName": "SWITCH",
 		"answers": []
 	},
@@ -43,7 +40,6 @@
 		"id": 15,
 		"title": "STUDENT",
 		"content": "Jestem weganinem?",
-		"formControlName": "vegan",
 		"typeName": "SWITCH",
 		"answers": []
 	},
@@ -51,7 +47,6 @@
 		"id": 16,
 		"title": "STUDENT",
 		"content": "Szukam współlokatora?",
-		"formControlName": "lookingForRoommate",
 		"typeName": "SWITCH",
 		"answers": []
 	},
@@ -59,7 +54,6 @@
 		"id": 17,
 		"title": "STUDENT",
 		"content": "Jaką liczbę współlokatorów akceptuję?",
-		"formControlName": "acceptedRoommatesCount",
 		"typeName": "FORM",
 		"answers": []
 	},
@@ -67,7 +61,6 @@
 		"id": 18,
 		"title": "STUDENT",
 		"content": "Preferowana płeć współlokatora",
-		"formControlName": "preferredRoommateGender",
 		"typeName": "CHECKBOX",
 		"answers": ["K", "M"]
 	},
@@ -75,7 +68,6 @@
 		"id": 19,
 		"title": "STUDENT",
 		"content": "Minimalny wiek współlokatora?",
-		"formControlName": "minRoommateAge",
 		"typeName": "FORM",
 		"answers": "boolean"
 	},
@@ -83,7 +75,6 @@
 		"id": 20,
 		"title": "STUDENT",
 		"content": "Maksymalny wiek współlokatora?",
-		"formControlName": "maxRoommateAge",
 		"typeName": "FORM",
 		"answers": "boolean"
 	}
