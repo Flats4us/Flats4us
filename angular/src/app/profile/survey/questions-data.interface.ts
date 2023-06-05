@@ -1,8 +1,8 @@
-import { TypeName } from './survey.component';
+import { typeName } from './typeName';
 export interface IQuestionsData {
-	id: number;
+	id: string;
 	title: string;
 	content: string;
-	typeName: TypeName;
+	typeName: typeName;
 	answers: string[];
 }

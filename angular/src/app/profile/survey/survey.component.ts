@@ -4,14 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
 import { Observable } from 'rxjs';
-
-export enum TypeName {
-	RADIOBUTTON = 'RADIOBUTTON',
-	FORM = 'FORM',
-	SWITCH = 'SWITCH',
-	SLIDER = 'SLIDER',
-	CHECKBOX = 'CHECKBOX',
-}
+import { typeName } from './typeName';
 
 @Component({
 	selector: 'app-student-survey',
@@ -21,9 +14,8 @@ export enum TypeName {
 })
 export class SurveyComponent implements OnInit {
 	public questions$: Observable<IQuestionsData[]>;
-	public questions: IQuestionsData[] = [];
 	public studentSurveyForm: FormGroup;
-	public TypeName: typeof TypeName = TypeName;
+	public TypeName: typeof typeName = typeName;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -40,7 +32,7 @@ export class SurveyComponent implements OnInit {
 
 		this.questions$.subscribe((questions) =>
 			questions.forEach((question) =>
-				this.studentSurveyForm.addControl(String(question.id), new FormControl(''))
+				this.studentSurveyForm.addControl(question.id, new FormControl(''))
 			)
 		);
 	}
