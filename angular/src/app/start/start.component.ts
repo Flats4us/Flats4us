@@ -37,6 +37,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
+	public flatOptions$?: Observable<IFlatOffer[]>;
 
 	public regionCityArray: IRegionCity[] = [];
 
@@ -59,7 +60,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -70,7 +71,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 2,
 			url: '#',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -81,7 +82,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -92,7 +93,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 1,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'pokój',
+			type: 'Pokój',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -103,7 +104,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 2,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'kawalerka',
+			type: 'Kawalerka',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -114,13 +115,82 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Bemowo',
+			price: 2500,
+			rent: 500,
+			area: 35,
+			rooms: 3,
+			url: '/',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Mieszkanie',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Wola',
+			price: 2000,
+			rent: 700,
+			area: 30,
+			rooms: 2,
+			url: '#',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Mieszkanie',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Mokotów',
+			price: 3000,
+			rent: 900,
+			area: 40,
+			rooms: 3,
+			url: '/',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Mieszkanie',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Białołęka',
+			price: 1200,
+			rent: 300,
+			area: 25,
+			rooms: 1,
+			url: '/',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Pokój',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Wawer',
+			price: 1700,
+			rent: 900,
+			area: 30,
+			rooms: 2,
+			url: '/',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Kawalerka',
+		},
+		{
+			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+			district: 'Śródmieście',
+			price: 2000,
+			rent: 1000,
+			area: 37,
+			rooms: 3,
+			url: '/',
+			imgSource: './assets/mieszkanie.jpg',
+			type: 'Mieszkanie',
 		},
 	];
 
 	public numberOfRecords = this.allFlatOffers.length;
 
-	public dataSource = new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
+	// public dataSource = new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
+
+	public dataSource: MatTableDataSource<IFlatOffer> =
+		new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
 
 	public chosenRegionString = '';
 	public chosenCityString = '';
@@ -159,16 +229,18 @@ export class StartComponent implements AfterViewInit, OnInit {
 			.subscribe((data) => {
 				const csvToRowArray = data.split('\n');
 				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					const row = csvToRowArray[index].split(';');
-					const lowerCaseRegion = row[2].trim().toLowerCase();
-					this.regionCityArray.push(<IRegionCity>{
-						region: lowerCaseRegion,
-						city: row[1],
-					});
+					if (csvToRowArray[index] !== '') {
+						const row = csvToRowArray[index].split(';');
+						const lowerCaseRegion = row[2].trim().toLowerCase();
+						this.regionCityArray.push(<IRegionCity>{
+							region: lowerCaseRegion,
+							city: row[1],
+						});
 
-					this.citiesGroups
-						.find((group) => group.whole == lowerCaseRegion)
-						?.parts.push(row[1]);
+						this.citiesGroups
+							.find((group) => group.whole == lowerCaseRegion)
+							?.parts.push(row[1]);
+					}
 				}
 			});
 	}
@@ -213,6 +285,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public ngAfterViewInit() {
 		this.dataSource.paginator = this.paginator;
+		this.flatOptions$ = this.dataSource.connect();
 	}
 
 	public ngOnInit() {
@@ -544,7 +617,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -555,7 +628,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 2,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -566,7 +639,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -577,7 +650,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 1,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -588,7 +661,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 2,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -599,7 +672,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: 3,
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
-			type: 'mieszkanie',
+			type: 'Mieszkanie',
 		},
 	];
 }

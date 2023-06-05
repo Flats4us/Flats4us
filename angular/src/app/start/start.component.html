@@ -359,11 +359,62 @@
 			<h1>
 				Znaleziono
 				<span class="colour-text" [appGetDescription]="numberOfRecords"></span>
-				<br />{{ chosenRegionString }}, {{ chosenCityString
-				}}{{ chosenDistrictString }}
+				<p>
+					{{ chosenRegionString }}, {{ chosenCityString }}{{ chosenDistrictString }}
+				</p>
 			</h1>
 		</div>
-		<table mat-table [dataSource]="dataSource">
+		<div class="container-2">
+			<mat-card
+				*ngFor="let flat of flatOptions$ | async"
+				class="card"
+				(click)="navigateToFlat(flat.url)"
+			>
+				<mat-card-subtitle>{{ flat.type }}</mat-card-subtitle>
+				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="flat.imgSource" />
+				<mat-card-content>
+					<mat-chip-listbox>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>attach_money</mat-icon>
+								<span>Cena: {{ flat.price }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>add</mat-icon><span>Czynsz: {{ flat.rent }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>straighten</mat-icon>
+								<span>Powierzchnia: {{ flat.area }} m²</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>meeting_room</mat-icon>
+								<span>Liczba pokoi: {{ flat.rooms }}</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<mat-mini-fab
+								class="box-icon-3"
+								id="addToFavorite"
+								type="button"
+								mat-icon-button
+								matTooltip="Dodaj do ulubionych"
+								aria-label="AddToFavorite"
+								(click)="addToFavorite()"
+							>
+								<mat-icon>favorite_border</mat-icon>
+							</mat-mini-fab>
+						</mat-chip>
+					</mat-chip-listbox>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<!-- <table mat-table [dataSource]="dataSource">
 			<ng-container matColumnDef="photo">
 				<th mat-header-cell *matHeaderCellDef>Zdjęcie podglądowe</th>
 				<td
@@ -425,12 +476,13 @@
 				class="colour-row"
 			></tr>
 		</table>
+	</div> -->
 	</div>
 	<div [hidden]="!isSubmitted">
 		<mat-paginator
 			id="paginator2"
 			showFirstLastButtons
-			[pageSizeOptions]="[5, 10, 20, 100]"
+			[pageSizeOptions]="[6, 12, 18, 48]"
 			aria-label="Paginator"
 		>
 		</mat-paginator>
