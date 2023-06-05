@@ -187,8 +187,6 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public numberOfRecords = this.allFlatOffers.length;
 
-	// public dataSource = new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
-
 	public dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
 
