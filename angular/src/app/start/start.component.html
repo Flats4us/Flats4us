@@ -321,7 +321,8 @@
 				(click)="navigateToFlat(offer.url)"
 			>
 				<mat-card-subtitle
-					>{{ offer.regionCity.city }}, {{ offer.district }}</mat-card-subtitle
+					>{{ offer.type }} - {{ offer.regionCity.city }},
+					{{ offer.district }}</mat-card-subtitle
 				>
 				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="offer.imgSource" />
 				<mat-card-content>
