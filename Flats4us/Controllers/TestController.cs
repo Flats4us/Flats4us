@@ -54,7 +54,8 @@ namespace Flats4us.Controllers
         public async Task<IActionResult> GetSurveyStudents()
         {
             _logger.LogInformation("Getting SurveyStudent");
-            var surveyStudent = _surveyStudentService.MakingSurvey(typeof(SurveyStudent));
+            var surveyStudent = await _surveyStudentService.MakingSurvey(typeof(SurveyStudent));
+            //var surveyStudent = _surveyStudentService.MakingSurvey(typeof(SurveyStudent));
 
             return Ok(surveyStudent);
         }

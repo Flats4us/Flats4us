@@ -43,7 +43,6 @@ namespace Flats4us.Services
                 }
                 else if (property.PropertyType.IsEnum)
                 {
-                    //Array values = Enum.GetValues(attribute.PropertyType);
                     string[] enumValues = Enum.GetNames(property.PropertyType);
 
                     SurveyJson surveyJson = new()
@@ -68,7 +67,7 @@ namespace Flats4us.Services
                             id = id++,
                             name = property.Name,
                             type_name = "SLIDER",
-                            answers = new string[] { slider.MinimumValue.ToString(), slider.MaximumValue.ToString() }
+                            answers = new string[] {slider.MinimumValue.ToString(), slider.MaximumValue.ToString() }
                         };
                     }
                     else

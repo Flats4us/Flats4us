@@ -44,6 +44,7 @@ namespace Flats4us.Entities
 
         // 0-6
         [Required]
+        [SurveySlider(1, 6)]
         public int MaxNumberOfRoommates { get; set; }
 
         [Required]

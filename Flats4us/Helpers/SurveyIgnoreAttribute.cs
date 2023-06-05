@@ -11,11 +11,7 @@ namespace Helpers
     [AttributeUsage(AttributeTargets.Property)]
     public class SurveyIgnoreAttribute : Attribute
     {
-        //public SurveySliderAttribute(int minimumValue, int maximumValue)
-        //{
-        //    MinimumValue = minimumValue;
-        //    MaximumValue = maximumValue;
-        //}
+
     }
 
 }
