@@ -19,6 +19,7 @@
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
+	cursor: pointer;
 }
 
 .card-full-width {
@@ -125,6 +126,7 @@ mat-card-content {
 	display: flex;
 	align-content: center;
 	justify-content: center;
+	cursor: pointer;
 }
 
 .example-full-width {
@@ -164,18 +166,11 @@ mat-form-field {
 	color: #fbbb8b;
 }
 
-table {
-	width: 100%;
-}
-
-tr.colour-row:hover {
-	background-color: #fbbc8b16;
-}
-
 .image {
 	width: auto;
 	height: 100%;
 	max-height: 40vh;
+	cursor: pointer;
 }
 
 .image:hover {
