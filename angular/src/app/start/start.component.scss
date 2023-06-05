@@ -202,12 +202,6 @@ input[matinput][type="number"] {
 	.container-2 {
 		grid-template-columns: repeat(2, 1fr);
 	}
-	table {
-		font-size: 1.6vw;
-	}
-	.box-icon-3 {
-		transform: scale(0.8);
-	}
 	mat-paginator {
 		transform: scale(0.8);
 	}
@@ -217,22 +211,7 @@ input[matinput][type="number"] {
 	.container-2 {
 		grid-template-columns: repeat(1, 1fr);
 	}
-	table {
-		font-size: 1.2vw;
-	}
-	.box-icon-3 {
-		transform: scale(0.4);
-	}
 	mat-paginator {
 		transform: scale(0.4);
-	}
-}
-
-@media screen and (max-width: 400px) {
-	table {
-		font-size: 0.6vw;
-	}
-	.box-icon-3 {
-		transform: scale(0.2);
 	}
 }
