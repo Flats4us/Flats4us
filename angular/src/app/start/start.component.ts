@@ -41,15 +41,6 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public regionCityArray: IRegionCity[] = [];
 
-	public displayedColumns: string[] = [
-		'photo',
-		'type',
-		'price',
-		'rent',
-		'area',
-		'rooms',
-		'favorite',
-	];
 	public allFlatOffers: IFlatOffer[] = [
 		{
 			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
@@ -227,19 +218,17 @@ export class StartComponent implements AfterViewInit, OnInit {
 			.subscribe((data) => {
 				const csvToRowArray = data.split('\n');
 				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					if (csvToRowArray[index] !== '') {
+					if (csvToRowArray[index]) {
 						const row = csvToRowArray[index].split(';');
-						if (row.length === 3) {
-							const lowerCaseRegion = row[2].trim().toLowerCase();
-							this.regionCityArray.push(<IRegionCity>{
-								region: lowerCaseRegion,
-								city: row[1],
-							});
+						const lowerCaseRegion = row[2].trim().toLowerCase();
+						this.regionCityArray.push(<IRegionCity>{
+							region: lowerCaseRegion,
+							city: row[1],
+						});
 
-							this.citiesGroups
-								.find((group) => group.whole == lowerCaseRegion)
-								?.parts.push(row[1]);
-						}
+						this.citiesGroups
+							.find((group) => group.whole == lowerCaseRegion)
+							?.parts.push(row[1]);
 					}
 				}
 			});
