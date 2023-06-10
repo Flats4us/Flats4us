@@ -33,7 +33,9 @@ const routes: Routes = [
 	{
 		path: 'addRealEstate',
 		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then((m) => m.AddRealEstateModule),
+			import('./add-real-estate/add-real-estate.module').then(
+				(m) => m.AddRealEstateModule
+			),
 	},
 	{ path: '**', component: NotFoundComponent },
 ];
