@@ -30,6 +30,11 @@ const routes: Routes = [
 				(m) => m.FindRoommateModule
 			),
 	},
+	{
+		path: 'addRealEstate',
+		loadChildren: () =>
+			import('./add-real-estate/add-real-estate.module').then((m) => m.AddRealEstateModule),
+	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
