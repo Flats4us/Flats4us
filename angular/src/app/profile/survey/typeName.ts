@@ -1,0 +1,7 @@
+export enum typeName {
+	RADIOBUTTON = 'RADIOBUTTON',
+	FORM = 'FORM',
+	SWITCH = 'SWITCH',
+	SLIDER = 'SLIDER',
+	CHECKBOX = 'CHECKBOX',
+}
