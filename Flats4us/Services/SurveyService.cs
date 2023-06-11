@@ -5,18 +5,24 @@ using System;
 using System.Reflection;
 using System.Text.Json;
 using Helpers;
+using System.Xml;
 
 namespace Flats4us.Services
 {
-    public class SurveyStudentService : ISurveyStudentService
+    public class SurveyService : ISurveyService
     {
         JsonSerializerOptions options = new JsonSerializerOptions()
         {
             WriteIndented = true,
         };
 
-        public async Task<string> MakingSurvey(Type type)
+        public async Task<string> MakingSurvey(Type type, string title, string lang)
         {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load($"Lang/{lang}.xml");
+               
+
+
 
             var attributes = type.GetProperties();
 
@@ -29,13 +35,27 @@ namespace Flats4us.Services
                     continue;
                 }
 
+                XmlNode stringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{property.Name}']");
+
+                string content;
+
+                if (stringNode != null)
+                {
+                    content = stringNode.InnerText;
+                }
+                else
+                {
+                    content = "notFound";
+                }
+
                 if (property.PropertyType == typeof(bool))
                 {
                     SurveyJson surveyJson = new()
                     {
                         id = id++,
-                        name = property.Name,
-                        type_name = "SWITCH",
+                        title = title,
+                        content = content,
+                        typeName = "SWITCH",
                         answers = new string[0]
                     };
 
@@ -48,8 +68,9 @@ namespace Flats4us.Services
                     SurveyJson surveyJson = new()
                     {
                         id = id++,
-                        name = property.Name,
-                        type_name = "RADIOBUTTON",
+                        title = title,
+                        content = content,
+                        typeName = "RADIOBUTTON",
                         answers = enumValues,
                     };
 
@@ -65,8 +86,9 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             id = id++,
-                            name = property.Name,
-                            type_name = "SLIDER",
+                            title = title,
+                            content = content,
+                            typeName = "SLIDER",
                             answers = new string[] {slider.MinimumValue.ToString(), slider.MaximumValue.ToString() }
                         };
                     }
@@ -75,8 +97,9 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             id = id++,
-                            name = property.Name,
-                            type_name = "NUMBER",
+                            title = title,
+                            content = content,
+                            typeName = "NUMBER",
                             answers = new string[0]
                         };
                     }

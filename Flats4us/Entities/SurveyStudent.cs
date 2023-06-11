@@ -23,7 +23,8 @@ namespace Flats4us.Entities
 
         // Yes/No
         [Required]
-        public bool Smoking { get; set; }
+        [SurveySlider(1, 10)]
+        public bool Smoking { get; set; } 
 
         // Scale 1-10
         [Required]
@@ -44,16 +45,20 @@ namespace Flats4us.Entities
 
         // 0-6
         [Required]
-        [SurveySlider(1, 6)]
+        //[SurveySlider(1, 6)]
+        [SurveyIgnore]
         public int MaxNumberOfRoommates { get; set; }
 
         [Required]
+        [SurveyIgnore]
         public Gender RoommateGender { get; set; }
 
         [Required]
+        [SurveyIgnore]
         public int MinRoommateAge { get; set; }
 
         [Required]
+        [SurveyIgnore]
         public int MaxRoommateAge { get; set; }
 
         public virtual Student Student { get; set; }

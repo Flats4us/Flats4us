@@ -12,17 +12,21 @@ namespace Flats4us.Controllers
     {
         private readonly ITestService _surveyService;
         private readonly ILogger<TestController> _logger;
-        private readonly ISurveyStudentService _surveyStudentService;
+        //private readonly ISurveyStudentService _surveyStudentService;
+        //private readonly ISurveyOwnerOfferService _surveyOwnerOfferService;
 
 
 
         public TestController(ITestService surveyService,
-                                ILogger<TestController> logger,
-                                ISurveyStudentService surveyStudentService)
+                                ILogger<TestController> logger
+                                //ISurveyStudentService surveyStudentService,
+                                //ISurveyOwnerOfferService surveyOwnerOfferService
+                                )
         {
             _surveyService = surveyService;
             _logger = logger;
-            _surveyStudentService = surveyStudentService;
+            //_surveyStudentService = surveyStudentService;
+            //_surveyOwnerOfferService= surveyOwnerOfferService;
         }
 
 
@@ -48,6 +52,7 @@ namespace Flats4us.Controllers
                 return Ok(survey);
         }
 
+/*
         // GET: ankieta_surveyStudent 
         [HttpGet]
         [Route("GetSurveyStudent")]
@@ -55,9 +60,22 @@ namespace Flats4us.Controllers
         {
             _logger.LogInformation("Getting SurveyStudent");
             var surveyStudent = await _surveyStudentService.MakingSurvey(typeof(SurveyStudent));
-            //var surveyStudent = _surveyStudentService.MakingSurvey(typeof(SurveyStudent));
+            
 
             return Ok(surveyStudent);
         }
+*/
+
+        // GET: ankieta_surveyOwnerOffer 
+        /*[HttpGet]
+        [Route("GetSurveyOwnerOffer")]
+        public async Task<IActionResult> GetSurveyOwnerOffer()
+        {
+            _logger.LogInformation("Getting SurveyOwnerOffer");
+            var surveyOwnerOffer = await _surveyOwnerOfferService.MakingSurveyOwnerOffer(typeof(SurveyOwnerOffer));
+            
+
+            return Ok(surveyOwnerOffer);
+        }*/
     }
 }
