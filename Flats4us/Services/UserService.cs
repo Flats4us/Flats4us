@@ -29,7 +29,7 @@ namespace Flats4us.Services
 
 
 
-        public async Task<User> RegisterAsync(UserDto request)
+        public async Task<User> RegisterAsync(UserRegisterDto request)
         {
             // Verify that the requested username does not already exist in the database
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Username == request.Username);
@@ -61,7 +61,8 @@ namespace Flats4us.Services
             User user = new User()
             {
                 Username = request.Username,
-                PasswordHash = passwordHash
+                PasswordHash = passwordHash,
+                Role = request.Role,
             };
 
             // Add the user to the database

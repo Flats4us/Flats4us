@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class logintest : Migration
+    public partial class aad : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,7 +57,7 @@ namespace Flats4us.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PasswordHash = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,8 +116,8 @@ namespace Flats4us.Migrations
                 columns: new[] { "UserId", "PasswordHash", "Username" },
                 values: new object[,]
                 {
-                    { 1, "$2a$11$YywTkmrlCXEi6YcgIwESL.X14eBtVuU7QZLuc7TFZE3TQQwoxrAIW", "Dominik" },
-                    { 2, "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nIiwiZXhwIjoxNjc5OTQwNzM5fQ.T7-HLhSAbF9yeLdgngkyXF-_8_f0sGtMuMbmOvaEr6ZH9IFLhCLYkZ9KpxSejezyqJSNaTxRcnsy3F8rpFIEPQ", "testuser" }
+                    { 1, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "Dominik" },
+                    { 2, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "testuser" }
                 });
 
             migrationBuilder.InsertData(

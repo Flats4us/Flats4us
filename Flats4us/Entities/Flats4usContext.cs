@@ -88,13 +88,15 @@ namespace Flats4us.Entities
                 {
                     UserId = 1,
                     Username = "Dominik",
-                    PasswordHash = "$2a$11$YywTkmrlCXEi6YcgIwESL.X14eBtVuU7QZLuc7TFZE3TQQwoxrAIW"
+                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                    Role = "Tenant"
                 },
                 new
                 {
                     UserId = 2,
                     Username = "testuser",
-                    PasswordHash = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nIiwiZXhwIjoxNjc5OTQwNzM5fQ.T7-HLhSAbF9yeLdgngkyXF-_8_f0sGtMuMbmOvaEr6ZH9IFLhCLYkZ9KpxSejezyqJSNaTxRcnsy3F8rpFIEPQ"
+                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                    Role = "Tenant"
                 }
             );
 

@@ -32,6 +32,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrTenantOnly", policy =>
+    {
+        policy.RequireRole("Admin", "Tenant");
+    });
+}); 
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()

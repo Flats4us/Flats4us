@@ -24,7 +24,7 @@ namespace Flats4us.Controllers
 
         // GET: api/Tenant
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             _logger.LogInformation("Getting tenants list");
@@ -34,6 +34,7 @@ namespace Flats4us.Controllers
         }
 
         // GET api/Tenant/{id}
+        [Authorize(Policy = "AdminOrTenantOnly")]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

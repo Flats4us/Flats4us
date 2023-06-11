@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20230326210905_login-test")]
-    partial class logintest
+    [Migration("20230611145806_aad")]
+    partial class aad
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,7 +222,8 @@ namespace Flats4us.Migrations
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -237,13 +238,13 @@ namespace Flats4us.Migrations
                         new
                         {
                             UserId = 1,
-                            PasswordHash = "$2a$11$YywTkmrlCXEi6YcgIwESL.X14eBtVuU7QZLuc7TFZE3TQQwoxrAIW",
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
                             Username = "Dominik"
                         },
                         new
                         {
                             UserId = 2,
-                            PasswordHash = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nIiwiZXhwIjoxNjc5OTQwNzM5fQ.T7-HLhSAbF9yeLdgngkyXF-_8_f0sGtMuMbmOvaEr6ZH9IFLhCLYkZ9KpxSejezyqJSNaTxRcnsy3F8rpFIEPQ",
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
                             Username = "testuser"
                         });
                 });

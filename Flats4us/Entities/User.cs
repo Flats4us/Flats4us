@@ -23,8 +23,14 @@ namespace Flats4us.Entities
 
         [Required]
         [MinLength(8)]
-        [MaxLength(50)]
+        [MaxLength(70)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
         public string PasswordHash { get; set; }
+
+
+
+        [Required]
+        public string Role{ get; set; }
+
     }
 }

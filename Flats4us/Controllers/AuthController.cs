@@ -29,7 +29,7 @@ namespace Flats4us.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> RegisterAsync(UserDto request)
+        public async Task<ActionResult<User>> RegisterAsync(UserRegisterDto request)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Flats4us.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<String>> Login(UserDto request) {
+        public async Task<ActionResult<String>> Login(UserLoginDto request) {
 
             var user = await _userService.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
@@ -60,7 +60,7 @@ namespace Flats4us.Controllers
 
         [HttpGet("profile")]
         [Authorize]
-        public async Task<ActionResult<UserDto>> GetUserProfile()
+        public async Task<ActionResult<UserInfoDto>> GetUserProfile()
         {
             // Get the user ID from the token
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -73,11 +73,11 @@ namespace Flats4us.Controllers
             }
 
             // Create a UserDto object with the required properties
-            var userDto = new UserDto
+            var userDto = new UserInfoDto
             {
                 Id = user.UserId,
                 Username = user.Username,
-                Password = user.PasswordHash // Note: This is not recommended in production scenarios
+                Role = user.Role,
             };
 
             return Ok(userDto);
@@ -90,7 +90,8 @@ namespace Flats4us.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()) // Add the user ID claim
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
+                new Claim(ClaimTypes.Role, user.Role) // Add the role claim
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
