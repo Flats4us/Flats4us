@@ -2,7 +2,11 @@
 	<div class="container-1">
 		<h1>Utwórz nieruchomość</h1>
 	</div>
-	<form class="container-2" [formGroup]="mainSiteForm" (ngSubmit)="onSubmit()">
+	<form
+		class="container-2"
+		[formGroup]="addRealEstateForm"
+		(ngSubmit)="onSubmit()"
+	>
 		<div class="container-3">
 			<div class="box-1">
 				<div class="subtitle">Rodzaj nieruchomości:</div>
@@ -17,7 +21,7 @@
 						</mat-option>
 					</mat-select>
 					<mat-error
-						*ngIf="mainSiteForm.controls['property'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['property'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano rodzaju nieruchomości!
@@ -37,7 +41,7 @@
 						</mat-option>
 					</mat-select>
 					<mat-error
-						*ngIf="mainSiteForm.controls['regionsGroup'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['regionsGroup'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano województwa!
@@ -71,7 +75,7 @@
 						</mat-optgroup>
 					</mat-autocomplete>
 					<mat-error
-						*ngIf="mainSiteForm.controls['citiesGroup'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['citiesGroup'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano miejscowości!
@@ -124,7 +128,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="mainSiteForm.controls['street'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['street'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano nazwy ulicy!
@@ -148,7 +152,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="mainSiteForm.controls['streetNumber'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['streetNumber'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano numeru ulicy/lokalu!
@@ -173,13 +177,13 @@
 					/>
 					<span matSuffix class="suffix">m²</span>
 					<mat-error
-						*ngIf="mainSiteForm.controls['area'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['area'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano powierzchni!
 					</mat-error>
 					<mat-error
-						*ngIf="mainSiteForm.controls['area'].errors?.['min']"
+						*ngIf="addRealEstateForm.controls['area'].errors?.['min']"
 						class="error-text"
 					>
 						Nieprawidłowa wartość!
@@ -203,13 +207,13 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="mainSiteForm.controls['maxResidents'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['maxResidents'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano maks. l. mieszkańców!
 					</mat-error>
 					<mat-error
-						*ngIf="mainSiteForm.controls['maxResidents'].errors?.['min']"
+						*ngIf="addRealEstateForm.controls['maxResidents'].errors?.['min']"
 						class="error-text"
 					>
 						Nieprawidłowa wartość!
@@ -230,7 +234,7 @@
 						</mat-option>
 					</mat-select>
 					<mat-error
-						*ngIf="mainSiteForm.controls['year'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['year'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano lat budowy!
@@ -254,13 +258,13 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="mainSiteForm.controls['rooms'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['rooms'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano liczby pokoi!
 					</mat-error>
 					<mat-error
-						*ngIf="mainSiteForm.controls['rooms'].errors?.['min']"
+						*ngIf="addRealEstateForm.controls['rooms'].errors?.['min']"
 						class="error-text"
 					>
 						Nieprawidłowa wartość!
@@ -284,13 +288,13 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="mainSiteForm.controls['floors'].errors?.['required']"
+						*ngIf="addRealEstateForm.controls['floors'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano liczby pięter!
 					</mat-error>
 					<mat-error
-						*ngIf="mainSiteForm.controls['floors'].errors?.['min']"
+						*ngIf="addRealEstateForm.controls['floors'].errors?.['min']"
 						class="error-text"
 					>
 						Nieprawidłowa wartość!
