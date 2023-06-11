@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.Json;
 using Helpers;
 using System.Xml;
+using System.Text.Encodings.Web;
 
 namespace Flats4us.Services
 {
@@ -14,6 +15,7 @@ namespace Flats4us.Services
         JsonSerializerOptions options = new JsonSerializerOptions()
         {
             WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
         public async Task<string> MakingSurvey(Type type, string title, string lang)
