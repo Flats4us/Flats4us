@@ -17,7 +17,7 @@ import { Observable, map } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRealEstateComponent implements OnInit {
-	public mainSiteForm: FormGroup = new FormGroup({});
+	public addRealEstateForm: FormGroup = new FormGroup({});
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
@@ -31,7 +31,7 @@ export class AddRealEstateComponent implements OnInit {
 		private router: Router,
 		private http: HttpClient
 	) {
-		this.mainSiteForm = formBuilder.group({
+		this.addRealEstateForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
 			districtsGroup: new FormControl(''),
@@ -87,7 +87,7 @@ export class AddRealEstateComponent implements OnInit {
 	};
 
 	public onSubmit() {
-		if (this.mainSiteForm.valid) {
+		if (this.addRealEstateForm.valid) {
 			this.router.navigate(['/']);
 		}
 	}
@@ -97,29 +97,29 @@ export class AddRealEstateComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.citiesGroupOptions$ = this.mainSiteForm
+		this.citiesGroupOptions$ = this.addRealEstateForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
 				map((value) => value ?? ''),
 				map((value) => this.filterCitiesGroup(value))
 			);
 
-		this.districtGroupOptions$ = this.mainSiteForm
+		this.districtGroupOptions$ = this.addRealEstateForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
 				map((value) => value ?? ''),
 				map((value) => this.filterDistrictsGroup(value))
 			);
 
-		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe((value) => {
+		this.addRealEstateForm.get('citiesGroup')?.valueChanges.subscribe((value) => {
 			if (this.districtGroups.find((distr) => distr.whole === value)) {
-				this.mainSiteForm.get('districtsGroup')?.enable();
+				this.addRealEstateForm.get('districtsGroup')?.enable();
 			} else {
-				this.mainSiteForm.get('districtsGroup')?.reset();
+				this.addRealEstateForm.get('districtsGroup')?.reset();
 			}
 		});
-		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
-			this.mainSiteForm.get('citiesGroup')?.reset();
+		this.addRealEstateForm.get('regionsGroup')?.valueChanges.subscribe(() => {
+			this.addRealEstateForm.get('citiesGroup')?.reset();
 		});
 	}
 
@@ -132,7 +132,7 @@ export class AddRealEstateComponent implements OnInit {
 			.filter(
 				(group) =>
 					group.parts.length > 0 &&
-					group.whole === this.mainSiteForm.get('regionsGroup')?.value
+					group.whole === this.addRealEstateForm.get('regionsGroup')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
@@ -144,7 +144,7 @@ export class AddRealEstateComponent implements OnInit {
 			.filter(
 				(group) =>
 					group.parts.length > 0 &&
-					group.whole === this.mainSiteForm.get('citiesGroup')?.value
+					group.whole === this.addRealEstateForm.get('citiesGroup')?.value
 			);
 	}
 
