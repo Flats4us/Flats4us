@@ -12,6 +12,8 @@ namespace Flats4us.Entities
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
         public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<House> Houses { get; set; }
@@ -31,11 +33,9 @@ namespace Flats4us.Entities
         public DbSet<Property> Properties { get; set; }
         public DbSet<Rent> Rents { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Seeker> Seekers { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
         public DbSet<SurveyStudent> StudentSurveys { get; set; }
-        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<User> Users { get; set; }
 
         public Flats4usContext() { }
@@ -80,6 +80,18 @@ namespace Flats4us.Entities
                 .HasOne(x => x.Evaluated)
                 .WithMany(x => x.ReceivedStudentOwnerOpinions)
                 .HasForeignKey(x => x.EvaluatedId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(x => x.Owner)
+                .WithMany(x => x.Chats)
+                .HasForeignKey(x => x.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Chat>()
+                .HasOne(x => x.Student)
+                .WithMany(x => x.Chats)
+                .HasForeignKey(x => x.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             //modelBuilder.Entity<Moderator>().HasData(

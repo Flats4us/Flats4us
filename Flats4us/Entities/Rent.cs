@@ -26,14 +26,14 @@ namespace Flats4us.Entities
 
         public virtual Offer Offers { get; set; }
 
-        public virtual Tenant Tenant { get; set; }
+        public virtual Student Student { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Student> OtherTenants { get; set; }
+        public virtual ICollection<Student> OtherStudents { get; set; }
 
         public Rent()
         {
-            OtherTenants = new HashSet<Student>();
+            OtherStudents = new HashSet<Student>();
         }
     }
 }
