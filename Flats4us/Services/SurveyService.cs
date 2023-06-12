@@ -23,9 +23,6 @@ namespace Flats4us.Services
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load($"Lang/{lang}.xml");
                
-
-
-
             var attributes = type.GetProperties();
 
             int id = 1;
@@ -111,8 +108,6 @@ namespace Flats4us.Services
 
             string j = JsonSerializer.Serialize(json, options);
             return j;
-
         }
-
     }
 }

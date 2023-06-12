@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.IO;
 
-
 namespace Flats4us.Entities
 {
     public class Flats4usContext : DbContext

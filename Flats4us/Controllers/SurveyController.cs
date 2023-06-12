@@ -13,17 +13,14 @@ namespace Flats4us.Controllers
         private readonly ILogger<SurveyController> _logger;
         private readonly ISurveyService _surveyService;
 
-        public SurveyController( ILogger<SurveyController> logger,
-                                        ISurveyService surveyStudentService
-                                        )
+        public SurveyController(ILogger<SurveyController> logger,
+                                ISurveyService surveyStudentService)
         {
             _logger = logger;
             _surveyService = surveyStudentService;   
         }
 
-      
-
-        // GET: ankieta_surveyStudent 
+        // GET: /api/Survey/GetSurveyStudent?lang=XX
         [HttpGet]
         [Route("GetSurveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
@@ -31,11 +28,10 @@ namespace Flats4us.Controllers
             _logger.LogInformation("Getting SurveyStudent");
             var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", lang);
             
-
             return Ok(surveyStudent);
         }
 
-        // GET: ankieta_surveyOwnerOffer
+        // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
         [HttpGet]
         [Route("GetSurveyOwnerOffer")]
         public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
@@ -43,13 +39,7 @@ namespace Flats4us.Controllers
             _logger.LogInformation("Getting SurveyOwnerOffer");
             var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", lang);
           
-
             return Ok(surveyOwnerOffer);
         }
-
-
-
-
-
     }
 }
