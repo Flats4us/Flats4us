@@ -39,7 +39,7 @@ export class SurveyComponent {
 
 	public getQuestions(): Observable<IQuestionsData[]> {
 		const param = this.route.snapshot.paramMap.get('survey-type');
-		if (param === 'student-survey') {
+		if (param === 'student') {
 			return this.http.get<IQuestionsData[]>('../../assets/student-survey.json');
 		} else {
 			return this.http.get<IQuestionsData[]>('../../assets/owner-survey.json');
