@@ -12,7 +12,7 @@ namespace Flats4us.Entities
         [Required]
         public DateTime Date { get; set; }
 
-        public Seeker Seeker { get; set; }
+        public Student Student { get; set; }
 
         public Offer Offer { get; set; }
     }

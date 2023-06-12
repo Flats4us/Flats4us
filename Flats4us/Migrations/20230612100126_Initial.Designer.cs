@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20230529005504_InitialClassModels")]
-    partial class InitialClassModels
+    [Migration("20230612100126_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,6 +168,57 @@ namespace Flats4us.Migrations
                     b.ToTable("ArgumentMessages");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Chat", b =>
+                {
+                    b.Property<int>("ChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatId"));
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Chats");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ChatMessage", b =>
+                {
+                    b.Property<int>("ChatMessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChatMessageId"));
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sender")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatMessageId");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("ChatMessages");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Equipment", b =>
                 {
                     b.Property<int>("EquipmentId")
@@ -286,14 +337,14 @@ namespace Flats4us.Migrations
                     b.Property<int>("OfferId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeekerUserId")
+                    b.Property<int>("StudentUserId")
                         .HasColumnType("int");
 
                     b.HasKey("OfferInterestId");
 
                     b.HasIndex("OfferId");
 
-                    b.HasIndex("SeekerUserId");
+                    b.HasIndex("StudentUserId");
 
                     b.ToTable("OfferInterests");
                 });
@@ -566,14 +617,14 @@ namespace Flats4us.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TenantUserId")
+                    b.Property<int>("StudentUserId")
                         .HasColumnType("int");
 
                     b.HasKey("RentId");
 
                     b.HasIndex("OffersOfferId");
 
-                    b.HasIndex("TenantUserId");
+                    b.HasIndex("StudentUserId");
 
                     b.ToTable("Rents");
                 });
@@ -855,6 +906,12 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsTenant")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RoommatesStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("StudentNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -871,23 +928,6 @@ namespace Flats4us.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("Student");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Seeker", b =>
-                {
-                    b.HasBaseType("Flats4us.Entities.Student");
-
-                    b.HasDiscriminator().HasValue("Seeker");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
-                {
-                    b.HasBaseType("Flats4us.Entities.Student");
-
-                    b.Property<int>("RoommatesStatus")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("Tenant");
                 });
 
             modelBuilder.Entity("EquipmentProperty", b =>
@@ -963,6 +1003,36 @@ namespace Flats4us.Migrations
                     b.Navigation("Argument");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Chat", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Owner", "Owner")
+                        .WithMany("Chats")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Flats4us.Entities.Student", "Student")
+                        .WithMany("Chats")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Flats4us.Entities.ChatMessage", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Chat", "Chat")
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Meeting", b =>
                 {
                     b.HasOne("Flats4us.Entities.Offer", null)
@@ -989,15 +1059,15 @@ namespace Flats4us.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Flats4us.Entities.Seeker", "Seeker")
+                    b.HasOne("Flats4us.Entities.Student", "Student")
                         .WithMany("OfferInterests")
-                        .HasForeignKey("SeekerUserId")
+                        .HasForeignKey("StudentUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Offer");
 
-                    b.Navigation("Seeker");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OfferPromotion", b =>
@@ -1106,15 +1176,15 @@ namespace Flats4us.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Flats4us.Entities.Tenant", "Tenant")
+                    b.HasOne("Flats4us.Entities.Student", "Student")
                         .WithMany("Rents")
-                        .HasForeignKey("TenantUserId")
+                        .HasForeignKey("StudentUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Offers");
 
-                    b.Navigation("Tenant");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyOwnerOffer", b =>
@@ -1182,6 +1252,11 @@ namespace Flats4us.Migrations
                     b.Navigation("ArgumentMessages");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Chat", b =>
+                {
+                    b.Navigation("ChatMessages");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Offer", b =>
                 {
                     b.Navigation("Arguments");
@@ -1220,6 +1295,8 @@ namespace Flats4us.Migrations
 
             modelBuilder.Entity("Flats4us.Entities.Owner", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("IssuedOwnerStudentOpinions");
 
                     b.Navigation("OwnerOfferSurveys");
@@ -1231,9 +1308,13 @@ namespace Flats4us.Migrations
                 {
                     b.Navigation("Arguments");
 
+                    b.Navigation("Chats");
+
                     b.Navigation("IssuedStudentOwnerOpinions");
 
                     b.Navigation("IssuedStudentStudentOpinions");
+
+                    b.Navigation("OfferInterests");
 
                     b.Navigation("Payments");
 
@@ -1241,18 +1322,10 @@ namespace Flats4us.Migrations
 
                     b.Navigation("ReceivedStudentStudentOpinions");
 
+                    b.Navigation("Rents");
+
                     b.Navigation("SurveyStudent")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Seeker", b =>
-                {
-                    b.Navigation("OfferInterests");
-                });
-
-            modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
-                {
-                    b.Navigation("Rents");
                 });
 #pragma warning restore 612, 618
         }

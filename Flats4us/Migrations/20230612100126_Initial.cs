@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialClassModels : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,7 +103,8 @@ namespace Flats4us.Migrations
                     Facebook = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Instagram = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoommatesStatus = table.Column<int>(type: "int", nullable: true)
+                    RoommatesStatus = table.Column<int>(type: "int", nullable: true),
+                    IsTenant = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -201,6 +202,32 @@ namespace Flats4us.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chats",
+                columns: table => new
+                {
+                    ChatId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chats", x => x.ChatId);
+                    table.ForeignKey(
+                        name: "FK_Chats_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Chats_Users_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -370,7 +397,7 @@ namespace Flats4us.Migrations
                     OfferInterestId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    SeekerUserId = table.Column<int>(type: "int", nullable: false),
+                    StudentUserId = table.Column<int>(type: "int", nullable: false),
                     OfferId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -383,8 +410,8 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OfferInterests_Users_SeekerUserId",
-                        column: x => x.SeekerUserId,
+                        name: "FK_OfferInterests_Users_StudentUserId",
+                        column: x => x.StudentUserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -477,7 +504,7 @@ namespace Flats4us.Migrations
                     RentPeriod = table.Column<int>(type: "int", nullable: false),
                     ContractInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OffersOfferId = table.Column<int>(type: "int", nullable: false),
-                    TenantUserId = table.Column<int>(type: "int", nullable: false)
+                    StudentUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -489,8 +516,8 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rents_Users_TenantUserId",
-                        column: x => x.TenantUserId,
+                        name: "FK_Rents_Users_StudentUserId",
+                        column: x => x.StudentUserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -530,6 +557,28 @@ namespace Flats4us.Migrations
                         column: x => x.StudentUserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChatMessages",
+                columns: table => new
+                {
+                    ChatMessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sender = table.Column<int>(type: "int", nullable: false),
+                    ChatId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatMessages", x => x.ChatMessageId);
+                    table.ForeignKey(
+                        name: "FK_ChatMessages_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
+                        principalColumn: "ChatId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -637,6 +686,21 @@ namespace Flats4us.Migrations
                 column: "StudentUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChatMessages_ChatId",
+                table: "ChatMessages",
+                column: "ChatId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_OwnerId",
+                table: "Chats",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chats_StudentId",
+                table: "Chats",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EquipmentProperty_PropertiesPropertyId",
                 table: "EquipmentProperty",
                 column: "PropertiesPropertyId");
@@ -662,9 +726,9 @@ namespace Flats4us.Migrations
                 column: "OfferId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OfferInterests_SeekerUserId",
+                name: "IX_OfferInterests_StudentUserId",
                 table: "OfferInterests",
-                column: "SeekerUserId");
+                column: "StudentUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Offers_PropertyId",
@@ -702,9 +766,9 @@ namespace Flats4us.Migrations
                 column: "OffersOfferId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rents_TenantUserId",
+                name: "IX_Rents_StudentUserId",
                 table: "Rents",
-                column: "TenantUserId");
+                column: "StudentUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentOwnerOpinions_EvaluatedId",
@@ -735,6 +799,9 @@ namespace Flats4us.Migrations
 
             migrationBuilder.DropTable(
                 name: "ArgumentMessages");
+
+            migrationBuilder.DropTable(
+                name: "ChatMessages");
 
             migrationBuilder.DropTable(
                 name: "EquipmentProperty");
@@ -774,6 +841,9 @@ namespace Flats4us.Migrations
 
             migrationBuilder.DropTable(
                 name: "Arguments");
+
+            migrationBuilder.DropTable(
+                name: "Chats");
 
             migrationBuilder.DropTable(
                 name: "Equipment");
