@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="Party">Jak często imprezuję?</string>
+    <string name="Tidiness">Jak często sprzątam w mieszkaniu?</string>
+    <string name="Smoking">Palę papierosy?</string>
+	<string name="Sociability">Jestem towarzyski?</string>
+	<string name="Animals">Posiadam zwierzę?</string>
+	<string name="Vegan">Jestem weganinem?</string>
+	<string name="LookingForRoommate">Szukam współlokatora?</string>
+	<string name="NumberOfInhabitants">Dla ilu osób chcesz wynająć nieruchomość?</string>
+	<string name="Smoking">Pali papierosy</string>
+	<string name="Parties">Imprezuje</string>
+	<string name="Animals">Zwierzęta</string>
+	<string name="Gender">Płeć</string>
+</resources>
