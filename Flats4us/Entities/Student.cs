@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Helpers.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public abstract class Student : OwnerStudent
+    public class Student : OwnerStudent
     {
         [Required]
         public int YearOfBirth { get; set; }
@@ -23,6 +24,12 @@ namespace Flats4us.Entities
 
         public string Instagram { get; set; }
 
+        [Required]
+        public RoommatesStatus RoommatesStatus { get; set; }
+
+        [Required]
+        public bool IsTenant { get; set; }
+
         public virtual SurveyStudent SurveyStudent { get; set; }
 
         public virtual ICollection<Interest> Interests { get; set; }
@@ -36,6 +43,9 @@ namespace Flats4us.Entities
         public virtual ICollection<Argument> Arguments { get; set; }
         [NotMapped]
         public virtual ICollection<Rent> RoommateInRents { get; set; }
+        public virtual ICollection<Rent> Rents { get; set; }
+        public virtual ICollection<OfferInterest> OfferInterests { get; set; }
+        public virtual ICollection<Chat> Chats { get; set; }
 
         public Student()
         {
@@ -48,6 +58,9 @@ namespace Flats4us.Entities
             this.Payments = new HashSet<Payment>();
             this.Arguments = new HashSet<Argument>();
             this.RoommateInRents= new HashSet<Rent>();
+            this.Rents = new HashSet<Rent>();
+            this.OfferInterests = new HashSet<OfferInterest>();
+            this.Chats = new HashSet<Chat>();
         }
     }
 }

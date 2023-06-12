@@ -18,12 +18,14 @@ namespace Flats4us.Entities
         [Required]
         public int Check1 { get; set; }
 
+        [Required]
         public int EvaluatedId { get; set; }
 
+        [Required]
         public int EvaluatorId { get; set; }
 
-        public Owner Evaluated { get; set; }
+        public virtual Owner Evaluated { get; set; }
 
-        public Student Evaluator { get; set; }
+        public virtual Student Evaluator { get; set; }
     }
 }
