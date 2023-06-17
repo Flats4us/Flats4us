@@ -13,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatStepperModule } from '@angular/material/stepper';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
 	declarations: [AddRealEstateComponent],
@@ -31,8 +32,11 @@ import { MatDividerModule } from '@angular/material/divider';
 		MatInputModule,
 		MatSlideToggleModule,
 		MatChipsModule,
-		MatDividerModule,
+		MatStepperModule,
 	],
 	exports: [AddRealEstateComponent],
+	providers: [
+		{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
+	],
 })
 export class AddRealEstateModule {}
