@@ -23,12 +23,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
-	{ path: '**', component: NotFoundComponent },
 	{
-		path: 'offert',
-		loadChildren: () =>
-			import('./offert/offert.module').then((m) => m.OffertModule),
+		path: 'offer',
+		loadChildren: () => import('./offer/offer.module').then((m) => m.OfferModule),
 	},
+	{ path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
