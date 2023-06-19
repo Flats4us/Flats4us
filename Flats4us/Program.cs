@@ -12,7 +12,8 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
 
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<ISurveyService, SurveyService>();
-//builder.Services.AddScoped<ISurveyOwnerOfferService, SurveyOwnerOfferService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
