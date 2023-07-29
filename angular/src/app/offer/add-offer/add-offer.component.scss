@@ -1,4 +1,17 @@
-button {
-	background-color: #fbbb8b;
-	border-radius: 20px;
+mat-card {
+	margin: auto;
+	max-width: 90vw;
+	width: 640px;
+}
+
+mat-card-content {
+	padding: 24px;
+}
+
+mat-form-field {
+	display: inline;
+}
+
+.mdc-button {
+	justify-content: left;
 }
