@@ -23,10 +23,11 @@ namespace Flats4us.Controllers
         // GET: /api/Survey/GetSurveyStudent?lang=XX
         [HttpGet]
         [Route("GetSurveyStudent")]
-        public async Task<IActionResult> GetSurveyStudents(string lang)
+        public async Task<IActionResult> GetSurveyStudents()
         {
             _logger.LogInformation("Getting SurveyStudent");
-            var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", lang);
+            string acceptLanguage = Request.Headers["Accept-Language"].ToString();
+            var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", acceptLanguage);
             
             return Ok(surveyStudent);
         }
@@ -34,10 +35,11 @@ namespace Flats4us.Controllers
         // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
         [HttpGet]
         [Route("GetSurveyOwnerOffer")]
-        public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
+        public async Task<IActionResult> GetSurveyOwnerOffer()
         {
             _logger.LogInformation("Getting SurveyOwnerOffer");
-            var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", lang);
+            string acceptLanguage = Request.Headers["Accept-Language"].ToString();
+            var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", acceptLanguage);
           
             return Ok(surveyOwnerOffer);
         }
