@@ -3,12 +3,22 @@
 	padding-top: 0px;
 }
 
+.batch {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .container-1 {
 	text-align: center;
 	font-size: xx-large;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
+}
+
+.desctext {
+	padding-right: 10px;
 }
 
 .container-2 {
@@ -18,6 +28,10 @@
 	width: 100%;
 	height: fit-content;
 	padding-bottom: 20px;
+}
+
+mat-form-field {
+	width: 30%;
 }
 
 .box-1 {
@@ -32,12 +46,6 @@
 	padding-right: 4px;
 }
 
-.batch {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .suffix {
 	padding-left: 4px;
 	padding-right: 4px;
@@ -46,9 +54,20 @@
 .button-box {
 	padding: 8px;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
 	row-gap: 4px;
+	column-gap: 20%;
+	justify-content: center;
+}
+
+.button-box-1 {
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 80px;
+	justify-content: center;
 }
 
 .subtitle {
@@ -71,28 +90,37 @@
 	height: 1px;
 	position: relative;
 	vertical-align: middle;
-	width: 10%;
+	width: 70%;
 }
 
 .subtitle-2:before {
 	right: 0.4em;
-	margin-left: -10%;
+	margin-left: -70%;
 }
 
 .subtitle-2:after {
 	left: 0.4em;
-	margin-right: -10%;
+	margin-right: -70%;
 }
 
 .btn {
 	background: #fbbb8b;
 	border-radius: 24px;
 	padding: 4px;
-	width: auto;
+	width: 160px;
+}
+
+.btn-2 {
+	padding: 4px;
+	background-color: #fbbb8b;
+	border-radius: 24px;
+	width: 240px;
+	//height: 60px;
 }
 
 .upload-btn {
 	background: #fbbb8b;
+	justify-content: center;
 }
 
 .mat-stepper-horizontal {
@@ -112,12 +140,43 @@
 	display: none;
 }
 
+.success-icon {
+	transform: scale(4);
+	color: #fbbb8b;
+}
+
+.gallery {
+	display: flex;
+	align-items: center;
+	row-gap: 4px;
+	column-gap: 8%;
+	justify-content: center;
+	flex-flow: row;
+	flex-wrap: wrap;
+}
+
+.img {
+	max-width: 20%;
+	justify-content: center;
+}
+
 ::ng-deep .mat-step-header .mat-step-icon-selected {
 	background-color: #fbbb8b;
+	transform: scale(1.6);
 }
 
 ::ng-deep .mat-step-icon.mat-step-icon-state-edit {
 	background-color: #fbbb8b;
+	transform: scale(1.6);
+}
+
+::ng-deep .mat-step-text-label {
+	font-size: 1.2rem;
+	padding-left: 4px;
+}
+
+::ng-deep .mat-step-header .mat-step-icon {
+	transform: scale(1.6);
 }
 
 /* Chrome, Safari, Edge, Opera */

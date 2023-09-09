@@ -19,6 +19,7 @@ import { Observable, map } from 'rxjs';
 export class AddRealEstateComponent implements OnInit {
 	public addRealEstateForm1: FormGroup = new FormGroup({});
 	public addRealEstateForm2: FormGroup = new FormGroup({});
+	public addRealEstateForm3: FormGroup = new FormGroup({});
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
@@ -30,6 +31,7 @@ export class AddRealEstateComponent implements OnInit {
 	public completed = false;
 	public fileName = '';
 	public url: any;
+	public urls: any;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -41,7 +43,7 @@ export class AddRealEstateComponent implements OnInit {
 			citiesGroup: new FormControl('', Validators.required),
 			districtsGroup: new FormControl(''),
 			street: new FormControl('', Validators.required),
-			streetNumber: new FormControl('', [Validators.required]),
+			streetNumber: new FormControl('', Validators.required),
 			property: new FormControl('', Validators.required),
 		});
 
@@ -70,6 +72,10 @@ export class AddRealEstateComponent implements OnInit {
 			year: new FormControl('', Validators.required),
 		});
 
+		this.addRealEstateForm3 = formBuilder.group({
+			photos: new FormControl(null, Validators.required),
+		});
+
 		this.http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
 			.subscribe((data) => {
@@ -87,6 +93,8 @@ export class AddRealEstateComponent implements OnInit {
 						?.parts.push(row[1]);
 				}
 			});
+
+		this.urls = [];
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -96,25 +104,18 @@ export class AddRealEstateComponent implements OnInit {
 	};
 
 	public onFileSelected(event: any) {
-		const file: File = event.target.files[0];
+		if (event.target.files) {
+			for (let i = 0; i < File.length; i++) {
+				const reader = new FileReader();
 
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
+				reader.readAsDataURL(event.target.files[i]);
 
-		reader.onload = (_event) => {
-			this.url = reader.result;
-		};
-
-		if (file) {
-			this.fileName = file.name;
-
-			const formData = new FormData();
-
-			formData.append('', file);
-
-			const upload$ = this.http.post('', formData);
-
-			upload$.subscribe();
+				reader.onload = (event: any) => {
+					if (this.urls.length <= 10) {
+						this.urls.push(event.target.result);
+					}
+				};
+			}
 		}
 	}
 
@@ -180,6 +181,12 @@ export class AddRealEstateComponent implements OnInit {
 					group.parts.length > 0 &&
 					group.whole === this.addRealEstateForm1.get('citiesGroup')?.value
 			);
+	}
+
+	public formReset() {
+		this.addRealEstateForm1.reset();
+		this.addRealEstateForm2.reset();
+		this.urls = [];
 	}
 
 	public citiesGroups: IGroup[] = [

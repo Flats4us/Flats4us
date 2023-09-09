@@ -158,7 +158,9 @@
 						</mat-error>
 					</mat-form-field>
 					<div class="button-box">
-						<button mat-button matStepperNext class="btn">Kolejny krok</button>
+						<button mat-button matStepperNext class="btn">
+							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
 					</div>
 				</form>
 			</mat-step>
@@ -195,7 +197,7 @@
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Maks. l. mieszkańców:</div>
+					<div class="subtitle">Maks. liczba mieszkańców:</div>
 					<mat-form-field appearance="fill">
 						<mat-label>Maks. l. mieszkańców</mat-label>
 						<span matPrefix>
@@ -307,60 +309,93 @@
 						</mat-select>
 					</mat-form-field>
 					<div class="button-box">
-						<button mat-button matStepperNext class="btn">Kolejny krok</button>
-						<button mat-button matStepperPrevious class="btn">Poprzedni krok</button>
+						<button mat-button matStepperPrevious class="btn">
+							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button mat-button matStepperNext class="btn">
+							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
 					</div>
 				</form>
 			</mat-step>
 		</div>
 		<div class="box-1">
-			<mat-step>
+			<mat-step [stepControl]="addRealEstateForm3">
 				<ng-template matStepLabel>Zdjęcia</ng-template>
-				<div class="button-box">
-					<div><img [src]="url" *ngIf="url" /></div>
-					<input
-						#fileUpload
-						id="file"
-						class="file-input"
-						type="file"
-						accept="image/*"
-						aria-label="File"
-						(change)="onFileSelected($event)"
-					/>
-					<div class="file-upload">
-						{{ fileName || "Dodaj zdjęcia" }}
+				<form [formGroup]="addRealEstateForm3">
+					<div class="button-box-1">
+						<div class="gallery">
+							<img *ngFor="let url of urls" [src]="url" class="img" />
+						</div>
+						<input
+							#fileUpload
+							id="file"
+							class="file-input"
+							type="file"
+							accept="image/*"
+							aria-label="File"
+							(change)="onFileSelected($event)"
+							multiple
+							formControlName="photos"
+						/>
+						<div *ngIf="addRealEstateForm3.get('photos')?.hasError('required')">
+							Zdjęcie jest wymagane.
+						</div>
+						<div class="batch">
+							<div class="desctext">
+								{{ fileName || "Dodaj zdjęcia (max 10)" }}
+							</div>
 
-						<button
-							mat-mini-fab
-							id="upload"
-							class="upload-btn"
-							aria-label="Upload"
-							(click)="fileUpload.click()"
-						>
-							<mat-icon>attach_file</mat-icon>
-						</button>
+							<button
+								mat-mini-fab
+								id="upload"
+								class="upload-btn"
+								aria-label="Upload"
+								(click)="fileUpload.click()"
+							>
+								<mat-icon>attach_file</mat-icon>
+							</button>
+						</div>
+						<div class="button-box">
+							<button mat-button matStepperPrevious class="btn">
+								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+							</button>
+							<button mat-button matStepperNext class="btn">
+								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+							</button>
+						</div>
 					</div>
-					<button mat-button matStepperNext class="btn">Kolejny krok</button>
-					<button mat-button matStepperPrevious class="btn">Poprzedni krok</button>
-				</div>
+				</form>
 			</mat-step>
 		</div>
 		<div class="box-1">
 			<mat-step [completed]="completed">
 				<ng-template matStepLabel>Gotowe</ng-template>
-				<div class="button-box">
-					<button
-						id="search"
-						class="btn"
-						type="submit"
-						mat-button
-						aria-label="Submit"
-						(click)="isDone()"
+				<div class="button-box-1">
+					<div
+						*ngIf="addRealEstateForm1.valid || addRealEstateForm2.valid"
+						class="button-box-1"
 					>
-						Dodaj ofertę
-					</button>
-					<button mat-button matStepperPrevious class="btn">Poprzedni krok</button>
-					<button mat-button (click)="stepper.reset()" class="btn">Reset</button>
+						<mat-icon class="success-icon"> insert_emoticon</mat-icon>
+						<h2>Formularz został pomyślnie wypełniony!</h2>
+					</div>
+					<div class="button-box">
+						<button mat-button matStepperPrevious class="btn">
+							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button
+							id="search"
+							class="btn-2"
+							type="submit"
+							mat-button
+							aria-label="Submit"
+							(click)="isDone()"
+						>
+							Dodaj ofertę
+						</button>
+						<!-- <button mat-button (click)="stepper.reset()" class="btn">Reset</button> -->
+						<button mat-button (click)="formReset()" class="btn">Reset</button>
+					</div>
 				</div>
 			</mat-step>
 		</div>
