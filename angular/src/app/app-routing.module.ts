@@ -23,6 +23,13 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
+	{
+		path: 'find-roommate',
+		loadChildren: () =>
+			import('./find-roommate/find-roommate.module').then(
+				(m) => m.FindRoommateModule
+			),
+	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
