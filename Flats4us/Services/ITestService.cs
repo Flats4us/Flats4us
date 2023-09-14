@@ -2,7 +2,5 @@
 
 namespace Flats4us.Services
 {
-    public interface ITestService
-    {
-    }
+    public interface ITestService{}
 }
