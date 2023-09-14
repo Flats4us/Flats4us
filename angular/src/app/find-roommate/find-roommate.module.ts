@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { FindRoommateRoutingModule } from './find-roommate-routing.module';
 import { ConversationsComponent } from './components/conversations/conversations.component';
 import { RoommateCandidateComponent } from './components/roommate-candidate/roommate-candidate.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
 	declarations: [
@@ -12,7 +13,12 @@ import { RoommateCandidateComponent } from './components/roommate-candidate/room
 		ConversationsComponent,
 		RoommateCandidateComponent,
 	],
-	imports: [CommonModule, FindRoommateRoutingModule, MatCardModule],
+	imports: [
+		CommonModule,
+		FindRoommateRoutingModule,
+		MatCardModule,
+		MatChipsModule,
+	],
 	exports: [FindRoommateComponent],
 })
 export class FindRoommateModule {}
