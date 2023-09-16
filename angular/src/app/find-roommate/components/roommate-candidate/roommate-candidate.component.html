@@ -1,67 +1,57 @@
 <mat-card class="m-3 p-4">
 	<mat-card-header>
-		<img
-			mat-card-avatar
-			src="../../../assets/check_circle_24px.png"
-			alt="Photo of a Shiba Inu"
-		/>
+		<mat-icon mat-card-avatar>check_circle</mat-icon>
 		<mat-card-title class="text-2xl">Maciej, 19</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
 		<img
-			class="m-auto"
+			class="m-auto mb-3"
 			src="../../../assets/candidate.png"
 			alt="Candidate image"
 		/>
-		<mat-chip-listbox aria-label="Candidate interest">
+		<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
 			<mat-chip>
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Muzyka
 			</mat-chip>
 			<mat-chip color="primary">
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Gry
 			</mat-chip>
 			<mat-chip color="accent">
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Piłka nożna
 			</mat-chip>
 			<mat-chip color="accent">
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Filmy
 			</mat-chip>
 			<mat-chip color="accent">
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Muzyka
 			</mat-chip>
 			<mat-chip color="accent">
-				<img
-					matChipAvatar
-					src="../../../assets/check_circle_24px.png"
-					alt="Photo of a Shiba Inu"
-				/>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
 				Gotowanie
 			</mat-chip>
 		</mat-chip-listbox>
+
+		<div class="flex flex-row">
+			<mat-slider discrete disabled min="0" max="100">
+				<input value="90" matSliderThumb />
+			</mat-slider>
+			<mat-label class="text-[10px]">
+				dopasowanie z tym użytkownikiem na poziomie 90%
+			</mat-label>
+		</div>
+
+		<div class="flex justify-between">
+			<button class="scale-[3.0]" type="button" mat-icon-button>
+				<mat-icon class="icon-red">cancel</mat-icon>
+			</button>
+			<button class="scale-[3.0]" type="button" mat-icon-button>
+				<mat-icon class="icon-green">check_circle</mat-icon>
+			</button>
+		</div>
 	</mat-card-content>
 </mat-card>
