@@ -1,0 +1,68 @@
+<mat-card class="m-3 p-4">
+	<mat-card-header>
+		<mat-icon mat-card-avatar>check_circle</mat-icon>
+		<mat-card-title class="text-2xl">Maciej, 19</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<img
+			class="m-auto mb-3"
+			src="../../../assets/candidate.webp"
+			alt="Candidate image"
+		/>
+
+		<div class="flex justify-between">
+			<span>
+				<mat-icon>star</mat-icon>
+				<mat-icon>star</mat-icon>
+				<mat-icon>star</mat-icon>
+				<mat-icon>star</mat-icon>
+				<mat-icon>star_border</mat-icon>
+			</span>
+			<span>ocena: 4/5</span>
+		</div>
+		<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
+			<mat-chip>
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Muzyka
+			</mat-chip>
+			<mat-chip color="primary">
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Gry
+			</mat-chip>
+			<mat-chip color="accent">
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Piłka nożna
+			</mat-chip>
+			<mat-chip color="accent">
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Filmy
+			</mat-chip>
+			<mat-chip color="accent">
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Muzyka
+			</mat-chip>
+			<mat-chip color="accent">
+				<mat-icon matChipAvatar>check_circle</mat-icon>
+				Gotowanie
+			</mat-chip>
+		</mat-chip-listbox>
+
+		<div class="flex flex-row">
+			<mat-slider discrete disabled min="0" max="100">
+				<input value="90" matSliderThumb />
+			</mat-slider>
+			<mat-label class="text-[10px]">
+				dopasowanie z tym użytkownikiem na poziomie 90%
+			</mat-label>
+		</div>
+
+		<div class="flex justify-between">
+			<button class="scale-[3.0]" type="button" mat-icon-button>
+				<mat-icon class="icon-red">cancel</mat-icon>
+			</button>
+			<button class="scale-[3.0]" type="button" mat-icon-button>
+				<mat-icon class="icon-green">check_circle</mat-icon>
+			</button>
+		</div>
+	</mat-card-content>
+</mat-card>

@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FindRoommateModule } from './find-roommate/find-roommate.module';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -20,6 +21,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
+		FindRoommateModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
