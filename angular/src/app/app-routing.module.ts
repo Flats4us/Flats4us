@@ -30,6 +30,10 @@ const routes: Routes = [
 				(m) => m.FindRoommateModule
 			),
 	},
+	{
+		path: 'offer',
+		loadChildren: () => import('./offer/offer.module').then((m) => m.OfferModule),
+	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
