@@ -41,13 +41,6 @@ const routes: Routes = [
 		path: 'offer',
 		loadChildren: () => import('./offer/offer.module').then((m) => m.OfferModule),
 	},
-	{
-		path: 'addRealEstate',
-		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
-			),
-	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
