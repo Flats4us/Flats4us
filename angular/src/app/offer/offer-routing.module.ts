@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AddOfferComponent } from './add-offer/add-offer.component';
 
 const routes: Routes = [
+	{ path: '', pathMatch: 'full', redirectTo: '/start' },
 	{
 		path: 'add-offer',
 		component: AddOfferComponent,
