@@ -158,7 +158,12 @@
 						</mat-error>
 					</mat-form-field>
 					<div class="button-box">
-						<button mat-button matStepperNext class="btn">
+						<button
+							*ngIf="addRealEstateForm1.valid"
+							mat-button
+							matStepperNext
+							class="btn"
+						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
 					</div>
@@ -312,7 +317,12 @@
 						<button mat-button matStepperPrevious class="btn">
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 						</button>
-						<button mat-button matStepperNext class="btn">
+						<button
+							*ngIf="addRealEstateForm2.valid"
+							mat-button
+							matStepperNext
+							class="btn"
+						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
 					</div>
@@ -360,7 +370,12 @@
 							<button mat-button matStepperPrevious class="btn">
 								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 							</button>
-							<button mat-button matStepperNext class="btn">
+							<button
+								*ngIf="addRealEstateForm3.valid"
+								mat-button
+								matStepperNext
+								class="btn"
+							>
 								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 							</button>
 						</div>
@@ -373,28 +388,56 @@
 				<ng-template matStepLabel>Gotowe</ng-template>
 				<div class="button-box-1">
 					<div
-						*ngIf="addRealEstateForm1.valid || addRealEstateForm2.valid"
+						*ngIf="
+							addRealEstateForm1.valid &&
+							addRealEstateForm2.valid &&
+							addRealEstateForm3.valid
+						"
 						class="button-box-1"
 					>
 						<mat-icon class="success-icon"> insert_emoticon</mat-icon>
 						<h2>Formularz został pomyślnie wypełniony!</h2>
+						<h2>
+							Klikająć na przycisk "Zapisz nieruchomość" potwierdzasz prawdziwość
+							wprowadzonych danych.
+						</h2>
 					</div>
 					<div class="button-box">
 						<button mat-button matStepperPrevious class="btn">
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<button
-							id="search"
+							*ngIf="
+								addRealEstateForm1.valid &&
+								addRealEstateForm2.valid &&
+								addRealEstateForm3.valid
+							"
+							id="addRealEstate"
 							class="btn-2"
 							type="submit"
 							mat-button
-							aria-label="Submit"
-							(click)="isDone()"
+							aria-label="AddRealEstate"
+							(click)="saveRealEstate()"
+						>
+							Zapisz nieruchomość
+						</button>
+						<button mat-button (click)="formReset()" class="btn">Reset</button>
+					</div>
+					<h2 *ngIf="completed">
+						Czy chcesz dodać ofertę dla zapisanej nieruchomości?
+					</h2>
+					<div class="button-box">
+						<button
+							*ngIf="completed"
+							id="addOffer"
+							class="btn-2"
+							type="submit"
+							mat-button
+							aria-label="AddOffer"
+							(click)="addOffer()"
 						>
 							Dodaj ofertę
 						</button>
-						<!-- <button mat-button (click)="stepper.reset()" class="btn">Reset</button> -->
-						<button mat-button (click)="formReset()" class="btn">Reset</button>
 					</div>
 				</div>
 			</mat-step>
