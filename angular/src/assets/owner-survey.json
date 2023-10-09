@@ -1,0 +1,51 @@
+[
+	{
+		"id": 1,
+		"title": "OWNER",
+		"content": "Jaką nieruchomość chcesz wynająć?",
+		"typeName": "RADIOBUTTON",
+		"answers": ["Pokój", "Mieszkanie", "Dom"]
+	},
+	{
+		"id": 2,
+		"title": "OWNER",
+		"content": "Dla ilu osób chcesz wynająć nieruchomość?",
+		"typeName": "RADIOBUTTON",
+		"answers": ["1", "2", "3", "Więcej"]
+	},
+	{
+		"id": 3,
+		"title": "OWNER",
+		"content": "Jakie masz preferencje wobec najemcy?",
+		"typeName": "SUBQUESTION",
+		"answers": []
+	},
+	{
+		"id": 4,
+		"title": "OWNER",
+		"content": "Pali papierosy",
+		"typeName": "RADIOBUTTON",
+		"answers": ["Tak", "Nie", "Bez znaczenia"]
+	},
+	{
+		"id": 5,
+		"title": "OWNER",
+		"content": "Imprezuje",
+		"typeName": "RADIOBUTTON",
+		"answers": ["Tak", "Nie", "Bez znaczenia"]
+	},
+	{
+		"id": 6,
+		"title": "OWNER",
+		"content": "Zwierzęta",
+		"typeName": "RADIOBUTTON",
+		"answers": ["Tak", "Nie", "Bez znaczenia"]
+	},
+	{
+		"id": 7,
+		"title": "OWNER",
+		"content": "Płeć",
+		"typeName": "RADIOBUTTON",
+		"answers": ["K", "M", "Bez znaczenia"]
+	}
+]

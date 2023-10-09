@@ -1,0 +1,61 @@
+<mat-card>
+	<h1>Ankieta</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
+		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
+			<ng-container *ngFor="let question of questions$ | async; let i = index">
+				<div *ngIf="i < 7 || studentSurveyForm.get('16')">
+					<mat-label>{{ i + 1 }}. {{ question.content }} </mat-label>
+
+					<mat-slider
+						*ngIf="question.typeName === typeName.SLIDER"
+						discrete
+						min="0"
+						max="5"
+						step="1"
+					>
+						<input [formControlName]="question.id" matSliderThumb />
+					</mat-slider>
+
+					<mat-form-field
+						*ngIf="question.typeName === typeName.FORM"
+						class="h-1/2"
+						appearance="outline"
+					>
+						<input [formControlName]="question.id" matInput />
+					</mat-form-field>
+
+					<mat-slide-toggle
+						*ngIf="question.typeName === typeName.SWITCH"
+						[formControlName]="question.id"
+					></mat-slide-toggle>
+
+					<section
+						*ngIf="question.typeName === typeName.CHECKBOX"
+						class="example-section"
+					>
+						<mat-checkbox *ngFor="let answer of question.answers">{{
+							answer
+						}}</mat-checkbox>
+					</section>
+
+					<mat-radio-group *ngIf="question.typeName === typeName.RADIOBUTTON">
+						<mat-radio-button *ngFor="let answer of question.answers">{{
+							answer
+						}}</mat-radio-button>
+					</mat-radio-group>
+				</div>
+			</ng-container>
+			<div class="buttons">
+				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
+				<button
+					mat-flat-button
+					class="btn-cancel"
+					type="button"
+					routerLink="/start"
+				>
+					Anuluj
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>
