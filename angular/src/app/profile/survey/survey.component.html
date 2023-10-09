@@ -7,7 +7,7 @@
 					<mat-label>{{ i + 1 }}. {{ question.content }} </mat-label>
 
 					<mat-slider
-						*ngIf="question.typeName === TypeName.SLIDER"
+						*ngIf="question.typeName === typeName.SLIDER"
 						discrete
 						min="0"
 						max="5"
@@ -17,7 +17,7 @@
 					</mat-slider>
 
 					<mat-form-field
-						*ngIf="question.typeName === TypeName.FORM"
+						*ngIf="question.typeName === typeName.FORM"
 						class="h-1/2"
 						appearance="outline"
 					>
@@ -25,12 +25,12 @@
 					</mat-form-field>
 
 					<mat-slide-toggle
-						*ngIf="question.typeName === TypeName.SWITCH"
+						*ngIf="question.typeName === typeName.SWITCH"
 						[formControlName]="question.id"
 					></mat-slide-toggle>
 
 					<section
-						*ngIf="question.typeName === TypeName.CHECKBOX"
+						*ngIf="question.typeName === typeName.CHECKBOX"
 						class="example-section"
 					>
 						<mat-checkbox *ngFor="let answer of question.answers">{{
@@ -38,7 +38,7 @@
 						}}</mat-checkbox>
 					</section>
 
-					<mat-radio-group *ngIf="question.typeName === TypeName.RADIOBUTTON">
+					<mat-radio-group *ngIf="question.typeName === typeName.RADIOBUTTON">
 						<mat-radio-button *ngFor="let answer of question.answers">{{
 							answer
 						}}</mat-radio-button>

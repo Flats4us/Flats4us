@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { IQuestionsData } from './questions-data.interface';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { typeName } from './typeName';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SurveyComponent {
 	public questions$: Observable<IQuestionsData[]>;
 	public studentSurveyForm: FormGroup;
-	public TypeName: typeof typeName = typeName;
+	public typeName: typeof typeName = typeName;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -28,11 +28,11 @@ export class SurveyComponent {
 			lookingForRoommate: [''],
 		});
 
-		this.questions$ = this.getQuestions();
-
-		this.questions$.subscribe((questions) =>
-			questions.forEach((question) =>
-				this.studentSurveyForm.addControl(question.id, new FormControl(''))
+		this.questions$ = this.getQuestions().pipe(
+			tap((questions) =>
+				questions.forEach((question) =>
+					this.studentSurveyForm.addControl(question.id, new FormControl(''))
+				)
 			)
 		);
 	}

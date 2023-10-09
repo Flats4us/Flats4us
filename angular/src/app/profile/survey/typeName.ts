@@ -4,4 +4,5 @@ export enum typeName {
 	SWITCH = 'SWITCH',
 	SLIDER = 'SLIDER',
 	CHECKBOX = 'CHECKBOX',
+	SUBQUESTION = 'SUBQUESTION',
 }
