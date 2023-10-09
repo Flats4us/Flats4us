@@ -4,11 +4,11 @@
 			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
 		</div>
 		<div class="container">
-			<div class="box2">
+			<div class="box-2">
 				<mat-form-field appearance="fill">
 					<mat-label>Województwo</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 					</span>
 					<mat-select id="region" formControlName="regionsGroup">
 						<mat-option *ngFor="let region of regions" [value]="region">
@@ -35,7 +35,7 @@
 						[matAutocomplete]="autoCity"
 					/>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 					</span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
@@ -58,7 +58,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Odległość</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>directions_walk</mat-icon></div>
+						<div class="box-icon"><mat-icon>directions_walk</mat-icon></div>
 					</span>
 					<mat-select id="distance" formControlName="distance">
 						<mat-option *ngFor="let distance of distances" [value]="distance.value">
@@ -70,7 +70,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Rodzaj nieruchomości</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>home</mat-icon></div>
+						<div class="box-icon"><mat-icon>home</mat-icon></div>
 					</span>
 					<mat-select id="property" formControlName="property" multiple>
 						<mat-option *ngFor="let property of properties" [value]="property">
@@ -88,7 +88,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Cena min.</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
 					</span>
 					<input
 						id="minPrice"
@@ -105,15 +105,13 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['minPrice']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Cena maks.</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
 					</span>
 					<input
 						id="maxPrice"
@@ -130,50 +128,47 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['maxPrice']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 				<div class="batch">
 					<button
-						class="boxIcon2"
+						class="box-icon-2"
+						id="showMoreFilters"
 						type="button"
-						(click)="showFilters()"
 						mat-icon-button
 						matTooltip="Pokaż więcej filtrów"
-						id="showMoreFilters"
 						aria-label="ShowMoreFilters"
+						(click)="showFilters()"
 					>
 						<mat-icon>filter_list</mat-icon>
 					</button>
 
 					<button
-						class="boxIcon2"
+						class="box-icon-2"
+						id="showMap"
 						type="button"
-						(click)="showMap()"
 						mat-icon-button
 						matTooltip="Pokaż mapę"
-						id="showMap"
 						aria-label="ShowMap"
+						(click)="showMap()"
 					>
 						<mat-icon>map</mat-icon>
 					</button>
 
 					<button
-						class="boxIcon2"
+						class="box-icon-2"
+						id="search"
 						type="submit"
 						mat-icon-button
 						matTooltip="Szukaj ofert"
-						id="search"
 						aria-label="SearchForOffers"
-						[disabled]="!mainSiteForm.valid"
+						[disabled]="!validateForm()"
 					>
 						<mat-icon>search</mat-icon>
 					</button>
-					<div class="boxIcon" [appGetDescription]="numberOfRecords"></div>
 				</div>
 			</div>
-			<div *ngIf="showMoreFilters" class="box3">
+			<div *ngIf="showMoreFilters" class="box-3">
 				<mat-form-field appearance="fill">
 					<mat-label>Dzielnica</mat-label>
 					<input
@@ -186,7 +181,7 @@
 						[matAutocomplete]="autoDistrict"
 					/>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 					</span>
 					<mat-autocomplete #autoDistrict="matAutocomplete">
 						<mat-optgroup
@@ -203,7 +198,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Powierzchnia od</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
+						<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 					</span>
 					<input
 						id="minArea"
@@ -220,15 +215,13 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['minArea']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Powierzchnia do</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
+						<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 					</span>
 					<input
 						id="maxArea"
@@ -245,15 +238,13 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['maxArea']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Lata budowy</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>history</mat-icon></div>
+						<div class="box-icon"><mat-icon>history</mat-icon></div>
 					</span>
 					<mat-select id="year" formControlName="year" multiple>
 						<mat-option *ngFor="let year of yearOfBuilds" [value]="year">
@@ -265,7 +256,7 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Min. liczba pokoi</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>meeting_room</mat-icon></div>
+						<div class="box-icon"><mat-icon>meeting_room</mat-icon></div>
 					</span>
 					<input
 						id="rooms"
@@ -281,15 +272,13 @@
 							{{ room.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['rooms']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Maks. liczba pięter</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
+						<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 					</span>
 					<input
 						id="floors"
@@ -305,15 +294,13 @@
 							{{ floor.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text" *ngIf="mainSiteForm.controls['floors']">
-						Nieprawidłowa wartość!
-					</mat-error>
+					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Wyposażenie</mat-label>
 					<span matPrefix>
-						<div class="boxIcon"><mat-icon>category</mat-icon></div>
+						<div class="box-icon"><mat-icon>category</mat-icon></div>
 					</span>
 					<mat-select id="equipment" formControlName="equipment" multiple>
 						<mat-option *ngFor="let equipment of equipment" [value]="equipment">
@@ -324,205 +311,119 @@
 			</div>
 		</div>
 	</form>
-
-	<div class="container-2">
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-		<mat-card class="card" (click)="navigateToFlat()">
-			<mat-card-subtitle>Warszawa, Wola</mat-card-subtitle>
-			<img
-				mat-card-image
-				class="imgs"
-				src="./assets/mieszkanie.jpg"
-				alt="Mieszkanie"
-			/>
-			<mat-card-content>
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon> <span>Cena: 2500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon><span>Czynsz: 500 zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon> <span>Powierzchnia: 35 m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon> <span>Liczba pokoi: 2</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
+	<div *ngIf="!isSubmitted" class="container-5">
+		<div class="container-3">
+			<h1>Promowane <span class="colour-text">oferty</span></h1>
+		</div>
+		<div class="container-2">
+			<mat-card
+				*ngFor="let offer of promotedFlatOffers"
+				class="card"
+				(click)="navigateToFlat(offer.url)"
+			>
+				<mat-card-subtitle
+					>{{ offer.type }} - {{ offer.regionCity.city }},
+					{{ offer.district }}</mat-card-subtitle
+				>
+				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="offer.imgSource" />
+				<mat-card-content>
+					<mat-chip-listbox>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>attach_money</mat-icon>
+								<span>Cena: {{ offer.price }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>add</mat-icon><span>Czynsz: {{ offer.rent }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>straighten</mat-icon>
+								<span>Powierzchnia: {{ offer.area }} m²</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>meeting_room</mat-icon>
+								<span>Liczba pokoi: {{ offer.rooms }}</span>
+							</div>
+						</mat-chip>
+					</mat-chip-listbox>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+	<div *ngIf="isSubmitted">
+		<div class="container-3">
+			<h1>
+				Znaleziono
+				<span class="colour-text" [appGetDescription]="numberOfRecords"></span>
+				<p>
+					{{ chosenRegionString }}, {{ chosenCityString }}{{ chosenDistrictString }}
+				</p>
+			</h1>
+		</div>
+		<div class="container-2">
+			<mat-card
+				*ngFor="let flat of flatOptions$ | async"
+				class="card"
+				(click)="navigateToFlat(flat.url)"
+			>
+				<mat-card-subtitle>{{ flat.type }}</mat-card-subtitle>
+				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="flat.imgSource" />
+				<mat-card-content>
+					<mat-chip-listbox>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>attach_money</mat-icon>
+								<span>Cena: {{ flat.price }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>add</mat-icon><span>Czynsz: {{ flat.rent }} zł/mc</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>straighten</mat-icon>
+								<span>Powierzchnia: {{ flat.area }} m²</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>meeting_room</mat-icon>
+								<span>Liczba pokoi: {{ flat.rooms }}</span>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<mat-mini-fab
+								class="box-icon-3"
+								id="addToFavorite"
+								type="button"
+								mat-icon-button
+								matTooltip="Dodaj do ulubionych"
+								aria-label="AddToFavorite"
+								(click)="addToFavorite()"
+							>
+								<mat-icon>favorite_border</mat-icon>
+							</mat-mini-fab>
+						</mat-chip>
+					</mat-chip-listbox>
+				</mat-card-content>
+			</mat-card>
+		</div>
+	</div>
+	<div [hidden]="!isSubmitted">
+		<mat-paginator
+			id="paginator2"
+			showFirstLastButtons
+			[pageSizeOptions]="[6, 12, 18, 48]"
+			aria-label="Paginator"
+		>
+		</mat-paginator>
 	</div>
 </div>
