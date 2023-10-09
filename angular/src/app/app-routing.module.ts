@@ -24,6 +24,13 @@ const routes: Routes = [
 			import('./settings/settings.module').then((m) => m.SettingsModule),
 	},
 	{
+		path: 'addRealEstate',
+		loadChildren: () =>
+			import('./add-real-estate/add-real-estate.module').then(
+				(m) => m.AddRealEstateModule
+			),
+	},
+	{
 		path: 'find-roommate',
 		loadChildren: () =>
 			import('./find-roommate/find-roommate.module').then(
@@ -33,6 +40,13 @@ const routes: Routes = [
 	{
 		path: 'offer',
 		loadChildren: () => import('./offer/offer.module').then((m) => m.OfferModule),
+	},
+	{
+		path: 'addRealEstate',
+		loadChildren: () =>
+			import('./add-real-estate/add-real-estate.module').then(
+				(m) => m.AddRealEstateModule
+			),
 	},
 	{ path: '**', component: NotFoundComponent },
 ];
