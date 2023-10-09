@@ -3,7 +3,7 @@
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<ng-container *ngFor="let question of questions$ | async; let i = index">
-				<div *ngIf="i < 7 || studentSurveyForm.get('16')?.value">
+				<div *ngIf="i < 7 || studentSurveyForm.get('16')">
 					<mat-label>{{ i + 1 }}. {{ question.content }} </mat-label>
 
 					<mat-slider
