@@ -24,6 +24,11 @@ const routes: Routes = [
 			import('./settings/settings.module').then(m => m.SettingsModule),
 	},
 	{
+		path: 'messages',
+		loadChildren: () =>
+			import('./messages/messages.module').then(m => m.MessagesModule),
+	},
+	{
 		path: 'find-roommate',
 		loadChildren: () =>
 			import('./find-roommate/find-roommate.module').then(
