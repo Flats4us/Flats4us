@@ -26,13 +26,13 @@ export class AuthService {
 	public login({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
 			.post<IAuthTokenResponse>('/api/auth/login', { email, password })
-			.pipe(tap((response) => this.setToken(response)));
+			.pipe(tap(response => this.setToken(response)));
 	}
 
 	public register({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
 			.post<IAuthTokenResponse>('/api/auth/register', { email, password })
-			.pipe(tap((response) => this.setToken(response)));
+			.pipe(tap(response => this.setToken(response)));
 	}
 
 	private setToken(response: IAuthTokenResponse): void {
@@ -60,8 +60,8 @@ export class AuthService {
 		return this.http
 			.post<IAuthTokenResponse>('/api/auth/refresh', { token })
 			.pipe(
-				tap((response) => this.setToken(response)),
-				catchError((_error) => {
+				tap(response => this.setToken(response)),
+				catchError(_error => {
 					this.authTokenSubject.next(null);
 					localStorage.removeItem('authToken');
 					localStorage.removeItem('authTokenExpirationTime');

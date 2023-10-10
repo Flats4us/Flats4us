@@ -7,32 +7,32 @@ const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'start' },
 	{
 		path: 'auth',
-		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+		loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
 	},
 	{
 		path: 'start',
-		loadChildren: () => import('./start/start.module').then((m) => m.StartModule),
+		loadChildren: () => import('./start/start.module').then(m => m.StartModule),
 	},
 	{
 		path: 'profile',
 		loadChildren: () =>
-			import('./profile/profile.module').then((m) => m.ProfileModule),
+			import('./profile/profile.module').then(m => m.ProfileModule),
 	},
 	{
 		path: 'settings',
 		loadChildren: () =>
-			import('./settings/settings.module').then((m) => m.SettingsModule),
+			import('./settings/settings.module').then(m => m.SettingsModule),
 	},
 	{
 		path: 'find-roommate',
 		loadChildren: () =>
 			import('./find-roommate/find-roommate.module').then(
-				(m) => m.FindRoommateModule
+				m => m.FindRoommateModule
 			),
 	},
 	{
 		path: 'offer',
-		loadChildren: () => import('./offer/offer.module').then((m) => m.OfferModule),
+		loadChildren: () => import('./offer/offer.module').then(m => m.OfferModule),
 	},
 	{ path: '**', component: NotFoundComponent },
 ];
