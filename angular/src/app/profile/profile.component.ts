@@ -13,7 +13,7 @@ export class ProfileComponent {
 
 	constructor(private route: ActivatedRoute) {
 		this.id$ = this.route.paramMap.pipe(
-			map((params) => params.get('id')),
+			map(params => params.get('id')),
 			filter(Boolean)
 		);
 	}

@@ -51,14 +51,14 @@ export class StartMapComponent implements OnInit, OnDestroy {
 
 	private getLocation(): void {
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) =>
+			navigator.geolocation.getCurrentPosition(position =>
 				this.setMapView([position.coords.latitude, position.coords.longitude])
 			);
 		}
 	}
 
 	public addMarkersFromAddresses(addresses: string[]) {
-		addresses.forEach((address) => {
+		addresses.forEach(address => {
 			const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
 				address
 			)}&format=json`;

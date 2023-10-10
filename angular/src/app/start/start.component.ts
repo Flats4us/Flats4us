@@ -50,7 +50,7 @@ export class StartComponent implements OnInit {
 		});
 		this.http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe((data) => {
+			.subscribe(data => {
 				const csvToRowArray = data.split('\n');
 				for (let index = 1; index < csvToRowArray.length - 1; index++) {
 					const row = csvToRowArray[index].split(';');
@@ -61,7 +61,7 @@ export class StartComponent implements OnInit {
 					});
 
 					this.citiesGroups
-						.find((group) => group.whole == lowerCaseRegion)
+						.find(group => group.whole == lowerCaseRegion)
 						?.parts.push(row[1]);
 				}
 			});
@@ -70,7 +70,7 @@ export class StartComponent implements OnInit {
 	public filter = (opt: string[], value: string): string[] => {
 		const filterValue = value.toLowerCase();
 
-		return opt.filter((item) => item.toLowerCase().includes(filterValue));
+		return opt.filter(item => item.toLowerCase().includes(filterValue));
 	};
 
 	public showFilters() {
@@ -89,21 +89,21 @@ export class StartComponent implements OnInit {
 		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				map((value) => value ?? ''),
-				map((value) => this.filterCitiesGroup(value))
+				map(value => value ?? ''),
+				map(value => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				map((value) => value ?? ''),
-				map((value) => this.filterDistrictsGroup(value))
+				map(value => value ?? ''),
+				map(value => this.filterDistrictsGroup(value))
 			);
 
 		this.mainSiteForm.get('districtsGroup')?.disable();
 
-		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe((value) => {
-			if (this.districtGroups.find((distr) => distr.whole === value)) {
+		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe(value => {
+			if (this.districtGroups.find(distr => distr.whole === value)) {
 				this.mainSiteForm.get('districtsGroup')?.enable();
 			} else {
 				this.mainSiteForm.get('districtsGroup')?.reset();
@@ -117,24 +117,24 @@ export class StartComponent implements OnInit {
 
 	private filterCitiesGroup(value: string): IGroup[] {
 		return this.citiesGroups
-			.map((group) => ({
+			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),
 			}))
 			.filter(
-				(group) =>
+				group =>
 					group.parts.length > 0 &&
 					group.whole === this.mainSiteForm.get('regionsGroup')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
 		return this.districtGroups
-			.map((group) => ({
+			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),
 			}))
 			.filter(
-				(group) =>
+				group =>
 					group.parts.length > 0 &&
 					group.whole === this.mainSiteForm.get('citiesGroup')?.value
 			);

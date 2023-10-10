@@ -29,8 +29,8 @@ export class SurveyComponent {
 		});
 
 		this.questions$ = this.getQuestions().pipe(
-			tap((questions) =>
-				questions.forEach((question) =>
+			tap(questions =>
+				questions.forEach(question =>
 					this.studentSurveyForm.addControl(question.id, new FormControl(''))
 				)
 			)
