@@ -1,11 +1,12 @@
 <mat-toolbar role="heading" class="custom-toolbar">
-	<a class="logo" routerLink="/"
-		><img
+	<a class="logo" routerLink="/">
+		<img
 			class="main-logo"
 			id="logo-header"
 			src="./assets/logoFlats4Us.png"
 			alt="Company Logo"
-	/></a>
+		/>
+	</a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
 		<a class="start" routerLink="/">
@@ -17,7 +18,7 @@
 			></mat-icon>
 		</a>
 
-		<button class="map" mat-menu-item>
+		<button class="map" mat-menu-item routerLink="start/map">
 			<span><mat-icon>map</mat-icon></span
 			>MAPA
 		</button>
@@ -26,23 +27,33 @@
 			>WIADOMOŚCI
 		</button>
 		<mat-menu #tidings="matMenu">
-			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
-			<button mat-menu-item>WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
+			<button mat-menu-item routerLink="messages">
+				WIADOMOŚCI Z WŁAŚCICIELEM
+			</button>
+			<button mat-menu-item routerLink="messages">
+				WIADOMOŚCI Z WSPÓŁLOKATORAMI
+			</button>
 		</mat-menu>
 		<button class="settings" mat-menu-item [matMenuTriggerFor]="settings">
 			<span><mat-icon>settings</mat-icon></span
 			>USTAWIENIA
 		</button>
 		<mat-menu #settings="matMenu">
-			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
-			<button mat-menu-item>ZMIEŃ HASŁO</button>
-			<button mat-menu-item [matMenuTriggerFor]="help_center">
+			<button mat-menu-item routerLink="settings/notifications">
+				USTAWIENIA POWIADOMIEŃ
+			</button>
+			<button mat-menu-item routerLink="settings/change-password">
+				ZMIEŃ HASŁO
+			</button>
+			<button mat-menu-item [matMenuTriggerFor]="helpCenter">
 				CENTRUM POMOCY
 			</button>
 		</mat-menu>
 
-		<mat-menu #help_center="matMenu">
-			<button mat-menu-item>WYŚLIJ ZGŁOSZENIE DO MODERATORA</button>
+		<mat-menu #helpCenter="matMenu">
+			<button mat-menu-item routerLink="settings/help-center">
+				WYŚLIJ ZGŁOSZENIE DO MODERATORA
+			</button>
 		</mat-menu>
 
 		<button class="options" mat-menu-item [matMenuTriggerFor]="extended">

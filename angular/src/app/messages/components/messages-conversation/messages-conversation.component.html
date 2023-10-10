@@ -1,0 +1,21 @@
+<div class="conversation-header">
+	<div class="avatar"></div>
+	<span class="conversation__user">Uzytkownik X</span>
+</div>
+<h4>ID WYBRANEJ KONWERSACJI {{ conversationId$ | async }}</h4>
+<div *ngFor="let msg of messages; let index = index">
+	{{ index + 1 }}. {{ msg }}
+</div>
+<mat-form-field class="w-full">
+	<input
+		matInput
+		type="text"
+		placeholder="Wiadomość..."
+		[formControl]="messageControl"
+		(keydown.enter)="onSend()"
+	/>
+
+	<button matSuffix mat-icon-button (click)="onSend()">
+		<mat-icon>send</mat-icon>
+	</button>
+</mat-form-field>
