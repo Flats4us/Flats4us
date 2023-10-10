@@ -22,24 +22,34 @@
 			<mat-icon class="material-icons-outlined">chat</mat-icon>
 			Wiadomości
 		</button>
-		<mat-menu #messages="matMenu">
-			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
-			<button mat-menu-item>WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
+		<mat-menu #tidings="matMenu">
+			<button mat-menu-item routerLink="messages">
+				WIADOMOŚCI Z WŁAŚCICIELEM
+			</button>
+			<button mat-menu-item routerLink="messages">
+				WIADOMOŚCI Z WSPÓŁLOKATORAMI
+			</button>
 		</mat-menu>
 		<button mat-button [matMenuTriggerFor]="settings" class="mr-7">
 			<mat-icon class="material-icons-outlined">settings</mat-icon>
 			Ustawienia
 		</button>
 		<mat-menu #settings="matMenu">
-			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
-			<button mat-menu-item>ZMIEŃ HASŁO</button>
-			<button mat-menu-item [matMenuTriggerFor]="help_center">
+			<button mat-menu-item routerLink="settings/notifications">
+				USTAWIENIA POWIADOMIEŃ
+			</button>
+			<button mat-menu-item routerLink="settings/change-password">
+				ZMIEŃ HASŁO
+			</button>
+			<button mat-menu-item [matMenuTriggerFor]="helpCenter">
 				CENTRUM POMOCY
 			</button>
 		</mat-menu>
 
-		<mat-menu #help_center="matMenu">
-			<button mat-menu-item>WYŚLIJ ZGŁOSZENIE DO MODERATORA</button>
+		<mat-menu #helpCenter="matMenu">
+			<button mat-menu-item routerLink="settings/help-center">
+				WYŚLIJ ZGŁOSZENIE DO MODERATORA
+			</button>
 		</mat-menu>
 
 		<button mat-button [matMenuTriggerFor]="extended" class="mr-10">
