@@ -556,6 +556,10 @@ namespace Flats4us.Migrations
                     b.Property<int>("Flat")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImagesPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MaxNumberOfInhabitants")
                         .HasColumnType("int");
 
@@ -571,10 +575,6 @@ namespace Flats4us.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TitleDeedPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -799,16 +799,14 @@ namespace Flats4us.Migrations
                     b.HasBaseType("Flats4us.Entities.Property");
 
                     b.Property<int>("Floor")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("Floor");
 
                     b.Property<int>("NumberOfRooms")
-                        .HasColumnType("int");
-
-                    b.ToTable("Properties", t =>
-                        {
-                            t.Property("NumberOfRooms")
-                                .HasColumnName("Flat_NumberOfRooms");
-                        });
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("NumberOfRooms");
 
                     b.HasDiscriminator().HasValue("Flat");
                 });
@@ -821,7 +819,9 @@ namespace Flats4us.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfRooms")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("NumberOfRooms");
 
                     b.Property<int>("PlotArea")
                         .HasColumnType("int");
@@ -833,9 +833,10 @@ namespace Flats4us.Migrations
                 {
                     b.HasBaseType("Flats4us.Entities.Property");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Floor")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("Floor");
 
                     b.HasDiscriminator().HasValue("Room");
                 });

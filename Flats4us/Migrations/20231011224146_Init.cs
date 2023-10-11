@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,15 +54,13 @@ namespace Flats4us.Migrations
                     MaxNumberOfInhabitants = table.Column<int>(type: "int", nullable: false),
                     ConstructionYear = table.Column<int>(type: "int", nullable: false),
                     Elevator = table.Column<bool>(type: "bit", nullable: false),
-                    TitleDeedPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagesPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VerificationStatus = table.Column<int>(type: "int", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Flat_NumberOfRooms = table.Column<int>(type: "int", nullable: true),
-                    Floor = table.Column<int>(type: "int", nullable: true),
                     NumberOfRooms = table.Column<int>(type: "int", nullable: true),
+                    Floor = table.Column<int>(type: "int", nullable: true),
                     NumberOfFloors = table.Column<int>(type: "int", nullable: true),
-                    PlotArea = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PlotArea = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
