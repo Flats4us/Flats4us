@@ -1362,6 +1362,23 @@ namespace Flats4us.Entities
             //    }
             //);
 
+            modelBuilder.Entity<User>().HasData(
+                new
+                {
+                    UserId = 1,
+                    Username = "Dominik",
+                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                    Role = "Tenant"
+                },
+                new
+                {
+                    UserId = 2,
+                    Username = "testuser",
+                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                    Role = "Tenant"
+                }
+            );
+
         }
     }
 }

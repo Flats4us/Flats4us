@@ -1165,6 +1165,49 @@ namespace Flats4us.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                            Role = "Tenant",
+                            Username = "Dominik"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                            Role = "Tenant",
+                            Username = "testuser"
+                        });
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Rent", b =>
                 {
                     b.HasOne("Flats4us.Entities.Offer", "Offers")

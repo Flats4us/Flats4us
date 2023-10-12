@@ -3,11 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
 {
-    public abstract class User
+    [Table("User")]
+    public class User
     {
+        public const int MinUsernameLenght = 6;
+        public const int MaxUsernameLenght = 30;
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
+        public const int MinPasswordLenght = 6;
+        public const int MaxPasswordeLenght = 30;
         [Required]
         public string Name { get; set; }
 
@@ -27,9 +32,16 @@ namespace Flats4us.Entities
 
         [Required]
         public string PostalCode { get; set; }
+        [MaxLength(MaxUsernameLenght)]
+        [MinLength(MinUsernameLenght)]
+        public string Username { get; set; }
 
         [Required]
         public string Email { get; set; }
+        [MinLength(8)]
+        [MaxLength(70)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
+        public string PasswordHash { get; set; }
 
         [Required]
         public string PhoneNumber { get; set; }
@@ -39,8 +51,7 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime LastLoginDate { get; set; }
+        public string Role{ get; set; }
 
-        [Required]
-        public string Password { get; set; }
     }
 }
