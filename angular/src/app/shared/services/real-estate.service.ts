@@ -246,7 +246,7 @@ export class RealEstateService {
 		'od 1990 do 2010',
 		'od 2010',
 	];
-	public properties: string[] = ['Dom', 'Kawalerka', 'Mieszkanie', 'Pokój'];
+	public properties: string[] = ['Dom', 'Mieszkanie', 'Pokój'];
 	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
 
 	constructor(private httpClient: HttpClient) {}

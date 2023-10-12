@@ -159,10 +159,10 @@
 					</mat-form-field>
 					<div class="button-box">
 						<button
-							*ngIf="addRealEstateForm1.valid"
 							mat-button
 							matStepperNext
 							class="btn"
+							[disabled]="!addRealEstateForm1.valid"
 						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
@@ -274,9 +274,9 @@
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Liczba pięter:</div>
+					<div class="subtitle">Piętro:</div>
 					<mat-form-field appearance="fill">
-						<mat-label>Liczba pięter</mat-label>
+						<mat-label>Piętro</mat-label>
 						<span matPrefix>
 							<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
 						</span>
@@ -284,7 +284,7 @@
 							id="floors"
 							formControlName="floors"
 							type="number"
-							placeholder="Liczba pięter"
+							placeholder="Piętro"
 							aria-label="NumberOfFloors"
 							matInput
 						/>
@@ -318,10 +318,10 @@
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<button
-							*ngIf="addRealEstateForm2.valid"
 							mat-button
 							matStepperNext
 							class="btn"
+							[disabled]="!addRealEstateForm2.valid"
 						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
@@ -371,10 +371,10 @@
 								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 							</button>
 							<button
-								*ngIf="addRealEstateForm3.valid"
 								mat-button
 								matStepperNext
 								class="btn"
+								[disabled]="!addRealEstateForm3.valid"
 							>
 								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 							</button>
@@ -423,8 +423,9 @@
 						</button>
 						<button mat-button (click)="formReset()" class="btn">Reset</button>
 					</div>
-					<h2 *ngIf="completed">
-						Czy chcesz dodać ofertę dla zapisanej nieruchomości?
+					<h2 *ngIf="completed" class="subtitle-3">
+						<p>Nieruchomość została zapisana!</p>
+						<p>Czy chcesz dodać ofertę dla zapisanej nieruchomości?</p>
 					</h2>
 					<div class="button-box">
 						<button

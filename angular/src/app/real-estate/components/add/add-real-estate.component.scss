@@ -82,6 +82,10 @@ mat-form-field {
 	padding-bottom: 8px;
 }
 
+.subtitle-3 {
+	text-align: center;
+}
+
 .subtitle-2:before,
 .subtitle-2:after {
 	background-color: #000000;
@@ -146,6 +150,7 @@ mat-form-field {
 }
 
 .gallery {
+	width: 40%;
 	display: flex;
 	align-items: center;
 	row-gap: 4px;
@@ -156,7 +161,7 @@ mat-form-field {
 }
 
 .img {
-	max-width: 20%;
+	max-width: 40%;
 	justify-content: center;
 }
 
