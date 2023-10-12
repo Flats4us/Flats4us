@@ -21,6 +21,7 @@ import {
 	MatPaginatorModule,
 } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { RealEstateService } from '../shared/services/real-estate.service';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -43,6 +44,6 @@ import { MatTableModule } from '@angular/material/table';
 		MatTableModule,
 	],
 	exports: [StartComponent],
-	providers: [MatPaginatorIntl],
+	providers: [MatPaginatorIntl, RealEstateService],
 })
 export class StartModule {}

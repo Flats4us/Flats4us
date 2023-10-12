@@ -46,9 +46,7 @@
 	grid-template-columns: repeat(3, 1fr);
 	grid-row-gap: 40px;
 	grid-column-gap: 40px;
-	padding-left: 40px;
-	padding-right: 40px;
-	padding-bottom: 40px;
+	padding: 0 40px 40px 40px;
 	justify-content: center;
 }
 
@@ -111,14 +109,12 @@ mat-card-content {
 }
 
 .box-icon {
-	padding-left: 4px;
-	padding-right: 4px;
+	padding: 0 4px;
 }
 
 .box-icon-2 {
 	transform: scale(1.2);
-	padding-left: 4px;
-	padding-right: 4px;
+	padding: 0 4px;
 }
 
 .box-icon-3 {
@@ -153,8 +149,7 @@ mat-form-field {
 }
 
 .suffix {
-	padding-left: 4px;
-	padding-right: 4px;
+	padding: 0 4px;
 }
 
 .description {
@@ -169,7 +164,7 @@ mat-form-field {
 .image {
 	width: auto;
 	height: 100%;
-	max-height: 40vh;
+	max-height: 40px;
 	cursor: pointer;
 }
 

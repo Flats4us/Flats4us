@@ -11,26 +11,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGroup, IRegionCity, IFlatOffer } from './models/start-site.models';
+import { IFlatOffer } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {
-	areaFroms,
-	areaTos,
-	citiesGroups,
-	distances,
-	districtGroups,
-	equipment,
-	numberOfFloors,
-	numberOfRooms,
-	priceMaxs,
-	properties,
-	readCitiesForRegions,
-	regions,
-	yearOfBuilds,
-} from '../shared/models/realEstate';
+import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
+import { RealEstateService } from '../shared/services/real-estate.service';
 
 @Component({
 	selector: 'app-start',
@@ -49,18 +36,18 @@ export class StartComponent implements AfterViewInit, OnInit {
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	public flatOptions$?: Observable<IFlatOffer[]>;
 
-	public citiesGroups = citiesGroups;
-	public districtGroups = districtGroups;
-	public regions = regions;
-	public numberOfFloors = numberOfFloors;
-	public yearOfBuilds = yearOfBuilds;
-	public properties = properties;
-	public equipment = equipment;
-	public distances = distances;
-	public priceMaxs = priceMaxs;
-	public areaFroms = areaFroms;
-	public areaTos = areaTos;
-	public numberOfRooms = numberOfRooms;
+	public citiesGroups = this.realEstateService.citiesGroups;
+	public districtGroups = this.realEstateService.districtGroups;
+	public regions = this.realEstateService.regions;
+	public numberOfFloors = this.realEstateService.numberOfFloors;
+	public yearOfBuilds = this.realEstateService.yearOfBuilds;
+	public properties = this.realEstateService.properties;
+	public equipment = this.realEstateService.equipment;
+	public distances = this.realEstateService.distances;
+	public priceMaxs = this.realEstateService.priceMaxs;
+	public areaFroms = this.realEstateService.areaFroms;
+	public areaTos = this.realEstateService.areaTos;
+	public numberOfRooms = this.realEstateService.numberOfRooms;
 
 	public regionCityArray: IRegionCity[] = [];
 
@@ -268,8 +255,6 @@ export class StartComponent implements AfterViewInit, OnInit {
 		},
 	];
 
-	public numberOfRecords = this.allFlatOffers.length;
-
 	public dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
 
@@ -288,7 +273,8 @@ export class StartComponent implements AfterViewInit, OnInit {
 		private http: HttpClient,
 		private router: Router,
 		private route: ActivatedRoute,
-		private matPaginatorIntl: MatPaginatorIntl
+		private matPaginatorIntl: MatPaginatorIntl,
+		private realEstateService: RealEstateService = new RealEstateService(http)
 	) {
 		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -305,7 +291,10 @@ export class StartComponent implements AfterViewInit, OnInit {
 			floors: new FormControl(null, [Validators.min(0)]),
 			equipment: new FormControl(''),
 		});
-		readCitiesForRegions(this.http, this.regionCityArray, this.citiesGroups);
+		realEstateService.readCitiesForRegions(
+			this.regionCityArray,
+			this.citiesGroups
+		);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -331,19 +320,18 @@ export class StartComponent implements AfterViewInit, OnInit {
 	}
 
 	public onSubmit() {
+		if (this.mainSiteForm.valid) {
+			this.isSubmitted = true;
+		}
 		this.chosenRegionString = this.mainSiteForm
 			.get('regionsGroup')
 			?.value.toString();
 		this.chosenCityString = this.mainSiteForm
 			.get('citiesGroup')
 			?.value.toString();
-		this.chosenDistrictString =
-			this.mainSiteForm.get('districtsGroup')?.value == null
-				? ''
-				: ', ' + this.mainSiteForm.get('districtsGroup')?.value.toString();
-		if (this.mainSiteForm.valid) {
-			this.isSubmitted = true;
-		}
+		this.chosenDistrictString = this.mainSiteForm
+			.get('districtsGroup')
+			?.value.toString();
 	}
 
 	public ngAfterViewInit() {

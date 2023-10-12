@@ -162,7 +162,7 @@
 						mat-icon-button
 						matTooltip="Szukaj ofert"
 						aria-label="SearchForOffers"
-						[disabled]="!validateForm()"
+						[disabled]="!mainSiteForm.valid"
 					>
 						<mat-icon>search</mat-icon>
 					</button>
@@ -360,9 +360,13 @@
 		<div class="container-3">
 			<h1>
 				Znaleziono
-				<span class="colour-text" [appGetDescription]="numberOfRecords"></span>
+				<span
+					class="colour-text"
+					[appGetDescription]="this.allFlatOffers.length"
+				></span>
 				<p>
-					{{ chosenRegionString }}, {{ chosenCityString }}{{ chosenDistrictString }}
+					{{ chosenRegionString }}, {{ chosenCityString }}
+					{{ chosenDistrictString ? ", " + chosenDistrictString : "" }}
 				</p>
 			</h1>
 		</div>
@@ -421,8 +425,8 @@
 		<mat-paginator
 			id="paginator2"
 			showFirstLastButtons
-			[pageSizeOptions]="[6, 12, 18, 48]"
 			aria-label="Paginator"
+			[pageSizeOptions]="[6, 12, 18, 48]"
 		>
 		</mat-paginator>
 	</div>
