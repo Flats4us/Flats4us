@@ -14,6 +14,9 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn")));
 
 builder.Services.AddScoped<ITenantService, TenantService>();
+
+
+//builder.Services.AddTransient<ITenantService, TenantService>();
 builder.Services.AddScoped<UserService>(); 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,7 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
-
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOrTenantOnly", policy =>

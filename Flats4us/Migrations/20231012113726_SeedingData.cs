@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class SeedingData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -70,7 +72,19 @@ namespace Flats4us.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Tenants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -82,11 +96,13 @@ namespace Flats4us.Migrations
                     Flat = table.Column<int>(type: "int", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AccountCreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastLoginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -108,7 +124,7 @@ namespace Flats4us.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_User", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,9 +192,9 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_Advertisements", x => x.AdvertisementId);
                     table.ForeignKey(
-                        name: "FK_Advertisements_Users_ModeratorUserId",
+                        name: "FK_Advertisements_User_ModeratorUserId",
                         column: x => x.ModeratorUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -197,9 +213,9 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_ArgumentInterventions", x => x.ArgumentInterventionId);
                     table.ForeignKey(
-                        name: "FK_ArgumentInterventions_Users_ModeratorUserId",
+                        name: "FK_ArgumentInterventions_User_ModeratorUserId",
                         column: x => x.ModeratorUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -217,15 +233,15 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_Chats", x => x.ChatId);
                     table.ForeignKey(
-                        name: "FK_Chats_Users_OwnerId",
+                        name: "FK_Chats_User_OwnerId",
                         column: x => x.OwnerId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Chats_Users_StudentId",
+                        name: "FK_Chats_User_StudentId",
                         column: x => x.StudentId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -247,9 +263,9 @@ namespace Flats4us.Migrations
                         principalColumn: "InterestId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InterestStudent_Users_StudentsUserId",
+                        name: "FK_InterestStudent_User_StudentsUserId",
                         column: x => x.StudentsUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -270,15 +286,15 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_OwnerStudentOpinions", x => x.OpinionOwnerStudentId);
                     table.ForeignKey(
-                        name: "FK_OwnerStudentOpinions_Users_EvaluatedId",
+                        name: "FK_OwnerStudentOpinions_User_EvaluatedId",
                         column: x => x.EvaluatedId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OwnerStudentOpinions_Users_EvaluatorId",
+                        name: "FK_OwnerStudentOpinions_User_EvaluatorId",
                         column: x => x.EvaluatorId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -299,15 +315,15 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_StudentOwnerOpinions", x => x.OpinionOwnerStudentId);
                     table.ForeignKey(
-                        name: "FK_StudentOwnerOpinions_Users_EvaluatedId",
+                        name: "FK_StudentOwnerOpinions_User_EvaluatedId",
                         column: x => x.EvaluatedId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentOwnerOpinions_Users_EvaluatorId",
+                        name: "FK_StudentOwnerOpinions_User_EvaluatorId",
                         column: x => x.EvaluatorId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -328,15 +344,15 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_StudentStudentOpinions", x => x.OpinionStudentStudentId);
                     table.ForeignKey(
-                        name: "FK_StudentStudentOpinions_Users_EvaluatedId",
+                        name: "FK_StudentStudentOpinions_User_EvaluatedId",
                         column: x => x.EvaluatedId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentStudentOpinions_Users_EvaluatorId",
+                        name: "FK_StudentStudentOpinions_User_EvaluatorId",
                         column: x => x.EvaluatorId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -362,9 +378,9 @@ namespace Flats4us.Migrations
                 {
                     table.PrimaryKey("PK_StudentSurveys", x => x.SurveyStudentId);
                     table.ForeignKey(
-                        name: "FK_StudentSurveys_Users_SurveyStudentId",
+                        name: "FK_StudentSurveys_User_SurveyStudentId",
                         column: x => x.SurveyStudentId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -410,9 +426,9 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OfferInterests_Users_StudentUserId",
+                        name: "FK_OfferInterests_User_StudentUserId",
                         column: x => x.StudentUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -458,9 +474,9 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OwnerOfferSurveys_Users_OwnerUserId",
+                        name: "FK_OwnerOfferSurveys_User_OwnerUserId",
                         column: x => x.OwnerUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -486,9 +502,9 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Payments_Users_StudentUserId",
+                        name: "FK_Payments_User_StudentUserId",
                         column: x => x.StudentUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -516,9 +532,9 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rents_Users_StudentUserId",
+                        name: "FK_Rents_User_StudentUserId",
                         column: x => x.StudentUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -553,9 +569,9 @@ namespace Flats4us.Migrations
                         principalColumn: "OfferId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Arguments_Users_StudentUserId",
+                        name: "FK_Arguments_User_StudentUserId",
                         column: x => x.StudentUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -599,9 +615,9 @@ namespace Flats4us.Migrations
                         principalColumn: "MeetingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MeetingStudent_Users_StudentsUserId",
+                        name: "FK_MeetingStudent_User_StudentsUserId",
                         column: x => x.StudentsUserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -653,6 +669,15 @@ namespace Flats4us.Migrations
                         principalTable: "Arguments",
                         principalColumn: "ArgumentId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "UserId", "AccountCreationDate", "City", "Discriminator", "Email", "Flat", "LastLoginDate", "Name", "Number", "PasswordHash", "PhoneNumber", "PostalCode", "Role", "Street", "Surname", "Username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(385), "Dominik City", "User", "dominik@example.com", 0, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(446), "Dominik Name", 45, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "123-456-7890", "12345", "Tenant", "123 Dominik St", "Dominik Surname", "Dominik" },
+                    { 2, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(455), "Test City", "User", "test@example.com", 0, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(456), "Test Name", 78, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "987-654-3210", "67890", "Tenant", "456 Test St", "Test Surname", "testuser" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -840,6 +865,9 @@ namespace Flats4us.Migrations
                 name: "StudentSurveys");
 
             migrationBuilder.DropTable(
+                name: "Tenants");
+
+            migrationBuilder.DropTable(
                 name: "Arguments");
 
             migrationBuilder.DropTable(
@@ -864,7 +892,7 @@ namespace Flats4us.Migrations
                 name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Properties");

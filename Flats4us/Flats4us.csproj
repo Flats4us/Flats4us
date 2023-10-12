@@ -27,11 +27,11 @@
 
   <ItemGroup>
     <Folder Include="Controllers\NewFolder\" />
+    <Folder Include="Migrations\" />
     <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Dto\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

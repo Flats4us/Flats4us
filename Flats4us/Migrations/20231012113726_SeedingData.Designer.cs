@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20230612100126_Initial")]
-    partial class Initial
+    [Migration("20231012113726_SeedingData")]
+    partial class SeedingData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -702,6 +702,19 @@ namespace Flats4us.Migrations
                     b.ToTable("StudentSurveys");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Tenant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -738,15 +751,20 @@ namespace Flats4us.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -758,13 +776,56 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
                     b.HasKey("UserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            AccountCreationDate = new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(385),
+                            City = "Dominik City",
+                            Email = "dominik@example.com",
+                            Flat = 0,
+                            LastLoginDate = new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(446),
+                            Name = "Dominik Name",
+                            Number = 45,
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                            PhoneNumber = "123-456-7890",
+                            PostalCode = "12345",
+                            Role = "Tenant",
+                            Street = "123 Dominik St",
+                            Surname = "Dominik Surname",
+                            Username = "Dominik"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            AccountCreationDate = new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(455),
+                            City = "Test City",
+                            Email = "test@example.com",
+                            Flat = 0,
+                            LastLoginDate = new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(456),
+                            Name = "Test Name",
+                            Number = 78,
+                            PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+                            PhoneNumber = "987-654-3210",
+                            PostalCode = "67890",
+                            Role = "Tenant",
+                            Street = "456 Test St",
+                            Surname = "Test Surname",
+                            Username = "testuser"
+                        });
                 });
 
             modelBuilder.Entity("InterestStudent", b =>
@@ -850,6 +911,8 @@ namespace Flats4us.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
+                    b.ToTable("User");
+
                     b.HasDiscriminator().HasValue("Moderator");
                 });
 
@@ -877,6 +940,8 @@ namespace Flats4us.Migrations
                     b.Property<int>("VerificationStatus")
                         .HasColumnType("int");
 
+                    b.ToTable("User");
+
                     b.HasDiscriminator().HasValue("OwnerStudent");
                 });
 
@@ -887,6 +952,8 @@ namespace Flats4us.Migrations
                     b.Property<string>("BankAccount")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("User");
 
                     b.HasDiscriminator().HasValue("Owner");
                 });
@@ -926,6 +993,8 @@ namespace Flats4us.Migrations
 
                     b.Property<int>("YearOfBirth")
                         .HasColumnType("int");
+
+                    b.ToTable("User");
 
                     b.HasDiscriminator().HasValue("Student");
                 });
