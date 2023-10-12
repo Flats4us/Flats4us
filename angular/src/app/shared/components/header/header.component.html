@@ -1,37 +1,35 @@
-<mat-toolbar class="custom-toolbar">
-	<a class="logo" routerLink="/"
+<mat-toolbar class="custom-toolbar" role="heading">
+	<a class="min-w-[150px] logo" routerLink="/"
 		><img
-			class="main-logo"
-			id="logo-header"
-			src="./assets/logoFlats4Us.png"
-			alt="Company Logo"
+			src="./assets/logoFlats4Us.svg"
+			alt="Flats4Us Logo"
 	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
-		<a class="start" routerLink="/">
-			<mat-icon
-				class="home"
+		<a mat-button class="mr-7" routerLink="/">
+			<mat-icon class="material-icons-outlined"
 				aria-hidden="false"
 				aria-label="Example home icon"
 				fontIcon="home"
 			></mat-icon>
+      Strona główna
 		</a>
 
-		<button class="map" mat-menu-item>
-			<span><mat-icon>map</mat-icon></span
-			>MAPA
+		<a mat-button class="mr-7">
+        <mat-icon class="material-icons-outlined">map</mat-icon>
+			Mapa
+		</a>
+		<button mat-button [matMenuTriggerFor]="messages" class="mr-7">
+			<mat-icon class="material-icons-outlined">speaker_notes</mat-icon>
+			Wiadomości
 		</button>
-		<button class="tidings" mat-menu-item [matMenuTriggerFor]="tidings">
-			<span><mat-icon>speaker_notes</mat-icon></span
-			>WIADOMOŚCI
-		</button>
-		<mat-menu #tidings="matMenu">
+		<mat-menu #messages="matMenu">
 			<button mat-menu-item>WIADOMOŚCI Z WŁAŚCICIELEM</button>
 			<button mat-menu-item>WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
 		</mat-menu>
-		<button class="settings" mat-menu-item [matMenuTriggerFor]="settings">
-			<span><mat-icon>settings</mat-icon></span
-			>USTAWIENIA
+		<button mat-button [matMenuTriggerFor]="settings" class="mr-7">
+			<mat-icon class="material-icons-outlined">settings</mat-icon>
+			Ustawienia
 		</button>
 		<mat-menu #settings="matMenu">
 			<button mat-menu-item>USTAWIENIA POWIADOMIEŃ</button>
@@ -45,9 +43,9 @@
 			<button mat-menu-item>WYŚLIJ ZGŁOSZENIE DO MODERATORA</button>
 		</mat-menu>
 
-		<button class="options" mat-menu-item [matMenuTriggerFor]="extended">
-			<span><mat-icon>arrow_drop_down</mat-icon></span>
-			DODATKOWE
+		<button mat-button [matMenuTriggerFor]="extended" class="mr-10">
+			<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+			Dodatkowe
 		</button>
 
 		<mat-menu #extended="matMenu">
@@ -69,19 +67,19 @@
 			<button mat-menu-item>WYBORY W KTÓRYCH MNIE WYBRANO</button>
 		</mat-menu>
 
-		<select class="change-lang">
-			<option value="pl">PL</option>
-			<option value="EN">EN</option>
-		</select>
-		<span><mat-icon class="sun">sunny</mat-icon> </span>
-		<div class="mode">
-			<mat-slide-toggle> </mat-slide-toggle>
-		</div>
-		<span><mat-icon class="moon">dark_mode</mat-icon> </span>
+    <button mat-button [matMenuTriggerFor]="languages">PL<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon></button>
+    <mat-menu #languages="matMenu">
+      <button mat-menu-item>PL</button>
+      <button mat-menu-item>EN</button>
+    </mat-menu>
+    <button mat-button ><mat-icon class="material-icons-outlined">dark_mode</mat-icon> </button>
+    <a mat-icon-button class="responsive-menu">
+      <mat-icon class="material-icons-outlined">menu</mat-icon>
+    </a>
 	</div>
 
-	<div *ngIf="isUserLoggedIn" class="photo">
-		<button class="your-profile" mat-menu-item [matMenuTriggerFor]="my_profile">
+	<div *ngIf="isUserLoggedIn">
+		<button class="your-profile" [matMenuTriggerFor]="my_profile">
 			<img class="your-photo" src="../../assets/1.jpg" alt="" />
 		</button>
 	</div>
