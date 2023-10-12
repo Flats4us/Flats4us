@@ -1,22 +1,21 @@
 <mat-toolbar class="custom-toolbar" role="heading">
 	<a class="min-w-[150px] logo" routerLink="/"
-		><img
-			src="./assets/logoFlats4Us.svg"
-			alt="Flats4Us Logo"
+		><img src="./assets/logoFlats4Us.svg" alt="Flats4Us Logo"
 	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
 		<a mat-button class="mr-7" routerLink="/">
-			<mat-icon class="material-icons-outlined"
+			<mat-icon
+				class="material-icons-outlined"
 				aria-hidden="false"
 				aria-label="Example home icon"
 				fontIcon="home"
 			></mat-icon>
-      Strona główna
+			Strona główna
 		</a>
 
 		<a mat-button class="mr-7">
-        <mat-icon class="material-icons-outlined">map</mat-icon>
+			<mat-icon class="material-icons-outlined">map</mat-icon>
 			Mapa
 		</a>
 		<button mat-button [matMenuTriggerFor]="messages" class="mr-7">
@@ -67,15 +66,19 @@
 			<button mat-menu-item>WYBORY W KTÓRYCH MNIE WYBRANO</button>
 		</mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="languages">PL<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon></button>
-    <mat-menu #languages="matMenu">
-      <button mat-menu-item>PL</button>
-      <button mat-menu-item>EN</button>
-    </mat-menu>
-    <button mat-button ><mat-icon class="material-icons-outlined">dark_mode</mat-icon> </button>
-    <a mat-icon-button class="responsive-menu">
-      <mat-icon class="material-icons-outlined">menu</mat-icon>
-    </a>
+		<button mat-button [matMenuTriggerFor]="languages">
+			PL<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+		</button>
+		<mat-menu #languages="matMenu">
+			<button mat-menu-item>PL</button>
+			<button mat-menu-item>EN</button>
+		</mat-menu>
+		<button mat-button>
+			<mat-icon class="material-icons-outlined">dark_mode</mat-icon>
+		</button>
+		<a mat-icon-button class="responsive-menu">
+			<mat-icon class="material-icons-outlined">menu</mat-icon>
+		</a>
 	</div>
 
 	<div *ngIf="isUserLoggedIn">

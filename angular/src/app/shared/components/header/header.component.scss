@@ -4,7 +4,7 @@
 
 .full-main-button {
 	display: flex;
-  align-items: center;
+	align-items: center;
 }
 
 .settings,
@@ -66,13 +66,19 @@
 	height: auto;
 }*/
 
-.custom-toolbar .responsive-menu{display: none}
+.custom-toolbar .responsive-menu {
+	display: none;
+}
 
 @media screen and (max-width: 1100px) {
-  .custom-toolbar a:not(.logo):not(.responsive-menu) {display: none;}
-  .custom-toolbar button {display: none;}
-  .custom-toolbar .responsive-menu {
-    float: right;
-    display: block;
-  }
+	.custom-toolbar a:not(.logo):not(.responsive-menu) {
+		display: none;
+	}
+	.custom-toolbar button {
+		display: none;
+	}
+	.custom-toolbar .responsive-menu {
+		float: right;
+		display: block;
+	}
 }
