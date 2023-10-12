@@ -28,24 +28,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./messages/messages.module').then(m => m.MessagesModule),
 	},
-	{
-		path: 'addRealEstate',
-		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				m => m.AddRealEstateModule
-			),
-	},
+
 	{
 		path: 'real-estate',
 		loadChildren: () =>
 			import('./real-estate/real-estate.module').then(m => m.RealEstateModule),
-	},
-	{
-		path: 'addRealEstate',
-		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				m => m.AddRealEstateModule
-			),
 	},
 	{
 		path: 'find-roommate',
@@ -57,20 +44,6 @@ const routes: Routes = [
 	{
 		path: 'offer',
 		loadChildren: () => import('./offer/offer.module').then(m => m.OfferModule),
-	},
-	{
-		path: 'addRealEstate',
-		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				m => m.AddRealEstateModule
-			),
-	},
-	{
-		path: 'addRealEstate',
-		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				m => m.AddRealEstateModule
-			),
 	},
 	{ path: '**', component: NotFoundComponent },
 ];
