@@ -46,7 +46,7 @@ export class AddRealEstateComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private http: HttpClient,
-		private realEstateService: RealEstateService
+		private realEstateService: RealEstateService = new RealEstateService(http)
 	) {
 		this.addRealEstateForm1 = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -86,7 +86,6 @@ export class AddRealEstateComponent implements OnInit {
 			photos: new FormControl(null, Validators.required),
 		});
 		this.realEstateService.readCitiesForRegions(
-			this.http,
 			this.regionCityArray,
 			this.citiesGroups
 		);

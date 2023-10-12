@@ -4,7 +4,7 @@ import {
 	IGroup,
 	INumeric,
 	IRegionCity,
-} from 'src/app/start/models/start-site.models';
+} from 'src/app/real-estate/models/real-estate.models';
 
 @Injectable({
 	providedIn: 'root',
@@ -249,12 +249,13 @@ export class RealEstateService {
 	public properties: string[] = ['Dom', 'Kawalerka', 'Mieszkanie', 'Pokój'];
 	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
 
+	constructor(private httpClient: HttpClient) {}
+
 	public readCitiesForRegions(
-		http: HttpClient,
 		regionCityArray: IRegionCity[],
 		citiesGroups: IGroup[]
 	): void {
-		http
+		this.httpClient
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
 			.subscribe(data => {
 				const csvToRowArray = data.split('\n');

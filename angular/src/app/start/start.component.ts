@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { INumeric } from './models/start-site.models';
-import { IGroup } from './models/start-site.models';
-import { IRegionCity } from './models/start-site.models';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import {
+	IGroup,
+	INumeric,
+	IRegionCity,
+} from '../real-estate/models/real-estate.models';
 
 @Component({
 	selector: 'app-start',
