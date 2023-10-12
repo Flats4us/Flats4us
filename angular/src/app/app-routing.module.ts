@@ -36,11 +36,9 @@ const routes: Routes = [
 			),
 	},
 	{
-		path: 'addRealEstate',
+		path: 'real-estate',
 		loadChildren: () =>
-			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
-			),
+			import('./real-estate/real-estate.module').then((m) => m.RealEstateModule),
 	},
 	{
 		path: 'find-roommate',

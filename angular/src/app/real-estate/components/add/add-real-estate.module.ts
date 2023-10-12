@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddRealEstateRoutingModule } from './add-real-estate-routing.module';
 import { AddRealEstateComponent } from './add-real-estate.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,7 +19,6 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 	declarations: [AddRealEstateComponent],
 	imports: [
 		CommonModule,
-		AddRealEstateRoutingModule,
 		MatFormFieldModule,
 		MatSelectModule,
 		MatAutocompleteModule,

@@ -343,10 +343,10 @@
 							class="file-input"
 							type="file"
 							accept="image/*"
-							aria-label="File"
-							(change)="onFileSelected($event)"
 							multiple
 							formControlName="photos"
+							aria-label="File"
+							(change)="onFileSelected($event)"
 						/>
 						<div *ngIf="addRealEstateForm3.get('photos')?.hasError('required')">
 							Zdjęcie jest wymagane.

@@ -6,19 +6,10 @@ import {
 	Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IGroup, IRegionCity } from './models/add-real-estate.models';
+import { IGroup, IRegionCity } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import {
-	citiesGroups,
-	districtGroups,
-	equipment,
-	numberOfFloors,
-	properties,
-	readCitiesForRegions,
-	regions,
-	yearOfBuilds,
-} from '../shared/models/realEstate';
+import { RealEstateService } from '../../services/real-estate.service';
 
 @Component({
 	selector: 'app-add-real-estate',
@@ -41,20 +32,21 @@ export class AddRealEstateComponent implements OnInit {
 	public completed = false;
 	public fileName = '';
 	public url: any;
-	public urls: object[] = [];
+	public urls: any[] = [];
 
-	public citiesGroups = citiesGroups;
-	public districtGroups = districtGroups;
-	public regions = regions;
-	public numberOfFloors = numberOfFloors;
-	public yearOfBuilds = yearOfBuilds;
-	public properties = properties;
-	public equipment = equipment;
+	public citiesGroups = this.realEstateService.citiesGroups;
+	public districtGroups = this.realEstateService.districtGroups;
+	public regions = this.realEstateService.regions;
+	public numberOfFloors = this.realEstateService.numberOfFloors;
+	public yearOfBuilds = this.realEstateService.yearOfBuilds;
+	public properties = this.realEstateService.properties;
+	public equipment = this.realEstateService.equipment;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private router: Router,
-		private http: HttpClient
+		private http: HttpClient,
+		private realEstateService: RealEstateService
 	) {
 		this.addRealEstateForm1 = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -93,7 +85,11 @@ export class AddRealEstateComponent implements OnInit {
 		this.addRealEstateForm3 = formBuilder.group({
 			photos: new FormControl(null, Validators.required),
 		});
-		readCitiesForRegions(this.http, this.regionCityArray, this.citiesGroups);
+		this.realEstateService.readCitiesForRegions(
+			this.http,
+			this.regionCityArray,
+			this.citiesGroups
+		);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
