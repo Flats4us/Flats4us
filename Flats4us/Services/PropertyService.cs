@@ -14,6 +14,7 @@ namespace Flats4us.Services
         {
             _context = context;
         }
+
         public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
         {
             var result = new List<PropertyDto>();
@@ -65,7 +66,6 @@ namespace Flats4us.Services
                     NumberOfRooms = p.NumberOfRooms,
                     NumberOfFloors = p.NumberOfFloors,
                     PlotArea = p.PlotArea,
-
                 })
                 .ToListAsync()
             );
