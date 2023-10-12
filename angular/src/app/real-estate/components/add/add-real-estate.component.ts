@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { IGroup, IRegionCity } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { RealEstateService } from '../../services/real-estate.service';
+import { RealEstateService } from '../../../shared/services/real-estate.service';
 
 @Component({
 	selector: 'app-add-real-estate',

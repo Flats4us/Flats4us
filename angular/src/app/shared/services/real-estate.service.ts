@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { IGroup, INumeric, IRegionCity } from '../models/real-estate.models';
 import { Injectable } from '@angular/core';
+import {
+	IGroup,
+	INumeric,
+	IRegionCity,
+} from 'src/app/start/models/start-site.models';
 
 @Injectable({
 	providedIn: 'root',
