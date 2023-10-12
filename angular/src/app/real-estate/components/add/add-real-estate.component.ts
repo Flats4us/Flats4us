@@ -95,7 +95,7 @@ export class AddRealEstateComponent implements OnInit {
 	public filter = (opt: string[], value: string): string[] => {
 		const filterValue = value.toLowerCase();
 
-		return opt.filter((item) => item.toLowerCase().includes(filterValue));
+		return opt.filter(item => item.toLowerCase().includes(filterValue));
 	};
 
 	public onFileSelected(event: any) {
@@ -136,26 +136,24 @@ export class AddRealEstateComponent implements OnInit {
 		this.citiesGroupOptions$ = this.addRealEstateForm1
 			.get('citiesGroup')
 			?.valueChanges.pipe(
-				map((value) => value ?? ''),
-				map((value) => this.filterCitiesGroup(value))
+				map(value => value ?? ''),
+				map(value => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.addRealEstateForm1
 			.get('districtsGroup')
 			?.valueChanges.pipe(
-				map((value) => value ?? ''),
-				map((value) => this.filterDistrictsGroup(value))
+				map(value => value ?? ''),
+				map(value => this.filterDistrictsGroup(value))
 			);
 
-		this.addRealEstateForm1
-			.get('citiesGroup')
-			?.valueChanges.subscribe((value) => {
-				if (this.districtGroups.find((distr) => distr.whole === value)) {
-					this.addRealEstateForm1.get('districtsGroup')?.enable();
-				} else {
-					this.addRealEstateForm1.get('districtsGroup')?.reset();
-				}
-			});
+		this.addRealEstateForm1.get('citiesGroup')?.valueChanges.subscribe(value => {
+			if (this.districtGroups.find(distr => distr.whole === value)) {
+				this.addRealEstateForm1.get('districtsGroup')?.enable();
+			} else {
+				this.addRealEstateForm1.get('districtsGroup')?.reset();
+			}
+		});
 		this.addRealEstateForm1.get('regionsGroup')?.valueChanges.subscribe(() => {
 			this.addRealEstateForm1.get('citiesGroup')?.reset();
 		});
@@ -163,24 +161,24 @@ export class AddRealEstateComponent implements OnInit {
 
 	private filterCitiesGroup(value: string): IGroup[] {
 		return this.citiesGroups
-			.map((group) => ({
+			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),
 			}))
 			.filter(
-				(group) =>
+				group =>
 					group.parts.length > 0 &&
 					group.whole === this.addRealEstateForm1.get('regionsGroup')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
 		return this.districtGroups
-			.map((group) => ({
+			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),
 			}))
 			.filter(
-				(group) =>
+				group =>
 					group.parts.length > 0 &&
 					group.whole === this.addRealEstateForm1.get('citiesGroup')?.value
 			);

@@ -32,19 +32,19 @@ const routes: Routes = [
 		path: 'addRealEstate',
 		loadChildren: () =>
 			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
+				m => m.AddRealEstateModule
 			),
 	},
 	{
 		path: 'real-estate',
 		loadChildren: () =>
-			import('./real-estate/real-estate.module').then((m) => m.RealEstateModule),
+			import('./real-estate/real-estate.module').then(m => m.RealEstateModule),
 	},
 	{
 		path: 'addRealEstate',
 		loadChildren: () =>
 			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
+				m => m.AddRealEstateModule
 			),
 	},
 	{
@@ -62,14 +62,14 @@ const routes: Routes = [
 		path: 'addRealEstate',
 		loadChildren: () =>
 			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
+				m => m.AddRealEstateModule
 			),
 	},
 	{
 		path: 'addRealEstate',
 		loadChildren: () =>
 			import('./add-real-estate/add-real-estate.module').then(
-				(m) => m.AddRealEstateModule
+				m => m.AddRealEstateModule
 			),
 	},
 	{ path: '**', component: NotFoundComponent },

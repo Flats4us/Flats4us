@@ -252,7 +252,7 @@ export class RealEstateService {
 	): void {
 		http
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe((data) => {
+			.subscribe(data => {
 				const csvToRowArray = data.split('\n');
 				for (let index = 1; index < csvToRowArray.length - 2; index++) {
 					const row = csvToRowArray[index].split(';');
@@ -263,7 +263,7 @@ export class RealEstateService {
 					});
 
 					citiesGroups
-						.find((group) => group.whole == regionToLowerCase)
+						.find(group => group.whole == regionToLowerCase)
 						?.parts.push(row[1]);
 				}
 			});
