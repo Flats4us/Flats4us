@@ -11,24 +11,20 @@
 				aria-label="Example home icon"
 				fontIcon="home"
 			></mat-icon>
-			Strona główna
+      Strona główna
 		</a>
 
-		<a mat-button class="mr-7">
-			<mat-icon class="material-icons-outlined">map</mat-icon>
+		<a mat-button class="mr-7" routerLink="start/map">
+        <mat-icon class="material-icons-outlined">map</mat-icon>
 			Mapa
 		</a>
 		<button mat-button [matMenuTriggerFor]="messages" class="mr-7">
-			<mat-icon class="material-icons-outlined">chat</mat-icon>
+			<mat-icon class="material-icons-outlined">speaker_notes</mat-icon>
 			Wiadomości
 		</button>
-		<mat-menu #tidings="matMenu">
-			<button mat-menu-item routerLink="messages">
-				WIADOMOŚCI Z WŁAŚCICIELEM
-			</button>
-			<button mat-menu-item routerLink="messages">
-				WIADOMOŚCI Z WSPÓŁLOKATORAMI
-			</button>
+		<mat-menu #messages="matMenu">
+			<button mat-menu-item routerLink="messages">WIADOMOŚCI Z WŁAŚCICIELEM</button>
+			<button mat-menu-item routerLink="messages">WIADOMOŚCI Z WSPÓŁLOKATORAMI</button>
 		</mat-menu>
 		<button mat-button [matMenuTriggerFor]="settings" class="mr-7">
 			<mat-icon class="material-icons-outlined">settings</mat-icon>
