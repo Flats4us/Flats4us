@@ -547,13 +547,12 @@ namespace Flats4us.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Elevator")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Flat")
+                    b.Property<int?>("Flat")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagesPath")

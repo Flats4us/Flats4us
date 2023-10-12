@@ -21,7 +21,22 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // INSERT
+        // GET: api/Property/NotVerified
+        [HttpGet("NotVerified")]
+        public async Task<IActionResult> GetNotVerifiedProperties()
+        {
+            try
+            {
+                var notVerifiedProperties = await _propertyService.GetNotVerifiedPropertiesAsync();
+                return Ok(notVerifiedProperties);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // POST: api/Property
         [HttpPost]
         public async Task<IActionResult> AddProperty([FromForm] NewPropertyDto input)
         {
@@ -38,6 +53,7 @@ namespace Flats4us.Controllers
             }
         }
 
+        // DELETE: api/Property/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProperty(int id)
         {

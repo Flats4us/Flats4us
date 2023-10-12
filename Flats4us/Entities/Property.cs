@@ -12,7 +12,7 @@ namespace Flats4us.Entities
         [Required]
         public string Province { get; set; }
 
-        public string District { get; set; }
+        public string? District { get; set; }
 
         [Required]
         public string Street { get; set; }
@@ -20,7 +20,7 @@ namespace Flats4us.Entities
         [Required]
         public int Number { get; set; }
 
-        public int Flat { get; set; }
+        public int? Flat { get; set; }
 
         [Required]
         public string City { get; set; }

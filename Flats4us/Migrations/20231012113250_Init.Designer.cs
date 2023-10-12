@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20231011224146_Init")]
+    [Migration("20231012113250_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -550,13 +550,12 @@ namespace Flats4us.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Elevator")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Flat")
+                    b.Property<int?>("Flat")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagesPath")

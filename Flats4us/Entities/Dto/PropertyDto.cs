@@ -1,10 +1,14 @@
 ﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities.Dto
 {
-    public class NewPropertyDto
+    public class PropertyDto
     {
+        [Required]
+        public int PropertyId { get; set; }
+
         [Required]
         public PropertyType PropertyType { get; set; }
 
@@ -40,17 +44,17 @@ namespace Flats4us.Entities.Dto
         public bool Elevator { get; set; }
 
         [Required]
-        public IFormFile TitleDeed { get; set; }
+        public string ImagesPath { get; set; }
 
         [Required]
-        public List<IFormFile> Images { get; set; }
+        public VerificationStatus VerificationStatus { get; set; }
 
-        public int NumberOfRooms { get; set; }
+        public int? NumberOfRooms { get; set; }
 
-        public int Floor { get; set; }
+        public int? NumberOfFloors { get; set; }
 
-        public int NumberOfFloors { get; set; }
+        public int? PlotArea { get; set; }
 
-        public int PlotArea { get; set; }
+        public int? Floor { get; set; }
     }
 }

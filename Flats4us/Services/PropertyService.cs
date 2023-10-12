@@ -14,6 +14,88 @@ namespace Flats4us.Services
         {
             _context = context;
         }
+        public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
+        {
+            var result = new List<PropertyDto>();
+
+            result.AddRange(await _context.Flats
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Select(p => new PropertyDto
+                {
+                    PropertyId = p.PropertyId,
+                    PropertyType = PropertyType.Flat,
+                    Province = p.Province,
+                    District = p.District,
+                    Street = p.Street,
+                    Number = p.Number,
+                    Flat = p.Flat,
+                    City = p.City,
+                    PostalCode = p.PostalCode,
+                    Area = p.Area,
+                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
+                    ConstructionYear = p.ConstructionYear,
+                    Elevator = p.Elevator,
+                    ImagesPath = p.ImagesPath,
+                    VerificationStatus = VerificationStatus.NotVerified,
+                    NumberOfRooms = p.NumberOfRooms,
+                    Floor = p.Floor
+                })
+                .ToListAsync()
+            );
+
+            result.AddRange(await _context.Houses
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Select(p => new PropertyDto
+                {
+                    PropertyId = p.PropertyId,
+                    PropertyType = PropertyType.House,
+                    Province = p.Province,
+                    District = p.District,
+                    Street = p.Street,
+                    Number = p.Number,
+                    Flat = p.Flat,
+                    City = p.City,
+                    PostalCode = p.PostalCode,
+                    Area = p.Area,
+                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
+                    ConstructionYear = p.ConstructionYear,
+                    Elevator = p.Elevator,
+                    ImagesPath = p.ImagesPath,
+                    VerificationStatus = VerificationStatus.NotVerified,
+                    NumberOfRooms = p.NumberOfRooms,
+                    NumberOfFloors = p.NumberOfFloors,
+                    PlotArea = p.PlotArea,
+
+                })
+                .ToListAsync()
+            );
+
+            result.AddRange(await _context.Rooms
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Select(p => new PropertyDto
+                {
+                    PropertyId = p.PropertyId,
+                    PropertyType = PropertyType.Room,
+                    Province = p.Province,
+                    District = p.District,
+                    Street = p.Street,
+                    Number = p.Number,
+                    Flat = p.Flat,
+                    City = p.City,
+                    PostalCode = p.PostalCode,
+                    Area = p.Area,
+                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
+                    ConstructionYear = p.ConstructionYear,
+                    Elevator = p.Elevator,
+                    ImagesPath = p.ImagesPath,
+                    VerificationStatus = VerificationStatus.NotVerified,
+                    Floor = p.Floor
+                })
+                .ToListAsync()
+            );
+
+            return result;
+        }
 
         public async Task AddPropertyAsync(NewPropertyDto input)
         {
@@ -57,7 +139,8 @@ namespace Flats4us.Services
                         ConstructionYear = input.ConstructionYear,
                         Elevator = input.Elevator,
                         ImagesPath = imageFolder,
-                        VerificationStatus = VerificationStatus.NotVerified
+                        VerificationStatus = VerificationStatus.NotVerified,
+                        Floor = input.Floor
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
@@ -125,7 +208,6 @@ namespace Flats4us.Services
             {
                 throw new ArgumentException($"Property with ID {id} not found.");
             }
-
         }
     }
 }

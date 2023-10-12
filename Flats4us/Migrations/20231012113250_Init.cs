@@ -44,10 +44,10 @@ namespace Flats4us.Migrations
                     PropertyId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
-                    Flat = table.Column<int>(type: "int", nullable: false),
+                    Flat = table.Column<int>(type: "int", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Area = table.Column<int>(type: "int", nullable: false),
