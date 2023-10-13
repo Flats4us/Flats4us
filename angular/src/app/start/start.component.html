@@ -276,7 +276,7 @@
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Maks. liczba pięter</mat-label>
+					<mat-label>Piętro</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 					</span>
@@ -284,7 +284,7 @@
 						id="floors"
 						formControlName="floors"
 						type="number"
-						placeholder="Maks. liczba pięter"
+						placeholder="Piętro"
 						aria-label="NumberOfFloors"
 						matInput
 						[matAutocomplete]="autoNumberOfFloors"
@@ -311,53 +311,8 @@
 			</div>
 		</div>
 	</form>
-	<div *ngIf="!isSubmitted" class="container-5">
-		<div class="container-3">
-			<h1>Promowane <span class="colour-text">oferty</span></h1>
-		</div>
-		<div class="container-2">
-			<mat-card
-				*ngFor="let offer of promotedFlatOffers"
-				class="card"
-				(click)="navigateToFlat(offer.url)"
-			>
-				<mat-card-subtitle
-					>{{ offer.type }} - {{ offer.regionCity.city }},
-					{{ offer.district }}</mat-card-subtitle
-				>
-				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="offer.imgSource" />
-				<mat-card-content>
-					<mat-chip-listbox>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>attach_money</mat-icon>
-								<span>Cena: {{ offer.price }} zł/mc</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>add</mat-icon><span>Czynsz: {{ offer.rent }} zł/mc</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>straighten</mat-icon>
-								<span>Powierzchnia: {{ offer.area }} m²</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>meeting_room</mat-icon>
-								<span>Liczba pokoi: {{ offer.rooms }}</span>
-							</div>
-						</mat-chip>
-					</mat-chip-listbox>
-				</mat-card-content>
-			</mat-card>
-		</div>
-	</div>
-	<div *ngIf="isSubmitted">
-		<div class="container-3">
+	<div>
+		<div *ngIf="isSubmitted" class="container-3">
 			<h1>
 				Znaleziono
 				<span
@@ -365,10 +320,13 @@
 					[appGetDescription]="this.allFlatOffers.length"
 				></span>
 				<p>
-					{{ chosenRegionString }}, {{ chosenCityString }}
-					{{ chosenDistrictString ? ", " + chosenDistrictString : "" }}
+					{{ chosenRegion }}, {{ chosenCity }}
+					{{ chosenDistrict ? ", " + chosenDistrict : "" }}
 				</p>
 			</h1>
+		</div>
+		<div *ngIf="!isSubmitted" class="container-3">
+			<h1>Promowane <span class="colour-text">oferty</span></h1>
 		</div>
 		<div class="container-2">
 			<mat-card
@@ -376,7 +334,10 @@
 				class="card"
 				(click)="navigateToFlat(flat.url)"
 			>
-				<mat-card-subtitle>{{ flat.type }}</mat-card-subtitle>
+				<mat-card-subtitle
+					>{{ flat.type }} - {{ flat.regionCity.city }},
+					{{ flat.district }}</mat-card-subtitle
+				>
 				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="flat.imgSource" />
 				<mat-card-content>
 					<mat-chip-listbox>
@@ -421,13 +382,11 @@
 			</mat-card>
 		</div>
 	</div>
-	<div [hidden]="!isSubmitted">
-		<mat-paginator
-			id="paginator2"
-			showFirstLastButtons
-			aria-label="Paginator"
-			[pageSizeOptions]="[6, 12, 18, 48]"
-		>
-		</mat-paginator>
-	</div>
+	<mat-paginator
+		id="paginator2"
+		showFirstLastButtons
+		aria-label="Paginator"
+		[pageSizeOptions]="[6, 12, 18, 48]"
+	>
+	</mat-paginator>
 </div>

@@ -18,6 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../shared/services/real-estate.service';
+import { StartService } from './services/start.service';
 
 @Component({
 	selector: 'app-start',
@@ -28,7 +29,7 @@ import { RealEstateService } from '../shared/services/real-estate.service';
 export class StartComponent implements AfterViewInit, OnInit {
 	public showMoreFilters = false;
 
-	public isSubmitted = false;
+	public isSubmitted: boolean;
 
 	public mainSiteForm: FormGroup = new FormGroup({});
 
@@ -51,216 +52,14 @@ export class StartComponent implements AfterViewInit, OnInit {
 
 	public regionCityArray: IRegionCity[] = [];
 
-	public allFlatOffers: IFlatOffer[] = [
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Bemowo',
-			price: 2500,
-			rent: 500,
-			area: 35,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wola',
-			price: 2000,
-			rent: 700,
-			area: 30,
-			rooms: 2,
-			url: '#',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Mokotów',
-			price: 3000,
-			rent: 900,
-			area: 40,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Białołęka',
-			price: 1200,
-			rent: 300,
-			area: 25,
-			rooms: 1,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Pokój',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wawer',
-			price: 1700,
-			rent: 900,
-			area: 30,
-			rooms: 2,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Kawalerka',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Śródmieście',
-			price: 2000,
-			rent: 1000,
-			area: 37,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Bemowo',
-			price: 2500,
-			rent: 500,
-			area: 35,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wola',
-			price: 2000,
-			rent: 700,
-			area: 30,
-			rooms: 2,
-			url: '#',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Mokotów',
-			price: 3000,
-			rent: 900,
-			area: 40,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Białołęka',
-			price: 1200,
-			rent: 300,
-			area: 25,
-			rooms: 1,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Pokój',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wawer',
-			price: 1700,
-			rent: 900,
-			area: 30,
-			rooms: 2,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Kawalerka',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Śródmieście',
-			price: 2000,
-			rent: 1000,
-			area: 37,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-	];
-
-	public promotedFlatOffers: IFlatOffer[] = [
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Bemowo',
-			price: 2500,
-			rent: 500,
-			area: 35,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wola',
-			price: 2000,
-			rent: 700,
-			area: 30,
-			rooms: 2,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Mokotów',
-			price: 3000,
-			rent: 900,
-			area: 40,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Białołęka',
-			price: 1800,
-			rent: 800,
-			area: 25,
-			rooms: 1,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Wawer',
-			price: 1700,
-			rent: 900,
-			area: 30,
-			rooms: 2,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-		{
-			regionCity: { region: 'mazowieckie', city: 'Warszawa' },
-			district: 'Śródmieście',
-			price: 2000,
-			rent: 1000,
-			area: 37,
-			rooms: 3,
-			url: '/',
-			imgSource: './assets/mieszkanie.jpg',
-			type: 'Mieszkanie',
-		},
-	];
+	public allFlatOffers = this.startService.allFlatOffers;
 
 	public dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
 
-	public chosenRegionString = '';
-	public chosenCityString = '';
-	public chosenDistrictString = '';
+	public chosenRegion = '';
+	public chosenCity = '';
+	public chosenDistrict = '';
 
 	@ViewChild(MatPaginator)
 	public paginator: MatPaginator = new MatPaginator(
@@ -274,7 +73,8 @@ export class StartComponent implements AfterViewInit, OnInit {
 		private router: Router,
 		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
-		private realEstateService: RealEstateService = new RealEstateService(http)
+		private realEstateService: RealEstateService = new RealEstateService(http),
+		private startService: StartService
 	) {
 		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -295,6 +95,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			this.regionCityArray,
 			this.citiesGroups
 		);
+		this.isSubmitted = false;
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -323,15 +124,9 @@ export class StartComponent implements AfterViewInit, OnInit {
 		if (this.mainSiteForm.valid) {
 			this.isSubmitted = true;
 		}
-		this.chosenRegionString = this.mainSiteForm
-			.get('regionsGroup')
-			?.value.toString();
-		this.chosenCityString = this.mainSiteForm
-			.get('citiesGroup')
-			?.value.toString();
-		this.chosenDistrictString = this.mainSiteForm
-			.get('districtsGroup')
-			?.value.toString();
+		this.chosenRegion = this.mainSiteForm.get('regionsGroup')?.value;
+		this.chosenCity = this.mainSiteForm.get('citiesGroup')?.value;
+		this.chosenDistrict = this.mainSiteForm.get('districtsGroup')?.value;
 	}
 
 	public ngAfterViewInit() {
