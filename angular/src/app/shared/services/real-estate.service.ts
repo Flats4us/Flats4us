@@ -6,9 +6,7 @@ import {
 	IRegionCity,
 } from 'src/app/real-estate/models/real-estate.models';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class RealEstateService {
 	public citiesGroups: IGroup[] = [
 		{
