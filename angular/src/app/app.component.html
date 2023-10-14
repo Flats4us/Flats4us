@@ -1,8 +1,30 @@
 <div class="min-h-screen bg-gray-100 flex flex-col">
-	<app-header></app-header>
+	<app-header (sidenav)="sidenav.toggle()"></app-header>
 
 	<div class="flex-grow">
-		<router-outlet></router-outlet>
+		<mat-sidenav-container>
+			<mat-sidenav #sidenav position="end">
+				<div class="flex flex-col">
+					<a mat-button class="mr-7">
+						<mat-icon class="material-icons-outlined">map</mat-icon>
+						Mapa
+					</a>
+					<button mat-button class="mr-7">
+						<mat-icon class="material-icons-outlined">chat</mat-icon>
+						Wiadomości
+					</button>
+					<button mat-button class="mr-7">
+						<mat-icon class="material-icons-outlined">settings</mat-icon>
+						Ustawienia
+					</button>
+					<button mat-button class="mr-10">
+						<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+						Dodatkowe
+					</button>
+				</div>
+			</mat-sidenav>
+			<router-outlet></router-outlet>
+		</mat-sidenav-container>
 	</div>
 
 	<app-footer></app-footer>

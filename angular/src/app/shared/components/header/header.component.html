@@ -1,6 +1,6 @@
 <mat-toolbar class="custom-toolbar" role="heading">
 	<a class="min-w-[150px] logo" routerLink="/"
-		><img src="./assets/logoFlats4Us.svg" alt="Flats4Us Logo"
+		><img src="./assets/logoFlats4Us.svg" alt=""
 	/></a>
 	<div class="spacer"></div>
 	<div *ngIf="isUserLoggedIn" class="full-main-button">
@@ -19,7 +19,7 @@
 			Mapa
 		</a>
 		<button mat-button [matMenuTriggerFor]="messages" class="mr-7">
-			<mat-icon class="material-icons-outlined">speaker_notes</mat-icon>
+			<mat-icon class="material-icons-outlined">chat</mat-icon>
 			Wiadomości
 		</button>
 		<mat-menu #messages="matMenu">
@@ -76,14 +76,14 @@
 		<button mat-button>
 			<mat-icon class="material-icons-outlined">dark_mode</mat-icon>
 		</button>
-		<a mat-icon-button class="responsive-menu">
+		<button mat-icon-button class="responsive-menu" (click)="toggle()">
 			<mat-icon class="material-icons-outlined">menu</mat-icon>
-		</a>
+		</button>
 	</div>
 
 	<div *ngIf="isUserLoggedIn">
 		<button class="your-profile" [matMenuTriggerFor]="my_profile">
-			<img class="your-photo" src="../../assets/1.jpg" alt="" />
+			<img class="your-photo" src="../../assets/1.jpg" alt="Twój profil" />
 		</button>
 	</div>
 	<mat-menu #my_profile="matMenu">
