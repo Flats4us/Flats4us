@@ -5,10 +5,11 @@ import {
 	AfterViewInit,
 	ViewChild,
 	ChangeDetectorRef,
+	OnDestroy,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFlatOffer } from './models/start-site.models';
@@ -17,8 +18,9 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
-import { RealEstateService } from '../shared/services/real-estate.service';
+import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
+import { MatSort, Sort } from '@angular/material/sort';
 
 @Component({
 	selector: 'app-start',
@@ -26,7 +28,9 @@ import { StartService } from './services/start.service';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent implements AfterViewInit, OnInit {
+export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
+	public notifier = new Subject();
+
 	public showMoreFilters = false;
 
 	public isSubmitted: boolean;
@@ -37,29 +41,16 @@ export class StartComponent implements AfterViewInit, OnInit {
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	public flatOptions$?: Observable<IFlatOffer[]>;
 
-	public citiesGroups = this.realEstateService.citiesGroups;
-	public districtGroups = this.realEstateService.districtGroups;
-	public regions = this.realEstateService.regions;
-	public numberOfFloors = this.realEstateService.numberOfFloors;
-	public yearOfBuilds = this.realEstateService.yearOfBuilds;
-	public properties = this.realEstateService.properties;
-	public equipment = this.realEstateService.equipment;
-	public distances = this.realEstateService.distances;
-	public priceMaxs = this.realEstateService.priceMaxs;
-	public areaFroms = this.realEstateService.areaFroms;
-	public areaTos = this.realEstateService.areaTos;
-	public numberOfRooms = this.realEstateService.numberOfRooms;
-
 	public regionCityArray: IRegionCity[] = [];
 
-	public allFlatOffers = this.startService.allFlatOffers;
-
 	public dataSource: MatTableDataSource<IFlatOffer> =
-		new MatTableDataSource<IFlatOffer>(this.allFlatOffers);
+		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
 
 	public chosenRegion = '';
 	public chosenCity = '';
 	public chosenDistrict = '';
+
+	public sortState: Sort = { active: 'price', direction: 'desc' };
 
 	@ViewChild(MatPaginator)
 	public paginator: MatPaginator = new MatPaginator(
@@ -67,14 +58,17 @@ export class StartComponent implements AfterViewInit, OnInit {
 		ChangeDetectorRef.prototype
 	);
 
+	@ViewChild(MatSort, { static: false })
+	public matSort: MatSort = new MatSort();
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private http: HttpClient,
 		private router: Router,
 		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
-		private realEstateService: RealEstateService = new RealEstateService(http),
-		private startService: StartService
+		public realEstateService: RealEstateService,
+		public startService: StartService
 	) {
 		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -90,10 +84,11 @@ export class StartComponent implements AfterViewInit, OnInit {
 			rooms: new FormControl(null, [Validators.min(1)]),
 			floors: new FormControl(null, [Validators.min(0)]),
 			equipment: new FormControl(''),
+			sortBy: new FormControl(''),
 		});
-		realEstateService.readCitiesForRegions(
+		this.realEstateService.readCitiesForRegions(
 			this.regionCityArray,
-			this.citiesGroups
+			this.realEstateService.citiesGroups
 		);
 		this.isSubmitted = false;
 	}
@@ -174,20 +169,34 @@ export class StartComponent implements AfterViewInit, OnInit {
 		this.mainSiteForm.get('districtsGroup')?.disable();
 
 		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe(value => {
-			if (this.districtGroups.find(distr => distr.whole === value)) {
+			if (
+				this.realEstateService.districtGroups.find(distr => distr.whole === value)
+			) {
 				this.mainSiteForm.get('districtsGroup')?.enable();
 			} else {
 				this.mainSiteForm.get('districtsGroup')?.reset();
 				this.mainSiteForm.get('districtsGroup')?.disable();
 			}
-		});
+		}, takeUntil(this.notifier));
 		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
 			this.mainSiteForm.get('citiesGroup')?.reset();
-		});
+		}, takeUntil(this.notifier));
+		this.mainSiteForm.get('sortBy')?.valueChanges.subscribe(value => {
+			this.dataSource.sort = this.matSort;
+			this.sortState = { active: value.type, direction: value.direction };
+			this.matSort.active = this.sortState.active;
+			this.matSort.direction = this.sortState.direction;
+			this.matSort.sortChange.emit(this.sortState);
+		}, takeUntil(this.notifier));
+	}
+
+	public ngOnDestroy() {
+		this.notifier.next;
+		this.notifier.complete;
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
-		return this.citiesGroups
+		return this.realEstateService.citiesGroups
 			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),
@@ -199,7 +208,7 @@ export class StartComponent implements AfterViewInit, OnInit {
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
-		return this.districtGroups
+		return this.realEstateService.districtGroups
 			.map(group => ({
 				whole: group.whole,
 				parts: this.filter(group.parts, value),

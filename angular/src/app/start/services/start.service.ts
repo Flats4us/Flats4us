@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IFlatOffer } from '../models/start-site.models';
+import { IFlatOffer, ISortOption } from '../models/start-site.models';
 
 @Injectable()
 export class StartService {
@@ -135,6 +135,28 @@ export class StartService {
 			url: '/',
 			imgSource: './assets/mieszkanie.jpg',
 			type: 'Mieszkanie',
+		},
+	];
+	public sortByOptions: ISortOption[] = [
+		{ type: 'price', direction: 'asc', description: 'ceny: od najniższej' },
+		{ type: 'price', direction: 'desc', description: 'ceny: od najwyższej' },
+		{ type: 'rent', direction: 'asc', description: 'czynszu: od najniższego' },
+		{ type: 'rent', direction: 'desc', description: 'czynszu: od najwyższego' },
+		{
+			type: 'rooms',
+			direction: 'asc',
+			description: 'liczby pokoi: od najniższej',
+		},
+		{
+			type: 'rooms',
+			direction: 'desc',
+			description: 'liczby pokoi: od najwyższej',
+		},
+		{ type: 'area', direction: 'asc', description: 'powierzchni: od najniższej' },
+		{
+			type: 'area',
+			direction: 'desc',
+			description: 'powierzchni: od najwyższej',
 		},
 	];
 }

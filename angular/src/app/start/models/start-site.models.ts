@@ -11,3 +11,9 @@ export interface IFlatOffer {
 	imgSource: string;
 	type: string;
 }
+
+export interface ISortOption {
+	type: string;
+	direction: string;
+	description: string;
+}

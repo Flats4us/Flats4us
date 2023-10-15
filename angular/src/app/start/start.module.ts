@@ -21,8 +21,9 @@ import {
 	MatPaginatorModule,
 } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
-import { RealEstateService } from '../shared/services/real-estate.service';
+import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -43,6 +44,7 @@ import { StartService } from './services/start.service';
 		StartRoutingModule,
 		MatPaginatorModule,
 		MatTableModule,
+		MatSortModule,
 	],
 	exports: [StartComponent],
 	providers: [MatPaginatorIntl, RealEstateService, StartService],

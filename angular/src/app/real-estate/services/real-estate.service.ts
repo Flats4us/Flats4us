@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import {
 	IGroup,
 	INumeric,
@@ -252,10 +253,10 @@ export class RealEstateService {
 	public readCitiesForRegions(
 		regionCityArray: IRegionCity[],
 		citiesGroups: IGroup[]
-	): void {
+	): Observable<IRegionCity[]> {
 		this.httpClient
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe(data => {
+			.forEach(data => {
 				const csvToRowArray = data.split('\n');
 				for (let index = 1; index < csvToRowArray.length - 2; index++) {
 					const row = csvToRowArray[index].split(';');
@@ -270,5 +271,7 @@ export class RealEstateService {
 						?.parts.push(row[1]);
 				}
 			});
+		const newObservableArray$ = of(regionCityArray);
+		return newObservableArray$;
 	}
 }
