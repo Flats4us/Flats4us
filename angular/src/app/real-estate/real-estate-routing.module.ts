@@ -7,6 +7,7 @@ import { RealEstateComponent } from './real-estate.component';
 const routes: Routes = [
 	{
 		path: '',
+		pathMatch: 'full',
 		component: RealEstateComponent,
 	},
 	{

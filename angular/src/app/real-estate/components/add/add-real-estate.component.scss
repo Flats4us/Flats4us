@@ -165,25 +165,6 @@ mat-form-field {
 	justify-content: center;
 }
 
-::ng-deep .mat-step-header .mat-step-icon-selected {
-	background-color: #fbbb8b;
-	transform: scale(1.6);
-}
-
-::ng-deep .mat-step-icon.mat-step-icon-state-edit {
-	background-color: #fbbb8b;
-	transform: scale(1.6);
-}
-
-::ng-deep .mat-step-text-label {
-	font-size: 1.2rem;
-	padding-left: 4px;
-}
-
-::ng-deep .mat-step-header .mat-step-icon {
-	transform: scale(1.6);
-}
-
 /* Chrome, Safari, Edge, Opera */
 input[matinput]::-webkit-outer-spin-button,
 input[matinput]::-webkit-inner-spin-button {
