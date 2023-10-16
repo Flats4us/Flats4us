@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Output,
+} from '@angular/core';
 
 @Component({
 	selector: 'app-header',
@@ -12,4 +16,9 @@ export class HeaderComponent {
 	public isUserLoggedInAsStudent = true;
 
 	public id = '';
+	@Output() public sidenav: EventEmitter<any> = new EventEmitter();
+
+	public toggle() {
+		this.sidenav.emit();
+	}
 }

@@ -1,9 +1,38 @@
 <div class="min-h-screen bg-gray-100 flex flex-col">
-	<app-header></app-header>
-
-	<div class="flex-grow">
+	<app-header (sidenav)="sidenav.toggle()"></app-header>
+	<mat-sidenav-container class="flex-grow">
+		<mat-sidenav #sidenav position="end">
+			<div class="flex flex-col w-[180px]">
+				<!--
+				{{ buttons }}
+-->
+				<a mat-button class="m-2">
+					<mat-icon class="material-icons-outlined">map</mat-icon>
+					Mapa
+				</a>
+				<button mat-button [matMenuTriggerFor]="messages" class="m-2">
+					<mat-icon class="material-icons-outlined">chat</mat-icon>
+					Wiadomości
+				</button>
+				<mat-menu #messages="matMenu">
+					<button mat-menu-item routerLink="messages">
+						WIADOMOŚCI Z WŁAŚCICIELEM
+					</button>
+					<button mat-menu-item routerLink="messages">
+						WIADOMOŚCI Z WSPÓŁLOKATORAMI
+					</button>
+				</mat-menu>
+				<button mat-button class="m-2">
+					<mat-icon class="material-icons-outlined">settings</mat-icon>
+					Ustawienia
+				</button>
+				<button mat-button class="m-2">
+					<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+					Dodatkowe
+				</button>
+			</div>
+		</mat-sidenav>
 		<router-outlet></router-outlet>
-	</div>
-
+	</mat-sidenav-container>
 	<app-footer></app-footer>
 </div>
