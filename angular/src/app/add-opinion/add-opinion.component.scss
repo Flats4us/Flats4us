@@ -1,0 +1,42 @@
+.textarea {
+	height: 60vh;
+	width: 100%;
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.tag {
+	margin-right: 5px; /* Пробел справа */
+	padding: 3px 10px;
+	border: 3px solid #ccc;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.tag-komunikatywna {
+	background-color: #00dd04;
+	color: white;
+}
+
+.tag-spokojna {
+	background-color: #00dd04;
+	color: white;
+}
+
+.tag-sprząta {
+	background-color: #00dd04;
+	color: white;
+}
+
+.tag-nie-sprząta {
+	background-color: #dd0000;
+	color: white;
+}
+
+.tag-głośna {
+	background-color: #dd0000;
+	color: white;
+}

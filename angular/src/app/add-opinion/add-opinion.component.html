@@ -1,0 +1,53 @@
+<mat-card>
+	<mat-card-header> </mat-card-header>
+	<mat-card-content>
+		<section>
+			<div class="flex justify-center">
+				<img
+					mat-card-avatar
+					src="https://placehold.co/400"
+					alt="avatar"
+					class="avatar__image"
+				/>
+			</div>
+			<div class="profile-name flex justify-center"><b>Dodaj opinę o</b></div>
+			<div class="profile-name flex justify-center">Agnieszka</div>
+			<div class="profile-rating__wrapper flex flex-col">
+				<div class="profile-rating__stars mx-auto">
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+				</div>
+			</div>
+			<textarea
+				[(ngModel)]="commentText"
+				rows="4"
+				cols="50"
+				class="textarea"
+				placeholder="Tutaj wpisz opinię..."
+			></textarea>
+			<div class="tags">
+				<span
+					(click)="addTagToComment('Komunikatywna')"
+					class="tag tag-komunikatywna"
+				>
+					Komunikatywna</span
+				>
+				<span (click)="addTagToComment('Sprząta')" class="tag tag-sprząta"
+					>Sprząta</span
+				>
+				<span (click)="addTagToComment('Spokojna')" class="tag tag-spokojna"
+					>Spokojna</span
+				>
+				<span (click)="addTagToComment('Nie sprząta')" class="tag tag-nie-sprząta"
+					>Nie sprząta</span
+				>
+				<span (click)="addTagToComment('Sprząta')" class="tag tag-głośna"
+					>Głośna</span
+				>
+			</div>
+		</section>
+	</mat-card-content>
+</mat-card>

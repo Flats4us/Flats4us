@@ -15,6 +15,11 @@ const routes: Routes = [
 		loadChildren: () => import('./start/start.module').then(m => m.StartModule),
 	},
 	{
+		path: 'add-opinion',
+		loadChildren: () =>
+			import('./add-opinion/add-opinion.module').then(m => m.AddOpinionModule),
+	},
+	{
 		path: 'profile',
 		loadChildren: () =>
 			import('./profile/profile.module').then(m => m.ProfileModule),
