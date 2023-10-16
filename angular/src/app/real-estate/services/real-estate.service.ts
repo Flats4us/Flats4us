@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import {
 	IGroup,
 	INumeric,
@@ -253,25 +253,25 @@ export class RealEstateService {
 	public readCitiesForRegions(
 		regionCityArray: IRegionCity[],
 		citiesGroups: IGroup[]
-	): Observable<IRegionCity[]> {
-		this.httpClient
+	) {
+		return this.httpClient
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.forEach(data => {
-				const csvToRowArray = data.split('\n');
-				for (let index = 1; index < csvToRowArray.length - 2; index++) {
-					const row = csvToRowArray[index].split(';');
-					const regionToLowerCase = row[2].trim().toLowerCase();
-					regionCityArray.push(<IRegionCity>{
-						region: regionToLowerCase,
-						city: row[1],
-					});
+			.pipe(
+				map(data => {
+					const csvToRowArray = data.split('\n');
+					for (let index = 1; index < csvToRowArray.length - 2; index++) {
+						const row = csvToRowArray[index].split(';');
+						const regionToLowerCase = row[2].trim().toLowerCase();
+						regionCityArray.push(<IRegionCity>{
+							region: regionToLowerCase,
+							city: row[1],
+						});
 
-					citiesGroups
-						.find(group => group.whole == regionToLowerCase)
-						?.parts.push(row[1]);
-				}
-			});
-		const newObservableArray$ = of(regionCityArray);
-		return newObservableArray$;
+						citiesGroups
+							.find(group => group.whole == regionToLowerCase)
+							?.parts.push(row[1]);
+					}
+				})
+			);
 	}
 }

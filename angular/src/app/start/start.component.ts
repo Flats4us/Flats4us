@@ -8,7 +8,7 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
+	public regionCitiesSubscription = new Subscription();
+
 	public notifier = new Subject();
 
 	public showMoreFilters = false;
@@ -46,9 +48,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
 
-	public chosenRegion = '';
-	public chosenCity = '';
-	public chosenDistrict = '';
+	public description = '';
 
 	public sortState: Sort = { active: 'price', direction: 'desc' };
 
@@ -86,10 +86,12 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			equipment: new FormControl(''),
 			sortBy: new FormControl(''),
 		});
-		this.realEstateService.readCitiesForRegions(
-			this.regionCityArray,
-			this.realEstateService.citiesGroups
-		);
+		this.realEstateService
+			.readCitiesForRegions(
+				this.regionCityArray,
+				this.realEstateService.citiesGroups
+			)
+			.subscribe();
 		this.isSubmitted = false;
 	}
 
@@ -119,9 +121,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 		if (this.mainSiteForm.valid) {
 			this.isSubmitted = true;
 		}
-		this.chosenRegion = this.mainSiteForm.get('regionsGroup')?.value;
-		this.chosenCity = this.mainSiteForm.get('citiesGroup')?.value;
-		this.chosenDistrict = this.mainSiteForm.get('districtsGroup')?.value;
+		this.changeDescription();
 	}
 
 	public ngAfterViewInit() {
@@ -193,6 +193,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public ngOnDestroy() {
 		this.notifier.next;
 		this.notifier.complete;
+		this.regionCitiesSubscription.unsubscribe;
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -225,5 +226,16 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 	public validateForm() {
 		return this.mainSiteForm.valid;
+	}
+
+	public changeDescription() {
+		this.description = '';
+		this.description +=
+			this.mainSiteForm.get('regionsGroup')?.value +
+			', ' +
+			this.mainSiteForm.get('citiesGroup')?.value;
+		this.description += this.mainSiteForm.get('districtsGroup')?.value
+			? ', ' + this.mainSiteForm.get('districtsGroup')?.value
+			: '';
 	}
 }
