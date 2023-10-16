@@ -13,6 +13,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { FindRoommateModule } from './find-roommate/find-roommate.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -28,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 		MatSidenavModule,
 		MatButtonModule,
 		MatIconModule,
+		MatMenuModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

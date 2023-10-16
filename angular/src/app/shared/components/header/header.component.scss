@@ -14,10 +14,6 @@
 	margin-left: 25px;
 }
 
-.change-lang {
-	background-color: #fbbb8b;
-	margin-left: 100px;
-}
 .icon-sun {
 	margin-left: 30px;
 	margin-right: 10px;
@@ -47,34 +43,26 @@
 
 .your-photo {
 	border-radius: 100%;
-	width: 40px;
-	height: 40px;
-	margin-right: 20px;
+	width: 35px;
+	height: 35px;
 }
 
 .your-profile {
-	margin-right: 30px;
+	min-width: 35px;
 }
-
-/*span {
-	vertical-align: middle;
-	font-size: 20px;
-}*/
-
-/*.full-main-button button {
-	width: auto;
-	height: auto;
-}*/
 
 .custom-toolbar .responsive-menu {
 	display: none;
 }
 
-@media screen and (max-width: 1100px) {
-	.custom-toolbar a:not(.logo):not(.responsive-menu) {
+@media screen and (max-width: 1000px) {
+	.custom-toolbar a:not(.logo) {
 		display: none;
 	}
-	.custom-toolbar button {
+	.custom-toolbar
+		button:not(.your-profile):not(.responsive-menu):not(.dark-theme):not(
+			.languages
+		) {
 		display: none;
 	}
 	.custom-toolbar .responsive-menu {
