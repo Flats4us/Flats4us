@@ -7,9 +7,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddOpinionComponent {
-	commentText: string = '';
+	public commentText = '';
 
-	addTagToComment(tag: string) {
+	public addTagToComment(tag: string) {
 		this.commentText += `#${tag} `;
 	}
 }
