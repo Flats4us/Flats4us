@@ -48,8 +48,6 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
 
-	public description = '';
-
 	public sortState: Sort = { active: 'price', direction: 'desc' };
 
 	@ViewChild(MatPaginator)
@@ -121,7 +119,6 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 		if (this.mainSiteForm.valid) {
 			this.isSubmitted = true;
 		}
-		this.changeDescription();
 	}
 
 	public ngAfterViewInit() {
@@ -226,16 +223,5 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 	public validateForm() {
 		return this.mainSiteForm.valid;
-	}
-
-	public changeDescription() {
-		this.description = '';
-		this.description +=
-			this.mainSiteForm.get('regionsGroup')?.value +
-			', ' +
-			this.mainSiteForm.get('citiesGroup')?.value;
-		this.description += this.mainSiteForm.get('districtsGroup')?.value
-			? ', ' + this.mainSiteForm.get('districtsGroup')?.value
-			: '';
 	}
 }
