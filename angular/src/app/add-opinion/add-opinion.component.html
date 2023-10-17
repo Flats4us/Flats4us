@@ -22,31 +22,35 @@
 				</div>
 			</div>
 			<textarea
+				class="textarea"
 				[(ngModel)]="commentText"
 				rows="4"
 				cols="50"
-				class="textarea"
 				placeholder="Tutaj wpisz opinię..."
 			></textarea>
 			<div class="tags">
-				<span
-					(click)="addTagToComment('Komunikatywna')"
-					class="tag tag-komunikatywna"
-				>
-					Komunikatywna</span
-				>
-				<span (click)="addTagToComment('Sprząta')" class="tag tag-sprząta"
-					>Sprząta</span
-				>
-				<span (click)="addTagToComment('Spokojna')" class="tag tag-spokojna"
-					>Spokojna</span
-				>
-				<span (click)="addTagToComment('Nie sprząta')" class="tag tag-nie-sprząta"
-					>Nie sprząta</span
-				>
-				<span (click)="addTagToComment('Sprząta')" class="tag tag-głośna"
-					>Głośna</span
-				>
+				<div class="good-tags">
+					<span
+						class="tag tag-komunikatywna"
+						(click)="addTagToComment('Komunikatywna')"
+					>
+						Komunikatywna</span
+					>
+					<span (click)="addTagToComment('Sprząta')" class="tag tag-sprząta"
+						>Sprząta</span
+					>
+					<span (click)="addTagToComment('Spokojna')" class="tag tag-spokojna"
+						>Spokojna</span
+					>
+				</div>
+				<div class="bad-tags">
+					<span (click)="addTagToComment('Nie sprząta')" class="tag tag-nie-sprząta"
+						>Nie sprząta</span
+					>
+					<span (click)="addTagToComment('Sprząta')" class="tag tag-głośna"
+						>Głośna</span
+					>
+				</div>
 			</div>
 		</section>
 	</mat-card-content>
