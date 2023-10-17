@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IGroup, IRegionCity } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, Subscription, map, takeUntil } from 'rxjs';
+import { Observable, Subject, Subscription, map, of, takeUntil } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 
 @Component({
@@ -18,9 +18,9 @@ import { RealEstateService } from '../../services/real-estate.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRealEstateComponent implements OnInit, OnDestroy {
-	public regionCitiesSubscription = new Subscription();
+	private regionCitiesSubscription: Subscription;
 
-	public notifier = new Subject();
+	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public addRealEstateFormAddressData;
 	public addRealEstateFormRemainingData;
@@ -28,10 +28,9 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
+	public urlsOptions$?: Observable<object[]>;
 
-	public regionCityArray: IRegionCity[] = [];
-
-	public numberOfPhotos = 0;
+	private regionCityArray: IRegionCity[] = [];
 
 	public completed = false;
 	public fileName = '';
@@ -80,12 +79,15 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 		this.addRealEstateFormPhotos = formBuilder.group({
 			photos: new FormControl(null, Validators.required),
 		});
+
 		this.regionCitiesSubscription = this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
 			)
 			.subscribe();
+
+		this.urlsOptions$ = of(this.urls);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -94,25 +96,26 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 		return opt.filter(item => item.toLowerCase().includes(filterValue));
 	};
 
-	public onFileSelected(event: any) {
+	public onFileSelected(event: Event) {
 		const formData = new FormData();
 
-		if (event.target.files) {
-			for (let i = 0; i < event.target.files.length; i++) {
-				const file: File = event.target.files[i];
+		const fileEvent = (event.target as HTMLInputElement).files;
+
+		if (fileEvent) {
+			for (let i = 0; i < fileEvent.length; i++) {
+				const file: File = fileEvent[i];
 
 				this.fileName = file.name;
 
-				formData.append('thumbnail', file);
+				formData.append(this.fileName, file);
 
 				const reader = new FileReader();
 
-				reader.readAsDataURL(event.target.files[i]);
-				this.urls.push(event.target.result);
+				reader.readAsDataURL(file);
 
-				reader.onload = (event: any) => {
-					if (this.urls.length <= 10) {
-						this.urls.push(event.target.result);
+				reader.onloadend = () => {
+					if (this.urls.length < 10) {
+						this.urls.push(file);
 					}
 				};
 			}
@@ -162,18 +165,18 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 				} else {
 					this.addRealEstateFormAddressData.get('districtsGroup')?.reset();
 				}
-			}, takeUntil(this.notifier));
+			}, takeUntil(this.unsubscribe$));
 		this.addRealEstateFormAddressData
 			.get('regionsGroup')
 			?.valueChanges.subscribe(() => {
 				this.addRealEstateFormAddressData.get('citiesGroup')?.reset();
-			}, takeUntil(this.notifier));
+			}, takeUntil(this.unsubscribe$));
 	}
 
 	public ngOnDestroy() {
-		this.notifier.next;
-		this.notifier.complete;
-		this.regionCitiesSubscription.unsubscribe;
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
+		this.regionCitiesSubscription.unsubscribe();
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
