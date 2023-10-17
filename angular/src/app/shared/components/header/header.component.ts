@@ -12,11 +12,12 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+	@Output() public sidenav: EventEmitter<any> = new EventEmitter();
+
 	public isUserLoggedIn = true;
 	public isUserLoggedInAsStudent = true;
 
 	public id = '';
-	@Output() public sidenav: EventEmitter<any> = new EventEmitter();
 
 	public toggle() {
 		this.sidenav.emit();
