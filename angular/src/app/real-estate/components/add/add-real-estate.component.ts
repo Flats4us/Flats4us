@@ -28,13 +28,13 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
-	public urlsOptions$?: Observable<object[]>;
+	public urlsOptions$?: Observable<string[]>;
 
 	private regionCityArray: IRegionCity[] = [];
 
 	public completed = false;
 	public fileName = '';
-	public urls: object[] = [];
+	public urls: string[] = [];
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -115,7 +115,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 				reader.onloadend = () => {
 					if (this.urls.length < 10) {
-						this.urls.push(file);
+						this.urls.push(<string>reader.result);
 					}
 				};
 			}
