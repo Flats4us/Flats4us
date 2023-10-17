@@ -29,7 +29,6 @@ import { MatSort, Sort } from '@angular/material/sort';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
-
 	private regionCitiesSubscription: Subscription;
 
 	private readonly unsubscribe$: Subject<void> = new Subject();
