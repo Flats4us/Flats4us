@@ -1,83 +1,79 @@
+<ng-template #buttons>
+	<a mat-button class="mr-2" routerLink="/">
+		<mat-icon
+			class="material-icons-outlined"
+			aria-hidden="false"
+			aria-label="Example home icon"
+			fontIcon="home"
+		></mat-icon>
+		Strona główna
+	</a>
+
+	<a mat-button class="mr-2" routerLink="start/map">
+		<mat-icon class="material-icons-outlined">map</mat-icon>
+		Mapa
+	</a>
+	<button mat-button [matMenuTriggerFor]="messages" class="mr-2">
+		<mat-icon class="material-icons-outlined">chat</mat-icon>
+		Wiadomości
+	</button>
+	<mat-menu #messages="matMenu">
+		<button mat-menu-item routerLink="messages">Wiadomości z właścicielem</button>
+		<button mat-menu-item routerLink="messages">
+			Wiadomości z współlokatorami
+		</button>
+	</mat-menu>
+	<button mat-button [matMenuTriggerFor]="settings" class="mr-2">
+		<mat-icon class="material-icons-outlined">settings</mat-icon>
+		Ustawienia
+	</button>
+	<mat-menu #settings="matMenu">
+		<button mat-menu-item routerLink="settings/notifications">
+			Ustawienia powiadomień
+		</button>
+		<button mat-menu-item routerLink="settings/password-change">
+			Zmień hasło
+		</button>
+		<button mat-menu-item [matMenuTriggerFor]="helpCenter">Centrum pomocy</button>
+	</mat-menu>
+
+	<mat-menu #helpCenter="matMenu">
+		<button mat-menu-item routerLink="settings/help-center">
+			Wyślij zgłoszenie do moderatora
+		</button>
+	</mat-menu>
+
+	<button mat-button [matMenuTriggerFor]="extended" class="mr-2">
+		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+		Dodatkowe
+	</button>
+
+	<mat-menu #extended="matMenu">
+		<button mat-menu-item>Obserwowane oferty</button>
+		<button mat-menu-item>Ostatnio oglądane oferty</button>
+		<button mat-menu-item>Opinie</button>
+		<button mat-menu-item>Utwórz nowy spór</button>
+		<button mat-menu-item>Kalendarz</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[matMenuTriggerFor]="roommates"
+		>
+			Współlokatorzy
+		</button>
+	</mat-menu>
+	<mat-menu #roommates="matMenu">
+		<button mat-menu-item>Moje wybory</button>
+		<button mat-menu-item>Wybory w których mnie wybrano</button>
+	</mat-menu>
+</ng-template>
+
 <mat-toolbar class="custom-toolbar" role="heading">
 	<a class="min-w-[150px] logo" routerLink="/"
 		><img src="./assets/logoFlats4Us.svg" alt=""
 	/></a>
-	<div
-		#buttons
-		*ngIf="isUserLoggedIn"
-		class="flex items-center justify-around w-[750px]"
-	>
-		<a mat-button class="mr-2" routerLink="/">
-			<mat-icon
-				class="material-icons-outlined"
-				aria-hidden="false"
-				aria-label="Example home icon"
-				fontIcon="home"
-			></mat-icon>
-			Strona główna
-		</a>
-
-		<a mat-button class="mr-2" routerLink="start/map">
-			<mat-icon class="material-icons-outlined">map</mat-icon>
-			Mapa
-		</a>
-		<button mat-button [matMenuTriggerFor]="messages" class="mr-2">
-			<mat-icon class="material-icons-outlined">chat</mat-icon>
-			Wiadomości
-		</button>
-		<mat-menu #messages="matMenu">
-			<button mat-menu-item routerLink="messages">
-				Wiadomości z właścicielem
-			</button>
-			<button mat-menu-item routerLink="messages">
-				Wiadomości z współlokatorami
-			</button>
-		</mat-menu>
-		<button mat-button [matMenuTriggerFor]="settings" class="mr-2">
-			<mat-icon class="material-icons-outlined">settings</mat-icon>
-			Ustawienia
-		</button>
-		<mat-menu #settings="matMenu">
-			<button mat-menu-item routerLink="settings/notifications">
-				Ustawienia powiadomień
-			</button>
-			<button mat-menu-item routerLink="settings/password-change">
-				Zmień hasło
-			</button>
-			<button mat-menu-item [matMenuTriggerFor]="helpCenter">
-				Centrum pomocy
-			</button>
-		</mat-menu>
-
-		<mat-menu #helpCenter="matMenu">
-			<button mat-menu-item routerLink="settings/help-center">
-				Wyślij zgłoszenie do moderatora
-			</button>
-		</mat-menu>
-
-		<button mat-button [matMenuTriggerFor]="extended" class="mr-2">
-			<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
-			Dodatkowe
-		</button>
-
-		<mat-menu #extended="matMenu">
-			<button mat-menu-item>Obserwowane oferty</button>
-			<button mat-menu-item>Ostatnio oglądane oferty</button>
-			<button mat-menu-item>Opinie</button>
-			<button mat-menu-item>Utwórz nowy spór</button>
-			<button mat-menu-item>Kalendarz</button>
-			<button
-				*ngIf="isUserLoggedInAsStudent"
-				mat-menu-item
-				[matMenuTriggerFor]="roommates"
-			>
-				Współlokatorzy
-			</button>
-		</mat-menu>
-		<mat-menu #roommates="matMenu">
-			<button mat-menu-item>Moje wybory</button>
-			<button mat-menu-item>Wybory w których mnie wybrano</button>
-		</mat-menu>
+	<div *ngIf="isUserLoggedIn" class="flex items-center justify-around w-[750px]">
+		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
 	<button mat-button class="languages" [matMenuTriggerFor]="languages">
@@ -125,7 +121,17 @@
 			Rejestracja
 		</button>
 	</div>
-	<button mat-icon-button class="responsive-menu" (click)="toggle()">
+	<button
+		mat-icon-button
+		class="responsive-menu"
+		(click)="showSidenav = !showSidenav"
+	>
 		<mat-icon class="material-icons-outlined">menu</mat-icon>
 	</button>
 </mat-toolbar>
+<div
+	*ngIf="showSidenav"
+	class="sidenav flex flex-col w-[180px] h-full bg-white"
+>
+	<ng-container *ngTemplateOutlet="buttons"></ng-container>
+</div>

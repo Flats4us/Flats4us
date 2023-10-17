@@ -69,4 +69,13 @@
 		float: right;
 		display: block;
 	}
+	.sidenav {
+		position: absolute;
+		right: 0px;
+	}
+
+	.sidenav a,
+	.sidenav button {
+		justify-content: space-between;
+	}
 }
