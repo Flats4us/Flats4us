@@ -29,9 +29,10 @@ import { MatSort, Sort } from '@angular/material/sort';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
-	public regionCitiesSubscription = new Subscription();
 
-	public notifier = new Subject();
+	private regionCitiesSubscription: Subscription;
+
+	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
 
@@ -43,12 +44,12 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	public flatOptions$?: Observable<IFlatOffer[]>;
 
-	public regionCityArray: IRegionCity[] = [];
+	private regionCityArray: IRegionCity[] = [];
 
-	public dataSource: MatTableDataSource<IFlatOffer> =
+	private dataSource: MatTableDataSource<IFlatOffer> =
 		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
 
-	public sortState: Sort = { active: 'price', direction: 'desc' };
+	private sortState: Sort = { active: 'price', direction: 'desc' };
 
 	@ViewChild(MatPaginator)
 	public paginator: MatPaginator = new MatPaginator(
@@ -84,7 +85,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			equipment: new FormControl(''),
 			sortBy: new FormControl(''),
 		});
-		this.realEstateService
+		this.regionCitiesSubscription = this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
@@ -174,23 +175,23 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 				this.mainSiteForm.get('districtsGroup')?.reset();
 				this.mainSiteForm.get('districtsGroup')?.disable();
 			}
-		}, takeUntil(this.notifier));
+		}, takeUntil(this.unsubscribe$));
 		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
 			this.mainSiteForm.get('citiesGroup')?.reset();
-		}, takeUntil(this.notifier));
+		}, takeUntil(this.unsubscribe$));
 		this.mainSiteForm.get('sortBy')?.valueChanges.subscribe(value => {
 			this.dataSource.sort = this.matSort;
 			this.sortState = { active: value.type, direction: value.direction };
 			this.matSort.active = this.sortState.active;
 			this.matSort.direction = this.sortState.direction;
 			this.matSort.sortChange.emit(this.sortState);
-		}, takeUntil(this.notifier));
+		}, takeUntil(this.unsubscribe$));
 	}
 
 	public ngOnDestroy() {
-		this.notifier.next;
-		this.notifier.complete;
-		this.regionCitiesSubscription.unsubscribe;
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
+		this.regionCitiesSubscription.unsubscribe();
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {

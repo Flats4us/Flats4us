@@ -253,7 +253,7 @@ export class RealEstateService {
 	public readCitiesForRegions(
 		regionCityArray: IRegionCity[],
 		citiesGroups: IGroup[]
-	) {
+	): Observable<IRegionCity[]> {
 		return this.httpClient
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
 			.pipe(
@@ -266,11 +266,11 @@ export class RealEstateService {
 							region: regionToLowerCase,
 							city: row[1],
 						});
-
 						citiesGroups
 							.find(group => group.whole == regionToLowerCase)
 							?.parts.push(row[1]);
 					}
+					return regionCityArray;
 				})
 			);
 	}
