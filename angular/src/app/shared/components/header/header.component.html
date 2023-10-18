@@ -88,11 +88,11 @@
 	</button>
 
 	<div *ngIf="isUserLoggedIn">
-		<button class="your-profile" [matMenuTriggerFor]="my_profile">
+		<button class="your-profile" [matMenuTriggerFor]="myProfile">
 			<img class="your-photo" src="../../assets/1.jpg" alt="Twój profil" />
 		</button>
 	</div>
-	<mat-menu #my_profile="matMenu">
+	<mat-menu #myProfile="matMenu">
 		<button [routerLink]="['/profile', id]" mat-menu-item>Mój profil</button>
 		<button mat-menu-item>EDYTUJ PROFIL</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
