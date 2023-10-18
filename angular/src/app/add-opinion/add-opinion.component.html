@@ -1,5 +1,4 @@
 <mat-card>
-	<mat-card-header> </mat-card-header>
 	<mat-card-content>
 		<section>
 			<div class="flex justify-center">
@@ -23,10 +22,10 @@
 			</div>
 			<textarea
 				class="textarea"
-				[(ngModel)]="commentText"
 				rows="4"
 				cols="50"
 				placeholder="Tutaj wpisz opinię..."
+				[(ngModel)]="commentText"
 			></textarea>
 			<div class="tags">
 				<div class="good-tags">
@@ -36,18 +35,18 @@
 					>
 						Komunikatywna</span
 					>
-					<span (click)="addTagToComment('Sprząta')" class="tag tag-sprząta"
+					<span class="tag tag-sprząta" (click)="addTagToComment('Sprząta')"
 						>Sprząta</span
 					>
-					<span (click)="addTagToComment('Spokojna')" class="tag tag-spokojna"
+					<span class="tag tag-spokojna" (click)="addTagToComment('Spokojna')"
 						>Spokojna</span
 					>
 				</div>
 				<div class="bad-tags">
-					<span (click)="addTagToComment('Nie sprząta')" class="tag tag-nie-sprząta"
+					<span class="tag tag-nie-sprząta" (click)="addTagToComment('Nie sprząta')"
 						>Nie sprząta</span
 					>
-					<span (click)="addTagToComment('Sprząta')" class="tag tag-głośna"
+					<span class="tag tag-głośna" (click)="addTagToComment('Sprząta')"
 						>Głośna</span
 					>
 				</div>
