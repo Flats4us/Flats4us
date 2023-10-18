@@ -12,5 +12,9 @@ namespace Flats4us.Entities
         [Required]
         [Column("Floor")]
         public int Floor { get; set; }
+
+        [Required]
+        [Column("Elevator")]
+        public bool Elevator { get; set; }
     }
 }

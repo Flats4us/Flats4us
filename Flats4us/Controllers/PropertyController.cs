@@ -53,6 +53,12 @@ namespace Flats4us.Controllers
             }
         }
 
+        //// PUT: api/Property
+        //public async Task<IActionResult> UpdateProperty([FromForm] NewPropertyDto input)
+        //{
+
+        //}
+
         // DELETE: api/Property/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProperty(int id)

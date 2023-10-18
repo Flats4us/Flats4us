@@ -35,11 +35,11 @@ namespace Flats4us.Services
                     Area = p.Area,
                     MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
                     ConstructionYear = p.ConstructionYear,
-                    Elevator = p.Elevator,
                     ImagesPath = p.ImagesPath,
                     VerificationStatus = VerificationStatus.NotVerified,
                     NumberOfRooms = p.NumberOfRooms,
-                    Floor = p.Floor
+                    Floor = p.Floor,
+                    Elevator = p.Elevator
                 })
                 .ToListAsync()
             );
@@ -60,7 +60,6 @@ namespace Flats4us.Services
                     Area = p.Area,
                     MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
                     ConstructionYear = p.ConstructionYear,
-                    Elevator = p.Elevator,
                     ImagesPath = p.ImagesPath,
                     VerificationStatus = VerificationStatus.NotVerified,
                     NumberOfRooms = p.NumberOfRooms,
@@ -86,10 +85,10 @@ namespace Flats4us.Services
                     Area = p.Area,
                     MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
                     ConstructionYear = p.ConstructionYear,
-                    Elevator = p.Elevator,
                     ImagesPath = p.ImagesPath,
                     VerificationStatus = VerificationStatus.NotVerified,
-                    Floor = p.Floor
+                    Floor = p.Floor,
+                    Elevator = p.Elevator
                 })
                 .ToListAsync()
             );
@@ -99,7 +98,7 @@ namespace Flats4us.Services
 
         public async Task AddPropertyAsync(NewPropertyDto input)
         {
-            var imageFolder = HashUtility.HashSHA256(DateTimeOffset.Now.Ticks.ToString());
+            var imageFolder = Guid.NewGuid().ToString();
 
             switch (input.PropertyType)
             {
@@ -116,11 +115,11 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        Elevator = input.Elevator,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         NumberOfRooms = input.NumberOfRooms,
-                        Floor = input.Floor
+                        Floor = input.Floor,
+                        Elevator = input.Elevator
                     };
                     await _context.Flats.AddAsync(flat);
                     break;
@@ -137,10 +136,10 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        Elevator = input.Elevator,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
-                        Floor = input.Floor
+                        Floor = input.Floor,
+                        Elevator = input.Elevator
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
@@ -157,7 +156,6 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        Elevator = input.Elevator,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         NumberOfRooms = input.NumberOfRooms,

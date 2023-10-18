@@ -549,9 +549,6 @@ namespace Flats4us.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Elevator")
-                        .HasColumnType("bit");
-
                     b.Property<int?>("Flat")
                         .HasColumnType("int");
 
@@ -562,7 +559,11 @@ namespace Flats4us.Migrations
                     b.Property<int>("MaxNumberOfInhabitants")
                         .HasColumnType("int");
 
-                    b.Property<int>("Number")
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
@@ -581,6 +582,8 @@ namespace Flats4us.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PropertyId");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Properties");
 
@@ -721,7 +724,7 @@ namespace Flats4us.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Flat")
+                    b.Property<int?>("Flat")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastLoginDate")
@@ -797,6 +800,11 @@ namespace Flats4us.Migrations
                 {
                     b.HasBaseType("Flats4us.Entities.Property");
 
+                    b.Property<bool>("Elevator")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Elevator");
+
                     b.Property<int>("Floor")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -808,6 +816,108 @@ namespace Flats4us.Migrations
                         .HasColumnName("NumberOfRooms");
 
                     b.HasDiscriminator().HasValue("Flat");
+
+                    b.HasData(
+                        new
+                        {
+                            PropertyId = 1,
+                            Area = 40,
+                            City = "Warszawa",
+                            ConstructionYear = 2000,
+                            District = "Wilanów",
+                            Flat = 3,
+                            ImagesPath = "e2c2baa7-3dd8-490f-8378-972cf167c004",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "4",
+                            OwnerId = 1,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Radosna",
+                            VerificationStatus = 0,
+                            Elevator = false,
+                            Floor = 2,
+                            NumberOfRooms = 2
+                        },
+                        new
+                        {
+                            PropertyId = 2,
+                            Area = 50,
+                            City = "Warszawa",
+                            ConstructionYear = 1995,
+                            District = "Ursynów",
+                            Flat = 1,
+                            ImagesPath = "1bb1e30b-2c30-47a2-8047-220649fa5df8",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "9",
+                            OwnerId = 2,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Lasek Brzozowy",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 4,
+                            NumberOfRooms = 3
+                        },
+                        new
+                        {
+                            PropertyId = 3,
+                            Area = 80,
+                            City = "Warszawa",
+                            ConstructionYear = 2010,
+                            District = "Włochy",
+                            Flat = 5,
+                            ImagesPath = "988aae23-a539-43c5-a7a0-35ab823a40af",
+                            MaxNumberOfInhabitants = 3,
+                            Number = "2",
+                            OwnerId = 3,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Żegoty",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 3,
+                            NumberOfRooms = 4
+                        },
+                        new
+                        {
+                            PropertyId = 4,
+                            Area = 55,
+                            City = "Warszawa",
+                            ConstructionYear = 2002,
+                            District = "Bielany",
+                            Flat = 2,
+                            ImagesPath = "796fe042-d1bd-46c5-a5f3-e24efe1373a3",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "1",
+                            OwnerId = 2,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Biograficzna",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 5,
+                            NumberOfRooms = 3
+                        },
+                        new
+                        {
+                            PropertyId = 5,
+                            Area = 45,
+                            City = "Warszawa",
+                            ConstructionYear = 1998,
+                            District = "Mokotów",
+                            Flat = 1,
+                            ImagesPath = "6bdfc44b-a0ef-4fd6-9ac4-09fa6f98e447",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "18",
+                            OwnerId = 1,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Samochodowa",
+                            VerificationStatus = 0,
+                            Elevator = false,
+                            Floor = 3,
+                            NumberOfRooms = 2
+                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.House", b =>
@@ -832,12 +942,113 @@ namespace Flats4us.Migrations
                 {
                     b.HasBaseType("Flats4us.Entities.Property");
 
+                    b.Property<bool>("Elevator")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Elevator");
+
                     b.Property<int>("Floor")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("Floor");
 
                     b.HasDiscriminator().HasValue("Room");
+
+                    b.HasData(
+                        new
+                        {
+                            PropertyId = 6,
+                            Area = 40,
+                            City = "Warszawa",
+                            ConstructionYear = 2000,
+                            District = "Wilanów",
+                            Flat = 3,
+                            ImagesPath = "107d5997-dc99-48af-bd69-cc698a8649e6",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "5b",
+                            OwnerId = 1,
+                            PostalCode = "00-000",
+                            Province = "Małopolskie",
+                            Street = "Świętej Urszuli Ledóchowskiej",
+                            VerificationStatus = 0,
+                            Elevator = false,
+                            Floor = 2
+                        },
+                        new
+                        {
+                            PropertyId = 7,
+                            Area = 50,
+                            City = "Warszawa",
+                            ConstructionYear = 1995,
+                            District = "Targówek",
+                            ImagesPath = "fdf28490-2de7-4b7c-85c1-c5bfe1003e24",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "8",
+                            OwnerId = 2,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Muszyniecka",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 1
+                        },
+                        new
+                        {
+                            PropertyId = 8,
+                            Area = 80,
+                            City = "Warszawa",
+                            ConstructionYear = 2010,
+                            District = "Wawer",
+                            Flat = 1,
+                            ImagesPath = "8fe4e3d1-4096-4556-aba0-98969eac7203",
+                            MaxNumberOfInhabitants = 3,
+                            Number = "25",
+                            OwnerId = 3,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Gruntowa",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 3
+                        },
+                        new
+                        {
+                            PropertyId = 9,
+                            Area = 55,
+                            City = "Warszawa",
+                            ConstructionYear = 2002,
+                            District = "Mokotów",
+                            Flat = 2,
+                            ImagesPath = "9ada2eaf-9b59-48d4-b9fd-6f70f27df0fe",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "30",
+                            OwnerId = 2,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Goworka",
+                            VerificationStatus = 0,
+                            Elevator = true,
+                            Floor = 5
+                        },
+                        new
+                        {
+                            PropertyId = 10,
+                            Area = 45,
+                            City = "Piaseczno",
+                            ConstructionYear = 1998,
+                            District = "Mokotów",
+                            Flat = 7,
+                            ImagesPath = "5cf06a97-6830-46de-8bbd-d2c3771357c6",
+                            MaxNumberOfInhabitants = 2,
+                            Number = "3",
+                            OwnerId = 1,
+                            PostalCode = "00-000",
+                            Province = "Mazowieckie",
+                            Street = "Ludwiga van Beethovena",
+                            VerificationStatus = 0,
+                            Elevator = false,
+                            Floor = 3
+                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Moderator", b =>
@@ -886,6 +1097,76 @@ namespace Flats4us.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Owner");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            AccountCreationDate = new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Warszawa",
+                            Email = "mkowalski@gmail.com",
+                            Flat = 2,
+                            LastLoginDate = new DateTime(2023, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Maciej",
+                            Number = 54,
+                            Password = "mkowalski123",
+                            PhoneNumber = "123456789",
+                            PostalCode = "00-000",
+                            Street = "Marszałkowska",
+                            Surname = "Kowalski",
+                            ActivityStatus = false,
+                            DocumentExpireDate = new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DocumentPath = "placeholder",
+                            DocumentType = 0,
+                            PhotoPath = "placeholder",
+                            VerificationStatus = 0,
+                            BankAccount = "12341234123412341234123412"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            AccountCreationDate = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Kraków",
+                            Email = "bnowak@gmail.com",
+                            LastLoginDate = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Barbara",
+                            Number = 12,
+                            Password = "bnowak123",
+                            PhoneNumber = "123456789",
+                            PostalCode = "00-000",
+                            Street = "Długa",
+                            Surname = "Nowak",
+                            ActivityStatus = false,
+                            DocumentExpireDate = new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DocumentPath = "placeholder",
+                            DocumentType = 0,
+                            PhotoPath = "placeholder",
+                            VerificationStatus = 0,
+                            BankAccount = "12341234123412341234123412"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            AccountCreationDate = new DateTime(2023, 8, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            City = "Łódż",
+                            Email = "rzielinski@gmail.com",
+                            Flat = 7,
+                            LastLoginDate = new DateTime(2023, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Rafał",
+                            Number = 99,
+                            Password = "rzielinski123",
+                            PhoneNumber = "123456789",
+                            PostalCode = "00-000",
+                            Street = "Prosta",
+                            Surname = "Zieliński",
+                            ActivityStatus = false,
+                            DocumentExpireDate = new DateTime(2029, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DocumentPath = "placeholder",
+                            DocumentType = 0,
+                            PhotoPath = "placeholder",
+                            VerificationStatus = 0,
+                            BankAccount = "12341234123412341234123412"
+                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.Student", b =>
@@ -1165,6 +1446,17 @@ namespace Flats4us.Migrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("Flats4us.Entities.Property", b =>
+                {
+                    b.HasOne("Flats4us.Entities.Owner", "Owner")
+                        .WithMany("Properties")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("Flats4us.Entities.Rent", b =>
                 {
                     b.HasOne("Flats4us.Entities.Offer", "Offers")
@@ -1297,6 +1589,8 @@ namespace Flats4us.Migrations
                     b.Navigation("IssuedOwnerStudentOpinions");
 
                     b.Navigation("OwnerOfferSurveys");
+
+                    b.Navigation("Properties");
 
                     b.Navigation("ReceivedStudentOwnerOpinions");
                 });

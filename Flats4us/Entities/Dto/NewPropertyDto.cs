@@ -17,7 +17,7 @@ namespace Flats4us.Entities.Dto
         public string Street { get; set; }
 
         [Required]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public int? Flat { get; set; }
 

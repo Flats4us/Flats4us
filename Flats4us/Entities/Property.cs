@@ -18,7 +18,7 @@ namespace Flats4us.Entities
         public string Street { get; set; }
 
         [Required]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public int? Flat { get; set; }
 
@@ -38,13 +38,15 @@ namespace Flats4us.Entities
         public int ConstructionYear { get; set; }
 
         [Required]
-        public bool Elevator { get; set; }
-
-        [Required]
         public string ImagesPath { get; set; }
 
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
+
+        [Required]
+        public int OwnerId { get; set; }
+
+        public virtual Owner Owner { get; set; }
 
         public virtual ICollection<Equipment> Equipment { get; set; }
         public virtual ICollection<Offer> Offers { get; set; }

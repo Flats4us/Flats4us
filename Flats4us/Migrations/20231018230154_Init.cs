@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
@@ -38,36 +40,6 @@ namespace Flats4us.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Properties",
-                columns: table => new
-                {
-                    PropertyId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
-                    Flat = table.Column<int>(type: "int", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Area = table.Column<int>(type: "int", nullable: false),
-                    MaxNumberOfInhabitants = table.Column<int>(type: "int", nullable: false),
-                    ConstructionYear = table.Column<int>(type: "int", nullable: false),
-                    Elevator = table.Column<bool>(type: "bit", nullable: false),
-                    ImagesPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VerificationStatus = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfRooms = table.Column<int>(type: "int", nullable: true),
-                    Floor = table.Column<int>(type: "int", nullable: true),
-                    NumberOfFloors = table.Column<int>(type: "int", nullable: true),
-                    PlotArea = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Properties", x => x.PropertyId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -77,7 +49,7 @@ namespace Flats4us.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
-                    Flat = table.Column<int>(type: "int", nullable: false),
+                    Flat = table.Column<int>(type: "int", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -107,56 +79,6 @@ namespace Flats4us.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EquipmentProperty",
-                columns: table => new
-                {
-                    EquipmentId = table.Column<int>(type: "int", nullable: false),
-                    PropertiesPropertyId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EquipmentProperty", x => new { x.EquipmentId, x.PropertiesPropertyId });
-                    table.ForeignKey(
-                        name: "FK_EquipmentProperty_Equipment_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalTable: "Equipment",
-                        principalColumn: "EquipmentId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EquipmentProperty_Properties_PropertiesPropertyId",
-                        column: x => x.PropertiesPropertyId,
-                        principalTable: "Properties",
-                        principalColumn: "PropertyId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Offers",
-                columns: table => new
-                {
-                    OfferId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OfferStatus = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RentalPeriod = table.Column<int>(type: "int", nullable: false),
-                    NumberOfInterested = table.Column<int>(type: "int", nullable: false),
-                    Regulations = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PropertyId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Offers", x => x.OfferId);
-                    table.ForeignKey(
-                        name: "FK_Offers_Properties_PropertyId",
-                        column: x => x.PropertyId,
-                        principalTable: "Properties",
-                        principalColumn: "PropertyId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -282,6 +204,43 @@ namespace Flats4us.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Properties",
+                columns: table => new
+                {
+                    PropertyId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Province = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Flat = table.Column<int>(type: "int", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Area = table.Column<int>(type: "int", nullable: false),
+                    MaxNumberOfInhabitants = table.Column<int>(type: "int", nullable: false),
+                    ConstructionYear = table.Column<int>(type: "int", nullable: false),
+                    ImagesPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VerificationStatus = table.Column<int>(type: "int", nullable: false),
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfRooms = table.Column<int>(type: "int", nullable: true),
+                    Floor = table.Column<int>(type: "int", nullable: true),
+                    Elevator = table.Column<bool>(type: "bit", nullable: true),
+                    NumberOfFloors = table.Column<int>(type: "int", nullable: true),
+                    PlotArea = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Properties", x => x.PropertyId);
+                    table.ForeignKey(
+                        name: "FK_Properties_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StudentOwnerOpinions",
                 columns: table => new
                 {
@@ -362,6 +321,115 @@ namespace Flats4us.Migrations
                     table.ForeignKey(
                         name: "FK_StudentSurveys_Users_SurveyStudentId",
                         column: x => x.SurveyStudentId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChatMessages",
+                columns: table => new
+                {
+                    ChatMessageId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Sender = table.Column<int>(type: "int", nullable: false),
+                    ChatId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatMessages", x => x.ChatMessageId);
+                    table.ForeignKey(
+                        name: "FK_ChatMessages_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
+                        principalColumn: "ChatId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EquipmentProperty",
+                columns: table => new
+                {
+                    EquipmentId = table.Column<int>(type: "int", nullable: false),
+                    PropertiesPropertyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquipmentProperty", x => new { x.EquipmentId, x.PropertiesPropertyId });
+                    table.ForeignKey(
+                        name: "FK_EquipmentProperty_Equipment_EquipmentId",
+                        column: x => x.EquipmentId,
+                        principalTable: "Equipment",
+                        principalColumn: "EquipmentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EquipmentProperty_Properties_PropertiesPropertyId",
+                        column: x => x.PropertiesPropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "PropertyId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Offers",
+                columns: table => new
+                {
+                    OfferId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OfferStatus = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RentalPeriod = table.Column<int>(type: "int", nullable: false),
+                    NumberOfInterested = table.Column<int>(type: "int", nullable: false),
+                    Regulations = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PropertyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Offers", x => x.OfferId);
+                    table.ForeignKey(
+                        name: "FK_Offers_Properties_PropertyId",
+                        column: x => x.PropertyId,
+                        principalTable: "Properties",
+                        principalColumn: "PropertyId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Arguments",
+                columns: table => new
+                {
+                    ArgumentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StudentAcceptanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OwnerAcceptanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArgumentStatus = table.Column<int>(type: "int", nullable: false),
+                    MederatorDecisionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OfferId = table.Column<int>(type: "int", nullable: false),
+                    StudentUserId = table.Column<int>(type: "int", nullable: false),
+                    ArgumentInterventionId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Arguments", x => x.ArgumentId);
+                    table.ForeignKey(
+                        name: "FK_Arguments_ArgumentInterventions_ArgumentInterventionId",
+                        column: x => x.ArgumentInterventionId,
+                        principalTable: "ArgumentInterventions",
+                        principalColumn: "ArgumentInterventionId");
+                    table.ForeignKey(
+                        name: "FK_Arguments_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
+                        principalColumn: "OfferId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Arguments_Users_StudentUserId",
+                        column: x => x.StudentUserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -522,61 +590,25 @@ namespace Flats4us.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Arguments",
+                name: "ArgumentMessages",
                 columns: table => new
                 {
-                    ArgumentId = table.Column<int>(type: "int", nullable: false)
+                    ArgumentMessageId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StudentAcceptanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OwnerAcceptanceDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ArgumentStatus = table.Column<int>(type: "int", nullable: false),
-                    MederatorDecisionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OfferId = table.Column<int>(type: "int", nullable: false),
-                    StudentUserId = table.Column<int>(type: "int", nullable: false),
-                    ArgumentInterventionId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Arguments", x => x.ArgumentId);
-                    table.ForeignKey(
-                        name: "FK_Arguments_ArgumentInterventions_ArgumentInterventionId",
-                        column: x => x.ArgumentInterventionId,
-                        principalTable: "ArgumentInterventions",
-                        principalColumn: "ArgumentInterventionId");
-                    table.ForeignKey(
-                        name: "FK_Arguments_Offers_OfferId",
-                        column: x => x.OfferId,
-                        principalTable: "Offers",
-                        principalColumn: "OfferId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Arguments_Users_StudentUserId",
-                        column: x => x.StudentUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ChatMessages",
-                columns: table => new
-                {
-                    ChatMessageId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sender = table.Column<int>(type: "int", nullable: false),
-                    ChatId = table.Column<int>(type: "int", nullable: false)
+                    ArgumentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChatMessages", x => x.ChatMessageId);
+                    table.PrimaryKey("PK_ArgumentMessages", x => x.ArgumentMessageId);
                     table.ForeignKey(
-                        name: "FK_ChatMessages_Chats_ChatId",
-                        column: x => x.ChatId,
-                        principalTable: "Chats",
-                        principalColumn: "ChatId",
+                        name: "FK_ArgumentMessages_Arguments_ArgumentId",
+                        column: x => x.ArgumentId,
+                        principalTable: "Arguments",
+                        principalColumn: "ArgumentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -630,27 +662,38 @@ namespace Flats4us.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ArgumentMessages",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "AccountCreationDate", "ActivityStatus", "BankAccount", "City", "Discriminator", "DocumentExpireDate", "DocumentPath", "DocumentType", "Email", "Flat", "LastLoginDate", "Name", "Number", "Password", "PhoneNumber", "PhotoPath", "PostalCode", "Street", "Surname", "VerificationStatus" },
+                values: new object[,]
                 {
-                    ArgumentMessageId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sender = table.Column<int>(type: "int", nullable: false),
-                    ArgumentId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
+                    { 1, new DateTime(2023, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "12341234123412341234123412", "Warszawa", "Owner", new DateTime(2025, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 0, "mkowalski@gmail.com", 2, new DateTime(2023, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Maciej", 54, "mkowalski123", "123456789", "placeholder", "00-000", "Marszałkowska", "Kowalski", 0 },
+                    { 2, new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "12341234123412341234123412", "Kraków", "Owner", new DateTime(2025, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 0, "bnowak@gmail.com", null, new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Barbara", 12, "bnowak123", "123456789", "placeholder", "00-000", "Długa", "Nowak", 0 },
+                    { 3, new DateTime(2023, 8, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), false, "12341234123412341234123412", "Łódż", "Owner", new DateTime(2029, 3, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 0, "rzielinski@gmail.com", 7, new DateTime(2023, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rafał", 99, "rzielinski123", "123456789", "placeholder", "00-000", "Prosta", "Zieliński", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Properties",
+                columns: new[] { "PropertyId", "Area", "City", "ConstructionYear", "Discriminator", "District", "Elevator", "Flat", "Floor", "ImagesPath", "MaxNumberOfInhabitants", "Number", "NumberOfRooms", "OwnerId", "PostalCode", "Province", "Street", "VerificationStatus" },
+                values: new object[,]
                 {
-                    table.PrimaryKey("PK_ArgumentMessages", x => x.ArgumentMessageId);
-                    table.ForeignKey(
-                        name: "FK_ArgumentMessages_Arguments_ArgumentId",
-                        column: x => x.ArgumentId,
-                        principalTable: "Arguments",
-                        principalColumn: "ArgumentId",
-                        onDelete: ReferentialAction.Cascade);
+                    { 1, 40, "Warszawa", 2000, "Flat", "Wilanów", false, 3, 2, "e2c2baa7-3dd8-490f-8378-972cf167c004", 2, "4", 2, 1, "00-000", "Mazowieckie", "Radosna", 0 },
+                    { 2, 50, "Warszawa", 1995, "Flat", "Ursynów", true, 1, 4, "1bb1e30b-2c30-47a2-8047-220649fa5df8", 2, "9", 3, 2, "00-000", "Mazowieckie", "Lasek Brzozowy", 0 },
+                    { 3, 80, "Warszawa", 2010, "Flat", "Włochy", true, 5, 3, "988aae23-a539-43c5-a7a0-35ab823a40af", 3, "2", 4, 3, "00-000", "Mazowieckie", "Żegoty", 0 },
+                    { 4, 55, "Warszawa", 2002, "Flat", "Bielany", true, 2, 5, "796fe042-d1bd-46c5-a5f3-e24efe1373a3", 2, "1", 3, 2, "00-000", "Mazowieckie", "Biograficzna", 0 },
+                    { 5, 45, "Warszawa", 1998, "Flat", "Mokotów", false, 1, 3, "6bdfc44b-a0ef-4fd6-9ac4-09fa6f98e447", 2, "18", 2, 1, "00-000", "Mazowieckie", "Samochodowa", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Properties",
+                columns: new[] { "PropertyId", "Area", "City", "ConstructionYear", "Discriminator", "District", "Elevator", "Flat", "Floor", "ImagesPath", "MaxNumberOfInhabitants", "Number", "OwnerId", "PostalCode", "Province", "Street", "VerificationStatus" },
+                values: new object[,]
+                {
+                    { 6, 40, "Warszawa", 2000, "Room", "Wilanów", false, 3, 2, "107d5997-dc99-48af-bd69-cc698a8649e6", 2, "5b", 1, "00-000", "Małopolskie", "Świętej Urszuli Ledóchowskiej", 0 },
+                    { 7, 50, "Warszawa", 1995, "Room", "Targówek", true, null, 1, "fdf28490-2de7-4b7c-85c1-c5bfe1003e24", 2, "8", 2, "00-000", "Mazowieckie", "Muszyniecka", 0 },
+                    { 8, 80, "Warszawa", 2010, "Room", "Wawer", true, 1, 3, "8fe4e3d1-4096-4556-aba0-98969eac7203", 3, "25", 3, "00-000", "Mazowieckie", "Gruntowa", 0 },
+                    { 9, 55, "Warszawa", 2002, "Room", "Mokotów", true, 2, 5, "9ada2eaf-9b59-48d4-b9fd-6f70f27df0fe", 2, "30", 2, "00-000", "Mazowieckie", "Goworka", 0 },
+                    { 10, 45, "Piaseczno", 1998, "Room", "Mokotów", false, 7, 3, "5cf06a97-6830-46de-8bbd-d2c3771357c6", 2, "3", 1, "00-000", "Mazowieckie", "Ludwiga van Beethovena", 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -759,6 +802,11 @@ namespace Flats4us.Migrations
                 column: "StudentUserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Properties_OwnerId",
+                table: "Properties",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rents_OffersOfferId",
                 table: "Rents",
                 column: "OffersOfferId");
@@ -862,10 +910,10 @@ namespace Flats4us.Migrations
                 name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Properties");
 
             migrationBuilder.DropTable(
-                name: "Properties");
+                name: "Users");
         }
     }
 }
