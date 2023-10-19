@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Dto\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 
