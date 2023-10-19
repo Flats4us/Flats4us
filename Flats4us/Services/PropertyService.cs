@@ -2,6 +2,7 @@
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
+using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
@@ -119,7 +120,8 @@ namespace Flats4us.Services
                         VerificationStatus = VerificationStatus.NotVerified,
                         NumberOfRooms = input.NumberOfRooms,
                         Floor = input.Floor,
-                        Elevator = input.Elevator
+                        Elevator = input.Elevator,
+                        OwnerId = input.OwnerId
                     };
                     await _context.Flats.AddAsync(flat);
                     break;
@@ -139,7 +141,8 @@ namespace Flats4us.Services
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         Floor = input.Floor,
-                        Elevator = input.Elevator
+                        Elevator = input.Elevator,
+                        OwnerId = input.OwnerId
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
@@ -160,7 +163,8 @@ namespace Flats4us.Services
                         VerificationStatus = VerificationStatus.NotVerified,
                         NumberOfRooms = input.NumberOfRooms,
                         NumberOfFloors = input.NumberOfFloors,
-                        PlotArea = input.PlotArea
+                        PlotArea = input.PlotArea,
+                        OwnerId = input.OwnerId
                     };
                     await _context.Houses.AddAsync(house);
                     break;

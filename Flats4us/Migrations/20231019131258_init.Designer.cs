@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flats4us.Migrations
 {
     [DbContext(typeof(Flats4usContext))]
-    [Migration("20231018230154_Init")]
-    partial class Init
+    [Migration("20231019131258_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -321,6 +321,56 @@ namespace Flats4us.Migrations
                     b.HasIndex("PropertyId");
 
                     b.ToTable("Offers");
+
+                    b.HasData(
+                        new
+                        {
+                            OfferId = 1,
+                            Date = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Decription = "placeholder",
+                            NumberOfInterested = 9,
+                            OfferStatus = 0,
+                            Price = 2000,
+                            PropertyId = 1,
+                            Regulations = "placeholder",
+                            RentalPeriod = 6
+                        },
+                        new
+                        {
+                            OfferId = 2,
+                            Date = new DateTime(2023, 9, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Decription = "placeholder",
+                            NumberOfInterested = 1,
+                            OfferStatus = 0,
+                            Price = 2500,
+                            PropertyId = 2,
+                            Regulations = "placeholder",
+                            RentalPeriod = 9
+                        },
+                        new
+                        {
+                            OfferId = 3,
+                            Date = new DateTime(2023, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Decription = "placeholder",
+                            NumberOfInterested = 2,
+                            OfferStatus = 0,
+                            Price = 1000,
+                            PropertyId = 6,
+                            Regulations = "placeholder",
+                            RentalPeriod = 4
+                        },
+                        new
+                        {
+                            OfferId = 4,
+                            Date = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Decription = "placeholder",
+                            NumberOfInterested = 9,
+                            OfferStatus = 0,
+                            Price = 2000,
+                            PropertyId = 10,
+                            Regulations = "placeholder",
+                            RentalPeriod = 6
+                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.OfferInterest", b =>
@@ -552,6 +602,9 @@ namespace Flats4us.Migrations
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("Elevator")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("Flat")
                         .HasColumnType("int");
 
@@ -642,10 +695,7 @@ namespace Flats4us.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumberOfInhabitants")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OwnerUserId")
+                    b.Property<int>("OfferId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Parties")
@@ -656,9 +706,36 @@ namespace Flats4us.Migrations
 
                     b.HasKey("SurveyOwnerOfferId");
 
-                    b.HasIndex("OwnerUserId");
-
                     b.ToTable("OwnerOfferSurveys");
+
+                    b.HasData(
+                        new
+                        {
+                            SurveyOwnerOfferId = 1,
+                            Animals = true,
+                            Gender = 2,
+                            OfferId = 1,
+                            Parties = true,
+                            Smoking = false
+                        },
+                        new
+                        {
+                            SurveyOwnerOfferId = 2,
+                            Animals = false,
+                            Gender = 2,
+                            OfferId = 2,
+                            Parties = true,
+                            Smoking = true
+                        },
+                        new
+                        {
+                            SurveyOwnerOfferId = 3,
+                            Animals = false,
+                            Gender = 2,
+                            OfferId = 3,
+                            Parties = true,
+                            Smoking = false
+                        });
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
@@ -803,11 +880,6 @@ namespace Flats4us.Migrations
                 {
                     b.HasBaseType("Flats4us.Entities.Property");
 
-                    b.Property<bool>("Elevator")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Elevator");
-
                     b.Property<int>("Floor")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -828,8 +900,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2000,
                             District = "Wilanów",
+                            Elevator = false,
                             Flat = 3,
-                            ImagesPath = "e2c2baa7-3dd8-490f-8378-972cf167c004",
+                            ImagesPath = "e26c1fbc-51da-49d9-89c0-607227516638",
                             MaxNumberOfInhabitants = 2,
                             Number = "4",
                             OwnerId = 1,
@@ -837,7 +910,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Radosna",
                             VerificationStatus = 0,
-                            Elevator = false,
                             Floor = 2,
                             NumberOfRooms = 2
                         },
@@ -848,8 +920,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 1995,
                             District = "Ursynów",
+                            Elevator = true,
                             Flat = 1,
-                            ImagesPath = "1bb1e30b-2c30-47a2-8047-220649fa5df8",
+                            ImagesPath = "e6bb87f2-8b6a-442a-9bce-1d3f3b919353",
                             MaxNumberOfInhabitants = 2,
                             Number = "9",
                             OwnerId = 2,
@@ -857,7 +930,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Lasek Brzozowy",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 4,
                             NumberOfRooms = 3
                         },
@@ -868,8 +940,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2010,
                             District = "Włochy",
+                            Elevator = true,
                             Flat = 5,
-                            ImagesPath = "988aae23-a539-43c5-a7a0-35ab823a40af",
+                            ImagesPath = "1d7223c8-28ab-4319-80c6-cd54613e47d0",
                             MaxNumberOfInhabitants = 3,
                             Number = "2",
                             OwnerId = 3,
@@ -877,7 +950,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Żegoty",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 3,
                             NumberOfRooms = 4
                         },
@@ -888,8 +960,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2002,
                             District = "Bielany",
+                            Elevator = true,
                             Flat = 2,
-                            ImagesPath = "796fe042-d1bd-46c5-a5f3-e24efe1373a3",
+                            ImagesPath = "a175b643-3723-4ebb-9fe6-c8876d25dc09",
                             MaxNumberOfInhabitants = 2,
                             Number = "1",
                             OwnerId = 2,
@@ -897,7 +970,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Biograficzna",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 5,
                             NumberOfRooms = 3
                         },
@@ -908,8 +980,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 1998,
                             District = "Mokotów",
+                            Elevator = false,
                             Flat = 1,
-                            ImagesPath = "6bdfc44b-a0ef-4fd6-9ac4-09fa6f98e447",
+                            ImagesPath = "8607b64e-dd1c-4bf7-aeb8-1363e040a2a8",
                             MaxNumberOfInhabitants = 2,
                             Number = "18",
                             OwnerId = 1,
@@ -917,7 +990,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Samochodowa",
                             VerificationStatus = 0,
-                            Elevator = false,
                             Floor = 3,
                             NumberOfRooms = 2
                         });
@@ -945,11 +1017,6 @@ namespace Flats4us.Migrations
                 {
                     b.HasBaseType("Flats4us.Entities.Property");
 
-                    b.Property<bool>("Elevator")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Elevator");
-
                     b.Property<int>("Floor")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -965,16 +1032,16 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2000,
                             District = "Wilanów",
+                            Elevator = false,
                             Flat = 3,
-                            ImagesPath = "107d5997-dc99-48af-bd69-cc698a8649e6",
+                            ImagesPath = "ab56e8db-43c4-45d0-b31b-bbd2da3f6f4d",
                             MaxNumberOfInhabitants = 2,
                             Number = "5b",
                             OwnerId = 1,
                             PostalCode = "00-000",
-                            Province = "Małopolskie",
+                            Province = "Mazowieckie",
                             Street = "Świętej Urszuli Ledóchowskiej",
                             VerificationStatus = 0,
-                            Elevator = false,
                             Floor = 2
                         },
                         new
@@ -984,7 +1051,8 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 1995,
                             District = "Targówek",
-                            ImagesPath = "fdf28490-2de7-4b7c-85c1-c5bfe1003e24",
+                            Elevator = true,
+                            ImagesPath = "8089fc53-5db3-4a85-814e-1e279344bb37",
                             MaxNumberOfInhabitants = 2,
                             Number = "8",
                             OwnerId = 2,
@@ -992,7 +1060,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Muszyniecka",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 1
                         },
                         new
@@ -1002,8 +1069,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2010,
                             District = "Wawer",
+                            Elevator = true,
                             Flat = 1,
-                            ImagesPath = "8fe4e3d1-4096-4556-aba0-98969eac7203",
+                            ImagesPath = "63640f39-dacd-4dfe-b348-e166bc594867",
                             MaxNumberOfInhabitants = 3,
                             Number = "25",
                             OwnerId = 3,
@@ -1011,7 +1079,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Gruntowa",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 3
                         },
                         new
@@ -1021,8 +1088,9 @@ namespace Flats4us.Migrations
                             City = "Warszawa",
                             ConstructionYear = 2002,
                             District = "Mokotów",
+                            Elevator = true,
                             Flat = 2,
-                            ImagesPath = "9ada2eaf-9b59-48d4-b9fd-6f70f27df0fe",
+                            ImagesPath = "d64ab31f-9304-4da0-a768-840259363607",
                             MaxNumberOfInhabitants = 2,
                             Number = "30",
                             OwnerId = 2,
@@ -1030,18 +1098,17 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Goworka",
                             VerificationStatus = 0,
-                            Elevator = true,
                             Floor = 5
                         },
                         new
                         {
                             PropertyId = 10,
                             Area = 45,
-                            City = "Piaseczno",
+                            City = "Warszawa",
                             ConstructionYear = 1998,
-                            District = "Mokotów",
+                            Elevator = false,
                             Flat = 7,
-                            ImagesPath = "5cf06a97-6830-46de-8bbd-d2c3771357c6",
+                            ImagesPath = "ab728e65-4597-4763-967e-5f0595d609d8",
                             MaxNumberOfInhabitants = 2,
                             Number = "3",
                             OwnerId = 1,
@@ -1049,7 +1116,6 @@ namespace Flats4us.Migrations
                             Province = "Mazowieckie",
                             Street = "Ludwiga van Beethovena",
                             VerificationStatus = 0,
-                            Elevator = false,
                             Floor = 3
                         });
                 });
@@ -1326,7 +1392,7 @@ namespace Flats4us.Migrations
                     b.HasOne("Flats4us.Entities.Property", "Property")
                         .WithMany("Offers")
                         .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Property");
@@ -1481,12 +1547,6 @@ namespace Flats4us.Migrations
 
             modelBuilder.Entity("Flats4us.Entities.SurveyOwnerOffer", b =>
                 {
-                    b.HasOne("Flats4us.Entities.Owner", "Owner")
-                        .WithMany("OwnerOfferSurveys")
-                        .HasForeignKey("OwnerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Flats4us.Entities.Offer", "Offer")
                         .WithOne("SurveyOwnerOffer")
                         .HasForeignKey("Flats4us.Entities.SurveyOwnerOffer", "SurveyOwnerOfferId")
@@ -1494,8 +1554,6 @@ namespace Flats4us.Migrations
                         .IsRequired();
 
                     b.Navigation("Offer");
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Flats4us.Entities.SurveyStudent", b =>
@@ -1590,8 +1648,6 @@ namespace Flats4us.Migrations
                     b.Navigation("Chats");
 
                     b.Navigation("IssuedOwnerStudentOpinions");
-
-                    b.Navigation("OwnerOfferSurveys");
 
                     b.Navigation("Properties");
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -219,13 +219,13 @@ namespace Flats4us.Migrations
                     Area = table.Column<int>(type: "int", nullable: false),
                     MaxNumberOfInhabitants = table.Column<int>(type: "int", nullable: false),
                     ConstructionYear = table.Column<int>(type: "int", nullable: false),
+                    Elevator = table.Column<bool>(type: "bit", nullable: true),
                     ImagesPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VerificationStatus = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumberOfRooms = table.Column<int>(type: "int", nullable: true),
                     Floor = table.Column<int>(type: "int", nullable: true),
-                    Elevator = table.Column<bool>(type: "bit", nullable: true),
                     NumberOfFloors = table.Column<int>(type: "int", nullable: true),
                     PlotArea = table.Column<int>(type: "int", nullable: true)
                 },
@@ -395,7 +395,7 @@ namespace Flats4us.Migrations
                         column: x => x.PropertyId,
                         principalTable: "Properties",
                         principalColumn: "PropertyId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -507,12 +507,11 @@ namespace Flats4us.Migrations
                 columns: table => new
                 {
                     SurveyOwnerOfferId = table.Column<int>(type: "int", nullable: false),
-                    NumberOfInhabitants = table.Column<int>(type: "int", nullable: false),
                     Smoking = table.Column<bool>(type: "bit", nullable: false),
                     Parties = table.Column<bool>(type: "bit", nullable: false),
                     Animals = table.Column<bool>(type: "bit", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
-                    OwnerUserId = table.Column<int>(type: "int", nullable: false)
+                    OfferId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -522,12 +521,6 @@ namespace Flats4us.Migrations
                         column: x => x.SurveyOwnerOfferId,
                         principalTable: "Offers",
                         principalColumn: "OfferId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OwnerOfferSurveys_Users_OwnerUserId",
-                        column: x => x.OwnerUserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -677,11 +670,11 @@ namespace Flats4us.Migrations
                 columns: new[] { "PropertyId", "Area", "City", "ConstructionYear", "Discriminator", "District", "Elevator", "Flat", "Floor", "ImagesPath", "MaxNumberOfInhabitants", "Number", "NumberOfRooms", "OwnerId", "PostalCode", "Province", "Street", "VerificationStatus" },
                 values: new object[,]
                 {
-                    { 1, 40, "Warszawa", 2000, "Flat", "Wilanów", false, 3, 2, "e2c2baa7-3dd8-490f-8378-972cf167c004", 2, "4", 2, 1, "00-000", "Mazowieckie", "Radosna", 0 },
-                    { 2, 50, "Warszawa", 1995, "Flat", "Ursynów", true, 1, 4, "1bb1e30b-2c30-47a2-8047-220649fa5df8", 2, "9", 3, 2, "00-000", "Mazowieckie", "Lasek Brzozowy", 0 },
-                    { 3, 80, "Warszawa", 2010, "Flat", "Włochy", true, 5, 3, "988aae23-a539-43c5-a7a0-35ab823a40af", 3, "2", 4, 3, "00-000", "Mazowieckie", "Żegoty", 0 },
-                    { 4, 55, "Warszawa", 2002, "Flat", "Bielany", true, 2, 5, "796fe042-d1bd-46c5-a5f3-e24efe1373a3", 2, "1", 3, 2, "00-000", "Mazowieckie", "Biograficzna", 0 },
-                    { 5, 45, "Warszawa", 1998, "Flat", "Mokotów", false, 1, 3, "6bdfc44b-a0ef-4fd6-9ac4-09fa6f98e447", 2, "18", 2, 1, "00-000", "Mazowieckie", "Samochodowa", 0 }
+                    { 1, 40, "Warszawa", 2000, "Flat", "Wilanów", false, 3, 2, "e26c1fbc-51da-49d9-89c0-607227516638", 2, "4", 2, 1, "00-000", "Mazowieckie", "Radosna", 0 },
+                    { 2, 50, "Warszawa", 1995, "Flat", "Ursynów", true, 1, 4, "e6bb87f2-8b6a-442a-9bce-1d3f3b919353", 2, "9", 3, 2, "00-000", "Mazowieckie", "Lasek Brzozowy", 0 },
+                    { 3, 80, "Warszawa", 2010, "Flat", "Włochy", true, 5, 3, "1d7223c8-28ab-4319-80c6-cd54613e47d0", 3, "2", 4, 3, "00-000", "Mazowieckie", "Żegoty", 0 },
+                    { 4, 55, "Warszawa", 2002, "Flat", "Bielany", true, 2, 5, "a175b643-3723-4ebb-9fe6-c8876d25dc09", 2, "1", 3, 2, "00-000", "Mazowieckie", "Biograficzna", 0 },
+                    { 5, 45, "Warszawa", 1998, "Flat", "Mokotów", false, 1, 3, "8607b64e-dd1c-4bf7-aeb8-1363e040a2a8", 2, "18", 2, 1, "00-000", "Mazowieckie", "Samochodowa", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -689,11 +682,32 @@ namespace Flats4us.Migrations
                 columns: new[] { "PropertyId", "Area", "City", "ConstructionYear", "Discriminator", "District", "Elevator", "Flat", "Floor", "ImagesPath", "MaxNumberOfInhabitants", "Number", "OwnerId", "PostalCode", "Province", "Street", "VerificationStatus" },
                 values: new object[,]
                 {
-                    { 6, 40, "Warszawa", 2000, "Room", "Wilanów", false, 3, 2, "107d5997-dc99-48af-bd69-cc698a8649e6", 2, "5b", 1, "00-000", "Małopolskie", "Świętej Urszuli Ledóchowskiej", 0 },
-                    { 7, 50, "Warszawa", 1995, "Room", "Targówek", true, null, 1, "fdf28490-2de7-4b7c-85c1-c5bfe1003e24", 2, "8", 2, "00-000", "Mazowieckie", "Muszyniecka", 0 },
-                    { 8, 80, "Warszawa", 2010, "Room", "Wawer", true, 1, 3, "8fe4e3d1-4096-4556-aba0-98969eac7203", 3, "25", 3, "00-000", "Mazowieckie", "Gruntowa", 0 },
-                    { 9, 55, "Warszawa", 2002, "Room", "Mokotów", true, 2, 5, "9ada2eaf-9b59-48d4-b9fd-6f70f27df0fe", 2, "30", 2, "00-000", "Mazowieckie", "Goworka", 0 },
-                    { 10, 45, "Piaseczno", 1998, "Room", "Mokotów", false, 7, 3, "5cf06a97-6830-46de-8bbd-d2c3771357c6", 2, "3", 1, "00-000", "Mazowieckie", "Ludwiga van Beethovena", 0 }
+                    { 6, 40, "Warszawa", 2000, "Room", "Wilanów", false, 3, 2, "ab56e8db-43c4-45d0-b31b-bbd2da3f6f4d", 2, "5b", 1, "00-000", "Mazowieckie", "Świętej Urszuli Ledóchowskiej", 0 },
+                    { 7, 50, "Warszawa", 1995, "Room", "Targówek", true, null, 1, "8089fc53-5db3-4a85-814e-1e279344bb37", 2, "8", 2, "00-000", "Mazowieckie", "Muszyniecka", 0 },
+                    { 8, 80, "Warszawa", 2010, "Room", "Wawer", true, 1, 3, "63640f39-dacd-4dfe-b348-e166bc594867", 3, "25", 3, "00-000", "Mazowieckie", "Gruntowa", 0 },
+                    { 9, 55, "Warszawa", 2002, "Room", "Mokotów", true, 2, 5, "d64ab31f-9304-4da0-a768-840259363607", 2, "30", 2, "00-000", "Mazowieckie", "Goworka", 0 },
+                    { 10, 45, "Warszawa", 1998, "Room", null, false, 7, 3, "ab728e65-4597-4763-967e-5f0595d609d8", 2, "3", 1, "00-000", "Mazowieckie", "Ludwiga van Beethovena", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Offers",
+                columns: new[] { "OfferId", "Date", "Decription", "NumberOfInterested", "OfferStatus", "Price", "PropertyId", "Regulations", "RentalPeriod" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 9, 0, 2000, 1, "placeholder", 6 },
+                    { 2, new DateTime(2023, 9, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 1, 0, 2500, 2, "placeholder", 9 },
+                    { 3, new DateTime(2023, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 2, 0, 1000, 6, "placeholder", 4 },
+                    { 4, new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "placeholder", 9, 0, 2000, 10, "placeholder", 6 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "OwnerOfferSurveys",
+                columns: new[] { "SurveyOwnerOfferId", "Animals", "Gender", "OfferId", "Parties", "Smoking" },
+                values: new object[,]
+                {
+                    { 1, true, 2, 1, true, false },
+                    { 2, false, 2, 2, true, true },
+                    { 3, false, 2, 3, true, false }
                 });
 
             migrationBuilder.CreateIndex(
@@ -775,11 +789,6 @@ namespace Flats4us.Migrations
                 name: "IX_Offers_PropertyId",
                 table: "Offers",
                 column: "PropertyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OwnerOfferSurveys_OwnerUserId",
-                table: "OwnerOfferSurveys",
-                column: "OwnerUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OwnerStudentOpinions_EvaluatedId",

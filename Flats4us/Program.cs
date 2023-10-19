@@ -1,5 +1,6 @@
 using Flats4us.Entities;
 using Flats4us.Services;
+using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
 //builder.Services.AddScoped<ISurveyOwnerOfferService, SurveyOwnerOfferService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

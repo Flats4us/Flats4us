@@ -101,6 +101,12 @@ namespace Flats4us.Entities
                 .HasForeignKey(x => x.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Offer>()
+                .HasOne(x => x.Property)
+                .WithMany(x => x.Offers)
+                .HasForeignKey(x => x.PropertyId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             #region seed
 
             modelBuilder.Entity<Owner>().HasData(
@@ -281,7 +287,7 @@ namespace Flats4us.Entities
                 new Room
                 {
                     PropertyId = 6,
-                    Province = "Małopolskie",
+                    Province = "Mazowieckie",
                     District = "Wilanów",
                     Street = "Świętej Urszuli Ledóchowskiej",
                     Number = "5b",
@@ -357,11 +363,10 @@ namespace Flats4us.Entities
                 {
                     PropertyId = 10,
                     Province = "Mazowieckie",
-                    District = "Mokotów",
                     Street = "Ludwiga van Beethovena",
                     Number = "3",
                     Flat = 7,
-                    City = "Piaseczno",
+                    City = "Warszawa",
                     PostalCode = "00-000",
                     Area = 45,
                     MaxNumberOfInhabitants = 2,
@@ -371,6 +376,89 @@ namespace Flats4us.Entities
                     OwnerId = 1,
                     Floor = 3,
                     Elevator = false,
+                }
+            );
+
+            // TODO: Seed Houses
+
+            modelBuilder.Entity<Offer>().HasData(
+                new Offer
+                {
+                    OfferId = 1,
+                    Date = new DateTime(2023, 10, 10),
+                    OfferStatus = OfferStatus.Current,
+                    Price = 2000,
+                    Decription = "placeholder",
+                    RentalPeriod = 6,
+                    NumberOfInterested = 9,
+                    Regulations = "placeholder",
+                    PropertyId = 1
+                },
+                new Offer
+                {
+                    OfferId = 2,
+                    Date = new DateTime(2023, 9, 23),
+                    OfferStatus = OfferStatus.Current,
+                    Price = 2500,
+                    Decription = "placeholder",
+                    RentalPeriod = 9,
+                    NumberOfInterested = 1,
+                    Regulations = "placeholder",
+                    PropertyId = 2
+                },
+                new Offer
+                {
+                    OfferId = 3,
+                    Date = new DateTime(2023, 9, 30),
+                    OfferStatus = OfferStatus.Current,
+                    Price = 1000,
+                    Decription = "placeholder",
+                    RentalPeriod = 4,
+                    NumberOfInterested = 2,
+                    Regulations = "placeholder",
+                    PropertyId = 6
+                },
+                new Offer
+                {
+                    OfferId = 4,
+                    Date = new DateTime(2023, 10, 10),
+                    OfferStatus = OfferStatus.Current,
+                    Price = 2000,
+                    Decription = "placeholder",
+                    RentalPeriod = 6,
+                    NumberOfInterested = 9,
+                    Regulations = "placeholder",
+                    PropertyId = 10
+                }
+            );
+
+            modelBuilder.Entity<SurveyOwnerOffer>().HasData(
+                new SurveyOwnerOffer
+                {
+                    SurveyOwnerOfferId = 1,
+                    Smoking = false,
+                    Parties = true,
+                    Animals = true,
+                    Gender = Gender.Both,
+                    OfferId = 1
+                },
+                new SurveyOwnerOffer
+                {
+                    SurveyOwnerOfferId = 2,
+                    Smoking = true,
+                    Parties = true,
+                    Animals = false,
+                    Gender = Gender.Both,
+                    OfferId = 2
+                },
+                new SurveyOwnerOffer
+                {
+                    SurveyOwnerOfferId = 3,
+                    Smoking = false,
+                    Parties = true,
+                    Animals = false,
+                    Gender = Gender.Both,
+                    OfferId = 3
                 }
             );
 

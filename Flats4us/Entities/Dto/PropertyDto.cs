@@ -40,8 +40,7 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int ConstructionYear { get; set; }
 
-        [Required]
-        public bool Elevator { get; set; }
+        public bool? Elevator { get; set; }
 
         [Required]
         public string ImagesPath { get; set; }

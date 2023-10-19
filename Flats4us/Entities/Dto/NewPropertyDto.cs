@@ -36,14 +36,16 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int ConstructionYear { get; set; }
 
-        [Required]
-        public bool Elevator { get; set; }
+        public bool? Elevator { get; set; }
 
         [Required]
         public IFormFile TitleDeed { get; set; }
 
         [Required]
         public List<IFormFile> Images { get; set; }
+
+        [Required]
+        public int OwnerId { get; set; }
 
         public int NumberOfRooms { get; set; }
 

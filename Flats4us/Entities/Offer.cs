@@ -32,6 +32,9 @@ namespace Flats4us.Entities
         [Required]
         public string Regulations { get; set; }
 
+        [Required]
+        public int PropertyId { get; set; }
+
         public virtual Property Property { get; set; }
         public virtual SurveyOwnerOffer SurveyOwnerOffer { get; set; }
 
