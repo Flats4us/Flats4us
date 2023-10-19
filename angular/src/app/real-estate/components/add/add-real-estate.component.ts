@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IGroup, IRegionCity } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, Subscription, map, of, takeUntil } from 'rxjs';
+import { Observable, Subject, map, of, takeUntil } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 
 @Component({
@@ -18,8 +18,6 @@ import { RealEstateService } from '../../services/real-estate.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRealEstateComponent implements OnInit, OnDestroy {
-	private regionCitiesSubscription: Subscription;
-
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public addRealEstateFormAddressData;
@@ -28,7 +26,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
-	public urlsOptions$?: Observable<string[]>;
+	public urlsOptions$: Observable<string[]>;
 
 	private regionCityArray: IRegionCity[] = [];
 
@@ -80,11 +78,12 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			photos: new FormControl(null, Validators.required),
 		});
 
-		this.regionCitiesSubscription = this.realEstateService
+		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
 			)
+			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
 
 		this.urlsOptions$ = of(this.urls);
@@ -113,7 +112,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 				reader.readAsDataURL(file);
 
-				reader.onloadend = () => {
+				reader.onload = () => {
 					if (this.urls.length < 10) {
 						this.urls.push(<string>reader.result);
 					}
@@ -157,7 +156,8 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 		this.addRealEstateFormAddressData
 			.get('citiesGroup')
-			?.valueChanges.subscribe(value => {
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(value => {
 				if (
 					this.realEstateService.districtGroups.find(distr => distr.whole === value)
 				) {
@@ -165,18 +165,18 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 				} else {
 					this.addRealEstateFormAddressData.get('districtsGroup')?.reset();
 				}
-			}, takeUntil(this.unsubscribe$));
+			});
 		this.addRealEstateFormAddressData
 			.get('regionsGroup')
-			?.valueChanges.subscribe(() => {
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(() => {
 				this.addRealEstateFormAddressData.get('citiesGroup')?.reset();
-			}, takeUntil(this.unsubscribe$));
+			});
 	}
 
 	public ngOnDestroy() {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();
-		this.regionCitiesSubscription.unsubscribe();
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
