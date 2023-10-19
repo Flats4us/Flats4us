@@ -42,6 +42,20 @@ builder.Services.AddCors(c =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    // Get the database context
+    var dbContext = services.GetRequiredService<Flats4usContext>();
+
+    // Ensure the database is created and tables are created if they don't exist
+    if (dbContext.Database.EnsureCreated())
+    {
+        DataSeeder.SeedData(dbContext);
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

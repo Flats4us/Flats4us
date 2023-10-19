@@ -109,358 +109,358 @@ namespace Flats4us.Entities
 
             #region seed
 
-            modelBuilder.Entity<Owner>().HasData(
-                new Owner
-                {
-                    UserId = 1,
-                    Name = "Maciej",
-                    Surname = "Kowalski",
-                    Street = "Marszałkowska",
-                    Number = 54,
-                    Flat = 2,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Email = "mkowalski@gmail.com",
-                    PhoneNumber = "123456789",
-                    AccountCreationDate = new DateTime(2023, 1, 12),
-                    LastLoginDate = new DateTime(2023, 10, 12),
-                    Password = "mkowalski123",
-                    PhotoPath = "placeholder",
-                    ActivityStatus = false,
-                    DocumentPath = "placeholder",
-                    DocumentType = DocumentType.ID,
-                    VerificationStatus = VerificationStatus.Verified,
-                    DocumentExpireDate= new DateTime(2025, 12, 8),
-                    BankAccount = "12341234123412341234123412"
-                },
-                new Owner
-                {
-                    UserId = 2,
-                    Name = "Barbara",
-                    Surname = "Nowak",
-                    Street = "Długa",
-                    Number = 12,
-                    City = "Kraków",
-                    PostalCode = "00-000",
-                    Email = "bnowak@gmail.com",
-                    PhoneNumber = "123456789",
-                    AccountCreationDate = new DateTime(2023, 3, 23),
-                    LastLoginDate = new DateTime(2023, 10, 10),
-                    Password = "bnowak123",
-                    PhotoPath = "placeholder",
-                    ActivityStatus = false,
-                    DocumentPath = "placeholder",
-                    DocumentType = DocumentType.ID,
-                    VerificationStatus = VerificationStatus.Verified,
-                    DocumentExpireDate = new DateTime(2025, 9, 8),
-                    BankAccount = "12341234123412341234123412"
-                },
-                new Owner
-                {
-                    UserId = 3,
-                    Name = "Rafał",
-                    Surname = "Zieliński",
-                    Street = "Prosta",
-                    Number = 99,
-                    Flat = 7,
-                    City = "Łódż",
-                    PostalCode = "00-000",
-                    Email = "rzielinski@gmail.com",
-                    PhoneNumber = "123456789",
-                    AccountCreationDate = new DateTime(2023, 8, 9),
-                    LastLoginDate = new DateTime(2023, 7, 7),
-                    Password = "rzielinski123",
-                    PhotoPath = "placeholder",
-                    ActivityStatus = false,
-                    DocumentPath = "placeholder",
-                    DocumentType = DocumentType.ID,
-                    VerificationStatus = VerificationStatus.Verified,
-                    DocumentExpireDate = new DateTime(2029, 3, 8),
-                    BankAccount = "12341234123412341234123412"
-                }
-            );
+            //modelBuilder.Entity<Owner>().HasData(
+            //    new Owner
+            //    {
+            //        UserId = 1,
+            //        Name = "Maciej",
+            //        Surname = "Kowalski",
+            //        Street = "Marszałkowska",
+            //        Number = 54,
+            //        Flat = 2,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Email = "mkowalski@gmail.com",
+            //        PhoneNumber = "123456789",
+            //        AccountCreationDate = new DateTime(2023, 1, 12),
+            //        LastLoginDate = new DateTime(2023, 10, 12),
+            //        Password = "mkowalski123",
+            //        PhotoPath = "placeholder",
+            //        ActivityStatus = false,
+            //        DocumentPath = "placeholder",
+            //        DocumentType = DocumentType.ID,
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        DocumentExpireDate= new DateTime(2025, 12, 8),
+            //        BankAccount = "12341234123412341234123412"
+            //    },
+            //    new Owner
+            //    {
+            //        UserId = 2,
+            //        Name = "Barbara",
+            //        Surname = "Nowak",
+            //        Street = "Długa",
+            //        Number = 12,
+            //        City = "Kraków",
+            //        PostalCode = "00-000",
+            //        Email = "bnowak@gmail.com",
+            //        PhoneNumber = "123456789",
+            //        AccountCreationDate = new DateTime(2023, 3, 23),
+            //        LastLoginDate = new DateTime(2023, 10, 10),
+            //        Password = "bnowak123",
+            //        PhotoPath = "placeholder",
+            //        ActivityStatus = false,
+            //        DocumentPath = "placeholder",
+            //        DocumentType = DocumentType.ID,
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        DocumentExpireDate = new DateTime(2025, 9, 8),
+            //        BankAccount = "12341234123412341234123412"
+            //    },
+            //    new Owner
+            //    {
+            //        UserId = 3,
+            //        Name = "Rafał",
+            //        Surname = "Zieliński",
+            //        Street = "Prosta",
+            //        Number = 99,
+            //        Flat = 7,
+            //        City = "Łódż",
+            //        PostalCode = "00-000",
+            //        Email = "rzielinski@gmail.com",
+            //        PhoneNumber = "123456789",
+            //        AccountCreationDate = new DateTime(2023, 8, 9),
+            //        LastLoginDate = new DateTime(2023, 7, 7),
+            //        Password = "rzielinski123",
+            //        PhotoPath = "placeholder",
+            //        ActivityStatus = false,
+            //        DocumentPath = "placeholder",
+            //        DocumentType = DocumentType.ID,
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        DocumentExpireDate = new DateTime(2029, 3, 8),
+            //        BankAccount = "12341234123412341234123412"
+            //    }
+            //);
 
-            modelBuilder.Entity<Flat>().HasData(
-                new Flat
-                {
-                    PropertyId = 1,
-                    Province = "Mazowieckie",
-                    District = "Wilanów",
-                    Street = "Radosna",
-                    Number = "4",
-                    Flat = 3,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 40,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 2000,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 1,
-                    NumberOfRooms = 2,
-                    Floor = 2,
-                    Elevator = false
-                },
-                new Flat
-                {
-                    PropertyId = 2,
-                    Province = "Mazowieckie",
-                    District = "Ursynów",
-                    Street = "Lasek Brzozowy",
-                    Number = "9",
-                    Flat = 1,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 50,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 1995,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 2,
-                    NumberOfRooms = 3,
-                    Floor = 4,
-                    Elevator = true
-                },
-                new Flat
-                {
-                    PropertyId = 3,
-                    Province = "Mazowieckie",
-                    District = "Włochy",
-                    Street = "Żegoty",
-                    Number = "2",
-                    Flat = 5,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 80,
-                    MaxNumberOfInhabitants = 3,
-                    ConstructionYear = 2010,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 3,
-                    NumberOfRooms = 4,
-                    Floor = 3,
-                    Elevator = true
-                },
-                new Flat
-                {
-                    PropertyId = 4,
-                    Province = "Mazowieckie",
-                    District = "Bielany",
-                    Street = "Biograficzna",
-                    Number = "1",
-                    Flat = 2,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 55,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 2002,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 2,
-                    NumberOfRooms = 3,
-                    Floor = 5,
-                    Elevator = true
-                },
-                new Flat
-                {
-                    PropertyId = 5,
-                    Province = "Mazowieckie",
-                    District = "Mokotów",
-                    Street = "Samochodowa",
-                    Number = "18",
-                    Flat = 1,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 45,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 1998,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 1,
-                    NumberOfRooms = 2,
-                    Floor = 3,
-                    Elevator = false,
-                }
-            );
+            //modelBuilder.Entity<Flat>().HasData(
+            //    new Flat
+            //    {
+            //        PropertyId = 1,
+            //        Province = "Mazowieckie",
+            //        District = "Wilanów",
+            //        Street = "Radosna",
+            //        Number = "4",
+            //        Flat = 3,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 40,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 2000,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 1,
+            //        NumberOfRooms = 2,
+            //        Floor = 2,
+            //        Elevator = false
+            //    },
+            //    new Flat
+            //    {
+            //        PropertyId = 2,
+            //        Province = "Mazowieckie",
+            //        District = "Ursynów",
+            //        Street = "Lasek Brzozowy",
+            //        Number = "9",
+            //        Flat = 1,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 50,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 1995,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 2,
+            //        NumberOfRooms = 3,
+            //        Floor = 4,
+            //        Elevator = true
+            //    },
+            //    new Flat
+            //    {
+            //        PropertyId = 3,
+            //        Province = "Mazowieckie",
+            //        District = "Włochy",
+            //        Street = "Żegoty",
+            //        Number = "2",
+            //        Flat = 5,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 80,
+            //        MaxNumberOfInhabitants = 3,
+            //        ConstructionYear = 2010,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 3,
+            //        NumberOfRooms = 4,
+            //        Floor = 3,
+            //        Elevator = true
+            //    },
+            //    new Flat
+            //    {
+            //        PropertyId = 4,
+            //        Province = "Mazowieckie",
+            //        District = "Bielany",
+            //        Street = "Biograficzna",
+            //        Number = "1",
+            //        Flat = 2,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 55,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 2002,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 2,
+            //        NumberOfRooms = 3,
+            //        Floor = 5,
+            //        Elevator = true
+            //    },
+            //    new Flat
+            //    {
+            //        PropertyId = 5,
+            //        Province = "Mazowieckie",
+            //        District = "Mokotów",
+            //        Street = "Samochodowa",
+            //        Number = "18",
+            //        Flat = 1,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 45,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 1998,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 1,
+            //        NumberOfRooms = 2,
+            //        Floor = 3,
+            //        Elevator = false,
+            //    }
+            //);
 
-            modelBuilder.Entity<Room>().HasData(
-                new Room
-                {
-                    PropertyId = 6,
-                    Province = "Mazowieckie",
-                    District = "Wilanów",
-                    Street = "Świętej Urszuli Ledóchowskiej",
-                    Number = "5b",
-                    Flat = 3,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 40,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 2000,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 1,
-                    Floor = 2,
-                    Elevator = false
-                },
-                new Room
-                {
-                    PropertyId = 7,
-                    Province = "Mazowieckie",
-                    District = "Targówek",
-                    Street = "Muszyniecka",
-                    Number = "8",
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 50,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 1995,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 2,
-                    Floor = 1,
-                    Elevator = true
-                },
-                new Room
-                {
-                    PropertyId = 8,
-                    Province = "Mazowieckie",
-                    District = "Wawer",
-                    Street = "Gruntowa",
-                    Number = "25",
-                    Flat = 1,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 80,
-                    MaxNumberOfInhabitants = 3,
-                    ConstructionYear = 2010,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 3,
-                    Floor = 3,
-                    Elevator = true
-                },
-                new Room
-                {
-                    PropertyId = 9,
-                    Province = "Mazowieckie",
-                    District = "Mokotów",
-                    Street = "Goworka",
-                    Number = "30",
-                    Flat = 2,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 55,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 2002,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 2,
-                    Floor = 5,
-                    Elevator = true
-                },
-                new Room
-                {
-                    PropertyId = 10,
-                    Province = "Mazowieckie",
-                    Street = "Ludwiga van Beethovena",
-                    Number = "3",
-                    Flat = 7,
-                    City = "Warszawa",
-                    PostalCode = "00-000",
-                    Area = 45,
-                    MaxNumberOfInhabitants = 2,
-                    ConstructionYear = 1998,
-                    ImagesPath = Guid.NewGuid().ToString(),
-                    VerificationStatus = VerificationStatus.Verified,
-                    OwnerId = 1,
-                    Floor = 3,
-                    Elevator = false,
-                }
-            );
+            //modelBuilder.Entity<Room>().HasData(
+            //    new Room
+            //    {
+            //        PropertyId = 6,
+            //        Province = "Mazowieckie",
+            //        District = "Wilanów",
+            //        Street = "Świętej Urszuli Ledóchowskiej",
+            //        Number = "5b",
+            //        Flat = 3,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 40,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 2000,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 1,
+            //        Floor = 2,
+            //        Elevator = false
+            //    },
+            //    new Room
+            //    {
+            //        PropertyId = 7,
+            //        Province = "Mazowieckie",
+            //        District = "Targówek",
+            //        Street = "Muszyniecka",
+            //        Number = "8",
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 50,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 1995,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 2,
+            //        Floor = 1,
+            //        Elevator = true
+            //    },
+            //    new Room
+            //    {
+            //        PropertyId = 8,
+            //        Province = "Mazowieckie",
+            //        District = "Wawer",
+            //        Street = "Gruntowa",
+            //        Number = "25",
+            //        Flat = 1,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 80,
+            //        MaxNumberOfInhabitants = 3,
+            //        ConstructionYear = 2010,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 3,
+            //        Floor = 3,
+            //        Elevator = true
+            //    },
+            //    new Room
+            //    {
+            //        PropertyId = 9,
+            //        Province = "Mazowieckie",
+            //        District = "Mokotów",
+            //        Street = "Goworka",
+            //        Number = "30",
+            //        Flat = 2,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 55,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 2002,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 2,
+            //        Floor = 5,
+            //        Elevator = true
+            //    },
+            //    new Room
+            //    {
+            //        PropertyId = 10,
+            //        Province = "Mazowieckie",
+            //        Street = "Ludwiga van Beethovena",
+            //        Number = "3",
+            //        Flat = 7,
+            //        City = "Warszawa",
+            //        PostalCode = "00-000",
+            //        Area = 45,
+            //        MaxNumberOfInhabitants = 2,
+            //        ConstructionYear = 1998,
+            //        ImagesPath = Guid.NewGuid().ToString(),
+            //        VerificationStatus = VerificationStatus.Verified,
+            //        OwnerId = 1,
+            //        Floor = 3,
+            //        Elevator = false,
+            //    }
+            //);
 
-            // TODO: Seed Houses
+            //// TODO: Seed Houses
 
-            modelBuilder.Entity<Offer>().HasData(
-                new Offer
-                {
-                    OfferId = 1,
-                    Date = new DateTime(2023, 10, 10),
-                    OfferStatus = OfferStatus.Current,
-                    Price = 2000,
-                    Decription = "placeholder",
-                    RentalPeriod = 6,
-                    NumberOfInterested = 9,
-                    Regulations = "placeholder",
-                    PropertyId = 1
-                },
-                new Offer
-                {
-                    OfferId = 2,
-                    Date = new DateTime(2023, 9, 23),
-                    OfferStatus = OfferStatus.Current,
-                    Price = 2500,
-                    Decription = "placeholder",
-                    RentalPeriod = 9,
-                    NumberOfInterested = 1,
-                    Regulations = "placeholder",
-                    PropertyId = 2
-                },
-                new Offer
-                {
-                    OfferId = 3,
-                    Date = new DateTime(2023, 9, 30),
-                    OfferStatus = OfferStatus.Current,
-                    Price = 1000,
-                    Decription = "placeholder",
-                    RentalPeriod = 4,
-                    NumberOfInterested = 2,
-                    Regulations = "placeholder",
-                    PropertyId = 6
-                },
-                new Offer
-                {
-                    OfferId = 4,
-                    Date = new DateTime(2023, 10, 10),
-                    OfferStatus = OfferStatus.Current,
-                    Price = 2000,
-                    Decription = "placeholder",
-                    RentalPeriod = 6,
-                    NumberOfInterested = 9,
-                    Regulations = "placeholder",
-                    PropertyId = 10
-                }
-            );
+            //modelBuilder.Entity<Offer>().HasData(
+            //    new Offer
+            //    {
+            //        OfferId = 1,
+            //        Date = new DateTime(2023, 10, 10),
+            //        OfferStatus = OfferStatus.Current,
+            //        Price = 2000,
+            //        Decription = "placeholder",
+            //        RentalPeriod = 6,
+            //        NumberOfInterested = 9,
+            //        Regulations = "placeholder",
+            //        PropertyId = 1
+            //    },
+            //    new Offer
+            //    {
+            //        OfferId = 2,
+            //        Date = new DateTime(2023, 9, 23),
+            //        OfferStatus = OfferStatus.Current,
+            //        Price = 2500,
+            //        Decription = "placeholder",
+            //        RentalPeriod = 9,
+            //        NumberOfInterested = 1,
+            //        Regulations = "placeholder",
+            //        PropertyId = 2
+            //    },
+            //    new Offer
+            //    {
+            //        OfferId = 3,
+            //        Date = new DateTime(2023, 9, 30),
+            //        OfferStatus = OfferStatus.Current,
+            //        Price = 1000,
+            //        Decription = "placeholder",
+            //        RentalPeriod = 4,
+            //        NumberOfInterested = 2,
+            //        Regulations = "placeholder",
+            //        PropertyId = 6
+            //    },
+            //    new Offer
+            //    {
+            //        OfferId = 4,
+            //        Date = new DateTime(2023, 10, 10),
+            //        OfferStatus = OfferStatus.Current,
+            //        Price = 2000,
+            //        Decription = "placeholder",
+            //        RentalPeriod = 6,
+            //        NumberOfInterested = 9,
+            //        Regulations = "placeholder",
+            //        PropertyId = 10
+            //    }
+            //);
 
-            modelBuilder.Entity<SurveyOwnerOffer>().HasData(
-                new SurveyOwnerOffer
-                {
-                    SurveyOwnerOfferId = 1,
-                    Smoking = false,
-                    Parties = true,
-                    Animals = true,
-                    Gender = Gender.Both,
-                    OfferId = 1
-                },
-                new SurveyOwnerOffer
-                {
-                    SurveyOwnerOfferId = 2,
-                    Smoking = true,
-                    Parties = true,
-                    Animals = false,
-                    Gender = Gender.Both,
-                    OfferId = 2
-                },
-                new SurveyOwnerOffer
-                {
-                    SurveyOwnerOfferId = 3,
-                    Smoking = false,
-                    Parties = true,
-                    Animals = false,
-                    Gender = Gender.Both,
-                    OfferId = 3
-                }
-            );
+            //modelBuilder.Entity<SurveyOwnerOffer>().HasData(
+            //    new SurveyOwnerOffer
+            //    {
+            //        SurveyOwnerOfferId = 1,
+            //        Smoking = false,
+            //        Parties = true,
+            //        Animals = true,
+            //        Gender = Gender.Both,
+            //        OfferId = 1
+            //    },
+            //    new SurveyOwnerOffer
+            //    {
+            //        SurveyOwnerOfferId = 2,
+            //        Smoking = true,
+            //        Parties = true,
+            //        Animals = false,
+            //        Gender = Gender.Both,
+            //        OfferId = 2
+            //    },
+            //    new SurveyOwnerOffer
+            //    {
+            //        SurveyOwnerOfferId = 3,
+            //        Smoking = false,
+            //        Parties = true,
+            //        Animals = false,
+            //        Gender = Gender.Both,
+            //        OfferId = 3
+            //    }
+            //);
 
             #endregion
 
