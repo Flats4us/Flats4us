@@ -29,7 +29,6 @@ import { MatSort, Sort } from '@angular/material/sort';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
-	
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
@@ -84,13 +83,13 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			sortBy: new FormControl(''),
 		});
 		this.realEstateService
-		.readCitiesForRegions(
-			this.regionCityArray,
-			this.realEstateService.citiesGroups
+			.readCitiesForRegions(
+				this.regionCityArray,
+				this.realEstateService.citiesGroups
 			)
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
-			this.isSubmitted = false;
+		this.isSubmitted = false;
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -165,32 +164,35 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 
 		this.mainSiteForm.get('districtsGroup')?.disable();
 
-		this.mainSiteForm.get('citiesGroup')?.valueChanges
-		.pipe(takeUntil(this.unsubscribe$))
-		.subscribe(value => {
-			if (
-				this.realEstateService.districtGroups.find(distr => distr.whole === value)
-			) {
-				this.mainSiteForm.get('districtsGroup')?.enable();
-			} else {
-				this.mainSiteForm.get('districtsGroup')?.reset();
-				this.mainSiteForm.get('districtsGroup')?.disable();
-			}
-		});
-		this.mainSiteForm.get('regionsGroup')?.valueChanges
-		.pipe(takeUntil(this.unsubscribe$))
-		.subscribe(() => {
-			this.mainSiteForm.get('citiesGroup')?.reset();
-		});
-		this.mainSiteForm.get('sortBy')?.valueChanges
-		.pipe(takeUntil(this.unsubscribe$))
-		.subscribe(value => {
-			this.dataSource.sort = this.matSort;
-			this.sortState = { active: value.type, direction: value.direction };
-			this.matSort.active = this.sortState.active;
-			this.matSort.direction = this.sortState.direction;
-			this.matSort.sortChange.emit(this.sortState);
-		});
+		this.mainSiteForm
+			.get('citiesGroup')
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(value => {
+				if (
+					this.realEstateService.districtGroups.find(distr => distr.whole === value)
+				) {
+					this.mainSiteForm.get('districtsGroup')?.enable();
+				} else {
+					this.mainSiteForm.get('districtsGroup')?.reset();
+					this.mainSiteForm.get('districtsGroup')?.disable();
+				}
+			});
+		this.mainSiteForm
+			.get('regionsGroup')
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(() => {
+				this.mainSiteForm.get('citiesGroup')?.reset();
+			});
+		this.mainSiteForm
+			.get('sortBy')
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(value => {
+				this.dataSource.sort = this.matSort;
+				this.sortState = { active: value.type, direction: value.direction };
+				this.matSort.active = this.sortState.active;
+				this.matSort.direction = this.sortState.direction;
+				this.matSort.sortChange.emit(this.sortState);
+			});
 	}
 
 	public ngOnDestroy() {
