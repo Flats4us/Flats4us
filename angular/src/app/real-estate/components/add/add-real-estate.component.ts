@@ -115,11 +115,13 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = () => {
-				if (this.urls.length > 10) {
+				if (this.urls.length > 9) {
 					return;
 				}
 				this.urls.push(<string>reader.result);
 			};
+			const input = document.getElementById('upload');
+			input?.click();
 		}
 	}
 
