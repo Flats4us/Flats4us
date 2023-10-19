@@ -8,7 +8,7 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,8 +29,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
-	private regionCitiesSubscription: Subscription;
-
+	
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
@@ -84,13 +83,14 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			equipment: new FormControl(''),
 			sortBy: new FormControl(''),
 		});
-		this.regionCitiesSubscription = this.realEstateService
-			.readCitiesForRegions(
-				this.regionCityArray,
-				this.realEstateService.citiesGroups
+		this.realEstateService
+		.readCitiesForRegions(
+			this.regionCityArray,
+			this.realEstateService.citiesGroups
 			)
+			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
-		this.isSubmitted = false;
+			this.isSubmitted = false;
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -165,7 +165,9 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 
 		this.mainSiteForm.get('districtsGroup')?.disable();
 
-		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe(value => {
+		this.mainSiteForm.get('citiesGroup')?.valueChanges
+		.pipe(takeUntil(this.unsubscribe$))
+		.subscribe(value => {
 			if (
 				this.realEstateService.districtGroups.find(distr => distr.whole === value)
 			) {
@@ -174,23 +176,26 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 				this.mainSiteForm.get('districtsGroup')?.reset();
 				this.mainSiteForm.get('districtsGroup')?.disable();
 			}
-		}, takeUntil(this.unsubscribe$));
-		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
+		});
+		this.mainSiteForm.get('regionsGroup')?.valueChanges
+		.pipe(takeUntil(this.unsubscribe$))
+		.subscribe(() => {
 			this.mainSiteForm.get('citiesGroup')?.reset();
-		}, takeUntil(this.unsubscribe$));
-		this.mainSiteForm.get('sortBy')?.valueChanges.subscribe(value => {
+		});
+		this.mainSiteForm.get('sortBy')?.valueChanges
+		.pipe(takeUntil(this.unsubscribe$))
+		.subscribe(value => {
 			this.dataSource.sort = this.matSort;
 			this.sortState = { active: value.type, direction: value.direction };
 			this.matSort.active = this.sortState.active;
 			this.matSort.direction = this.sortState.direction;
 			this.matSort.sortChange.emit(this.sortState);
-		}, takeUntil(this.unsubscribe$));
+		});
 	}
 
 	public ngOnDestroy() {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();
-		this.regionCitiesSubscription.unsubscribe();
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
