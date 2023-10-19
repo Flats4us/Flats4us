@@ -17,6 +17,7 @@ import { AuthInterceptor } from '@shared/services/auth.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatCardModule } from '@angular/material/card';
 
 registerLocaleData(localePl);
 
@@ -35,6 +36,7 @@ registerLocaleData(localePl);
 		MatIconModule,
 		MatMenuModule,
 		MatNativeDateModule,
+		MatCardModule,
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'pl' },
