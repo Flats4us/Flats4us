@@ -1,56 +1,68 @@
-<mat-card>
-	<mat-card-content>
-		<section>
-			<div class="flex justify-center">
-				<img
-					mat-card-avatar
-					src="https://placehold.co/400"
-					alt="avatar"
-					class="avatar__image"
-				/>
-			</div>
-			<div class="profile-name flex justify-center"><b>Dodaj opinę o</b></div>
-			<div class="profile-name flex justify-center">Agnieszka</div>
-			<div class="profile-rating__wrapper flex flex-col">
-				<div class="profile-rating__stars mx-auto">
-					<mat-icon class="filled">star</mat-icon>
-					<mat-icon class="filled">star</mat-icon>
-					<mat-icon class="filled">star</mat-icon>
-					<mat-icon class="filled">star</mat-icon>
-					<mat-icon class="filled">star</mat-icon>
+<div class="flex flex-column justify-center align-center">
+	<mat-card>
+		<mat-card-content>
+			<section>
+				<div class="flex justify-center">
+					<img
+						mat-card-avatar
+						src="https://placehold.co/400"
+						alt="avatar"
+						class="avatar__image"
+					/>
 				</div>
-			</div>
-			<textarea
-				class="textarea"
-				rows="4"
-				cols="50"
-				placeholder="Tutaj wpisz opinię..."
-				[(ngModel)]="commentText"
-			></textarea>
-			<div class="tags">
-				<div class="good-tags">
-					<span
-						class="tag tag-komunikatywna"
-						(click)="addTagToComment('Komunikatywna')"
-					>
-						Komunikatywna</span
-					>
-					<span class="tag tag-sprząta" (click)="addTagToComment('Sprząta')"
-						>Sprząta</span
-					>
-					<span class="tag tag-spokojna" (click)="addTagToComment('Spokojna')"
-						>Spokojna</span
-					>
+				<div class="profile-name flex justify-center"><b>Dodaj opinę o</b></div>
+				<div class="profile-name flex justify-center">Agnieszka</div>
+				<div class="profile-rating__wrapper flex flex-col">
+					<div class="profile-rating__stars mx-auto">
+						<mat-icon class="filled">star</mat-icon>
+						<mat-icon class="filled">star</mat-icon>
+						<mat-icon class="filled">star</mat-icon>
+						<mat-icon class="filled">star</mat-icon>
+						<mat-icon class="filled">star</mat-icon>
+					</div>
 				</div>
-				<div class="bad-tags">
-					<span class="tag tag-nie-sprząta" (click)="addTagToComment('Nie sprząta')"
-						>Nie sprząta</span
-					>
-					<span class="tag tag-głośna" (click)="addTagToComment('Sprząta')"
-						>Głośna</span
-					>
+				<mat-form-field class="full-width">
+					<textarea
+						class="textarea"
+						rows="4"
+						cols="50"
+						placeholder="Tutaj wpisz opinię..."
+						[(ngModel)]="commentText"
+					></textarea>
+				</mat-form-field>
+				<div class="tags">
+					<div class="good-tags">
+						<span
+							class="tag tag-komunikatywna"
+							(click)="addTagToComment('Komunikatywna')"
+						>
+							Komunikatywna</span
+						>
+						<span class="tag tag-sprząta" (click)="addTagToComment('Sprząta')"
+							>Sprząta</span
+						>
+						<span class="tag tag-spokojna" (click)="addTagToComment('Spokojna')"
+							>Spokojna</span
+						>
+					</div>
+					<div class="bad-tags">
+						<span class="tag tag-nie-sprząta" (click)="addTagToComment('Nie sprząta')"
+							>Nie sprząta</span
+						>
+						<span class="tag tag-głośna" (click)="addTagToComment('Głośna')"
+							>Głośna</span
+						>
+						<span class="tag tag-tag" (click)="addTagToComment('Tag')">Tag</span>
+					</div>
 				</div>
-			</div>
-		</section>
-	</mat-card-content>
-</mat-card>
+			</section>
+			<mat-card-actions
+				class="button-container flex flex-column justify-center align-center"
+			>
+				<button mat-raised-button color="primary">Dodaj</button>
+				<div style="margin: 10px"></div>
+				<button mat-raised-button color="warn">ANULUJ</button>
+			</mat-card-actions>
+		</mat-card-content>
+	</mat-card>
+</div>
