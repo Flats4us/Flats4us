@@ -5,6 +5,8 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { AuthGuard } from '@shared/services/auth.guard';
 
 
+import { AddOpinionComponent } from './add-opinion/add-opinion.component';
+
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'start' },
 	{
@@ -15,11 +17,7 @@ const routes: Routes = [
 		path: 'start',
 		loadChildren: () => import('./start/start.module').then(m => m.StartModule),
 	},
-	{
-		path: 'add-opinion',
-		loadChildren: () =>
-			import('./add-opinion/add-opinion.module').then(m => m.AddOpinionModule),
-	},
+	{ path: 'add-opinion', component: AddOpinionComponent },
 	{
 		path: 'profile',
 		loadChildren: () =>
