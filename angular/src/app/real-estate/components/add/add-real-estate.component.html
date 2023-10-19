@@ -1,0 +1,459 @@
+<div class="add-real-estate">
+	<div class="container-1">
+		<h1>Utwórz nieruchomość</h1>
+	</div>
+	<mat-stepper #stepper>
+		<div class="box-1">
+			<mat-step [stepControl]="addRealEstateFormAddressData">
+				<ng-template matStepLabel>Dane adresowe</ng-template>
+				<form class="container-2" [formGroup]="addRealEstateFormAddressData">
+					<div class="subtitle">Rodzaj nieruchomości:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Rodzaj nieruchomości</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>home</mat-icon></div>
+						</span>
+						<mat-select id="property" formControlName="property">
+							<mat-option
+								*ngFor="let property of this.realEstateService.properties"
+								[value]="property"
+							>
+								{{ property }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['property'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano rodzaju nieruchomości!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle-2">
+						Dane adresowe:
+						<button
+							id="showMap"
+							class="batch"
+							type="button"
+							mat-icon-button
+							matTooltip="Wybierz na mapie"
+							aria-label="ShowMap"
+							(click)="showMap()"
+						>
+							<mat-icon>map</mat-icon>
+						</button>
+					</div>
+					<div class="subtitle">Województwo:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Województwo</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						</span>
+						<mat-select id="region" formControlName="regionsGroup">
+							<mat-option
+								*ngFor="let region of this.realEstateService.regions"
+								[value]="region"
+							>
+								{{ region }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['regionsGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano województwa!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Miejscowość:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Miejscowość</mat-label>
+						<input
+							id="city"
+							type="text"
+							placeholder="Miejscowość"
+							aria-label="City"
+							matInput
+							formControlName="citiesGroup"
+							[matAutocomplete]="autoCity"
+						/>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						</span>
+						<mat-autocomplete #autoCity="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group of citiesGroupOptions$ | async"
+								[label]="group.whole"
+							>
+								<mat-option *ngFor="let city of group.parts" [value]="city">
+									{{ city }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['citiesGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano miejscowości!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Dzielnica:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Dzielnica</mat-label>
+						<input
+							id="district"
+							type="text"
+							placeholder="Dzielnica"
+							aria-label="District"
+							matInput
+							formControlName="districtsGroup"
+							[matAutocomplete]="autoDistrict"
+						/>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						</span>
+						<mat-autocomplete #autoDistrict="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group2 of districtGroupOptions$ | async"
+								[label]="group2.whole"
+							>
+								<mat-option *ngFor="let district of group2.parts" [value]="district">
+									{{ district }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+					</mat-form-field>
+					<div class="subtitle">Ulica:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Ulica</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						</span>
+						<input
+							id="street"
+							formControlName="street"
+							type="text"
+							placeholder="Ulica"
+							aria-label="Street"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['street'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano nazwy ulicy!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Numer ulicy/lokalu:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Numer</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+						</span>
+						<input
+							id="streetNumber"
+							formControlName="streetNumber"
+							type="text"
+							placeholder="Numer ulicy"
+							aria-label="StreetNumber"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['streetNumber'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano numeru ulicy/lokalu!
+						</mat-error>
+					</mat-form-field>
+					<div class="button-box">
+						<button
+							mat-button
+							matStepperNext
+							class="btn"
+							[disabled]="!addRealEstateFormAddressData.valid"
+						>
+							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+		</div>
+		<div class="box-1">
+			<mat-step [stepControl]="addRealEstateFormRemainingData">
+				<ng-template matStepLabel>Pozostałe dane</ng-template>
+				<form class="container-2" [formGroup]="addRealEstateFormRemainingData">
+					<div class="subtitle">Powierzchnia:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Powierzchnia</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
+						</span>
+						<input
+							id="area"
+							formControlName="area"
+							type="number"
+							placeholder="Powierzchnia"
+							aria-label="area"
+							matInput
+						/>
+						<span matSuffix class="suffix">m²</span>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano powierzchni!
+						</mat-error>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['min']"
+							class="error-text"
+						>
+							Nieprawidłowa wartość!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Maks. liczba mieszkańców:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Maks. l. mieszkańców</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>supervisor_account</mat-icon></div>
+						</span>
+						<input
+							id="maxResidents"
+							formControlName="maxResidents"
+							type="number"
+							placeholder="Maks. l. mieszkańców"
+							aria-label="maxResidents"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['maxResidents'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano maks. l. mieszkańców!
+						</mat-error>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['maxResidents'].errors?.['min']"
+							class="error-text"
+						>
+							Nieprawidłowa wartość!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Lata budowy:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Lata budowy</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>history</mat-icon></div>
+						</span>
+						<mat-select id="year" formControlName="year">
+							<mat-option
+								*ngFor="let year of this.realEstateService.yearOfBuilds"
+								[value]="year"
+							>
+								{{ year }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['year'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano lat budowy!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Liczba pokoi:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Liczba pokoi</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>meeting_room</mat-icon></div>
+						</span>
+						<input
+							id="rooms"
+							formControlName="rooms"
+							type="number"
+							placeholder="Liczba pokoi"
+							aria-label="NumberOfRooms"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['rooms'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano liczby pokoi!
+						</mat-error>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['rooms'].errors?.['min']"
+							class="error-text"
+						>
+							Nieprawidłowa wartość!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Piętro:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Piętro</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
+						</span>
+						<input
+							id="floors"
+							formControlName="floors"
+							type="number"
+							placeholder="Piętro"
+							aria-label="NumberOfFloors"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['floors'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano liczby pięter!
+						</mat-error>
+						<mat-error
+							*ngIf="addRealEstateFormRemainingData.controls['floors'].errors?.['min']"
+							class="error-text"
+						>
+							Nieprawidłowa wartość!
+						</mat-error>
+					</mat-form-field>
+					<div class="subtitle">Wyposażenie:</div>
+					<mat-form-field appearance="fill">
+						<mat-label>Wyposażenie</mat-label>
+						<span matPrefix>
+							<div class="boxIcon"><mat-icon>category</mat-icon></div>
+						</span>
+						<mat-select id="equipment" formControlName="equipment" multiple>
+							<mat-option
+								*ngFor="let equipment of this.realEstateService.equipment"
+								[value]="equipment"
+							>
+								{{ equipment }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+					<div class="button-box">
+						<button mat-button matStepperPrevious class="btn">
+							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button
+							mat-button
+							matStepperNext
+							class="btn"
+							[disabled]="!addRealEstateFormRemainingData.valid"
+						>
+							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+		</div>
+		<div class="box-1">
+			<mat-step [stepControl]="addRealEstateFormPhotos" class="step-3">
+				<ng-template matStepLabel>Zdjęcia</ng-template>
+				<form [formGroup]="addRealEstateFormPhotos">
+					<div class="button-box-1">
+						<div class="gallery">
+							<img *ngFor="let url of urlsOptions$ | async" [src]="url" class="img" />
+						</div>
+						<input
+							#fileUpload
+							id="file"
+							class="file-input"
+							type="file"
+							accept="image/*"
+							multiple
+							formControlName="photos"
+							aria-label="File"
+							(change)="onFileSelected($event)"
+						/>
+						<div *ngIf="addRealEstateFormPhotos.get('photos')?.hasError('required')">
+							Zdjęcie jest wymagane.
+						</div>
+						<div class="batch">
+							<div class="desctext">
+								{{ fileName || "Dodaj zdjęcia (max 10)" }}
+							</div>
+
+							<button
+								mat-mini-fab
+								id="upload"
+								class="upload-btn"
+								aria-label="Upload"
+								(click)="fileUpload.click()"
+							>
+								<mat-icon>attach_file</mat-icon>
+							</button>
+						</div>
+						<div class="button-box">
+							<button mat-button matStepperPrevious class="btn">
+								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+							</button>
+							<button
+								mat-button
+								matStepperNext
+								class="btn"
+								[disabled]="!addRealEstateFormPhotos.valid"
+							>
+								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+							</button>
+						</div>
+					</div>
+				</form>
+			</mat-step>
+		</div>
+		<div class="box-1">
+			<mat-step [completed]="completed">
+				<ng-template *ngIf="completed" matStepLabel>Gotowe</ng-template>
+				<div class="button-box-1">
+					<div
+						*ngIf="
+							addRealEstateFormAddressData.valid &&
+							addRealEstateFormRemainingData.valid &&
+							addRealEstateFormPhotos.valid
+						"
+						class="button-box-1"
+					>
+						<mat-icon class="success-icon"> insert_emoticon</mat-icon>
+						<h2>Formularz został pomyślnie wypełniony!</h2>
+						<h2>
+							Klikająć na przycisk "Zapisz nieruchomość" potwierdzasz prawdziwość
+							wprowadzonych danych.
+						</h2>
+					</div>
+					<div class="button-box">
+						<button mat-button matStepperPrevious class="btn">
+							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button
+							*ngIf="
+								addRealEstateFormAddressData.valid &&
+								addRealEstateFormRemainingData.valid &&
+								addRealEstateFormPhotos.valid
+							"
+							id="addRealEstate"
+							class="btn-2"
+							type="submit"
+							mat-button
+							aria-label="AddRealEstate"
+							(click)="saveRealEstate()"
+						>
+							Zapisz nieruchomość
+						</button>
+						<button mat-button (click)="formReset()" class="btn">Reset</button>
+					</div>
+					<h2 *ngIf="completed" class="subtitle-3">
+						<p>Nieruchomość została zapisana!</p>
+						<p>Czy chcesz dodać ofertę dla zapisanej nieruchomości?</p>
+					</h2>
+					<div class="button-box">
+						<button
+							*ngIf="completed"
+							id="addOffer"
+							class="btn-2"
+							type="submit"
+							mat-button
+							aria-label="AddOffer"
+							(click)="addOffer()"
+						>
+							Dodaj ofertę
+						</button>
+					</div>
+				</div>
+			</mat-step>
+		</div>
+	</mat-stepper>
+</div>

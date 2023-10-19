@@ -1,151 +1,14 @@
-import { ChangeDetectionStrategy } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import {
 	IGroup,
 	INumeric,
 	IRegionCity,
-} from '../real-estate/models/real-estate.models';
+} from 'src/app/real-estate/models/real-estate.models';
 
-@Component({
-	selector: 'app-start',
-	templateUrl: './start.component.html',
-	styleUrls: ['./start.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class StartComponent implements OnInit {
-	public showMoreFilters = false;
-	public numberOfRecords = 14585;
-
-	public mainSiteForm: FormGroup = new FormGroup({});
-
-	public citiesGroupOptions$?: Observable<IGroup[]>;
-	public districtGroupOptions$?: Observable<IGroup[]>;
-
-	public regionCityArray: IRegionCity[] = [];
-
-	constructor(
-		private formBuilder: FormBuilder,
-		private http: HttpClient,
-		private router: Router
-	) {
-		this.mainSiteForm = formBuilder.group({
-			regionsGroup: new FormControl('', Validators.required),
-			citiesGroup: new FormControl('', Validators.required),
-			distance: new FormControl(0, Validators.required),
-			property: new FormControl('', Validators.required),
-			minPrice: new FormControl('', [Validators.min(0)]),
-			maxPrice: new FormControl('', [Validators.min(0)]),
-			districtsGroup: new FormControl(''),
-			minArea: new FormControl('', [Validators.min(0)]),
-			maxArea: new FormControl('', [Validators.min(0)]),
-			year: new FormControl(''),
-			rooms: new FormControl('', [Validators.min(1)]),
-			floors: new FormControl('', [Validators.min(0)]),
-			equipment: new FormControl(''),
-		});
-		this.http
-			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
-			.subscribe(data => {
-				const csvToRowArray = data.split('\n');
-				for (let index = 1; index < csvToRowArray.length - 1; index++) {
-					const row = csvToRowArray[index].split(';');
-					const lowerCaseRegion = row[2].trim().toLowerCase();
-					this.regionCityArray.push(<IRegionCity>{
-						region: lowerCaseRegion,
-						city: row[1],
-					});
-
-					this.citiesGroups
-						.find(group => group.whole == lowerCaseRegion)
-						?.parts.push(row[1]);
-				}
-			});
-	}
-
-	public filter = (opt: string[], value: string): string[] => {
-		const filterValue = value.toLowerCase();
-
-		return opt.filter(item => item.toLowerCase().includes(filterValue));
-	};
-
-	public showFilters() {
-		this.showMoreFilters = !this.showMoreFilters;
-	}
-
-	public showMap() {
-		this.router.navigate(['start/map']);
-	}
-
-	public onSubmit() {
-		this.router.navigate(['/']);
-	}
-
-	public ngOnInit() {
-		this.citiesGroupOptions$ = this.mainSiteForm
-			.get('citiesGroup')
-			?.valueChanges.pipe(
-				map(value => value ?? ''),
-				map(value => this.filterCitiesGroup(value))
-			);
-
-		this.districtGroupOptions$ = this.mainSiteForm
-			.get('districtsGroup')
-			?.valueChanges.pipe(
-				map(value => value ?? ''),
-				map(value => this.filterDistrictsGroup(value))
-			);
-
-		this.mainSiteForm.get('districtsGroup')?.disable();
-
-		this.mainSiteForm.get('citiesGroup')?.valueChanges.subscribe(value => {
-			if (this.districtGroups.find(distr => distr.whole === value)) {
-				this.mainSiteForm.get('districtsGroup')?.enable();
-			} else {
-				this.mainSiteForm.get('districtsGroup')?.reset();
-				this.mainSiteForm.get('districtsGroup')?.disable();
-			}
-		});
-		this.mainSiteForm.get('regionsGroup')?.valueChanges.subscribe(() => {
-			this.mainSiteForm.get('citiesGroup')?.reset();
-		});
-	}
-
-	private filterCitiesGroup(value: string): IGroup[] {
-		return this.citiesGroups
-			.map(group => ({
-				whole: group.whole,
-				parts: this.filter(group.parts, value),
-			}))
-			.filter(
-				group =>
-					group.parts.length > 0 &&
-					group.whole === this.mainSiteForm.get('regionsGroup')?.value
-			);
-	}
-	private filterDistrictsGroup(value: string): IGroup[] {
-		return this.districtGroups
-			.map(group => ({
-				whole: group.whole,
-				parts: this.filter(group.parts, value),
-			}))
-			.filter(
-				group =>
-					group.parts.length > 0 &&
-					group.whole === this.mainSiteForm.get('citiesGroup')?.value
-			);
-	}
-
-	public navigateToFlat() {
-		this.router.navigate(['/']);
-	}
-
+@Injectable()
+export class RealEstateService {
 	public citiesGroups: IGroup[] = [
 		{
 			whole: 'dolnośląskie',
@@ -382,6 +245,33 @@ export class StartComponent implements OnInit {
 		'od 1990 do 2010',
 		'od 2010',
 	];
-	public properties: string[] = ['Dom', 'Kawalerka', 'Mieszkanie', 'Pokój'];
+	public properties: string[] = ['Dom', 'Mieszkanie', 'Pokój'];
 	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
+
+	constructor(private httpClient: HttpClient) {}
+
+	public readCitiesForRegions(
+		regionCityArray: IRegionCity[],
+		citiesGroups: IGroup[]
+	): Observable<IRegionCity[]> {
+		return this.httpClient
+			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
+			.pipe(
+				map(data => {
+					const csvToRowArray = data.split('\n');
+					for (let index = 1; index < csvToRowArray.length - 2; index++) {
+						const row = csvToRowArray[index].split(';');
+						const regionToLowerCase = row[2].trim().toLowerCase();
+						regionCityArray.push(<IRegionCity>{
+							region: regionToLowerCase,
+							city: row[1],
+						});
+						citiesGroups
+							.find(group => group.whole == regionToLowerCase)
+							?.parts.push(row[1]);
+					}
+					return regionCityArray;
+				})
+			);
+	}
 }

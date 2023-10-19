@@ -51,3 +51,22 @@ body {
 .mdc-notched-outline__notch {
 	border-right: none;
 }
+
+.mat-step-header .mat-step-icon-selected {
+	background-color: #fbbb8b;
+	transform: scale(1.6);
+}
+
+.mat-step-icon.mat-step-icon-state-edit {
+	background-color: #fbbb8b;
+	transform: scale(1.6);
+}
+
+.mat-step-text-label {
+	font-size: 1.2rem;
+	padding-left: 4px;
+}
+
+.mat-step-header .mat-step-icon {
+	transform: scale(1.6);
+}
