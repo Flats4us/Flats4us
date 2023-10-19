@@ -100,24 +100,26 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 		const fileEvent = (event.target as HTMLInputElement).files;
 
-		if (fileEvent) {
-			for (let i = 0; i < fileEvent.length; i++) {
-				const file: File = fileEvent[i];
+		if (!fileEvent) {
+			return;
+		}
 
-				this.fileName = file.name;
-
-				formData.append(this.fileName, file);
-
-				const reader = new FileReader();
-
-				reader.readAsDataURL(file);
-
-				reader.onload = () => {
-					if (this.urls.length < 10) {
-						this.urls.push(<string>reader.result);
-					}
-				};
+		for (let i = 0; i < fileEvent.length; i++) {
+			const file: File = fileEvent[i];
+			const fileType = file.type;
+			if (fileType.match(/image\/*/) == null) {
+				return;
 			}
+			this.fileName = file.name;
+			formData.append(this.fileName, file);
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				if (this.urls.length > 10) {
+					return;
+				}
+				this.urls.push(<string>reader.result);
+			};
 		}
 	}
 
