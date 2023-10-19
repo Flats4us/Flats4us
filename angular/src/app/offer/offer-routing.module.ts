@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AddOfferComponent } from './add-offer/add-offer.component';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
 
 const routes: Routes = [
-	{ path: '', pathMatch: 'full', redirectTo: '/start' },
+	{ path: '', pathMatch: 'full', redirectTo: 'add' },
 	{
-		path: 'add-offer',
+		path: 'add',
 		component: AddOfferComponent,
 	},
 ];
