@@ -10,10 +10,13 @@ namespace Flats4us.Services
     public class PropertyService : IPropertyService
     {
         public readonly Flats4usContext _context;
+        private readonly IOpenStreetMapService _openStreetMapService;
 
-        public PropertyService(Flats4usContext context)
+        public PropertyService(Flats4usContext context,
+            IOpenStreetMapService openStreetMapService)
         {
             _context = context;
+            _openStreetMapService = openStreetMapService;
         }
 
         public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
@@ -101,6 +104,8 @@ namespace Flats4us.Services
         {
             var imageFolder = Guid.NewGuid().ToString();
 
+            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
+
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
@@ -113,6 +118,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
+                        GeoLat = geoInfo.Latitude,
+                        GeoLon = geoInfo.Longitude,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
@@ -135,6 +142,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
+                        GeoLat = geoInfo.Latitude,
+                        GeoLon = geoInfo.Longitude,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
@@ -156,6 +165,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
+                        GeoLat = geoInfo.Latitude,
+                        GeoLon = geoInfo.Longitude,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,

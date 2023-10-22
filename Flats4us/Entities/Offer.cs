@@ -20,7 +20,7 @@ namespace Flats4us.Entities
         public int Price { get; set; }
 
         [Required]
-        public string Decription { get; set;}
+        public string Description { get; set;}
 
         // In Months 
         [Required]

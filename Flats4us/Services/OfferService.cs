@@ -3,6 +3,7 @@ using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq.Dynamic.Core;
 
 namespace Flats4us.Services
@@ -10,10 +11,13 @@ namespace Flats4us.Services
     public class OfferService : IOfferService
     {
         public readonly Flats4usContext _context;
+        private readonly IOpenStreetMapService _openStreetMapService;
 
-        public OfferService(Flats4usContext context)
+        public OfferService(Flats4usContext context,
+            IOpenStreetMapService openStreetMapService)
         {
             _context = context;
+            _openStreetMapService = openStreetMapService;
         }
 
         public async Task<List<OfferDto>> GetAll()
@@ -25,7 +29,7 @@ namespace Flats4us.Services
                     Date = o.Date,
                     OfferStatus = o.OfferStatus,
                     Price = o.Price,
-                    Decription = o.Decription,
+                    Decription = o.Description,
                     RentalPeriod = o.RentalPeriod,
                     NumberOfInterested = o.NumberOfInterested,
                     Regulations = o.Regulations,
@@ -66,7 +70,7 @@ namespace Flats4us.Services
 
         public async Task<List<OfferDto>> GetFilteredAndSortedOffers(GetFilteredAndSortedOffersDto input)
         {
-            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "Year ASC", "Year DSC" };
+            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "Area ASC", "Area DSC" };
 
             var query = _context.Offers.AsQueryable();
 
@@ -74,6 +78,11 @@ namespace Flats4us.Services
                 o.Property.City.Equals(input.City));
 
             // DISTANCE
+
+            if (!input.PropertyTypes.IsNullOrEmpty())
+            {
+                //query = query.Where(o => o.Property.)
+            }
 
             if (input.MinPrice.HasValue)
             {
@@ -122,8 +131,15 @@ namespace Flats4us.Services
 
             if (allowedSorts.Contains(input.Sorting)) 
             {
-                    // Poprawić (Area nie działa)
-                query = query.OrderBy(input.Sorting);
+                if (input.Sorting.Equals("Price ASC") || input.Sorting.Equals("Price DSC")) 
+                { 
+                    query = query.OrderBy(input.Sorting);
+                }
+                else if (input.Sorting.Equals("Area ASC") || input.Sorting.Equals("Area DSC"))
+                {
+                    query = query.OrderBy("Property." + input.Sorting);
+                }
+                
             }
 
             var result = await query
@@ -133,7 +149,7 @@ namespace Flats4us.Services
                     Date = o.Date,
                     OfferStatus = o.OfferStatus,
                     Price = o.Price,
-                    Decription = o.Decription,
+                    Decription = o.Description,
                     RentalPeriod = o.RentalPeriod,
                     NumberOfInterested = o.NumberOfInterested,
                     Regulations = o.Regulations,
@@ -153,7 +169,11 @@ namespace Flats4us.Services
                         ConstructionYear = o.Property.ConstructionYear,
                         ImagesPath = o.Property.ImagesPath,
                         Elevator = o.Property.Elevator,
-                        VerificationStatus = o.Property.VerificationStatus
+                        VerificationStatus = o.Property.VerificationStatus,
+                        NumberOfRooms = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : null,
+                        NumberOfFloors = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfFloors : null,
+                        PlotArea = o.Property.GetType() == typeof(House) ? ((House)o.Property).PlotArea : null,
+                        Floor = o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Floor : null
                     },
                     Owner = new OwnerStudentDto
                     {
