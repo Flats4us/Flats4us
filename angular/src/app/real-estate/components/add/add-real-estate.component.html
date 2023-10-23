@@ -347,7 +347,7 @@
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-1">
 						<div class="gallery">
-							<img *ngFor="let url of urlsOptions$ | async" [src]="url" class="img" />
+							<img *ngFor="let url of urls" class="img" [src]="url" />
 						</div>
 						<input
 							#fileUpload
