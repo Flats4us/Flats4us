@@ -7,6 +7,56 @@ public static class DataSeeder
 {
     public static void SeedData(Flats4usContext dbContext)
     {
+        #region Equipment
+
+        var equipment1 = new Equipment { 
+            Name = "Dishwasher"
+        };
+        var equipment2 = new Equipment
+        {
+            Name = "Washing Machine"
+        };
+        var equipment3 = new Equipment
+        {
+            Name = "Iron"
+        };
+        var equipment4 = new Equipment
+        {
+            Name = "Kettle"
+        };
+        var equipment5 = new Equipment
+        {
+            Name = "Coffe Machine"
+        };
+        var equipment6 = new Equipment
+        {
+            Name = "Air Conditioning"
+        };
+        var equipment7 = new Equipment
+        {
+            Name = "Balcony"
+        };
+        var equipment8 = new Equipment
+        {
+            Name = "TV"
+        };
+        var equipment9 = new Equipment
+        {
+            Name = "Bath"
+        };
+        var equipment10 = new Equipment
+        {
+            Name = "Oven"
+        };
+        var equipment11 = new Equipment
+        {
+            Name = "Microwave"
+        };
+
+        dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11);
+
+        #endregion
+
         #region Owner
 
         var owner1 = new Owner
@@ -123,7 +173,8 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 2,
             Floor = 2,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment1, equipment2, equipment4, equipment5 }
         };
         var flat2 = new Flat
         {
@@ -144,7 +195,8 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 3,
             Floor = 2,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment7, equipment9, equipment11 }
         };
         var flat3 = new Flat
         {
@@ -165,7 +217,8 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 2,
             Floor = 7,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment1, equipment3, equipment5, equipment6, equipment8 }
         };
         var flat4 = new Flat
         {
@@ -186,7 +239,8 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 3,
             Floor = 2,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment2, equipment4, equipment7, equipment9, equipment10 }
         };
         var flat5 = new Flat
         {
@@ -207,7 +261,8 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 2,
             Floor = 3,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment1, equipment2, equipment5, equipment8 }
         };
         var flat6 = new Flat
         {
@@ -228,7 +283,8 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 3,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment4, equipment6, equipment9 }
         };
         var flat7 = new Flat
         {
@@ -249,7 +305,8 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 9,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment3, equipment4, equipment7, equipment10, equipment11 }
         };
         var flat8 = new Flat
         {
@@ -270,7 +327,8 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 10,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment1, equipment2, equipment5, equipment7, equipment8 }
         };
         var flat9 = new Flat
         {
@@ -291,7 +349,8 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 4,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment3, equipment6, equipment11 }
         };
         var flat10 = new Flat
         {
@@ -312,7 +371,8 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 4,
             Floor = 2,
-            Elevator = true
+            Elevator = true,
+            Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
 
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
@@ -339,7 +399,8 @@ public static class DataSeeder
             VerificationStatus = VerificationStatus.Verified,
             Owner = owner1,
             Floor = 4,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment4, equipment5, equipment7, equipment9, equipment11 }
         };
         var room2 = new Room
         {
@@ -359,7 +420,8 @@ public static class DataSeeder
             VerificationStatus = VerificationStatus.Verified,
             Owner = owner1,
             Floor = 3,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment1, equipment2, equipment4, equipment5, equipment7, equipment10 }
         };
         var room3 = new Room
         {
@@ -379,7 +441,8 @@ public static class DataSeeder
             VerificationStatus = VerificationStatus.Verified,
             Owner = owner2,
             Floor = 1,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment3, equipment6, equipment8, equipment11 }
         };
         var room4 = new Room
         {
@@ -399,7 +462,8 @@ public static class DataSeeder
             VerificationStatus = VerificationStatus.Verified,
             Owner = owner3,
             Floor = 4,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment1, equipment2, equipment4, equipment5, equipment8 }
         };
         var room5 = new Room
         {
@@ -419,7 +483,8 @@ public static class DataSeeder
             VerificationStatus = VerificationStatus.Verified,
             Owner = owner4,
             Floor = 3,
-            Elevator = false
+            Elevator = false,
+            Equipment = { equipment3, equipment7, equipment9, equipment10 }
         };
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5);
@@ -446,7 +511,8 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
-            PlotArea= 200
+            PlotArea= 200,
+            Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
         var house2 = new House
         {
@@ -466,7 +532,8 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 4,
             NumberOfFloors = 2,
-            PlotArea = 120
+            PlotArea = 120,
+            Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
         };
         var house3 = new House
         {
@@ -486,7 +553,8 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 7,
             NumberOfFloors = 4,
-            PlotArea = 210
+            PlotArea = 210,
+            Equipment = { equipment2, equipment4, equipment6, equipment9 }
         };
         var house4 = new House
         {
@@ -506,7 +574,8 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 4,
             NumberOfFloors = 3,
-            PlotArea = 130
+            PlotArea = 130,
+            Equipment = { equipment1, equipment3, equipment5, equipment7, equipment8 }
         };
         var house5 = new House
         {
@@ -526,7 +595,8 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 3,
             NumberOfFloors = 1,
-            PlotArea = 140
+            PlotArea = 140,
+            Equipment = { equipment2, equipment6, equipment10, equipment11 }
         };
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);

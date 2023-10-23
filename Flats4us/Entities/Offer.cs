@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Flats4us.Helpers.Enums;
+using Newtonsoft.Json;
 
 namespace Flats4us.Entities
 {

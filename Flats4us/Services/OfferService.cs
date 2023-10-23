@@ -4,6 +4,7 @@ using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace Flats4us.Services
@@ -87,11 +88,6 @@ namespace Flats4us.Services
                 }
             }
 
-            if (!input.PropertyTypes.IsNullOrEmpty())
-            {
-                //query = query.Where(o => o.Property.)
-            }
-
             if (input.MinPrice.HasValue)
             {
                 query = query.Where(o => o.Price >= input.MinPrice);
@@ -136,18 +132,6 @@ namespace Flats4us.Services
             {
                 query = query.Where(o => o.Property.GetType() == typeof(Flat) || o.Property.GetType() == typeof(Room));
                 query = query.Where(o => (o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Flat : null) == input.Floor);
-            }
-
-            if (allowedSorts.Contains(input.Sorting)) 
-            {
-                if (input.Sorting.Equals("Price ASC") || input.Sorting.Equals("Price DSC")) 
-                { 
-                    query = query.OrderBy(input.Sorting);
-                }
-                else if (input.Sorting.Equals("Area ASC") || input.Sorting.Equals("Area DSC"))
-                {
-                    query = query.OrderBy("Property." + input.Sorting);
-                }
             }
 
             var result = await query
@@ -199,11 +183,44 @@ namespace Flats4us.Services
                 })
                 .ToListAsync();
 
+            if (!input.PropertyTypes.IsNullOrEmpty())
+            {
+                result = result.Where(o => input.PropertyTypes.Contains(o.Property.PropertyType)).ToList();
+            }
+
             if (input.Distance.HasValue)
             {
                 result = result
                     .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
+            }
+            
+            if (allowedSorts.Contains(input.Sorting))
+            {
+                switch (input.Sorting)
+                {
+                    case "Price ASC":
+                        result = result.OrderBy(o => o.Price).ToList();
+                        break;
+                    case "Price DSC":
+                        result = result.OrderByDescending(o => o.Price).ToList();
+                        break;
+                    case "Area ASC":
+                        result = result.OrderBy(o => o.Property.Area).ToList();
+                        break;
+                    case "Area DSC":
+                        result = result.OrderByDescending(o => o.Property.Area).ToList();
+                        break;
+                    case "NumberOfRooms ASC":
+                        result = result.OrderBy(o => o.Property.NumberOfRooms).ToList();
+                        break;
+                    case "NumberOfRooms DSC":
+                        result = result.OrderByDescending(o => o.Property.NumberOfRooms).ToList();
+                        break;
+                    default:
+                        result = result.OrderBy(o => o.OfferId).ToList();
+                        break;
+                }
             }
 
             result = result.Skip((input.PageNumber - 1) * input.PageSize)
