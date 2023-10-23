@@ -21,6 +21,9 @@ import { MatStepper } from '@angular/material/stepper';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRealEstateComponent implements OnInit, OnDestroy {
+	@ViewChild('stepper')
+	public stepper: MatStepper | undefined;
+
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public addRealEstateFormAddressData;
@@ -35,9 +38,6 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	public completed = false;
 	public fileName = '';
 	public urls: string[] = [];
-
-	@ViewChild('stepper')
-	public stepper: MatStepper | undefined;
 
 	constructor(
 		private formBuilder: FormBuilder,
