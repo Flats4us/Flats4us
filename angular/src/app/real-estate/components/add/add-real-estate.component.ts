@@ -1,15 +1,18 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
+	ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IGroup, IRegionCity } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, map, of, takeUntil } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
 	selector: 'app-add-real-estate',
@@ -18,6 +21,9 @@ import { RealEstateService } from '../../services/real-estate.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRealEstateComponent implements OnInit, OnDestroy {
+	@ViewChild('stepper')
+	public stepper: MatStepper | undefined;
+
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public addRealEstateFormAddressData;
@@ -26,7 +32,6 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
-	public urlsOptions$: Observable<string[]>;
 
 	private regionCityArray: IRegionCity[] = [];
 
@@ -38,7 +43,8 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private http: HttpClient,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
+		private changeDetectorRef: ChangeDetectorRef
 	) {
 		this.addRealEstateFormAddressData = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -68,7 +74,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			]),
 			floors: new FormControl(null, [
 				Validators.required,
-				Validators.min(1),
+				Validators.min(0),
 				Validators.pattern('^[0-9]*$'),
 			]),
 			year: new FormControl('', Validators.required),
@@ -85,8 +91,6 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			)
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
-
-		this.urlsOptions$ = of(this.urls);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -115,10 +119,11 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = () => {
-				if (this.urls.length > 10) {
+				if (this.urls.length > 9) {
 					return;
 				}
 				this.urls.push(<string>reader.result);
+				this.changeDetectorRef.detectChanges();
 			};
 		}
 	}
@@ -138,7 +143,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	}
 
 	public addOffer() {
-		this.router.navigate(['/']);
+		this.router.navigate(['offer/add']);
 	}
 
 	public ngOnInit() {
@@ -208,9 +213,13 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	}
 
 	public formReset() {
+		this.urls = [];
+		this.fileName = '';
 		this.addRealEstateFormAddressData.reset();
 		this.addRealEstateFormRemainingData.reset();
 		this.addRealEstateFormPhotos.reset();
-		this.urls = [];
+		if (this.stepper) {
+			this.stepper.selectedIndex = 0;
+		}
 	}
 }
