@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RentsComponent } from './rents.component';
 import { RentsRoutingModule } from './rents-routing.module';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { RentsRoutingModule } from './rents-routing.module';
   ],
   imports: [
     CommonModule,
-    RentsRoutingModule
+    RentsRoutingModule,
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     RentsComponent
