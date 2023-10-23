@@ -140,8 +140,6 @@ export class StartService {
 	public sortByOptions: ISortOption[] = [
 		{ type: 'price', direction: 'asc', description: 'ceny: od najniższej' },
 		{ type: 'price', direction: 'desc', description: 'ceny: od najwyższej' },
-		{ type: 'rent', direction: 'asc', description: 'czynszu: od najniższego' },
-		{ type: 'rent', direction: 'desc', description: 'czynszu: od najwyższego' },
 		{
 			type: 'rooms',
 			direction: 'asc',
