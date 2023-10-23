@@ -1,4 +1,5 @@
 ﻿using Flats4us.Helpers.Enums;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
@@ -33,7 +34,8 @@ namespace Flats4us.Entities.Dto
 
         public int? Floor { get; set; }
 
-        //public List<Equipment>? Equipment { get; set; }
+        [FromBody]
+        public List<EquipmentDto>? Equipment { get; set; }
 
         [Required]
         public string Sorting { get; set; }

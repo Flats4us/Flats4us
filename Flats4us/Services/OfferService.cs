@@ -167,7 +167,12 @@ namespace Flats4us.Services
                         NumberOfRooms = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : null,
                         NumberOfFloors = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfFloors : null,
                         PlotArea = o.Property.GetType() == typeof(House) ? ((House)o.Property).PlotArea : null,
-                        Floor = o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Floor : null
+                        Floor = o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Floor : null,
+                        Equipment = o.Property.Equipment.Select(e => new EquipmentDto
+                        {
+                            EquipmentId = e.EquipmentId,
+                            Name = e.Name
+                        }).ToList()
                     },
                     Owner = new OwnerStudentDto
                     {
@@ -194,7 +199,15 @@ namespace Flats4us.Services
                     .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
-            
+
+            if (input.Equipment != null && input.Equipment.Any())
+            {
+                result = result.Where(o => input.Equipment
+                    .All(ie => o.Property.Equipment
+                    .Any(e => e.EquipmentId == ie.EquipmentId)))
+                    .ToList();
+            }
+
             if (allowedSorts.Contains(input.Sorting))
             {
                 switch (input.Sorting)

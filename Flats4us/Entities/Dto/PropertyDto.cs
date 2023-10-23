@@ -61,5 +61,7 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         public int? Floor { get; set; }
+
+        public ICollection<EquipmentDto> Equipment { get; set; }
     }
 }

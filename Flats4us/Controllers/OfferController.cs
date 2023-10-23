@@ -37,7 +37,7 @@ namespace Flats4us.Controllers
         }
 
         // GET: api/Offer
-        [HttpGet("filtered")]
+        [HttpPost("filtered")]
         public async Task<IActionResult> GetFilteredAndSorted([FromQuery] GetFilteredAndSortedOffersDto input)
         {
             try
