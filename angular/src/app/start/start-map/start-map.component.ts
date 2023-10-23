@@ -66,14 +66,14 @@ export class StartMapComponent implements OnInit, OnDestroy {
 			this.http.get(url).subscribe((response: any) => {
 				if (response.length > 0) {
 					const { lat, lon, icon } = response[0];
-					// const markerIcon = lIcon({
-					// 	iconUrl: icon,
-					// 	iconSize: [25, 41],
-					// 	iconAnchor: [12, 41],
-					// 	popupAnchor: [1, -34],
-					// 	shadowSize: [41, 41],
-					// });
-					marker([+lat, +lon]).addTo(this.map as Map);
+					const markerIcon = lIcon({
+						iconUrl: icon,
+						iconSize: [25, 41],
+						iconAnchor: [12, 41],
+						popupAnchor: [1, -34],
+						shadowSize: [41, 41],
+					});
+					marker([+lat, +lon], { icon: markerIcon }).addTo(this.map as Map);
 				}
 			});
 		});
