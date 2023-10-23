@@ -70,14 +70,22 @@ namespace Flats4us.Services
 
         public async Task<List<OfferDto>> GetFilteredAndSortedOffers(GetFilteredAndSortedOffersDto input)
         {
-            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "Area ASC", "Area DSC" };
+            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
+
+            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
             var query = _context.Offers.AsQueryable();
 
-            query = query.Where(o => o.Property.Province.Equals(input.Province) &&
-                o.Property.City.Equals(input.City));
+            if (!input.Distance.HasValue)
+            {
+                query = query.Where(o => o.Property.Province.Equals(input.Province) &&
+                    o.Property.City.Equals(input.City));
 
-            // DISTANCE
+                if (!string.IsNullOrEmpty(input.District))
+                {
+                    query = query.Where(o => o.Property.District.Equals(input.District));
+                }
+            }
 
             if (!input.PropertyTypes.IsNullOrEmpty())
             {
@@ -94,7 +102,7 @@ namespace Flats4us.Services
                 query = query.Where(o => o.Price <= input.MaxPrice);
             }
 
-            if (!string.IsNullOrEmpty(input.District))
+            if (!string.IsNullOrEmpty(input.District) && !input.Distance.HasValue)
             {
                 query = query.Where(o => o.Property.District.Equals(input.District));
             }
@@ -121,12 +129,13 @@ namespace Flats4us.Services
 
             if (input.MinNumberOfRooms.HasValue)
             {
-                //query = query.Where(o => o.Property.ConstructionYear >= input.MinNumberOfRooms);
+                query = query.Where(o => (o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : 1) >= input.MinNumberOfRooms);
             }
 
-            if (input.MaxNumberOfFloors.HasValue)
+            if (input.Floor.HasValue)
             {
-                //query = query.Where(o => o.Property <= input.MaxNumberOfFloors);
+                query = query.Where(o => o.Property.GetType() == typeof(Flat) || o.Property.GetType() == typeof(Room));
+                query = query.Where(o => (o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Flat : null) == input.Floor);
             }
 
             if (allowedSorts.Contains(input.Sorting)) 
@@ -139,7 +148,6 @@ namespace Flats4us.Services
                 {
                     query = query.OrderBy("Property." + input.Sorting);
                 }
-                
             }
 
             var result = await query
@@ -164,6 +172,8 @@ namespace Flats4us.Services
                         Flat = o.Property.Flat,
                         City = o.Property.City,
                         PostalCode = o.Property.PostalCode,
+                        GeoLat = o.Property.GeoLat,
+                        GeoLon = o.Property.GeoLon,
                         Area = o.Property.Area,
                         MaxNumberOfInhabitants = o.Property.MaxNumberOfInhabitants,
                         ConstructionYear = o.Property.ConstructionYear,
@@ -187,9 +197,18 @@ namespace Flats4us.Services
                     },
                     SurveyOwnerOffer = o.SurveyOwnerOffer
                 })
-                .Skip((input.PageNumber - 1) * input.PageSize)
-                .Take(input.PageSize)
                 .ToListAsync();
+
+            if (input.Distance.HasValue)
+            {
+                result = result
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .ToList();
+            }
+
+            result = result.Skip((input.PageNumber - 1) * input.PageSize)
+                .Take(input.PageSize)
+                .ToList();
 
             return result;
         }

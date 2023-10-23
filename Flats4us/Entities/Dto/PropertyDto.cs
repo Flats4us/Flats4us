@@ -32,6 +32,12 @@ namespace Flats4us.Entities.Dto
         public string PostalCode { get; set; }
 
         [Required]
+        public double GeoLat { get; set; }
+
+        [Required]
+        public double GeoLon { get; set; }
+
+        [Required]
         public int Area { get; set; }
 
         [Required]

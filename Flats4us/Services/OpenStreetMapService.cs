@@ -18,10 +18,10 @@ public class OpenStreetMapService : IOpenStreetMapService
 
 
 
-    public async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string province, string? district, string street, string number, string city, string postalCode)
+    public async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string province, string? district, string? street, string? number, string city, string? postalCode)
     {
 
-        string address = $"{number} {street}, {postalCode} {city}, {district}, {province}";
+        string address = $"{number}, {street}, {district}, {city}, {province}, {postalCode}";
         string query = $"{OpenStreetMapApiUrl}?format=json&q={Uri.EscapeDataString(address)}";
 
         HttpResponseMessage response = await _httpClient.GetAsync(query);
@@ -41,7 +41,7 @@ public class OpenStreetMapService : IOpenStreetMapService
         return (0, 0);
     }
 
-    public static double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+    public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
     {
         const double EarthRadiusKm = 6371;
 

@@ -11,8 +11,7 @@ namespace Flats4us.Entities.Dto
         [Required]
         public string City { get; set; }
 
-        [Required]
-        public int Distance { get; set; }
+        public int? Distance { get; set; }
 
         public List<PropertyType>? PropertyTypes { get; set; }
 
@@ -32,7 +31,7 @@ namespace Flats4us.Entities.Dto
 
         public int? MinNumberOfRooms { get; set; }
 
-        public int? MaxNumberOfFloors { get; set; }
+        public int? Floor { get; set; }
 
         //public List<Equipment>? Equipment { get; set; }
 
