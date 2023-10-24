@@ -503,3 +503,4 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+/Flats4us/Images/Properties
