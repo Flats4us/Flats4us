@@ -16,6 +16,7 @@ builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 
 //builder.Services.AddScoped<ISurveyOwnerOfferService, SurveyOwnerOfferService>();
 builder.Services.AddControllers();
