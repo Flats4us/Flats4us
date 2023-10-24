@@ -8,10 +8,10 @@ const routes: Routes = [
 		pathMatch: 'full',
 		component: RentsComponent,
 	},
-    {
+	{
 		path: 'search',
 		component: RentsComponent,
-	}
+	},
 ];
 
 @NgModule({
