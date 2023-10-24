@@ -169,6 +169,8 @@ AutoTest.Net/
 # Installshield output folder
 [Ee]xpress/
 
+Images/Properties/
+
 # DocProject is a documentation generator add-in
 DocProject/buildhelp/
 DocProject/Help/*.HxT
@@ -503,5 +505,3 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
-
-Images/Properties/
