@@ -2,6 +2,7 @@
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Flats4us.Controllers
 {

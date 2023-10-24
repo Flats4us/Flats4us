@@ -4,6 +4,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Flats4us.Services
 {
@@ -106,9 +107,10 @@ namespace Flats4us.Services
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
+            var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
 
-            var equipment = await _context.Equipment
-                .Where(e => input.Equipment
+            var equipmentList = await _context.Equipment
+                .Where(e => equipmentDtoList
                     .Select(e => e.EquipmentId)
                     .Contains(e.EquipmentId)
                 )
@@ -137,7 +139,7 @@ namespace Flats4us.Services
                         Floor = input.Floor,
                         Elevator = input.Elevator,
                         OwnerId = input.OwnerId,
-                        Equipment = equipment
+                        Equipment = equipmentList
                     };
                     await _context.Flats.AddAsync(flat);
                     break;
@@ -161,7 +163,7 @@ namespace Flats4us.Services
                         Floor = input.Floor,
                         Elevator = input.Elevator,
                         OwnerId = input.OwnerId,
-                        Equipment = equipment
+                        Equipment = equipmentList
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
@@ -186,7 +188,7 @@ namespace Flats4us.Services
                         NumberOfFloors = input.NumberOfFloors,
                         PlotArea = input.PlotArea,
                         OwnerId = input.OwnerId,
-                        Equipment = equipment
+                        Equipment = equipmentList
                     };
                     await _context.Houses.AddAsync(house);
                     break;

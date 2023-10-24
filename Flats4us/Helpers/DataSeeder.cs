@@ -902,19 +902,6 @@ public static class DataSeeder
 
         #endregion
 
-        //modelBuilder.Entity<Interest>().HasData(
-        //    new { InterestId = 1, Name = "Sailing" },
-        //    new { InterestId = 2, Name = "Painting" },
-        //    new { InterestId = 3, Name = "Photography" },
-        //    new { InterestId = 4, Name = "Cooking" },
-        //    new { InterestId = 5, Name = "Gardening" },
-        //    new { InterestId = 6, Name = "Playing Guitar" },
-        //    new { InterestId = 7, Name = "Reading Books" },
-        //    new { InterestId = 8, Name = "Hiking" },
-        //    new { InterestId = 9, Name = "Dancing" },
-        //    new { InterestId = 10, Name = "Yoga" }
-        //);
-
         dbContext.SaveChanges();
     }
 }
