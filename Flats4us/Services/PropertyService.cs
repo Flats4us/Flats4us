@@ -106,6 +106,14 @@ namespace Flats4us.Services
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
+
+            var equipment = await _context.Equipment
+                .Where(e => input.Equipment
+                    .Select(e => e.EquipmentId)
+                    .Contains(e.EquipmentId)
+                )
+                .ToListAsync();
+
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
@@ -128,7 +136,8 @@ namespace Flats4us.Services
                         NumberOfRooms = input.NumberOfRooms,
                         Floor = input.Floor,
                         Elevator = input.Elevator,
-                        OwnerId = input.OwnerId
+                        OwnerId = input.OwnerId,
+                        Equipment = equipment
                     };
                     await _context.Flats.AddAsync(flat);
                     break;
@@ -151,7 +160,8 @@ namespace Flats4us.Services
                         VerificationStatus = VerificationStatus.NotVerified,
                         Floor = input.Floor,
                         Elevator = input.Elevator,
-                        OwnerId = input.OwnerId
+                        OwnerId = input.OwnerId,
+                        Equipment = equipment
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
@@ -175,7 +185,8 @@ namespace Flats4us.Services
                         NumberOfRooms = input.NumberOfRooms,
                         NumberOfFloors = input.NumberOfFloors,
                         PlotArea = input.PlotArea,
-                        OwnerId = input.OwnerId
+                        OwnerId = input.OwnerId,
+                        Equipment = equipment
                     };
                     await _context.Houses.AddAsync(house);
                     break;

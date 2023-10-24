@@ -54,5 +54,7 @@ namespace Flats4us.Entities.Dto
         public int NumberOfFloors { get; set; }
 
         public int PlotArea { get; set; }
+
+        public List<EquipmentDto> Equipment { get; set; }
     }
 }
