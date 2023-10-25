@@ -39,7 +39,7 @@ namespace Flats4us.Controllers
 
         // POST: api/Property
         [HttpPost]
-        public async Task<IActionResult> AddProperty([FromForm] NewPropertyDto input)
+        public async Task<IActionResult> AddProperty([FromForm] AddEditPropertyDto input)
         {
             try
             {
@@ -54,11 +54,23 @@ namespace Flats4us.Controllers
             }
         }
 
-        //// PUT: api/Property
-        //public async Task<IActionResult> UpdateProperty([FromForm] NewPropertyDto input)
-        //{
+        // PUT: api/Property/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProperty(int id, [FromForm] AddEditPropertyDto input)
+        {
+            try
+            {
+                await _propertyService.UpdateProperyAsync(id, input);
+                _logger.LogInformation($"Updating property - id: {id}");
+                return Ok("Property updated successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Updating property - id: {id}");
+                return BadRequest($"An error occurred: {ex.Message} {ex.InnerException.Message}");
+            }
 
-        //}
+        }
 
         // DELETE: api/Property/{id}
         [HttpDelete("{id}")]

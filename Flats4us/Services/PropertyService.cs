@@ -101,7 +101,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task AddPropertyAsync(NewPropertyDto input)
+        public async Task AddPropertyAsync(AddEditPropertyDto input)
         {
             var imageFolder = Guid.NewGuid().ToString();
 
@@ -206,6 +206,122 @@ namespace Flats4us.Services
                 foreach (var image in input.Images)
                 {
                     await ImageUtility.ProcessAndSaveImage(image, $"Images/Properties/{imageFolder}/Images");
+                }
+            }
+        }
+
+        public async Task UpdateProperyAsync(int id, AddEditPropertyDto input)
+        {
+            if (await _context.Properties.FindAsync(id) is null)
+            {
+                throw new ArgumentException($"Property with ID {id} not found.");
+            }
+
+            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
+
+            var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
+
+            var equipmentList = await _context.Equipment
+                .Where(e => equipmentDtoList
+                    .Select(e => e.EquipmentId)
+                    .Contains(e.EquipmentId)
+                )
+                .ToListAsync();
+
+            string imageDirectoryPath = string.Empty;
+
+            switch (input.PropertyType)
+            {
+                case PropertyType.Flat:
+                    var flat = await _context.Flats
+                        .Include(f => f.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    if (flat is null) throw new ArgumentException($"Flat with ID {id} not found.");
+
+                    imageDirectoryPath = Path.Combine("Images/Properties", flat.ImagesPath);
+
+                    flat.Province = input.Province;
+                    flat.District = input.District;
+                    flat.Street = input.Street;
+                    flat.Number = input.Number;
+                    flat.Flat = input.Flat;
+                    flat.City = input.City;
+                    flat.PostalCode = input.PostalCode;
+                    flat.GeoLat = geoInfo.Latitude;
+                    flat.GeoLon = geoInfo.Longitude;
+                    flat.Area = input.Area;
+                    flat.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
+                    flat.ConstructionYear = input.ConstructionYear;
+                    flat.NumberOfRooms = input.NumberOfRooms;
+                    flat.Floor = input.Floor;
+                    flat.Elevator = input.Elevator;
+                    flat.Equipment = equipmentList;
+                    break;
+                case PropertyType.Room:
+                    var room = await _context.Rooms
+                        .Include(f => f.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    if (room is null) throw new ArgumentException($"Room with ID {id} not found.");
+
+                    imageDirectoryPath = Path.Combine("Images/Properties", room.ImagesPath);
+
+                    room.Province = input.Province;
+                    room.District = input.District;
+                    room.Street = input.Street;
+                    room.Number = input.Number;
+                    room.Flat = input.Flat;
+                    room.City = input.City;
+                    room.PostalCode = input.PostalCode;
+                    room.GeoLat = geoInfo.Latitude;
+                    room.GeoLon = geoInfo.Longitude;
+                    room.Area = input.Area;
+                    room.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
+                    room.ConstructionYear = input.ConstructionYear;
+                    room.Floor = input.Floor;
+                    room.Elevator = input.Elevator;
+                    room.Equipment = equipmentList;
+                    break;
+                case PropertyType.House:
+                    var house = await _context.Houses
+                        .Include(f => f.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    if (house is null) throw new ArgumentException($"House with ID {id} not found.");
+
+                    imageDirectoryPath = Path.Combine("Images/Properties", house.ImagesPath);
+
+                    house.Province = input.Province;
+                    house.District = input.District;
+                    house.Street = input.Street;
+                    house.Number = input.Number;
+                    house.Flat = input.Flat;
+                    house.City = input.City;
+                    house.PostalCode = input.PostalCode;
+                    house.GeoLat = geoInfo.Latitude;
+                    house.GeoLon = geoInfo.Longitude;
+                    house.Area = input.Area;
+                    house.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
+                    house.ConstructionYear = input.ConstructionYear;
+                    house.NumberOfRooms = input.NumberOfRooms;
+                    house.NumberOfFloors = input.NumberOfFloors;
+                    house.PlotArea = input.PlotArea;
+                    house.Equipment = equipmentList;
+                    break;
+            }
+
+                await _context.SaveChangesAsync();            
+
+            await ImageUtility.DeleteDirectory(imageDirectoryPath);
+
+            if (input.TitleDeed != null && input.TitleDeed.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"{imageDirectoryPath}/TitleDeed");
+            }
+
+            if (input.Images != null && input.Images.Count > 0)
+            {
+                foreach (var image in input.Images)
+                {
+                    await ImageUtility.ProcessAndSaveImage(image, $"{imageDirectoryPath}/Images");
                 }
             }
         }

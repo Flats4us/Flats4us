@@ -153,6 +153,8 @@ public static class DataSeeder
 
         #endregion
 
+        ImageUtility.DeleteDirectory("Images/Properties").Wait();
+
         #region Flat
 
         var flat1 = new Flat
@@ -177,7 +179,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5 }
         };
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath);
         var flat2 = new Flat
         {
             Province = "Mazowieckie",
@@ -200,7 +201,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment7, equipment9, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(flat2.ImagesPath);
         var flat3 = new Flat
         {
             Province = "Mazowieckie",
@@ -223,7 +223,6 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment1, equipment3, equipment5, equipment6, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(flat3.ImagesPath);
         var flat4 = new Flat
         {
             Province = "Mazowieckie",
@@ -246,7 +245,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment2, equipment4, equipment7, equipment9, equipment10 }
         };
-        ImageUtility.SeedPropertyImage(flat4.ImagesPath);
         var flat5 = new Flat
         {
             Province = "Mazowieckie",
@@ -269,7 +267,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment1, equipment2, equipment5, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(flat5.ImagesPath);
         var flat6 = new Flat
         {
             Province = "Mazowieckie",
@@ -292,7 +289,6 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment4, equipment6, equipment9 }
         };
-        ImageUtility.SeedPropertyImage(flat6.ImagesPath);
         var flat7 = new Flat
         {
             Province = "Mazowieckie",
@@ -315,7 +311,6 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment3, equipment4, equipment7, equipment10, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(flat7.ImagesPath);
         var flat8 = new Flat
         {
             Province = "Mazowieckie",
@@ -338,7 +333,6 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment1, equipment2, equipment5, equipment7, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(flat8.ImagesPath);
         var flat9 = new Flat
         {
             Province = "Mazowieckie",
@@ -361,7 +355,6 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment3, equipment6, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(flat9.ImagesPath);
         var flat10 = new Flat
         {
             Province = "Mazowieckie",
@@ -384,9 +377,19 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(flat10.ImagesPath);
-
+        
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
+
+        ImageUtility.SeedPropertyImage(flat1.ImagesPath);  
+        ImageUtility.SeedPropertyImage(flat2.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat3.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat4.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat5.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat6.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat7.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat8.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat9.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat10.ImagesPath);
 
         #endregion
 
@@ -413,7 +416,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment4, equipment5, equipment7, equipment9, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(room1.ImagesPath);
         var room2 = new Room
         {
             Province = "Mazowieckie",
@@ -435,7 +437,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment7, equipment10 }
         };
-        ImageUtility.SeedPropertyImage(room2.ImagesPath);
         var room3 = new Room
         {
             Province = "Mazowieckie",
@@ -457,7 +458,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment3, equipment6, equipment8, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(room3.ImagesPath);
         var room4 = new Room
         {
             Province = "Mazowieckie",
@@ -479,7 +479,6 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(room4.ImagesPath);
         var room5 = new Room
         {
             Province = "Mazowieckie",
@@ -501,9 +500,14 @@ public static class DataSeeder
             Elevator = false,
             Equipment = { equipment3, equipment7, equipment9, equipment10 }
         };
-        ImageUtility.SeedPropertyImage(room5.ImagesPath);
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5);
+
+        ImageUtility.SeedPropertyImage(room1.ImagesPath);
+        ImageUtility.SeedPropertyImage(room2.ImagesPath);
+        ImageUtility.SeedPropertyImage(room3.ImagesPath);
+        ImageUtility.SeedPropertyImage(room4.ImagesPath);
+        ImageUtility.SeedPropertyImage(room5.ImagesPath);
 
         #endregion
 
@@ -530,7 +534,7 @@ public static class DataSeeder
             PlotArea= 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
-        ImageUtility.SeedPropertyImage(house1.ImagesPath);
+        
         var house2 = new House
         {
             Province = "Mazowieckie",
@@ -552,7 +556,7 @@ public static class DataSeeder
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(house2.ImagesPath);
+        
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -574,7 +578,7 @@ public static class DataSeeder
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
         };
-        ImageUtility.SeedPropertyImage(house3.ImagesPath);
+        
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -596,7 +600,7 @@ public static class DataSeeder
             PlotArea = 130,
             Equipment = { equipment1, equipment3, equipment5, equipment7, equipment8 }
         };
-        ImageUtility.SeedPropertyImage(house4.ImagesPath);
+
         var house5 = new House
         {
             Province = "Mazowieckie",
@@ -618,9 +622,15 @@ public static class DataSeeder
             PlotArea = 140,
             Equipment = { equipment2, equipment6, equipment10, equipment11 }
         };
-        ImageUtility.SeedPropertyImage(house5.ImagesPath);
+        
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
+
+        ImageUtility.SeedPropertyImage(house1.ImagesPath);
+        ImageUtility.SeedPropertyImage(house2.ImagesPath);
+        ImageUtility.SeedPropertyImage(house3.ImagesPath);
+        ImageUtility.SeedPropertyImage(house4.ImagesPath);
+        ImageUtility.SeedPropertyImage(house5.ImagesPath);
 
         #endregion
 

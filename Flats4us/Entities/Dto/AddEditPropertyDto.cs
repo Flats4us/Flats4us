@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
-    public class NewPropertyDto
+    public class AddEditPropertyDto
     {
         [Required]
         public PropertyType PropertyType { get; set; }
