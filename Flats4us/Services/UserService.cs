@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
 {
-    public class UserService : IUserService
+    public abstract class UserService : IUserService
     {
         public readonly Flats4usContext _context;
 
@@ -28,6 +28,30 @@ namespace Flats4us.Services
 
 
 
+        // This method doesn't have an implementation in the base class.
+        // It's a contract that derived classes must fulfill.
+        protected abstract User CreateUserFromDto(UserRegisterDto request);
+
+        protected User PopulateCommonFieldsFromDto(User user, UserRegisterDto request)
+        {
+            user.Username = request.Username;
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            //user.Role = request.Role;
+            user.AccountCreationDate = DateTime.UtcNow;
+            user.LastLoginDate = DateTime.UtcNow;
+            user.Name = request.Name;
+            user.Surname = request.Surname;
+            user.Street = request.Street;
+            user.Number = request.Number;
+            user.Flat = request.Flat;
+            user.City = request.City;
+            user.PostalCode = request.PostalCode;
+            user.Email = request.Email;
+            user.PhoneNumber = request.PhoneNumber;
+            // ... any other common fields ...
+
+            return user;
+        }
 
         public async Task<User> RegisterAsync(UserRegisterDto request)
         {
@@ -60,25 +84,9 @@ namespace Flats4us.Services
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
                 // Create a new user object
-                User user = new User()
-                {
-                    Username = request.Username,
-                    PasswordHash = passwordHash,
-                    Role = request.Role,
-                    AccountCreationDate = DateTime.UtcNow,  
-                    LastLoginDate = DateTime.UtcNow,  
+                User user = CreateUserFromDto(request);
 
-                    // Map additional fields from DTO
-                    Name = request.Name,
-                    Surname = request.Surname,
-                    Street = request.Street,
-                    Number = request.Number,
-                    Flat = request.Flat,  
-                    City = request.City,
-                    PostalCode = request.PostalCode,
-                    Email = request.Email,
-                    PhoneNumber = request.PhoneNumber
-                };
+
 
                 // Add the user to the database
                 _context.Users.Add(user);

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Flats4us.Entities
 {
     [Table("User")]
-    public class User
+    public abstract class User
     {
         public const int MinUsernameLenght = 6;
         public const int MaxUsernameLenght = 30;

@@ -16,12 +16,11 @@ namespace Flats4us.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
         private readonly IConfiguration _configuration;
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
 
-        public AuthController(IConfiguration configuration, UserService userService)
+        public AuthController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
             _userService = userService;
@@ -30,6 +29,34 @@ namespace Flats4us.Controllers
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> RegisterAsync(UserRegisterDto request)
+        {
+            try
+            {
+                var user = await _userService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("register-student")]
+        public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
+        {
+            try
+            {
+                var user = await _userService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("register-owner")]
+        public async Task<ActionResult<User>> RegisterOwnerAsync(OwnerRegisterDto request)
         {
             try
             {

@@ -10,7 +10,7 @@ namespace Flats4us.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;  // Assuming you have a service interface called IUserService
+        private readonly IUserService _userService;  
 
         public UserController(IUserService userService)
         {
@@ -23,6 +23,8 @@ namespace Flats4us.Controllers
         public async Task<IActionResult> GetAsync()
         {
             var users = await _userService.GetAllUsersAsync();
+            if (users == null || !users.Any())
+                return NotFound("No users found");
             return Ok(users);
         }
 
@@ -37,16 +39,7 @@ namespace Flats4us.Controllers
             return Ok(user);
         }
 
-        // POST api/<UserController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserRegisterDto userDto)
-        {
-            if (userDto == null)
-                return BadRequest("Invalid user data");
-
-            var user = await _userService.RegisterAsync(userDto);
-            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user);
-        }
+       
 
        
 

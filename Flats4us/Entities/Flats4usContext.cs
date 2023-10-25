@@ -36,7 +36,6 @@ namespace Flats4us.Entities
         public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
         public DbSet<SurveyStudent> StudentSurveys { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Tenant> Tenants { get; internal set; }
 
         public Flats4usContext() { }
 
@@ -1363,42 +1362,42 @@ namespace Flats4us.Entities
             //    }
             //);
 
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    UserId = 1,
-                    Name = "Dominik Name",
-                    Surname = "Dominik Surname",
-                    Street = "123 Dominik St",
-                    Number = 45,
-                    City = "Dominik City",
-                    PostalCode = "12345",
-                    Username = "Dominik",
-                    Email = "dominik@example.com",
-                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
-                    PhoneNumber = "123-456-7890",
-                    Role = "Tenant",
-                    AccountCreationDate = DateTime.Now,
-                    LastLoginDate = DateTime.Now
-                },
-                new User
-                {
-                    UserId = 2,
-                    Name = "Test Name",
-                    Surname = "Test Surname",
-                    Street = "456 Test St",
-                    Number = 78,
-                    City = "Test City",
-                    PostalCode = "67890",
-                    Username = "testuser",
-                    Email = "test@example.com",
-                    PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
-                    PhoneNumber = "987-654-3210",
-                    Role = "Tenant",
-                    AccountCreationDate = DateTime.Now,
-                    LastLoginDate = DateTime.Now
-                }
-            );
+            //modelBuilder.Entity<User>().HasData(
+            //    new User
+            //    {
+            //        UserId = 1,
+            //        Name = "Dominik Name",
+            //        Surname = "Dominik Surname",
+            //        Street = "123 Dominik St",
+            //        Number = 45,
+            //        City = "Dominik City",
+            //        PostalCode = "12345",
+            //        Username = "Dominik",
+            //        Email = "dominik@example.com",
+            //        PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+            //        PhoneNumber = "123-456-7890",
+            //        Role = "Tenant",
+            //        AccountCreationDate = DateTime.Now,
+            //        LastLoginDate = DateTime.Now
+            //    },
+            //    new User
+            //    {
+            //        UserId = 2,
+            //        Name = "Test Name",
+            //        Surname = "Test Surname",
+            //        Street = "456 Test St",
+            //        Number = 78,
+            //        City = "Test City",
+            //        PostalCode = "67890",
+            //        Username = "testuser",
+            //        Email = "test@example.com",
+            //        PasswordHash = "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f",
+            //        PhoneNumber = "987-654-3210",
+            //        Role = "Tenant",
+            //        AccountCreationDate = DateTime.Now,
+            //        LastLoginDate = DateTime.Now
+            //    }
+            //);
 
         }
     }
