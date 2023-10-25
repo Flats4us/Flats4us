@@ -210,7 +210,7 @@ namespace Flats4us.Services
             }
         }
 
-        public async Task UpdateProperyAsync(int id, AddEditPropertyDto input)
+        public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input)
         {
             if (await _context.Properties.FindAsync(id) is null)
             {

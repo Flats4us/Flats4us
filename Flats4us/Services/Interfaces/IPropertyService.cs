@@ -7,7 +7,7 @@ namespace Flats4us.Services.Interfaces
     {
         Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync();
         Task AddPropertyAsync(AddEditPropertyDto input);
-        Task UpdateProperyAsync(int id, AddEditPropertyDto input);
+        Task UpdatePropertyAsync(int id, AddEditPropertyDto input);
         Task DeletePropertyAsync(int id);
     }
 }

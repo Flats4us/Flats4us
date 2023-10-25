@@ -60,14 +60,14 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _propertyService.UpdateProperyAsync(id, input);
+                await _propertyService.UpdatePropertyAsync(id, input);
                 _logger.LogInformation($"Updating property - id: {id}");
                 return Ok("Property updated successfully");
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Updating property - id: {id}");
-                return BadRequest($"An error occurred: {ex.Message} {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message}");
             }
 
         }

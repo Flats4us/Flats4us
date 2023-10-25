@@ -534,7 +534,6 @@ public static class DataSeeder
             PlotArea= 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
-        
         var house2 = new House
         {
             Province = "Mazowieckie",
@@ -555,8 +554,7 @@ public static class DataSeeder
             NumberOfFloors = 2,
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
-        };
-        
+        };        
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -577,8 +575,7 @@ public static class DataSeeder
             NumberOfFloors = 4,
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
-        };
-        
+        };        
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -600,7 +597,6 @@ public static class DataSeeder
             PlotArea = 130,
             Equipment = { equipment1, equipment3, equipment5, equipment7, equipment8 }
         };
-
         var house5 = new House
         {
             Province = "Mazowieckie",
