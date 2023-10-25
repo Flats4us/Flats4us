@@ -1,38 +1,132 @@
 import { Injectable } from '@angular/core';
-import { IPayment } from '../models/rents.models';
+import { IPayment, IRent, Status } from '../models/rents.models';
 
 @Injectable()
 export class RentsService {
-	public imageArray: object[] = [
+	public rents: IRent[] = [
 		{
-			image: './assets/mieszkanie.jpg',
-			thumbImage: './assets/mieszkanie.jpg',
-			alt: '',
-			title: '',
+			title: 'Mieszkanie1, Wilanów',
+			publishDate: '8-12-2022',
+			status: Status.valid,
+			price: 4000,
+			description: '',
+			period: 2,
+			biddersNumber: 2,
+			viewsNumber: 100,
+			rules: '',
+			imageArray: [
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+			],
+			payments: [
+				{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
+				{ sum: 4000, date: '10-12-2022', kind: 'CZYNSZ' },
+			],
 		},
 		{
-			image: './assets/mieszkanie.jpg',
-			thumbImage: './assets/mieszkanie.jpg',
-			alt: '',
-			title: '',
+			title: 'Mieszkanie2, Mokotów',
+			publishDate: '8-12-2022',
+			status: Status.valid,
+			price: 4000,
+			description: '',
+			period: 2,
+			biddersNumber: 2,
+			viewsNumber: 100,
+			rules: '',
+			imageArray: [
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+			],
+			payments: [
+				{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
+				{ sum: 4000, date: '10-12-2022', kind: 'CZYNSZ' },
+			],
 		},
 		{
-			image: './assets/mieszkanie.jpg',
-			thumbImage: './assets/mieszkanie.jpg',
-			alt: '',
-			title: '',
+			title: 'Mieszkanie3, Ursynów',
+			publishDate: '8-12-2022',
+			status: Status.valid,
+			price: 4000,
+			description: '',
+			period: 2,
+			biddersNumber: 2,
+			viewsNumber: 100,
+			rules: '',
+			imageArray: [
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+				{
+					image: './assets/mieszkanie.jpg',
+					thumbImage: './assets/mieszkanie.jpg',
+					alt: '',
+					title: '',
+				},
+			],
+			payments: [
+				{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
+				{ sum: 4000, date: '10-12-2022', kind: 'CZYNSZ' },
+			],
 		},
-		{
-			image: './assets/mieszkanie.jpg',
-			thumbImage: './assets/mieszkanie.jpg',
-			alt: '',
-			title: '',
-		},
-	];
-	public rents: string[] = [
-		'Mieszkanie1, Wilanów',
-		'Mieszkanie2, Mokotów',
-		'Mieszkanie3, Ursynów',
 	];
 
 	public payments: IPayment[] = [

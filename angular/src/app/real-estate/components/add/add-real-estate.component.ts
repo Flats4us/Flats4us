@@ -1,5 +1,6 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -38,7 +39,8 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private http: HttpClient,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
+		private changeDetectorRef: ChangeDetectorRef
 	) {
 		this.addRealEstateFormAddressData = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
@@ -119,6 +121,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 					return;
 				}
 				this.urls.push(<string>reader.result);
+				this.changeDetectorRef.detectChanges();
 			};
 		}
 	}

@@ -6,20 +6,24 @@
 				id="add"
 				class="box-icon"
 				aria-label="Edit"
+				(click)="addOffer()"
 			>
 				<mat-icon>add</mat-icon>
 			</button>
 		</h1>
 		<mat-divider class="divider"></mat-divider>
 		<mat-nav-list>
-			<a mat-list-item *ngFor="let rent of this.rentsService.rents"
-				>{{ rent }} <mat-icon class="box-icon-2">check_circle</mat-icon></a
+			<a
+				mat-list-item
+				*ngFor="let rent of this.rentsService.rents"
+				(click)="showRent(rent)"
+				>{{ rent.title }} <mat-icon class="box-icon-2">check_circle</mat-icon></a
 			>
 		</mat-nav-list>
 	</div>
 	<div class="container-2">
 		<mat-form-field appearance="fill" class="title">
-			<mat-label>Wynajem - {{ title }}</mat-label>
+			<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
 			<span matSuffix>
 				<button mat-icon-button id="edit" class="box-icon" aria-label="Edit">
 					<mat-icon>edit</mat-icon>
@@ -37,7 +41,7 @@
 		<div class="gallery">
 			<ng-image-slider
 				#nav
-				[images]="this.rentsService.imageArray"
+				[images]="actualRent.imageArray"
 				[infinite]="false"
 				[autoSlide]="1"
 				[imageSize]="{ width: '40%', height: '24%' }"
@@ -83,16 +87,15 @@
 		<div class="payments">
 			<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 				<ng-container
-					[matColumnDef]="column"
 					*ngFor="let column of this.rentsService.displayedColumns"
+					[matColumnDef]="column"
 				>
 					<th mat-header-cell *matHeaderCellDef>{{ column }}</th>
 					<td mat-cell *matCellDef="let payment">{{ payment[column] }}</td>
 				</ng-container>
-				<!-- <tr mat-header-row *matHeaderRowDef="this.rentsService.displayedColumns"></tr> -->
 				<tr
 					mat-row
-					*matRowDef="let paymentrow; columns: this.rentsService.displayedColumns"
+					*matRowDef="let paymentRow; columns: this.rentsService.displayedColumns"
 				></tr>
 			</table>
 			<div class="button-box-2">
