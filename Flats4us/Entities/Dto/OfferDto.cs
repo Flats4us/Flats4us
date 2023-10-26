@@ -20,9 +20,11 @@ namespace Flats4us.Entities.Dto
         [Required]
         public string Decription { get; set; }
 
-        // In Months 
         [Required]
-        public int RentalPeriod { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
 
         [Required]
         public int NumberOfInterested { get; set; }
@@ -37,6 +39,6 @@ namespace Flats4us.Entities.Dto
         public OwnerStudentDto Owner { get; set; }
 
         [Required]
-        public SurveyOwnerOffer SurveyOwnerOffer { get; set; }
+        public SurveyOwnerOfferDto SurveyOwnerOffer { get; set; }
     }
 }

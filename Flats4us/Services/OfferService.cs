@@ -1,10 +1,9 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Linq;
+using Flats4us.Helpers.Enums;
 using System.Linq.Dynamic.Core;
 
 namespace Flats4us.Services
@@ -21,7 +20,7 @@ namespace Flats4us.Services
             _openStreetMapService = openStreetMapService;
         }
 
-        public async Task<List<OfferDto>> GetAll()
+        public async Task<List<OfferDto>> GetAllAsync()
         {
             var result = await _context.Offers
                 .Select(o => new OfferDto
@@ -31,13 +30,14 @@ namespace Flats4us.Services
                     OfferStatus = o.OfferStatus,
                     Price = o.Price,
                     Decription = o.Description,
-                    RentalPeriod = o.RentalPeriod,
+                    StartDate = o.StartDate,
+                    EndDate = o.EndDate,
                     NumberOfInterested = o.NumberOfInterested,
                     Regulations = o.Regulations,
                     Property = new PropertyDto
                     {
                         PropertyId = o.Property.PropertyId,
-                        PropertyType = o.Property.GetType() == typeof(Room) ? Helpers.Enums.PropertyType.Room : (o.Property.GetType() == typeof(House) ? Helpers.Enums.PropertyType.House : Helpers.Enums.PropertyType.Flat),
+                        PropertyType = o.Property.GetType() == typeof(Room) ? PropertyType.Room : (o.Property.GetType() == typeof(House) ? PropertyType.House : PropertyType.Flat),
                         Province = o.Property.Province,
                         District = o.Property.District,
                         Street = o.Property.Street,
@@ -45,12 +45,23 @@ namespace Flats4us.Services
                         Flat = o.Property.Flat,
                         City = o.Property.City,
                         PostalCode = o.Property.PostalCode,
+                        GeoLat = o.Property.GeoLat,
+                        GeoLon = o.Property.GeoLon,
                         Area = o.Property.Area,
                         MaxNumberOfInhabitants = o.Property.MaxNumberOfInhabitants,
                         ConstructionYear = o.Property.ConstructionYear,
                         ImagesPath = o.Property.ImagesPath,
                         Elevator = o.Property.Elevator,
-                        VerificationStatus = o.Property.VerificationStatus
+                        VerificationStatus = o.Property.VerificationStatus,
+                        NumberOfRooms = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : null,
+                        NumberOfFloors = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfFloors : null,
+                        PlotArea = o.Property.GetType() == typeof(House) ? ((House)o.Property).PlotArea : null,
+                        Floor = o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Floor : null,
+                        Equipment = o.Property.Equipment.Select(e => new EquipmentDto
+                        {
+                            EquipmentId = e.EquipmentId,
+                            Name = e.Name
+                        }).ToList()
                     },
                     Owner = new OwnerStudentDto
                     {
@@ -62,20 +73,100 @@ namespace Flats4us.Services
                         PhotoPath = o.Property.Owner.PhotoPath,
                         ActivityStatus = o.Property.Owner.ActivityStatus
                     },
-                    SurveyOwnerOffer = o.SurveyOwnerOffer
+                    SurveyOwnerOffer = new SurveyOwnerOfferDto
+                    {
+                        Smoking = o.SurveyOwnerOffer.Smoking,
+                        Parties = o.SurveyOwnerOffer.Parties,
+                        Animals = o.SurveyOwnerOffer.Animals,
+                        Gender = o.SurveyOwnerOffer.Gender
+                    }
                 })
                 .ToListAsync();
 
             return result;
         }
 
-        public async Task<List<OfferDto>> GetFilteredAndSortedOffers(GetFilteredAndSortedOffersDto input)
+        public async Task<OfferDto> GetByIdAsync(int id)
+        {
+            if (await _context.Offers.FindAsync(id) is null)
+            {
+                throw new ArgumentException($"Offer with ID {id} not found.");
+            }
+
+            var offer = await _context.Offers
+                .Where(o => o.OfferId == id)
+                .Select(o => new OfferDto
+                {
+                    OfferId = o.OfferId,
+                    Date = o.Date,
+                    OfferStatus = o.OfferStatus,
+                    Price = o.Price,
+                    Decription = o.Description,
+                    StartDate = o.StartDate,
+                    EndDate = o.EndDate,
+                    NumberOfInterested = o.NumberOfInterested,
+                    Regulations = o.Regulations,
+                    Property = new PropertyDto
+                    {
+                        PropertyId = o.Property.PropertyId,
+                        PropertyType = o.Property.GetType() == typeof(Room) ? PropertyType.Room : (o.Property.GetType() == typeof(House) ? PropertyType.House : PropertyType.Flat),
+                        Province = o.Property.Province,
+                        District = o.Property.District,
+                        Street = o.Property.Street,
+                        Number = o.Property.Number,
+                        Flat = o.Property.Flat,
+                        City = o.Property.City,
+                        PostalCode = o.Property.PostalCode,
+                        GeoLat = o.Property.GeoLat,
+                        GeoLon = o.Property.GeoLon,
+                        Area = o.Property.Area,
+                        MaxNumberOfInhabitants = o.Property.MaxNumberOfInhabitants,
+                        ConstructionYear = o.Property.ConstructionYear,
+                        ImagesPath = o.Property.ImagesPath,
+                        Elevator = o.Property.Elevator,
+                        VerificationStatus = o.Property.VerificationStatus,
+                        NumberOfRooms = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : null,
+                        NumberOfFloors = o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfFloors : null,
+                        PlotArea = o.Property.GetType() == typeof(House) ? ((House)o.Property).PlotArea : null,
+                        Floor = o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Floor : null,
+                        Equipment = o.Property.Equipment.Select(e => new EquipmentDto
+                        {
+                            EquipmentId = e.EquipmentId,
+                            Name = e.Name
+                        }).ToList()
+                    },
+                    Owner = new OwnerStudentDto
+                    {
+                        UserId = o.Property.Owner.UserId,
+                        Name = o.Property.Owner.Name,
+                        Surname = o.Property.Owner.Surname,
+                        Email = o.Property.Owner.Email,
+                        PhoneNumber = o.Property.Owner.PhoneNumber,
+                        PhotoPath = o.Property.Owner.PhotoPath,
+                        ActivityStatus = o.Property.Owner.ActivityStatus
+                    },
+                    SurveyOwnerOffer = new SurveyOwnerOfferDto
+                    {
+                        Smoking = o.SurveyOwnerOffer.Smoking,
+                        Parties = o.SurveyOwnerOffer.Parties,
+                        Animals = o.SurveyOwnerOffer.Animals,
+                        Gender = o.SurveyOwnerOffer.Gender
+                    }
+                })
+                .FirstOrDefaultAsync();
+
+            return offer;
+        }
+
+        public async Task<List<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
         {
             var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
             var query = _context.Offers.AsQueryable();
+
+            query = query.Where(o => o.OfferStatus == OfferStatus.Current);
 
             if (!input.Distance.HasValue)
             {
@@ -142,13 +233,14 @@ namespace Flats4us.Services
                     OfferStatus = o.OfferStatus,
                     Price = o.Price,
                     Decription = o.Description,
-                    RentalPeriod = o.RentalPeriod,
+                    StartDate = o.StartDate,
+                    EndDate = o.EndDate,
                     NumberOfInterested = o.NumberOfInterested,
                     Regulations = o.Regulations,
                     Property = new PropertyDto
                     {
                         PropertyId = o.Property.PropertyId,
-                        PropertyType = o.Property.GetType() == typeof(Room) ? Helpers.Enums.PropertyType.Room : (o.Property.GetType() == typeof(House) ? Helpers.Enums.PropertyType.House : Helpers.Enums.PropertyType.Flat),
+                        PropertyType = o.Property.GetType() == typeof(Room) ? PropertyType.Room : (o.Property.GetType() == typeof(House) ? PropertyType.House : PropertyType.Flat),
                         Province = o.Property.Province,
                         District = o.Property.District,
                         Street = o.Property.Street,
@@ -184,7 +276,13 @@ namespace Flats4us.Services
                         PhotoPath = o.Property.Owner.PhotoPath,
                         ActivityStatus = o.Property.Owner.ActivityStatus
                     },
-                    SurveyOwnerOffer = o.SurveyOwnerOffer
+                    SurveyOwnerOffer = new SurveyOwnerOfferDto
+                    {
+                        Smoking = o.SurveyOwnerOffer.Smoking,
+                        Parties = o.SurveyOwnerOffer.Parties,
+                        Animals = o.SurveyOwnerOffer.Animals,
+                        Gender = o.SurveyOwnerOffer.Gender
+                    }
                 })
                 .ToListAsync();
 
@@ -241,6 +339,34 @@ namespace Flats4us.Services
                 .ToList();
 
             return result;
+        }
+
+        public async Task AddOfferAsync(AddEditOfferDto input)
+        {
+            var property = await _context.Properties.FindAsync(input.PropertyId);
+
+            var offer = new Offer
+            {
+                Date = DateTime.Now,
+                OfferStatus = OfferStatus.Current,
+                Price = input.Price,
+                Description = input.Description,
+                StartDate = input.StartDate,
+                EndDate = input.EndDate,
+                NumberOfInterested = 0,
+                Regulations = input.Regulations,
+                Property = property,
+                SurveyOwnerOffer = new SurveyOwnerOffer
+                {
+                    Smoking = input.Smoking,
+                    Parties = input.Parties,
+                    Animals = input.Animals,
+                    Gender = input.Gender
+                }
+            };
+
+            await _context.Offers.AddAsync(offer);
+            await _context.SaveChangesAsync();
         }
     }
 }

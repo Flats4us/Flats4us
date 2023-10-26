@@ -5,7 +5,9 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IOfferService
     {
-        Task<List<OfferDto>> GetAll();
-        Task<List<OfferDto>> GetFilteredAndSortedOffers(GetFilteredAndSortedOffersDto input);
+        Task<List<OfferDto>> GetAllAsync();
+        Task<OfferDto> GetByIdAsync(int id);
+        Task<List<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input);
+        Task AddOfferAsync(AddEditOfferDto input);
     }
 }

@@ -23,9 +23,11 @@ namespace Flats4us.Entities
         [Required]
         public string Description { get; set;}
 
-        // In Months 
         [Required]
-        public int RentalPeriod { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
 
         [Required]
         public int NumberOfInterested { get; set; }

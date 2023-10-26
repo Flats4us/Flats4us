@@ -638,7 +638,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2000,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 7, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = flat1
@@ -649,7 +650,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2200,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2023, 12, 15),
+            EndDate = new DateTime(2024, 3, 15),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = flat2
@@ -660,7 +662,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1800,
             Description = "placeholder",
-            RentalPeriod = 5,
+            StartDate = new DateTime(2023, 12, 10),
+            EndDate = new DateTime(2024, 6, 10),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = flat4
@@ -671,7 +674,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2100,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 4, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = flat6
@@ -682,7 +686,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1900,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2023, 11, 1),
+            EndDate = new DateTime(2024, 6, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = flat7
@@ -693,7 +698,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2050,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2024, 2, 1),
+            EndDate = new DateTime(2024, 10, 1),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = flat8
@@ -704,7 +710,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1950,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2023, 12, 20),
+            EndDate = new DateTime(2024, 10, 20),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = flat9
@@ -715,7 +722,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2100,
             Description = "placeholder",
-            RentalPeriod = 5,
+            StartDate = new DateTime(2024, 1, 10),
+            EndDate = new DateTime(2024, 6, 10),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = flat10
@@ -726,7 +734,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2200,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2023, 12, 10),
+            EndDate = new DateTime(2024, 8, 10),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = house1
@@ -737,7 +746,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1800,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2024, 3, 1),
+            EndDate = new DateTime(2024, 6, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = house2
@@ -748,7 +758,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2050,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2023, 12, 15),
+            EndDate = new DateTime(2024, 8, 15),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = house3
@@ -759,7 +770,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1950,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 9, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = house5
@@ -770,7 +782,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 1900,
             Description = "placeholder",
-            RentalPeriod = 5,
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 4, 1),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = room1
@@ -781,7 +794,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2200,
             Description = "placeholder",
-            RentalPeriod = 6,
+            StartDate = new DateTime(2024, 1, 15),
+            EndDate = new DateTime(2024, 7, 15),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = room2
@@ -792,7 +806,8 @@ public static class DataSeeder
             OfferStatus = OfferStatus.Current,
             Price = 2000,
             Description = "placeholder",
-            RentalPeriod = 7,
+            StartDate = new DateTime(2024, 2, 1),
+            EndDate = new DateTime(2024, 8, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = room5

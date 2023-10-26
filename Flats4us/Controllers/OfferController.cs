@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +28,7 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offers = await _offerService.GetAll();
+                var offers = await _offerService.GetAllAsync();
                 return Ok(offers);
             }
             catch (Exception ex)
@@ -36,17 +37,51 @@ namespace Flats4us.Controllers
             }
         }
 
+        // GET: api/Offer/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var offer = await _offerService.GetByIdAsync(id);
+                return Ok(offer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occured: {ex.Message}");
+            }
+            
+
+        }
+
         // GET: api/Offer
         [HttpPost("filtered")]
         public async Task<IActionResult> GetFilteredAndSorted([FromQuery] GetFilteredAndSortedOffersDto input)
         {
             try
             {
-                var offers = await _offerService.GetFilteredAndSortedOffers(input);
+                var offers = await _offerService.GetFilteredAndSortedOffersAsync(input);
                 return Ok(offers);
             }
             catch (Exception ex)
             {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // POST: api/Property
+        [HttpPost]
+        public async Task<IActionResult> AddProperty([FromForm] AddEditOfferDto input)
+        {
+            try
+            {
+                await _offerService.AddOfferAsync(input);
+                _logger.LogInformation($"Adding offer - body: {input}");
+                return Ok("Property added successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
