@@ -14,23 +14,40 @@
 	width: 100px;
 	height: 100px;
 }
+.left-column {
+	flex: 1;
+	padding: 20px;
+}
+
+.right-column {
+	flex: 1;
+	padding: 20px;
+}
 
 .tags {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-between;
 }
 
-.good-tags,
+.good-tags {
+	flex: 1;
+	text-align: left;
+}
+
 .bad-tags {
 	flex: 1;
+	text-align: left;
+}
+.good-tags .tag input:checked + label {
+	color: green;
+}
+
+.bad-tags .tag input:checked + label {
+	color: red;
 }
 
 .tag {
-	margin-right: 8px;
-	padding: 4px 12px;
-	border-radius: 12px;
-	cursor: pointer;
+	display: block;
 
 	&-komunikatywna {
 		background-color: #00dd04;
@@ -56,10 +73,30 @@
 		background-color: #dd0000;
 		color: white;
 	}
+
 	&-tag {
 		background-color: #dd0000;
 		color: white;
 	}
+}
+
+.comment {
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.comment-avatar {
+	width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+.comment-author {
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .button-container {
