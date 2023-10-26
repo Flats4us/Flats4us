@@ -8,7 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AddOpinionComponent {
 	public commentText = '';
-	public selectedTags: string[] = [];
 	public checkedTags: Set<string> = new Set();
 	public toggleCheckbox(tag: string): void {
 		if (this.isChecked(tag)) {
