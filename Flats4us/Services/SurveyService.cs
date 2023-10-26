@@ -7,6 +7,7 @@ using System.Text.Json;
 using Helpers;
 using System.Xml;
 using System.Text.Encodings.Web;
+using Flats4us.Services.Interfaces;
 
 namespace Flats4us.Services
 {

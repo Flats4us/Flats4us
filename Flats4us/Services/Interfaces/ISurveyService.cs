@@ -1,4 +1,4 @@
-﻿namespace Flats4us.Services
+﻿namespace Flats4us.Services.Interfaces
 {
     public interface ISurveyService
     {

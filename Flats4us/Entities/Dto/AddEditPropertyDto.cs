@@ -1,13 +1,12 @@
 ﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Flats4us.Entities
+namespace Flats4us.Entities.Dto
 {
-    public abstract class Property
+    public class AddEditPropertyDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PropertyId { get; set; }
+        [Required]
+        public PropertyType PropertyType { get; set; }
 
         [Required]
         public string Province { get; set; }
@@ -29,12 +28,6 @@ namespace Flats4us.Entities
         public string PostalCode { get; set; }
 
         [Required]
-        public double GeoLat { get; set; }
-
-        [Required]
-        public double GeoLon { get; set; }
-
-        [Required]
         public int Area { get; set; }
 
         [Required]
@@ -46,23 +39,23 @@ namespace Flats4us.Entities
         public bool? Elevator { get; set; }
 
         [Required]
-        public string ImagesPath { get; set; }
+        public IFormFile TitleDeed { get; set; }
 
         [Required]
-        public VerificationStatus VerificationStatus { get; set; }
+        public List<IFormFile> Images { get; set; }
 
         [Required]
         public int OwnerId { get; set; }
 
-        public virtual Owner Owner { get; set; }
+        public int NumberOfRooms { get; set; }
 
-        public virtual ICollection<Equipment> Equipment { get; set; }
-        public virtual ICollection<Offer> Offers { get; set; }
+        public int Floor { get; set; }
 
-        public Property()
-        {
-            this.Equipment = new HashSet<Equipment>();
-            this.Offers = new HashSet<Offer>();
-        }
+        public int NumberOfFloors { get; set; }
+
+        public int PlotArea { get; set; }
+
+        [Required]
+        public string EquipmentJson { get; set; }
     }
 }

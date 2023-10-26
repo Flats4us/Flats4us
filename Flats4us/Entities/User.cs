@@ -18,9 +18,9 @@ namespace Flats4us.Entities
         public string Street { get; set; }
 
         [Required]
-        public int Number { get; set; }
+        public string Number { get; set; }
 
-        public int Flat { get; set; }
+        public int? Flat { get; set; }
 
         [Required]
         public string City { get; set; }

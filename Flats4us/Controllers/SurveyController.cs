@@ -1,5 +1,5 @@
 ﻿using Flats4us.Entities;
-using Flats4us.Services;
+using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 

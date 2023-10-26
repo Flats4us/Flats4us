@@ -2,12 +2,15 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Flats4us.Entities
+namespace Flats4us.Entities.Dto
 {
-    public abstract class Property
+    public class PropertyDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int PropertyId { get; set; }
+
+        [Required]
+        public PropertyType PropertyType { get; set; }
 
         [Required]
         public string Province { get; set; }
@@ -51,18 +54,14 @@ namespace Flats4us.Entities
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
-        [Required]
-        public int OwnerId { get; set; }
+        public int? NumberOfRooms { get; set; }
 
-        public virtual Owner Owner { get; set; }
+        public int? NumberOfFloors { get; set; }
 
-        public virtual ICollection<Equipment> Equipment { get; set; }
-        public virtual ICollection<Offer> Offers { get; set; }
+        public int? PlotArea { get; set; }
 
-        public Property()
-        {
-            this.Equipment = new HashSet<Equipment>();
-            this.Offers = new HashSet<Offer>();
-        }
+        public int? Floor { get; set; }
+
+        public ICollection<EquipmentDto> Equipment { get; set; }
     }
 }
