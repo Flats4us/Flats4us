@@ -14,6 +14,7 @@ import { FindRoommateModule } from './find-roommate/find-roommate.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -30,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 		MatButtonModule,
 		MatIconModule,
 		MatMenuModule,
+		MatDialogModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
