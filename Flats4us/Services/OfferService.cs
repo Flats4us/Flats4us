@@ -345,6 +345,8 @@ namespace Flats4us.Services
         {
             var property = await _context.Properties.FindAsync(input.PropertyId);
 
+            if(property is null) throw new ArgumentException($"Property with ID {input.PropertyId} not found.");
+
             var offer = new Offer
             {
                 Date = DateTime.Now,
