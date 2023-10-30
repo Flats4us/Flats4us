@@ -5,13 +5,15 @@
 	<mat-stepper #stepper linear>
 		<div class="box-1">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
-				<ng-template matStepLabel>Dane adresowe</ng-template>
+				<ng-template matStepLabel
+					><span class="step-label">Dane adresowe</span></ng-template
+				>
 				<form class="container-2" [formGroup]="addRealEstateFormAddressData">
 					<div class="subtitle">Rodzaj nieruchomości:</div>
 					<mat-form-field appearance="fill">
 						<mat-label>Rodzaj nieruchomości</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>home</mat-icon></div>
+							<div class="box-icon"><mat-icon>home</mat-icon></div>
 						</span>
 						<mat-select id="property" formControlName="property">
 							<mat-option
@@ -46,7 +48,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Województwo</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
 						<mat-select id="region" formControlName="regionsGroup">
 							<mat-option
@@ -76,7 +78,7 @@
 							[matAutocomplete]="autoCity"
 						/>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
 						<mat-autocomplete #autoCity="matAutocomplete">
 							<mat-optgroup
@@ -108,7 +110,7 @@
 							[matAutocomplete]="autoDistrict"
 						/>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
 						<mat-autocomplete #autoDistrict="matAutocomplete">
 							<mat-optgroup
@@ -125,7 +127,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Ulica</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
 						<input
 							id="street"
@@ -146,7 +148,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Numer</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_on</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
 						<input
 							id="streetNumber"
@@ -178,13 +180,15 @@
 		</div>
 		<div class="box-1">
 			<mat-step [stepControl]="addRealEstateFormRemainingData">
-				<ng-template matStepLabel>Pozostałe dane</ng-template>
+				<ng-template matStepLabel
+					><span class="step-label">Pozostałe dane</span></ng-template
+				>
 				<form class="container-2" [formGroup]="addRealEstateFormRemainingData">
 					<div class="subtitle">Powierzchnia:</div>
 					<mat-form-field appearance="fill">
 						<mat-label>Powierzchnia</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>straighten</mat-icon></div>
+							<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 						</span>
 						<input
 							id="area"
@@ -212,7 +216,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Maks. l. mieszkańców</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>supervisor_account</mat-icon></div>
+							<div class="box-icon"><mat-icon>supervisor_account</mat-icon></div>
 						</span>
 						<input
 							id="maxResidents"
@@ -239,7 +243,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Lata budowy</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>history</mat-icon></div>
+							<div class="box-icon"><mat-icon>history</mat-icon></div>
 						</span>
 						<mat-select id="year" formControlName="year">
 							<mat-option
@@ -260,7 +264,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Liczba pokoi</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>meeting_room</mat-icon></div>
+							<div class="box-icon"><mat-icon>meeting_room</mat-icon></div>
 						</span>
 						<input
 							id="rooms"
@@ -287,7 +291,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Piętro</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>location_city</mat-icon></div>
+							<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 						</span>
 						<input
 							id="floors"
@@ -314,7 +318,7 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Wyposażenie</mat-label>
 						<span matPrefix>
-							<div class="boxIcon"><mat-icon>category</mat-icon></div>
+							<div class="box-icon"><mat-icon>category</mat-icon></div>
 						</span>
 						<mat-select id="equipment" formControlName="equipment" multiple>
 							<mat-option
@@ -343,7 +347,9 @@
 		</div>
 		<div class="box-1">
 			<mat-step [stepControl]="addRealEstateFormPhotos" class="step-3">
-				<ng-template matStepLabel>Zdjęcia</ng-template>
+				<ng-template matStepLabel
+					><span class="step-label">Zdjęcia</span></ng-template
+				>
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-1">
 						<div class="gallery">
@@ -379,7 +385,7 @@
 							</button>
 						</div>
 						<div class="button-box">
-							<button mat-button matStepperPrevious class="btn">
+							<button matStepperPrevious class="btn">
 								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 							</button>
 							<button
@@ -397,7 +403,9 @@
 		</div>
 		<div class="box-1">
 			<mat-step [completed]="completed">
-				<ng-template *ngIf="completed" matStepLabel>Gotowe</ng-template>
+				<ng-template *ngIf="completed" matStepLabel
+					><span class="step-label">Gotowe</span></ng-template
+				>
 				<div class="button-box-1">
 					<div
 						*ngIf="
@@ -415,8 +423,11 @@
 						</h2>
 					</div>
 					<div class="button-box">
-						<button mat-button matStepperPrevious class="btn">
+						<button *ngIf="!completed" mat-button matStepperPrevious class="btn">
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button *ngIf="completed" mat-button class="btn" (click)="onReturn()">
+							Powrót <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<button
 							*ngIf="
@@ -433,7 +444,14 @@
 						>
 							Zapisz nieruchomość
 						</button>
-						<button mat-button (click)="formReset()" class="btn">Reset</button>
+						<button
+							mat-button
+							class="btn"
+							[disabled]="completed"
+							(click)="formReset()"
+						>
+							Reset
+						</button>
 					</div>
 					<h2 *ngIf="completed" class="subtitle-3">
 						<p>Nieruchomość została zapisana!</p>

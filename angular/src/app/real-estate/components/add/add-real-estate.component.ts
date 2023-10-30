@@ -222,4 +222,8 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			this.stepper.selectedIndex = 0;
 		}
 	}
+
+	public onReturn() {
+		this.router.navigate(['/']);
+	}
 }
