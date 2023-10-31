@@ -43,8 +43,9 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	private regionCityArray: IRegionCity[] = [];
 
-	private dataSource: MatTableDataSource<IFlatOffer> =
-		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
+	public allFlatOffers: IFlatOffer[] = [];
+
+	private dataSource: MatTableDataSource<IFlatOffer>;
 
 	private sortState: Sort = { active: 'price', direction: 'desc' };
 
@@ -89,6 +90,13 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
 		this.isSubmitted = false;
+		this.startService
+			.getOffers(this.allFlatOffers)
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe();
+		this.dataSource = new MatTableDataSource<IFlatOffer>(
+			this.startService.allFlatOffers
+		);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -192,6 +200,9 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 		};
 		this.matSort.active = this.sortState.active;
 		this.matSort.direction = this.sortState.direction;
+		this.matSort.sortChange
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(() => (this.paginator.pageIndex = 0));
 		this.matSort.sortChange.emit(this.sortState);
 	}
 
