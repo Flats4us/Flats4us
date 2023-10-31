@@ -1,0 +1,30 @@
+[
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Bemowo",
+		"price": 2500,
+		"rent": 500,
+		"area": 35,
+		"rooms": 3,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 2700,
+		"rent": 400,
+		"area": 25,
+		"rooms": 3,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	}
+]
