@@ -91,9 +91,9 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			.subscribe();
 		this.isSubmitted = false;
 		this.startService
-			.getOffers(this.allFlatOffers)
+			.getOffers()
 			.pipe(takeUntil(this.unsubscribe$))
-			.subscribe();
+			.subscribe(data => (this.allFlatOffers = <IFlatOffer[]>data));
 		this.dataSource = new MatTableDataSource<IFlatOffer>(
 			this.startService.allFlatOffers
 		);
