@@ -28,7 +28,11 @@ const routes: Routes = [
 		loadChildren: () =>
 			import('./messages/messages.module').then(m => m.MessagesModule),
 	},
-
+	{
+		path: 'disputes',
+		loadChildren: () =>
+			import('./disputes/disputes.module').then(m => m.DisputesModule),
+	},
 	{
 		path: 'real-estate',
 		loadChildren: () =>
