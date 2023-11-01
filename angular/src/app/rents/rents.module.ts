@@ -10,6 +10,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatDialogModule } from '@angular/material/dialog';
+import { RentsDialogComponent } from './components/dialog/rents-dialog.component';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -23,6 +28,11 @@ import { MatTableModule } from '@angular/material/table';
 		MatDividerModule,
 		MatTableModule,
 		NgImageSliderModule,
+		MatMenuModule,
+		MatTooltipModule,
+		ScrollingModule,
+		MatDialogModule,
+		RentsDialogComponent,
 	],
 	exports: [RentsComponent],
 	providers: [RentsService],

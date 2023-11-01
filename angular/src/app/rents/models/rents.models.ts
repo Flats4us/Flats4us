@@ -12,6 +12,7 @@ export interface IPayment {
 }
 
 export interface IRent {
+	link: string;
 	title: string;
 	publishDate: string;
 	status: string;
@@ -25,9 +26,13 @@ export interface IRent {
 	payments: IPayment[];
 }
 
+export interface IMenuOptions {
+	option: string;
+	description: string;
+}
+
 export const Status = {
 	valid: 'valid',
-	invalid: 'invalid',
 	suspended: 'suspended',
 	rented: 'rented',
 };

@@ -9,8 +9,9 @@ const routes: Routes = [
 		component: RentsComponent,
 	},
 	{
-		path: 'search',
+		path: '',
 		component: RentsComponent,
+		children: [{ path: ':id', component: RentsComponent }],
 	},
 ];
 

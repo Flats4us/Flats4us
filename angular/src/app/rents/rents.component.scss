@@ -1,3 +1,7 @@
+.box-1 {
+	display: inline-flex;
+}
+
 .box-icon {
 	transform: scale(1.2);
 	margin: 8px;
@@ -8,11 +12,17 @@
 	color: green;
 }
 
+.box-icon-3 {
+	transform: scale(0.8);
+	color: grey;
+}
+
 .btn {
 	background: #fbbb8b;
 	border-radius: 24px;
 	padding: 4px;
 	width: 160px;
+	float: left;
 }
 
 .btn-2 {
@@ -25,12 +35,9 @@
 }
 
 .button-box {
-	padding: 8px;
 	display: flex;
+	padding: 8px;
 	flex-direction: row;
-	align-items: center;
-	column-gap: 60%;
-	justify-content: center;
 }
 
 .button-box-2 {
@@ -38,33 +45,50 @@
 	align-self: flex-end;
 }
 
-.column {
+.close-rent {
+	color: red;
+}
+
+.column-1 {
 	min-width: 200px;
 	float: left;
-	padding-right: 4px;
-	text-shadow: 1px 2px rgba(0, 0, 0, 0.057);
+	padding: 4px 4px 8px 4px;
+	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
+}
+
+.column-2 {
+	min-width: 200px;
+	float: left;
+	padding: 4px 4px 8px 4px;
+	text-shadow: 1px 2px rgba(0, 0, 0, 0.058);
 }
 
 .container-1 {
 	text-align: left;
-	box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.23);
+	box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.24);
 	margin-left: 12px;
 	height: 100%;
-	width: max-content;
+	min-width: max-content;
 	padding-top: 12px;
 }
 
 .container-2 {
-	justify-self: center;
-	width: max-content;
+	width: 80%;
+	margin: 0 8px 0 8px;
 }
 
 .divider {
 	padding-bottom: 12px;
 }
 
+.example-viewport {
+	height: 200px;
+	width: 100%;
+	border: 1px solid black;
+}
+
 .gallery {
-	min-width: 80%;
+	width: 100%;
 	height: auto;
 }
 
@@ -73,27 +97,37 @@ h1 {
 	padding-left: 12px;
 }
 
-.label {
-	background: #fbbb8b;
-	border-radius: 4px;
+.label-1 {
+	display: inline-flex;
+	justify-content: center;
+	font-size: large;
 	padding: 4px;
-	min-width: 160px;
+	width: 200px;
+	margin-left: auto;
 }
 
-.label-payment {
+.label-2 {
+	display: inline-flex;
+	justify-content: left;
+	font-size: large;
+	padding: 4px;
+	width: 160px;
+	float: left;
+}
+
+.label-3 {
 	padding: 12px 0 12px 0;
 }
 
 .payments {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	width: 100%;
 	padding-bottom: 12px;
 }
 
 .rents {
 	background: white;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	display: flex;
+	flex-direction: row;
 	margin-left: 12px;
 	margin-right: 12px;
 }
@@ -102,4 +136,18 @@ h1 {
 	width: 100%;
 	font-size: x-large;
 	padding: 12px 0;
+}
+
+@media screen and (max-width: 700px) {
+	.rents {
+		background: white;
+		display: flex;
+		flex-direction: column;
+		margin-left: 12px;
+		margin-right: 12px;
+	}
+	.container-2 {
+		width: 100%;
+		margin-left: 4px;
+	}
 }

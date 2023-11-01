@@ -5,7 +5,8 @@
 				mat-icon-button
 				id="add"
 				class="box-icon"
-				aria-label="Edit"
+				aria-label="Add"
+				matTooltip="Utwórz najem"
 				(click)="addOffer()"
 			>
 				<mat-icon>add</mat-icon>
@@ -14,10 +15,19 @@
 		<mat-divider class="divider"></mat-divider>
 		<mat-nav-list>
 			<a
-				mat-list-item
 				*ngFor="let rent of this.rentsService.rents"
+				mat-list-item
+				routerLink="{{ rent.link }}"
 				(click)="showRent(rent)"
-				>{{ rent.title }} <mat-icon class="box-icon-2">check_circle</mat-icon></a
+				><div class="box-1">
+					<span>{{ rent.title }}</span>
+					<mat-icon *ngIf="rent.status !== 'suspended'" class="box-icon-2"
+						>check_circle</mat-icon
+					>
+					<mat-icon *ngIf="rent.status === 'suspended'" class="box-icon-3"
+						>check_circle</mat-icon
+					>
+				</div></a
 			>
 		</mat-nav-list>
 	</div>
@@ -25,9 +35,32 @@
 		<mat-form-field appearance="fill" class="title">
 			<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
 			<span matSuffix>
-				<button mat-icon-button id="edit" class="box-icon" aria-label="Edit">
-					<mat-icon>edit</mat-icon>
+				<button
+					class="box-icon"
+					id="menu"
+					mat-icon-button
+					matTooltip="Więcej opcji"
+					aria-label="MenuButton"
+					[matMenuTriggerFor]="menu"
+					[disabled]="actualRent.status === 'suspended'"
+				>
+					<mat-icon>more_horiz</mat-icon>
 				</button>
+				<mat-menu #menu="matMenu" id="sort">
+					<button
+						*ngFor="let menuOption of this.rentsService.menuOptions"
+						mat-menu-item
+						[value]="menuOption.description"
+						(click)="onSelect(menuOption)"
+					>
+						<span *ngIf="menuOption.option !== 'closeRent'">{{
+							menuOption.description
+						}}</span>
+						<span *ngIf="menuOption.option === 'closeRent'" class="close-rent">{{
+							menuOption.description
+						}}</span>
+					</button>
+				</mat-menu>
 			</span>
 			<input
 				id="title"
@@ -36,6 +69,7 @@
 				placeholder="Tytuł"
 				aria-label="Title"
 				matInput
+				[disabled]="true"
 			/>
 		</mat-form-field>
 		<div class="gallery">
@@ -48,41 +82,58 @@
 			></ng-image-slider>
 		</div>
 		<div class="button-box">
-			<button mat-button class="btn">Szczegóły oferty</button
-			><mat-label class="label">CENA 4000 PLN/MSC</mat-label>
+			<button
+				mat-button
+				class="btn"
+				[disabled]="actualRent.status === 'suspended'"
+			>
+				Szczegóły oferty
+			</button>
+			<mat-label class="label-1">Cena {{ actualRent.price }} pln/msc</mat-label>
 		</div>
-		<div class="column">
-			<p>Data rozpoczęcia:</p>
-			<p>Data zakończenia:</p>
-			<p>Adres:</p>
-			<p>Metraż:</p>
-			<p>Data wystawienia oceny:</p>
+		<div class="label-3">
+			<mat-label class="label-2"
+				><mat-icon>description</mat-icon><span>Opis oferty</span></mat-label
+			>
+			<mat-divider></mat-divider>
 		</div>
-		<div class="column">
-			<p>12-12-2022</p>
-			<p>12-12-2024</p>
-			<p>Marszałkowska 44, Warszawa</p>
-			<p>90 m²</p>
-			<p>-</p>
-		</div>
-		<div class="column">
-			<p>Okres wynajęcia:</p>
-			<p>Maks. liczba miszkańców:</p>
-			<p>Wyposażenie:</p>
-			<p>Data płatności czynszu:</p>
-			<p>Informacje o umowie:</p>
-			<p>Współlokatorzy:</p>
-		</div>
-		<div class="column">
-			<p>2 lata</p>
-			<p>4</p>
-			<p>-</p>
-			<p>10-12-2022</p>
-			<p>-</p>
-			<p>Jan Kowalski, Barbara Nowak</p>
-		</div>
-		<div class="label-payment">
-			<mat-label class="label">Płatności</mat-label>
+		<cdk-virtual-scroll-viewport
+			appendOnly
+			itemSize="50"
+			class="example-viewport"
+		>
+			<div class="column-1">
+				<p>Data wystawienia:</p>
+				<p>Data zakończenia:</p>
+				<p>Adres:</p>
+				<p>Metraż:</p>
+				<p>Data wystawienia oceny:</p>
+				<p>Okres wynajmu:</p>
+				<p>Maks. liczba miszkańców:</p>
+				<p>Wyposażenie:</p>
+				<p>Data płatności czynszu:</p>
+				<p>Informacje o umowie:</p>
+				<p>Współlokatorzy:</p>
+			</div>
+			<div class="column-2">
+				<p>{{ actualRent.publishDate }}</p>
+				<p>12-12-2024</p>
+				<p>Marszałkowska 44, Warszawa</p>
+				<p>90 m²</p>
+				<p>-</p>
+				<p>{{ actualRent.period }} lata</p>
+				<p>4</p>
+				<p>-</p>
+				<p>10-12-2022</p>
+				<p>-</p>
+				<p>Jan Kowalski, Barbara Nowak</p>
+			</div>
+		</cdk-virtual-scroll-viewport>
+		<div class="label-3">
+			<mat-label class="label-2"
+				><mat-icon>attach_money</mat-icon><span>Płatności</span></mat-label
+			>
+			<mat-divider></mat-divider>
 		</div>
 		<div class="payments">
 			<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -98,9 +149,6 @@
 					*matRowDef="let paymentRow; columns: this.rentsService.displayedColumns"
 				></tr>
 			</table>
-			<div class="button-box-2">
-				<button mat-button class="btn-2">Zakończ najem</button>
-			</div>
 		</div>
 	</div>
 </div>
