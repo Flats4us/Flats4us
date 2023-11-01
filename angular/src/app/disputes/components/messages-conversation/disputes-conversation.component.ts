@@ -5,12 +5,12 @@ import { IConversation } from '@shared/models/conversation.models';
 import { map, Observable } from 'rxjs';
 
 @Component({
-	selector: 'app-messages-conversation',
-	templateUrl: './messages-conversation.component.html',
-	styleUrls: ['./messages-conversation.component.scss'],
+	selector: 'app-disputes-conversation',
+	templateUrl: './disputes-conversation.component.html',
+	styleUrls: ['./disputes-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessagesConversationComponent {
+export class DisputesConversationComponent {
 	public conversationId$: Observable<string>;
 	public messageControl = new FormControl();
 	public currentUser = 'User1';
