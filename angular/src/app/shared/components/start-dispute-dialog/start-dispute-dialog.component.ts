@@ -17,7 +17,7 @@ export interface IDialogData {
 
 @Component({
 	selector: 'app-start-dispute-dialog',
-	templateUrl: 'start-dispute-dialog.html',
+	templateUrl: 'start-dispute-dialog.component.html',
 	standalone: true,
 	imports: [
 		MatDialogModule,

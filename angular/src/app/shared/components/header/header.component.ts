@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { StartDisputeDialogComponent } from './start-dispute-dialog.component';
+import { StartDisputeDialogComponent } from '../start-dispute-dialog/start-dispute-dialog.component';
 
 @Component({
 	selector: 'app-header',
