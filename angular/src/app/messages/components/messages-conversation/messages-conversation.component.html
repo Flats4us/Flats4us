@@ -6,10 +6,10 @@
 <div class="conversation-list">
 	<div
 		*ngFor="let msg of messages; let index = index"
+		class="conversation"
 		[class]="
 			msg.sender === currentUser ? 'conversation-sent' : 'conversation-received'
 		"
-		class="conversation"
 	>
 		<span>{{ msg.sender }}</span>
 		<span class="bubble">{{ msg.message }}</span>

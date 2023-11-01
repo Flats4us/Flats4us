@@ -31,7 +31,10 @@ export class DisputesConversationComponent {
 			return;
 		}
 
-		this.messages.push({ sender: 'User1', message: this.messageControl.value });
+		this.messages.push({
+			sender: this.currentUser,
+			message: this.messageControl.value,
+		});
 		this.messageControl.reset();
 	}
 }
