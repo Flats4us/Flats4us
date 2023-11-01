@@ -1,10 +1,13 @@
 <h1 class="p-4 text-xl">Otwórz spór z właścicielem</h1>
 <div>
-	<mat-form-field class="w-full text-lg	">
+	<mat-form-field [formGroup]="form" class="w-full text-lg">
 		<mat-label>Rozpocznij dyskusję opisując swój problem</mat-label>
-    <textarea matInput></textarea>
+		<textarea matInput formControlName="message"></textarea>
 	</mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-	<button mat-raised-button mat-dialog-close>Wyślij</button>
+	<button mat-raised-button mat-dialog-close>Anuluj</button>
+	<button mat-raised-button mat-dialog-close [disabled]="!form.valid">
+		Wyślij
+	</button>
 </div>
