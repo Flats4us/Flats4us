@@ -1,3 +1,5 @@
+import { IFlatOffer } from 'src/app/start/models/start-site.models';
+
 export interface IGallery {
 	image: string;
 	thumbImage: string;
@@ -24,6 +26,7 @@ export interface IRent {
 	rules: string;
 	imageArray: IGallery[];
 	payments: IPayment[];
+	property: IFlatOffer;
 }
 
 export interface IMenuOptions {

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
@@ -16,6 +16,7 @@ import { IRent } from '../../models/rents.models';
 	templateUrl: 'rents-dialog.component.html',
 	styleUrls: ['./rents-dialog.component.scss'],
 	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		MatDialogModule,
 		MatFormFieldModule,

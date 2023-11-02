@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnDestroy,
+} from '@angular/core';
 import { RentsService } from './services/rents.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { IMenuOptions, IRent } from './models/rents.models';
+import { IMenuOptions, IPayment, IRent } from './models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RentsDialogComponent } from './components/dialog/rents-dialog.component';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'app-rents',
@@ -13,23 +18,34 @@ import { Observable, map } from 'rxjs';
 	styleUrls: ['./rents.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsComponent {
-	public actualRent: IRent = this.rentsService.rents[0];
-	public dataSource = new MatTableDataSource(this.actualRent.payments);
+export class RentsComponent implements OnDestroy {
+	public rentsOptions$?: Observable<IRent[]>;
+	public actualRent: any;
+	public dataSource: MatTableDataSource<IPayment> = new MatTableDataSource();
 	public rentId$: Observable<string>;
+	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	constructor(
 		public rentsService: RentsService,
 		private router: Router,
 		public dialog: MatDialog,
-		public route: ActivatedRoute
+		public route: ActivatedRoute,
+		private changeDetectionRef: ChangeDetectorRef
 	) {
 		this.rentId$ = route.paramMap.pipe(map(params => params.get('id') ?? ''));
+		this.rentsOptions$ = this.rentsService.getRents();
+		this.rentsOptions$.pipe(takeUntil(this.unsubscribe$)).subscribe(rents => {
+			this.actualRent = rents[0];
+			this.dataSource = new MatTableDataSource(this.actualRent.payments);
+		});
 	}
 
 	public showRent(rent: IRent) {
-		this.actualRent = rent;
-		this.dataSource = new MatTableDataSource(this.actualRent.payments);
+		this.rentsOptions$?.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+			this.actualRent = rent;
+			this.dataSource = new MatTableDataSource(this.actualRent.payments);
+			this.changeDetectionRef.detectChanges();
+		});
 	}
 
 	public addOffer() {
@@ -40,9 +56,12 @@ export class RentsComponent {
 		const dialogRef = this.dialog.open(RentsDialogComponent, {
 			data: this.actualRent,
 		});
-		dialogRef.afterClosed().subscribe(result => {
-			result;
-		});
+		dialogRef
+			.afterClosed()
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(() => {
+				this.changeDetectionRef.detectChanges();
+			});
 	}
 
 	public onSelect(menuOption: IMenuOptions) {
@@ -55,5 +74,9 @@ export class RentsComponent {
 				break;
 			}
 		}
+	}
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 }

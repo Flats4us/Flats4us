@@ -15,7 +15,7 @@
 		<mat-divider class="divider"></mat-divider>
 		<mat-nav-list>
 			<a
-				*ngFor="let rent of this.rentsService.rents"
+				*ngFor="let rent of rentsOptions$ | async"
 				mat-list-item
 				routerLink="{{ rent.link }}"
 				(click)="showRent(rent)"
@@ -109,7 +109,7 @@
 				<p>Metraż:</p>
 				<p>Data wystawienia oceny:</p>
 				<p>Okres wynajmu:</p>
-				<p>Maks. liczba miszkańców:</p>
+				<p>Maks. liczba mieszkańców:</p>
 				<p>Wyposażenie:</p>
 				<p>Data płatności czynszu:</p>
 				<p>Informacje o umowie:</p>
@@ -118,8 +118,8 @@
 			<div class="column-2">
 				<p>{{ actualRent.publishDate }}</p>
 				<p>12-12-2024</p>
-				<p>Marszałkowska 44, Warszawa</p>
-				<p>90 m²</p>
+				<p>Marszałkowska 44, {{ actualRent.property.regionCity.city }}</p>
+				<p>{{ actualRent.property.area }} m²</p>
 				<p>-</p>
 				<p>{{ actualRent.period }} lata</p>
 				<p>4</p>

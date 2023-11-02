@@ -47,6 +47,17 @@ export class RentsService {
 				{ sum: 1000, date: '8-12-2022', kind: 'KAUCJA' },
 				{ sum: 4000, date: '9-12-2022', kind: 'CZYNSZ' },
 			],
+			property: {
+				regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+				district: 'Wilanów',
+				price: 4000,
+				rent: 500,
+				area: 40,
+				rooms: 3,
+				url: '/',
+				imgSource: '/',
+				type: 'Mieszkanie',
+			},
 		},
 		{
 			link: '2',
@@ -89,6 +100,17 @@ export class RentsService {
 				{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
 				{ sum: 3000, date: '10-12-2022', kind: 'CZYNSZ' },
 			],
+			property: {
+				regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+				district: 'Mokotów',
+				price: 3000,
+				rent: 500,
+				area: 30,
+				rooms: 2,
+				url: '/',
+				imgSource: '/',
+				type: 'Mieszkanie',
+			},
 		},
 		{
 			link: '3',
@@ -131,6 +153,17 @@ export class RentsService {
 				{ sum: 2000, date: '11-12-2022', kind: 'KAUCJA' },
 				{ sum: 5000, date: '12-12-2022', kind: 'CZYNSZ' },
 			],
+			property: {
+				regionCity: { region: 'mazowieckie', city: 'Warszawa' },
+				district: 'Ursynów',
+				price: 5000,
+				rent: 500,
+				area: 50,
+				rooms: 2,
+				url: '/',
+				imgSource: '/',
+				type: 'Mieszkanie',
+			},
 		},
 	];
 
