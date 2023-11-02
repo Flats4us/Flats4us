@@ -17,36 +17,24 @@ namespace Flats4us.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly IUserService _userService;
+        private readonly Func<string, IUserService> _userServiceFactory;
 
-
-        public AuthController(IConfiguration configuration, IUserService userService)
+        public AuthController(IConfiguration configuration, Func<string, IUserService> userServiceFactory)
         {
             _configuration = configuration;
-            _userService = userService;
+            _userServiceFactory = userServiceFactory;
         }
 
 
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> RegisterAsync(UserRegisterDto request)
-        {
-            try
-            {
-                var user = await _userService.RegisterAsync(request);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
 
-        [HttpPost("register-student")]
+        [HttpPost("register/Student")]
         public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
         {
             try
             {
-                var user = await _userService.RegisterAsync(request);
+                var userService = _userServiceFactory("Student");
+                var user = await userService.RegisterAsync(request);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -55,12 +43,13 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("register-owner")]
+        [HttpPost("register/Owner")]
         public async Task<ActionResult<User>> RegisterOwnerAsync(OwnerRegisterDto request)
         {
             try
             {
-                var user = await _userService.RegisterAsync(request);
+                var userService = _userServiceFactory("Owner");
+                var user = await userService.RegisterAsync(request);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -72,8 +61,8 @@ namespace Flats4us.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<String>> Login(UserLoginDto request) {
-
-            var user = await _userService.AuthenticateAsync(request.Username, request.Password);
+            var initialUserService = _userServiceFactory("Student");
+            var user = await initialUserService.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
             {
                 return BadRequest("Incorrect username or password");
@@ -92,19 +81,31 @@ namespace Flats4us.Controllers
             // Get the user ID from the token
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             // Retrieve the user's information from the database or any other data source
-            var user = await _userService.GetUserByIdAsync(userId);
 
-            if (user == null)
+            IUserService userService;
+            User basicUser;
+
+            // Try fetching with StudentService
+            userService = _userServiceFactory("Student");
+            basicUser = await userService.GetUserByIdAsync(userId);
+
+            if (basicUser == null)
+            {
+                // Try fetching with OwnerService
+                userService = _userServiceFactory("Owner");
+                basicUser = await userService.GetUserByIdAsync(userId);
+            }
+
+            if (basicUser == null)
             {
                 return NotFound();
             }
 
-            // Create a UserDto object with the required properties
             var userDto = new UserInfoDto
             {
-                Id = user.UserId,
-                Username = user.Username,
-                Role = user.Role,
+                Id = basicUser.UserId,
+                Username = basicUser.Username,
+                Role = basicUser.Role,
             };
 
             return Ok(userDto);

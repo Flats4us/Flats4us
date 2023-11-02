@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Flats4us.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedingData : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,18 +67,6 @@ namespace Flats4us.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Properties", x => x.PropertyId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tenants",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tenants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -671,15 +657,6 @@ namespace Flats4us.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "User",
-                columns: new[] { "UserId", "AccountCreationDate", "City", "Discriminator", "Email", "Flat", "LastLoginDate", "Name", "Number", "PasswordHash", "PhoneNumber", "PostalCode", "Role", "Street", "Surname", "Username" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(385), "Dominik City", "User", "dominik@example.com", 0, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(446), "Dominik Name", 45, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "123-456-7890", "12345", "Tenant", "123 Dominik St", "Dominik Surname", "Dominik" },
-                    { 2, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(455), "Test City", "User", "test@example.com", 0, new DateTime(2023, 10, 12, 13, 37, 26, 365, DateTimeKind.Local).AddTicks(456), "Test Name", 78, "9uaPpbDg;0B:9540oyr,%\\\"Y~6\"<P(RkX`dY)S?NlUPTtE!Q6f", "987-654-3210", "67890", "Tenant", "456 Test St", "Test Surname", "testuser" }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_ModeratorUserId",
                 table: "Advertisements",
@@ -863,9 +840,6 @@ namespace Flats4us.Migrations
 
             migrationBuilder.DropTable(
                 name: "StudentSurveys");
-
-            migrationBuilder.DropTable(
-                name: "Tenants");
 
             migrationBuilder.DropTable(
                 name: "Arguments");

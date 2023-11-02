@@ -17,7 +17,7 @@ namespace Flats4us.Services
             // Populate properties from OwnerStudent
             //var student = base.CreateUserFromDto(studentDto) as Student;
             var student = new Student();
-            student = (Student)PopulateCommonFieldsFromDto(student, studentDto);
+            //student = (Student)PopulateCommonFieldsFromDto(student, studentDto);
             student = (Student)PopulateOwnerStudentFieldsFromDto(student, studentDto);
             student.Role = "Student";
 

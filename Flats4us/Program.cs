@@ -32,8 +32,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
-builder.Services.AddScoped<IUserService, StudentService>();
-builder.Services.AddScoped<IUserService, OwnerService>();
+
+
+
+//builder.Services.AddScoped<IUserService, StudentService>();
+//builder.Services.AddScoped<IUserService, OwnerService>();
+builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<OwnerService>();
+
+builder.Services.AddScoped<Func<string, IUserService>>(serviceProvider => key =>
+{
+    switch (key)
+    {
+        case "Student":
+            return serviceProvider.GetService<StudentService>();
+        case "Owner":
+            return serviceProvider.GetService<OwnerService>();
+        default:
+            throw new KeyNotFoundException(); 
+    }
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOrTenantOnly", policy =>
@@ -61,6 +80,10 @@ builder.Services.AddCors(c =>
                                                     .AllowAnyMethod());
 });
 
+using var scope = builder.Services.BuildServiceProvider().CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<Flats4usContext>();
+dbContext.Database.Migrate();
+
 var app = builder.Build();
 app.UseStaticFiles();   // for swagger
 
@@ -77,7 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(options => options.AllowAnyOrigin());
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
