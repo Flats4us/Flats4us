@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { OpinionRoutingModule } from './opinion-routing.module';
+import { AddOpinionComponent } from './add-opinion/add-opinion.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+
+@NgModule({
+	exports: [AddOpinionComponent],
+	declarations: [AddOpinionComponent],
+	imports: [
+		CommonModule,
+		OpinionRoutingModule,
+		MatCardModule,
+		MatIconModule,
+		FormsModule,
+		MatButtonModule,
+		MatCheckboxModule,
+		MatInputModule,
+		MatListModule,
+	],
+})
+export class OpinionModule {}

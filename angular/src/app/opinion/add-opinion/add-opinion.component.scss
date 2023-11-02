@@ -1,0 +1,20 @@
+.avatar__image {
+	width: 150px;
+	height: 150px;
+}
+
+.tags {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.good-tags {
+	flex: 1;
+	text-align: left;
+}
+
+.bad-tags {
+	flex: 1;
+	text-align: left;
+}
