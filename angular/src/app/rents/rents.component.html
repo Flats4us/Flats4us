@@ -73,13 +73,42 @@
 			/>
 		</mat-form-field>
 		<div class="gallery">
-			<ng-image-slider
-				#nav
-				[images]="actualRent.imageArray"
-				[infinite]="false"
-				[autoSlide]="1"
-				[imageSize]="{ width: '40%', height: '24%' }"
-			></ng-image-slider>
+			<div class="container slider">
+				<div [@slideAnimation]="currentIndex">
+					<ng-template
+						ngFor
+						[ngForOf]="actualRent.imageArray"
+						let-slide
+						let-i="index"
+					>
+						<img
+							class="slide slide-animation nonDraggableImage"
+							*ngIf="isCurrentSlideIndex(i)"
+							(swiperight)="nextSlide()"
+							(swipeleft)="prevSlide()"
+							[src]="slide.image"
+						/>
+					</ng-template>
+				</div>
+
+				<button class="arrow prev" (click)="nextSlide()"></button>
+				<button class="arrow next" (click)="prevSlide()"></button>
+				<nav class="nav">
+					<div class="wrapper">
+						<ul class="dots">
+							<li
+								class="dot"
+								*ngFor="let slide of actualRent.imageArray; let i = index"
+							>
+								<span
+									[ngClass]="{ active: isCurrentSlideIndex(i) }"
+									(click)="setCurrentSlideIndex(i)"
+								></span>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
 		</div>
 		<div class="button-box">
 			<button
