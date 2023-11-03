@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RentsComponent } from './rents.component';
+import { RentsDescriptionComponent } from './components/description/rents-description.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		pathMatch: 'full',
 		component: RentsComponent,
-	},
-	{
-		path: '',
-		component: RentsComponent,
-		children: [{ path: ':id', component: RentsComponent }],
+		children: [{ path: ':id', component: RentsDescriptionComponent }],
 	},
 ];
 

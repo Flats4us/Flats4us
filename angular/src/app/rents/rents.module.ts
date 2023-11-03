@@ -4,7 +4,6 @@ import { RentsComponent } from './rents.component';
 import { RentsRoutingModule } from './rents-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { NgImageSliderModule } from 'ng-image-slider';
 import { RentsService } from './services/rents.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
@@ -15,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RentsDialogComponent } from './components/dialog/rents-dialog.component';
+import { RentsDescriptionModule } from './components/description/rents-description.module';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -27,12 +27,12 @@ import { RentsDialogComponent } from './components/dialog/rents-dialog.component
 		MatListModule,
 		MatDividerModule,
 		MatTableModule,
-		NgImageSliderModule,
 		MatMenuModule,
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
 		RentsDialogComponent,
+		RentsDescriptionModule,
 	],
 	exports: [RentsComponent],
 	providers: [RentsService],
