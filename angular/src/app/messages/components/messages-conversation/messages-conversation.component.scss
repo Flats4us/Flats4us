@@ -1,0 +1,36 @@
+.conversation-header {
+	padding: 16px;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.avatar {
+	background: red;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+}
+
+.conversation {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	min-width: 100px;
+	margin: 8px;
+
+	.bubble {
+		padding: 8px 16px;
+		border-radius: 8px;
+		background-color: grey;
+	}
+
+	&-sent {
+		margin-left: auto;
+
+		.bubble {
+			background-color: lightblue;
+		}
+	}
+}

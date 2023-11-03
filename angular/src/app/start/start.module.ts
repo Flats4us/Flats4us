@@ -15,7 +15,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { GetDescriptionDirective } from '../directives/get-description.directive';
+import { GetDescriptionDirective } from './directives/get-description.directive';
+import {
+	MatPaginatorIntl,
+	MatPaginatorModule,
+} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { RealEstateService } from '../real-estate/services/real-estate.service';
+import { StartService } from './services/start.service';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -34,7 +43,12 @@ import { GetDescriptionDirective } from '../directives/get-description.directive
 		MatChipsModule,
 		MatDividerModule,
 		StartRoutingModule,
+		MatPaginatorModule,
+		MatTableModule,
+		MatSortModule,
+		MatMenuModule,
 	],
 	exports: [StartComponent],
+	providers: [MatPaginatorIntl, RealEstateService, StartService],
 })
 export class StartModule {}

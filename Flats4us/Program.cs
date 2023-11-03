@@ -1,6 +1,7 @@
 using Flats4us.Entities;
 using Flats4us.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -13,9 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Flats4usContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn")));
 
+builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddScoped<ISurveyService, SurveyService>();
+builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IOfferService, OfferService>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 
-
-//builder.Services.AddTransient<ITenantService, TenantService>();
+//builder.Services.AddScoped<ISurveyOwnerOfferService, SurveyOwnerOfferService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -86,6 +92,20 @@ dbContext.Database.Migrate();
 
 var app = builder.Build();
 app.UseStaticFiles();   // for swagger
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    // Get the database context
+    var dbContext = services.GetRequiredService<Flats4usContext>();
+
+    // Ensure the database is created and tables are created if they don't exist
+    if (dbContext.Database.EnsureCreated())
+    {
+        DataSeeder.SeedData(dbContext);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

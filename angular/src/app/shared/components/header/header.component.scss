@@ -1,30 +1,19 @@
 .custom-toolbar {
 	background-color: #fbbb8b;
-	height: 100px;
 }
 
-.logo {
-	margin-top: 55px;
-	width: 150px;
-	height: 150px;
-}
 .full-main-button {
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 }
 
 .settings,
-.tidings,
+.messages,
 .options,
 .map {
 	margin-left: 25px;
 }
 
-.change-lang {
-	background-color: #fbbb8b;
-	margin-left: 100px;
-}
 .icon-sun {
 	margin-left: 30px;
 	margin-right: 10px;
@@ -36,10 +25,6 @@
 .arrow {
 	width: 5px;
 	height: 5px;
-}
-.icon-moon {
-	width: 30px;
-	height: 30px;
 }
 
 .spacer {
@@ -58,24 +43,39 @@
 
 .your-photo {
 	border-radius: 100%;
-	width: 40px;
-	height: 40px;
-	margin-right: 20px;
+	width: 35px;
+	height: 35px;
 }
 
-.mat-sidenav-container {
-	height: 100%;
-}
 .your-profile {
-	margin-right: 30px;
+	min-width: 35px;
 }
 
-span {
-	vertical-align: middle;
-	font-size: 20px;
+.custom-toolbar .responsive-menu {
+	display: none;
 }
 
-.full-main-button button {
-	width: auto;
-	height: auto;
+@media screen and (max-width: 1000px) {
+	.custom-toolbar a:not(.logo) {
+		display: none;
+	}
+	.custom-toolbar
+		button:not(.your-profile):not(.responsive-menu):not(.dark-theme):not(
+			.languages
+		) {
+		display: none;
+	}
+	.custom-toolbar .responsive-menu {
+		float: right;
+		display: block;
+	}
+	.sidenav {
+		position: absolute;
+		right: 0px;
+	}
+
+	.sidenav a,
+	.sidenav button {
+		justify-content: space-between;
+	}
 }

@@ -61,4 +61,11 @@
         Roommate,
         Alone
     }
+
+    public enum PropertyType
+    {
+        Flat,
+        House,
+        Room
+    }
 }

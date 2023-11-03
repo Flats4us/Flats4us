@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Flats4us.Helpers.Enums;
+using Newtonsoft.Json;
 
 namespace Flats4us.Entities
 {
@@ -20,17 +21,22 @@ namespace Flats4us.Entities
         public int Price { get; set; }
 
         [Required]
-        public string Decription { get; set;}
+        public string Description { get; set;}
 
-        // In Months 
         [Required]
-        public int RentalPeriod { get; set; }
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
 
         [Required]
         public int NumberOfInterested { get; set; }
 
         [Required]
         public string Regulations { get; set; }
+
+        [Required]
+        public int PropertyId { get; set; }
 
         public virtual Property Property { get; set; }
         public virtual SurveyOwnerOffer SurveyOwnerOffer { get; set; }

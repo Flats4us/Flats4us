@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services

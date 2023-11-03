@@ -1,0 +1,30 @@
+<div class="conversation-header">
+	<div class="avatar"></div>
+	<span class="conversation__user">Uzytkownik X</span>
+</div>
+<h4>ID WYBRANEJ KONWERSACJI {{ conversationId$ | async }}</h4>
+<div class="conversation-list">
+	<div
+		*ngFor="let msg of messages; let index = index"
+		class="conversation"
+		[class]="
+			msg.sender === currentUser ? 'conversation-sent' : 'conversation-received'
+		"
+	>
+		<span>{{ msg.sender }}</span>
+		<span class="bubble">{{ msg.message }}</span>
+	</div>
+</div>
+<mat-form-field class="w-full">
+	<input
+		matInput
+		type="text"
+		placeholder="Wiadomość..."
+		[formControl]="messageControl"
+		(keydown.enter)="onSend()"
+	/>
+
+	<button matSuffix mat-icon-button (click)="onSend()">
+		<mat-icon>send</mat-icon>
+	</button>
+</mat-form-field>

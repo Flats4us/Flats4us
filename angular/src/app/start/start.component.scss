@@ -19,6 +19,7 @@
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
+	cursor: pointer;
 }
 
 .card-full-width {
@@ -26,7 +27,7 @@
 }
 
 .card:hover {
-	box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.255);
+	box-shadow: 12px 12px 4px rgba(0, 0, 0, 0.255);
 }
 
 .container {
@@ -43,13 +44,14 @@
 .container-2 {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-row-gap: 50px;
-	grid-column-gap: 50px;
-	padding: 50px;
+	grid-row-gap: 40px;
+	grid-column-gap: 40px;
+	padding: 0 40px 40px 40px;
 	justify-content: center;
 }
 
 .container-3 {
+	align-self: center;
 	text-align: center;
 	font-size: xx-large;
 	padding-top: 20px;
@@ -66,14 +68,28 @@
 	padding-bottom: 20px;
 }
 
-.box2 {
+.container-5 {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 100%;
+	height: fit-content;
+	padding-bottom: 20px;
+}
+
+.container-6 {
+	align-self: flex-end;
+	padding-right: 40px;
+}
+
+.box-2 {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 200px);
 	justify-content: center;
-	padding-top: 5px;
+	padding-top: 4px;
 }
 
-.box3 {
+.box-3 {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 200px);
 	justify-content: center;
@@ -86,7 +102,7 @@ mat-card-header {
 }
 
 mat-card-subtitle {
-	padding-top: 5px;
+	padding-top: 4px;
 	font-size: large;
 }
 
@@ -100,26 +116,35 @@ mat-card-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-bottom: 25px;
+	padding-bottom: 24px;
 }
 
 .batch-full-width {
 	width: 100%;
 }
 
-.batchText {
-	text-align: center;
+.box-icon {
+	padding: 0 4px;
 }
 
-.boxIcon {
-	padding-left: 5px;
-	padding-right: 5px;
-}
-
-.boxIcon2 {
+.box-icon-2 {
 	transform: scale(1.2);
-	padding-left: 5px;
-	padding-right: 5px;
+}
+
+.box-icon-3 {
+	transform: scale(1.2);
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.box-icon-4 {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	min-width: max-content;
+	opacity: 0;
 }
 
 .example-full-width {
@@ -137,7 +162,7 @@ mat-chip {
 }
 
 mat-form-field {
-	padding: 5px;
+	padding: 4px;
 }
 
 .error-text {
@@ -146,13 +171,31 @@ mat-form-field {
 }
 
 .suffix {
-	padding-left: 5px;
-	padding-right: 5px;
+	padding: 0 4px;
 }
 
 .description {
 	display: flex;
 	justify-content: center;
+}
+
+.colour-text {
+	color: #fbbb8b;
+}
+
+.image {
+	width: auto;
+	height: 100%;
+	max-height: 40px;
+	cursor: pointer;
+}
+
+.image:hover {
+	box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.255);
+}
+
+p {
+	white-space: pre-line;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -171,10 +214,16 @@ input[matinput][type="number"] {
 	.container-2 {
 		grid-template-columns: repeat(2, 1fr);
 	}
+	mat-paginator {
+		transform: scale(0.8);
+	}
 }
 
 @media screen and (max-width: 600px) {
 	.container-2 {
 		grid-template-columns: repeat(1, 1fr);
+	}
+	mat-paginator {
+		transform: scale(0.4);
 	}
 }

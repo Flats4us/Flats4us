@@ -11,13 +11,6 @@ namespace Flats4us.Entities
         [SurveyIgnore]
         public int SurveyOwnerOfferId { get; set; }
 
-        // TODO: Co wynajmuje?
-
-        // TODO: Mamy to już w nieruchomości
-        [Required]
-
-        public int NumberOfInhabitants { get; set; }
-
         [Required]
         public bool Smoking { get; set; }
 
@@ -30,7 +23,8 @@ namespace Flats4us.Entities
         [Required]
         public Gender Gender { get; set; }
 
-        public virtual Owner Owner { get; set; }
+        [Required]
+        public int OfferId { get; set; }
 
         public virtual Offer Offer { get; set; }
     }
