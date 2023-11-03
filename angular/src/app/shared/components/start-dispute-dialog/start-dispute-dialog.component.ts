@@ -3,8 +3,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
-	FormBuilder,
-	FormGroup,
+	FormControl,
 	FormsModule,
 	ReactiveFormsModule,
 	Validators,
@@ -29,11 +28,5 @@ export interface IDialogData {
 	],
 })
 export class StartDisputeDialogComponent {
-	public form: FormGroup;
-
-	constructor(private fb: FormBuilder) {
-		this.form = this.fb.group({
-			message: ['', Validators.required],
-		});
-	}
+	public message = new FormControl('', Validators.required);
 }
