@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { StartDisputeDialogModule } from './shared/components/start-dispute-dialog/start-dispute-dialog.module';
+import { StartDisputeDialogComponent } from './shared/components/start-dispute-dialog/start-dispute-dialog.component';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -33,7 +33,7 @@ import { StartDisputeDialogModule } from './shared/components/start-dispute-dial
 		MatIconModule,
 		MatMenuModule,
 		MatDialogModule,
-		StartDisputeDialogModule,
+		StartDisputeDialogComponent,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
