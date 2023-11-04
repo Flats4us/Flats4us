@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RentsDialogComponent } from './components/dialog/rents-dialog.component';
-import { RentsDescriptionModule } from './components/description/rents-description.module';
+import { RentsDetailsModule } from './components/details/rents-details.module';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -32,7 +32,7 @@ import { RentsDescriptionModule } from './components/description/rents-descripti
 		ScrollingModule,
 		MatDialogModule,
 		RentsDialogComponent,
-		RentsDescriptionModule,
+		RentsDetailsModule,
 	],
 	exports: [RentsComponent],
 	providers: [RentsService],

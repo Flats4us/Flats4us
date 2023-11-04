@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RentsComponent } from './rents.component';
-import { RentsDescriptionComponent } from './components/description/rents-description.component';
+import { RentsDetailsComponent } from './components/details/rents-details.component';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: RentsComponent,
-		children: [{ path: ':id', component: RentsDescriptionComponent }],
+		children: [{ path: ':id', component: RentsDetailsComponent }],
 	},
 ];
 

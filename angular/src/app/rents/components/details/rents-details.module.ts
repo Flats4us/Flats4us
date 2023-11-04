@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RentsDescriptionComponent } from './rents-description.component';
+import { RentsDetailsComponent } from './rents-details.component';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 
 @NgModule({
-	declarations: [RentsDescriptionComponent],
+	declarations: [RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -32,4 +32,4 @@ import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 		MatMenuModule,
 	],
 })
-export class RentsDescriptionModule {}
+export class RentsDetailsModule {}

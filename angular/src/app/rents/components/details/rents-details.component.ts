@@ -17,13 +17,13 @@ import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 
 @Component({
-	selector: 'app-rents-description',
-	templateUrl: './rents-description.component.html',
-	styleUrls: ['./rents-description.component.scss'],
+	selector: 'app-rents-details',
+	templateUrl: './rents-details.component.html',
+	styleUrls: ['./rents-details.component.scss'],
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsDescriptionComponent implements OnInit, OnDestroy {
+export class RentsDetailsComponent implements OnInit, OnDestroy {
 	@Output() public updatedState = new EventEmitter<string>();
 
 	public statusName: typeof statusName = statusName;
