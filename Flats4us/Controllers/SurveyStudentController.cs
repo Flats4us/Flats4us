@@ -47,25 +47,20 @@ namespace Flats4us.Controllers
 
         [HttpPost]
         //[Route("GetSurveyStudent")]
-        public async Task<IActionResult> PostSurveyStudent(SurveyStudentPost surveyStudent)
+        public async Task<IActionResult> PostSurveyStudent(SurveyStudentPost input)
         {
-            _logger.LogInformation("Getting SurveyStudent");
-            await _surveyStudentService.Post(new SurveyStudent
-            {
-                Party = surveyStudent.Party,
-                Tidiness = surveyStudent.Tidiness,
-                Smoking = surveyStudent.Smoking,
-                Sociability = surveyStudent.Sociability,
-                Animals = surveyStudent.Animals,
-                Vegan = surveyStudent.Vegan,
-                LookingForRoommate = surveyStudent.LookingForRoommate,
-                MaxNumberOfRoommates = surveyStudent.MaxNumberOfRoommates,
-                RoommateGender = surveyStudent.RoommateGender,
-                MinRoommateAge = surveyStudent.MinRoommateAge,
-                //Student = surveyStudent.Student
-            });
 
-            return Ok();
+            try
+            {
+                _logger.LogInformation("Getting SurveyStudent");
+                await _surveyStudentService.AddSurveyStudentAsync(input);
+                return Ok("dodano ankiete");
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
         }
     }
 }

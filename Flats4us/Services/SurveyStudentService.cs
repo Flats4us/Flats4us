@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
@@ -23,11 +24,33 @@ namespace Flats4us.Services
             return await _context.StudentSurveys.FirstAsync(x => x.SurveyStudentId == id);
         }
 
-        public async Task<SurveyStudent> Post(SurveyStudent surveyStudent)
+        public async Task AddSurveyStudentAsync(SurveyStudentPost input)
         {
+            //var property = await _context.Properties.FindAsync(input.SurveyStudentId);
+            //if (property is null) throw new ArgumentException
+            //var student = await _context.Properties.FindAsync(input.Student.UserId);
+
+            var surveyStudent = new SurveyStudent
+            {
+                SurveyStudentId = input.SurveyStudentId,
+                Party = input.Party,
+                Tidiness = input.Tidiness,
+                Smoking = input.Smoking,
+                Sociability = input.Sociability,
+                Animals = input.Animals,
+                Vegan = input.Vegan,
+                LookingForRoommate = input.LookingForRoommate,
+                MaxNumberOfRoommates = input.MaxNumberOfRoommates,
+                RoommateGender = input.RoommateGender,
+                MinRoommateAge = input.MinRoommateAge,
+                //Student = null
+            };
+
+
+
             await _context.StudentSurveys.AddAsync(surveyStudent);
             await _context.SaveChangesAsync();
-            return surveyStudent;
+            
         }
 
     }

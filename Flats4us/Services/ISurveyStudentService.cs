@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services
 {
@@ -6,6 +7,6 @@ namespace Flats4us.Services
     {
         public Task<List<SurveyStudent>> GetAllAsync();
         public Task<SurveyStudent> GetById(int id);
-        public Task<SurveyStudent> Post(SurveyStudent surveyStudent);
+        public Task AddSurveyStudentAsync(SurveyStudentPost input);
     }
 }
