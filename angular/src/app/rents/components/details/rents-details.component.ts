@@ -12,7 +12,7 @@ import { IMenuOptions, IPayment, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, Subject, map, mergeMap, takeUntil } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 
@@ -32,6 +32,7 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	public dataSource: MatTableDataSource<IPayment> = new MatTableDataSource();
 	public rentId$?: Observable<string>;
 	private readonly unsubscribe$: Subject<void> = new Subject();
+
 	public currentIndex = 0;
 
 	constructor(
@@ -44,9 +45,9 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 		this.rentId$ = this.route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
 		);
-		this.rentId$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
-			this.actualRent$ = this.rentsService.getRent(value);
-		});
+		this.actualRent$ = this.rentId$.pipe(
+			mergeMap(value => this.rentsService.getRent(value))
+		);
 		this.actualRent$?.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
 			this.dataSource = new MatTableDataSource(value?.payments);
 			this.actualRent ?? value;
