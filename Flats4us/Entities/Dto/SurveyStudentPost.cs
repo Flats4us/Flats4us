@@ -6,6 +6,7 @@ namespace Flats4us.Entities.Dto
 {
     public class SurveyStudentPost
     {
+        public int SurveyStudentId { get; set; }
         public int Party { get; set; }
         public int Tidiness { get; set; }
         public bool Smoking { get; set; }
@@ -16,6 +17,6 @@ namespace Flats4us.Entities.Dto
         public int MaxNumberOfRoommates { get; set; }
         public Gender RoommateGender { get; set; }
         public int MinRoommateAge { get; set; }
-        public int MaxRoommateAge { get; set; }
+        //public virtual Student Student { get; set; }
     }
 }

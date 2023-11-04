@@ -10,13 +10,13 @@ namespace Flats4us.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentSurveyController : ControllerBase
+    public class SurveyStudentController : ControllerBase
     {
-        private readonly ILogger<StudentSurveyController> _logger;
+        private readonly ILogger<SurveyStudentController> _logger;
         private readonly ISurveyStudentService _surveyStudentService;
 
-        public StudentSurveyController(
-            ILogger<StudentSurveyController> logger,
+        public SurveyStudentController(
+            ILogger<SurveyStudentController> logger,
             ISurveyStudentService surveyStudentService
         )
         {
@@ -39,7 +39,7 @@ namespace Flats4us.Controllers
         //[Route("GetSurveyStudent")]
         public async Task<IActionResult> GetSurveyStudentById(int id)
         {
-            _logger.LogInformation("Getting SurveyStudent");
+            _logger.LogInformation("Getting SurveyStudent by ID");
             var surveyStudent = await _surveyStudentService.GetById(id);
 
             return Ok(surveyStudent);
@@ -62,7 +62,7 @@ namespace Flats4us.Controllers
                 MaxNumberOfRoommates = surveyStudent.MaxNumberOfRoommates,
                 RoommateGender = surveyStudent.RoommateGender,
                 MinRoommateAge = surveyStudent.MinRoommateAge,
-                MaxRoommateAge = surveyStudent.MaxRoommateAge,
+                //Student = surveyStudent.Student
             });
 
             return Ok();
