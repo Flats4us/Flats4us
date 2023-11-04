@@ -27,6 +27,7 @@ import { statusName } from '../../statusName';
 	],
 })
 export class RentsDialogComponent {
+	public statusName: typeof statusName = statusName;
 	constructor(
 		public rentsService: RentsService,
 		public dialogRef: MatDialogRef<RentsDialogComponent>,
