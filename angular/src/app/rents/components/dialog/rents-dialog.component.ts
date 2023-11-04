@@ -36,6 +36,6 @@ export class RentsDialogComponent {
 
 	public onYesClick() {
 		this.data.status = statusName.SUSPENDED;
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
 	}
 }
