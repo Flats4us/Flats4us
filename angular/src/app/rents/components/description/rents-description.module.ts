@@ -11,7 +11,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { NgImageSliderModule } from 'ng-image-slider';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 		MatListModule,
 		MatDividerModule,
 		MatTableModule,
-		NgImageSliderModule,
 		MatMenuModule,
 		MatTooltipModule,
 		ScrollingModule,

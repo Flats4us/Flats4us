@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IMenuOptions, IPayment, IRent } from '../models/rents.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { statusName } from '../statusName';
 
 @Injectable()
 export class RentsService {
@@ -9,7 +10,7 @@ export class RentsService {
 		link: '1',
 		title: 'Mieszkanie1, Wilanów',
 		publishDate: '8-12-2022',
-		status: 'valid',
+		status: statusName.VALID,
 		price: 4000,
 		description: '',
 		period: 2,

@@ -1,12 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	OnDestroy,
+	OnInit,
+	Output,
+} from '@angular/core';
 import { RentsService } from '../../services/rents.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { IMenuOptions, IPayment } from '../../models/rents.models';
+import { IMenuOptions, IPayment, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
+import { statusName } from '../../statusName';
 
 @Component({
 	selector: 'app-rents-description',
@@ -15,11 +23,14 @@ import { slideAnimation } from '../../slide.animation';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsDescriptionComponent implements OnDestroy {
-	public id = '1';
+export class RentsDescriptionComponent implements OnInit, OnDestroy {
+	@Output() public updatedState = new EventEmitter<string>();
+
+	public statusName: typeof statusName = statusName;
 	public actualRent = this.rentsService.initialRent;
-	public dataSource: MatTableDataSource<IPayment>;
-	public rentId$: Observable<string>;
+	public actualRent$?: Observable<IRent | null | undefined>;
+	public dataSource: MatTableDataSource<IPayment> = new MatTableDataSource();
+	public rentId$?: Observable<string>;
 	private readonly unsubscribe$: Subject<void> = new Subject();
 	public currentIndex = 0;
 
@@ -28,20 +39,18 @@ export class RentsDescriptionComponent implements OnDestroy {
 		private router: Router,
 		public dialog: MatDialog,
 		public route: ActivatedRoute
-	) {
-		this.rentId$ = route.paramMap.pipe(map(params => params.get('id') ?? ''));
-		this.rentId$
-			.pipe(takeUntil(this.unsubscribe$))
-			.subscribe(id => (this.id = id));
-		this.rentsService
-			.getRent(this.id)
-			.pipe(takeUntil(this.unsubscribe$))
-			.subscribe(rent => {
-				if (rent) {
-					this.actualRent = rent;
-				}
-			});
-		this.dataSource = new MatTableDataSource(this.actualRent.payments);
+	) {}
+	public ngOnInit(): void {
+		this.rentId$ = this.route.paramMap.pipe(
+			map(params => params.get('id') ?? '')
+		);
+		this.rentId$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
+			this.actualRent$ = this.rentsService.getRent(value);
+		});
+		this.actualRent$?.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
+			this.dataSource = new MatTableDataSource(value?.payments);
+			this.actualRent ?? value;
+		});
 	}
 
 	public addOffer() {
@@ -49,14 +58,14 @@ export class RentsDescriptionComponent implements OnDestroy {
 	}
 
 	public openDialog(): void {
-		const dialogRef = this.dialog.open(RentsDialogComponent);
+		const dialogRef = this.dialog.open(RentsDialogComponent, {
+			data: this.actualRent,
+		});
 		dialogRef
 			.afterClosed()
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(result => {
-				if (result) {
-					this.actualRent.status = 'suspended';
-				}
+				this.actualRent = result;
 			});
 	}
 

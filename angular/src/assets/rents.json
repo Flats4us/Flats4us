@@ -143,7 +143,7 @@
 			}
 		],
 		"payments": [
-			{ "sum": 2000, "date": "11-12-2022", "kind": "KAUCJA" },
+			{ "sum": 1000, "date": "11-12-2022", "kind": "KAUCJA" },
 			{ "sum": 5000, "date": "12-12-2022", "kind": "CZYNSZ" }
 		],
 		"property": {

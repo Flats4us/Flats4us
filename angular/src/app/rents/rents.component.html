@@ -21,10 +21,10 @@
 				routerLink="{{ rent.link }}"
 				><div class="box-1">
 					<span>{{ rent.title }}</span>
-					<mat-icon *ngIf="rent.status !== 'suspended'" class="box-icon-2"
+					<mat-icon *ngIf="rent.status !== statusName.SUSPENDED" class="box-icon-2"
 						>check_circle</mat-icon
 					>
-					<mat-icon *ngIf="rent.status === 'suspended'" class="box-icon-3"
+					<mat-icon *ngIf="rent.status === statusName.SUSPENDED" class="box-icon-3"
 						>check_circle</mat-icon
 					>
 				</div></a

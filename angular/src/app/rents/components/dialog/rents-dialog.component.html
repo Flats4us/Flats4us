@@ -3,5 +3,5 @@
 </div>
 <div mat-dialog-actions class="button-box">
 	<button mat-button mat-dialog-close>Nie</button>
-	<button mat-button cdkFocusInitial [mat-dialog-close]="true">Tak</button>
+	<button mat-button cdkFocusInitial (click)="onYesClick()">Tak</button>
 </div>

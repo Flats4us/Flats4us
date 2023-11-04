@@ -3,6 +3,7 @@ import { RentsService } from './services/rents.service';
 import { IRent } from './models/rents.models';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { statusName } from './statusName';
 
 @Component({
 	selector: 'app-rents',
@@ -12,6 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class RentsComponent {
 	public rentsOptions$: Observable<IRent[]>;
+
+	public statusName: typeof statusName = statusName;
 
 	constructor(public rentsService: RentsService, private router: Router) {
 		this.rentsOptions$ = this.rentsService.getRents();

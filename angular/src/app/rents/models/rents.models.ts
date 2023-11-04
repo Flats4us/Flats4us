@@ -1,4 +1,5 @@
 import { IFlatOffer } from 'src/app/start/models/start-site.models';
+import { statusName } from '../statusName';
 
 export interface IGallery {
 	image: string;
@@ -17,7 +18,7 @@ export interface IRent {
 	link: string;
 	title: string;
 	publishDate: string;
-	status: string;
+	status: statusName;
 	price: number;
 	description: string;
 	period: number;
@@ -33,9 +34,3 @@ export interface IMenuOptions {
 	option: string;
 	description: string;
 }
-
-export const Status = {
-	valid: 'valid',
-	suspended: 'suspended',
-	rented: 'rented',
-};
