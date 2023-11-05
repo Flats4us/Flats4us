@@ -46,11 +46,8 @@ namespace Flats4us.Services
                 //Student = null
             };
 
-
-
             await _context.StudentSurveys.AddAsync(surveyStudent);
-            await _context.SaveChangesAsync();
-            
+            await _context.SaveChangesAsync(); 
         }
 
     }

@@ -1,4 +1,6 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
@@ -39,11 +41,20 @@ namespace Flats4us.Services
             return await _context.OwnerOfferSurveys.FirstAsync(x => x.SurveyOwnerOfferId == id);
         }
 
-        public async Task<SurveyOwnerOffer> Post(SurveyOwnerOffer surveyOwnerOffer)
+        public async Task AddSurveyOwnerOfferAsync(SurveyOwnerOfferDto input)
         {
+            var surveyOwnerOffer = new SurveyOwnerOffer
+            {
+                SurveyOwnerOfferId = input.SurveyOwnerOfferId,
+                NumberOfInhabitants = input.NumberOfInhabitants,
+                Smoking = input.Smoking,
+                Parties = input.Parties,
+                Animals = input.Animals,
+                Gender = input.Gender
+            };
+            
             await _context.OwnerOfferSurveys.AddAsync(surveyOwnerOffer);
             await _context.SaveChangesAsync();
-            return surveyOwnerOffer;
         }
     }
 }

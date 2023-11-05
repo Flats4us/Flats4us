@@ -1,4 +1,5 @@
-﻿using Flats4us.Services;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,7 +42,23 @@ namespace Flats4us.Controllers
         }
 
 
+        [HttpPost]
+        //[Route("GetSurveyStudent")]
+        public async Task<IActionResult> PostSurveyOwnerOffer(SurveyOwnerOfferDto input)
+        {
 
+            try
+            {
+                _logger.LogInformation("Getting SurveyOwnerOffer");
+                await _surveyOwnerOfferService.AddSurveyOwnerOfferAsync(input);
+                return Ok("dodano ankiete OwnerOffer");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
 
     }
 }

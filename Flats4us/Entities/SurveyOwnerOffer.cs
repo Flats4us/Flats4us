@@ -15,7 +15,6 @@ namespace Flats4us.Entities
 
         // TODO: Mamy to już w nieruchomości
         [Required]
-
         public int NumberOfInhabitants { get; set; }
 
         [Required]
