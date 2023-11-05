@@ -12,7 +12,7 @@ import { statusName } from './statusName';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentsComponent {
-	public rentsOptions$: Observable<IRent[]>;
+	public rentsOptions$?: Observable<IRent[]>;
 
 	public statusName: typeof statusName = statusName;
 

@@ -7,12 +7,18 @@ import {
 	Output,
 } from '@angular/core';
 import { RentsService } from '../../services/rents.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { IMenuOptions, IPayment, IRent } from '../../models/rents.models';
+import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import { Observable, Subject, map, mergeMap, takeUntil } from 'rxjs';
+import {
+	BehaviorSubject,
+	Observable,
+	Subject,
+	map,
+	switchMap,
+	takeUntil,
+} from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 
@@ -24,13 +30,14 @@ import { statusName } from '../../statusName';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentsDetailsComponent implements OnInit, OnDestroy {
-	@Output() public updatedState = new EventEmitter<string>();
+	@Output() public updatedRent = new EventEmitter<BehaviorSubject<IRent>>();
 
 	public statusName: typeof statusName = statusName;
-	public actualRent = this.rentsService.initialRent;
-	public actualRent$?: Observable<IRent | null | undefined>;
-	public dataSource: MatTableDataSource<IPayment> = new MatTableDataSource();
-	public rentId$?: Observable<string>;
+	public actualRent$?: Observable<IRent>;
+	public actualRentSubject$?: BehaviorSubject<IRent> = new BehaviorSubject(
+		{} as IRent
+	);
+	private rentId$?: Observable<string>;
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public currentIndex = 0;
@@ -38,20 +45,17 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	constructor(
 		public rentsService: RentsService,
 		private router: Router,
-		public dialog: MatDialog,
-		public route: ActivatedRoute
+		private dialog: MatDialog,
+		private route: ActivatedRoute
 	) {}
 	public ngOnInit(): void {
 		this.rentId$ = this.route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
 		);
 		this.actualRent$ = this.rentId$.pipe(
-			mergeMap(value => this.rentsService.getRent(value))
+			switchMap(value => this.rentsService.getRent(value))
 		);
-		this.actualRent$?.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
-			this.dataSource = new MatTableDataSource(value?.payments);
-			this.actualRent ?? value;
-		});
+		this.actualRent$.subscribe(this.actualRentSubject$);
 	}
 
 	public addOffer() {
@@ -60,13 +64,14 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 
 	public openDialog(): void {
 		const dialogRef = this.dialog.open(RentsDialogComponent, {
-			data: this.actualRent,
+			data: this.actualRentSubject$,
 		});
 		dialogRef
 			.afterClosed()
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(result => {
-				this.actualRent = result;
+				this.actualRentSubject$?.pipe(switchMap(result));
+				this.updatedRent.emit(result);
 			});
 	}
 
@@ -94,17 +99,11 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide() {
-		this.currentIndex =
-			this.currentIndex < this.actualRent.imageArray.length - 1
-				? ++this.currentIndex
-				: 0;
+	public prevSlide(length: number) {
+		this.currentIndex = this.currentIndex < length - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide() {
-		this.currentIndex =
-			this.currentIndex > 0
-				? --this.currentIndex
-				: this.actualRent.imageArray.length - 1;
+	public nextSlide(length: number) {
+		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
 	}
 }

@@ -18,7 +18,7 @@
 			<a
 				*ngFor="let rent of rentsOptions$ | async"
 				mat-list-item
-				routerLink="{{ rent.link }}"
+				routerLink="{{ rent.id }}"
 				><div class="box-1">
 					<span>{{ rent.title }}</span>
 					<mat-icon *ngIf="rent.status !== statusName.SUSPENDED" class="box-icon-2"

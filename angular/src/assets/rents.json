@@ -1,6 +1,6 @@
 [
 	{
-		"link": "1",
+		"id": "1",
 		"title": "Mieszkanie1, Wilanów",
 		"publishDate": "8-12-2022",
 		"status": "valid",
@@ -53,7 +53,7 @@
 		}
 	},
 	{
-		"link": "2",
+		"id": "2",
 		"title": "Mieszkanie2, Mokotów",
 		"publishDate": "9-12-2022",
 		"status": "valid",
@@ -106,7 +106,7 @@
 		}
 	},
 	{
-		"link": "3",
+		"id": "3",
 		"title": "Mieszkanie3, Ursynów",
 		"publishDate": "11-12-2022",
 		"status": "valid",

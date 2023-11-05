@@ -15,7 +15,7 @@ export interface IPayment {
 }
 
 export interface IRent {
-	link: string;
+	id: string;
 	title: string;
 	publishDate: string;
 	status: statusName;
