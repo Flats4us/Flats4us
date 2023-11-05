@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  flats4us:
+    build:
+      context: ./Flats4us
+      dockerfile: Dockerfile
+    container_name: flats4us_container
+    environment:
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5166:80"
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_CLI_TRUST_SERVER_CERTIFICATE=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - db-data:/var/opt/mssql
+
+volumes:
+  db-data:
+

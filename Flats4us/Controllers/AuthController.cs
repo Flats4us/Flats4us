@@ -1,0 +1,141 @@
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Flats4us.Services.Interfaces;
+
+namespace Flats4us.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+        private readonly IConfiguration _configuration;
+        private readonly Func<string, IUserService> _userServiceFactory;
+
+        public AuthController(IConfiguration configuration, Func<string, IUserService> userServiceFactory)
+        {
+            _configuration = configuration;
+            _userServiceFactory = userServiceFactory;
+        }
+
+
+        
+
+        [HttpPost("register/Student")]
+        public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
+        {
+            try
+            {
+                var userService = _userServiceFactory("Student");
+                var user = await userService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("register/Owner")]
+        public async Task<ActionResult<User>> RegisterOwnerAsync(OwnerRegisterDto request)
+        {
+            try
+            {
+                var userService = _userServiceFactory("Owner");
+                var user = await userService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpPost("login")]
+        public async Task<ActionResult<String>> Login(UserLoginDto request) {
+            var initialUserService = _userServiceFactory("Student");
+            var user = await initialUserService.AuthenticateAsync(request.Username, request.Password);
+            if (user == null)
+            {
+                return BadRequest("Incorrect username or password");
+            }
+
+            string token = CreateToken(user);
+
+            return Ok(token);    
+        }
+
+
+        [HttpGet("profile")]
+        [Authorize]
+        public async Task<ActionResult<UserInfoDto>> GetUserProfile()
+        {
+            // Get the user ID from the token
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            // Retrieve the user's information from the database or any other data source
+
+            IUserService userService;
+            User basicUser;
+
+            // Try fetching with StudentService
+            userService = _userServiceFactory("Student");
+            basicUser = await userService.GetUserByIdAsync(userId);
+
+            if (basicUser == null)
+            {
+                // Try fetching with OwnerService
+                userService = _userServiceFactory("Owner");
+                basicUser = await userService.GetUserByIdAsync(userId);
+            }
+
+            if (basicUser == null)
+            {
+                return NotFound();
+            }
+
+            var userDto = new UserInfoDto
+            {
+                Id = basicUser.UserId,
+                Username = basicUser.Username,
+                Role = basicUser.Role,
+            };
+
+            return Ok(userDto);
+        }
+
+
+
+        private string CreateToken(User user)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
+                new Claim(ClaimTypes.Role, user.Role) // Add the role claim
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration.GetSection("Jwt:Key").Value!));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddDays(1),
+                signingCredentials: creds
+                );
+
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwt;
+        }
+    }
+}
