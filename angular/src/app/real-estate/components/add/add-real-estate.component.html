@@ -342,7 +342,7 @@
 			</mat-step>
 		</div>
 		<div class="box-1">
-			<mat-step [stepControl]="addRealEstateFormPhotos" class="step-3">
+			<mat-step class="step-3" [stepControl]="addRealEstateFormPhotos">
 				<ng-template matStepLabel>Zdjęcia</ng-template>
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-1">
@@ -433,7 +433,7 @@
 						>
 							Zapisz nieruchomość
 						</button>
-						<button mat-button (click)="formReset()" class="btn">Reset</button>
+						<button mat-button class="btn" (click)="formReset()">Reset</button>
 					</div>
 					<h2 *ngIf="completed" class="subtitle-3">
 						<p>Nieruchomość została zapisana!</p>

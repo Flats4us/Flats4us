@@ -13,7 +13,7 @@
 						max="5"
 						step="1"
 					>
-						<input [formControlName]="question.id" matSliderThumb />
+						<input matSliderThumb [formControlName]="question.id" />
 					</mat-slider>
 
 					<mat-form-field
@@ -21,7 +21,7 @@
 						class="h-1/2"
 						appearance="outline"
 					>
-						<input [formControlName]="question.id" matInput />
+						<input matInput [formControlName]="question.id" />
 					</mat-form-field>
 
 					<mat-slide-toggle
