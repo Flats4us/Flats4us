@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Flats4us.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Flats4us.Services;
     using System.Threading.Tasks;
     using Flats4us.Entities.Dto;
+    using Flats4us.Services.Interfaces;
 
     [Route("api/[controller]")]
     [ApiController]

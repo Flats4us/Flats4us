@@ -93,19 +93,19 @@ dbContext.Database.Migrate();
 var app = builder.Build();
 app.UseStaticFiles();   // for swagger
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
+//using (var scope = app.Services.CreateScope())
+//{
+  //  var services = scope.ServiceProvider;
 
     // Get the database context
-    var dbContext = services.GetRequiredService<Flats4usContext>();
+    //var dbContext = services.GetRequiredService<Flats4usContext>();
 
     // Ensure the database is created and tables are created if they don't exist
-    if (dbContext.Database.EnsureCreated())
-    {
-        DataSeeder.SeedData(dbContext);
-    }
-}
+    //if (dbContext.Database.EnsureCreated())
+    //{
+      //  DataSeeder.SeedData(dbContext);
+    //}
+//}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

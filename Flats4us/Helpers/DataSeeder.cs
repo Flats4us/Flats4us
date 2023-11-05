@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities;
+﻿using Azure.Core;
+using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using System;
@@ -73,7 +74,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            Password = "mkowalski123",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("mkowalski123"),
             PhotoPath = "placeholder",
             ActivityStatus = false,
             DocumentPath = "placeholder",
@@ -95,7 +96,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 3, 23),
             LastLoginDate = new DateTime(2023, 10, 10),
-            Password = "bnowak123",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
             PhotoPath = "placeholder",
             ActivityStatus = false,
             DocumentPath = "placeholder",
@@ -117,7 +118,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
-            Password = "bnowak123",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
             PhotoPath = "placeholder",
             ActivityStatus = false,
             DocumentPath = "placeholder",
@@ -139,7 +140,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
-            Password = "bnowak123",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
             PhotoPath = "placeholder",
             ActivityStatus = false,
             DocumentPath = "placeholder",

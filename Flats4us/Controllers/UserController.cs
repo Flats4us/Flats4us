@@ -1,5 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
-using Flats4us.Services;
+using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

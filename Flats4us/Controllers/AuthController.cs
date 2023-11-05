@@ -1,6 +1,5 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
-using Flats4us.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Flats4us.Services.Interfaces;
 
 namespace Flats4us.Controllers
 {
