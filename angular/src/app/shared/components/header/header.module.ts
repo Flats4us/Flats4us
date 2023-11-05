@@ -12,6 +12,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
+import { StartDisputeDialogComponent } from '../start-dispute-dialog/start-dispute-dialog.component';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -27,6 +28,7 @@ import { RouterLink } from '@angular/router';
 		MatSlideToggleModule,
 		MatMenuModule,
 		RouterLink,
+		StartDisputeDialogComponent,
 	],
 	exports: [HeaderComponent],
 })
