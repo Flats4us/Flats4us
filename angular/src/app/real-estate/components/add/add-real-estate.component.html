@@ -442,7 +442,14 @@
 						>
 							Zapisz nieruchomość
 						</button>
-						<button mat-button class="btn" (click)="formReset()">Reset</button>
+						<button
+							mat-button
+							class="btn"
+							[disabled]="completed"
+							(click)="formReset()"
+						>
+							Reset
+						</button>
 					</div>
 					<h2 *ngIf="completed" class="subtitle-3">
 						<p>Nieruchomość została zapisana!</p>
