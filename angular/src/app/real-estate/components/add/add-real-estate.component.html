@@ -346,8 +346,10 @@
 			</mat-step>
 		</div>
 		<div class="box-1">
-			<mat-step class="step-3" [stepControl]="addRealEstateFormPhotos">
-				<ng-template matStepLabel>Zdjęcia</ng-template>
+			<mat-step [stepControl]="addRealEstateFormPhotos">
+				<ng-template matStepLabel
+					><span class="step-label">Zdjęcia</span></ng-template
+				>
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-1">
 						<div class="gallery">
