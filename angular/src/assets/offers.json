@@ -26,5 +26,103 @@
 		"url": "/",
 		"imgSource": "./assets/mieszkanie.jpg",
 		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 2800,
+		"rent": 500,
+		"area": 40,
+		"rooms": 2,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 1200,
+		"rent": 200,
+		"area": 32,
+		"rooms": 4,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 1300,
+		"rent": 300,
+		"area": 22,
+		"rooms": 1,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 2600,
+		"rent": 600,
+		"area": 21,
+		"rooms": 2,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 3200,
+		"rent": 700,
+		"area": 23,
+		"rooms": 3,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 4000,
+		"rent": 400,
+		"area": 28,
+		"rooms": 2,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"regionCity": {
+			"region": "mazowieckie",
+			"city": "Warszawa"
+		},
+		"district": "Mokotów",
+		"price": 2200,
+		"rent": 300,
+		"area": 42,
+		"rooms": 5,
+		"url": "/",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
 	}
 ]
