@@ -93,7 +93,7 @@
 		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
-		<button [routerLink]="['/profile', 1]" mat-menu-item>Mój profil</button>
+		<button mat-menu-item [routerLink]="['/profile', 1]">Mój profil</button>
 		<button mat-menu-item>EDYTUJ PROFIL</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>Moje wynajmy</button>
