@@ -55,7 +55,7 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 			.afterClosed()
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(result => {
-				this.actualRent$ = this.actualRent$?.pipe(switchMap(() => of(result)));
+				this.actualRent$ = of(result);
 			});
 	}
 
