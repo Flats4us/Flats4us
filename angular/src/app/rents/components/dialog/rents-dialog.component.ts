@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RentsService } from '../../services/rents.service';
 import { IRent } from '../../models/rents.models';
 import { statusName } from '../../statusName';
-import { BehaviorSubject, take } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-rents-dialog',
@@ -28,19 +28,16 @@ import { BehaviorSubject, take } from 'rxjs';
 	],
 })
 export class RentsDialogComponent {
+	private readonly unsubscribe$: Subject<void> = new Subject();
 	public statusName: typeof statusName = statusName;
 	constructor(
 		public rentsService: RentsService,
 		public dialogRef: MatDialogRef<RentsDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: BehaviorSubject<IRent>
+		@Inject(MAT_DIALOG_DATA) public data: IRent
 	) {}
 
 	public onYesClick() {
-		this.data
-			.pipe(take(1))
-			.subscribe(value =>
-				this.data.next({ ...value, status: statusName.SUSPENDED })
-			);
+		this.data = { ...this.data, status: statusName.SUSPENDED };
 		this.dialogRef.close(this.data);
 	}
 }

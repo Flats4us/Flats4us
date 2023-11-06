@@ -1,4 +1,4 @@
-<div *ngIf="actualRentSubject$ | async as actualRent">
+<div *ngIf="actualRent$ | async as actualRent">
 	<mat-form-field appearance="fill" class="title">
 		<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
 		<span matSuffix>
@@ -18,7 +18,7 @@
 					*ngFor="let menuOption of this.rentsService.menuOptions"
 					mat-menu-item
 					[value]="menuOption.description"
-					(click)="onSelect(menuOption)"
+					(click)="onSelect(menuOption, actualRent)"
 				>
 					<span *ngIf="menuOption.option !== 'closeRent'">{{
 						menuOption.description

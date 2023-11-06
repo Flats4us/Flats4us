@@ -1,24 +1,15 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	EventEmitter,
 	OnDestroy,
 	OnInit,
-	Output,
 } from '@angular/core';
 import { RentsService } from '../../services/rents.service';
 import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import {
-	BehaviorSubject,
-	Observable,
-	Subject,
-	map,
-	switchMap,
-	takeUntil,
-} from 'rxjs';
+import { Observable, Subject, map, of, switchMap, takeUntil } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 
@@ -30,13 +21,8 @@ import { statusName } from '../../statusName';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentsDetailsComponent implements OnInit, OnDestroy {
-	@Output() public updatedRent = new EventEmitter<BehaviorSubject<IRent>>();
-
 	public statusName: typeof statusName = statusName;
 	public actualRent$?: Observable<IRent>;
-	public actualRentSubject$?: BehaviorSubject<IRent> = new BehaviorSubject(
-		{} as IRent
-	);
 	private rentId$?: Observable<string>;
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
@@ -55,33 +41,31 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 		this.actualRent$ = this.rentId$.pipe(
 			switchMap(value => this.rentsService.getRent(value))
 		);
-		this.actualRent$.subscribe(this.actualRentSubject$);
 	}
 
 	public addOffer() {
 		this.router.navigate(['offer/add']);
 	}
 
-	public openDialog(): void {
+	public openDialog(actualRent: IRent): void {
 		const dialogRef = this.dialog.open(RentsDialogComponent, {
-			data: this.actualRentSubject$,
+			data: actualRent,
 		});
 		dialogRef
 			.afterClosed()
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(result => {
-				this.actualRentSubject$?.pipe(switchMap(result));
-				this.updatedRent.emit(result);
+				this.actualRent$ = this.actualRent$?.pipe(switchMap(() => of(result)));
 			});
 	}
 
-	public onSelect(menuOption: IMenuOptions) {
+	public onSelect(menuOption: IMenuOptions, actualRent: IRent) {
 		switch (menuOption.option) {
 			case 'startDispute': {
 				break;
 			}
 			case 'closeRent': {
-				this.openDialog();
+				this.openDialog(actualRent);
 				break;
 			}
 		}
