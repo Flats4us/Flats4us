@@ -70,10 +70,6 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 			}
 		}
 	}
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
-	}
 
 	public setCurrentSlideIndex(index: number) {
 		this.currentIndex = index;
@@ -89,5 +85,10 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 
 	public nextSlide(length: number) {
 		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
+	}
+
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 }

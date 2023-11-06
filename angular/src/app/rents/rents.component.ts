@@ -12,13 +12,11 @@ import { statusName } from './statusName';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentsComponent {
-	public rentsOptions$?: Observable<IRent[]>;
+	public rentsOptions$: Observable<IRent[]> = this.rentsService.getRents();
 
 	public statusName: typeof statusName = statusName;
 
-	constructor(public rentsService: RentsService, private router: Router) {
-		this.rentsOptions$ = this.rentsService.getRents();
-	}
+	constructor(public rentsService: RentsService, private router: Router) {}
 
 	public addOffer() {
 		this.router.navigate(['offer/add']);
