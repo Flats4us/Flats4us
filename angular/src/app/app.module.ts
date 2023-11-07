@@ -10,11 +10,9 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './shared/components/footer/footer.module';
 import { HeaderModule } from './shared/components/header/header.module';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { FindRoommateModule } from './find-roommate/find-roommate.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -26,12 +24,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 		BrowserAnimationsModule,
 		HeaderModule,
 		FooterModule,
-		FindRoommateModule,
 		MatSidenavModule,
 		MatButtonModule,
 		MatIconModule,
 		MatMenuModule,
-		MatDialogModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],
