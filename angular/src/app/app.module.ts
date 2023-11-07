@@ -7,9 +7,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterModule } from './shared/components/footer/footer.module';
-import { HeaderModule } from './shared/components/header/header.module';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { FooterModule } from '@shared/components/footer/footer.module';
+import { HeaderModule } from '@shared/components/header/header.module';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
