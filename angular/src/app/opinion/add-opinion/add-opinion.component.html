@@ -8,7 +8,7 @@
 	<form [formGroup]="opinionForm" (ngSubmit)="onSubmit()">
 		<mat-card-content>
 			<div class="flex flex-wrap justify-center">
-				<div class="w-[430px] p-5">
+				<div class="w-[432px] p-5">
 					<h2 class="font-medium text-2xl mb-4">KASIA, 19</h2>
 					<img
 						mat-card-avatar
@@ -101,7 +101,6 @@
 						<label>Twoja ocena: </label>
 						<div class="star-rating">
 							<mat-icon
-								value="5"
 								*ngFor="let star of starsScale"
 								(click)="countStar(star)"
 								[ngClass]="{
