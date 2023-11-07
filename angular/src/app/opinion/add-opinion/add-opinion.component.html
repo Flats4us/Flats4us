@@ -1,62 +1,131 @@
-<mat-card class="w-[1000px] m-auto">
+<mat-card class="max-w-[1100px] m-auto">
 	<mat-card-header class="justify-center">
 		<mat-card-title>
 			<h1 class="font-medium my-6">TWOJA OPINIA O UŻYTKOWNIKU</h1>
 		</mat-card-title>
 	</mat-card-header>
 	<mat-divider></mat-divider>
-	<mat-card-content>
-		<div class="flex">
-			<div class="flex-1 p-5 justify-center">
-				<h2 class="font-medium text-2xl mb-4">KASIA, 19</h2>
-				<img
-					mat-card-avatar
-					src="../../assets/typiara.jpg"
-					alt="avatar"
-					class="avatar__image m-auto"
-				/>
-				<div class="profile-rating__wrapper flex flex-col">
-					<div class="profile-rating__stars mx-auto">
-						<mat-icon class="filled">star</mat-icon>
-						<mat-icon class="filled">star</mat-icon>
-						<mat-icon class="filled">star</mat-icon>
-						<mat-icon class="filled">star</mat-icon>
-						<mat-icon class="filled">star_half</mat-icon>
+	<form [formGroup]="opinionForm" (ngSubmit)="onSubmit()">
+		<mat-card-content>
+			<div class="flex flex-wrap justify-center">
+				<div class="w-[430px] p-5">
+					<h2 class="font-medium text-2xl mb-4">KASIA, 19</h2>
+					<img
+						mat-card-avatar
+						src="../../assets/typiara.jpg"
+						alt="avatar"
+						class="avatar__image m-auto"
+						height="186"
+						width="179"
+					/>
+
+					<div class="profile-rating__wrapper flex flex-col">
+						<div class="profile-rating__stars mx-auto">
+							<mat-icon
+								class="filled"
+								*ngFor="let star of starsScale; let i = index"
+								>{{
+									i + 1 <= rating
+										? "star"
+										: i + 1 <= rating + 1
+										? "star_half"
+										: "star_outline"
+								}}</mat-icon
+							>
+						</div>
 					</div>
+
+					<div class="text-center">{{ rating }}</div>
+					<div class="text-center">OPINIE (12)</div>
 				</div>
-				<div class="text-center">4.98</div>
-				<div class="text-center">OPINIE (12)</div>
-			</div>
-			<div class="flex-[2] p-5">
-				<h2 class="text-center font-medium drop-shadow-md mb-4">NOWA OPINIA</h2>
-				<div class="tags mb-8">
-					<ul class="good-tags">
-						<li><mat-checkbox> Pomocny</mat-checkbox></li>
-						<li><mat-checkbox> Gotowy do współpracy</mat-checkbox></li>
-						<li><mat-checkbox> Dba o porządek</mat-checkbox></li>
-						<li><mat-checkbox> Przyjazny</mat-checkbox></li>
-						<li><mat-checkbox> Szanujący prywatność innych</mat-checkbox></li>
-						<li><mat-checkbox> Komunikatywny</mat-checkbox></li>
-					</ul>
-					<ul class="bad-tags">
-						<li><mat-checkbox> Nieuczciwy </mat-checkbox></li>
-						<li><mat-checkbox> Brak higieny osobistej </mat-checkbox></li>
-						<li><mat-checkbox> Nie dba o porządek </mat-checkbox></li>
-						<li><mat-checkbox> Konfliktowy </mat-checkbox></li>
-						<li><mat-checkbox> Zbyt głośny </mat-checkbox></li>
-						<li><mat-checkbox> Nie przestrzega ustaleń </mat-checkbox></li>
-					</ul>
+				<div class="w-[540px] p-5">
+					<h2 class="text-center font-medium drop-shadow-md mb-4">NOWA OPINIA</h2>
+					<fieldset class="tags mb-8">
+						<legend class="mb-4">Cechy użytkownika:</legend>
+						<ul class="good-tags">
+							<li>
+								<mat-checkbox formControlName="helpful">Pomocny</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="cooperative"
+									>Gotowy do współpracy</mat-checkbox
+								>
+							</li>
+							<li>
+								<mat-checkbox formControlName="organized">Dba o porządek</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="friendly">Przyjazny</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="respectfulOfPrivacy"
+									>Szanujący prywatność innych</mat-checkbox
+								>
+							</li>
+							<li>
+								<mat-checkbox formControlName="communicative"
+									>Komunikatywny</mat-checkbox
+								>
+							</li>
+						</ul>
+
+						<ul class="bad-tags">
+							<li>
+								<mat-checkbox formControlName="dishonest">Nieuczciwy</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="badPersonalHygiene"
+									>Brak higieny osobistej</mat-checkbox
+								>
+							</li>
+							<li>
+								<mat-checkbox formControlName="disorganized"
+									>Nie dba o porządek</mat-checkbox
+								>
+							</li>
+							<li>
+								<mat-checkbox formControlName="conflictual">Konfliktowy</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="tooNoisy">Zbyt głośny</mat-checkbox>
+							</li>
+							<li>
+								<mat-checkbox formControlName="doesNotFollowArrangements"
+									>Nie przestrzega ustaleń</mat-checkbox
+								>
+							</li>
+						</ul>
+					</fieldset>
+
+					<div class="flex justify-between mb-4">
+						<label>Twoja ocena: </label>
+						<div class="star-rating">
+							<mat-icon
+								value="5"
+								*ngFor="let star of starsScale"
+								(click)="countStar(star)"
+								[ngClass]="{
+									selected: star <= this.opinionForm.controls['selectedGrade'].value
+								}"
+							>
+								star</mat-icon
+							>
+						</div>
+					</div>
+
+					<mat-form-field class="w-full">
+						<mat-label>Tutaj wpisz uwagi...</mat-label>
+						<textarea matInput formControlName="comment"></textarea>
+					</mat-form-field>
 				</div>
-				<mat-form-field class="w-full">
-					<mat-label>Tutaj wpisz uwagi...</mat-label>
-					<textarea matInput></textarea>
-				</mat-form-field>
 			</div>
-		</div>
-	</mat-card-content>
-	<mat-card-actions class="mx-auto my-5">
-		<button mat-raised-button>Dodaj opinię</button>
-		<div style="margin: 10px"></div>
-		<button mat-raised-button>Wyczyść</button>
-	</mat-card-actions>
+		</mat-card-content>
+		<mat-card-actions class="justify-center my-5">
+			<button mat-raised-button type="submit" [disabled]="!opinionForm.valid">
+				Dodaj opinię
+			</button>
+			<div style="margin: 10px"></div>
+			<button mat-raised-button>Wyczyść</button>
+		</mat-card-actions>
+	</form>
 </mat-card>

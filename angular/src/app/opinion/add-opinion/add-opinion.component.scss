@@ -18,3 +18,24 @@
 	flex: 1;
 	text-align: left;
 }
+
+.profile-rating {
+	&__stars {
+		mat-icon.filled {
+			color: gold;
+		}
+	}
+}
+
+.star-rating mat-icon {
+	color: #ddd;
+}
+
+.star-rating mat-icon:hover,
+.star-rating mat-icon.selected {
+	color: gold;
+}
+
+.star-rating {
+	display: flex;
+}
