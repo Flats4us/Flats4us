@@ -206,11 +206,6 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 		this.matSort.sortChange.emit(this.sortState);
 	}
 
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
-	}
-
 	private filterCitiesGroup(value: string): IGroup[] {
 		return this.realEstateService.citiesGroups
 			.map(group => ({
@@ -241,5 +236,9 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 	public validateForm() {
 		return this.startSiteForm.valid;
+	}
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 }
