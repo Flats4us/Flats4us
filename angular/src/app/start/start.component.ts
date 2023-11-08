@@ -10,7 +10,6 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFlatOffer, ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -33,7 +32,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 
 	public showMoreFilters = false;
 
-	public isSubmitted: boolean;
+	public isSubmitted = false;
 
 	public startSiteForm: FormGroup = new FormGroup({});
 
@@ -43,6 +42,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	private dataSource = new MatTableDataSource<IFlatOffer>();
 	private regionCityArray: IRegionCity[] = [];
 	private dataSource$?: Observable<MatTableDataSource<IFlatOffer>>;
+	private formBuilder: FormBuilder = new FormBuilder();
 
 	private sortState: Sort = { active: 'price', direction: 'desc' };
 
@@ -56,15 +56,13 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	private matSort: MatSort = new MatSort();
 
 	constructor(
-		private formBuilder: FormBuilder,
-		private http: HttpClient,
 		private router: Router,
 		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
 		public realEstateService: RealEstateService,
 		public startService: StartService
 	) {
-		this.startSiteForm = formBuilder.group({
+		this.startSiteForm = this.formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
 			distance: new FormControl(0, Validators.required),
@@ -86,41 +84,6 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 			)
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
-		this.isSubmitted = false;
-	}
-
-	public filter = (opt: string[], value: string): string[] => {
-		const filterValue = value.toLowerCase();
-
-		return opt.filter(item => item.toLowerCase().includes(filterValue));
-	};
-
-	public showFilters() {
-		this.showMoreFilters = !this.showMoreFilters;
-	}
-
-	public showMap() {
-		this.router.navigate(['map'], { relativeTo: this.route });
-	}
-
-	public addToFavorite() {
-		this.router.navigate(['/']);
-	}
-
-	public showDescription(url: string) {
-		this.router.navigate([url]);
-	}
-
-	public onSubmit() {
-		if (this.startSiteForm.valid) {
-			this.isSubmitted = true;
-		}
-	}
-
-	public ngAfterViewInit() {
-		this.dataSource$?.pipe(takeUntil(this.unsubscribe$)).subscribe(dataSource => {
-			this.flatOptions$ = dataSource.connect();
-		});
 	}
 
 	public ngOnInit() {
@@ -190,6 +153,39 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 				return this.dataSource;
 			})
 		);
+	}
+
+	public ngAfterViewInit() {
+		this.dataSource$?.pipe(takeUntil(this.unsubscribe$)).subscribe(dataSource => {
+			this.flatOptions$ = dataSource.connect();
+		});
+	}
+
+	public filter(opt: string[], value: string): string[] {
+		const filterValue = value.toLowerCase();
+		return opt.filter(item => item.toLowerCase().includes(filterValue));
+	}
+
+	public showFilters() {
+		this.showMoreFilters = !this.showMoreFilters;
+	}
+
+	public showMap() {
+		this.router.navigate(['map'], { relativeTo: this.route });
+	}
+
+	public addToFavorite() {
+		this.router.navigate(['/']);
+	}
+
+	public showDescription(url: string) {
+		this.router.navigate([url]);
+	}
+
+	public onSubmit() {
+		if (this.startSiteForm.valid) {
+			this.isSubmitted = true;
+		}
 	}
 
 	public onSelect(sortByOption: ISortOption) {
