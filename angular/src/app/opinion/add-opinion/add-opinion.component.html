@@ -15,8 +15,6 @@
 						src="../../assets/typiara.jpg"
 						alt="avatar"
 						class="avatar__image m-auto"
-						height="186"
-						width="179"
 					/>
 
 					<div class="profile-rating__wrapper flex flex-col">
@@ -118,11 +116,10 @@
 				</div>
 			</div>
 		</mat-card-content>
-		<mat-card-actions class="justify-center my-5">
+		<mat-card-actions class="w-[260px] justify-between my-5 mx-auto">
 			<button mat-raised-button type="submit" [disabled]="!opinionForm.valid">
 				Dodaj opinię
 			</button>
-			<div style="margin: 10px"></div>
 			<button mat-raised-button>Wyczyść</button>
 		</mat-card-actions>
 	</form>

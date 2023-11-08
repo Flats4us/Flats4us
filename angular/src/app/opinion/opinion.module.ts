@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 import { OpinionRoutingModule } from './opinion-routing.module';
 import { AddOpinionComponent } from './add-opinion/add-opinion.component';
@@ -25,7 +25,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatCheckboxModule,
 		MatInputModule,
 		MatListModule,
-		NgOptimizedImage,
 		ReactiveFormsModule,
 		MatSnackBarModule,
 	],
