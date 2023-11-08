@@ -21,17 +21,16 @@
 
 					<div class="profile-rating__wrapper flex flex-col">
 						<div class="profile-rating__stars mx-auto">
-							<mat-icon
-								class="filled"
-								*ngFor="let star of starsScale; let i = index"
+							<mat-icon *ngFor="let star of starsScale; let i = index"
 								>{{
 									i + 1 <= rating
 										? "star"
 										: i + 1 <= rating + 1
 										? "star_half"
 										: "star_outline"
-								}}</mat-icon
-							>
+								}}
+								class="filled"
+							</mat-icon>
 						</div>
 					</div>
 
@@ -102,10 +101,10 @@
 						<div class="star-rating">
 							<mat-icon
 								*ngFor="let star of starsScale"
-								(click)="countStar(star)"
 								[ngClass]="{
 									selected: star <= this.opinionForm.controls['selectedGrade'].value
 								}"
+								(click)="countStar(star)"
 							>
 								star</mat-icon
 							>
