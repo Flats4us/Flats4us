@@ -9,16 +9,14 @@ import {
 	Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-
-export interface IDialogData {
-	message: string;
-}
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-start-dispute-dialog',
 	templateUrl: 'start-dispute-dialog.component.html',
 	standalone: true,
 	imports: [
+		CommonModule,
 		MatDialogModule,
 		MatFormFieldModule,
 		MatInputModule,
