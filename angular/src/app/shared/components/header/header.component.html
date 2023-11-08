@@ -52,7 +52,7 @@
 		<button mat-menu-item>Obserwowane oferty</button>
 		<button mat-menu-item>Ostatnio oglądane oferty</button>
 		<button mat-menu-item>Opinie</button>
-		<button mat-menu-item>Utwórz nowy spór</button>
+		<button mat-menu-item (click)="openDialog()">Utwórz nowy spór</button>
 		<button mat-menu-item>Kalendarz</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
@@ -93,7 +93,7 @@
 		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
-		<button mat-menu-item [routerLink]="['/profile', id]">Mój profil</button>
+		<button mat-menu-item [routerLink]="['/profile', 1]">Mój profil</button>
 		<button mat-menu-item>EDYTUJ PROFIL</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>Moje wynajmy</button>
