@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IMenuOptions, IPayment, IRent } from '../models/rents.models';
+import { IMenuOptions, IRent } from '../models/rents.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class RentsService {
-	public payments: IPayment[] = [
-		{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
-		{ sum: 4000, date: '10-12-2022', kind: 'CZYNSZ' },
-	];
-	public displayedColumns: string[] = ['sum', 'date', 'kind'];
+	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
+	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'startDispute', description: 'Rozpocznij spór' },
 		{ option: 'closeRent', description: 'Zakończ najem' },

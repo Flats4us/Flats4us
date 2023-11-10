@@ -92,15 +92,19 @@
 		>
 			Szczegóły oferty
 		</button>
-		<mat-label class="label-1">Cena {{ actualRent.price }} pln/msc</mat-label>
+		<mat-label class="label-1"
+			>Cena &nbsp;<span [appGetPrice]="actualRent.price"></span>&nbsp;
+			PLN/mies.</mat-label
+		>
 	</div>
 	<div class="label-3">
 		<mat-label class="label-2"
-			><mat-icon>description</mat-icon><span>Opis oferty</span></mat-label
+			><mat-icon class="icon">description</mat-icon
+			><span>Opis oferty</span></mat-label
 		>
-		<mat-divider></mat-divider>
 	</div>
-	<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+	<mat-divider></mat-divider>
+	<div class="container-2">
 		<div class="column-1">
 			<p>Data wystawienia:</p>
 			<p>Data zakończenia:</p>
@@ -127,24 +131,27 @@
 			<p>-</p>
 			<p>Jan Kowalski, Barbara Nowak</p>
 		</div>
-	</cdk-virtual-scroll-viewport>
+	</div>
 	<div class="label-3">
 		<mat-label class="label-2"
-			><mat-icon>attach_money</mat-icon><span>Płatności</span></mat-label
+			><mat-icon class="icon">attach_money</mat-icon
+			><span>Płatności</span></mat-label
 		>
-		<mat-divider></mat-divider>
 	</div>
 	<div class="payments">
 		<table mat-table class="mat-elevation-z8" [dataSource]="actualRent.payments">
 			<ng-container
-				*ngFor="let column of this.rentsService.displayedColumns"
+				*ngFor="let column of this.rentsService.displayedColumnsStudent"
 				[matColumnDef]="column"
 			>
 				<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
 				<td *matCellDef="let payment" mat-cell>{{ payment[column] }}</td>
 			</ng-container>
 			<tr
-				*matRowDef="let paymentRow; columns: this.rentsService.displayedColumns"
+				*matRowDef="
+					let paymentRow;
+					columns: this.rentsService.displayedColumnsStudent
+				"
 				mat-row
 			></tr>
 		</table>
