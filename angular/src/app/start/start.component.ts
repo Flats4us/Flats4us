@@ -2,10 +2,11 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	OnInit,
-	AfterViewInit,
 	ViewChild,
 	ChangeDetectorRef,
 	OnDestroy,
+	Output,
+	EventEmitter,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
@@ -13,13 +14,12 @@ import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFlatOffer, ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
-import { MatSort, Sort, SortDirection } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 
 @Component({
 	selector: 'app-start',
@@ -27,7 +27,7 @@ import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
+export class StartComponent implements OnInit, OnDestroy {
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
@@ -39,11 +39,13 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	public flatOptions$?: Observable<IFlatOffer[]>;
-	private dataSource = new MatTableDataSource<IFlatOffer>();
+	public offersLength$: Observable<number> =
+		this.startService.getAllOffersSize();
 	private regionCityArray: IRegionCity[] = [];
-	private dataSource$?: Observable<MatTableDataSource<IFlatOffer>>;
 	private formBuilder: FormBuilder = new FormBuilder();
-
+	public pageEvent = new PageEvent();
+	public pageSize = 6;
+	public pageIndex = 0;
 	private sortState: Sort = { active: 'price', direction: 'desc' };
 
 	@ViewChild(MatPaginator)
@@ -52,8 +54,8 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 		ChangeDetectorRef.prototype
 	);
 
-	@ViewChild(MatSort, { static: false })
-	private matSort: MatSort = new MatSort();
+	@Output()
+	public page: EventEmitter<PageEvent> = new EventEmitter();
 
 	constructor(
 		private router: Router,
@@ -145,20 +147,7 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
 
-		this.dataSource$ = this.startService.getOffers().pipe(
-			map(offers => {
-				this.dataSource.data = offers;
-				this.dataSource.paginator = this.paginator;
-				this.dataSource.sort = this.matSort;
-				return this.dataSource;
-			})
-		);
-	}
-
-	public ngAfterViewInit() {
-		this.dataSource$?.pipe(takeUntil(this.unsubscribe$)).subscribe(dataSource => {
-			this.flatOptions$ = dataSource.connect();
-		});
+		this.flatOptions$ = this.startService.getOffers(0, 6);
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -189,17 +178,10 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	}
 
 	public onSelect(sortByOption: ISortOption) {
-		this.dataSource.sort = this.matSort;
 		this.sortState = {
 			active: sortByOption.type,
 			direction: <SortDirection>sortByOption.direction,
 		};
-		this.matSort.active = this.sortState.active;
-		this.matSort.direction = this.sortState.direction;
-		this.matSort.sortChange
-			.pipe(takeUntil(this.unsubscribe$))
-			.subscribe(() => (this.paginator.pageIndex = 0));
-		this.matSort.sortChange.emit(this.sortState);
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -233,6 +215,21 @@ export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
 	public validateForm() {
 		return this.startSiteForm.valid;
 	}
+
+	public changePage(e: PageEvent) {
+		this.pageEvent = e;
+		this.pageSize = e.pageSize;
+		this.pageIndex = e.pageIndex;
+		this.filterOffers();
+	}
+
+	public filterOffers() {
+		this.flatOptions$ = this.startService.getOffers(
+			this.pageSize * this.pageIndex,
+			this.pageSize * this.pageIndex + this.pageSize
+		);
+	}
+
 	public ngOnDestroy() {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();

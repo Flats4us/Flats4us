@@ -1,4 +1,4 @@
-<div class="startsite">
+<div *ngIf="flatOptions$ | async as flatOptions" class="startsite">
 	<form class="container-4" [formGroup]="startSiteForm" (ngSubmit)="onSubmit()">
 		<div class="container-3">
 			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
@@ -381,7 +381,7 @@
 		</div>
 		<div class="container-2">
 			<mat-card
-				*ngFor="let flat of flatOptions$ | async"
+				*ngFor="let flat of flatOptions"
 				class="card"
 				(click)="navigateToFlat(flat.url)"
 			>
@@ -434,10 +434,17 @@
 		</div>
 	</div>
 	<mat-paginator
+		*ngIf="offersLength$ | async as length"
+		#paginator
 		id="paginator2"
 		showFirstLastButtons
 		aria-label="Paginator"
+		[length]="length"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
 		[pageSizeOptions]="[6, 12, 18, 48]"
+		(page)="changePage($event)"
 	>
+		>
 	</mat-paginator>
 </div>
