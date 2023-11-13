@@ -59,7 +59,22 @@
 		{
 			"files": ["*.html"],
 			"extends": ["plugin:@angular-eslint/template/recommended"],
-			"rules": {}
+			"rules": {
+				"@angular-eslint/template/attributes-order": [
+					"error",
+					{
+						"alphabetical": false,
+						"order": [
+							"STRUCTURAL_DIRECTIVE", // e.g. `*ngIf="true"`, `*ngFor="let item of items"`
+							"TEMPLATE_REFERENCE", // e.g. `<input #inputRef>`
+							"ATTRIBUTE_BINDING", // e.g. `<input required>`, `id="3"`
+							"INPUT_BINDING", // e.g. `[id]="3"`, `[attr.colspan]="colspan"`, [style.width.%]="100", [@triggerName]="expression", `bind-id="handleChange()"`
+							"TWO_WAY_BINDING", // e.g. `[(id)]="id"`, `bindon-id="id"
+							"OUTPUT_BINDING" // e.g. `(idChange)="handleChange()"`, `on-id="handleChange()"`
+						]
+					}
+				]
+			}
 		}
 	]
 }

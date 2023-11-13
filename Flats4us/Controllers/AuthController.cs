@@ -21,7 +21,7 @@ namespace Flats4us.Controllers
         //private readonly Func<string, IUserService> _userServiceFactory;
         private readonly IOwnerService _ownerService;
         private readonly IStudentService _studentService;
-        
+
 
         public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService)
         {
@@ -32,7 +32,7 @@ namespace Flats4us.Controllers
         }
 
 
-
+        
 
         [HttpPost("register/Student")]
         public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
@@ -114,6 +114,7 @@ namespace Flats4us.Controllers
             {
                 Id = basicUser.UserId,
                 Username = basicUser.Username,
+                Role = basicUser.Role,
             };
 
             return Ok(userDto);

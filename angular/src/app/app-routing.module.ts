@@ -49,6 +49,10 @@ const routes: Routes = [
 		path: 'offer',
 		loadChildren: () => import('./offer/offer.module').then(m => m.OfferModule),
 	},
+	{
+		path: 'rents',
+		loadChildren: () => import('./rents/rents.module').then(m => m.RentsModule),
+	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
