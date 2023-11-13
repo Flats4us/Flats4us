@@ -41,23 +41,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 
-//builder.Services.AddScoped<IUserService, StudentService>();
 //builder.Services.AddScoped<IUserService, OwnerService>();
-builder.Services.AddScoped<StudentService>();
-builder.Services.AddScoped<OwnerService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
 
-builder.Services.AddScoped<Func<string, IUserService>>(serviceProvider => key =>
-{
-    switch (key)
-    {
-        case "Student":
-            return serviceProvider.GetService<StudentService>();
-        case "Owner":
-            return serviceProvider.GetService<OwnerService>();
-        default:
-            throw new KeyNotFoundException(); 
-    }
-});
+builder.Services.AddScoped<IStudentService, StudentService>();
+//builder.Services.AddScoped<OwnerService>();
+
+
 
 builder.Services.AddAuthorization(options =>
 {
@@ -86,26 +76,25 @@ builder.Services.AddCors(c =>
                                                     .AllowAnyMethod());
 });
 
-using var scope = builder.Services.BuildServiceProvider().CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<Flats4usContext>();
-dbContext.Database.Migrate();
+
 
 var app = builder.Build();
-app.UseStaticFiles();   // for swagger
 
-//using (var scope = app.Services.CreateScope())
-//{
-  //  var services = scope.ServiceProvider;
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
     // Get the database context
-    //var dbContext = services.GetRequiredService<Flats4usContext>();
+    var dbContext = services.GetRequiredService<Flats4usContext>();
 
     // Ensure the database is created and tables are created if they don't exist
-    //if (dbContext.Database.EnsureCreated())
-    //{
-      //  DataSeeder.SeedData(dbContext);
-    //}
-//}
+    if (dbContext.Database.EnsureCreated())
+    {
+        DataSeeder.SeedData(dbContext);
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

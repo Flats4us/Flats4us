@@ -9,6 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Flats4us.Services.Interfaces;
+using Flats4us.Services;
 
 namespace Flats4us.Controllers
 {
@@ -17,24 +18,28 @@ namespace Flats4us.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly Func<string, IUserService> _userServiceFactory;
+        //private readonly Func<string, IUserService> _userServiceFactory;
+        private readonly IOwnerService _ownerService;
+        private readonly IStudentService _studentService;
+        
 
-        public AuthController(IConfiguration configuration, Func<string, IUserService> userServiceFactory)
+        public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService)
         {
             _configuration = configuration;
-            _userServiceFactory = userServiceFactory;
+            _ownerService = ownerService;
+            _studentService = studentService;
+            
         }
 
 
-        
+
 
         [HttpPost("register/Student")]
         public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
         {
             try
             {
-                var userService = _userServiceFactory("Student");
-                var user = await userService.RegisterAsync(request);
+                var user = await _studentService.RegisterAsync(request);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -48,8 +53,10 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var userService = _userServiceFactory("Owner");
-                var user = await userService.RegisterAsync(request);
+                //var userService = _userServiceFactory("Owner");
+                //var userService = OwnerService;
+
+                var user = await _ownerService.RegisterAsync(request);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -60,9 +67,9 @@ namespace Flats4us.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<String>> Login(UserLoginDto request) {
-            var initialUserService = _userServiceFactory("Student");
-            var user = await initialUserService.AuthenticateAsync(request.Username, request.Password);
+        public async Task<ActionResult<String>> LoginStudent(UserLoginDto request) {
+            //var initialUserService = _userServiceFactory("Student");
+            var user = await _studentService.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
             {
                 return BadRequest("Incorrect username or password");
@@ -72,6 +79,9 @@ namespace Flats4us.Controllers
 
             return Ok(token);    
         }
+
+
+        
 
 
         [HttpGet("profile")]
@@ -86,14 +96,13 @@ namespace Flats4us.Controllers
             User basicUser;
 
             // Try fetching with StudentService
-            userService = _userServiceFactory("Student");
-            basicUser = await userService.GetUserByIdAsync(userId);
+            //userService = _userServiceFactory("Student");
+            basicUser = await _studentService.GetUserByIdAsync(userId);
 
             if (basicUser == null)
             {
                 // Try fetching with OwnerService
-                userService = _userServiceFactory("Owner");
-                basicUser = await userService.GetUserByIdAsync(userId);
+                basicUser = await _ownerService.GetUserByIdAsync(userId);
             }
 
             if (basicUser == null)
@@ -105,7 +114,6 @@ namespace Flats4us.Controllers
             {
                 Id = basicUser.UserId,
                 Username = basicUser.Username,
-                Role = basicUser.Role,
             };
 
             return Ok(userDto);
@@ -119,7 +127,7 @@ namespace Flats4us.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
-                new Claim(ClaimTypes.Role, user.Role) // Add the role claim
+                //new Claim(ClaimTypes.Role, user.Role) // Add the role claim
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
