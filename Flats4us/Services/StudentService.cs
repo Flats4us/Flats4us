@@ -88,7 +88,33 @@ namespace Flats4us.Services
                 Console.WriteLine(ex.ToString()); // This will print the main exception and any inner exception
                 throw;  // rethrow the exception if needed
             }
+
+
         }
+
+        async Task<IEnumerable<User>> IStudentService.GetAllUsersAsync()
+        {
+            return await _context.Students.ToListAsync();
+        }
+
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Students.FindAsync(id);
+            return user;
+        }
+
+        async Task<bool> IStudentService.DeleteUserAsync(int id)
+        {
+            var user = await _context.Students.FindAsync(id);
+            if (user == null) return false;
+
+            _context.Students.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+
     }
 
 }

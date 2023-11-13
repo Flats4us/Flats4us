@@ -73,5 +73,27 @@ namespace Flats4us.Services
                 throw;  // rethrow the exception if needed
             }
         }
+
+        async Task<IEnumerable<User>> IOwnerService.GetAllUsersAsync()
+        {
+            return await _context.Owners.ToListAsync();
+        }
+
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Owners.FindAsync(id);
+            return user;
+        }
+
+        async Task<bool> IOwnerService.DeleteUserAsync(int id)
+        {
+            var user = await _context.Owners.FindAsync(id);
+            if (user == null) return false;
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

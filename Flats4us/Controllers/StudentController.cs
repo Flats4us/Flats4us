@@ -12,9 +12,9 @@ namespace Flats4us.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IUserService _studentService;  // Assuming that StudentService is implementing IUserService
+        private readonly IStudentService _studentService;  // Assuming that StudentService is implementing IUserService
 
-        public StudentController(IUserService studentService)
+        public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
         }

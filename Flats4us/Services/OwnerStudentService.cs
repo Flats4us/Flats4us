@@ -25,5 +25,7 @@ namespace Flats4us.Services
         }
 
         protected abstract override User CreateUserFromDto(UserRegisterDto request);
+
+
     }
 }
