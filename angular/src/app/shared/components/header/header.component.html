@@ -53,7 +53,7 @@
 		<button mat-menu-item>Ostatnio oglądane oferty</button>
 		<button mat-menu-item>Opinie</button>
 		<button mat-menu-item (click)="openDialog()">Utwórz nowy spór</button>
-		<button mat-menu-item>Kalendarz</button>
+		<button mat-menu-item routerLink="calendar">Kalendarz</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
@@ -69,9 +69,9 @@
 </ng-template>
 
 <mat-toolbar class="custom-toolbar" role="heading">
-	<a class="min-w-[150px] logo" routerLink="/"
-		><img src="./assets/logoFlats4Us.svg" alt=""
-	/></a>
+	<a class="h-full logo" routerLink="/">
+		<img class="h-full w-auto" src="./assets/logoFlats4Us.svg" alt="" />
+	</a>
 	<div *ngIf="isUserLoggedIn" class="flex items-center justify-around w-[750px]">
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
@@ -94,7 +94,7 @@
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['/profile', 1]">Mój profil</button>
-		<button mat-menu-item>EDYTUJ PROFIL</button>
+		<button mat-menu-item>Edytuj profil</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button *ngIf="isUserLoggedInAsStudent" mat-menu-item>Moje wynajmy</button>
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>

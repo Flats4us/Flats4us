@@ -1,20 +1,11 @@
-:host {
+.messages-wrapper {
 	display: flex;
-	padding: 32px;
 	gap: 16px;
 }
 
 .messages-choice {
 	background: #fff;
 	min-width: 300px;
-}
-
-.messages-choice__header {
-	font-size: 32px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px;
-	padding: 32px 32px 32px 16px;
 }
 
 .messages-choice__conversation {

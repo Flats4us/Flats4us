@@ -1,25 +1,24 @@
+<h1 class="text-4xl p-4 font-semibold">Ustawienia</h1>
 <div class="settings">
 	<mat-card>
 		<nav>
 			<ul>
 				<li>
-					<a routerLink="notifications" routerLinkActive="active">Notifications</a>
+					<a routerLink="notifications" routerLinkActive="active">Powiadomienia</a>
 				</li>
 				<li>
-					<a routerLink="password-change" routerLinkActive="active"
-						>Password Change</a
-					>
+					<a routerLink="password-change" routerLinkActive="active">Zmień hasło</a>
 				</li>
 				<li>
-					<a routerLink="email-change" routerLinkActive="active">Email Change</a>
+					<a routerLink="email-change" routerLinkActive="active">Zmień email</a>
 				</li>
 				<li>
-					<a routerLink="help-center" routerLinkActive="active">Help Center</a>
+					<a routerLink="help-center" routerLinkActive="active">Centrum pomocy</a>
 				</li>
 			</ul>
 		</nav>
 	</mat-card>
-	<div class="router-outlet">
+	<div class="flex-1">
 		<router-outlet></router-outlet>
 	</div>
 </div>
