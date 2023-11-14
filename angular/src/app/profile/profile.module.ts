@@ -21,9 +21,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
 import { MatRadioModule } from '@angular/material/radio';
+import { EditProfileComponent } from './edit/edit-profile.component';
 
 @NgModule({
-	declarations: [ProfileComponent, SurveyComponent],
+	declarations: [ProfileComponent, SurveyComponent, EditProfileComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,

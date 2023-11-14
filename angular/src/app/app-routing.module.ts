@@ -49,10 +49,7 @@ const routes: Routes = [
 		path: 'offer',
 		loadChildren: () => import('./offer/offer.module').then(m => m.OfferModule),
 	},
-	{
-		path: 'agreement',
-		loadChildren: () => import('./agreement/agreement.module').then(m => m.AgreementModule),
-	},
+
 	{ path: '**', component: NotFoundComponent },
 ];
 
