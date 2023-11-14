@@ -1,78 +1,80 @@
-<mat-tab-group mat-stretch-tabs="true">
-	<mat-tab label="Otwarte">
-		<div class="disputes-choice">
-			<div class="disputes-choice__header">Spory</div>
-			<div class="disputes-choice__conversation" routerLink="1">
-				<span>Lorem ipsum</span>
-				<div>
-					<button mat-icon-button>
-						<mat-icon>error</mat-icon>
-					</button>
-					<button mat-icon-button>
-						<mat-icon>star</mat-icon>
-					</button>
+<h1 class="text-4xl p-4 font-semibold">Spory</h1>
+<div class="disputes-wrapper">
+	<mat-tab-group mat-stretch-tabs="true">
+		<mat-tab label="Otwarte">
+			<div class="disputes-choice">
+				<div class="disputes-choice__conversation" routerLink="1">
+					<span>Lorem ipsum</span>
+					<div>
+						<button mat-icon-button>
+							<mat-icon>error</mat-icon>
+						</button>
+						<button mat-icon-button>
+							<mat-icon>star</mat-icon>
+						</button>
+					</div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="2">
+					<span>Lorem ipsum</span>
+					<div>
+						<button mat-icon-button>
+							<mat-icon>star</mat-icon>
+						</button>
+					</div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="3">
+					<span>Lorem ipsum</span>
+					<div></div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="4">
+					<span>Lorem ipsum</span>
+					<div></div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="5">
+					<span>Lorem ipsum</span>
+					<div></div>
 				</div>
 			</div>
-			<div class="disputes-choice__conversation" routerLink="2">
-				<span>Lorem ipsum</span>
-				<div>
-					<button mat-icon-button>
-						<mat-icon>star</mat-icon>
-					</button>
+		</mat-tab>
+		<mat-tab label="Zamknięte">
+			<div class="disputes-choice">
+				<div class="disputes-choice__header">Spory</div>
+				<div class="disputes-choice__conversation" routerLink="1">
+					<span>Lorem ipsum</span>
+					<div>
+						<button mat-icon-button>
+							<mat-icon>error</mat-icon>
+						</button>
+						<button mat-icon-button>
+							<mat-icon>star</mat-icon>
+						</button>
+					</div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="2">
+					<span>Lorem ipsum</span>
+					<div>
+						<button mat-icon-button>
+							<mat-icon>star</mat-icon>
+						</button>
+					</div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="3">
+					<span>Lorem ipsum</span>
+					<div></div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="4">
+					<span>Lorem ipsum</span>
+					<div></div>
+				</div>
+				<div class="disputes-choice__conversation" routerLink="5">
+					<span>Lorem ipsum</span>
+					<div></div>
 				</div>
 			</div>
-			<div class="disputes-choice__conversation" routerLink="3">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="4">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="5">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-		</div>
-	</mat-tab>
-	<mat-tab label="Zamknięte">
-		<div class="disputes-choice">
-			<div class="disputes-choice__header">Spory</div>
-			<div class="disputes-choice__conversation" routerLink="1">
-				<span>Lorem ipsum</span>
-				<div>
-					<button mat-icon-button>
-						<mat-icon>error</mat-icon>
-					</button>
-					<button mat-icon-button>
-						<mat-icon>star</mat-icon>
-					</button>
-				</div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="2">
-				<span>Lorem ipsum</span>
-				<div>
-					<button mat-icon-button>
-						<mat-icon>star</mat-icon>
-					</button>
-				</div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="3">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="4">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-			<div class="disputes-choice__conversation" routerLink="5">
-				<span>Lorem ipsum</span>
-				<div></div>
-			</div>
-		</div>
-	</mat-tab>
-</mat-tab-group>
+		</mat-tab>
+	</mat-tab-group>
 
-<div class="disputes-box">
-	<router-outlet></router-outlet>
+	<div class="disputes-box">
+		<router-outlet></router-outlet>
+	</div>
 </div>

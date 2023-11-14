@@ -1,20 +1,11 @@
-:host {
+.disputes-wrapper {
 	display: flex;
-	padding: 32px;
 	gap: 16px;
 }
 
 .disputes-choice {
 	background: #fff;
 	min-width: 300px;
-}
-
-.disputes-choice__header {
-	font-size: 32px;
-	font-style: normal;
-	font-weight: 500;
-	line-height: 24px;
-	padding: 32px 32px 32px 16px;
 }
 
 .disputes-choice__conversation {
