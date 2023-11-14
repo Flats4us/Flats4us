@@ -114,7 +114,6 @@ namespace Flats4us.Controllers
             {
                 Id = basicUser.UserId,
                 Username = basicUser.Username,
-                Role = basicUser.Role,
             };
 
             return Ok(userDto);
