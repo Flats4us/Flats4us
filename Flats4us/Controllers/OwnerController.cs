@@ -8,7 +8,7 @@ namespace Flats4us.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly IOwnerService _ownerService;  // Assuming you have an IOwnerService interface for OwnerService.
+        private readonly IOwnerService _ownerService;  
 
         public OwnerController(IOwnerService ownerService)
         {

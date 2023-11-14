@@ -37,7 +37,6 @@ namespace Flats4us.Services
         {
             user.Username = request.Username;
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            //user.Role = request.Role;
             user.AccountCreationDate = DateTime.UtcNow;
             user.LastLoginDate = DateTime.UtcNow;
             user.Name = request.Name;

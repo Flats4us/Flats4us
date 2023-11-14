@@ -18,7 +18,6 @@ namespace Flats4us.Services
 
             var owner = new Owner();
             PopulateOwnerStudentFieldsFromDto(owner, ownerDto); // This will populate the fields common to OwnerStudent.
-            //owner.Role = "Owner";
 
             // Fields specific to Owner can be populated here if they're part of the DTO
             owner.BankAccount = ownerDto.BankAccount;

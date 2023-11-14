@@ -18,7 +18,6 @@ namespace Flats4us.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        //private readonly Func<string, IUserService> _userServiceFactory;
         private readonly IOwnerService _ownerService;
         private readonly IStudentService _studentService;
 
@@ -53,8 +52,6 @@ namespace Flats4us.Controllers
         {
             try
             {
-                //var userService = _userServiceFactory("Owner");
-                //var userService = OwnerService;
 
                 var user = await _ownerService.RegisterAsync(request);
                 return Ok(user);
@@ -68,7 +65,6 @@ namespace Flats4us.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<String>> LoginStudent(UserLoginDto request) {
-            //var initialUserService = _userServiceFactory("Student");
             var user = await _studentService.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
             {
@@ -96,7 +92,6 @@ namespace Flats4us.Controllers
             User basicUser;
 
             // Try fetching with StudentService
-            //userService = _userServiceFactory("Student");
             basicUser = await _studentService.GetUserByIdAsync(userId);
 
             if (basicUser == null)
@@ -127,7 +122,6 @@ namespace Flats4us.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
-                //new Claim(ClaimTypes.Role, user.Role) // Add the role claim
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

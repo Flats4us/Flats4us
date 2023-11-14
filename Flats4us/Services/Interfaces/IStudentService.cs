@@ -9,7 +9,6 @@ namespace Flats4us.Services.Interfaces
         Task<User> AuthenticateAsync(string username, string password);
         Task<User?> GetUserByIdAsync(int userId);
         Task<IEnumerable<User>> GetAllUsersAsync();
-
         Task<bool> DeleteUserAsync(int id);
     }
 }
