@@ -17,6 +17,7 @@ builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IArgumentInterventionService, ArgumentInterventionService>();
 
 builder.Services.AddControllers();
 
