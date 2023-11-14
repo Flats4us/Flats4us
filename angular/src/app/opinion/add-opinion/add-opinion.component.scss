@@ -43,3 +43,8 @@
 mat-card-content {
 	display: flex;
 }
+
+.grid-container {
+	display: grid;
+	grid-template-columns: 1fr 4fr 1fr;
+}
