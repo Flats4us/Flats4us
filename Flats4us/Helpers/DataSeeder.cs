@@ -156,6 +156,7 @@ public static class DataSeeder
         ImageUtility.SeedUserImage(owner3.ImagesPath);
         ImageUtility.SeedUserImage(owner4.ImagesPath);
         dbContext.Owners.AddRange(owner1, owner2);
+        dbContext.SaveChanges();
 
         #endregion
 
