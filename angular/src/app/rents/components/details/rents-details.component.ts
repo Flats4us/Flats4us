@@ -12,6 +12,7 @@ import { RentsDialogComponent } from '../dialog/rents-dialog.component';
 import { Observable, Subject, map, of, switchMap, takeUntil } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
+import { StartDisputeDialogComponent } from '@shared/components/start-dispute-dialog/start-dispute-dialog.component';
 
 @Component({
 	selector: 'app-rents-details',
@@ -47,6 +48,12 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 		this.router.navigate(['offer/add']);
 	}
 
+	private startDispute() {
+		this.dialog.open(StartDisputeDialogComponent, {
+			width: '600px',
+		});
+	}
+
 	public openDialog(actualRent: IRent): void {
 		const dialogRef = this.dialog.open(RentsDialogComponent, {
 			data: actualRent,
@@ -62,6 +69,7 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	public onSelect(menuOption: IMenuOptions, actualRent: IRent) {
 		switch (menuOption.option) {
 			case 'startDispute': {
+				this.startDispute();
 				break;
 			}
 			case 'closeRent': {
