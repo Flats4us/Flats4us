@@ -14,10 +14,10 @@ RUN dotnet restore
 # Copy the main source project files
 COPY . .
 
-RUN dotnet build -c Release -o /build/out
+RUN dotnet build "Flats4us.csproj" -c Release -o /build/out
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /publish/out
+RUN dotnet publish "Flats4us.csproj" -c Release -o /publish/out
 
 FROM base AS final
 WORKDIR /app

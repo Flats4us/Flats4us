@@ -51,7 +51,7 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime LastLoginDate { get; set; }
-        public string Role{ get; set; }
+        //public string Role{ get; set; }
 
     }
 }

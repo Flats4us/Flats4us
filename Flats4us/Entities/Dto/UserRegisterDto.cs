@@ -15,19 +15,14 @@ namespace Flats4us.Entities.Dto
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-        //public string Role { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime AccountCreationDate { get; set; }
-        public DateTime LastLoginDate { get; set; }
     }
 
     public class OwnerStudentRegisterDto : UserRegisterDto
     {
-        public string PhotoPath { get; set; }
-        public bool ActivityStatus { get; set; }
-        public string DocumentPath { get; set; }
+        public IFormFile ProfilePicture { get; set; }
+        public IFormFile Document { get; set; }
         public DocumentType DocumentType { get; set; }
-        public VerificationStatus VerificationStatus { get; set; }
         public DateTime DocumentExpireDate { get; set; }
     }
 

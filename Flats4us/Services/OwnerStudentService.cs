@@ -14,16 +14,12 @@ namespace Flats4us.Services
             ownerStudent = (OwnerStudent)PopulateCommonFieldsFromDto(ownerStudent, request);
 
             // Populate OwnerStudent specific fields
-            ownerStudent.PhotoPath = request.PhotoPath;
-            ownerStudent.ActivityStatus = request.ActivityStatus;
-            ownerStudent.DocumentPath = request.DocumentPath;
             ownerStudent.DocumentType = request.DocumentType;
-            ownerStudent.VerificationStatus = request.VerificationStatus;
             ownerStudent.DocumentExpireDate = request.DocumentExpireDate;
-
+            
             return ownerStudent;
         }
 
-        protected abstract override User CreateUserFromDto(UserRegisterDto request);
+        protected abstract User CreateUserFromDto(OwnerStudentRegisterDto request);
     }
 }

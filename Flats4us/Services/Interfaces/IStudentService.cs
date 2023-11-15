@@ -1,16 +1,14 @@
-﻿using Flats4us.Entities;
-using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Entities;
 
 namespace Flats4us.Services.Interfaces
 {
-    public interface IUserService
+    public interface IStudentService
     {
+        Task RegisterAsync(StudentRegisterDto userDto);
         Task<User> AuthenticateAsync(string username, string password);
+        Task<User?> GetUserByIdAsync(int userId);
         Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User?> GetUserByIdAsync(int id);
-        
-        //Task<User?> UpdateUserAsync(int id, UserUpdateDto userUpdateDto);
         Task<bool> DeleteUserAsync(int id);
     }
-
 }

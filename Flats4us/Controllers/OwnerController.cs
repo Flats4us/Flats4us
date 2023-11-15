@@ -8,9 +8,9 @@ namespace Flats4us.Controllers
     [ApiController]
     public class OwnerController : ControllerBase
     {
-        private readonly IUserService _ownerService;  // Assuming you have an IOwnerService interface for OwnerService.
+        private readonly IOwnerService _ownerService;  
 
-        public OwnerController(IUserService ownerService)
+        public OwnerController(IOwnerService ownerService)
         {
             _ownerService = ownerService;
         }
@@ -35,8 +35,6 @@ namespace Flats4us.Controllers
             return Ok(owner);
         }
 
-        
-
         // DELETE api/<OwnerController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -47,5 +45,4 @@ namespace Flats4us.Controllers
             return NoContent();
         }
     }
-
 }

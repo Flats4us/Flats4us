@@ -9,6 +9,9 @@ public static class DataSeeder
 {
     public static void SeedData(Flats4usContext dbContext)
     {
+        ImageUtility.DeleteDirectory("Images/Properties").Wait();
+        ImageUtility.DeleteDirectory("Images/Users").Wait();
+
         #region Equipment
 
         var equipment1 = new Equipment { 
@@ -74,10 +77,10 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "mkowalski",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("mkowalski123"),
-            PhotoPath = "placeholder",
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -96,10 +99,10 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 3, 23),
             LastLoginDate = new DateTime(2023, 10, 10),
+            Username = "bnowak",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
@@ -114,14 +117,14 @@ public static class DataSeeder
             Flat = 5,
             City = "Warszawa",
             PostalCode = "02-836",
-            Email = "bnowak@gmail.com",
+            Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
+            Username = "rpawlak",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("rpawlak123"),
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
@@ -136,25 +139,28 @@ public static class DataSeeder
             Flat = 1,
             City = "Warszawa",
             PostalCode = "02-110",
-            Email = "bnowak@gmail.com",
+            Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
+            Username = "kklik",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("kklik123"),
+            ImagesPath = Guid.NewGuid().ToString(),
             ActivityStatus = false,
-            DocumentPath = "placeholder",
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
             BankAccount = "12341234123412341234123412"
         };
 
-        dbContext.Owners.AddRange(owner1, owner2);
+        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
 
+        ImageUtility.SeedUserImage(owner1.ImagesPath);
+        ImageUtility.SeedUserImage(owner2.ImagesPath);
+        ImageUtility.SeedUserImage(owner3.ImagesPath);
+        ImageUtility.SeedUserImage(owner4.ImagesPath);
+        
         #endregion
-
-        ImageUtility.DeleteDirectory("Images/Properties").Wait();
 
         #region Flat
 

@@ -1,9 +1,12 @@
 using Flats4us.Entities;
 using Flats4us.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,36 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
+
+
+//builder.Services.AddScoped<IUserService, OwnerService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+
+builder.Services.AddScoped<IStudentService, StudentService>();
+//builder.Services.AddScoped<OwnerService>();
+
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrTenantOnly", policy =>
+    {
+        policy.RequireRole("Admin", "Tenant");
+    });
+}); 
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -43,7 +76,11 @@ builder.Services.AddCors(c =>
                                                     .AllowAnyMethod());
 });
 
+
+
 var app = builder.Build();
+
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -64,11 +101,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    
 }
+
+
+
 
 app.UseCors(options => options.AllowAnyOrigin());
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

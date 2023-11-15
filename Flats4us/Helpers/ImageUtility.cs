@@ -59,6 +59,46 @@
                 }
             }
         }
+        public static void SeedUserImage(string path)
+        {
+            var directoryPath = $"Images/Users/{path}";
+            var sourceDirectory = "Images/UsersSeed";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(directoryPath);
+
+                var sourceProfilePicturesDirectory = Path.Combine(sourceDirectory, "ProfilePictures");
+                var sourceDocumentsDirectory = Path.Combine(sourceDirectory, "Documents");
+
+                var targetProfilePicturesDirectory = Path.Combine(directoryPath, "ProfilePictures");
+                var targetDocumentsDirectory = Path.Combine(directoryPath, "Documents");
+
+                if (Directory.Exists(sourceProfilePicturesDirectory))
+                {
+                    Directory.CreateDirectory(targetProfilePicturesDirectory);
+                    var files = Directory.GetFiles(sourceProfilePicturesDirectory);
+                    foreach (var file in files)
+                    {
+                        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(file)}";
+                        var destinationPath = Path.Combine(targetProfilePicturesDirectory, newFileName);
+                        File.Copy(file, destinationPath);
+                    }
+                }
+
+                if (Directory.Exists(sourceDocumentsDirectory))
+                {
+                    Directory.CreateDirectory(targetDocumentsDirectory);
+                    var files = Directory.GetFiles(sourceDocumentsDirectory);
+                    foreach (var file in files)
+                    {
+                        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(file)}";
+                        var destinationPath = Path.Combine(targetDocumentsDirectory, newFileName);
+                        File.Copy(file, destinationPath);
+                    }
+                }
+            }
+        }
 
         public static async Task DeleteDirectory(string directoryPath)
         {

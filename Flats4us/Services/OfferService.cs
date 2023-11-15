@@ -70,7 +70,7 @@ namespace Flats4us.Services
                         Surname = o.Property.Owner.Surname,
                         Email = o.Property.Owner.Email,
                         PhoneNumber = o.Property.Owner.PhoneNumber,
-                        PhotoPath = o.Property.Owner.PhotoPath,
+                        ImagesPath = o.Property.Owner.ImagesPath,
                         ActivityStatus = o.Property.Owner.ActivityStatus
                     },
                     SurveyOwnerOffer = new SurveyOwnerOfferDto
@@ -142,7 +142,7 @@ namespace Flats4us.Services
                         Surname = o.Property.Owner.Surname,
                         Email = o.Property.Owner.Email,
                         PhoneNumber = o.Property.Owner.PhoneNumber,
-                        PhotoPath = o.Property.Owner.PhotoPath,
+                        ImagesPath = o.Property.Owner.ImagesPath,
                         ActivityStatus = o.Property.Owner.ActivityStatus
                     },
                     SurveyOwnerOffer = new SurveyOwnerOfferDto
@@ -273,7 +273,7 @@ namespace Flats4us.Services
                         Surname = o.Property.Owner.Surname,
                         Email = o.Property.Owner.Email,
                         PhoneNumber = o.Property.Owner.PhoneNumber,
-                        PhotoPath = o.Property.Owner.PhotoPath,
+                        ImagesPath = o.Property.Owner.ImagesPath,
                         ActivityStatus = o.Property.Owner.ActivityStatus
                     },
                     SurveyOwnerOffer = new SurveyOwnerOfferDto

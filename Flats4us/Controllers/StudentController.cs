@@ -12,9 +12,9 @@ namespace Flats4us.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IUserService _studentService;  // Assuming that StudentService is implementing IUserService
+        private readonly IStudentService _studentService;  
 
-        public StudentController(IUserService studentService)
+        public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
         }
@@ -36,8 +36,6 @@ namespace Flats4us.Controllers
                 return NotFound("Student not found");
             return Ok(student);
         }
-
-        
 
         // DELETE: api/<StudentController>/5
         [HttpDelete("{id}")]
