@@ -21,7 +21,6 @@ namespace Flats4us.Controllers
         private readonly IOwnerService _ownerService;
         private readonly IStudentService _studentService;
 
-
         public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService)
         {
             _configuration = configuration;
@@ -29,9 +28,6 @@ namespace Flats4us.Controllers
             _studentService = studentService;
             
         }
-
-
-        
 
         [HttpPost("register/Student")]
         public async Task<ActionResult<User>> RegisterStudentAsync([FromForm] StudentRegisterDto request)
@@ -62,7 +58,6 @@ namespace Flats4us.Controllers
             }
         }
 
-
         [HttpPost("login")]
         public async Task<ActionResult<String>> LoginStudent([FromForm] UserLoginDto request) {
             var user = await _studentService.AuthenticateAsync(request.Username, request.Password);
@@ -75,10 +70,6 @@ namespace Flats4us.Controllers
 
             return Ok(token);    
         }
-
-
-        
-
 
         [HttpGet("profile")]
         [Authorize]
@@ -113,8 +104,6 @@ namespace Flats4us.Controllers
 
             return Ok(userDto);
         }
-
-
 
         private string CreateToken(User user)
         {

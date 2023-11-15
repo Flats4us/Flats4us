@@ -24,7 +24,6 @@ namespace Flats4us.Services
 
             // Fields specific to Student (like Interests, Meetings etc.) can be populated here if they're part of the DTO
             
-
             student.YearOfBirth = studentDto.YearOfBirth;
             
             student.StudentNumber = studentDto.StudentNumber;
@@ -91,8 +90,6 @@ namespace Flats4us.Services
                 Console.WriteLine(ex.ToString()); // This will print the main exception and any inner exception
                 throw;  // rethrow the exception if needed
             }
-
-
         }
 
         async Task<IEnumerable<User>> IStudentService.GetAllUsersAsync()
@@ -116,8 +113,5 @@ namespace Flats4us.Services
 
             return true;
         }
-
-
     }
-
 }

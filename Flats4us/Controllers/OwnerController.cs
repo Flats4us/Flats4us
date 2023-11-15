@@ -35,8 +35,6 @@ namespace Flats4us.Controllers
             return Ok(owner);
         }
 
-        
-
         // DELETE api/<OwnerController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -47,5 +45,4 @@ namespace Flats4us.Controllers
             return NoContent();
         }
     }
-
 }
