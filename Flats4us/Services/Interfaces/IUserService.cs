@@ -8,7 +8,7 @@ namespace Flats4us.Services.Interfaces
         Task<User> AuthenticateAsync(string username, string password);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(int id);
-        Task<User> RegisterAsync(UserRegisterDto userDto);
+        
         //Task<User?> UpdateUserAsync(int id, UserUpdateDto userUpdateDto);
         Task<bool> DeleteUserAsync(int id);
     }

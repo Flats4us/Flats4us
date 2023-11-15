@@ -32,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Images\UsersSeed\Documents\" />
+    <Folder Include="Images\Users\" />
     <Folder Include="NewFolder\" />
   </ItemGroup>
 

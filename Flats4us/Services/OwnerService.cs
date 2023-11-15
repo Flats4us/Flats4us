@@ -2,6 +2,7 @@
 using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Flats4us.Services.Interfaces;
+using Flats4us.Helpers;
 
 namespace Flats4us.Services
 {
@@ -11,8 +12,10 @@ namespace Flats4us.Services
         {
         }
 
-        protected override User CreateUserFromDto(UserRegisterDto request)
+        protected override Owner CreateUserFromDto(OwnerStudentRegisterDto request)
         {
+            var imageFolder = Guid.NewGuid().ToString();
+
             var ownerDto = request as OwnerRegisterDto; // Assuming you have a specific DTO for Owner registration.
             if (ownerDto == null) throw new ArgumentException("Invalid DTO for owner registration");
 
@@ -21,12 +24,14 @@ namespace Flats4us.Services
 
             // Fields specific to Owner can be populated here if they're part of the DTO
             owner.BankAccount = ownerDto.BankAccount;
+            owner.ImagesPath = imageFolder;
+
             // ... other Owner-specific fields ...
 
             return owner;
         }
 
-        public async Task<User> RegisterAsync(UserRegisterDto request)
+        public async Task<User> RegisterAsync(OwnerRegisterDto request)
         {
             try
             {
@@ -57,8 +62,18 @@ namespace Flats4us.Services
                 string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
                 // Create a new user object
-                User user = CreateUserFromDto(request);
+                OwnerStudent user = CreateUserFromDto(request);
 
+                var imageFolder = user.ImagesPath;
+
+                if (request.ProfilePicture != null && request.ProfilePicture.Length > 0)
+                {
+                    await ImageUtility.ProcessAndSaveImage(request.ProfilePicture, $"Images/Users/{imageFolder}/ProfilePicture");
+                }
+                if (request.Document != null && request.Document.Length > 0)
+                {
+                    await ImageUtility.ProcessAndSaveImage(request.Document, $"Images/Users/{imageFolder}/Document");
+                }
 
 
                 // Add the user to the database

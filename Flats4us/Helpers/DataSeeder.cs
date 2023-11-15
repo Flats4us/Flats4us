@@ -76,9 +76,8 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 10, 12),
             Username = "mkowalski",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("mkowalski123"),
-            PhotoPath = "placeholder",
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -99,9 +98,8 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 10, 10),
             Username = "bnowak",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
@@ -122,9 +120,8 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 10, 20),
             Username = "nowakowski",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
             ActivityStatus = false,
-            DocumentPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
@@ -145,15 +142,19 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 9, 30),
             Username = "nowak3",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
-            PhotoPath = "placeholder",
+            ImagesPath = Guid.NewGuid().ToString(),
             ActivityStatus = false,
-            DocumentPath = "placeholder",
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
             BankAccount = "12341234123412341234123412"
         };
+        ImageUtility.DeleteDirectory("Images/Users").Wait();
 
+        ImageUtility.SeedUserImage(owner1.ImagesPath);
+        ImageUtility.SeedUserImage(owner2.ImagesPath);
+        ImageUtility.SeedUserImage(owner3.ImagesPath);
+        ImageUtility.SeedUserImage(owner4.ImagesPath);
         dbContext.Owners.AddRange(owner1, owner2);
 
         #endregion

@@ -6,13 +6,10 @@ namespace Flats4us.Entities
     public abstract class OwnerStudent : User
     {
         [Required]
-        public string PhotoPath { get; set; }
+        public string ImagesPath { get; set; }
 
         [Required]
         public bool ActivityStatus { get; set; }
-
-        [Required]
-        public string DocumentPath { get; set; }
 
         [Required]
         public DocumentType DocumentType { get; set; }

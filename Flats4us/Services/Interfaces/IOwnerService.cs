@@ -8,6 +8,6 @@ namespace Flats4us.Services.Interfaces
         Task<bool> DeleteUserAsync(int id);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(int userId);
-        Task<User> RegisterAsync(UserRegisterDto userDto);
+        Task<User> RegisterAsync(OwnerRegisterDto userDto);
     }
 }

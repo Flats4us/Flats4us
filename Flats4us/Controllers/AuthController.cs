@@ -34,12 +34,12 @@ namespace Flats4us.Controllers
         
 
         [HttpPost("register/Student")]
-        public async Task<ActionResult<User>> RegisterStudentAsync(StudentRegisterDto request)
+        public async Task<ActionResult<User>> RegisterStudentAsync([FromForm] StudentRegisterDto request)
         {
             try
             {
-                var user = await _studentService.RegisterAsync(request);
-                return Ok(user);
+                await _studentService.RegisterAsync(request);
+                return Ok("User added successfully");
             }
             catch (Exception ex)
             {
@@ -48,7 +48,7 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("register/Owner")]
-        public async Task<ActionResult<User>> RegisterOwnerAsync(OwnerRegisterDto request)
+        public async Task<ActionResult<User>> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Flats4us.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<String>> LoginStudent(UserLoginDto request) {
+        public async Task<ActionResult<String>> LoginStudent([FromForm] UserLoginDto request) {
             var user = await _studentService.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
             {
