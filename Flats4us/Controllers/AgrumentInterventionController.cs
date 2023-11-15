@@ -55,13 +55,5 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
-
-
-
-
-
-
-
-
     }
 }
