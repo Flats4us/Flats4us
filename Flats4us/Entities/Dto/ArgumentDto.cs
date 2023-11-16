@@ -6,7 +6,7 @@ namespace Flats4us.Entities.Dto
     public class ArgumentDto
     {
         [Required]
-        public int ArgumentId { get; set; }
+        //public int ArgumentId { get; set; }
         public DateTime? StartDate { get; set; }
 
         public DateTime? StudentAcceptanceDate { get; set; }
