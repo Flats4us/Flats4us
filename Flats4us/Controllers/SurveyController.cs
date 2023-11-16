@@ -21,7 +21,7 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        [HttpGet]
+        [HttpGet("student")]
         //[Route("GetSurveyStudent")]
         public async Task<IActionResult> GetSurveyStudents()
         {
@@ -67,8 +67,7 @@ namespace Flats4us.Controllers
 
 
 
-        [HttpGet]
-        [Route("GetSurveyStudent")]
+        [HttpGet("surveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
         {
             _logger.LogInformation("Getting SurveyStudent");
@@ -78,8 +77,7 @@ namespace Flats4us.Controllers
         }
 
         
-        [HttpGet]
-        [Route("GetSurveyOwnerOffer")]
+        [HttpGet("SurveyOwnerOffer")]
         public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
         {
             _logger.LogInformation("Getting SurveyOwnerOffer");

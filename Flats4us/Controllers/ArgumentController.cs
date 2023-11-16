@@ -21,7 +21,7 @@ namespace Flats4us.Controllers
             _argumentService = argumentService;
         }
 
-        [HttpGet]
+        [HttpGet("argument")]
         public async Task<IActionResult> GetArguments()
         {
             _logger.LogInformation("Geting Arguments");
@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
             return Ok(argument);
         }
 
-        [HttpPost]
+        [HttpPost("argument")]
         public async Task<IActionResult> PostArgument(ArgumentDto input)
         {
             try
@@ -59,7 +59,7 @@ namespace Flats4us.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet("intervention")]
         public async Task<IActionResult> GetArgumentInterventions()
         {
             _logger.LogInformation("Getting ArgumentInterventions");
@@ -77,7 +77,7 @@ namespace Flats4us.Controllers
             return Ok(argumentIntervention);
         }
 
-        [HttpPost]
+        [HttpPost("intervention")]
         public async Task<IActionResult> PostArgumentIntervention(ArgumentInterventionDto input)
         {
 
