@@ -159,7 +159,45 @@ public static class DataSeeder
         ImageUtility.SeedUserImage(owner2.ImagesPath);
         ImageUtility.SeedUserImage(owner3.ImagesPath);
         ImageUtility.SeedUserImage(owner4.ImagesPath);
-        
+
+        #endregion
+
+        #region Student
+
+        var student1 = new Student
+        {
+            Name = "Kajetan",
+            Surname = "Kajetański",
+            Street = "Kaukaska",
+            Number = "9",
+            Flat = 2,
+            City = "Warszawa",
+            PostalCode = "02-760",
+            Email = "kkajetanski@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "kkajetanski",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("kkajetanski123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 12, 8),
+            BirthDate = new DateTime(2002, 12, 1),
+            StudentNumber = "s27235",
+            University = "PJATK",
+            Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
+            Twitter_X = "https://twitter.com/kkajetanski",
+            Instagram = "https://www.instagram.com/kkajetanski/",
+            RoommatesStatus = RoommatesStatus.Alone,
+            IsTenant = false
+        };
+
+        dbContext.Students.AddRange(student1);
+
+        ImageUtility.SeedUserImage(student1.ImagesPath);
+
         #endregion
 
         #region Flat

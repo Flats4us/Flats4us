@@ -17,7 +17,14 @@ namespace Flats4us.Entities
         [Required]
         public string Reason { get; set; }
 
+        [Required]
+        public int OfferId { get; set; }
+
+        public virtual Offer Offer { get; set; }
+
         public virtual ICollection<Student> Students { get; set; }
+
+
 
         public Meeting()
         {

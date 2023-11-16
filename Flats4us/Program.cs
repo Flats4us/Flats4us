@@ -20,6 +20,7 @@ builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IMeetingService, MeetingService>();
 
 builder.Services.AddControllers();
 
@@ -39,15 +40,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-
-
-//builder.Services.AddScoped<IUserService, OwnerService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 
 builder.Services.AddScoped<IStudentService, StudentService>();
-//builder.Services.AddScoped<OwnerService>();
-
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -76,11 +71,7 @@ builder.Services.AddCors(c =>
                                                     .AllowAnyMethod());
 });
 
-
-
 var app = builder.Build();
-
-
 
 using (var scope = app.Services.CreateScope())
 {
@@ -103,9 +94,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     
 }
-
-
-
 
 app.UseCors(options => options.AllowAnyOrigin());
 
