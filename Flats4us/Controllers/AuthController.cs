@@ -47,20 +47,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("register/Owner")]
-        public async Task<ActionResult<User>> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
-        {
-            try
-            {
-
-                var user = await _ownerService.RegisterAsync(request);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        
 
 
         [HttpPost("login")]
@@ -122,6 +109,7 @@ namespace Flats4us.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
+                new Claim(ClaimTypes.Role, user.GetType().Name)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

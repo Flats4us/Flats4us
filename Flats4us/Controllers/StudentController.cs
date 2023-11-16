@@ -7,6 +7,7 @@ namespace Flats4us.Controllers
     using System.Threading.Tasks;
     using Flats4us.Entities.Dto;
     using Flats4us.Services.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -22,6 +23,15 @@ namespace Flats4us.Controllers
         // GET: api/<StudentController>
         [HttpGet]
         public async Task<IActionResult> GetAllStudents()
+        {
+            var students = await _studentService.GetAllUsersAsync();
+            return Ok(students);
+        }
+
+
+        [HttpGet("policy_example")]
+        [Authorize(Policy = "StudentOnly")]
+        public async Task<IActionResult> OnlyStudentPolicyExample()
         {
             var students = await _studentService.GetAllUsersAsync();
             return Ok(students);
