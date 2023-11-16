@@ -24,12 +24,12 @@ namespace Flats4us.Services
 
             // Fields specific to Student (like Interests, Meetings etc.) can be populated here if they're part of the DTO
             
-            student.YearOfBirth = studentDto.YearOfBirth;
+            student.BirthDate = studentDto.BirthDate;
             
             student.StudentNumber = studentDto.StudentNumber;
             student.University = studentDto.University;
             student.Facebook = studentDto.Facebook;
-            student.Twitter = studentDto.Twitter;
+            student.Twitter_X = studentDto.Twitter;
             student.Instagram = studentDto.Instagram;
             student.RoommatesStatus = studentDto.RoommatesStatus;
             student.IsTenant = studentDto.IsTenant;

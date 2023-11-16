@@ -113,6 +113,12 @@ namespace Flats4us.Entities
                 .HasForeignKey<SurveyOwnerOffer>(soo => soo.OfferId);
 
             modelBuilder.Entity<PropertyEquipment>().HasKey(pe => new { pe.PropertyId, pe.EquipmentId });
+
+            modelBuilder.Entity<Meeting>()
+                .HasOne(x => x.Offer)
+                .WithMany(x => x.Meetings)
+                .HasForeignKey(x => x.OfferId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

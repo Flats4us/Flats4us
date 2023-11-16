@@ -1,8 +1,10 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Exceptions;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
@@ -81,7 +83,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
+                _logger.LogInformation($"FAILED: Adding offer - body: {input}");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
@@ -92,9 +94,25 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _offerService.AddOfferPromotionAsync(input);
+                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(requestUserId))
+                {
+                    return Unauthorized("User not authenticated");
+                }
+
+                if (!int.TryParse(requestUserId, out int userId))
+                {
+                    return BadRequest("Invalid user ID format");
+                }
+
+                await _offerService.AddOfferPromotionAsync(input, userId);
                 _logger.LogInformation($"Adding offer promotion for offer ID: {input.OfferId}");
                 return Ok("Offer promotion added successfully");
+            }
+            catch (ForbiddenException)
+            {
+                return StatusCode(403, "You do not own this offer");
             }
             catch (Exception ex)
             {
@@ -107,9 +125,48 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _offerService.AddOfferInterest(offerId);
+                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(requestUserId))
+                {
+                    return Unauthorized("User not authenticated");
+                }
+
+                if (!int.TryParse(requestUserId, out int userId))
+                {
+                    return BadRequest("Invalid user ID format");
+                }
+
+                await _offerService.AddOfferInterest(offerId, userId);
                 _logger.LogInformation($"Adding offer interest for offer ID: {offerId}");
-                return Ok("Interest addded")
+                return Ok("Interest addded");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("Interest")]
+        public async Task<IActionResult> RemoveOfferInterest(int offerId)
+        {
+            try
+            {
+                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(requestUserId))
+                {
+                    return Unauthorized("User not authenticated");
+                }
+
+                if (!int.TryParse(requestUserId, out int userId))
+                {
+                    return BadRequest("Invalid user ID format");
+                }
+
+                await _offerService.RemoveOfferInterest(offerId, userId);
+                _logger.LogInformation($"Removing offer interest for offer ID: {offerId}");
+                return Ok("Interest removed");
             }
             catch (Exception ex)
             {

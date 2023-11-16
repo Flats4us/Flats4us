@@ -7,10 +7,7 @@ namespace Flats4us.Entities
     public class Student : OwnerStudent
     {
         [Required]
-        public int YearOfBirth { get; set; }
-
-        [Required]
-        public int Age { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Required]
         public string StudentNumber { get; set; }
@@ -20,7 +17,7 @@ namespace Flats4us.Entities
 
         public string Facebook { get; set; }
 
-        public string Twitter { get; set; }
+        public string Twitter_X { get; set; }
 
         public string Instagram { get; set; }
 
