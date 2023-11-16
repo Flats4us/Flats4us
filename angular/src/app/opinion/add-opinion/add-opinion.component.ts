@@ -28,7 +28,7 @@ export class AddOpinionComponent {
 			tooNoisy: false,
 			doesNotFollowArrangements: false,
 			selectedGrade: [0, Validators.min(1)],
-			comment: ['', Validators.required],
+			comment: [''],
 		});
 	}
 
