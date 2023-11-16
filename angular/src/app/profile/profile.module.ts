@@ -24,6 +24,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { EditProfileComponent } from './edit/edit-profile.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ProfileService } from './services/profile.service';
 
 @NgModule({
 	declarations: [ProfileComponent, SurveyComponent, EditProfileComponent],
@@ -50,7 +53,10 @@ import { MatDividerModule } from '@angular/material/divider';
 		MatRadioModule,
 		MatStepperModule,
 		MatDividerModule,
+		MatSelectModule,
+		MatAutocompleteModule,
 	],
 	exports: [ProfileComponent],
+	providers: [ProfileService],
 })
 export class ProfileModule {}

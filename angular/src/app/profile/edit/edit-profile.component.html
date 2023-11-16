@@ -56,12 +56,110 @@
 	</div>
 	<div *ngIf="changeAdress" class="container-2">
 		<mat-stepper #stepper orientation="vertical">
-			<mat-step [stepControl]="firstFormGroup">
-				<form [formGroup]="firstFormGroup">
+			-->
+			<mat-step [stepControl]="addressFormGroup">
+				<form [formGroup]="addressFormGroup">
 					<ng-template matStepLabel>Podaj nowy adres</ng-template>
 					<mat-form-field>
-						<mat-label>Adres</mat-label>
-						<input matInput placeholder="Adres" formControlName="firstCtrl" />
+						<mat-label>Województwo</mat-label>
+						<mat-select id="region" formControlName="regionsGroup">
+							<mat-option
+								*ngFor="let region of this.profileService.regions"
+								[value]="region"
+							>
+								{{ region }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							*ngIf="addressFormGroup.controls['regionsGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano województwa!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Miejscowość</mat-label>
+						<input
+							id="city"
+							type="text"
+							placeholder="Miejscowość"
+							aria-label="City"
+							matInput
+							formControlName="citiesGroup"
+							[matAutocomplete]="autoCity"
+						/>
+						<mat-autocomplete #autoCity="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group of citiesGroupOptions$ | async"
+								[label]="group.whole"
+							>
+								<mat-option *ngFor="let city of group.parts" [value]="city">
+									{{ city }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+						<mat-error
+							*ngIf="addressFormGroup.controls['citiesGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano miejscowości!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Dzielnica</mat-label>
+						<input
+							id="district"
+							type="text"
+							placeholder="Dzielnica"
+							aria-label="District"
+							matInput
+							formControlName="districtsGroup"
+							[matAutocomplete]="autoDistrict"
+						/>
+						<mat-autocomplete #autoDistrict="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group2 of districtGroupOptions$ | async"
+								[label]="group2.whole"
+							>
+								<mat-option *ngFor="let district of group2.parts" [value]="district">
+									{{ district }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Ulica</mat-label>
+						<input
+							id="street"
+							formControlName="street"
+							type="text"
+							placeholder="Ulica"
+							aria-label="Street"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addressFormGroup.controls['street'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano nazwy ulicy!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Numer</mat-label>
+						<input
+							id="streetNumber"
+							formControlName="streetNumber"
+							type="text"
+							placeholder="Numer ulicy"
+							aria-label="StreetNumber"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addressFormGroup.controls['streetNumber'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano numeru ulicy/lokalu!
+						</mat-error>
 					</mat-form-field>
 					<div>
 						<button mat-button matStepperNext>
@@ -70,12 +168,18 @@
 					</div>
 				</form>
 			</mat-step>
-			<mat-step [stepControl]="secondFormGroup">
-				<form [formGroup]="secondFormGroup">
+			<mat-step [stepControl]="phoneNumberFormGroup">
+				<form [formGroup]="phoneNumberFormGroup">
 					<ng-template matStepLabel>Wpisz nowy numer telefonu</ng-template>
 					<mat-form-field>
 						<mat-label>Nr telefonu</mat-label>
-						<input matInput formControlName="secondCtrl" placeholder="Nr telefonu" />
+						<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
+						<mat-error
+							*ngIf="phoneNumberFormGroup.controls['phoneNumber'].errors?.['pattern']"
+							class="error-text"
+						>
+							Nieprawidłowy numer telefonu!
+						</mat-error>
 					</mat-form-field>
 					<div>
 						<button mat-button matStepperPrevious>
