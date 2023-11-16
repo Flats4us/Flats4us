@@ -1,0 +1,131 @@
+.edit-profile {
+	display: flex;
+	flex-direction: row;
+	background-color: white;
+	justify-content: center;
+	align-items: center;
+	margin: 0 16px 0 16px;
+}
+
+.container-title {
+	text-align: center;
+	font-size: xx-large;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
+	background-color: white;
+	margin: 0 16px 0 16px;
+}
+
+.btn {
+	background: #fbbb8b;
+	border-radius: 24px;
+	padding: 4px;
+	width: 200px;
+	height: 45px;
+	margin: 4px;
+}
+
+.btn2 {
+	background: rgb(255, 237, 223);
+	border-radius: 24px;
+	padding: 4px;
+	width: 200px;
+	height: 45px;
+	border: 3px black;
+	border-style: solid;
+}
+
+.divider-1 {
+	margin: 0 16px 0 16px;
+}
+
+.image-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 4px;
+}
+
+.button-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 4px;
+}
+
+.title2 {
+	font-size: x-large;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
+	text-align: center;
+}
+
+.profile-avatar__image {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+}
+
+.container-1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	border-right: 1px;
+	border-color: rgba(0, 0, 0, 0.12);
+	border-style: solid;
+}
+
+.container-2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.error-text {
+	color: #ff0000;
+	font-size: x-small;
+}
+
+.hobbies {
+	// display: flex;
+	// flex-wrap: wrap;
+	// align-items: center;
+	// justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(3, 108px);
+}
+
+.file-upload {
+	visibility: hidden;
+}
+
+mat-chip-option {
+	min-width: 100px;
+	margin: 4px;
+}
+
+mat-form-field {
+	min-width: 400px;
+}
+
+@media screen and (max-width: 992px) {
+	.edit-profile {
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		justify-content: center;
+		align-items: center;
+	}
+	.container-1 {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+		border-right: 0px;
+	}
+	mat-form-field {
+		min-width: 300px;
+	}
+}

@@ -1,0 +1,207 @@
+<div class="container-title"><h1>Edycja profilu</h1></div>
+<mat-divider class="divider-1"></mat-divider>
+<div class="edit-profile">
+	<div class="container-1">
+		<div class="image-box">
+			<img alt="avatar" class="profile-avatar__image" [src]="url" />
+			<input
+				#fileUpload
+				id="file"
+				class="file-upload"
+				type="file"
+				accept="image/*"
+				aria-label="File"
+				(change)="onFileSelected($event)"
+			/>
+			<div class="button-box">
+				<button
+					mat-button
+					id="upload"
+					class="btn2"
+					aria-label="Upload"
+					(click)="fileUpload.click()"
+				>
+					Zmień zdjęcie <mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
+				</button>
+			</div>
+		</div>
+		<div class="image-box">
+			<div class="title2">Wybierz swoje zainteresowania</div>
+			<div class="hobbies">
+				<mat-chip-listbox
+					*ngFor="let hobby of hobbies"
+					[multiple]="true"
+					[selectable]="true"
+				>
+					<mat-chip-option>{{ hobby }}</mat-chip-option>
+				</mat-chip-listbox>
+			</div>
+		</div>
+		<div class="button-box">
+			<button mat-button class="btn2">
+				Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="container-2">
+		<div class="image-box">
+			<button mat-button class="btn" (click)="changePassword()">
+				Zmień hasło
+			</button>
+			<button mat-button class="btn" (click)="changeEmail()">Zmień email</button>
+			<button mat-button class="btn" (click)="changeAddressData()">
+				Zmień dane adresowe
+			</button>
+		</div>
+	</div>
+	<div *ngIf="changeAdress" class="container-2">
+		<mat-stepper #stepper orientation="vertical">
+			-->
+			<mat-step [stepControl]="addressFormGroup">
+				<form [formGroup]="addressFormGroup">
+					<ng-template matStepLabel>Podaj nowy adres</ng-template>
+					<mat-form-field>
+						<mat-label>Województwo</mat-label>
+						<mat-select id="region" formControlName="regionsGroup">
+							<mat-option
+								*ngFor="let region of this.profileService.regions"
+								[value]="region"
+							>
+								{{ region }}
+							</mat-option>
+						</mat-select>
+						<mat-error
+							*ngIf="addressFormGroup.controls['regionsGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano województwa!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Miejscowość</mat-label>
+						<input
+							id="city"
+							type="text"
+							placeholder="Miejscowość"
+							aria-label="City"
+							matInput
+							formControlName="citiesGroup"
+							[matAutocomplete]="autoCity"
+						/>
+						<mat-autocomplete #autoCity="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group of citiesGroupOptions$ | async"
+								[label]="group.whole"
+							>
+								<mat-option *ngFor="let city of group.parts" [value]="city">
+									{{ city }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+						<mat-error
+							*ngIf="addressFormGroup.controls['citiesGroup'].errors?.['required']"
+							class="error-text"
+						>
+							Nie wybrano miejscowości!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Dzielnica</mat-label>
+						<input
+							id="district"
+							type="text"
+							placeholder="Dzielnica"
+							aria-label="District"
+							matInput
+							formControlName="districtsGroup"
+							[matAutocomplete]="autoDistrict"
+						/>
+						<mat-autocomplete #autoDistrict="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let group2 of districtGroupOptions$ | async"
+								[label]="group2.whole"
+							>
+								<mat-option *ngFor="let district of group2.parts" [value]="district">
+									{{ district }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Ulica</mat-label>
+						<input
+							id="street"
+							formControlName="street"
+							type="text"
+							placeholder="Ulica"
+							aria-label="Street"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addressFormGroup.controls['street'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano nazwy ulicy!
+						</mat-error>
+					</mat-form-field>
+					<mat-form-field>
+						<mat-label>Numer</mat-label>
+						<input
+							id="streetNumber"
+							formControlName="streetNumber"
+							type="text"
+							placeholder="Numer ulicy"
+							aria-label="StreetNumber"
+							matInput
+						/>
+						<mat-error
+							*ngIf="addressFormGroup.controls['streetNumber'].errors?.['required']"
+							class="error-text"
+						>
+							Nie podano numeru ulicy/lokalu!
+						</mat-error>
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperNext>
+							Następny<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step [stepControl]="phoneNumberFormGroup">
+				<form [formGroup]="phoneNumberFormGroup">
+					<ng-template matStepLabel>Wpisz nowy numer telefonu</ng-template>
+					<mat-form-field>
+						<mat-label>Nr telefonu</mat-label>
+						<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
+						<mat-error
+							*ngIf="phoneNumberFormGroup.controls['phoneNumber'].errors?.['pattern']"
+							class="error-text"
+						>
+							Nieprawidłowy numer telefonu!
+						</mat-error>
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperPrevious>
+							Poprzedni<mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button mat-button matStepperNext>
+							Następny<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step>
+				<ng-template matStepLabel>Gotowe</ng-template>
+				<div>
+					<button mat-button matStepperPrevious>
+						Poprzedni<mat-icon>arrow_back_ios</mat-icon>
+					</button>
+					<button mat-button (click)="submitForm()">
+						Zapisz<mat-icon iconPositionEnd>done_outline</mat-icon>
+					</button>
+				</div>
+			</mat-step>
+		</mat-stepper>
+	</div>
+</div>
