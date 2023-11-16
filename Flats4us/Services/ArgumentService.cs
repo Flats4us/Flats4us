@@ -29,7 +29,7 @@ namespace Flats4us.Services
         {
             var argument = new Argument
             {
-                ArgumentId = input.ArgumentId,
+                //ArgumentId = input.ArgumentId,
                 StartDate = (DateTime)input.StartDate,
                 StudentAcceptanceDate = (DateTime)input.StudentAcceptanceDate,
                 OwnerAcceptanceDate = (DateTime)input.OwnerAcceptanceDate,
