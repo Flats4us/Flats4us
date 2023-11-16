@@ -1,89 +1,103 @@
 <div class="container-title"><h1>Edycja profilu</h1></div>
-	<div class="edit-profile">
-		<div class="container-1">
-			<!-- <mat-card>
-				<mat-card-content> -->
-					<div class="button-box">
-					<img
-						src="../../../assets/candidate.webp"
-						alt="avatar"
-						class="profile-avatar__image"
-					/>
-					</div>
-					<div class="button-box">
-						<button mat-button class="btn2">
-							Zmień zdjęcie <mat-icon iconPositionEnd> insert_photo</mat-icon>
-						</button>
-					</div>
-					<div class="title2">
-						<p>Wybierz swoje zainteresowania</p>
-					</div>
-					<div>
-						<mat-chip-listbox>
-							<mat-chip>Muzyka</mat-chip>
-							<mat-chip>Sport</mat-chip>
-							<mat-chip>Filmy</mat-chip>
-							<mat-chip>Podróże</mat-chip>
-							<mat-chip>Sztuka</mat-chip>
-						</mat-chip-listbox>
-					</div>
-					<div class="button-box">
-						<button mat-button class="btn2">
-							Wybierz więcej <mat-icon iconPositionEnd>more</mat-icon>
-						</button>
-						<button mat-button class="btn">
-							Zatwierdź zmiany
-						</button>
-					</div>
-				<!-- </mat-card-content>
-			</mat-card> -->
-		</div>
+<mat-divider class="divider-1"></mat-divider>
+<div class="edit-profile">
 	<div class="container-1">
-		<form>
-			<div class="title2">
-				<p>Hasło</p>
-			</div>
+		<div class="image-box">
+			<img alt="avatar" class="profile-avatar__image" [src]="url" />
+			<input
+				#fileUpload
+				id="file"
+				class="file-upload"
+				type="file"
+				accept="image/*"
+				aria-label="File"
+				(change)="onFileSelected($event)"
+			/>
 			<div class="button-box">
-				<button mat-button class="btn">
-					Zmień hasło
+				<button
+					mat-button
+					id="upload"
+					class="btn2"
+					aria-label="Upload"
+					(click)="fileUpload.click()"
+				>
+					Zmień zdjęcie <mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
 				</button>
 			</div>
-			<div class="title2">
-				<p>Email</p>
+		</div>
+		<div class="image-box">
+			<div class="title2">Wybierz swoje zainteresowania</div>
+			<div class="hobbies">
+				<mat-chip-listbox
+					*ngFor="let hobby of hobbies"
+					[multiple]="true"
+					[selectable]="true"
+				>
+					<mat-chip-option>{{ hobby }}</mat-chip-option>
+				</mat-chip-listbox>
 			</div>
-			<div class="button-box">
-				<button mat-button class="btn">
-					Zmień email
-				</button>
-			</div>
-			<div class="title2">
-				<p>Adres</p>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>Podaj nowy adres</mat-label>
-					<input matInput name="newAddress"/>
-				</mat-form-field>
-			</div>
-			<div class="button-box">
-				<button mat-button class="btn">
-					Zmień adres zamieszkania
-				</button>
-			</div>
-			<div class="title2">
-				<p>Nr. telefonu</p>
-			</div>
-			<div class="form-group">
-				<mat-form-field>
-					<mat-label>Podaj nowy numer telefonu</mat-label>
-					<input matInput name="newPhoneNumber"/>
-				</mat-form-field>
-			</div>
-			<div class="button-box">
-				<button mat-button class="btn">
-					Zmień numer telefonu
-				</button>
-			</div>
-		</form>
+		</div>
+		<div class="button-box">
+			<button mat-button class="btn2">
+				Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="container-2">
+		<div class="image-box">
+			<button mat-button class="btn" (click)="changePassword()">
+				Zmień hasło
+			</button>
+			<button mat-button class="btn" (click)="changeEmail()">Zmień email</button>
+			<button mat-button class="btn" (click)="changeAddressData()">
+				Zmień dane adresowe
+			</button>
+		</div>
+	</div>
+	<div *ngIf="changeAdress" class="container-2">
+		<mat-stepper #stepper orientation="vertical">
+			<mat-step [stepControl]="firstFormGroup">
+				<form [formGroup]="firstFormGroup">
+					<ng-template matStepLabel>Podaj nowy adres</ng-template>
+					<mat-form-field>
+						<mat-label>Adres</mat-label>
+						<input matInput placeholder="Adres" formControlName="firstCtrl" />
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperNext>
+							Następny<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step [stepControl]="secondFormGroup">
+				<form [formGroup]="secondFormGroup">
+					<ng-template matStepLabel>Wpisz nowy numer telefonu</ng-template>
+					<mat-form-field>
+						<mat-label>Nr telefonu</mat-label>
+						<input matInput formControlName="secondCtrl" placeholder="Nr telefonu" />
+					</mat-form-field>
+					<div>
+						<button mat-button matStepperPrevious>
+							Poprzedni<mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button mat-button matStepperNext>
+							Następny<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+			<mat-step>
+				<ng-template matStepLabel>Gotowe</ng-template>
+				<div>
+					<button mat-button matStepperPrevious>
+						Poprzedni<mat-icon>arrow_back_ios</mat-icon>
+					</button>
+					<button mat-button (click)="submitForm()">
+						Zapisz<mat-icon iconPositionEnd>done_outline</mat-icon>
+					</button>
+				</div>
+			</mat-step>
+		</mat-stepper>
 	</div>
 </div>

@@ -1,38 +1,18 @@
-// .form-group {
-// 	margin: 1px;
-// }
-
 .edit-profile {
 	display: flex;
 	flex-direction: row;
-	//width: 100%;
 	background-color: white;
 	justify-content: center;
-	//justify-content: space-between;
+	align-items: center;
+	margin: 0 16px 0 16px;
 }
-
-// mat-card-title {
-// 	font-size: xx-large;
-// 	margin-top: 16px;
-// 	text-align: center;
-//     margin-bottom: 16px;
-// 	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-// }
 
 .container-title {
 	text-align: center;
 	font-size: xx-large;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
 	background-color: white;
-}
-
-// mat-form-field {
-// 	width: 100%;
-//     padding: 1px;
-// }
-
-mat-card {
-	border-color: white;
+	margin: 0 16px 0 16px;
 }
 
 .btn {
@@ -40,7 +20,8 @@ mat-card {
 	border-radius: 24px;
 	padding: 4px;
 	width: 200px;
-    height: 45px;
+	height: 45px;
+	margin: 4px;
 }
 
 .btn2 {
@@ -48,35 +29,35 @@ mat-card {
 	border-radius: 24px;
 	padding: 4px;
 	width: 200px;
-    height: 45px;
+	height: 45px;
 	border: 3px black;
 	border-style: solid;
 }
 
-.button-box {
-	padding: 4px;
+.divider-1 {
+	margin: 0 16px 0 16px;
+}
+
+.image-box {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
-	//row-gap: 4px;
-	column-gap: 4px;
 	justify-content: center;
+	margin: 4px;
+}
+
+.button-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 4px;
 }
 
 .title2 {
-    font-size: medium;
-    //font-weight: bold;
-    //text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    text-align: center;
-	padding: 4px;
+	font-size: x-large;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
+	text-align: center;
 }
-
-// .main {
-//     display: flex;
-//     flex-wrap: wrap;
-//     justify-content: center;
-// 	justify-content: space-around;
-// }
 
 .profile-avatar__image {
 	width: 250px;
@@ -85,7 +66,61 @@ mat-card {
 }
 
 .container-1 {
-	padding-right: 8px;
-	height: fit-content;
-	//width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	border-right: 1px;
+	border-color: rgba(0, 0, 0, 0.12);
+	border-style: solid;
+}
+
+.container-2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.hobbies {
+	// display: flex;
+	// flex-wrap: wrap;
+	// align-items: center;
+	// justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(3, 108px);
+}
+
+.file-upload {
+	visibility: hidden;
+}
+
+mat-chip-option {
+	min-width: 100px;
+	margin: 4px;
+}
+
+mat-form-field {
+	min-width: 400px;
+}
+
+@media screen and (max-width: 992px) {
+	.edit-profile {
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		justify-content: center;
+		align-items: center;
+	}
+	.container-1 {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+		border-right: 0px;
+	}
+	mat-form-field {
+		min-width: 300px;
+	}
 }

@@ -22,6 +22,8 @@ import { EmailChangeModule } from '../settings/components/emailChange/emailChang
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { EditProfileComponent } from './edit/edit-profile.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
 	declarations: [ProfileComponent, SurveyComponent, EditProfileComponent],
@@ -46,6 +48,8 @@ import { EditProfileComponent } from './edit/edit-profile.component';
 		EmailChangeModule,
 		PasswordChangeModule,
 		MatRadioModule,
+		MatStepperModule,
+		MatDividerModule,
 	],
 	exports: [ProfileComponent],
 })
