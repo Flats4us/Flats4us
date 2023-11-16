@@ -9,5 +9,6 @@ namespace Flats4us.Services.Interfaces
         Task<OfferDto> GetByIdAsync(int id);
         Task<List<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input);
         Task AddOfferAsync(AddEditOfferDto input);
+        Task AddOfferPromotionAsync(AddOfferPromotionDto input);
     }
 }

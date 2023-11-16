@@ -85,5 +85,36 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
+
+        // POST: api/Equipment
+        [HttpPost("Promotion")]
+        public async Task<IActionResult> AddOfferPromotion([FromForm] AddOfferPromotionDto input)
+        {
+            try
+            {
+                await _offerService.AddOfferPromotionAsync(input);
+                _logger.LogInformation($"Adding offer promotion for offer ID: {input.OfferId}");
+                return Ok("Offer promotion added successfully");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpPost("Interest")]
+        public async Task<IActionResult> AddOfferInterest(int offerId)
+        {
+            try
+            {
+                await _offerService.AddOfferInterest(offerId);
+                _logger.LogInformation($"Adding offer interest for offer ID: {offerId}");
+                return Ok("Interest addded")
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

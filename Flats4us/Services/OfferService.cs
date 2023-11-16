@@ -370,5 +370,41 @@ namespace Flats4us.Services
             await _context.Offers.AddAsync(offer);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddOfferPromotionAsync(AddOfferPromotionDto input)
+        {
+            var offer = await _context.Offers.FindAsync(input.OfferId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
+
+            var offerPromotion = new OfferPromotion
+            {
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.Date.AddDays(input.Duration),
+                Price = input.Duration * OfferPromotion.PricePerDay,
+            };
+
+            offer.OfferPromotions.Add(offerPromotion);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddOfferInterest(int offerId)
+        {
+            var offer = await _context.Offers.FindAsync(offerId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
+
+            offer.NumberOfInterested = offer.NumberOfInterested++;
+
+            var offerInterest = new OfferInterest
+            {
+                Date = DateTime.Now,
+                Student = null,
+                Offer = offer
+            };
+
+            await _context.OfferInterests.AddAsync(offerInterest);
+            await _context.SaveChangesAsync();
+        }
     }
 }
