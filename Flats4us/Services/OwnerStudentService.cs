@@ -10,7 +10,6 @@ namespace Flats4us.Services
         }
         protected OwnerStudent PopulateOwnerStudentFieldsFromDto(OwnerStudent ownerStudent, OwnerStudentRegisterDto request)
         {
-            
             // Call base method to populate common User fields
             ownerStudent = (OwnerStudent)PopulateCommonFieldsFromDto(ownerStudent, request);
 
@@ -22,7 +21,5 @@ namespace Flats4us.Services
         }
 
         protected abstract User CreateUserFromDto(OwnerStudentRegisterDto request);
-
-
     }
 }

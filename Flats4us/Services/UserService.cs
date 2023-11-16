@@ -26,11 +26,6 @@ namespace Flats4us.Services
             return user;
         }
 
-
-
-
-       
-
         protected User PopulateCommonFieldsFromDto(User user, UserRegisterDto request)
         {
             user.Username = request.Username;
@@ -51,15 +46,11 @@ namespace Flats4us.Services
             return user;
         }
 
-        
-
-
         public async Task<User?> GetUserByIdAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
             return user;
         }
-
 
         async Task<IEnumerable<User>> IUserService.GetAllUsersAsync()
         {

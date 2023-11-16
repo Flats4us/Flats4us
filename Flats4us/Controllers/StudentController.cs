@@ -47,8 +47,6 @@ namespace Flats4us.Controllers
             return Ok(student);
         }
 
-        
-
         // DELETE: api/<StudentController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(int id)

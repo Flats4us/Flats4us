@@ -9,6 +9,9 @@ public static class DataSeeder
 {
     public static void SeedData(Flats4usContext dbContext)
     {
+        ImageUtility.DeleteDirectory("Images/Properties").Wait();
+        ImageUtility.DeleteDirectory("Images/Users").Wait();
+
         #region Equipment
 
         var equipment1 = new Equipment { 
@@ -114,12 +117,12 @@ public static class DataSeeder
             Flat = 5,
             City = "Warszawa",
             PostalCode = "02-836",
-            Email = "bnowak@gmail.com",
+            Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
-            Username = "nowakowski",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
+            Username = "rpawlak",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("rpawlak123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
@@ -136,12 +139,12 @@ public static class DataSeeder
             Flat = 1,
             City = "Warszawa",
             PostalCode = "02-110",
-            Email = "bnowak@gmail.com",
+            Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
-            Username = "nowak3",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
+            Username = "kklik",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("kklik123"),
             ImagesPath = Guid.NewGuid().ToString(),
             ActivityStatus = false,
             DocumentType = DocumentType.ID,
@@ -149,18 +152,15 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2029, 5, 14),
             BankAccount = "12341234123412341234123412"
         };
-        ImageUtility.DeleteDirectory("Images/Users").Wait();
+
+        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
 
         ImageUtility.SeedUserImage(owner1.ImagesPath);
         ImageUtility.SeedUserImage(owner2.ImagesPath);
         ImageUtility.SeedUserImage(owner3.ImagesPath);
         ImageUtility.SeedUserImage(owner4.ImagesPath);
-        dbContext.Owners.AddRange(owner1, owner2);
-        dbContext.SaveChanges();
-
+        
         #endregion
-
-        ImageUtility.DeleteDirectory("Images/Properties").Wait();
 
         #region Flat
 

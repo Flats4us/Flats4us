@@ -75,7 +75,6 @@ namespace Flats4us.Services
                     await ImageUtility.ProcessAndSaveImage(request.Document, $"Images/Users/{imageFolder}/Document");
                 }
 
-
                 // Add the user to the database
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
