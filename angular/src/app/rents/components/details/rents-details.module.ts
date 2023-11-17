@@ -12,10 +12,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import { GetPriceDirective } from 'src/app/directives/get-price.directive';
+import { CustomCurrencyPipe } from '../../custom.currency-pipe';
 
 @NgModule({
-	declarations: [RentsDetailsComponent, GetPriceDirective],
+	declarations: [RentsDetailsComponent, CustomCurrencyPipe],
 	imports: [
 		CommonModule,
 		MatButtonModule,

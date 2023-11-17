@@ -87,16 +87,9 @@
 		</div>
 	</div>
 	<div class="button-box">
-		<!-- <button
-			mat-button
-			class="btn"
-			[disabled]="actualRent.status === statusName.SUSPENDED"
-		>
-			Szczegóły oferty
-		</button> -->
 		<mat-label class="label-1"
-			>Cena &nbsp;<span [appGetPrice]="actualRent.price"></span>&nbsp;
-			PLN/mies.</mat-label
+			>Cena &nbsp;<span>{{ actualRent.price | customCurrencyPipe }}</span
+			>&nbsp; PLN/mies.</mat-label
 		>
 	</div>
 	<div class="label-3">
