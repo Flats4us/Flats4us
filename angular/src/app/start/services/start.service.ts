@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IFlatOffer, ISortOption } from '../models/start-site.models';
+import {
+	IFlatOffer,
+	ISendOffers,
+	ISortOption,
+} from '../models/start-site.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map, zip } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class StartService {
@@ -162,22 +166,12 @@ export class StartService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	public getAllOffersSize(): Observable<number> {
-		return this.httpClient
-			.get<IFlatOffer[]>('./assets/offers.json')
-			.pipe(map(el => el.length));
-	}
-
-	public getOffers(
-		size1: number,
-		size2: number
-	): Observable<[number, IFlatOffer[]]> {
-		const streamSize = this.httpClient
-			.get<IFlatOffer[]>('./assets/offers.json')
-			.pipe(map(el => el.length));
-		const streamOffers = this.httpClient
-			.get<IFlatOffer[]>('./assets/offers.json')
-			.pipe(map(el => el.slice(size1, size2)));
-		return zip(streamSize, streamOffers);
+	public getOffers(size1: number, size2: number): Observable<ISendOffers> {
+		const stream = this.httpClient.get<IFlatOffer[]>('./assets/offers.json').pipe(
+			map(el => {
+				return { data: el.slice(size1, size2), total: el.length };
+			})
+		);
+		return stream;
 	}
 }

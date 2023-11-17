@@ -17,3 +17,8 @@ export interface ISortOption {
 	direction: string;
 	description: string;
 }
+
+export interface ISendOffers {
+	data: IFlatOffer[];
+	total: number;
+}

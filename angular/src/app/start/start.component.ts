@@ -9,10 +9,10 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, Subject, of } from 'rxjs';
-import { map, mergeMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IFlatOffer, ISortOption } from './models/start-site.models';
+import { ISendOffers, ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
@@ -38,10 +38,7 @@ export class StartComponent implements OnInit, OnDestroy {
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
-	public flatOptions$?: Observable<IFlatOffer[]>;
-	public offersLength$: Observable<number> = this.startService
-		.getOffers(0, 6)
-		.pipe(mergeMap(e => of(e[0])));
+	public flatOptions$?: Observable<ISendOffers>;
 	private regionCityArray: IRegionCity[] = [];
 	private formBuilder: FormBuilder = new FormBuilder();
 	public pageEvent = new PageEvent();
@@ -148,9 +145,7 @@ export class StartComponent implements OnInit, OnDestroy {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
 
-		this.flatOptions$ = this.startService
-			.getOffers(0, 6)
-			.pipe(mergeMap(e => of(e[1])));
+		this.flatOptions$ = this.startService.getOffers(0, 6);
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -227,12 +222,10 @@ export class StartComponent implements OnInit, OnDestroy {
 	}
 
 	public filterOffers() {
-		this.flatOptions$ = this.startService
-			.getOffers(
-				this.pageSize * this.pageIndex,
-				this.pageSize * this.pageIndex + this.pageSize
-			)
-			.pipe(mergeMap(e => of(e[1])));
+		this.flatOptions$ = this.startService.getOffers(
+			this.pageSize * this.pageIndex,
+			this.pageSize * this.pageIndex + this.pageSize
+		);
 	}
 
 	public ngOnDestroy() {

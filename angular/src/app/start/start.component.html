@@ -383,7 +383,7 @@
 		</div>
 		<div class="container-2">
 			<mat-card
-				*ngFor="let flat of flatOptions"
+				*ngFor="let flat of flatOptions.data"
 				class="card"
 				(click)="navigateToFlat(flat.url)"
 			>
@@ -436,12 +436,11 @@
 		</div>
 	</div>
 	<mat-paginator
-		*ngIf="offersLength$ | async as length"
 		#paginator
 		id="paginator2"
 		showFirstLastButtons
 		aria-label="Paginator"
-		[length]="length"
+		[length]="flatOptions.total"
 		[pageSize]="pageSize"
 		[pageIndex]="pageIndex"
 		[pageSizeOptions]="[6, 12, 18, 48]"
