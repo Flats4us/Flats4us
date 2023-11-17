@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IFlatOffer, ISortOption } from '../models/start-site.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, zip } from 'rxjs';
 
 @Injectable()
 export class StartService {
@@ -168,9 +168,16 @@ export class StartService {
 			.pipe(map(el => el.length));
 	}
 
-	public getOffers(size1: number, size2: number): Observable<IFlatOffer[]> {
-		return this.httpClient
+	public getOffers(
+		size1: number,
+		size2: number
+	): Observable<[number, IFlatOffer[]]> {
+		const streamSize = this.httpClient
+			.get<IFlatOffer[]>('./assets/offers.json')
+			.pipe(map(el => el.length));
+		const streamOffers = this.httpClient
 			.get<IFlatOffer[]>('./assets/offers.json')
 			.pipe(map(el => el.slice(size1, size2)));
+		return zip(streamSize, streamOffers);
 	}
 }

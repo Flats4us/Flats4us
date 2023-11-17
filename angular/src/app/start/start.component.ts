@@ -9,8 +9,8 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { map, mergeMap, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IFlatOffer, ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -39,8 +39,9 @@ export class StartComponent implements OnInit, OnDestroy {
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	public flatOptions$?: Observable<IFlatOffer[]>;
-	public offersLength$: Observable<number> =
-		this.startService.getAllOffersSize();
+	public offersLength$: Observable<number> = this.startService
+		.getOffers(0, 6)
+		.pipe(mergeMap(e => of(e[0])));
 	private regionCityArray: IRegionCity[] = [];
 	private formBuilder: FormBuilder = new FormBuilder();
 	public pageEvent = new PageEvent();
@@ -147,7 +148,9 @@ export class StartComponent implements OnInit, OnDestroy {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
 
-		this.flatOptions$ = this.startService.getOffers(0, 6);
+		this.flatOptions$ = this.startService
+			.getOffers(0, 6)
+			.pipe(mergeMap(e => of(e[1])));
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -224,10 +227,12 @@ export class StartComponent implements OnInit, OnDestroy {
 	}
 
 	public filterOffers() {
-		this.flatOptions$ = this.startService.getOffers(
-			this.pageSize * this.pageIndex,
-			this.pageSize * this.pageIndex + this.pageSize
-		);
+		this.flatOptions$ = this.startService
+			.getOffers(
+				this.pageSize * this.pageIndex,
+				this.pageSize * this.pageIndex + this.pageSize
+			)
+			.pipe(mergeMap(e => of(e[1])));
 	}
 
 	public ngOnDestroy() {
