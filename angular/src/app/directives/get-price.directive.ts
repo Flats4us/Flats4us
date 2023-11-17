@@ -9,6 +9,7 @@ import {
 
 @Directive({
 	selector: '[appGetPrice]',
+	providers: [CurrencyPipe],
 })
 export class GetPriceDirective implements OnChanges {
 	@Input('appGetPrice')
