@@ -28,6 +28,14 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 
 	public currentIndex = 0;
 
+	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
+	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
+	public menuOptions: IMenuOptions[] = [
+		{ option: 'offerDetails', description: 'Szczegóły oferty' },
+		{ option: 'startDispute', description: 'Rozpocznij spór' },
+		{ option: 'closeRent', description: 'Zakończ najem' },
+	];
+
 	constructor(
 		public rentsService: RentsService,
 		private router: Router,
@@ -61,6 +69,9 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 
 	public onSelect(menuOption: IMenuOptions, actualRent: IRent) {
 		switch (menuOption.option) {
+			case 'offerDetails': {
+				break;
+			}
 			case 'startDispute': {
 				break;
 			}

@@ -13,6 +13,7 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -28,8 +29,9 @@ import { MatMenuModule } from '@angular/material/menu';
 		MatButtonModule,
 		MatIconModule,
 		MatMenuModule,
+		CurrencyPipe,
 	],
-	providers: [],
+	providers: [CurrencyPipe],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

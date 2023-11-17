@@ -1,6 +1,8 @@
 <div *ngIf="actualRent$ | async as actualRent">
 	<mat-form-field appearance="fill" class="title">
-		<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
+		<mat-label
+			><div class="title-text">Wynajem - {{ actualRent.title }}</div></mat-label
+		>
 		<span matSuffix>
 			<button
 				class="box-icon"
@@ -15,7 +17,7 @@
 			</button>
 			<mat-menu #menu="matMenu" id="sort">
 				<button
-					*ngFor="let menuOption of this.rentsService.menuOptions"
+					*ngFor="let menuOption of this.menuOptions"
 					mat-menu-item
 					[value]="menuOption.description"
 					(click)="onSelect(menuOption, actualRent)"
@@ -85,13 +87,13 @@
 		</div>
 	</div>
 	<div class="button-box">
-		<button
+		<!-- <button
 			mat-button
 			class="btn"
 			[disabled]="actualRent.status === statusName.SUSPENDED"
 		>
 			Szczegóły oferty
-		</button>
+		</button> -->
 		<mat-label class="label-1"
 			>Cena &nbsp;<span [appGetPrice]="actualRent.price"></span>&nbsp;
 			PLN/mies.</mat-label
@@ -141,17 +143,14 @@
 	<div class="payments">
 		<table mat-table class="mat-elevation-z8" [dataSource]="actualRent.payments">
 			<ng-container
-				*ngFor="let column of this.rentsService.displayedColumnsStudent"
+				*ngFor="let column of this.displayedColumnsStudent"
 				[matColumnDef]="column"
 			>
 				<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
 				<td *matCellDef="let payment" mat-cell>{{ payment[column] }}</td>
 			</ng-container>
 			<tr
-				*matRowDef="
-					let paymentRow;
-					columns: this.rentsService.displayedColumnsStudent
-				"
+				*matRowDef="let paymentRow; columns: this.displayedColumnsStudent"
 				mat-row
 			></tr>
 		</table>

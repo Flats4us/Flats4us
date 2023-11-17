@@ -171,22 +171,23 @@
 }
 
 .column-1 {
-	min-width: 100px;
+	width: 50%;
 	padding: 4px 4px 4px 4px;
 	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
 }
 
 .column-2 {
-	min-width: 100px;
+	width: 50%;
 	padding: 4px 4px 4px 4px;
 	text-shadow: 1px 2px rgba(0, 0, 0, 0.058);
 }
 
 .container-2 {
 	display: flex;
-	flex-direction: row;
+	flex-wrap: wrap;
 	min-height: 300px;
 	width: 100%;
+	font-size: x-large;
 }
 
 .divider {
@@ -200,19 +201,15 @@
 	height: auto;
 }
 
-h1 {
-	font-size: x-large;
-	padding-left: 12px;
-}
-
 .icon {
-	transform: scale(1.2);
+	transform: scale(1.4);
+	margin-right: 4px;
 }
 
 .label-1 {
 	display: inline-flex;
 	justify-content: right;
-	font-size: x-large;
+	font-size: xx-large;
 	padding: 4px;
 	min-width: 300px;
 	margin-left: auto;
@@ -220,10 +217,10 @@ h1 {
 }
 
 .label-2 {
-	font-size: x-large;
+	font-size: xx-large;
 	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
 	padding: 4px;
-	width: 160px;
+	min-width: 160px;
 	float: left;
 }
 
@@ -236,11 +233,16 @@ h1 {
 .payments {
 	width: 100%;
 	padding-bottom: 12px;
+	font-size: x-large;
 }
 
 .title {
 	width: 100%;
-	font-size: x-large;
+	font-size: xx-large;
+}
+
+.title-text {
+	padding-top: 20px;
 }
 
 @media screen and (max-width: 700px) {

@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IMenuOptions, IRent } from '../models/rents.models';
+import { IRent } from '../models/rents.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class RentsService {
-	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
-	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
-	public menuOptions: IMenuOptions[] = [
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
-		{ option: 'closeRent', description: 'Zakończ najem' },
-	];
-
 	constructor(private httpClient: HttpClient) {}
 
 	public getRents(): Observable<IRent[]> {
