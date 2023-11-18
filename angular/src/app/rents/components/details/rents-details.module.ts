@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RentsDetailsComponent } from './rents-details.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -12,10 +12,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import { CustomCurrencyPipe } from '../../custom.currency-pipe';
+import localePL from '@angular/common/locales/pl';
+
+registerLocaleData(localePL, 'pl');
 
 @NgModule({
-	declarations: [RentsDetailsComponent, CustomCurrencyPipe],
+	declarations: [RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,

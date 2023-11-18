@@ -1,7 +1,7 @@
 <div *ngIf="actualRent$ | async as actualRent">
 	<mat-form-field appearance="fill" class="title">
 		<mat-label
-			><div class="title-text">Wynajem - {{ actualRent.title }}</div></mat-label
+			><div class="text-3xl pt-4">Wynajem - {{ actualRent.title }}</div></mat-label
 		>
 		<span matSuffix>
 			<button
@@ -88,49 +88,52 @@
 	</div>
 	<div class="button-box">
 		<mat-label class="label-1"
-			>Cena &nbsp;<span>{{ actualRent.price | customCurrencyPipe }}</span
-			>&nbsp; PLN/mies.</mat-label
+			><span class="text-3xl"
+				>Cena {{ actualRent.price | number : ".2" : "pl" }} PLN/mies.</span
+			></mat-label
 		>
 	</div>
 	<div class="label-3">
 		<mat-label class="label-2"
 			><mat-icon class="icon">description</mat-icon
-			><span>Opis oferty</span></mat-label
+			><span class="text-3xl">Opis oferty</span></mat-label
 		>
 	</div>
 	<mat-divider></mat-divider>
 	<div class="container-2">
 		<div class="column-1">
-			<p>Data wystawienia:</p>
-			<p>Data zakończenia:</p>
-			<p>Adres:</p>
-			<p>Metraż:</p>
-			<p>Data wystawienia oceny:</p>
-			<p>Okres wynajmu:</p>
-			<p>Maks. liczba mieszkańców:</p>
-			<p>Wyposażenie:</p>
-			<p>Data płatności czynszu:</p>
-			<p>Informacje o umowie:</p>
-			<p>Współlokatorzy:</p>
+			<p class="text-2xl">Data wystawienia:</p>
+			<p class="text-2xl">Data zakończenia:</p>
+			<p class="text-2xl">Adres:</p>
+			<p class="text-2xl">Metraż:</p>
+			<p class="text-2xl">Data wystawienia oceny:</p>
+			<p class="text-2xl">Okres wynajmu:</p>
+			<p class="text-2xl">Maks. liczba mieszkańców:</p>
+			<p class="text-2xl">Wyposażenie:</p>
+			<p class="text-2xl">Data płatności czynszu:</p>
+			<p class="text-2xl">Informacje o umowie:</p>
+			<p class="text-2xl">Współlokatorzy:</p>
 		</div>
 		<div class="column-2">
-			<p>{{ actualRent?.publishDate }}</p>
-			<p>12-12-2024</p>
-			<p>Marszałkowska 44, {{ actualRent?.property?.regionCity?.city }}</p>
-			<p>{{ actualRent?.property?.area }} m²</p>
-			<p>-</p>
-			<p>{{ actualRent.period }} lata</p>
-			<p>4</p>
-			<p>-</p>
-			<p>10-12-2022</p>
-			<p>-</p>
-			<p>Jan Kowalski, Barbara Nowak</p>
+			<p class="text-2xl">{{ actualRent?.publishDate }}</p>
+			<p class="text-2xl">12-12-2024</p>
+			<p class="text-2xl">
+				Marszałkowska 44, {{ actualRent?.property?.regionCity?.city }}
+			</p>
+			<p class="text-2xl">{{ actualRent?.property?.area }} m²</p>
+			<p class="text-2xl">-</p>
+			<p class="text-2xl">{{ actualRent.period }} lata</p>
+			<p class="text-2xl">4</p>
+			<p class="text-2xl">-</p>
+			<p class="text-2xl">10-12-2022</p>
+			<p class="text-2xl">-</p>
+			<p class="text-2xl">Jan Kowalski, Barbara Nowak</p>
 		</div>
 	</div>
 	<div class="label-3">
 		<mat-label class="label-2"
 			><mat-icon class="icon">attach_money</mat-icon
-			><span>Płatności</span></mat-label
+			><span class="text-3xl">Płatności</span></mat-label
 		>
 	</div>
 	<div class="payments">
@@ -140,7 +143,9 @@
 				[matColumnDef]="column"
 			>
 				<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
-				<td *matCellDef="let payment" mat-cell>{{ payment[column] }}</td>
+				<td *matCellDef="let payment" mat-cell class="text-2xl">
+					{{ payment[column] }}
+				</td>
 			</ng-container>
 			<tr
 				*matRowDef="let paymentRow; columns: this.displayedColumnsStudent"

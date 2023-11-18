@@ -1,14 +1,11 @@
 .box-1 {
 	display: flex;
 	justify-content: space-between;
-	font-size: large;
-	font-weight: bold;
 }
 
 .box-2 {
 	display: flex;
 	justify-content: left;
-	font-size: medium;
 }
 
 .box-icon {
@@ -29,13 +26,10 @@
 .box-title {
 	align-self: left;
 	text-align: left;
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding: 20px 0 20px 12px;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
 	background-color: white;
-	margin-left: 12px;
-	margin-right: 12px;
-	padding-left: 12px;
+	margin: 0 12px;
 }
 
 .colour-text {
@@ -54,20 +48,14 @@
 
 .container-2 {
 	width: 80%;
-	margin: 0 8px 0 8px;
-}
-
-h1 {
-	font-size: xx-large;
-	padding-left: 12px;
+	margin: 0 8px;
 }
 
 .rents {
 	background: white;
 	display: flex;
 	flex-direction: row;
-	margin-left: 12px;
-	margin-right: 12px;
+	margin: 0 12px;
 }
 
 @media screen and (max-width: 700px) {
@@ -75,8 +63,7 @@ h1 {
 		background: white;
 		display: flex;
 		flex-direction: column;
-		margin-left: 12px;
-		margin-right: 12px;
+		margin: 0 12px;
 	}
 	.container-2 {
 		width: 100%;

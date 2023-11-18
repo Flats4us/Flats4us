@@ -3,7 +3,7 @@
 </div>
 <div class="rents">
 	<div class="container-1">
-		<h1>
+		<h1 class="text-3xl pl-4">
 			Moje wynajmy
 			<button
 				mat-icon-button
@@ -23,7 +23,7 @@
 				mat-list-item
 				routerLink="{{ rent.id }}"
 				><div class="box-1">
-					<span>{{ rent.title }}</span>
+					<span class="text-xl font-bold">{{ rent.title }}</span>
 					<mat-icon *ngIf="rent.status !== statusName.SUSPENDED" class="box-icon-2"
 						>check_circle</mat-icon
 					>

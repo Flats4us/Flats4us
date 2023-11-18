@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,7 +29,7 @@ import { AppComponent } from './app.component';
 		MatIconModule,
 		MatMenuModule,
 	],
-	providers: [],
+	providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
