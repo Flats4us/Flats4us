@@ -13,6 +13,10 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { registerLocaleData } from '@angular/common';
+import localePL from '@angular/common/locales/pl';
+
+registerLocaleData(localePL, 'pl');
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
