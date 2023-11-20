@@ -3,11 +3,12 @@ using Flats4us.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Hangfire;
+using Flats4us.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 
 builder.Services.AddControllers();
 
@@ -62,8 +64,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-            .GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -85,7 +86,6 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireRole("Owner");
     });
-
 });
 
 Log.Logger = new LoggerConfiguration()
@@ -102,10 +102,19 @@ builder.Services.AddLogging(loggingBuilder =>
 
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()
-                                                    .AllowAnyHeader()
-                                                    .AllowAnyMethod());
+    c.AddPolicy("AllowOrigin", options => options
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
 });
+
+builder.Services.AddHangfire(configuration => configuration
+    .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+    .UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("Flats4usConn")));
+
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -113,10 +122,8 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    // Get the database context
     var dbContext = services.GetRequiredService<Flats4usContext>();
 
-    // Ensure the database is created and tables are created if they don't exist
     if (dbContext.Database.EnsureCreated())
     {
         DataSeeder.SeedData(dbContext);
@@ -128,7 +135,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    
 }
 
 app.UseCors(options => options.AllowAnyOrigin());
@@ -138,6 +144,12 @@ app.UseCors(options => options.AllowAnyOrigin());
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseHangfireDashboard();
+
+var backgroundJobService = app.Services.GetRequiredService<IBackgroundJobService>();
+
+HangfireJobs.ConfigureJobs(backgroundJobService);
 
 app.MapControllers();
 
