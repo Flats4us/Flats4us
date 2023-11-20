@@ -148,8 +148,7 @@ app.UseAuthorization();
 app.UseHangfireDashboard();
 
 var backgroundJobService = app.Services.GetRequiredService<IBackgroundJobService>();
-
-HangfireJobs.ConfigureJobs(backgroundJobService);
+HangfireSetup.ConfigureJobs(backgroundJobService);
 
 app.MapControllers();
 
