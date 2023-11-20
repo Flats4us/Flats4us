@@ -3,7 +3,7 @@ using Hangfire;
 
 namespace Flats4us.Helpers
 {
-    public static class HangfireJobs
+    public static class HangfireSetup
     {
         public static void ConfigureJobs(IBackgroundJobService backgroundJobService)
         {
