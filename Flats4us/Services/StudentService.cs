@@ -29,7 +29,7 @@ namespace Flats4us.Services
             student.StudentNumber = studentDto.StudentNumber;
             student.University = studentDto.University;
             student.Facebook = studentDto.Facebook;
-            student.Twitter = studentDto.Twitter;
+            student.Twitter_X = studentDto.Twitter;
             student.Instagram = studentDto.Instagram;
             student.RoommatesStatus = studentDto.RoommatesStatus;
             student.IsTenant = studentDto.IsTenant;

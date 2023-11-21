@@ -30,7 +30,7 @@ namespace Flats4us.Entities.Dto
     {
         
         [Required]
-        public int YearOfBirth { get; set; }
+        public DateTime BirthDate { get; set; }
 
         [Required]
         public string StudentNumber { get; set; }

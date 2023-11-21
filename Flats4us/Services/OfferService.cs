@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Flats4us.Helpers.Enums;
 using System.Linq.Dynamic.Core;
+using System.Security.Claims;
+using Flats4us.Helpers.Exceptions;
 
 namespace Flats4us.Services
 {
@@ -368,6 +370,70 @@ namespace Flats4us.Services
             };
 
             await _context.Offers.AddAsync(offer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddOfferPromotionAsync(AddOfferPromotionDto input, int userId)
+        {
+            var offer = await _context.Offers
+                .Include(o => o.Property)
+                .FirstOrDefaultAsync(o => o.OfferId == input.OfferId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
+
+            if (offer.Property.OwnerId != userId) throw new ForbiddenException($"You do not own this offer");
+
+            var offerPromotion = new OfferPromotion
+            {
+                StartDate = DateTime.Now.Date,
+                EndDate = DateTime.Now.Date.AddDays(input.Duration),
+                Price = input.Duration * OfferPromotion.PricePerDay,
+            };
+
+            offer.OfferPromotions.Add(offerPromotion);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddOfferInterest(int offerId, int studentId)
+        {
+            var offer = await _context.Offers.FindAsync(offerId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
+
+            var student = await _context.Students.FindAsync(studentId);
+
+            if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            offer.NumberOfInterested = offer.NumberOfInterested++;
+
+            var offerInterest = new OfferInterest
+            {
+                Date = DateTime.Now,
+                Student = student,
+                Offer = offer
+            };
+
+            await _context.OfferInterests.AddAsync(offerInterest);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveOfferInterest(int offerId, int studentId)
+        {
+            var offer = await _context.Offers.FindAsync(offerId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
+
+            var offerInterest = await _context.OfferInterests
+                .FirstOrDefaultAsync(oi => oi.Offer.OfferId == offerId && oi.Student.UserId == studentId);
+
+            if (offerInterest is null)
+            {
+                throw new ArgumentException($"Interest not found for Offer ID: {offerId} and Student ID: {studentId}");
+            }
+
+            _context.OfferInterests.Remove(offerInterest);
+            offer.NumberOfInterested = offer.NumberOfInterested--;
+
             await _context.SaveChangesAsync();
         }
     }

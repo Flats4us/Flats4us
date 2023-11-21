@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +20,7 @@ builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IMeetingService, MeetingService>();
 
 builder.Services.AddControllers();
 
@@ -92,6 +92,18 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Student");
     });
 });
+
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+
+builder.Services.AddScoped<IStudentService, StudentService>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOrTenantOnly", policy =>
+    {
+        policy.RequireRole("Admin", "Tenant");
+    });
+}); 
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()

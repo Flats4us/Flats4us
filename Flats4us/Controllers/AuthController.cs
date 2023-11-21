@@ -43,7 +43,20 @@ namespace Flats4us.Controllers
             }
         }
 
-        
+        [HttpPost("register/Owner")]
+        public async Task<ActionResult<User>> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
+        {
+            try
+            {
+
+                var user = await _ownerService.RegisterAsync(request);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         [HttpPost("login")]
         public async Task<ActionResult<String>> LoginStudent([FromForm] UserLoginDto request) {
