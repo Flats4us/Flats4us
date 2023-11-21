@@ -70,3 +70,15 @@ body {
 .mat-step-header .mat-step-icon {
 	transform: scale(1.6);
 }
+
+.mat-calendar-body-cell.has-event::after {
+	content: "";
+	background: red;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	top: 25%;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
