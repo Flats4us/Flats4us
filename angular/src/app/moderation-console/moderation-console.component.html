@@ -1,0 +1,45 @@
+<mat-card>
+	<table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+		<!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+		<ng-container matColumnDef="email">
+			<th *matHeaderCellDef mat-header-cell>Email</th>
+			<td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+		</ng-container>
+		<!-- Position Column -->
+		<ng-container matColumnDef="studentNumber">
+			<th *matHeaderCellDef mat-header-cell>Nr albumu</th>
+			<td *matCellDef="let element" mat-cell>{{ element.studentNumber }}</td>
+		</ng-container>
+
+		<!-- Name Column -->
+		<ng-container matColumnDef="firstName">
+			<th *matHeaderCellDef mat-header-cell>Imię</th>
+			<td *matCellDef="let element" mat-cell>{{ element.firstName }}</td>
+		</ng-container>
+
+		<!-- Weight Column -->
+		<ng-container matColumnDef="lastName">
+			<th *matHeaderCellDef mat-header-cell>Nazwisko</th>
+			<td *matCellDef="let element" mat-cell>{{ element.lastName }}</td>
+		</ng-container>
+
+		<!-- Symbol Column -->
+		<ng-container matColumnDef="cardExpirationDate">
+			<th *matHeaderCellDef mat-header-cell>Ważność legitymacji</th>
+			<td *matCellDef="let element" mat-cell>{{ element.cardExpirationDate }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="b1">
+			<th *matHeaderCellDef mat-header-cell>Akcja</th>
+			<td *matCellDef="let element" mat-cell>
+				<button mat-flat-button color="primary">Zaakceptuj</button>
+				<button mat-flat-button color="accent">Odrzuć</button>
+			</td>
+		</ng-container>
+
+		<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+		<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+	</table>
+</mat-card>
