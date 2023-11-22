@@ -1,53 +1,52 @@
-table {
+.settings {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
+mat-card {
+	width: 200px;
+	padding: 20px;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	margin-bottom: 10px;
+}
+
+nav ul li a {
+	display: block;
+	position: relative;
+	padding-bottom: 5px;
+	color: #fbbb8b;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+nav ul li a.active {
+	font-weight: 600;
+}
+
+nav ul li a::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 0;
+	background-color: #fbbb8b;
+	transition: width 0.3s ease-in-out;
+}
+
+nav ul li a:hover::after {
 	width: 100%;
 }
 
-tr.example-detail-row {
-	height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-	background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-	background: #efefef;
-}
-
-.example-element-row td {
-	border-bottom-width: 0;
-}
-
-.example-element-detail {
-	overflow: hidden;
-	display: flex;
-}
-
-.example-element-diagram {
-	min-width: 80px;
-	border: 2px solid black;
-	padding: 8px;
-	font-weight: lighter;
-	margin: 8px 0;
-	height: 104px;
-}
-
-.example-element-symbol {
-	font-weight: bold;
-	font-size: 40px;
-	line-height: normal;
-}
-
-.example-element-description {
-	padding: 16px;
-}
-
-.example-element-description-attribution {
-	opacity: 0.5;
-}
-
-.mat-column-expand {
-	width: 320px;
-	padding-right: 24px;
-	text-align: center;
+nav ul li a.active::after {
+	width: 100%;
 }
