@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities;
+﻿using AutoMapper;
+using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
@@ -12,91 +13,42 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IOpenStreetMapService _openStreetMapService;
+        private readonly IMapper _mapper;
 
         public PropertyService(Flats4usContext context,
-            IOpenStreetMapService openStreetMapService)
+            IOpenStreetMapService openStreetMapService,
+            IMapper mapper)
         {
             _context = context;
             _openStreetMapService = openStreetMapService;
+            _mapper = mapper;
         }
 
         public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
         {
+            var flats = await _context.Flats
+                .Include(x => x.Equipment)
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .ToListAsync();
+
+            var houses = await _context.Houses
+                .Include(x => x.Equipment)
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .ToListAsync();
+
+            var rooms = await _context.Rooms
+                .Include(x => x.Equipment)
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .ToListAsync();
+
+            var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
+            var houseDtos = _mapper.Map<List<PropertyDto>>(houses);
+            var roomDtos = _mapper.Map<List<PropertyDto>>(rooms);
+
             var result = new List<PropertyDto>();
-
-            result.AddRange(await _context.Flats
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
-                .Select(p => new PropertyDto
-                {
-                    PropertyId = p.PropertyId,
-                    PropertyType = PropertyType.Flat,
-                    Province = p.Province,
-                    District = p.District,
-                    Street = p.Street,
-                    Number = p.Number,
-                    Flat = p.Flat,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    Area = p.Area,
-                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
-                    ConstructionYear = p.ConstructionYear,
-                    ImagesPath = p.ImagesPath,
-                    VerificationStatus = VerificationStatus.NotVerified,
-                    NumberOfRooms = p.NumberOfRooms,
-                    Floor = p.Floor,
-                    Elevator = p.Elevator
-                })
-                .ToListAsync()
-            );
-
-            result.AddRange(await _context.Houses
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
-                .Select(p => new PropertyDto
-                {
-                    PropertyId = p.PropertyId,
-                    PropertyType = PropertyType.House,
-                    Province = p.Province,
-                    District = p.District,
-                    Street = p.Street,
-                    Number = p.Number,
-                    Flat = p.Flat,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    Area = p.Area,
-                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
-                    ConstructionYear = p.ConstructionYear,
-                    ImagesPath = p.ImagesPath,
-                    VerificationStatus = VerificationStatus.NotVerified,
-                    NumberOfRooms = p.NumberOfRooms,
-                    NumberOfFloors = p.NumberOfFloors,
-                    PlotArea = p.PlotArea,
-                })
-                .ToListAsync()
-            );
-
-            result.AddRange(await _context.Rooms
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
-                .Select(p => new PropertyDto
-                {
-                    PropertyId = p.PropertyId,
-                    PropertyType = PropertyType.Room,
-                    Province = p.Province,
-                    District = p.District,
-                    Street = p.Street,
-                    Number = p.Number,
-                    Flat = p.Flat,
-                    City = p.City,
-                    PostalCode = p.PostalCode,
-                    Area = p.Area,
-                    MaxNumberOfInhabitants = p.MaxNumberOfInhabitants,
-                    ConstructionYear = p.ConstructionYear,
-                    ImagesPath = p.ImagesPath,
-                    VerificationStatus = VerificationStatus.NotVerified,
-                    Floor = p.Floor,
-                    Elevator = p.Elevator
-                })
-                .ToListAsync()
-            );
+            result.AddRange(flatDtos);
+            result.AddRange(houseDtos);
+            result.AddRange(roomDtos);
 
             return result;
         }
@@ -350,6 +302,29 @@ namespace Flats4us.Services
             {
                 throw new ArgumentException($"Property with ID {id} not found.");
             }
+        }
+
+        public async Task VerifyPropertyAsync(int id)
+        {
+            var property = await _context.Properties.FindAsync(id);
+
+            if (property is null)
+            {
+                throw new ArgumentException($"Property with ID {id} not found.");
+            }
+
+            if (property.VerificationStatus == VerificationStatus.Verified)
+            {
+                throw new ArgumentException($"Property with ID {id} is already verified.");
+            }
+
+            property.VerificationStatus = VerificationStatus.Verified;
+
+            var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
+
+            await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

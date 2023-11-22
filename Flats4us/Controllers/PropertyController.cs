@@ -37,6 +37,22 @@ namespace Flats4us.Controllers
             }
         }
 
+        [HttpPost("Verify/{id}")]
+        public async Task<IActionResult> VerifyProperty(int id)
+        {
+            try
+            {
+                await _propertyService.VerifyPropertyAsync(id);
+                _logger.LogInformation($"Verifying property - id: {id}");
+                return Ok("Property verified successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Verifying property - id: {id}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
         // POST: api/Property
         [HttpPost]
         public async Task<IActionResult> AddProperty([FromForm] AddEditPropertyDto input)
