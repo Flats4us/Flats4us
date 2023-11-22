@@ -1,4 +1,6 @@
-﻿namespace Flats4us.Helpers
+﻿using Flats4us.Helpers.Enums;
+
+namespace Flats4us.Helpers
 {
     public class ImageUtility
     {
@@ -19,7 +21,7 @@
             }
         }
 
-        public static void SeedPropertyImage(string path)
+        public static void SeedPropertyImage(string path, VerificationStatus status)
         {
             var directoryPath = $"Images/Properties/{path}";
             var sourceDirectory = "Images/PropertiesSeed";
@@ -28,29 +30,35 @@
             {
                 Directory.CreateDirectory(directoryPath);
 
-                var sourceTitleDeedDirectory = Path.Combine(sourceDirectory, "TitleDeed");
-                var sourceImagesDirectory = Path.Combine(sourceDirectory, "Images");
+                if ( status == VerificationStatus.NotVerified) {
+                    var sourceTitleDeedDirectory = Path.Combine(sourceDirectory, "TitleDeed");
+                    var targetTitleDeedDirectory = Path.Combine(directoryPath, "TitleDeed");
 
-                var targetTitleDeedDirectory = Path.Combine(directoryPath, "TitleDeed");
-                var targetImagesDirectory = Path.Combine(directoryPath, "Images");
-
-                if (Directory.Exists(sourceTitleDeedDirectory))
-                {
-                    Directory.CreateDirectory(targetTitleDeedDirectory);
-                    var files = Directory.GetFiles(sourceTitleDeedDirectory);
-                    foreach (var file in files)
+                    if (Directory.Exists(sourceTitleDeedDirectory))
                     {
-                        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(file)}";
-                        var destinationPath = Path.Combine(targetTitleDeedDirectory, newFileName);
-                        File.Copy(file, destinationPath);
+                        Directory.CreateDirectory(targetTitleDeedDirectory);
+                        var files = Directory.GetFiles(sourceTitleDeedDirectory);
+                        foreach (var file in files)
+                        {
+                            var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(file)}";
+                            var destinationPath = Path.Combine(targetTitleDeedDirectory, newFileName);
+                            File.Copy(file, destinationPath);
+                        }
                     }
                 }
+
+                var sourceImagesDirectory = Path.Combine(sourceDirectory, "Images");
+                var targetImagesDirectory = Path.Combine(directoryPath, "Images");
 
                 if (Directory.Exists(sourceImagesDirectory))
                 {
                     Directory.CreateDirectory(targetImagesDirectory);
+
+                    var random = new Random();
                     var files = Directory.GetFiles(sourceImagesDirectory);
-                    foreach (var file in files)
+                    var selectedFiles = files.OrderBy(f => random.Next()).Take(4);
+
+                    foreach (var file in selectedFiles)
                     {
                         var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(file)}";
                         var destinationPath = Path.Combine(targetImagesDirectory, newFileName);
@@ -59,6 +67,7 @@
                 }
             }
         }
+
         public static void SeedUserImage(string path)
         {
             var directoryPath = $"Images/Users/{path}";

@@ -261,7 +261,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1980,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner2,
             NumberOfRooms = 2,
             Floor = 7,
@@ -305,7 +305,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2001,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             NumberOfRooms = 2,
             Floor = 3,
@@ -425,16 +425,16 @@ public static class DataSeeder
         
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
 
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath);  
-        ImageUtility.SeedPropertyImage(flat2.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat3.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat4.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat5.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat6.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat7.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat8.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat9.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat10.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
+        ImageUtility.SeedPropertyImage(flat2.ImagesPath, flat2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat3.ImagesPath, flat3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat4.ImagesPath, flat4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat5.ImagesPath, flat5.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat6.ImagesPath, flat6.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat7.ImagesPath, flat7.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat8.ImagesPath, flat8.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat9.ImagesPath, flat9.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat10.ImagesPath, flat10.VerificationStatus);
 
         #endregion
 
@@ -497,7 +497,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2023,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner2,
             Floor = 1,
             Elevator = false,
@@ -518,7 +518,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2005,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             Floor = 4,
             Elevator = false,
@@ -548,11 +548,11 @@ public static class DataSeeder
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5);
 
-        ImageUtility.SeedPropertyImage(room1.ImagesPath);
-        ImageUtility.SeedPropertyImage(room2.ImagesPath);
-        ImageUtility.SeedPropertyImage(room3.ImagesPath);
-        ImageUtility.SeedPropertyImage(room4.ImagesPath);
-        ImageUtility.SeedPropertyImage(room5.ImagesPath);
+        ImageUtility.SeedPropertyImage(room1.ImagesPath, room1.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room2.ImagesPath, room2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room3.ImagesPath, room3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room4.ImagesPath, room4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room5.ImagesPath, room5.VerificationStatus);
 
         #endregion
 
@@ -635,7 +635,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1997,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             NumberOfRooms = 4,
             NumberOfFloors = 3,
@@ -667,11 +667,11 @@ public static class DataSeeder
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
 
-        ImageUtility.SeedPropertyImage(house1.ImagesPath);
-        ImageUtility.SeedPropertyImage(house2.ImagesPath);
-        ImageUtility.SeedPropertyImage(house3.ImagesPath);
-        ImageUtility.SeedPropertyImage(house4.ImagesPath);
-        ImageUtility.SeedPropertyImage(house5.ImagesPath);
+        ImageUtility.SeedPropertyImage(house1.ImagesPath, house1.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house2.ImagesPath, house2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house3.ImagesPath, house3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house4.ImagesPath, house4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house5.ImagesPath, house5.VerificationStatus);
 
         #endregion
 
