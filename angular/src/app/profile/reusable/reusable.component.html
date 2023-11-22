@@ -21,14 +21,12 @@
 					value="urlPhoto"
 					(change)="onPhotoSelected($event)"
 				/>
-				<mat-error
-					*ngIf="dataFormGroup.controls['photo'].errors?.['required']"
-					class="error-text"
-				>
-					Nie wczytano zdjęcia!
-				</mat-error>
 				<div class="text-3xl p-4 semibold">
-					{{ name$ | async }} {{ surname$ | async }}
+					{{
+						dataFormGroup.controls["name"].value +
+							" " +
+							dataFormGroup.controls["surname"].value
+					}}
 				</div>
 				<div *ngIf="getAge()" class="text-3xl pb-4 semibold">
 					wiek {{ getAge() }}
@@ -256,7 +254,7 @@
 							Nie wybrano rodzaju dokumentu!
 						</mat-error>
 						<div
-							*ngIf="dataFormGroup.controls['documentScan'].errors?.['required'] && !urlScan"
+							*ngIf="dataFormGroup.controls['documentScan'].errors?.['required']"
 							class="error-text"
 						>
 							Nie wczytano skanu dokumentu!
@@ -374,14 +372,12 @@
 					value="urlPhoto"
 					(change)="onPhotoSelected($event)"
 				/>
-				<mat-error
-					*ngIf="dataFormGroup2.controls['photo'].errors?.['required'] && !urlPhoto"
-					class="error-text"
-				>
-					Nie wczytano zdjęcia!
-				</mat-error>
 				<div class="text-3xl p-4 semibold">
-					{{ name$ | async }} {{ surname$ | async }}
+					{{
+						dataFormGroup2.controls["name"].value +
+							" " +
+							dataFormGroup2.controls["surname"].value
+					}}
 				</div>
 				<div class="button-box">
 					<button
@@ -503,7 +499,7 @@
 							Nie wybrano rodzaju dokumentu!
 						</mat-error>
 						<div
-							*ngIf="dataFormGroup2.controls['documentScan'].errors?.['required'] && !urlScan"
+							*ngIf="dataFormGroup2.controls['documentScan'].errors?.['required']"
 							class="error-text"
 						>
 							Nie wczytano skanu dokumentu!

@@ -59,8 +59,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public hobbyCtrl = new FormControl('');
 	public socialMediaCtrl = new FormControl('');
 	public filteredHobbies$?: Observable<string[]>;
-	public name$?: Observable<string>;
-	public surname$?: Observable<string>;
 	private rentId$?: Observable<string>;
 	public myHobbies: string[] = [];
 	public socialMedias: string[] = [];
@@ -164,9 +162,7 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 			email: new FormControl({ value: '', disabled: true }),
 			password: new FormControl({ value: '', disabled: true }),
 		});
-		if (this.userType === userType.STUDENT) {
-			this.dataFormGroup.get('photo')?.setValue(this.urlAvatar);
-		}
+		this.dataFormGroup.get('photo')?.setValue(this.urlAvatar);
 		this.dataFormGroup2.get('photo')?.setValue(this.urlAvatar);
 	}
 	public ngOnInit(): void {
@@ -212,17 +208,10 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 				this.socialMedias = student.socialMedia;
 				this.dataFormGroup.get('documentType')?.setValue(student.documentType);
 				this.urlScan = student.documentScan;
-				this.dataFormGroup.get('documentScan')?.setValue(student.documentScan);
 				this.dataFormGroup.get('validTill')?.setValue(new Date(student.validTill));
 				this.dataFormGroup.get('email')?.setValue(student.email);
 				this.dataFormGroup.get('password')?.setValue(student.password);
 			});
-			this.name$ = this.dataFormGroup
-				.get('name')
-				?.valueChanges.pipe(map(name => name ?? ''));
-			this.surname$ = this.dataFormGroup
-				.get('surname')
-				?.valueChanges.pipe(map(surname => surname ?? ''));
 		}
 
 		if (this.userType === userType.OWNER) {
@@ -259,18 +248,11 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 				this.dataFormGroup2.get('phoneNumber')?.setValue(owner.phoneNumber);
 				this.dataFormGroup2.get('documentType')?.setValue(owner.documentType);
 				this.urlScan = owner.documentScan;
-				this.dataFormGroup2.get('documentScan')?.setValue(owner.documentScan);
 				this.dataFormGroup2.get('validTill')?.setValue(new Date(owner.validTill));
 				this.dataFormGroup2.get('bankAccount')?.setValue(owner.bankAccount);
 				this.dataFormGroup2.get('email')?.setValue(owner.email);
 				this.dataFormGroup2.get('password')?.setValue(owner.password);
 			});
-			this.name$ = this.dataFormGroup2
-				.get('name')
-				?.valueChanges.pipe(map(name => name ?? ''));
-			this.surname$ = this.dataFormGroup2
-				.get('surname')
-				?.valueChanges.pipe(map(surname => surname ?? ''));
 		}
 	}
 
