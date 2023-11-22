@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {
+	animate,
+	state,
+	style,
+	transition,
+	trigger,
+} from '@angular/animations';
+import { MatTable } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface IPeriodicElement {
 	email: string;
@@ -6,6 +15,7 @@ export interface IPeriodicElement {
 	firstName: string;
 	lastName: string;
 	cardExpirationDate: string;
+	description: string;
 }
 
 const ELEMENT_DATA: IPeriodicElement[] = [
@@ -15,6 +25,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Adam',
 		lastName: 'Nowak',
 		cardExpirationDate: '31-06-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `anna.kwiatkowska@example.com`,
@@ -22,6 +33,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Anna',
 		lastName: 'Kwiatkowska',
 		cardExpirationDate: '31-09-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `bartosz.piotrowski@example.com`,
@@ -29,6 +41,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Bartek',
 		lastName: 'Piotrowski',
 		cardExpirationDate: '31-08-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `beata.zielonka@example.com`,
@@ -36,6 +49,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Beata',
 		lastName: 'Zielonka',
 		cardExpirationDate: '31-07-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `czeslaw.wisniewski@example.com`,
@@ -43,6 +57,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Czesław',
 		lastName: 'Wiśniewski',
 		cardExpirationDate: '31-12-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `danuta.kaczmarek@example.com`,
@@ -50,6 +65,7 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Danuta',
 		lastName: 'Kaczmarek',
 		cardExpirationDate: '31-11-24',
+		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `ewa.lewandowska@example.com`,
@@ -57,23 +73,70 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Ewa',
 		lastName: 'Lewandowska',
 		cardExpirationDate: '31-05-24',
+		description: 'Hydrogen is a chemical element',
 	},
 ];
 
 @Component({
 	selector: 'app-moderation-console',
 	templateUrl: './moderation-console.component.html',
+	animations: [
+		trigger('detailExpand', [
+			state('collapsed', style({ height: '0px', minHeight: '0' })),
+			state('expanded', style({ height: '*' })),
+			transition(
+				'expanded <=> collapsed',
+				animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+			),
+		]),
+	],
 	styleUrls: ['./moderation-console.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModerationConsoleComponent {
-	public displayedColumns: string[] = [
+	constructor(private snackBar: MatSnackBar) {}
+
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	@ViewChild(MatTable) public table: MatTable<IPeriodicElement>;
+
+	public columnsToDisplay: string[] = [
 		'email',
 		'studentNumber',
 		'firstName',
 		'lastName',
 		'cardExpirationDate',
-		'b1',
 	];
+	public columnsNames: string[] = [
+		'Email',
+		'Nr albumu',
+		'Imię',
+		'Nazwisko',
+		'Data ważności legitymacji',
+	];
+	public columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 	public dataSource = ELEMENT_DATA;
+	public expandedElement: IPeriodicElement | null | undefined;
+
+	public reject(email: string) {
+		ELEMENT_DATA.splice(
+			ELEMENT_DATA.findIndex(a => a.email === email),
+			1
+		);
+		this.table.renderRows();
+		this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
+			duration: 2000,
+		});
+	}
+
+	public accept(email: string) {
+		ELEMENT_DATA.splice(
+			ELEMENT_DATA.findIndex(a => a.email === email),
+			1
+		);
+		this.table.renderRows();
+		this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
+			duration: 2000,
+		});
+	}
 }
