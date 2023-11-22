@@ -15,7 +15,6 @@ export interface IPeriodicElement {
 	firstName: string;
 	lastName: string;
 	cardExpirationDate: string;
-	description: string;
 }
 
 const ELEMENT_DATA: IPeriodicElement[] = [
@@ -25,7 +24,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Adam',
 		lastName: 'Nowak',
 		cardExpirationDate: '31-06-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `anna.kwiatkowska@example.com`,
@@ -33,7 +31,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Anna',
 		lastName: 'Kwiatkowska',
 		cardExpirationDate: '31-09-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `bartosz.piotrowski@example.com`,
@@ -41,7 +38,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Bartek',
 		lastName: 'Piotrowski',
 		cardExpirationDate: '31-08-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `beata.zielonka@example.com`,
@@ -49,7 +45,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Beata',
 		lastName: 'Zielonka',
 		cardExpirationDate: '31-07-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `czeslaw.wisniewski@example.com`,
@@ -57,7 +52,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Czesław',
 		lastName: 'Wiśniewski',
 		cardExpirationDate: '31-12-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `danuta.kaczmarek@example.com`,
@@ -65,7 +59,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Danuta',
 		lastName: 'Kaczmarek',
 		cardExpirationDate: '31-11-24',
-		description: 'Hydrogen is a chemical element',
 	},
 	{
 		email: `ewa.lewandowska@example.com`,
@@ -73,7 +66,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 		firstName: 'Ewa',
 		lastName: 'Lewandowska',
 		cardExpirationDate: '31-05-24',
-		description: 'Hydrogen is a chemical element',
 	},
 ];
 
@@ -94,8 +86,6 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentCardsVerificationComponent {
-	constructor(private snackBar: MatSnackBar) {}
-
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	@ViewChild(MatTable) public table: MatTable<IPeriodicElement>;
@@ -114,9 +104,19 @@ export class StudentCardsVerificationComponent {
 		'Nazwisko',
 		'Data ważności legitymacji',
 	];
+
 	public columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
 	public dataSource = ELEMENT_DATA;
 	public expandedElement: IPeriodicElement | null | undefined;
+	public map1: Map<string, string> = new Map<string, string>();
+
+	constructor(private snackBar: MatSnackBar) {
+		this.map1.set('email', 'Email');
+		this.map1.set('studentNumber', 'Nr albumu');
+		this.map1.set('firstName', 'Imię');
+		this.map1.set('lastName', 'Nazwisko');
+		this.map1.set('cardExpirationDate', 'Data ważności legitymacji');
+	}
 
 	public reject(email: string) {
 		ELEMENT_DATA.splice(

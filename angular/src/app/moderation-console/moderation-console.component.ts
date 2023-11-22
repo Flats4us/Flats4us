@@ -1,13 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import {
-	animate,
-	state,
-	style,
-	transition,
-	trigger,
-} from '@angular/animations';
-import { MatTable } from '@angular/material/table';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 	selector: 'app-moderation-console',

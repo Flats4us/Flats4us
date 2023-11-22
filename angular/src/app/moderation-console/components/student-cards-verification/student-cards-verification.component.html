@@ -8,7 +8,7 @@
 		*ngFor="let column of columnsToDisplay"
 		matColumnDef="{{ column }}"
 	>
-		<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
+		<th *matHeaderCellDef mat-header-cell>{{ map1.get(column) }}</th>
 		<td *matCellDef="let element" mat-cell>{{ element[column] }}</td>
 	</ng-container>
 
