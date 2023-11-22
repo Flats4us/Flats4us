@@ -17,7 +17,7 @@ namespace Flats4us.Entities
 
         public string Facebook { get; set; }
 
-        public string Twitter_X { get; set; }
+        public string Twitter { get; set; }
 
         public string Instagram { get; set; }
 

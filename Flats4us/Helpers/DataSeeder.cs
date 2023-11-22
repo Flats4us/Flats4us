@@ -188,7 +188,7 @@ public static class DataSeeder
             StudentNumber = "s27235",
             University = "PJATK",
             Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
-            Twitter_X = "https://twitter.com/kkajetanski",
+            Twitter = "https://twitter.com/kkajetanski",
             Instagram = "https://www.instagram.com/kkajetanski/",
             RoommatesStatus = RoommatesStatus.Alone,
             IsTenant = false

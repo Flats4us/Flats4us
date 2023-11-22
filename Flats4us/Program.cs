@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,6 +93,23 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Student");
     });
 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("OwnerOnly", policy =>
+    {
+        policy.RequireRole("Owner");
+    });
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ModeratorOnly", policy =>
+    {
+        policy.RequireRole("Moderator");
+    });
+});
+
 
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 

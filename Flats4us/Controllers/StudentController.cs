@@ -29,12 +29,26 @@ namespace Flats4us.Controllers
         }
 
 
-        [HttpGet("policy_example")]
+        [HttpGet("student_policy_example")]
         [Authorize(Policy = "StudentOnly")]
         public async Task<IActionResult> OnlyStudentPolicyExample()
         {
-            var students = await _studentService.GetAllUsersAsync();
-            return Ok(students);
+            return Ok("policy works if you are a student");
+        }
+
+        [HttpGet("owner_policy_example")]
+        [Authorize(Policy = "OwnerOnly")]
+        public async Task<IActionResult> OnlyOwnerPolicyExample()
+        {
+            return Ok("policy works if you are an owner");
+        }
+
+        [HttpGet("moderator_policy_example")]
+        [Authorize(Policy = "ModeratorOnly")]
+        public async Task<IActionResult> OnlyModeratorPolicyExample()
+        {
+            return Ok("policy works if you are an moderator");
+
         }
 
         // GET: api/<StudentController>/5
