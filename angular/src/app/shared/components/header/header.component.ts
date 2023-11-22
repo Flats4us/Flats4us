@@ -8,8 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	constructor(public dialog: MatDialog) {}
-
 	public isUserLoggedIn = true;
 	public isUserLoggedInAsStudent = true;
 
