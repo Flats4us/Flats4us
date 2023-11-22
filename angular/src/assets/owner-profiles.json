@@ -1,0 +1,16 @@
+[
+	{
+		"id": "2",
+		"photo": "../../../assets/candidate.webp",
+		"name": "Eustachy",
+		"surname": "Maliniak",
+		"address": "Wilanowska 20, 00-150 Warszawa",
+		"phoneNumber": "829822444",
+		"documentType": "Dowód osobisty",
+		"documentScan": "../../../assets/candidate.webp",
+		"validTill": "2024-11-22T00:00:00.000Z",
+		"email": "jk@wp.pl",
+		"password": "qwerty",
+		"bankAccount": "57109024023278141329621369"
+	}
+]

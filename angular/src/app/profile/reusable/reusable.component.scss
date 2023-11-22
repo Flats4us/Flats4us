@@ -2,40 +2,47 @@
 	display: flex;
 	flex-direction: row;
 	background-color: white;
-	justify-content: center;
-	align-items: center;
-	margin: 0 16px 0 16px;
+	// justify-content: center;
+	// align-items: center;
+	margin: 0 16px;
 }
 
 .container-title {
-	text-align: center;
-	font-size: xx-large;
+	text-align: left;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
 	background-color: white;
-	margin: 0 16px 0 16px;
+	margin: 0 16px;
+	padding: 4px 0 32px 0;
 }
 
 .btn {
 	background: #fbbb8b;
 	border-radius: 24px;
 	padding: 4px;
-	width: 200px;
+	min-width: 400px;
 	height: 45px;
-	margin: 4px;
+	margin: 4px 0;
 }
 
 .btn2 {
 	background: rgb(255, 237, 223);
 	border-radius: 24px;
 	padding: 4px;
-	width: 200px;
+	margin: 4px 0;
+	min-width: 400px;
 	height: 45px;
 	border: 3px black;
 	border-style: solid;
 }
 
-.divider-1 {
-	margin: 0 16px 0 16px;
+.edit-btn {
+	background: #fbbb8b;
+	display: block;
+	float: right;
+}
+
+.form-btn {
+	width: 80%;
 }
 
 .image-box {
@@ -43,18 +50,15 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 4px;
 }
 
 .button-box {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 4px;
 }
 
 .title2 {
-	font-size: x-large;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
 	text-align: center;
 }
@@ -69,17 +73,24 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
-	border-right: 1px;
-	border-color: rgba(0, 0, 0, 0.12);
-	border-style: solid;
+	width: 50%;
+	margin-top: 16px;
+	margin-bottom: auto;
 }
 
 .container-2 {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
+	justify-content: space-between;
+	//align-items: stretch;
+	flex-grow: 1;
+	flex-direction: column;
+	margin: 16px;
+	//width: 50%;
+}
+
+.data-container {
+	display: flex;
+	flex-direction: column;
 }
 
 .error-text {
@@ -88,16 +99,19 @@
 }
 
 .hobbies {
-	// display: flex;
-	// flex-wrap: wrap;
-	// align-items: center;
-	// justify-content: center;
 	display: grid;
 	grid-template-columns: repeat(3, 108px);
 }
 
 .file-upload {
 	visibility: hidden;
+	width: 0;
+}
+
+.file-name {
+	display: inline-block;
+	overflow: hidden;
+	max-width: 32px;
 }
 
 mat-chip-option {
@@ -123,9 +137,30 @@ mat-form-field {
 		align-items: center;
 		flex-direction: column;
 		width: 100%;
-		border-right: 0px;
 	}
 	mat-form-field {
-		min-width: 300px;
+		min-width: 100px;
+	}
+	.form-btn {
+		width: 60%;
+	}
+	.btn {
+		background: #fbbb8b;
+		border-radius: 24px;
+		padding: 4px;
+		min-width: 200px;
+		height: 45px;
+		margin: 4px 0;
+	}
+
+	.btn2 {
+		background: rgb(255, 237, 223);
+		border-radius: 24px;
+		padding: 4px;
+		margin: 4px 0;
+		min-width: 200px;
+		height: 45px;
+		border: 3px black;
+		border-style: solid;
 	}
 }

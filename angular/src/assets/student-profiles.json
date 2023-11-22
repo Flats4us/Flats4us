@@ -1,0 +1,20 @@
+[
+	{
+		"id": "1",
+		"photo": "../../../assets/candidate.webp",
+		"name": "Jan",
+		"surname": "Kowalski",
+		"yearOfBirth": "1999",
+		"indexNumber": "s25420",
+		"university": "PJATK",
+		"address": "Marszałkowska 30, 00-120 Warszawa",
+		"phoneNumber": "512256423",
+		"hobbies": ["Muzyka", "Piwo"],
+		"socialMedia": ["jk.twitter.com"],
+		"documentType": "Legitymacja studencka",
+		"documentScan": "../../../assets/candidate.webp",
+		"validTill": "2024-11-22T00:00:00.000Z",
+		"email": "jk@wp.pl",
+		"password": "qwerty"
+	}
+]
