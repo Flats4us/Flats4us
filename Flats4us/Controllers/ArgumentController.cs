@@ -123,14 +123,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("get_filtered_intervention")]
+        /*[HttpGet("get_filtered_intervention")]
         public async Task<IActionResult> GetFilteredInterventions()
         {
             _logger.LogInformation("Filtered Interventions");
             var arguments = await _argumentService.GetInterventionNeedInterventionAsync();
 
             return Ok(arguments);
-        }
+        }*/
 
     }
 }

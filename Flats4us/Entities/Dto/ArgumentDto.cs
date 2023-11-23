@@ -10,5 +10,8 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int OfferId { get; set; }
+
+        [Required]
+        public bool InterventionNeed { get; set; }
     }
 }

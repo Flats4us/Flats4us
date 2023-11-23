@@ -23,6 +23,9 @@ namespace Flats4us.Entities
         [Required]
         public ArgumentStatus ArgumentStatus { get; set; }
 
+        [Required]
+        public bool InterventionNeed { get; set; }
+
         public DateTime? MederatorDecisionDate { get; set; }
 
         [Required]
