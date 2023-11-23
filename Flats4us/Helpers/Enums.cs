@@ -68,4 +68,10 @@
         House,
         Room
     }
+
+    public enum UserType
+    {
+        Owner,
+        Student
+    }
 }

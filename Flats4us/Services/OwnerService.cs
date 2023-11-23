@@ -3,12 +3,13 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Flats4us.Services.Interfaces;
 using Flats4us.Helpers;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class OwnerService : OwnerStudentService, IOwnerService
     {
-        public OwnerService(Flats4usContext context) : base(context)
+        public OwnerService(Flats4usContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
