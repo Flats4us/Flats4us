@@ -42,7 +42,7 @@ export class DisputeConversationComponent {
 	public currentUser = 'Moderator';
 	public disputeDescription = '';
 	@ViewChild('disputeDescriptionDialog')
-	public disputeDescriptionDialog!: TemplateRef<any>;
+	public disputeDescriptionDialog!: TemplateRef<unknown>;
 
 	public messages: IConversation[] = [
 		{ sender: 'User1', message: 'Msg' },
