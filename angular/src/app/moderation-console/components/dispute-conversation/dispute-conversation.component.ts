@@ -4,6 +4,7 @@ import {
 	TemplateRef,
 	ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -52,7 +53,8 @@ export class DisputeConversationComponent {
 	constructor(
 		public route: ActivatedRoute,
 		private dialog: MatDialog,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private router: Router
 	) {
 		this.conversationId$ = route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
@@ -80,6 +82,9 @@ export class DisputeConversationComponent {
 	public OnSubmit() {
 		this.snackBar.open('Spór zostaw zamknięty', 'Zamknij', {
 			duration: 2000,
+		});
+		this.snackBar._openedSnackBarRef?.afterDismissed().subscribe(() => {
+			this.router.navigate(['moderation-console/dispute']);
 		});
 	}
 }
