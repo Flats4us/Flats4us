@@ -13,13 +13,12 @@
 				<input
 					#photoUpload
 					id="file"
-					formControlName="photo"
 					class="file-upload"
 					type="file"
 					accept="image/*"
 					aria-label="File"
 					value="urlPhoto"
-					(change)="onPhotoSelected($event)"
+					(change)="onFileSelected($event, regexImage)"
 				/>
 				<div class="text-3xl p-4 semibold">
 					{{
@@ -253,22 +252,15 @@
 						>
 							Nie wybrano rodzaju dokumentu!
 						</mat-error>
-						<div
-							*ngIf="dataFormGroup.controls['documentScan'].errors?.['required']"
-							class="error-text"
-						>
-							Nie wczytano skanu dokumentu!
-						</div>
 					</mat-form-field>
 					<input
 						#scanUpload
 						id="documentScan"
-						formControlName="documentScan"
 						class="file-upload"
 						type="file"
 						accept="image/*,application/pdf"
 						aria-label="File"
-						(change)="onScanSelected($event)"
+						(change)="onFileSelected($event, regexScan)"
 					/>
 					<mat-icon *ngIf="urlScan">save</mat-icon>
 					<span class="file-name">{{ fileScanName }}</span>
@@ -364,13 +356,12 @@
 				<input
 					#photoUpload
 					id="file"
-					formControlName="photo"
 					class="file-upload"
 					type="file"
 					accept="image/*"
 					aria-label="File"
 					value="urlPhoto"
-					(change)="onPhotoSelected($event)"
+					(change)="onFileSelected($event, regexImage)"
 				/>
 				<div class="text-3xl p-4 semibold">
 					{{
@@ -498,24 +489,18 @@
 						>
 							Nie wybrano rodzaju dokumentu!
 						</mat-error>
-						<div
-							*ngIf="dataFormGroup2.controls['documentScan'].errors?.['required']"
-							class="error-text"
-						>
-							Nie wczytano skanu dokumentu!
-						</div>
 					</mat-form-field>
 					<input
 						#scanUpload
 						id="documentScan"
-						formControlName="documentScan"
 						class="file-upload"
 						type="file"
 						accept="image/*,application/pdf"
 						aria-label="File"
-						(change)="onScanSelected($event)"
+						(change)="onFileSelected($event, regexScan)"
 					/>
 					<mat-icon *ngIf="urlScan">save</mat-icon>
+					<span class="file-name">{{ fileScanName }}</span>
 					<button
 						mat-fab
 						class="edit-btn"

@@ -36,10 +36,10 @@ import { ProfileService } from '../services/profile.service';
 })
 export class ReusableProfileComponent implements OnInit, OnDestroy {
 	@Input()
-	public title = 'Edycja profilu';
+	public title = '';
 
 	@Input()
-	public createId = 2;
+	public createId = 0;
 
 	@Input()
 	public userType = userType.STUDENT;
@@ -67,7 +67,7 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public actualOwner$?: Observable<IOwner>;
 	public actualOwner = {} as IOwner;
 
-	private validYear: number = new Date().getFullYear() - 18;
+	private validYear: number = new Date().getFullYear();
 
 	private announcer = inject(LiveAnnouncer);
 
@@ -76,6 +76,8 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public filePhotoName = '';
 	public urlPhoto = '';
 	public urlScan = '';
+	public regexImage = /image\/*/;
+	public regexScan = /image\/*/ || /application\/pdf/;
 
 	private hobbies: string[] = [
 		'Muzyka',
@@ -115,7 +117,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 			)
 		);
 		this.dataFormGroup = this.formBuilder.group({
-			photo: new FormControl('', Validators.required),
 			name: new FormControl('', Validators.required),
 			surname: new FormControl('', Validators.required),
 			yearOfBirth: new FormControl('', [
@@ -135,14 +136,12 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 			hobbies: this.hobbyCtrl,
 			socialMedia: this.socialMediaCtrl,
 			documentType: new FormControl('', Validators.required),
-			documentScan: new FormControl('', Validators.required),
 			validTill: new FormControl(new Date(), Validators.required),
 			email: new FormControl({ value: '', disabled: true }),
 			password: new FormControl({ value: '', disabled: true }),
 		});
 
 		this.dataFormGroup2 = this.formBuilder.group({
-			photo: new FormControl('', Validators.required),
 			name: new FormControl('', Validators.required),
 			surname: new FormControl('', Validators.required),
 			address: new FormControl('', Validators.required),
@@ -153,7 +152,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 				),
 			]),
 			documentType: new FormControl('', Validators.required),
-			documentScan: new FormControl('', Validators.required),
 			validTill: new FormControl(new Date(), Validators.required),
 			bankAccount: new FormControl('', [
 				Validators.required,
@@ -162,8 +160,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 			email: new FormControl({ value: '', disabled: true }),
 			password: new FormControl({ value: '', disabled: true }),
 		});
-		this.dataFormGroup.get('photo')?.setValue(this.urlAvatar);
-		this.dataFormGroup2.get('photo')?.setValue(this.urlAvatar);
 	}
 	public ngOnInit(): void {
 		this.rentId$ = this.route.paramMap.pipe(
@@ -186,6 +182,8 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 								surname: user.surname,
 								address: user.address,
 								phoneNumber: user.phoneNumber,
+								hobbies: [],
+								socialMedia: [],
 								email: user.email,
 								password: user.password,
 							})
@@ -193,9 +191,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 					);
 			}
 			this.actualStudent$.pipe(takeUntil(this.unsubscribe$)).subscribe(student => {
-				this.dataFormGroup
-					.get('photo')
-					?.setValue(student.photo ? student.photo : this.urlAvatar);
 				this.urlPhoto = student.photo ? student.photo : this.urlAvatar;
 				this.dataFormGroup.get('name')?.setValue(student.name);
 				this.dataFormGroup.get('surname')?.setValue(student.surname);
@@ -238,9 +233,6 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 					);
 			}
 			this.actualOwner$.pipe(takeUntil(this.unsubscribe$)).subscribe(owner => {
-				this.dataFormGroup2
-					.get('photo')
-					?.setValue(owner.photo ? owner.photo : this.urlAvatar);
 				this.urlPhoto = owner.photo ? owner.photo : this.urlAvatar;
 				this.dataFormGroup2.get('name')?.setValue(owner.name);
 				this.dataFormGroup2.get('surname')?.setValue(owner.surname);
@@ -316,7 +308,7 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	}
 
 	public onSubmit() {
-		if (this.dataFormGroup.valid) {
+		if (this.dataFormGroup.valid || this.dataFormGroup2.valid) {
 			this.router.navigate(['/']);
 		}
 	}
@@ -325,13 +317,13 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 		const age =
 			new Date().getFullYear() -
 			Number(this.dataFormGroup.get('yearOfBirth')?.value);
-		if (age > 150) {
+		if (age > 150 || age < 0) {
 			return '';
 		}
 		return age ? age.toString() : '';
 	}
 
-	public onScanSelected(event: Event) {
+	public onFileSelected(event: Event, regex: RegExp) {
 		const formData = new FormData();
 		const fileEvent = (event.target as HTMLInputElement).files;
 
@@ -340,36 +332,22 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 		}
 		const file: File = fileEvent[0];
 		const fileType = file.type;
-		if (fileType.match(/image\/*/ || /application\/pdf/) == null) {
+		if (fileType.match(regex) == null) {
 			return;
 		}
-		this.fileScanName = file.name;
-		formData.append(this.fileScanName, file);
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 		reader.onload = () => {
-			this.urlScan = <string>reader.result;
-			this.changeDetectorRef.detectChanges();
-		};
-	}
-	public onPhotoSelected(event: Event) {
-		const formData = new FormData();
-		const fileEvent = (event.target as HTMLInputElement).files;
-
-		if (!fileEvent) {
-			return;
-		}
-		const file: File = fileEvent[0];
-		const fileType = file.type;
-		if (fileType.match(/image\/*/) == null) {
-			return;
-		}
-		this.filePhotoName = file.name;
-		formData.append(this.filePhotoName, file);
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = () => {
-			this.urlPhoto = <string>reader.result;
+			if (regex === this.regexImage) {
+				this.filePhotoName = file.name;
+				formData.append(this.filePhotoName, file);
+				this.urlPhoto = <string>reader.result;
+			}
+			if (regex === this.regexScan) {
+				this.fileScanName = file.name;
+				formData.append(this.fileScanName, file);
+				this.urlScan = <string>reader.result;
+			}
 			this.changeDetectorRef.detectChanges();
 		};
 	}
