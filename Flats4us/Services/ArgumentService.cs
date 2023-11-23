@@ -29,18 +29,39 @@ namespace Flats4us.Services
         {
             var argument = new Argument
             {
-                //ArgumentId = input.ArgumentId,
-                StartDate = (DateTime)input.StartDate,
-                StudentAcceptanceDate = (DateTime)input.StudentAcceptanceDate,
-                OwnerAcceptanceDate = (DateTime)input.OwnerAcceptanceDate,
-                ArgumentStatus = input.ArgumentStatus,
-                MederatorDecisionDate = (DateTime)input.MederatorDecisionDate
+                StartDate = DateTime.Now,
+                ArgumentStatus = ArgumentStatus.Ongoing,
+                Description = input.Description,
+                OfferId = input.OfferId,
+                StudentId = 5
             };
 
             await _context.Arguments.AddAsync(argument);
             await _context.SaveChangesAsync();
         }
 
+        
+        public async Task EditStatusArgumentAsync(int id, ArgumentStatus status)
+        {
+            var argument = _context.Arguments.FirstAsync(x => x.ArgumentId == id);
+
+            if (argument == null)
+                return;
+
+            argument.ArgumentStatus = status;
+
+            _context.Arguments.AddAsync(argument);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Argument>> GetOngoingArgumentsAsync()
+        {
+            var ongoingArguments = await _context.Arguments
+                .Where(x => x.ArgumentStatus == ArgumentStatus.Ongoing)
+                .ToListAsync();
+
+            return ongoingArguments;
+        }
 
 
         public async Task<List<ArgumentIntervention>> GetAllInterventionsAsync()
@@ -59,12 +80,21 @@ namespace Flats4us.Services
             {
                 ArgumentInterventionId = input.ArgumentInterventionId,
                 Date = input.Date,
-                Justification = input.Justification
+                Justification = input.Justification,
+                InterventionNeed = input.InterventionNeed,
+                ModeratorId =input.ModeratorId
             };
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<ArgumentIntervention>> GetInterventionNeedInterventionAsync()
+        {
+            var interventionNeed = await _context.ArgumentInterventions
+                .Where(x => x.InterventionNeed == true)
+                .ToListAsync();
 
+            return interventionNeed;
+        }
 
 
 

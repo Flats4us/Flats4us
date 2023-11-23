@@ -11,16 +11,19 @@ namespace Flats4us.Entities
         public int ArgumentId { get; set; }
 
         [Required]
+        public string Description { get; set; }
+
+        [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime StudentAcceptanceDate { get; set; }
+        public DateTime? StudentAcceptanceDate { get; set; }
 
-        public DateTime OwnerAcceptanceDate { get; set; }
+        public DateTime? OwnerAcceptanceDate { get; set; }
 
         [Required]
         public ArgumentStatus ArgumentStatus { get; set; }
 
-        public DateTime MederatorDecisionDate { get; set; }
+        public DateTime? MederatorDecisionDate { get; set; }
 
         [Required]
         public int OfferId { get; set; }

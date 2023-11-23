@@ -5,6 +5,7 @@ namespace Flats4us.Entities.Dto
 {
     public class ArgumentInterventionDto
     {
+        [ForeignKey("Argument")]
         public int ArgumentInterventionId { get; set; }
 
         [Required]
@@ -12,5 +13,11 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string Justification { get; set; }
+
+        [Required]
+        public bool InterventionNeed { get; set; }
+
+        [Required]
+        public int ModeratorId { get; set; }
     }
 }

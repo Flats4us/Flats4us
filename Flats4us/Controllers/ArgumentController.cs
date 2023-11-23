@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace Flats4us.Controllers
             _argumentService = argumentService;
         }
 
-        [HttpGet("argument")]
+        [HttpGet("get_argument")]
         public async Task<IActionResult> GetArguments()
         {
             _logger.LogInformation("Geting Arguments");
@@ -30,8 +31,7 @@ namespace Flats4us.Controllers
             return Ok(arguments);
         }
 
-
-        [HttpGet]
+        [HttpGet("get_id_argument")]
         public async Task<IActionResult> GetArgumentById(int id)
         {
             _logger.LogInformation("Geting Argument by Id");
@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
             return Ok(argument);
         }
 
-        [HttpPost("argument")]
+        [HttpPost("post_argument")]
         public async Task<IActionResult> PostArgument(ArgumentDto input)
         {
             try
@@ -56,10 +56,39 @@ namespace Flats4us.Controllers
             }
         }
 
+        [HttpPut("put_status_argument")]
+        public async Task<IActionResult> PutArgument(int id, ArgumentStatus status)
+        {
+            try
+            {
+                _logger.LogInformation("Put Argument");
+                await _argumentService.EditStatusArgumentAsync(id, status);
+                return Ok("Argument Added");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Editing argument");
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+            }
+        }
+
+        [HttpGet("get_filtered_argument")]
+        public async Task<IActionResult> GetFilteredArguments()
+        {
+            _logger.LogInformation("Geting Arguments");
+            var arguments = await _argumentService.GetOngoingArgumentsAsync();
+
+            return Ok(arguments);
+        }
 
 
 
-        [HttpGet("intervention")]
+
+
+
+
+
+        [HttpGet("get_intervention")]
         public async Task<IActionResult> GetArgumentInterventions()
         {
             _logger.LogInformation("Getting ArgumentInterventions");
@@ -68,7 +97,7 @@ namespace Flats4us.Controllers
             return Ok(ArgumentInterventions);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get_id_intervention")]
         public async Task<IActionResult> GetArgumentInterventionById(int id)
         {
             _logger.LogInformation("Getting ArgumentIntervention by ID");
@@ -77,7 +106,7 @@ namespace Flats4us.Controllers
             return Ok(argumentIntervention);
         }
 
-        [HttpPost("intervention")]
+        [HttpPost("post_intervention")]
         public async Task<IActionResult> PostArgumentIntervention(ArgumentInterventionDto input)
         {
 
@@ -90,8 +119,17 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding offar - body: {input}");
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
             }
+        }
+
+        [HttpGet("get_filtered_intervention")]
+        public async Task<IActionResult> GetFilteredInterventions()
+        {
+            _logger.LogInformation("Filtered Interventions");
+            var arguments = await _argumentService.GetInterventionNeedInterventionAsync();
+
+            return Ok(arguments);
         }
 
     }
