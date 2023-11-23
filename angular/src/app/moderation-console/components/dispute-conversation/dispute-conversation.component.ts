@@ -5,33 +5,15 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { FormControl } from '@angular/forms';
 import { map, Observable } from 'rxjs';
 import { IConversation } from '@shared/models/conversation.models';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-dispute-conversation',
-	standalone: true,
-	imports: [
-		CommonModule,
-		FormsModule,
-		MatFormFieldModule,
-		MatIconModule,
-		MatInputModule,
-		ReactiveFormsModule,
-		MatButtonModule,
-		MatDialogModule,
-		MatMenuModule,
-	],
 	templateUrl: './dispute-conversation.component.html',
 	styleUrls: ['./dispute-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

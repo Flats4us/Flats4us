@@ -9,9 +9,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StudentCardsVerificationComponent } from './components/student-cards-verification/student-cards-verification.component';
 import { ModerationConsoleComponent } from './moderation-console.component';
+import { DisputeComponent } from './components/dispute/dispute.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { DisputeConversationComponent } from './components/dispute-conversation/dispute-conversation.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
-	declarations: [ModerationConsoleComponent, StudentCardsVerificationComponent],
+	declarations: [
+		ModerationConsoleComponent,
+		StudentCardsVerificationComponent,
+		DisputeComponent,
+		DisputeConversationComponent,
+	],
 	imports: [
 		CommonModule,
 		ModerationConsoleRoutingModule,
@@ -20,6 +34,15 @@ import { ModerationConsoleComponent } from './moderation-console.component';
 		MatCardModule,
 		MatIconModule,
 		MatSnackBarModule,
+		MatTabsModule,
+		RouterLink,
+		RouterOutlet,
+		FormsModule,
+		MatFormFieldModule,
+		MatInputModule,
+		ReactiveFormsModule,
+		MatDialogModule,
+		MatMenuModule,
 	],
 	exports: [ModerationConsoleComponent],
 })
