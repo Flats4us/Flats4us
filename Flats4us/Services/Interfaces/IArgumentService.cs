@@ -15,6 +15,5 @@ namespace Flats4us.Services.Interfaces
         public Task<List<ArgumentIntervention>> GetAllInterventionsAsync();
         public Task<ArgumentIntervention> GetInterventionById(int id);
         public Task AddInterventionAsync(ArgumentInterventionDto input);
-        public Task<IEnumerable<ArgumentIntervention>> GetInterventionNeedInterventionAsync();
     }
 }

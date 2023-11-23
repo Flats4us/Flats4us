@@ -33,6 +33,7 @@ namespace Flats4us.Services
                 ArgumentStatus = ArgumentStatus.Ongoing,
                 Description = input.Description,
                 OfferId = input.OfferId,
+                InterventionNeed = input.InterventionNeed,
                 StudentId = 5
             };
 
@@ -43,14 +44,14 @@ namespace Flats4us.Services
         
         public async Task EditStatusArgumentAsync(int id, ArgumentStatus status)
         {
-            var argument = _context.Arguments.FirstAsync(x => x.ArgumentId == id);
+            var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
 
             if (argument == null)
                 return;
 
             argument.ArgumentStatus = status;
 
-            _context.Arguments.AddAsync(argument);
+            //await _context.Arguments.UpdateAsync(argument);
             await _context.SaveChangesAsync();
         }
 
@@ -58,10 +59,17 @@ namespace Flats4us.Services
         {
             var ongoingArguments = await _context.Arguments
                 .Where(x => x.ArgumentStatus == ArgumentStatus.Ongoing)
+                .Where(x => x.InterventionNeed == true)
                 .ToListAsync();
 
             return ongoingArguments;
         }
+
+
+
+
+
+
 
 
         public async Task<List<ArgumentIntervention>> GetAllInterventionsAsync()
@@ -78,22 +86,13 @@ namespace Flats4us.Services
         {
             var argumentIntervention = new ArgumentIntervention
             {
-                ArgumentInterventionId = input.ArgumentInterventionId,
                 Date = input.Date,
                 Justification = input.Justification,
-                InterventionNeed = input.InterventionNeed,
+                ArgumentId = input.ArgumentId,
                 ModeratorId =input.ModeratorId
             };
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);
             await _context.SaveChangesAsync();
-        }
-        public async Task<IEnumerable<ArgumentIntervention>> GetInterventionNeedInterventionAsync()
-        {
-            var interventionNeed = await _context.ArgumentInterventions
-                .Where(x => x.InterventionNeed == true)
-                .ToListAsync();
-
-            return interventionNeed;
         }
 
 

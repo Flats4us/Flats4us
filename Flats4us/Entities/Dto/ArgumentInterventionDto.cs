@@ -5,9 +5,6 @@ namespace Flats4us.Entities.Dto
 {
     public class ArgumentInterventionDto
     {
-        [ForeignKey("Argument")]
-        public int ArgumentInterventionId { get; set; }
-
         [Required]
         public DateTime Date { get; set; }
 
@@ -15,7 +12,7 @@ namespace Flats4us.Entities.Dto
         public string Justification { get; set; }
 
         [Required]
-        public bool InterventionNeed { get; set; }
+        public int ArgumentId { get; set; }
 
         [Required]
         public int ModeratorId { get; set; }

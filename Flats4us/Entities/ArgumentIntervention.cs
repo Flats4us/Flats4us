@@ -5,7 +5,7 @@ namespace Flats4us.Entities
 {
     public class ArgumentIntervention
     {
-        [ForeignKey("Argument")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ArgumentInterventionId { get; set; }
 
         [Required]
@@ -15,11 +15,12 @@ namespace Flats4us.Entities
         public string Justification { get; set; }
 
         [Required]
-        public bool InterventionNeed { get; set; }
+        public int ArgumentId { get; set; }
 
         [Required]
         public int ModeratorId { get; set; }
 
+        public virtual Argument Argument { get; set; }
         public virtual Moderator Moderator { get; set; }
     }
 }
