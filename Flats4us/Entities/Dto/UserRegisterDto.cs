@@ -55,6 +55,8 @@ namespace Flats4us.Entities.Dto
     {
         [Required]
         public string BankAccount { get; set; }
-    }
 
+        [Required]
+        public string DocumentNumber { get; set; }
+    }
 }

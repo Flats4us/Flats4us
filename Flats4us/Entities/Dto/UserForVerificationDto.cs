@@ -18,30 +18,7 @@ namespace Flats4us.Entities.Dto
         public string Surname { get; set; }
 
         [Required]
-        public string Street { get; set; }
-
-        [Required]
-        public string Number { get; set; }
-
-        public int? Flat { get; set; }
-
-        [Required]
-        public string City { get; set; }
-
-        [Required]
-        public string PostalCode { get; set; }
-
-        [Required]
-        public string Username { get; set; }
-
-        [Required]
         public string Email { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
-
-        [Required]
-        public DateTime AccountCreationDate { get; set; }
 
         [Required]
         public string ImagesPath { get; set; }
@@ -55,18 +32,10 @@ namespace Flats4us.Entities.Dto
         [Required]
         public DateTime DocumentExpireDate { get; set; }
 
-        public DateTime? BirthDate { get; set; }
-
         public string? StudentNumber { get; set; }
 
         public string? University { get; set; }
 
-        public string? Facebook { get; set; }
-
-        public string? Twitter_X { get; set; }
-
-        public string? Instagram { get; set; }
-
-        public string? BankAccount { get; set; }
+        public string? DocumentNumber { get; set; }
     }
 }
