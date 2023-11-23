@@ -26,6 +26,12 @@ namespace Flats4us.Helpers
             CreateMap<Owner, OwnerStudentDto>();
 
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
+
+            CreateMap<Student, UserForVerificationDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student));
+
+            CreateMap<Owner, UserForVerificationDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner));
         }
     }
 }

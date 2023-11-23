@@ -8,9 +8,10 @@ namespace Flats4us.Services.Interfaces
         Task<User> AuthenticateAsync(string username, string password);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User?> GetUserByIdAsync(int id);
-        
         //Task<User?> UpdateUserAsync(int id, UserUpdateDto userUpdateDto);
         Task<bool> DeleteUserAsync(int id);
+        Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync();
+        Task VerifyUserAsync(int id);
     }
 
 }

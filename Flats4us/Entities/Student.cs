@@ -15,11 +15,11 @@ namespace Flats4us.Entities
         [Required]
         public string University { get; set; }
 
-        public string Facebook { get; set; }
+        public string? Facebook { get; set; }
 
-        public string Twitter_X { get; set; }
+        public string? Twitter_X { get; set; }
 
-        public string Instagram { get; set; }
+        public string? Instagram { get; set; }
 
         [Required]
         public RoommatesStatus RoommatesStatus { get; set; }
