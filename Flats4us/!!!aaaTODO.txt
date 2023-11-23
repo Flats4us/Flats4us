@@ -1,0 +1,2 @@
+﻿Adres w Userach zmienić na prostego stringa
+

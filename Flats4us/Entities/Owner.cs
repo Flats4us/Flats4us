@@ -7,6 +7,9 @@ namespace Flats4us.Entities
         [Required]
         public string BankAccount { get; set; }
 
+        [Required]
+        public string DocumentNumber { get; set; }
+
         public virtual ICollection<OpinionOwnerStudent> IssuedOwnerStudentOpinions { get; set; }
         public virtual ICollection<OpinionStudentOwner> ReceivedStudentOwnerOpinions { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }

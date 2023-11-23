@@ -25,6 +25,7 @@ namespace Flats4us.Services
 
             // Fields specific to Owner can be populated here if they're part of the DTO
             owner.BankAccount = ownerDto.BankAccount;
+            owner.DocumentNumber= ownerDto.DocumentNumber;
             owner.ImagesPath = imageFolder;
 
             // ... other Owner-specific fields ...

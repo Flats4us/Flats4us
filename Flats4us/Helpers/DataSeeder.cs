@@ -84,7 +84,8 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner2 = new Owner
         {
@@ -106,7 +107,8 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner3 = new Owner
         {
@@ -128,7 +130,8 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner4 = new Owner
         {
@@ -150,7 +153,8 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
