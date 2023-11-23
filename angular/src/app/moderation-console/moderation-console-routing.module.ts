@@ -14,7 +14,7 @@ const routes: Routes = [
 			{ path: 'verification', component: StudentCardsVerificationComponent },
 			{ path: '', pathMatch: 'full', redirectTo: 'dispute' },
 			{ path: 'dispute', component: DisputeComponent },
-			{ path: ':id', component: DisputeConversationComponent },
+			{ path: 'dispute/:id', component: DisputeConversationComponent },
 		],
 	},
 ];
