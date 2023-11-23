@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Flats4us.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -129,6 +130,8 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.ClearProviders();
@@ -141,13 +144,19 @@ builder.Services.AddCors(c =>
                                                     .AllowAnyHeader()
                                                     .AllowAnyMethod());
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        builder.WithOrigins("http://localhost:4200") // Add here the specific origins
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials()); // Allow credentials
+});
 
 
 var app = builder.Build();
-
-
-
+app.UseRouting();
+app.UseCors("AllowSpecificOrigin");
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -162,6 +171,9 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.MapHub<ChatHub>("/chatHub");
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -170,10 +182,7 @@ if (app.Environment.IsDevelopment())
     
 }
 
-
-
-
-app.UseCors(options => options.AllowAnyOrigin());
+//app.UseCors(options => options.AllowAnyOrigin());
 
 //app.UseHttpsRedirection();
 
