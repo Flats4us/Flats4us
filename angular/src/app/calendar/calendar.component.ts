@@ -13,7 +13,7 @@ import { Observable, tap } from 'rxjs';
 
 import { IEvent } from './models/calendar.models';
 import { CalendarService } from './services/calendar.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -25,6 +25,7 @@ import { MatButtonModule } from '@angular/material/button';
 		MatDatepickerModule,
 		MatNativeDateModule,
 		MatButtonModule,
+		MatDialogModule,
 	],
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],
