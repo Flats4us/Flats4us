@@ -162,6 +162,31 @@ public static class DataSeeder
 
         #endregion
 
+        #region Moderator
+
+        var moderator1 = new Moderator
+        {
+            Name = "Jan",
+            Surname = "Adamczyk",
+            Street = "Kaukaska",
+            Number = "9",
+            Flat = 2,
+            City = "Warszawa",
+            PostalCode = "02-760",
+            Email = "jadamczyk@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "jadamczyk",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
+            HireDate = new DateTime(2023, 1, 12)
+
+        };
+
+        dbContext.Moderators.AddRange(moderator1);
+
+        #endregion
+
         #region Student
 
         var student1 = new Student
@@ -988,6 +1013,8 @@ public static class DataSeeder
         dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15);
 
         #endregion
+
+       
 
         dbContext.SaveChanges();
     }
