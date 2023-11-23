@@ -1,27 +1,52 @@
 <div class="conversation-header">Mieszkanie Warszawa-Ochota</div>
 <h4>ID WYBRANEGO SPORU {{ conversationId$ | async }}</h4>
 <div class="conversation-list">
-  <div
-    *ngFor="let msg of messages; let index = index"
-    class="conversation"
-    [class]="
+	<div
+		*ngFor="let msg of messages; let index = index"
+		class="conversation"
+		[class]="
 			msg.sender === currentUser ? 'conversation-sent' : 'conversation-received'
 		"
-  >
-    <span>{{ msg.sender }}</span>
-    <span class="bubble">{{ msg.message }}</span>
-  </div>
+	>
+		<span>{{ msg.sender }}</span>
+		<span class="bubble">{{ msg.message }}</span>
+	</div>
 </div>
 <mat-form-field class="w-full">
-  <input
-    matInput
-    type="text"
-    placeholder="Wiadomość..."
-    [formControl]="messageControl"
-    (keydown.enter)="onSend()"
-  />
+	<input
+		matInput
+		type="text"
+		placeholder="Wiadomość..."
+		[formControl]="messageControl"
+		(keydown.enter)="onSend()"
+	/>
 
-  <button matSuffix mat-icon-button (click)="onSend()">
-    <mat-icon>send</mat-icon>
-  </button>
+	<button matSuffix mat-icon-button (click)="onSend()">
+		<mat-icon>send</mat-icon>
+	</button>
 </mat-form-field>
+
+<div>
+	<ng-template #disputeDescriptionDialog>
+		<h2 mat-dialog-title class="description-title">Opiś i zakonć spór</h2>
+		<mat-dialog-content class="mat-typography">
+			<mat-form-field class="description-dispute" appearance="fill">
+				<mat-label>Opiś spór</mat-label>
+				<textarea matInput [(ngModel)]="disputeDescription"></textarea>
+			</mat-form-field>
+		</mat-dialog-content>
+		<mat-dialog-actions align="end">
+			<button mat-button mat-dialog-close>Anuluj</button>
+			<button
+				mat-button
+				[mat-dialog-close]="disputeDescription"
+				(click)="OnSubmit()"
+			>
+				Zakonć
+			</button>
+		</mat-dialog-actions>
+	</ng-template>
+</div>
+<div class="end-dialog">
+	<button mat-button (click)="openDisputeDialog()">Opiś i zamknij spór</button>
+</div>

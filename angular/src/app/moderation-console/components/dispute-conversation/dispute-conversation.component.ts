@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	TemplateRef,
+	ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,8 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { map, Observable } from 'rxjs';
 import { IConversation } from '@shared/models/conversation.models';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-dispute-conversation',
@@ -33,6 +39,9 @@ export class DisputeConversationComponent {
 	public conversationId$: Observable<string>;
 	public messageControl = new FormControl();
 	public currentUser = 'Moderator';
+	public disputeDescription = '';
+	@ViewChild('disputeDescriptionDialog')
+	public disputeDescriptionDialog!: TemplateRef<any>;
 
 	public messages: IConversation[] = [
 		{ sender: 'User1', message: 'Msg' },
@@ -40,10 +49,20 @@ export class DisputeConversationComponent {
 		{ sender: 'Moderator', message: 'Msg' },
 	];
 
-	constructor(public route: ActivatedRoute) {
+	constructor(
+		public route: ActivatedRoute,
+		private dialog: MatDialog,
+		private snackBar: MatSnackBar
+	) {
 		this.conversationId$ = route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
 		);
+	}
+
+	public openDisputeDialog(): void {
+		this.dialog.open(this.disputeDescriptionDialog, {
+			width: '500px',
+		});
 	}
 
 	public onSend(): void {
@@ -56,5 +75,11 @@ export class DisputeConversationComponent {
 			message: this.messageControl.value,
 		});
 		this.messageControl.reset();
+	}
+
+	public OnSubmit() {
+		this.snackBar.open('Spór zostaw zamknięty', 'Zamknij', {
+			duration: 2000,
+		});
 	}
 }
