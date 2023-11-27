@@ -204,6 +204,28 @@ public static class DataSeeder
 
         #endregion
 
+        #region Moderator
+
+        var moderator1 = new Moderator
+        {
+            Name = "Zbyszek",
+            Surname = "Moderator",
+            Street = "Kaukaska",
+            Number = "9",
+            Flat = 2,
+            City = "Warszawa",
+            PostalCode = "02-760",
+            Email = "zmoderator@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "zmoderator",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
+            HireDate = new DateTime(2023, 2, 7),
+        };
+
+        #endregion
+
         #region Flat
 
         var flat1 = new Flat

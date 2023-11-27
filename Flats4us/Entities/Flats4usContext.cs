@@ -9,7 +9,6 @@ namespace Flats4us.Entities
 {
     public class Flats4usContext : DbContext
     {
-        public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
         public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
