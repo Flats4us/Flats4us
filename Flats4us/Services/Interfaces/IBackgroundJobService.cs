@@ -2,10 +2,7 @@
 {
     public interface IBackgroundJobService
     {
-        void Test1();
-
-        void Test2();
-
-        void Test3();
+        // EXAMPLE
+        //Task TestAsync();
     }
 }

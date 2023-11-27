@@ -14,7 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<Flats4usContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn")));
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn"));
+    }, 
+    ServiceLifetime.Scoped
+);
 
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<ISurveyService, SurveyService>();
@@ -147,8 +151,8 @@ app.UseAuthorization();
 
 app.UseHangfireDashboard();
 
-var backgroundJobService = app.Services.GetRequiredService<IBackgroundJobService>();
-HangfireSetup.ConfigureJobs(backgroundJobService);
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+HangfireSetup.ConfigureJobs(scopeFactory);
 
 app.MapControllers();
 

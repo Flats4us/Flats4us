@@ -1,15 +1,20 @@
-﻿using Flats4us.Services.Interfaces;
+﻿using Flats4us.Entities;
+using Flats4us.Services.Interfaces;
 using Hangfire;
 
 namespace Flats4us.Helpers
 {
     public static class HangfireSetup
     {
-        public static void ConfigureJobs(IBackgroundJobService backgroundJobService)
+        public static void ConfigureJobs(IServiceScopeFactory scopeFactory)
         {
-            RecurringJob.AddOrUpdate("test-job1", () => backgroundJobService.Test1(), "* * * * *");
-            RecurringJob.AddOrUpdate("test-job2", () => backgroundJobService.Test2(), "*/2 * * * *");
-            RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.Test3(), "*/3 * * * *");
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var backgroundJobService = scope.ServiceProvider.GetRequiredService<IBackgroundJobService>();
+
+                //EXAMPLE
+                //RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.TestAsync(), "*/3 * * * *");
+            }
         }
     }
 }
