@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +22,40 @@ builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
+builder.Services.AddScoped<IOwnerService, OwnerService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer", // Note: Must be lowercase
+        BearerFormat = "JWT"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -40,17 +69,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddScoped<IOwnerService, OwnerService>();
-
-builder.Services.AddScoped<IStudentService, StudentService>();
-
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOrTenantOnly", policy =>
+    options.AddPolicy("Moderator", policy =>
     {
-        policy.RequireRole("Admin", "Tenant");
+        policy.RequireRole("Moderator");
     });
-}); 
+
+    options.AddPolicy("Student", policy =>
+    {
+        policy.RequireRole("Student");
+    });
+
+    options.AddPolicy("Owner", policy =>
+    {
+        policy.RequireRole("Owner");
+    });
+
+});
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()

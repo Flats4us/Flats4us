@@ -60,10 +60,10 @@ namespace Flats4us.Controllers
 
         [HttpPost("login")]
         public async Task<ActionResult<String>> LoginStudent([FromForm] UserLoginDto request) {
-            var user = await _studentService.AuthenticateAsync(request.Username, request.Password);
+            var user = await _studentService.AuthenticateAsync(request.Email, request.Password);
             if (user == null)
             {
-                return BadRequest("Incorrect username or password");
+                return BadRequest("Incorrect email or password");
             }
 
             string token = CreateToken(user);
@@ -111,6 +111,7 @@ namespace Flats4us.Controllers
             {
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
+                new Claim(ClaimTypes.Role, user.GetType().Name),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

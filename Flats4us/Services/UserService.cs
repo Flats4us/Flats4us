@@ -14,9 +14,9 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<User> AuthenticateAsync(string username, string passwordHash)
+        public async Task<User> AuthenticateAsync(string email, string passwordHash)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.Username == username);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(passwordHash, user.PasswordHash))
             {

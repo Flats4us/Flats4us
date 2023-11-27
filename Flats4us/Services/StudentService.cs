@@ -25,7 +25,6 @@ namespace Flats4us.Services
             // Fields specific to Student (like Interests, Meetings etc.) can be populated here if they're part of the DTO
             
             student.BirthDate = studentDto.BirthDate;
-            
             student.StudentNumber = studentDto.StudentNumber;
             student.University = studentDto.University;
             student.Facebook = studentDto.Facebook;
@@ -41,11 +40,11 @@ namespace Flats4us.Services
         {
             try
             {
-                // Verify that the requested username does not already exist in the database
-                var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Username == request.Username);
+                // Verify that the requested email does not already exist in the database
+                var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == request.Email);
                 if (existingUser != null)
                 {
-                    throw new Exception("Username already exists");
+                    throw new Exception("Email already exists");
                 }
 
                 // Verify that the username and password meet the length requirements
