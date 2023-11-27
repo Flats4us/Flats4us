@@ -1,9 +1,7 @@
 <div *ngIf="actualRent$ | async as actualRent">
-	<mat-form-field appearance="fill" class="title">
-		<mat-label
-			><div class="text-3xl pt-4">Wynajem - {{ actualRent.title }}</div></mat-label
-		>
-		<span matSuffix>
+	<mat-label class="title"
+		><span class="text-3xl pt-4">Wynajem - {{ actualRent.title }}</span>
+		<span>
 			<button
 				class="box-icon"
 				id="menu"
@@ -31,17 +29,7 @@
 				</button>
 			</mat-menu>
 		</span>
-		<input
-			#titleInput
-			id="title"
-			formControlName="title"
-			type="text"
-			placeholder="Tytuł"
-			aria-label="Title"
-			matInput
-			[disabled]="true"
-		/>
-	</mat-form-field>
+	</mat-label>
 	<div class="gallery">
 		<div class="container slider">
 			<div [@slideAnimation]="currentIndex">

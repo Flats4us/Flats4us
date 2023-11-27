@@ -1,9 +1,9 @@
 <div class="box-title">
-	<div class="text-4xl p-4 font-semibold">Przeglądaj swoje wynajmy</div>
+	<div class="text-4xl p-4 font-semibold">Przeglądanie wynajmów</div>
 </div>
 <div class="rents">
 	<div class="container-1">
-		<h1 class="text-3xl pl-4">
+		<h1 class="text-3xl pl-4 font-semibold">
 			Moje wynajmy
 			<button
 				mat-icon-button
@@ -21,6 +21,7 @@
 			<a
 				*ngFor="let rent of rentsOptions$ | async"
 				mat-list-item
+				class="item-list"
 				routerLink="{{ rent.id }}"
 				><div class="box-1">
 					<span class="text-xl font-bold">{{ rent.title }}</span>

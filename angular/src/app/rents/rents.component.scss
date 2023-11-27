@@ -6,6 +6,7 @@
 .box-2 {
 	display: flex;
 	justify-content: left;
+	margin-bottom: 16px;
 }
 
 .box-icon {
@@ -27,14 +28,7 @@
 	align-self: left;
 	text-align: left;
 	padding: 20px 0 20px 12px;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
-	background-color: white;
 	margin: 0 12px;
-}
-
-.colour-text {
-	color: #fbbb8b;
-	text-shadow: 1px 1px 1px black;
 }
 
 .container-1 {
@@ -49,6 +43,10 @@
 .container-2 {
 	width: 80%;
 	margin: 0 8px;
+}
+
+.item-list {
+	min-height: 64px;
 }
 
 .rents {

@@ -1,6 +1,6 @@
 .slider {
 	width: 100%;
-	height: 600px;
+	min-height: 600px;
 	overflow: hidden;
 	position: relative;
 	background: #ffffff;
@@ -138,23 +138,6 @@
 	color: grey;
 }
 
-.btn {
-	background: #fbbb8b;
-	border-radius: 24px;
-	padding: 4px;
-	width: 160px;
-	float: left;
-}
-
-.btn-2 {
-	background: #fbbb8b;
-	border-radius: 24px;
-	padding: 4px;
-	width: 160px;
-	margin: 8px 0 8px 0;
-	float: right;
-}
-
 .button-box {
 	display: flex;
 	padding: 8px;
@@ -173,13 +156,11 @@
 .column-1 {
 	width: 50%;
 	padding: 4px;
-	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
 }
 
 .column-2 {
 	width: 50%;
 	padding: 4px;
-	text-shadow: 1px 2px rgba(0, 0, 0, 0.058);
 }
 
 .container-2 {
@@ -211,11 +192,9 @@
 	padding: 4px;
 	min-width: 300px;
 	margin-left: auto;
-	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
 }
 
 .label-2 {
-	text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
 	padding: 4px;
 	min-width: 160px;
 	float: left;
@@ -239,7 +218,7 @@
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
-		height: 300px;
+		min-height: 300px;
 		overflow: hidden;
 		position: relative;
 		background: #e6e6e6;

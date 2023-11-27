@@ -13,6 +13,7 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -28,6 +29,7 @@ import { AppComponent } from './app.component';
 		MatButtonModule,
 		MatIconModule,
 		MatMenuModule,
+		MatNativeDateModule,
 	],
 	providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
 	bootstrap: [AppComponent],
