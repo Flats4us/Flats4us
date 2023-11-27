@@ -371,14 +371,11 @@
 			<div *ngIf="isSubmitted" class="container-3">
 				<h1>
 					Znaleziono
-					<span
-						class="colour-text"
-						[appGetDescription]="this.startService.allFlatOffers.length"
-					></span>
+					<span [appGetDescription]="this.startService.allFlatOffers.length"></span>
 				</h1>
 			</div>
 			<div *ngIf="!isSubmitted" class="container-3">
-				<h1>Promowane <span class="colour-text">oferty</span></h1>
+				<h1>Promowane oferty</h1>
 			</div>
 		</div>
 		<div class="container-2">

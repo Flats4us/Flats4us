@@ -1,6 +1,7 @@
 .add-real-estate {
 	background-color: #ffffff;
 	padding-top: 0px;
+	margin: 0 16px;
 }
 
 .batch {
@@ -10,11 +11,9 @@
 }
 
 .container-1 {
-	text-align: center;
-	font-size: xx-large;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
+	text-align: left;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 .desctext {
@@ -56,9 +55,7 @@ mat-form-field {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	row-gap: 4px;
-	column-gap: 20%;
-	justify-content: center;
+	justify-content: space-between;
 }
 
 .button-box-1 {
@@ -108,19 +105,8 @@ mat-form-field {
 	margin-right: -70%;
 }
 
-.btn {
-	background: #fbbb8b;
-	border-radius: 24px;
-	padding: 4px;
-	width: 160px;
-}
-
-.btn-2 {
-	padding: 4px;
-	background-color: #fbbb8b;
-	border-radius: 24px;
-	width: 240px;
-	height: auto;
+.btn-spacer {
+	min-width: 32px;
 }
 
 .upload-btn {

@@ -1,7 +1,7 @@
+<div class="container-1">
+	<h1 class="text-4xl p-4 font-semibold">Utwórz nieruchomość</h1>
+</div>
 <div class="add-real-estate">
-	<div class="container-1">
-		<h1 class="text-4xl p-4 font-semibold">Utwórz nieruchomość</h1>
-	</div>
 	<mat-stepper #stepper linear>
 		<div class="box-1">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
@@ -167,9 +167,9 @@
 					</mat-form-field>
 					<div class="button-box">
 						<button
-							mat-button
+							mat-raised-button
 							matStepperNext
-							class="btn"
+							color="primary"
 							[disabled]="!addRealEstateFormAddressData.valid"
 						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
@@ -330,13 +330,14 @@
 						</mat-select>
 					</mat-form-field>
 					<div class="button-box">
-						<button mat-button matStepperPrevious class="btn">
+						<button mat-raised-button matStepperPrevious color="primary">
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 						</button>
+						<div class="btn-spacer"></div>
 						<button
-							mat-button
+							mat-raised-button
 							matStepperNext
-							class="btn"
+							color="primary"
 							[disabled]="!addRealEstateFormRemainingData.valid"
 						>
 							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
@@ -376,8 +377,8 @@
 
 							<button
 								mat-mini-fab
+								color="primary"
 								id="upload"
-								class="upload-btn"
 								aria-label="Upload"
 								(click)="fileUpload.click()"
 							>
@@ -385,13 +386,14 @@
 							</button>
 						</div>
 						<div class="button-box">
-							<button mat-button matStepperPrevious class="btn">
+							<button mat-raised-button color="primary" matStepperPrevious>
 								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 							</button>
+							<div class="btn-spacer"></div>
 							<button
-								mat-button
+								mat-raised-button
+								color="primary"
 								matStepperNext
-								class="btn"
 								[disabled]="!addRealEstateFormPhotos.valid"
 							>
 								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
@@ -423,12 +425,23 @@
 						</h2>
 					</div>
 					<div class="button-box">
-						<button *ngIf="!completed" mat-button matStepperPrevious class="btn">
+						<button
+							*ngIf="!completed"
+							mat-raised-button
+							color="primary"
+							matStepperPrevious
+						>
 							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
 						</button>
-						<button *ngIf="completed" mat-button class="btn" (click)="onReturn()">
+						<button
+							*ngIf="completed"
+							mat-raised-button
+							color="primary"
+							(click)="onReturn()"
+						>
 							Powrót <mat-icon>arrow_back_ios</mat-icon>
 						</button>
+						<div class="btn-spacer"></div>
 						<button
 							*ngIf="
 								addRealEstateFormAddressData.valid &&
@@ -436,17 +449,18 @@
 								addRealEstateFormPhotos.valid
 							"
 							id="addRealEstate"
-							class="btn-2"
 							type="submit"
-							mat-button
+							mat-raised-button
+							color="primary"
 							aria-label="AddRealEstate"
 							(click)="saveRealEstate()"
 						>
 							Zapisz nieruchomość
 						</button>
+						<div class="btn-spacer"></div>
 						<button
-							mat-button
-							class="btn"
+							mat-raised-button
+							color="primary"
 							[disabled]="completed"
 							(click)="formReset()"
 						>
@@ -461,9 +475,9 @@
 						<button
 							*ngIf="completed"
 							id="addOffer"
-							class="btn-2"
 							type="submit"
-							mat-button
+							mat-raised-button
+							color="primary"
 							aria-label="AddOffer"
 							(click)="addOffer()"
 						>
