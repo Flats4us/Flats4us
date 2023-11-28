@@ -1,17 +1,23 @@
-﻿using Flats4us.Entities;
+﻿using AutoMapper;
+using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
+using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
 {
-    public abstract class UserService : IUserService
+    public class UserService : IUserService
     {
         public readonly Flats4usContext _context;
+        private readonly IMapper _mapper;
 
-        public UserService(Flats4usContext context)
+        public UserService(Flats4usContext context,
+            IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<User> AuthenticateAsync(string email, string passwordHash)
@@ -34,11 +40,9 @@ namespace Flats4us.Services
             user.LastLoginDate = DateTime.UtcNow;
             user.Name = request.Name;
             user.Surname = request.Surname;
-            user.Street = request.Street;
-            user.Number = request.Number;
-            user.Flat = request.Flat;
-            user.City = request.City;
-            user.PostalCode = request.PostalCode;
+            user.Address = (request.Flat != null) ?
+                $"{request.Street} {request.Number}/{request.Flat}, {request.PostalCode} {request.City}" :
+                $"{request.Street} {request.Number}, {request.PostalCode} {request.City}";
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
             // ... any other common fields ...
@@ -66,6 +70,49 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync()
+        {
+            var students = await _context.Students
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .ToListAsync();
+
+            var owners = await _context.Owners
+                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .ToListAsync();
+
+            var studentDtos = _mapper.Map<List<UserForVerificationDto>>(students);
+            var ownerDtos = _mapper.Map<List<UserForVerificationDto>>(owners);
+
+            var result = new List<UserForVerificationDto>();
+            result.AddRange(studentDtos);
+            result.AddRange(ownerDtos);
+
+            return result;
+        }
+
+        public async Task VerifyUserAsync(int id)
+        {
+            var user = await _context.OwnerStudents.FindAsync(id);
+
+            if (user is null)
+            {
+                throw new ArgumentException($"User with ID {id} not found.");
+            }
+
+            if (user.VerificationStatus == VerificationStatus.Verified)
+            {
+                throw new ArgumentException($"User with ID {id} is already verified.");
+            }
+
+            user.VerificationStatus = VerificationStatus.Verified;
+
+            var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
+
+            await ImageUtility.DeleteDirectory(documentDirectoryPath);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

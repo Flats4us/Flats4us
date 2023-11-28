@@ -1,11 +1,12 @@
-﻿using Flats4us.Entities;
+﻿using AutoMapper;
+using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services
 {
     public abstract class OwnerStudentService : UserService
     {
-        protected OwnerStudentService(Flats4usContext context) : base(context)
+        protected OwnerStudentService(Flats4usContext context, IMapper mapper) : base(context, mapper)
         {
         }
         protected OwnerStudent PopulateOwnerStudentFieldsFromDto(OwnerStudent ownerStudent, OwnerStudentRegisterDto request)

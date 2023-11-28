@@ -9,7 +9,6 @@ namespace Flats4us.Entities
 {
     public class Flats4usContext : DbContext
     {
-        public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
         public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
@@ -117,6 +116,12 @@ namespace Flats4us.Entities
             modelBuilder.Entity<Meeting>()
                 .HasOne(x => x.Offer)
                 .WithMany(x => x.Meetings)
+                .HasForeignKey(x => x.OfferId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OfferPromotion>()
+                .HasOne(x => x.Offer)
+                .WithMany(x => x.OfferPromotions)
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

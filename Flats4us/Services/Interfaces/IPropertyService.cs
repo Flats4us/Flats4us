@@ -9,5 +9,6 @@ namespace Flats4us.Services.Interfaces
         Task AddPropertyAsync(AddEditPropertyDto input);
         Task UpdatePropertyAsync(int id, AddEditPropertyDto input);
         Task DeletePropertyAsync(int id);
+        Task VerifyPropertyAsync(int id);
     }
 }

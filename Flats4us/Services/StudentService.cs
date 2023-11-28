@@ -3,12 +3,13 @@ using Flats4us.Entities;
 using Microsoft.EntityFrameworkCore;
 using Flats4us.Services.Interfaces;
 using Flats4us.Helpers;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class StudentService : OwnerStudentService, IStudentService
     {
-        public StudentService(Flats4usContext context) : base(context)
+        public StudentService(Flats4usContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
@@ -28,7 +29,7 @@ namespace Flats4us.Services
             student.StudentNumber = studentDto.StudentNumber;
             student.University = studentDto.University;
             student.Facebook = studentDto.Facebook;
-            student.Twitter_X = studentDto.Twitter;
+            student.Twitter_X = studentDto.Twitter_X;
             student.Instagram = studentDto.Instagram;
             student.RoommatesStatus = studentDto.RoommatesStatus;
             student.IsTenant = studentDto.IsTenant;
