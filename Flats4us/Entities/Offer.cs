@@ -21,6 +21,9 @@ namespace Flats4us.Entities
         public int Price { get; set; }
 
         [Required]
+        public int Deposit { get; set; }
+
+        [Required]
         public string Description { get; set;}
 
         [Required]

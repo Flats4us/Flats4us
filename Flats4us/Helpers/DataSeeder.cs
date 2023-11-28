@@ -68,11 +68,7 @@ public static class DataSeeder
         {
             Name = "Maciej",
             Surname = "Kowalski",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kaukaska 9/2, 02-760 Warszawa",
             Email = "mkowalski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -82,19 +78,16 @@ public static class DataSeeder
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner2 = new Owner
         {
             Name = "Barbara",
             Surname = "Nowak",
-            Street = "Tuchlińska",
-            Number = "2",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-695",
+            Address = "Tuchlińska 2/2, 02-695 Warszawa",
             Email = "bnowak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 3, 23),
@@ -104,19 +97,16 @@ public static class DataSeeder
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner3 = new Owner
         {
             Name = "Robert",
             Surname = "Pawlak",
-            Street = "Kormoranów",
-            Number = "9",
-            Flat = 5,
-            City = "Warszawa",
-            PostalCode = "02-836",
+            Address = "Kormoranów 9/5, 02-836 Warszawa",
             Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
@@ -128,17 +118,14 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
         var owner4 = new Owner
         {
             Name = "Katarzyna",
             Surname = "Klik",
-            Street = "Sanocka",
-            Number = "11B",
-            Flat = 1,
-            City = "Warszawa",
-            PostalCode = "02-110",
+            Address = "Sanocka 11B/1, 02-110 Warszawa",
             Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
@@ -150,7 +137,8 @@ public static class DataSeeder
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
-            BankAccount = "12341234123412341234123412"
+            BankAccount = "12341234123412341234123412",
+            DocumentNumber = "XXX 000000"
         };
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
@@ -168,11 +156,7 @@ public static class DataSeeder
         {
             Name = "Kajetan",
             Surname = "Kajetański",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kaukaska 11/6, 02-760 Warszawa",
             Email = "kkajetanski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -182,7 +166,7 @@ public static class DataSeeder
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
@@ -197,6 +181,26 @@ public static class DataSeeder
         dbContext.Students.AddRange(student1);
 
         ImageUtility.SeedUserImage(student1.ImagesPath);
+
+        #endregion
+
+        #region Moderator
+
+        var moderator1 = new Moderator
+        {
+            Name = "Zbyszek",
+            Surname = "Moderator",
+            Address = "Kormoranów 1, 02-836 Warszawa",
+            Email = "zmoderator@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "zmoderator",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
+            HireDate = new DateTime(2023, 2, 7),
+        };
+
+        dbContext.Moderators.AddRange(moderator1);
 
         #endregion
 
@@ -261,7 +265,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1980,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner2,
             NumberOfRooms = 2,
             Floor = 7,
@@ -305,7 +309,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2001,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             NumberOfRooms = 2,
             Floor = 3,
@@ -425,16 +429,16 @@ public static class DataSeeder
         
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
 
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath);  
-        ImageUtility.SeedPropertyImage(flat2.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat3.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat4.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat5.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat6.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat7.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat8.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat9.ImagesPath);
-        ImageUtility.SeedPropertyImage(flat10.ImagesPath);
+        ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
+        ImageUtility.SeedPropertyImage(flat2.ImagesPath, flat2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat3.ImagesPath, flat3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat4.ImagesPath, flat4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat5.ImagesPath, flat5.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat6.ImagesPath, flat6.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat7.ImagesPath, flat7.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat8.ImagesPath, flat8.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat9.ImagesPath, flat9.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat10.ImagesPath, flat10.VerificationStatus);
 
         #endregion
 
@@ -497,7 +501,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2023,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner2,
             Floor = 1,
             Elevator = false,
@@ -518,7 +522,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2005,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             Floor = 4,
             Elevator = false,
@@ -548,11 +552,11 @@ public static class DataSeeder
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5);
 
-        ImageUtility.SeedPropertyImage(room1.ImagesPath);
-        ImageUtility.SeedPropertyImage(room2.ImagesPath);
-        ImageUtility.SeedPropertyImage(room3.ImagesPath);
-        ImageUtility.SeedPropertyImage(room4.ImagesPath);
-        ImageUtility.SeedPropertyImage(room5.ImagesPath);
+        ImageUtility.SeedPropertyImage(room1.ImagesPath, room1.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room2.ImagesPath, room2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room3.ImagesPath, room3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room4.ImagesPath, room4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room5.ImagesPath, room5.VerificationStatus);
 
         #endregion
 
@@ -635,7 +639,7 @@ public static class DataSeeder
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1997,
             ImagesPath = Guid.NewGuid().ToString(),
-            VerificationStatus = VerificationStatus.Verified,
+            VerificationStatus = VerificationStatus.NotVerified,
             Owner = owner3,
             NumberOfRooms = 4,
             NumberOfFloors = 3,
@@ -667,11 +671,11 @@ public static class DataSeeder
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
 
-        ImageUtility.SeedPropertyImage(house1.ImagesPath);
-        ImageUtility.SeedPropertyImage(house2.ImagesPath);
-        ImageUtility.SeedPropertyImage(house3.ImagesPath);
-        ImageUtility.SeedPropertyImage(house4.ImagesPath);
-        ImageUtility.SeedPropertyImage(house5.ImagesPath);
+        ImageUtility.SeedPropertyImage(house1.ImagesPath, house1.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house2.ImagesPath, house2.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house3.ImagesPath, house3.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house4.ImagesPath, house4.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house5.ImagesPath, house5.VerificationStatus);
 
         #endregion
 
@@ -682,6 +686,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 10, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2000,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 7, 1),
@@ -694,6 +699,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 10, 5),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 15),
             EndDate = new DateTime(2024, 3, 15),
@@ -706,6 +712,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 25),
             OfferStatus = OfferStatus.Current,
             Price = 1800,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 10),
             EndDate = new DateTime(2024, 6, 10),
@@ -718,6 +725,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2100,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 4, 1),
@@ -730,6 +738,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 15),
             OfferStatus = OfferStatus.Current,
             Price = 1900,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 11, 1),
             EndDate = new DateTime(2024, 6, 1),
@@ -742,6 +751,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2050,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 2, 1),
             EndDate = new DateTime(2024, 10, 1),
@@ -754,6 +764,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 5),
             OfferStatus = OfferStatus.Current,
             Price = 1950,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 20),
             EndDate = new DateTime(2024, 10, 20),
@@ -766,6 +777,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 25),
             OfferStatus = OfferStatus.Current,
             Price = 2100,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 10),
             EndDate = new DateTime(2024, 6, 10),
@@ -778,6 +790,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 10),
             EndDate = new DateTime(2024, 8, 10),
@@ -790,6 +803,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 15),
             OfferStatus = OfferStatus.Current,
             Price = 1800,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 3, 1),
             EndDate = new DateTime(2024, 6, 1),
@@ -802,6 +816,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2050,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 15),
             EndDate = new DateTime(2024, 8, 15),
@@ -814,6 +829,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 5),
             OfferStatus = OfferStatus.Current,
             Price = 1950,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 9, 1),
@@ -826,6 +842,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 25),
             OfferStatus = OfferStatus.Current,
             Price = 1900,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 4, 1),
@@ -838,6 +855,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 15),
             EndDate = new DateTime(2024, 7, 15),
@@ -850,6 +868,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 15),
             OfferStatus = OfferStatus.Current,
             Price = 2000,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 2, 1),
             EndDate = new DateTime(2024, 8, 1),
@@ -859,6 +878,27 @@ public static class DataSeeder
         };
 
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
+
+        #endregion
+
+        #region OfferPromotions
+
+        var offerPromotion1 = new OfferPromotion
+        {
+            StartDate = new DateTime(2023, 11, 26),
+            EndDate = new DateTime(2023, 11, 30),
+            Price = 50,
+            Offer = offer1
+        };
+        var offerPromotion2 = new OfferPromotion
+        {
+            StartDate = new DateTime(2023, 11, 26),
+            EndDate = new DateTime(2023, 11, 30),
+            Price = 50,
+            Offer = offer2
+        };
+        
+        dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2);
 
         #endregion
 

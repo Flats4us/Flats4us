@@ -18,6 +18,9 @@ namespace Flats4us.Entities.Dto
         public int Price { get; set; }
 
         [Required]
+        public int Deposit { get; set; }
+
+        [Required]
         public string Decription { get; set; }
 
         [Required]

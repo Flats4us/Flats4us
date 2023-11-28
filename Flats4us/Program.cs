@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Hangfire;
 using Flats4us.Helpers;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,7 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddControllers();
 
@@ -119,6 +121,8 @@ builder.Services.AddHangfire(configuration => configuration
     .UseSqlServerStorage(builder.Configuration.GetConnectionString("Flats4usConn")));
 
 builder.Services.AddHangfireServer();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
