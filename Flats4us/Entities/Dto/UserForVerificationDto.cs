@@ -9,7 +9,7 @@ namespace Flats4us.Entities.Dto
         public int UserId { get; set; }
 
         [Required]
-        public UserType UserType { get;}
+        public UserType UserType { get; set; }
 
         [Required]
         public string Name { get; set; }
