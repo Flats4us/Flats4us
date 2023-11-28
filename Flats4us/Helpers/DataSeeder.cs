@@ -96,7 +96,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
-            DocumentType = DocumentType.ID,
+            DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
             BankAccount = "12341234123412341234123412",
@@ -143,10 +143,10 @@ public static class DataSeeder
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
 
-        ImageUtility.SeedUserImage(owner1.ImagesPath);
-        ImageUtility.SeedUserImage(owner2.ImagesPath);
-        ImageUtility.SeedUserImage(owner3.ImagesPath);
-        ImageUtility.SeedUserImage(owner4.ImagesPath);
+        ImageUtility.SeedUserImage(owner1.ImagesPath, owner1.VerificationStatus, owner1.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner2.ImagesPath, owner2.VerificationStatus, owner2.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner3.ImagesPath, owner3.VerificationStatus, owner3.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner4.ImagesPath, owner4.VerificationStatus, owner4.DocumentType).Wait();
 
         #endregion
 
@@ -165,7 +165,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("kkajetanski123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
-            DocumentType = DocumentType.ID,
+            DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
@@ -180,7 +180,7 @@ public static class DataSeeder
 
         dbContext.Students.AddRange(student1);
 
-        ImageUtility.SeedUserImage(student1.ImagesPath);
+        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
 
         #endregion
 

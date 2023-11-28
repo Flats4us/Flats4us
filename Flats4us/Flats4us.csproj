@@ -42,10 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\UsersSeed\Documents\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="Images\UsersSeed\ID\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 
