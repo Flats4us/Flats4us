@@ -68,11 +68,7 @@ public static class DataSeeder
         {
             Name = "Maciej",
             Surname = "Kowalski",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kaukaska 9/2, 02-760 Warszawa",
             Email = "mkowalski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -91,11 +87,7 @@ public static class DataSeeder
         {
             Name = "Barbara",
             Surname = "Nowak",
-            Street = "Tuchlińska",
-            Number = "2",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-695",
+            Address = "Tuchlińska 2/2, 02-695 Warszawa",
             Email = "bnowak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 3, 23),
@@ -114,11 +106,7 @@ public static class DataSeeder
         {
             Name = "Robert",
             Surname = "Pawlak",
-            Street = "Kormoranów",
-            Number = "9",
-            Flat = 5,
-            City = "Warszawa",
-            PostalCode = "02-836",
+            Address = "Kormoranów 9/5, 02-836 Warszawa",
             Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
@@ -137,11 +125,7 @@ public static class DataSeeder
         {
             Name = "Katarzyna",
             Surname = "Klik",
-            Street = "Sanocka",
-            Number = "11B",
-            Flat = 1,
-            City = "Warszawa",
-            PostalCode = "02-110",
+            Address = "Sanocka 11B/1, 02-110 Warszawa",
             Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
@@ -172,11 +156,7 @@ public static class DataSeeder
         {
             Name = "Kajetan",
             Surname = "Kajetański",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kaukaska 11/6, 02-760 Warszawa",
             Email = "kkajetanski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -210,11 +190,7 @@ public static class DataSeeder
         {
             Name = "Zbyszek",
             Surname = "Moderator",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kormoranów 1, 02-836 Warszawa",
             Email = "zmoderator@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -223,6 +199,8 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
             HireDate = new DateTime(2023, 2, 7),
         };
+
+        dbContext.Moderators.AddRange(moderator1);
 
         #endregion
 
@@ -708,6 +686,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 10, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2000,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 7, 1),
@@ -720,6 +699,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 10, 5),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 15),
             EndDate = new DateTime(2024, 3, 15),
@@ -732,6 +712,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 25),
             OfferStatus = OfferStatus.Current,
             Price = 1800,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 10),
             EndDate = new DateTime(2024, 6, 10),
@@ -744,6 +725,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2100,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 4, 1),
@@ -756,6 +738,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 15),
             OfferStatus = OfferStatus.Current,
             Price = 1900,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 11, 1),
             EndDate = new DateTime(2024, 6, 1),
@@ -768,6 +751,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2050,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 2, 1),
             EndDate = new DateTime(2024, 10, 1),
@@ -780,6 +764,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 9, 5),
             OfferStatus = OfferStatus.Current,
             Price = 1950,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 20),
             EndDate = new DateTime(2024, 10, 20),
@@ -792,6 +777,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 25),
             OfferStatus = OfferStatus.Current,
             Price = 2100,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 10),
             EndDate = new DateTime(2024, 6, 10),
@@ -804,6 +790,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 10),
             EndDate = new DateTime(2024, 8, 10),
@@ -816,6 +803,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 15),
             OfferStatus = OfferStatus.Current,
             Price = 1800,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 3, 1),
             EndDate = new DateTime(2024, 6, 1),
@@ -828,6 +816,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 10),
             OfferStatus = OfferStatus.Current,
             Price = 2050,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 15),
             EndDate = new DateTime(2024, 8, 15),
@@ -840,6 +829,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 8, 5),
             OfferStatus = OfferStatus.Current,
             Price = 1950,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 9, 1),
@@ -852,6 +842,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 25),
             OfferStatus = OfferStatus.Current,
             Price = 1900,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
             EndDate = new DateTime(2024, 4, 1),
@@ -864,6 +855,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 20),
             OfferStatus = OfferStatus.Current,
             Price = 2200,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 15),
             EndDate = new DateTime(2024, 7, 15),
@@ -876,6 +868,7 @@ public static class DataSeeder
             Date = new DateTime(2023, 7, 15),
             OfferStatus = OfferStatus.Current,
             Price = 2000,
+            Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 2, 1),
             EndDate = new DateTime(2024, 8, 1),
@@ -885,6 +878,27 @@ public static class DataSeeder
         };
 
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
+
+        #endregion
+
+        #region OfferPromotions
+
+        var offerPromotion1 = new OfferPromotion
+        {
+            StartDate = new DateTime(2023, 11, 26),
+            EndDate = new DateTime(2023, 11, 30),
+            Price = 50,
+            Offer = offer1
+        };
+        var offerPromotion2 = new OfferPromotion
+        {
+            StartDate = new DateTime(2023, 11, 26),
+            EndDate = new DateTime(2023, 11, 30),
+            Price = 50,
+            Offer = offer2
+        };
+        
+        dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2);
 
         #endregion
 

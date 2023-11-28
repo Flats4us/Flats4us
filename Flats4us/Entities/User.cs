@@ -8,12 +8,12 @@ namespace Flats4us.Entities
     {
         public const int MinUsernameLenght = 6;
         public const int MaxUsernameLenght = 30;
+        public const int MinPasswordLenght = 6;
+        public const int MaxPasswordeLenght = 30;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
 
-        public const int MinPasswordLenght = 6;
-        public const int MaxPasswordeLenght = 30;
         [Required]
         public string Name { get; set; }
 
@@ -21,18 +21,7 @@ namespace Flats4us.Entities
         public string Surname { get; set; }
 
         [Required]
-        public string Street { get; set; }
-
-        [Required]
-        public string Number { get; set; }
-
-        public int? Flat { get; set; }
-
-        [Required]
-        public string City { get; set; }
-
-        [Required]
-        public string PostalCode { get; set; }
+        public string Address { get; set; }
 
         [MaxLength(MaxUsernameLenght)]
         [MinLength(MinUsernameLenght)]

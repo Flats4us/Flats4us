@@ -8,6 +8,7 @@ using System.Linq.Dynamic.Core;
 using System.Security.Claims;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
+using System;
 
 namespace Flats4us.Services
 {
@@ -26,9 +27,27 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<OfferDto>> GetAllAsync()
+        public async Task<OfferListDto> GetAllAsync()
         {
-            var result = await _context.Offers
+            var currentDate = DateTime.Now;
+
+            var random = new Random();
+
+            var promotedOffers = await _context.Offers
+                .Where(o => o.OfferStatus == OfferStatus.Current &&
+                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate))
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Owner)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Equipment)
+                .Include(o => o.SurveyOwnerOffer)
+                .ToListAsync();
+
+            var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
+
+            var notPromotedOffers = await _context.Offers
+                .Where(o => o.OfferStatus == OfferStatus.Current &&
+                    (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)))
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
                 .Include(o => o.Property)
@@ -36,6 +55,12 @@ namespace Flats4us.Services
                 .Include(o => o.SurveyOwnerOffer)
                 .Select(o => _mapper.Map<OfferDto>(o))
                 .ToListAsync();
+
+            var result = new OfferListDto
+            {
+                PromotedOffers = randomPromotedOffers,
+                Offers = notPromotedOffers
+            };
 
             return result;
         }
@@ -60,15 +85,34 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<List<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
+        public async Task<OfferListDto> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
         {
             var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
+            var currentDate = DateTime.Now;
+
+            var random = new Random();
+
+            var promotedOffers = await _context.Offers
+                .Where(o => o.OfferStatus == OfferStatus.Current &&
+                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate) &&
+                    o.Property.Province.Equals(input.Province) &&
+                    o.Property.City.Equals(input.City))
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Owner)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Equipment)
+                .Include(o => o.SurveyOwnerOffer)
+                .ToListAsync();
+
+            var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
+
             var query = _context.Offers.AsQueryable();
 
-            query = query.Where(o => o.OfferStatus == OfferStatus.Current);
+            query = query.Where(o => o.OfferStatus == OfferStatus.Current &&
+                (!o.OfferPromotions.Any(op =>  op.StartDate <= currentDate && currentDate <= op.EndDate)));
 
             if (!input.Distance.HasValue)
             {
@@ -122,7 +166,7 @@ namespace Flats4us.Services
                 query = query.Where(o => (o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Flat : null) == input.Floor);
             }
 
-            var result = await query
+            var notPromotedOffers = await query
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
                 .Include(o => o.Property)
@@ -133,19 +177,19 @@ namespace Flats4us.Services
 
             if (!input.PropertyTypes.IsNullOrEmpty())
             {
-                result = result.Where(o => input.PropertyTypes.Contains(o.Property.PropertyType)).ToList();
+                notPromotedOffers = notPromotedOffers.Where(o => input.PropertyTypes.Contains(o.Property.PropertyType)).ToList();
             }
 
             if (input.Distance.HasValue)
             {
-                result = result
+                notPromotedOffers = notPromotedOffers
                     .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
             if (input.Equipment != null && input.Equipment.Any())
             {
-                result = result.Where(o => input.Equipment
+                notPromotedOffers = notPromotedOffers.Where(o => input.Equipment
                     .All(ie => o.Property.Equipment
                     .Any(e => e.EquipmentId == ie.EquipmentId)))
                     .ToList();
@@ -156,32 +200,37 @@ namespace Flats4us.Services
                 switch (input.Sorting)
                 {
                     case "Price ASC":
-                        result = result.OrderBy(o => o.Price).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Price).ToList();
                         break;
                     case "Price DSC":
-                        result = result.OrderByDescending(o => o.Price).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Price).ToList();
                         break;
                     case "Area ASC":
-                        result = result.OrderBy(o => o.Property.Area).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.Area).ToList();
                         break;
                     case "Area DSC":
-                        result = result.OrderByDescending(o => o.Property.Area).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.Area).ToList();
                         break;
                     case "NumberOfRooms ASC":
-                        result = result.OrderBy(o => o.Property.NumberOfRooms).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.NumberOfRooms).ToList();
                         break;
                     case "NumberOfRooms DSC":
-                        result = result.OrderByDescending(o => o.Property.NumberOfRooms).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.NumberOfRooms).ToList();
                         break;
                     default:
-                        result = result.OrderBy(o => o.OfferId).ToList();
+                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.OfferId).ToList();
                         break;
                 }
             }
 
-            result = result.Skip((input.PageNumber - 1) * input.PageSize)
+            notPromotedOffers = notPromotedOffers.Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
+
+            var result = new OfferListDto {
+                PromotedOffers = randomPromotedOffers,
+                Offers = notPromotedOffers
+            };
 
             return result;
         }
@@ -199,6 +248,7 @@ namespace Flats4us.Services
                 Date = DateTime.Now,
                 OfferStatus = OfferStatus.Current,
                 Price = input.Price,
+                Deposit = input.Deposit,
                 Description = input.Description,
                 StartDate = input.StartDate,
                 EndDate = input.EndDate,

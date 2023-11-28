@@ -9,7 +9,7 @@ namespace Flats4us.Entities.Dto
         public string Surname { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }
-        public int Flat { get; set; }
+        public int? Flat { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string Username { get; set; }
@@ -38,11 +38,11 @@ namespace Flats4us.Entities.Dto
         [Required]
         public string University { get; set; }
 
-        public string Facebook { get; set; }
+        public string? Facebook { get; set; }
 
-        public string Twitter { get; set; }
+        public string? Twitter_X { get; set; }
 
-        public string Instagram { get; set; }
+        public string? Instagram { get; set; }
 
         [Required]
         public RoommatesStatus RoommatesStatus { get; set; }

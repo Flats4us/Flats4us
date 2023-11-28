@@ -40,11 +40,9 @@ namespace Flats4us.Services
             user.LastLoginDate = DateTime.UtcNow;
             user.Name = request.Name;
             user.Surname = request.Surname;
-            user.Street = request.Street;
-            user.Number = request.Number;
-            user.Flat = request.Flat;
-            user.City = request.City;
-            user.PostalCode = request.PostalCode;
+            user.Address = (request.Flat != null) ?
+                $"{request.Street} {request.Number}/{request.Flat}, {request.PostalCode} {request.City}" :
+                $"{request.Street} {request.Number}, {request.PostalCode} {request.City}";
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
             // ... any other common fields ...

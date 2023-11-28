@@ -118,6 +118,12 @@ namespace Flats4us.Entities
                 .WithMany(x => x.Meetings)
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OfferPromotion>()
+                .HasOne(x => x.Offer)
+                .WithMany(x => x.OfferPromotions)
+                .HasForeignKey(x => x.OfferId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
