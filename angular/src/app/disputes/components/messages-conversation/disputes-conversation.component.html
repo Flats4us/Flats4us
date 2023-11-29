@@ -1,5 +1,22 @@
-<div class="conversation-header">Mieszkanie Warszawa-Ochota</div>
-<h4>ID WYBRANEGO SPORU {{ conversationId$ | async }}</h4>
+<div class="conversation-header">
+	<span>Mieszkanie Warszawa-Ochota</span>
+	<button mat-icon-button [matMenuTriggerFor]="menu">
+		<mat-icon>more_vert</mat-icon>
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item>
+			<mat-icon>close</mat-icon>
+			<span>Zakończ spór</span>
+		</button>
+		<button mat-menu-item>
+			<mat-icon>add</mat-icon>
+			<span>Dodaj moderatora do sporu</span>
+		</button>
+	</mat-menu>
+</div>
+<div>
+	<h4>ID WYBRANEGO SPORU {{ conversationId$ | async }}</h4>
+</div>
 <div class="conversation-list">
 	<div
 		*ngFor="let msg of messages; let index = index"

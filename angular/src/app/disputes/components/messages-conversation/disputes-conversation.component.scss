@@ -2,10 +2,15 @@
 	padding: 16px;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	gap: 16px;
 
 	font-size: x-large;
+
+	> span {
+		flex: 1;
+		text-align: center;
+	}
 }
 
 .avatar {
