@@ -8,66 +8,9 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-
-export interface IPeriodicElement {
-	email: string;
-	studentNumber: string;
-	firstName: string;
-	lastName: string;
-	cardExpirationDate: string;
-}
-
-const ELEMENT_DATA: IPeriodicElement[] = [
-	{
-		email: `jan.kowalski@example.com`,
-		studentNumber: 's23993',
-		firstName: 'Adam',
-		lastName: 'Nowak',
-		cardExpirationDate: '31-06-24',
-	},
-	{
-		email: `anna.kwiatkowska@example.com`,
-		studentNumber: 's24994',
-		firstName: 'Anna',
-		lastName: 'Kwiatkowska',
-		cardExpirationDate: '31-09-24',
-	},
-	{
-		email: `bartosz.piotrowski@example.com`,
-		studentNumber: 's25995',
-		firstName: 'Bartek',
-		lastName: 'Piotrowski',
-		cardExpirationDate: '31-08-24',
-	},
-	{
-		email: `beata.zielonka@example.com`,
-		studentNumber: 's26996',
-		firstName: 'Beata',
-		lastName: 'Zielonka',
-		cardExpirationDate: '31-07-24',
-	},
-	{
-		email: `czeslaw.wisniewski@example.com`,
-		studentNumber: 's27997',
-		firstName: 'Czesław',
-		lastName: 'Wiśniewski',
-		cardExpirationDate: '31-12-24',
-	},
-	{
-		email: `danuta.kaczmarek@example.com`,
-		studentNumber: 's28998',
-		firstName: 'Danuta',
-		lastName: 'Kaczmarek',
-		cardExpirationDate: '31-11-24',
-	},
-	{
-		email: `ewa.lewandowska@example.com`,
-		studentNumber: 's29999',
-		firstName: 'Ewa',
-		lastName: 'Lewandowska',
-		cardExpirationDate: '31-05-24',
-	},
-];
+import { IStudentCard } from './IStudentCard';
+import { ModerationConsoleService } from '../../services/moderation-console.service';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-student-cards-verification',
@@ -88,41 +31,35 @@ const ELEMENT_DATA: IPeriodicElement[] = [
 export class StudentCardsVerificationComponent {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	@ViewChild(MatTable) public table: MatTable<IPeriodicElement>;
+	@ViewChild(MatTable) public table: MatTable<IStudentCard>;
 
-	public columnsToDisplay: string[] = [
-		'email',
-		'studentNumber',
-		'firstName',
-		'lastName',
-		'cardExpirationDate',
+	public columnsToDisplay: Map<string, string> = new Map<string, string>([
+		['email', 'Email'],
+		['studentNumber', 'Nr albumu'],
+		['firstName', 'Imię'],
+		['lastName', 'Nazwisko'],
+		['cardExpirationDate', 'Data ważności legitymacji'],
+	]);
+
+	public columnsToDisplayWithExpand = [
+		...this.columnsToDisplay.keys(),
+		'expand',
 	];
-	public columnsNames: string[] = [
-		'Email',
-		'Nr albumu',
-		'Imię',
-		'Nazwisko',
-		'Data ważności legitymacji',
-	];
+	public dataSource$: Observable<IStudentCard[]>;
+	public expandedElement: IStudentCard | null | undefined;
 
-	public columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
-	public dataSource = ELEMENT_DATA;
-	public expandedElement: IPeriodicElement | null | undefined;
-	public map1: Map<string, string> = new Map<string, string>();
-
-	constructor(private snackBar: MatSnackBar) {
-		this.map1.set('email', 'Email');
-		this.map1.set('studentNumber', 'Nr albumu');
-		this.map1.set('firstName', 'Imię');
-		this.map1.set('lastName', 'Nazwisko');
-		this.map1.set('cardExpirationDate', 'Data ważności legitymacji');
+	constructor(
+		private snackBar: MatSnackBar,
+		private service: ModerationConsoleService
+	) {
+		this.dataSource$ = this.service.getStudentCards();
 	}
 
 	public reject(email: string) {
-		ELEMENT_DATA.splice(
+		/*ELEMENT_DATA.splice(
 			ELEMENT_DATA.findIndex(a => a.email === email),
 			1
-		);
+		);*/
 		this.table.renderRows();
 		this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
 			duration: 2000,
@@ -130,10 +67,10 @@ export class StudentCardsVerificationComponent {
 	}
 
 	public accept(email: string) {
-		ELEMENT_DATA.splice(
+		/*ELEMENT_DATA.splice(
 			ELEMENT_DATA.findIndex(a => a.email === email),
 			1
-		);
+		);*/
 		this.table.renderRows();
 		this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
 			duration: 2000,

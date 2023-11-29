@@ -2,13 +2,13 @@
 	multiTemplateDataRows
 	mat-table
 	class="mat-elevation-z8"
-	[dataSource]="dataSource"
+	[dataSource]="dataSource$"
 >
 	<ng-container
-		*ngFor="let column of columnsToDisplay"
+		*ngFor="let column of columnsToDisplay.keys()"
 		matColumnDef="{{ column }}"
 	>
-		<th *matHeaderCellDef mat-header-cell>{{ map1.get(column) }}</th>
+		<th *matHeaderCellDef mat-header-cell>{{ columnsToDisplay.get(column) }}</th>
 		<td *matCellDef="let element" mat-cell>{{ element[column] }}</td>
 	</ng-container>
 
