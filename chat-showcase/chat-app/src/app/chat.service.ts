@@ -7,9 +7,11 @@ import * as signalR from '@microsoft/signalr';
 export class ChatService {
   private hubConnection!: signalR.HubConnection;
 
-  public startConnection = () => {
+  public startConnection = (token?: string) => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-                            .withUrl('https://localhost:44376/chatHub') // Update with your backend URL
+                            .withUrl('https://localhost:44376/chatHub', {
+                              accessTokenFactory: () => token ? token : ''
+                            })
                             .build();
     
     this.hubConnection

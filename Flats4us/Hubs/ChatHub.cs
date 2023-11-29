@@ -4,6 +4,7 @@
     using Flats4us.Services.Interfaces;
     using Microsoft.AspNetCore.SignalR;
     using System.Collections.Concurrent;
+    using System.Security.Claims;
     using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     public class ChatHub : Hub
@@ -16,17 +17,26 @@
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
-        public async Task SendPrivateMessage(int receiverId, string message)
+        public async Task SendPrivateMessage(int receiverUserId, string message)
         {
-            var receiverConnectionId = GetConnectionIdByUserId(receiverId);
-            if (!string.IsNullOrEmpty(receiverConnectionId))
+
+            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
             {
-                // Use "ReceivePrivateMessage" to distinguish the method on the client-side.
                 await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", Context.User.Identity.Name, message);
-            } else
-            {
-                await Clients.All.SendAsync("ReceiveMessage", receiverId, message);
             }
+            else
+            {
+                // Handle the case where the user is not connected or not found
+            }
+        }
+        private int? GetUserId()
+        {
+            // Assuming the user ID claim is stored as "NameIdentifier"
+            if (int.TryParse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+            {
+                return userId;
+            }
+            return null;
         }
 
 
@@ -60,26 +70,25 @@
 
         public override async Task OnConnectedAsync()
         {
-            // When a user connects, add them to a group with their username
-            var username = Context.User.Identity.Name;
-            if (!string.IsNullOrEmpty(username))
+            var userId = GetUserId();
+            if (userId != null)
             {
-                await Groups.AddToGroupAsync(Context.ConnectionId, username);
+                _connections[userId.Value] = Context.ConnectionId;
             }
 
-            await base.OnConnectedAsync();
+
+            
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            // When a user disconnects, remove them from the group
-            var username = Context.User.Identity.Name;
-            if (!string.IsNullOrEmpty(username))
+            var userId = GetUserId();
+            if (userId != null)
             {
-                await Groups.RemoveFromGroupAsync(Context.ConnectionId, username);
+                _connections.TryRemove(userId.Value, out _);
             }
-
-            await base.OnDisconnectedAsync(exception);
+            // When a user disconnects, remove them from the group
+           
         }
     }
 }
