@@ -16,7 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
-	selector: 'app-add-event',
+	selector: 'app-event-add',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -28,11 +28,11 @@ import { CalendarService } from '../../services/calendar.service';
 		MatDialogModule,
 		MatButtonModule,
 	],
-	templateUrl: './add-event.component.html',
-	styleUrls: ['./add-event.component.scss'],
+	templateUrl: './event-add.component.html',
+	styleUrls: ['./event-add.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEventComponent {
+export class EventAddComponent {
 	public minDate: Date = new Date();
 
 	public form: FormGroup = new FormGroup({
