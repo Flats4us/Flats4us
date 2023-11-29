@@ -9,7 +9,7 @@ namespace Flats4us.Services
 {
     public class StudentService : OwnerStudentService, IStudentService
     {
-        public StudentService(Flats4usContext context, IMapper mapper) : base(context, mapper)
+        public StudentService(Flats4usContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper, configuration)
         {
         }
 
@@ -48,11 +48,6 @@ namespace Flats4us.Services
                     throw new Exception("Email already exists");
                 }
 
-                // Verify that the username and password meet the length requirements
-                if (request.Username.Length < User.MinUsernameLenght || request.Username.Length > User.MaxUsernameLenght)
-                {
-                    throw new Exception($"Username must be between {User.MinUsernameLenght} and {User.MaxUsernameLenght} characters");
-                }
                 if (request.Password.Length < 8 || request.Password.Length > 50)
                 {
                     throw new Exception("Password must be between 8 and 50 characters");
