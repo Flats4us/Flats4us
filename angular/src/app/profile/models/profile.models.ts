@@ -1,34 +1,14 @@
-export interface IStudent {
-	id: string;
-	photo: string;
-	name: string;
-	surname: string;
+import { statusType } from './types';
+
+export interface IStudent extends IUser {
 	yearOfBirth: string;
 	indexNumber: string;
 	university: string;
-	address: string;
-	phoneNumber: string;
 	hobbies: string[];
 	socialMedia: string[];
-	documentType: string;
-	documentScan: string;
-	validTill: Date;
-	email: string;
-	password: string;
 }
 
-export interface IOwner {
-	id: string;
-	photo: string;
-	name: string;
-	surname: string;
-	address: string;
-	phoneNumber: string;
-	documentType: string;
-	documentScan: string;
-	validTill: Date;
-	email: string;
-	password: string;
+export interface IOwner extends IUser {
 	bankAccount: string;
 }
 
@@ -39,5 +19,9 @@ export interface IUser {
 	address: string;
 	phoneNumber: string;
 	email: string;
-	password: string;
+	status: statusType;
+	documentType: string;
+	documentScan: string;
+	validTill: Date;
+	photo: string;
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { IOwner, IStudent, IUser } from '../models/profile.models';
+import { IOwner, IStudent } from '../models/profile.models';
 
 @Injectable()
 export class ProfileService {
@@ -13,9 +13,6 @@ export class ProfileService {
 	public getOwners(): Observable<IOwner[]> {
 		return this.httpClient.get<IOwner[]>('./assets/owner-profiles.json');
 	}
-	public getUsers(): Observable<IUser[]> {
-		return this.httpClient.get<IUser[]>('./assets/user-profiles.json');
-	}
 	public getStudent(id: string): Observable<IStudent> {
 		return this.httpClient
 			.get<IStudent[]>('./assets/student-profiles.json')
@@ -25,10 +22,5 @@ export class ProfileService {
 		return this.httpClient
 			.get<IOwner[]>('./assets/owner-profiles.json')
 			.pipe(map(results => results.find(result => result.id === id) as IOwner));
-	}
-	public getUser(id: string): Observable<IUser> {
-		return this.httpClient
-			.get<IUser[]>('./assets/user-profiles.json')
-			.pipe(map(results => results.find(result => result.id === id) as IUser));
 	}
 }

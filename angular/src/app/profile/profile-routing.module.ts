@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
 import { SurveyComponent } from './survey/survey.component';
-import { EditOwnerProfileComponent } from './owner/edit/edit-profile.component';
-import { CreateOwnerProfileComponent } from './owner/create/create-profile.component';
-import { EditStudentProfileComponent } from './student/edit/edit-profile.component';
-import { CreateStudentProfileComponent } from './student/create/create-profile.component';
+import { CreateProfileComponent } from './create/create-profile.component';
+import { EditProfileComponent } from './edit/edit-profile.component';
 
 const routes: Routes = [
 	{
@@ -14,20 +12,12 @@ const routes: Routes = [
 		component: SurveyComponent,
 	},
 	{
-		path: 'student/edit/:id',
-		component: EditStudentProfileComponent,
+		path: 'edit/:user/:id',
+		component: EditProfileComponent,
 	},
 	{
-		path: 'owner/edit/:id',
-		component: EditOwnerProfileComponent,
-	},
-	{
-		path: 'student/create',
-		component: CreateStudentProfileComponent,
-	},
-	{
-		path: 'owner/create',
-		component: CreateOwnerProfileComponent,
+		path: 'create/:user',
+		component: CreateProfileComponent,
 	},
 	{
 		path: ':id',

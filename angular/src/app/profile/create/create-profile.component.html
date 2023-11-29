@@ -1,0 +1,46 @@
+<div class="container-title">
+	<h1 *ngIf="(user$ | async) === 'student'" class="text-4xl p-4 font-semibold">
+		Tworzenie profilu studenta
+	</h1>
+	<h1 *ngIf="(user$ | async) === 'owner'" class="text-4xl p-4 font-semibold">
+		Tworzenie profilu właściciela
+	</h1>
+</div>
+<div class="create-profile">
+	<mat-stepper #stepper linear>
+		<div class="box">
+			<mat-step [stepControl]="registerForm">
+				<ng-template matStepLabel
+					><span class="step-label">Rejestracja użytkownika</span></ng-template
+				>
+				<form [formGroup]="registerForm">
+					<app-register [hideButtons]="true"></app-register>
+					<div class="button-box">
+						<button
+							mat-raised-button
+							color="primary"
+							matStepperNext
+							[disabled]="!registerForm.valid"
+						>
+							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+						</button>
+					</div>
+				</form>
+			</mat-step>
+			<div class="box">
+				<mat-step [stepControl]="createAccountForm">
+					<ng-template matStepLabel
+						><span class="step-label">Tworzenie konta</span></ng-template
+					>
+					<app-profile-edit
+						[name]="registerForm.get('name')?.value ?? ''"
+						[surname]="registerForm.get('surname')?.value ?? ''"
+						[email]="registerForm.get('email')?.value ?? ''"
+						[modificationType]="mType.CREATE"
+					></app-profile-edit>
+					<form [formGroup]="createAccountForm"></form>
+				</mat-step>
+			</div>
+		</div>
+	</mat-stepper>
+</div>

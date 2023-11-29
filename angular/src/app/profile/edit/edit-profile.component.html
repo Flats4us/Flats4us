@@ -1,13 +1,23 @@
-<div class="container-title">
-	<h1 class="text-4xl p-4 font-semibold">{{ title }}</h1>
+<div *ngIf="modificationType !== mType.CREATE" class="container-title">
+	<h1
+		*ngIf="(user$ | async) === uType.STUDENT"
+		class="text-4xl p-4 font-semibold"
+	>
+		Edycja profilu studenta
+	</h1>
+	<h1 *ngIf="(user$ | async) === uType.OWNER" class="text-4xl p-4 font-semibold">
+		Edycja profilu własciciela
+	</h1>
 </div>
 <form
-	*ngIf="userType === uType.STUDENT"
-	[formGroup]="dataFormGroup"
+	*ngIf="
+		(user$ | async) === uType.STUDENT && (actualStudent$ | async) as student
+	"
+	[formGroup]="dataFormGroupStudent"
 	(ngSubmit)="onSubmit()"
 >
 	<div class="edit-profile">
-		<div class="container-1">
+		<div class="container-photo">
 			<div class="image-box">
 				<img class="profile-avatar__image" [src]="urlPhoto" />
 				<input
@@ -20,21 +30,37 @@
 					value="urlPhoto"
 					(change)="onFileSelected($event, regexImage)"
 				/>
+				<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar" class="error-text"
+					>Nie wczytano zdjęcia!</mat-error
+				>
 				<div class="text-3xl p-4 semibold">
-					{{
-						dataFormGroup.controls["name"].value +
-							" " +
-							dataFormGroup.controls["surname"].value
-					}}
+					{{ student.name }} {{ student.surname }}
 				</div>
-				<div *ngIf="getAge()" class="text-3xl pb-4 semibold">
-					wiek {{ getAge() }}
+				<div class="text-3xl pb-4 semibold">
+					status:
+					{{ student.status === sType.VERIFIED ? sType.VERIFIED : sType.UNVERIFIED }}
+				</div>
+				<div class="text-3xl pb-4 semibold">email: {{ student.email }}</div>
+				<div
+					*ngIf="modificationType === mType.EDIT && getAge(student.yearOfBirth)"
+					class="text-3xl pb-4 semibold"
+				>
+					wiek {{ getAge(student.yearOfBirth) }}
+				</div>
+				<div
+					*ngIf="
+						modificationType === mType.CREATE &&
+						getAge(dataFormGroupStudent.get('yearOfBirth')?.value)
+					"
+					class="text-3xl pb-4 semibold"
+				>
+					wiek {{ getAge(dataFormGroupStudent.get("yearOfBirth")?.value ?? "") }}
 				</div>
 				<div class="button-box">
 					<button
-						mat-button
+						mat-raised-button
+						color="primary"
 						id="upload"
-						class="btn2"
 						type="button"
 						aria-label="Upload"
 						(click)="photoUpload.click()"
@@ -46,43 +72,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="container-2">
+		<div class="container-inputs">
 			<div class="data-container">
-				<mat-form-field>
-					<mat-label>Imię</mat-label>
-					<input
-						id="name"
-						formControlName="name"
-						type="text"
-						placeholder="Imię"
-						aria-label="Name"
-						matInput
-					/>
-					<mat-error
-						*ngIf="dataFormGroup.controls['name'].errors?.['required']"
-						class="error-text"
-					>
-						Nie podano imienia!
-					</mat-error>
-				</mat-form-field>
-				<mat-form-field>
-					<mat-label>Nazwisko</mat-label>
-					<input
-						id="surname"
-						formControlName="surname"
-						type="text"
-						placeholder="Nazwisko"
-						aria-label="Surname"
-						matInput
-					/>
-					<mat-error
-						*ngIf="dataFormGroup.controls['surname'].errors?.['required']"
-						class="error-text"
-					>
-						Nie podano imienia i nazwiska!
-					</mat-error>
-				</mat-form-field>
-				<mat-form-field>
+				<mat-form-field *ngIf="modificationType === mType.CREATE">
 					<mat-label>Rok urodzenia</mat-label>
 					<input
 						id="yearOfBirth"
@@ -93,14 +85,14 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="dataFormGroup.controls['yearOfBirth'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['yearOfBirth'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano roku urodzenia!
 					</mat-error>
 					<mat-error
-						*ngIf="dataFormGroup.controls['yearOfBirth'].errors?.['pattern'] || 
-				dataFormGroup.controls['yearOfBirth'].errors?.['max']"
+						*ngIf="dataFormGroupStudent.controls['yearOfBirth'].errors?.['pattern'] || 
+								dataFormGroupStudent.controls['yearOfBirth'].errors?.['max']"
 						class="error-text"
 					>
 						Nieprawidłowy rok urodzenia!
@@ -117,7 +109,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="dataFormGroup.controls['indexNumber'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['indexNumber'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano numeru studenta!
@@ -134,7 +126,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="dataFormGroup.controls['university'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['university'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano nazwy uczelni!
@@ -151,7 +143,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="dataFormGroup.controls['address'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano adresu!
@@ -161,13 +153,13 @@
 					<mat-label>Nr telefonu</mat-label>
 					<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
 					<mat-error
-						*ngIf="dataFormGroup.controls['phoneNumber'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano numeru telefonu!
 					</mat-error>
 					<mat-error
-						*ngIf="dataFormGroup.controls['phoneNumber'].errors?.['pattern']"
+						*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
 						class="error-text"
 					>
 						Nieprawidłowy numer telefonu!
@@ -189,25 +181,25 @@
 								<mat-icon>cancel</mat-icon>
 							</button>
 						</mat-chip-row>
-					</mat-chip-grid>
-					<input
-						#hobbiesInput
-						[formControl]="hobbyCtrl"
-						[matChipInputFor]="chipGrid"
-						[matAutocomplete]="auto"
-						[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-						(matChipInputTokenEnd)="add($event, myHobbies, hobbyCtrl)"
-					/>
-					<mat-autocomplete
-						#auto="matAutocomplete"
-						(optionSelected)="selected($event)"
-					>
-						<mat-option
-							*ngFor="let hobby of filteredHobbies$ | async"
-							[value]="hobby"
-							>{{ hobby }}</mat-option
+						<input
+							#hobbiesInput
+							[formControl]="hobbyCtrl"
+							[matChipInputFor]="chipGrid"
+							[matAutocomplete]="auto"
+							[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+							(matChipInputTokenEnd)="add($event, myHobbies, hobbyCtrl)"
+						/>
+						<mat-autocomplete
+							#auto="matAutocomplete"
+							(optionSelected)="selected($event)"
 						>
-					</mat-autocomplete>
+							<mat-option
+								*ngFor="let hobby of filteredHobbies$ | async"
+								[value]="hobby"
+								>{{ hobby }}</mat-option
+							>
+						</mat-autocomplete>
+					</mat-chip-grid>
 				</mat-form-field>
 				<mat-form-field class="example-chip-list">
 					<mat-label>Linki do social media</mat-label>
@@ -238,21 +230,17 @@
 						/>
 					</mat-chip-grid>
 				</mat-form-field>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Dokument tożsamości</mat-label>
-						<mat-select id="documentType" formControlName="documentType">
-							<mat-option *ngFor="let document of documents" [value]="document">
-								{{ document }}
-							</mat-option>
-						</mat-select>
-						<mat-error
-							*ngIf="dataFormGroup.controls['documentType'].errors?.['required']"
-							class="error-text"
-						>
-							Nie wybrano rodzaju dokumentu!
-						</mat-error>
-					</mat-form-field>
+				<span *ngIf="!checkValidity(student.validTill)" class="btn-upload-box">
+					<a *ngIf="!urlNewScan">Wczytaj skan aktualnego dokumentu!</a>
+					<button
+						mat-icon-button
+						type="button"
+						aria-label="Upload"
+						matTooltip="Wczytaj skan dokumentu"
+						(click)="scanUpload.click()"
+					>
+						<mat-icon>attachment</mat-icon>
+					</button>
 					<input
 						#scanUpload
 						id="documentScan"
@@ -262,82 +250,81 @@
 						aria-label="File"
 						(change)="onFileSelected($event, regexScan)"
 					/>
-					<mat-icon *ngIf="urlScan">save</mat-icon>
-					<span class="file-name">{{ fileScanName }}</span>
-					<button
-						mat-fab
-						class="edit-btn"
-						type="button"
-						aria-label="Upload"
-						matTooltip="Wczytaj skan dokumentu"
-						(click)="scanUpload.click()"
+					<mat-error *ngIf="!urlNewScan" class="error-text"
+						>Nie wczytano skanu dokumentu!</mat-error
 					>
-						<mat-icon>attachment</mat-icon>
-					</button>
-				</div>
-				<mat-form-field>
+				</span>
+				<mat-form-field *ngIf="!checkValidity(student.validTill)">
+					<mat-label>Dokument tożsamości</mat-label>
+					<mat-select id="documentType" formControlName="documentType">
+						<mat-option *ngFor="let document of documents" [value]="document">
+							{{ document }}
+						</mat-option>
+					</mat-select>
+					<mat-error
+						*ngIf="dataFormGroupStudent.controls['documentType'].errors?.['required']"
+						class="error-text"
+					>
+						Nie wybrano rodzaju dokumentu!
+					</mat-error>
+				</mat-form-field>
+				<input
+					#scanUpload
+					id="documentScan"
+					class="file-upload"
+					type="file"
+					accept="image/*,application/pdf"
+					aria-label="File"
+					(change)="onFileSelected($event, regexScan)"
+				/>
+				<mat-form-field *ngIf="!checkValidity(student.validTill)">
 					<mat-label>Data ważności dokumentu</mat-label>
 					<input matInput formControlName="validTill" [matDatepicker]="picker" />
-					<mat-hint>MM/DD/YYYY</mat-hint>
 					<mat-datepicker-toggle
 						matIconSuffix
 						[for]="picker"
 					></mat-datepicker-toggle>
 					<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
 					<mat-error
-						*ngIf="dataFormGroup.controls['validTill'].errors?.['required']"
+						*ngIf="dataFormGroupStudent.controls['validTill'].errors?.['required']"
 						class="error-text"
 					>
 						Nie określono daty ważności dokumentu!
 					</mat-error>
+					<mat-error
+						*ngIf="dataFormGroupStudent.controls['validTill'].errors?.['validityTill']"
+						class="error-text"
+					>
+						Termin ważności dokumentu nie może być wcześniejszy niż 14 dni!
+					</mat-error>
 				</mat-form-field>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Email</mat-label>
-						<input
-							id="email"
-							formControlName="email"
-							type="text"
-							placeholder="Adres email"
-							aria-label="Email"
-							matInput
-						/>
-					</mat-form-field>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
 					<button
-						mat-fab
-						class="edit-btn"
+						mat-raised-button
+						color="primary"
 						type="button"
 						aria-label="Edit"
-						matTooltip="Edytuj email"
 						(click)="changeEmail()"
 					>
-						<mat-icon>edit</mat-icon>
+						Edytuj email
+						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Hasło</mat-label>
-						<input
-							id="password"
-							formControlName="password"
-							type="password"
-							placeholder="Hasło"
-							aria-label="Password"
-							matInput
-						/>
-					</mat-form-field>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
 					<button
-						mat-fab
-						class="edit-btn"
+						mat-raised-button
+						color="primary"
 						type="button"
 						aria-label="Edit"
-						matTooltip="Zmień hasło"
 						(click)="changePassword()"
 					>
-						<mat-icon>edit</mat-icon>
+						Zmień hasło
+						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
-				<button mat-button class="btn2" type="submit">
+			</div>
+			<div class="btn-box-submit">
+				<button mat-raised-button color="primary" type="submit">
 					Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
 				</button>
 			</div>
@@ -345,12 +332,12 @@
 	</div>
 </form>
 <form
-	*ngIf="userType === uType.OWNER"
-	[formGroup]="dataFormGroup2"
+	*ngIf="(user$ | async) === uType.OWNER && (actualOwner$ | async) as owner"
+	[formGroup]="dataFormGroupOwner"
 	(ngSubmit)="onSubmit()"
 >
 	<div class="edit-profile">
-		<div class="container-1">
+		<div class="container-photo">
 			<div class="image-box">
 				<img class="profile-avatar__image" [src]="urlPhoto" />
 				<input
@@ -363,18 +350,22 @@
 					value="urlPhoto"
 					(change)="onFileSelected($event, regexImage)"
 				/>
+				<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar" class="error-text"
+					>Nie wczytano zdjęcia!</mat-error
+				>
 				<div class="text-3xl p-4 semibold">
-					{{
-						dataFormGroup2.controls["name"].value +
-							" " +
-							dataFormGroup2.controls["surname"].value
-					}}
+					{{ owner.name }} {{ owner.surname }}
 				</div>
+				<div class="text-3xl pb-4 semibold">
+					status:
+					{{ owner.status === sType.VERIFIED ? sType.VERIFIED : sType.UNVERIFIED }}
+				</div>
+				<div class="text-3xl pb-4 semibold">email: {{ owner.email }}</div>
 				<div class="button-box">
 					<button
-						mat-button
+						mat-raised-button
 						id="upload"
-						class="btn2"
+						color="primary"
 						type="button"
 						aria-label="Upload"
 						(click)="photoUpload.click()"
@@ -386,42 +377,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="container-2">
+		<div class="container-inputs">
 			<div class="data-container">
-				<mat-form-field>
-					<mat-label>Imię</mat-label>
-					<input
-						id="name"
-						formControlName="name"
-						type="text"
-						placeholder="Imię"
-						aria-label="Name"
-						matInput
-					/>
-					<mat-error
-						*ngIf="dataFormGroup2.controls['name'].errors?.['required']"
-						class="error-text"
-					>
-						Nie podano imienia!
-					</mat-error>
-				</mat-form-field>
-				<mat-form-field>
-					<mat-label>Nazwisko</mat-label>
-					<input
-						id="surname"
-						formControlName="surname"
-						type="text"
-						placeholder="Nazwisko"
-						aria-label="Surname"
-						matInput
-					/>
-					<mat-error
-						*ngIf="dataFormGroup2.controls['surname'].errors?.['required']"
-						class="error-text"
-					>
-						Nie podano imienia i nazwiska!
-					</mat-error>
-				</mat-form-field>
 				<mat-form-field>
 					<mat-label>Adres zamieszkania</mat-label>
 					<input
@@ -433,7 +390,7 @@
 						matInput
 					/>
 					<mat-error
-						*ngIf="dataFormGroup2.controls['address'].errors?.['required']"
+						*ngIf="dataFormGroupOwner.controls['address'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano adresu!
@@ -443,13 +400,13 @@
 					<mat-label>Nr telefonu</mat-label>
 					<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
 					<mat-error
-						*ngIf="dataFormGroup2.controls['phoneNumber'].errors?.['required']"
+						*ngIf="dataFormGroupOwner.controls['phoneNumber'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano numeru telefonu!
 					</mat-error>
 					<mat-error
-						*ngIf="dataFormGroup2.controls['phoneNumber'].errors?.['pattern']"
+						*ngIf="dataFormGroupOwner.controls['phoneNumber'].errors?.['pattern']"
 						class="error-text"
 					>
 						Nieprawidłowy numer telefonu!
@@ -463,33 +420,29 @@
 						placeholder="Nr konta bankowego"
 					/>
 					<mat-error
-						*ngIf="dataFormGroup2.controls['bankAccount'].errors?.['required']"
+						*ngIf="dataFormGroupOwner.controls['bankAccount'].errors?.['required']"
 						class="error-text"
 					>
 						Nie podano numeru konta bankowego!
 					</mat-error>
 					<mat-error
-						*ngIf="dataFormGroup2.controls['bankAccount'].errors?.['pattern']"
+						*ngIf="dataFormGroupOwner.controls['bankAccount'].errors?.['pattern']"
 						class="error-text"
 					>
 						Nieprawidłowy numeru konta bankowego!
 					</mat-error>
 				</mat-form-field>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Dokument tożsamości</mat-label>
-						<mat-select id="documentType" formControlName="documentType">
-							<mat-option *ngFor="let document of documents" [value]="document">
-								{{ document }}
-							</mat-option>
-						</mat-select>
-						<mat-error
-							*ngIf="dataFormGroup2.controls['documentType'].errors?.['required']"
-							class="error-text"
-						>
-							Nie wybrano rodzaju dokumentu!
-						</mat-error>
-					</mat-form-field>
+				<span *ngIf="!checkValidity(owner.validTill)" class="btn-upload-box">
+					<a *ngIf="!urlNewScan">Wczytaj skan aktualnego dokumentu!</a>
+					<button
+						mat-icon-button
+						type="button"
+						aria-label="Upload"
+						matTooltip="Wczytaj skan dokumentu"
+						(click)="scanUpload.click()"
+					>
+						<mat-icon>attachment</mat-icon>
+					</button>
 					<input
 						#scanUpload
 						id="documentScan"
@@ -499,21 +452,12 @@
 						aria-label="File"
 						(change)="onFileSelected($event, regexScan)"
 					/>
-					<mat-icon *ngIf="urlScan">save</mat-icon>
-					<span class="file-name">{{ fileScanName }}</span>
-					<button
-						mat-fab
-						class="edit-btn"
-						type="button"
-						aria-label="Upload"
-						matTooltip="Wczytaj skan dokumentu"
-						(click)="scanUpload.click()"
+					<mat-error *ngIf="!urlNewScan" class="error-text"
+						>Nie wczytano skanu dokumentu!</mat-error
 					>
-						<mat-icon>attachment</mat-icon>
-					</button>
-				</div>
-				<mat-form-field>
-					<mat-label>Data ważności dokumentu</mat-label>
+				</span>
+				<mat-form-field *ngIf="!checkValidity(owner.validTill)">
+					<mat-label>Data ważności dowodu osobistego</mat-label>
 					<input matInput formControlName="validTill" [matDatepicker]="picker" />
 					<mat-datepicker-toggle
 						matIconSuffix
@@ -521,59 +465,45 @@
 					></mat-datepicker-toggle>
 					<mat-datepicker #picker></mat-datepicker>
 					<mat-error
-						*ngIf="dataFormGroup2.controls['validTill'].errors?.['required']"
+						*ngIf="dataFormGroupOwner.controls['validTill'].errors?.['required']"
 						class="error-text"
 					>
 						Nie określono daty ważności dokumentu!
 					</mat-error>
+					<mat-error
+						*ngIf="dataFormGroupOwner.controls['validTill'].errors?.['validityTill']"
+						class="error-text"
+					>
+						Termin ważności dokumentu nie może być wcześniejszy niż 14 dni!
+					</mat-error>
 				</mat-form-field>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Email</mat-label>
-						<input
-							id="email"
-							formControlName="email"
-							type="text"
-							placeholder="Adres email"
-							aria-label="Email"
-							matInput
-						/>
-					</mat-form-field>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
 					<button
-						mat-fab
-						class="edit-btn"
+						mat-raised-button
+						color="primary"
 						type="button"
 						aria-label="Edit"
-						matTooltip="Edytuj email"
 						(click)="changeEmail()"
 					>
-						<mat-icon>edit</mat-icon>
+						Edytuj email
+						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
-				<div>
-					<mat-form-field class="form-btn">
-						<mat-label>Hasło</mat-label>
-						<input
-							id="password"
-							formControlName="password"
-							type="password"
-							placeholder="Hasło"
-							aria-label="Password"
-							matInput
-						/>
-					</mat-form-field>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
 					<button
-						mat-fab
-						class="edit-btn"
+						mat-raised-button
+						color="primary"
 						type="button"
 						aria-label="Edit"
-						matTooltip="Zmień hasło"
 						(click)="changePassword()"
 					>
-						<mat-icon>edit</mat-icon>
+						Zmień hasło
+						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
-				<button mat-button class="btn2" type="submit">
+			</div>
+			<div class="btn-box-submit">
+				<button mat-raised-button color="primary" type="submit">
 					Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
 				</button>
 			</div>

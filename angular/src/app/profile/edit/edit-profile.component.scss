@@ -2,43 +2,28 @@
 	display: flex;
 	flex-direction: row;
 	background-color: white;
-	// justify-content: center;
-	// align-items: center;
 	margin: 0 16px;
+}
+
+.btn-box {
+	padding: 4px;
+}
+
+.btn-box-submit {
+	align-self: flex-end;
+}
+
+.btn-upload-box {
+	min-height: 80px;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
 }
 
 .container-title {
 	text-align: left;
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
-	background-color: white;
 	margin: 0 16px;
 	padding: 4px 0 32px 0;
-}
-
-.btn {
-	background: #fbbb8b;
-	border-radius: 24px;
-	padding: 4px;
-	min-width: 400px;
-	height: 45px;
-	margin: 4px 0;
-}
-
-.btn2 {
-	background: rgb(255, 237, 223);
-	border-radius: 24px;
-	padding: 4px;
-	margin: 4px 0;
-	min-width: 400px;
-	height: 45px;
-	border: 3px black;
-	border-style: solid;
-}
-
-.edit-btn {
-	background: #fbbb8b;
-	display: block;
-	float: right;
 }
 
 .form-btn {
@@ -58,34 +43,28 @@
 	justify-content: center;
 }
 
-.title2 {
-	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.151);
-	text-align: center;
-}
-
 .profile-avatar__image {
 	width: 250px;
 	height: 250px;
 	border-radius: 50%;
 }
 
-.container-1 {
+.container-photo {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 50%;
 	margin-top: 16px;
 	margin-bottom: auto;
+	padding-bottom: 16px;
 }
 
-.container-2 {
+.container-inputs {
 	display: flex;
 	justify-content: space-between;
-	//align-items: stretch;
 	flex-grow: 1;
 	flex-direction: column;
 	margin: 16px;
-	//width: 50%;
 }
 
 .data-container {
@@ -106,6 +85,7 @@
 .file-upload {
 	visibility: hidden;
 	width: 0;
+	height: 0;
 }
 
 .file-name {
@@ -131,7 +111,7 @@ mat-form-field {
 		justify-content: center;
 		align-items: center;
 	}
-	.container-1 {
+	.container-photo {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -143,24 +123,5 @@ mat-form-field {
 	}
 	.form-btn {
 		width: 60%;
-	}
-	.btn {
-		background: #fbbb8b;
-		border-radius: 24px;
-		padding: 4px;
-		min-width: 200px;
-		height: 45px;
-		margin: 4px 0;
-	}
-
-	.btn2 {
-		background: rgb(255, 237, 223);
-		border-radius: 24px;
-		padding: 4px;
-		margin: 4px 0;
-		min-width: 200px;
-		height: 45px;
-		border: 3px black;
-		border-style: solid;
 	}
 }

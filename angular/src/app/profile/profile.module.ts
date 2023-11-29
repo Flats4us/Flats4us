@@ -21,7 +21,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
 import { MatRadioModule } from '@angular/material/radio';
-import { ReusableProfileComponent } from './reusable/reusable.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProfileService } from './services/profile.service';
@@ -29,20 +28,18 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
-import { EditOwnerProfileComponent } from './owner/edit/edit-profile.component';
-import { CreateOwnerProfileComponent } from './owner/create/create-profile.component';
-import { EditStudentProfileComponent } from './student/edit/edit-profile.component';
-import { CreateStudentProfileComponent } from './student/create/create-profile.component';
+import { EditProfileComponent } from './edit/edit-profile.component';
+import { CreateProfileComponent } from './create/create-profile.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { RegisterComponent } from '../auth/components/register/register.component';
 
 @NgModule({
 	declarations: [
 		ProfileComponent,
 		SurveyComponent,
-		ReusableProfileComponent,
-		EditOwnerProfileComponent,
-		CreateOwnerProfileComponent,
-		EditStudentProfileComponent,
-		CreateStudentProfileComponent,
+		EditProfileComponent,
+		CreateProfileComponent,
+		RegisterComponent,
 	],
 	imports: [
 		CommonModule,
@@ -71,6 +68,7 @@ import { CreateStudentProfileComponent } from './student/create/create-profile.c
 		MatNativeDateModule,
 		MatTooltipModule,
 		MatDividerModule,
+		MatStepperModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService],

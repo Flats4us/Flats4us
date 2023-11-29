@@ -13,8 +13,8 @@
 		"socialMedia": ["jk.twitter.com"],
 		"documentType": "Legitymacja studencka",
 		"documentScan": "../../../assets/candidate.webp",
-		"validTill": "2024-11-22T00:00:00.000Z",
+		"validTill": "2023-12-07T00:00:00.000Z",
 		"email": "jk@wp.pl",
-		"password": "qwerty"
+		"status": "zweryfikowany"
 	}
 ]

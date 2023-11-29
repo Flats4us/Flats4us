@@ -1,6 +1,6 @@
 [
 	{
-		"id": "2",
+		"id": "1",
 		"photo": "../../../assets/candidate.webp",
 		"name": "Eustachy",
 		"surname": "Maliniak",
@@ -8,9 +8,9 @@
 		"phoneNumber": "829822444",
 		"documentType": "Dowód osobisty",
 		"documentScan": "../../../assets/candidate.webp",
-		"validTill": "2024-11-22T00:00:00.000Z",
+		"validTill": "2023-12-05T00:00:00.000Z",
 		"email": "jk@wp.pl",
-		"password": "qwerty",
-		"bankAccount": "57109024023278141329621369"
+		"bankAccount": "57109024023278141329621369",
+		"status": "zweryfikowany"
 	}
 ]

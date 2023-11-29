@@ -4,54 +4,60 @@ import {
 	Component,
 	ElementRef,
 	Input,
+	OnChanges,
 	OnDestroy,
 	OnInit,
 	ViewChild,
 	inject,
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import {
 	Observable,
+	Subject,
 	map,
+	of,
 	startWith,
 	switchMap,
-	of,
-	Subject,
 	takeUntil,
 } from 'rxjs';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { modificationType, userType } from '../models/types';
+import {
+	AbstractControl,
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ValidationErrors,
+	ValidatorFn,
+	Validators,
+} from '@angular/forms';
 import { IOwner, IStudent } from '../models/profile.models';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { modificationType, statusType, userType } from '../models/types';
 
 @Component({
-	selector: 'app-profile-reusable',
-	templateUrl: './reusable.component.html',
-	styleUrls: ['./reusable.component.scss'],
+	selector: 'app-profile-edit',
+	templateUrl: './edit-profile.component.html',
+	styleUrls: ['./edit-profile.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ReusableProfileComponent implements OnInit, OnDestroy {
+export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 	@Input()
-	public title = '';
+	public name = '';
 
 	@Input()
-	public createId = 0;
+	public surname = '';
 
 	@Input()
-	public userType = userType.STUDENT;
+	public email = '';
 
 	@Input()
 	public modificationType = modificationType.EDIT;
 
 	@ViewChild('hobbiesInput')
 	public hobbiesInput!: ElementRef<HTMLInputElement>;
-
-	public uType = userType;
-	public mType = modificationType;
 
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
@@ -60,6 +66,8 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public socialMediaCtrl = new FormControl('');
 	public filteredHobbies$?: Observable<string[]>;
 	private rentId$?: Observable<string>;
+	public user$?: Observable<string>;
+	private user = '';
 	public myHobbies: string[] = [];
 	public socialMedias: string[] = [];
 	public actualStudent$?: Observable<IStudent>;
@@ -67,7 +75,15 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public actualOwner$?: Observable<IOwner>;
 	public actualOwner = {} as IOwner;
 
-	private validYear: number = new Date().getFullYear();
+	public yearOfBirth = new FormControl('', [
+		Validators.required,
+		Validators.pattern('^(19|20)[0-9]{2}$'),
+		Validators.max(new Date().getDate()),
+	]);
+
+	public uType = userType;
+	public mType = modificationType;
+	public sType = statusType;
 
 	private announcer = inject(LiveAnnouncer);
 
@@ -76,8 +92,10 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	public filePhotoName = '';
 	public urlPhoto = '';
 	public urlScan = '';
+	public urlNewScan = '';
 	public regexImage = /image\/*/;
 	public regexScan = /image\/*/ || /application\/pdf/;
+	public isValidDocument = true;
 
 	private hobbies: string[] = [
 		'Muzyka',
@@ -96,8 +114,8 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 
 	public documents: string[] = ['Legitymacja studencka', 'Dowód osobisty'];
 
-	public dataFormGroup;
-	public dataFormGroup2;
+	public dataFormGroupStudent: FormGroup;
+	public dataFormGroupOwner: FormGroup;
 
 	public addOnBlur = true;
 
@@ -116,14 +134,7 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 				hobby ? this.filter(hobby) : this.hobbies.slice()
 			)
 		);
-		this.dataFormGroup = this.formBuilder.group({
-			name: new FormControl('', Validators.required),
-			surname: new FormControl('', Validators.required),
-			yearOfBirth: new FormControl('', [
-				Validators.required,
-				Validators.pattern('^(19|20)[0-9]{2}$'),
-				Validators.max(this.validYear),
-			]),
+		this.dataFormGroupStudent = this.formBuilder.group({
 			indexNumber: new FormControl('', Validators.required),
 			university: new FormControl('', Validators.required),
 			address: new FormControl('', Validators.required),
@@ -136,14 +147,13 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 			hobbies: this.hobbyCtrl,
 			socialMedia: this.socialMediaCtrl,
 			documentType: new FormControl('', Validators.required),
-			validTill: new FormControl(new Date(), Validators.required),
-			email: new FormControl({ value: '', disabled: true }),
-			password: new FormControl({ value: '', disabled: true }),
+			validTill: new FormControl(null, [
+				Validators.required,
+				this.validityTillValidator(),
+			]),
 		});
 
-		this.dataFormGroup2 = this.formBuilder.group({
-			name: new FormControl('', Validators.required),
-			surname: new FormControl('', Validators.required),
+		this.dataFormGroupOwner = this.formBuilder.group({
 			address: new FormControl('', Validators.required),
 			phoneNumber: new FormControl('', [
 				Validators.required,
@@ -151,100 +161,113 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			documentType: new FormControl('', Validators.required),
-			validTill: new FormControl(new Date(), Validators.required),
+			validTill: new FormControl(null, [
+				Validators.required,
+				this.validityTillValidator(),
+			]),
 			bankAccount: new FormControl('', [
 				Validators.required,
 				Validators.pattern('^[0-9]{26}$'),
 			]),
-			email: new FormControl({ value: '', disabled: true }),
-			password: new FormControl({ value: '', disabled: true }),
 		});
 	}
 	public ngOnInit(): void {
+		if (this.modificationType === modificationType.CREATE) {
+			this.dataFormGroupStudent.addControl(
+				'yearOfBirth',
+				new FormControl('', [
+					Validators.required,
+					Validators.pattern('^(19|20)[0-9]{2}$'),
+					Validators.max(new Date().getFullYear()),
+				])
+			);
+		}
+
 		this.rentId$ = this.route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
 		);
-		if (this.userType === userType.STUDENT) {
+		this.user$ = this.route.paramMap.pipe(
+			map(params => params.get('user') ?? '')
+		);
+
+		this.user$
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(user => (this.user = user));
+
+		if (this.user === userType.STUDENT) {
 			if (this.modificationType === modificationType.EDIT) {
 				this.actualStudent$ = this.rentId$.pipe(
 					switchMap(value => this.profileService.getStudent(value))
 				);
+				this.actualStudent$
+					.pipe(takeUntil(this.unsubscribe$))
+					.subscribe(student => {
+						this.urlPhoto = student.photo ? student.photo : this.urlAvatar;
+						this.dataFormGroupStudent
+							.get('indexNumber')
+							?.setValue(student.indexNumber);
+						this.dataFormGroupStudent.get('university')?.setValue(student.university);
+						this.dataFormGroupStudent.get('address')?.setValue(student.address);
+						this.dataFormGroupStudent
+							.get('phoneNumber')
+							?.setValue(student.phoneNumber);
+						this.myHobbies = student.hobbies;
+						this.socialMedias = student.socialMedia;
+						this.dataFormGroupStudent
+							.get('documentType')
+							?.setValue(student.documentType);
+						this.urlScan = student.documentScan;
+						this.dataFormGroupStudent
+							.get('validTill')
+							?.setValue(new Date(student.validTill));
+					});
 			} else {
-				this.actualStudent$ = this.profileService
-					.getUser(this.createId.toString())
-					.pipe(
-						switchMap(user =>
-							of({
-								...this.actualStudent,
-								id: user.id,
-								name: user.name,
-								surname: user.surname,
-								address: user.address,
-								phoneNumber: user.phoneNumber,
-								hobbies: [],
-								socialMedia: [],
-								email: user.email,
-								password: user.password,
-							})
-						)
-					);
+				this.urlPhoto = this.urlAvatar;
 			}
-			this.actualStudent$.pipe(takeUntil(this.unsubscribe$)).subscribe(student => {
-				this.urlPhoto = student.photo ? student.photo : this.urlAvatar;
-				this.dataFormGroup.get('name')?.setValue(student.name);
-				this.dataFormGroup.get('surname')?.setValue(student.surname);
-				this.dataFormGroup.get('yearOfBirth')?.setValue(student.yearOfBirth);
-				this.dataFormGroup.get('indexNumber')?.setValue(student.indexNumber);
-				this.dataFormGroup.get('university')?.setValue(student.university);
-				this.dataFormGroup.get('address')?.setValue(student.address);
-				this.dataFormGroup.get('phoneNumber')?.setValue(student.phoneNumber);
-				this.myHobbies = student.hobbies;
-				this.socialMedias = student.socialMedia;
-				this.dataFormGroup.get('documentType')?.setValue(student.documentType);
-				this.urlScan = student.documentScan;
-				this.dataFormGroup.get('validTill')?.setValue(new Date(student.validTill));
-				this.dataFormGroup.get('email')?.setValue(student.email);
-				this.dataFormGroup.get('password')?.setValue(student.password);
-			});
 		}
 
-		if (this.userType === userType.OWNER) {
+		if (this.user === userType.OWNER) {
 			if (this.modificationType === modificationType.EDIT) {
 				this.actualOwner$ = this.rentId$.pipe(
 					switchMap(value => this.profileService.getOwner(value))
 				);
+				this.actualOwner$.pipe(takeUntil(this.unsubscribe$)).subscribe(owner => {
+					this.urlPhoto = owner.photo ? owner.photo : this.urlAvatar;
+					this.dataFormGroupOwner.get('address')?.setValue(owner.address);
+					this.dataFormGroupOwner.get('phoneNumber')?.setValue(owner.phoneNumber);
+					this.urlScan = owner.documentScan;
+					this.dataFormGroupOwner
+						.get('validTill')
+						?.setValue(new Date(owner.validTill));
+					this.dataFormGroupOwner.get('bankAccount')?.setValue(owner.bankAccount);
+				});
 			} else {
-				this.actualOwner$ = this.profileService
-					.getUser(this.createId.toString())
-					.pipe(
-						switchMap(user =>
-							of({
-								...this.actualOwner,
-								id: user.id,
-								name: user.name,
-								surname: user.surname,
-								address: user.address,
-								phoneNumber: user.phoneNumber,
-								email: user.email,
-								password: user.password,
-							})
-						)
-					);
+				this.urlPhoto = this.urlAvatar;
 			}
-			this.actualOwner$.pipe(takeUntil(this.unsubscribe$)).subscribe(owner => {
-				this.urlPhoto = owner.photo ? owner.photo : this.urlAvatar;
-				this.dataFormGroup2.get('name')?.setValue(owner.name);
-				this.dataFormGroup2.get('surname')?.setValue(owner.surname);
-				this.dataFormGroup2.get('address')?.setValue(owner.address);
-				this.dataFormGroup2.get('phoneNumber')?.setValue(owner.phoneNumber);
-				this.dataFormGroup2.get('documentType')?.setValue(owner.documentType);
-				this.urlScan = owner.documentScan;
-				this.dataFormGroup2.get('validTill')?.setValue(new Date(owner.validTill));
-				this.dataFormGroup2.get('bankAccount')?.setValue(owner.bankAccount);
-				this.dataFormGroup2.get('email')?.setValue(owner.email);
-				this.dataFormGroup2.get('password')?.setValue(owner.password);
-			});
+		}
+	}
+
+	public ngOnChanges() {
+		if (this.modificationType === modificationType.CREATE) {
+			if (this.user === userType.STUDENT) {
+				this.actualStudent$ = of({
+					...this.actualStudent,
+					name: this.name,
+					surname: this.surname,
+					hobbies: [],
+					socialMedia: [],
+					email: this.email,
+					status: statusType.UNVERIFIED,
+				});
+			}
+			if (this.user === userType.OWNER) {
+				this.actualOwner$ = of({
+					...this.actualOwner,
+					name: this.name,
+					surname: this.surname,
+					email: this.email,
+				});
+			}
 		}
 	}
 
@@ -308,19 +331,33 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 	}
 
 	public onSubmit() {
-		if (this.dataFormGroup.valid || this.dataFormGroup2.valid) {
-			this.router.navigate(['/']);
+		if (this.dataFormGroupStudent.valid || this.dataFormGroupOwner.valid) {
+			if (
+				this.urlPhoto !== this.urlAvatar &&
+				this.urlNewScan &&
+				!this.isValidDocument
+			) {
+				this.router.navigate(['/']);
+			}
 		}
 	}
 
-	public getAge(): string {
-		const age =
-			new Date().getFullYear() -
-			Number(this.dataFormGroup.get('yearOfBirth')?.value);
+	public getAge(year: string): string {
+		const age = new Date().getFullYear() - Number(year);
 		if (age > 150 || age < 0) {
 			return '';
 		}
 		return age ? age.toString() : '';
+	}
+
+	public checkValidity(date: Date): boolean {
+		const endDate = new Date(date);
+		const actualDate = new Date();
+		const days = Math.floor(
+			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24
+		);
+		this.isValidDocument = days >= 14 ? true : false;
+		return this.isValidDocument;
 	}
 
 	public onFileSelected(event: Event, regex: RegExp) {
@@ -347,10 +384,27 @@ export class ReusableProfileComponent implements OnInit, OnDestroy {
 				this.fileScanName = file.name;
 				formData.append(this.fileScanName, file);
 				this.urlScan = <string>reader.result;
+				this.urlNewScan = <string>reader.result;
 			}
 			this.changeDetectorRef.detectChanges();
 		};
 	}
+
+	public validityTillValidator(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			const value = control.value;
+
+			if (!value) {
+				return null;
+			}
+
+			return !this.checkValidity(value) &&
+				this.modificationType === modificationType.EDIT
+				? { validityTill: true }
+				: null;
+		};
+	}
+
 	public ngOnDestroy() {
 		this.unsubscribe$.next();
 		this.unsubscribe$.complete();

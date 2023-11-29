@@ -1,23 +1,41 @@
 <mat-card>
-	<mat-card-title>REJESTRACJA</mat-card-title>
+	<mat-card-title *ngIf="!hideButtons">REJESTRACJA</mat-card-title>
 	<mat-card-content>
-		<form>
+		<form [formGroup]="registerForm">
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Imie</mat-label>
-					<input matInput name="name" required />
+					<mat-label>Imię</mat-label>
+					<input matInput formControlName="name" name="name" required />
+					<mat-error
+						*ngIf="registerForm.controls['name'].errors?.['required']"
+						class="error-text"
+					>
+						Nie podano imienia!
+					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Nazwisko</mat-label>
-					<input matInput name="surname" required />
+					<input matInput formControlName="surname" name="surname" required />
+					<mat-error
+						*ngIf="registerForm.controls['surname'].errors?.['required']"
+						class="error-text"
+					>
+						Nie podano nazwiska!
+					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Adres email</mat-label>
-					<input matInput name="email" required />
+					<input matInput formControlName="email" name="email" required />
+					<mat-error
+						*ngIf="registerForm.controls['email'].errors?.['required']"
+						class="error-text"
+					>
+						Nie podano adresu email!
+					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
@@ -26,15 +44,30 @@
 					<input
 						matInput
 						name="password"
-						formControlName="password"
+						formControlName="password1"
 						required
 						[type]="hidePassword ? 'password' : 'text'"
 					/>
 					<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
 						hidePassword ? "visibility_off" : "visibility"
 					}}</mat-icon>
+					<mat-error
+						*ngIf="registerForm.controls['password1'].errors?.['required']"
+						class="error-text"
+					>
+						Nie podano hasła!
+					</mat-error>
+					<mat-error
+						*ngIf="registerForm.controls['password1'].errors?.['pattern']"
+						class="error-text"
+					>
+						Zbyt słabe hasło!
+					</mat-error>
 				</mat-form-field>
-				<p>Użyj przynajmniej 8 znaków, w tym jednocześnie liter, cyfr i symboli</p>
+				<mat-hint
+					>Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter,
+					cyfr i symboli</mat-hint
+				>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
@@ -42,20 +75,32 @@
 					<input
 						matInput
 						name="confirmPassword"
-						formControlName="password"
+						formControlName="password2"
 						required
 						[type]="hideConfirmPasword ? 'password' : 'text'"
 					/>
 					<mat-icon matSuffix (click)="hideConfirmPasword = !hideConfirmPasword">{{
 						hideConfirmPasword ? "visibility_off" : "visibility"
 					}}</mat-icon>
+					<mat-error
+						*ngIf="registerForm.controls['password2'].errors?.['required']"
+						class="error-text"
+					>
+						Nie powtórzono hasła!
+					</mat-error>
+					<mat-error
+						*ngIf="registerForm.controls['password2'].errors?.['passwordValid']"
+						class="error-text"
+					>
+						Hasła różnią się od siebie!
+					</mat-error>
 				</mat-form-field>
 			</div>
-			<div class="buttons">
-				<button mat-raised-button class="btn-submit" type="submit">
+			<div *ngIf="!hideButtons" class="buttons">
+				<button mat-raised-button color="primary" type="submit">
 					ZAREJESTRUJ SIĘ
 				</button>
-				<button mat-raised-button class="btn-log-in" routerLink="/login">
+				<button mat-raised-button color="basic" routerLink="/login">
 					ZALOGUJ SIĘ
 				</button>
 			</div>

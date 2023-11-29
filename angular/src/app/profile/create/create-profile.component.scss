@@ -1,0 +1,50 @@
+.create-profile {
+	background-color: #ffffff;
+	margin: 0 16px;
+}
+
+.container-title {
+	text-align: left;
+	margin: 0 16px;
+	padding: 4px 0 32px 0;
+}
+
+.box {
+	display: flex;
+	flex-direction: column;
+	min-width: fit-content;
+	height: auto;
+}
+
+.button-box {
+	padding: 8px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	row-gap: 4px;
+	column-gap: 20%;
+	justify-content: center;
+}
+
+mat-form-field {
+	min-width: 400px;
+}
+
+@media screen and (max-width: 992px) {
+	.container-1 {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+	}
+	mat-form-field {
+		min-width: 100px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.step-label {
+		display: none;
+	}
+}
