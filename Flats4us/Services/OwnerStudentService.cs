@@ -6,7 +6,7 @@ namespace Flats4us.Services
 {
     public abstract class OwnerStudentService : UserService
     {
-        protected OwnerStudentService(Flats4usContext context, IMapper mapper) : base(context, mapper)
+        protected OwnerStudentService(Flats4usContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper, configuration)
         {
         }
         protected OwnerStudent PopulateOwnerStudentFieldsFromDto(OwnerStudent ownerStudent, OwnerStudentRegisterDto request)

@@ -124,6 +124,10 @@ namespace Flats4us.Entities
                 .WithMany(x => x.OfferPromotions)
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }

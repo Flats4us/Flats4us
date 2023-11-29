@@ -6,7 +6,6 @@ namespace Flats4us.Services.Interfaces
     public interface IStudentService
     {
         Task RegisterAsync(StudentRegisterDto userDto);
-        Task<User> AuthenticateAsync(string email, string password);
         Task<User?> GetUserByIdAsync(int userId);
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<bool> DeleteUserAsync(int id);

@@ -10,6 +10,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Flats4us.Services.Interfaces;
 using Flats4us.Services;
+using Flats4us.Helpers.Exceptions;
 
 namespace Flats4us.Controllers
 {
@@ -20,13 +21,14 @@ namespace Flats4us.Controllers
         private readonly IConfiguration _configuration;
         private readonly IOwnerService _ownerService;
         private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService)
+        public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService, IUserService userService)
         {
             _configuration = configuration;
             _ownerService = ownerService;
             _studentService = studentService;
-            
+            _userService = userService;
         }
 
         [HttpPost("register/Student")]
@@ -59,75 +61,18 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<String>> LoginStudent([FromForm] UserLoginDto request) {
-            var user = await _studentService.AuthenticateAsync(request.Email, request.Password);
-            if (user == null)
-            {
-                return BadRequest("Incorrect email or password");
-            }
-
-            string token = CreateToken(user);
-
-            return Ok(token);    
-        }
-
-        [HttpGet("profile")]
-        [Authorize]
-        public async Task<ActionResult<UserInfoDto>> GetUserProfile()
+        public async Task<ActionResult<String>> Login([FromForm] UserLoginDto request)
         {
-            // Get the user ID from the token
-            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            // Retrieve the user's information from the database or any other data source
-
-            IUserService userService;
-            User basicUser;
-
-            // Try fetching with StudentService
-            basicUser = await _studentService.GetUserByIdAsync(userId);
-
-            if (basicUser == null)
+            try
             {
-                // Try fetching with OwnerService
-                basicUser = await _ownerService.GetUserByIdAsync(userId);
+                var token = await _userService.AuthenticateAsync(request.Email, request.Password);
+
+                return Ok(token);    
             }
-
-            if (basicUser == null)
+            catch(AuthenticationException ex)
             {
-                return NotFound();
+                return Unauthorized(ex.Message);
             }
-
-            var userDto = new UserInfoDto
-            {
-                Id = basicUser.UserId,
-                Username = basicUser.Username,
-            };
-
-            return Ok(userDto);
-        }
-
-        private string CreateToken(User user)
-        {
-            List<Claim> claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
-                new Claim(ClaimTypes.Role, user.GetType().Name),
-            };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("Jwt:Key").Value!));
-
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: DateTime.Now.AddDays(1),
-                signingCredentials: creds
-                );
-
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
         }
     }
 }

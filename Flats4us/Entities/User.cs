@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities
@@ -6,8 +7,6 @@ namespace Flats4us.Entities
     [Table("User")]
     public abstract class User
     {
-        public const int MinUsernameLenght = 6;
-        public const int MaxUsernameLenght = 30;
         public const int MinPasswordLenght = 6;
         public const int MaxPasswordeLenght = 30;
 
@@ -23,11 +22,8 @@ namespace Flats4us.Entities
         [Required]
         public string Address { get; set; }
 
-        [MaxLength(MaxUsernameLenght)]
-        [MinLength(MinUsernameLenght)]
-        public string Username { get; set; }
-
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [MinLength(8)]
