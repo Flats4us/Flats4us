@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StudentCardsVerificationComponent } from './student-cards-verification.component';
+import { DocumentVerificationComponent } from './document-verification.component';
 
 describe('StudentCardsVerificationComponent', () => {
-	let component: StudentCardsVerificationComponent;
-	let fixture: ComponentFixture<StudentCardsVerificationComponent>;
+	let component: DocumentVerificationComponent;
+	let fixture: ComponentFixture<DocumentVerificationComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [StudentCardsVerificationComponent],
+			imports: [DocumentVerificationComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(StudentCardsVerificationComponent);
+		fixture = TestBed.createComponent(DocumentVerificationComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

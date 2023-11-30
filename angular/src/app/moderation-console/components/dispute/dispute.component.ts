@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IDispute } from './IDispute';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
-import { IStudentCard } from '../student-cards-verification/IStudentCard';
 
 @Component({
 	selector: 'app-dispute',

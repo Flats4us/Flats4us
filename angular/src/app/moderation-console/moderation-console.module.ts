@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { StudentCardsVerificationComponent } from './components/student-cards-verification/student-cards-verification.component';
 import { ModerationConsoleComponent } from './moderation-console.component';
 import { DisputeComponent } from './components/dispute/dispute.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -18,11 +17,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
+import { DocumentVerificationComponent } from './components/id-cards-verification/document-verification.component';
 
 @NgModule({
 	declarations: [
 		ModerationConsoleComponent,
-		StudentCardsVerificationComponent,
+		DocumentVerificationComponent,
 		DisputeComponent,
 		DisputeConversationComponent,
 	],

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IStudentCard } from '../components/student-cards-verification/IStudentCard';
 import { IDispute } from '../components/dispute/IDispute';
+import { IUser } from '../components/id-cards-verification/document.interface';
 
 @Injectable({
 	providedIn: 'root',
@@ -10,8 +10,8 @@ import { IDispute } from '../components/dispute/IDispute';
 export class ModerationConsoleService {
 	constructor(private http: HttpClient) {}
 
-	public getStudentCards(): Observable<IStudentCard[]> {
-		return this.http.get<IStudentCard[]>('../../assets/students.json');
+	public getStudentCards(): Observable<IUser[]> {
+		return this.http.get<IUser[]>('../../assets/students.json');
 	}
 
 	public getDisputes() {

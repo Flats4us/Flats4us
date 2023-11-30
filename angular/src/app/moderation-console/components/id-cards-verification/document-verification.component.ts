@@ -8,14 +8,14 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-import { IStudentCard } from './IStudentCard';
+import { IUser } from './document.interface';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-	selector: 'app-student-cards-verification',
-	templateUrl: './student-cards-verification.component.html',
+	selector: 'app-id-cards-verification',
+	templateUrl: './document-verification.component.html',
 	animations: [
 		trigger('detailExpand', [
 			state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -26,13 +26,13 @@ import { ActivatedRoute } from '@angular/router';
 			),
 		]),
 	],
-	styleUrls: ['./student-cards-verification.component.scss'],
+	styleUrls: ['./document-verification.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentCardsVerificationComponent {
+export class DocumentVerificationComponent {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	@ViewChild(MatTable) public table: MatTable<IStudentCard>;
+	@ViewChild(MatTable) public table: MatTable<IUser>;
 
 	public columnsToDisplay: Map<string, string> = new Map<string, string>([
 		['email', 'Email'],
@@ -46,8 +46,8 @@ export class StudentCardsVerificationComponent {
 		...this.columnsToDisplay.keys(),
 		'expand',
 	];
-	public dataSource$: Observable<IStudentCard[]>;
-	public expandedElement: IStudentCard | null | undefined;
+	public dataSource$: Observable<IUser[]>;
+	public expandedElement: IUser | null | undefined;
 
 	constructor(
 		private snackBar: MatSnackBar,
