@@ -1,0 +1,64 @@
+<div>
+	<h1 class="text-4xl p-4 font-semibold">Obserwowane oferty</h1>
+</div>
+<div class="watched-offers">
+	<div class="container">
+		<mat-card
+			*ngFor="let watchedOffer of watchedOffers$ | async"
+			class="card"
+			(click)="navigateToFlat(watchedOffer.url)"
+		>
+			<mat-card-subtitle
+				>{{ watchedOffer.type }} - {{ watchedOffer.regionCity.city }},
+				{{ watchedOffer.district }}</mat-card-subtitle
+			>
+			<img
+				mat-card-image
+				class="imgs"
+				alt="Mieszkanie"
+				[src]="watchedOffer.imgSource"
+			/>
+			<mat-card-content matSort>
+				<mat-chip-listbox>
+					<mat-chip>
+						<div class="chip">
+							<mat-icon>attach_money</mat-icon>
+							<span>Cena: {{ watchedOffer.price }} zł/mc</span>
+						</div>
+					</mat-chip>
+					<mat-chip>
+						<div class="chip">
+							<mat-icon>add</mat-icon
+							><span>Czynsz: {{ watchedOffer.rent }} zł/mc</span>
+						</div>
+					</mat-chip>
+					<mat-chip>
+						<div class="chip">
+							<mat-icon>straighten</mat-icon>
+							<span>Powierzchnia: {{ watchedOffer.area }} m²</span>
+						</div>
+					</mat-chip>
+					<mat-chip>
+						<div class="chip">
+							<mat-icon>meeting_room</mat-icon>
+							<span>Liczba pokoi: {{ watchedOffer.rooms }}</span>
+						</div>
+					</mat-chip>
+					<mat-chip>
+						<mat-mini-fab
+							class="box-icon"
+							id="deleteOffer"
+							type="button"
+							mat-icon-button
+							matTooltip="Usuń z obserwowanych"
+							aria-label="DeleteOffer"
+							(click)="deleteOffer(watchedOffer.id)"
+						>
+							<mat-icon>delete_forever</mat-icon>
+						</mat-mini-fab>
+					</mat-chip>
+				</mat-chip-listbox>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>

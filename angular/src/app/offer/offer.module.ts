@@ -12,10 +12,14 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import { OfferRoutingModule } from './offer-routing.module';
+import { WatchedOffersComponent } from './components/watched-offers/watched-offers.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { OfferService } from './services/offer-service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-	exports: [AddOfferComponent],
-	declarations: [AddOfferComponent],
+	exports: [AddOfferComponent, WatchedOffersComponent],
+	declarations: [AddOfferComponent, WatchedOffersComponent],
 	imports: [
 		CommonModule,
 		OfferRoutingModule,
@@ -28,6 +32,9 @@ import { OfferRoutingModule } from './offer-routing.module';
 		MatSelectModule,
 		MatButtonModule,
 		MatIconModule,
+		MatChipsModule,
+		MatTooltipModule,
 	],
+	providers: [OfferService],
 })
 export class OfferModule {}

@@ -1,0 +1,50 @@
+[
+	{
+		"id": "1",
+		"regionCity": { "region": "mazowieckie", "city": "Warszawa" },
+		"district": "Mokotów",
+		"price": 2000,
+		"rent": 500,
+		"area": 34,
+		"rooms": 4,
+		"url": "./assets/mieszkanie.jpg",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"id": "2",
+		"regionCity": { "region": "mazowieckie", "city": "Warszawa" },
+		"district": "Ochota",
+		"price": 3500,
+		"rent": 1000,
+		"area": 50,
+		"rooms": 5,
+		"url": "./assets/mieszkanie.jpg",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"id": "3",
+		"regionCity": { "region": "mazowieckie", "city": "Warszawa" },
+		"district": "Śródmieście",
+		"price": 5000,
+		"rent": 1500,
+		"area": 60,
+		"rooms": 6,
+		"url": "./assets/mieszkanie.jpg",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	},
+	{
+		"id": "4",
+		"regionCity": { "region": "mazowieckie", "city": "Warszawa" },
+		"district": "Ursynów",
+		"price": 3000,
+		"rent": 800,
+		"area": 42,
+		"rooms": 5,
+		"url": "./assets/mieszkanie.jpg",
+		"imgSource": "./assets/mieszkanie.jpg",
+		"type": "Mieszkanie"
+	}
+]
