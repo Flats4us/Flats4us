@@ -43,7 +43,9 @@ export class DocumentVerificationComponent {
 	public enlargedImageTemplate!: TemplateRef<never>;
 	public columnsToDisplay: Map<string, string> = new Map<string, string>([
 		['email', 'Email'],
+    ['university', 'Uczelnia'],
 		['studentNumber', 'Nr albumu'],
+    ['documentNumber', 'Nr dokumentu'],
 		['firstName', 'Imię'],
 		['lastName', 'Nazwisko'],
 		['cardExpirationDate', 'Data ważności legitymacji'],
