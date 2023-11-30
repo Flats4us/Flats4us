@@ -1,46 +1,32 @@
 <div class="disputes-wrapper">
-	<mat-tab-group mat-stretch-tabs="true" class="full-screen-tab-group">
-		<mat-tab label="Otwarte">
-			<div class="disputes-choice">
-				<div class="disputes-header">
-					<span class="header-title">Spór między</span>
-					<span class="header-title">Stworzył spór</span>
-					<span class="header-title">Data stworzenia</span>
-					<span class="header-title">Data dodania moderatora</span>
-				</div>
-				<div class="disputes-choice__conversation" routerLink="1">
-					<span class="content-cell">Lorem ipsum</span>
-					<span class="content-cell">Jan Kowalski</span>
-					<span class="content-cell">2023-01-01</span>
-					<span class="content-cell">2023-01-01</span>
-				</div>
-				<div class="disputes-choice__conversation" routerLink="2">
-					<span class="content-cell">Lorem ipsum</span>
-					<span class="content-cell">Jan Kowalski</span>
-					<span class="content-cell">2023-01-01</span>
-					<span class="content-cell">2023-01-01</span>
-				</div>
-				<div class="disputes-choice__conversation" routerLink="3">
-					<span class="content-cell">Lorem ipsum</span>
-					<span class="content-cell">Jan Kowalski</span>
-					<span class="content-cell">2023-01-01</span>
-					<span class="content-cell">2023-01-01</span>
-				</div>
-				<div class="disputes-choice__conversation" routerLink="4">
-					<span class="content-cell">Lorem ipsum</span>
-					<span class="content-cell">Jan Kowalski</span>
-					<span class="content-cell">2023-01-01</span>
-					<span class="content-cell">2023-01-01</span>
-				</div>
-				<div class="disputes-choice__conversation" routerLink="5">
-					<span class="content-cell">Lorem ipsum</span>
-					<span class="content-cell">Jan Kowalski</span>
-					<span class="content-cell">2023-01-01</span>
-					<span class="content-cell">2023-01-01</span>
-				</div>
-			</div>
-		</mat-tab>
-	</mat-tab-group>
+	<table
+		mat-table
+		class="mat-elevation-z8"
+		multiTemplateDataRows
+		[dataSource]="dataSource$"
+	>
+		<ng-container
+			*ngFor="let column of columnsToDisplay.keys()"
+			matColumnDef="{{ column }}"
+		>
+			<th *matHeaderCellDef mat-header-cell>{{ columnsToDisplay.get(column) }}</th>
+			<td *matCellDef="let element" mat-cell>{{ element[column] }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="expand">
+			<th *matHeaderCellDef mat-header-cell aria-label="row actions">&nbsp;</th>
+			<td *matCellDef="let element" mat-cell>
+				<button mat-button routerLink="1">Zobacz spór</button>
+			</td>
+		</ng-container>
+
+		<tr *matHeaderRowDef="columnsToDisplayWithExpand" mat-header-row></tr>
+		<tr
+			*matRowDef="let element; columns: columnsToDisplayWithExpand"
+			mat-row
+			class="example-element-row"
+		></tr>
+	</table>
 
 	<div class="disputes-box">
 		<router-outlet></router-outlet>

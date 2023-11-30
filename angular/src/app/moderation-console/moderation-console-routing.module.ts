@@ -12,7 +12,6 @@ const routes: Routes = [
 		children: [
 			{ path: '', pathMatch: 'full', redirectTo: 'verification' },
 			{ path: 'verification', component: StudentCardsVerificationComponent },
-			{ path: '', pathMatch: 'full', redirectTo: 'dispute' },
 			{ path: 'dispute', component: DisputeComponent },
 			{ path: 'dispute/:id', component: DisputeConversationComponent },
 		],

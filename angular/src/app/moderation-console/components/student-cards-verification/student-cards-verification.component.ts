@@ -11,6 +11,7 @@ import {
 import { IStudentCard } from './IStudentCard';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-student-cards-verification',
@@ -50,10 +51,19 @@ export class StudentCardsVerificationComponent {
 
 	constructor(
 		private snackBar: MatSnackBar,
-		private service: ModerationConsoleService
+		private service: ModerationConsoleService,
+		private route: ActivatedRoute
 	) {
-		this.dataSource$ = this.service.getStudentCards();
+		this.dataSource$ = /*this.loadData();*/ this.service.getStudentCards();
 	}
+
+	/*public loadData(): Observable<IStudentCard[]> {
+		const param = this.route.snapshot.paramMap.get('');
+		if (param === 'verification') {
+			return this.service.getStudentCards();
+		}
+		return this.service.getStudentCards();
+	}*/
 
 	public reject(email: string) {
 		/*ELEMENT_DATA.splice(
