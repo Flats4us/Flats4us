@@ -37,7 +37,6 @@ namespace Flats4us.Services
         {
             var surveyStudent = new SurveyStudent
             {
-                SurveyStudentId = input.SurveyStudentId,
                 Party = input.Party,
                 Tidiness = input.Tidiness,
                 Smoking = input.Smoking,
@@ -48,6 +47,7 @@ namespace Flats4us.Services
                 MaxNumberOfRoommates = input.MaxNumberOfRoommates,
                 RoommateGender = input.RoommateGender,
                 MinRoommateAge = input.MinRoommateAge,
+                StudentId = input.StudentId,
             };
 
             await _context.StudentSurveys.AddAsync(surveyStudent);

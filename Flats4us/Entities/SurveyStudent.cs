@@ -7,8 +7,8 @@ namespace Flats4us.Entities
 {
     public class SurveyStudent
     {
-        [ForeignKey("Student")]
         [SurveyIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SurveyStudentId { get; set; }
 
         // Scale 1-10
@@ -60,6 +60,10 @@ namespace Flats4us.Entities
         [Required]
         [SurveyIgnore]
         public int MaxRoommateAge { get; set; }
+        
+        [Required]
+        public int StudentId { get; set; }
+
 
         public virtual Student Student { get; set; }
     }
