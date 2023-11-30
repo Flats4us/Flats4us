@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -29,18 +30,111 @@ namespace Flats4us.Services
             _configuration = configuration;
         }
 
-        public async Task<string> AuthenticateAsync(string email, string passwordHash)
+        public async Task<string> AuthenticateAsync(string email, string password)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(passwordHash, user.PasswordHash))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
-                throw new AuthenticationException("Login failed: Invalid username or password.");
+                throw new AuthenticationException("Login failed: Invalid email or password.");
             }
+
+            user.ActivityStatus = true;
+            user.LastLoginDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
 
             var token = CreateToken(user);
 
             return token;
+        }
+
+        public async Task RegisterOwnerAsync(OwnerRegisterDto input)
+        {
+            var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
+            if (existingUser != null)
+            {
+                throw new Exception("Email already exists");
+            }
+
+            if (input.Password.Length < 8 || input.Password.Length > 50)
+            {
+                throw new Exception("Password must be between 8 and 50 characters");
+            }
+
+            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit))
+            {
+                throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+            }
+
+            var owner = _mapper.Map<Owner>(input);
+
+            if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, $"Images/Users/{owner.ImagesPath}/ProfilePicture");
+            }
+            else
+            {
+                throw new Exception("Profile picture saving failure");
+            }
+
+            if (input.Document != null && input.Document.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.Document, $"Images/Users/{owner.ImagesPath}/Document");
+            }
+            else
+            {
+                throw new Exception("Document saving failure");
+            }
+
+            _context.Owners.Add(owner);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RegisterStudentAsync(StudentRegisterDto input)
+        {
+            var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
+            if (existingUser != null)
+            {
+                throw new Exception("Email already exists");
+            }
+
+            if (input.Password.Length < 8 || input.Password.Length > 50)
+            {
+                throw new Exception("Password must be between 8 and 50 characters");
+            }
+
+            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit))
+            {
+                throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+            }
+
+            var student = _mapper.Map<Student>(input);
+
+            var studentSurvey =_mapper.Map<SurveyStudent>(input);
+
+            student.SurveyStudent = studentSurvey;
+
+            if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, $"Images/Users/{student.ImagesPath}/ProfilePicture");
+            }
+            else
+            {
+                throw new Exception("Profile picture saving failure");
+            }
+
+            if (input.Document != null && input.Document.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.Document, $"Images/Users/{student.ImagesPath}/Document");
+            }
+            else
+            {
+                throw new Exception("Document saving failure");
+            }
+
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
         }
 
         protected User PopulateCommonFieldsFromDto(User user, UserRegisterDto request)
