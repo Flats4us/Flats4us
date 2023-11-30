@@ -8,17 +8,60 @@ using Helpers;
 using System.Xml;
 using System.Text.Encodings.Web;
 using Flats4us.Services.Interfaces;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services
 {
     public class SurveyService : ISurveyService
     {
+        
+
+        public readonly Flats4usContext _context;
+
+        public SurveyService(Flats4usContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<SurveyStudent>> GetAllSurveyStudentsAsync()
+        {
+            return await _context.StudentSurveys.ToListAsync();
+        }
+
+        public async Task<SurveyStudent> GetSurveyStudentById(int id)
+        {
+            return await _context.StudentSurveys.FirstAsync(x => x.SurveyStudentId == id);
+        }
+
+        public async Task AddSurveyStudentAsync(SurveyStudentDto input)
+        {
+            var surveyStudent = new SurveyStudent
+            {
+                SurveyStudentId = input.SurveyStudentId,
+                Party = input.Party,
+                Tidiness = input.Tidiness,
+                Smoking = input.Smoking,
+                Sociability = input.Sociability,
+                Animals = input.Animals,
+                Vegan = input.Vegan,
+                LookingForRoommate = input.LookingForRoommate,
+                MaxNumberOfRoommates = input.MaxNumberOfRoommates,
+                RoommateGender = input.RoommateGender,
+                MinRoommateAge = input.MinRoommateAge,
+            };
+
+            await _context.StudentSurveys.AddAsync(surveyStudent);
+            await _context.SaveChangesAsync();
+        }
+
+
+
+
         JsonSerializerOptions options = new JsonSerializerOptions()
         {
             WriteIndented = true,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
-
         public async Task<string> MakingSurvey(Type type, string title, string lang)
         {
             XmlDocument xmlDoc = new XmlDocument();

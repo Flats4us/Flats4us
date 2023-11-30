@@ -21,6 +21,8 @@ builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
+builder.Services.AddScoped<IArgumentService, ArgumentService>();
+builder.Services.AddScoped<ISurveyService, SurveyService>();
 
 builder.Services.AddControllers();
 
