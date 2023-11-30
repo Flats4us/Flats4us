@@ -1,7 +1,10 @@
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localePl from '@angular/common/locales/pl';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -13,7 +16,8 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MatNativeDateModule } from '@angular/material/core';
+
+registerLocaleData(localePl);
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],

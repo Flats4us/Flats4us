@@ -12,10 +12,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDialogComponent } from '../dialog/rents-dialog.component';
-import { registerLocaleData } from '@angular/common';
-import localePL from '@angular/common/locales/pl';
-
-registerLocaleData(localePL, 'pl');
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
