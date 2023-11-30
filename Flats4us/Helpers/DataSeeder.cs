@@ -14,7 +14,7 @@ public static class DataSeeder
 
         #region Equipment
 
-        var equipment1 = new Equipment { 
+        var equipment1 = new Equipment {
             Name = "Dishwasher"
         };
         var equipment2 = new Equipment
@@ -150,6 +150,54 @@ public static class DataSeeder
 
         #endregion
 
+        #region Moderator
+
+        var moderator1 = new Moderator
+        {
+            Name = "Jan",
+            Surname = "Majewski",
+            Address = "Przykładowa 10, 02-789 Warszawa",
+            Email = "jmajewski@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "jmajewski",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
+            HireDate = new DateTime(2023, 1, 12)
+
+        };
+
+        var moderator2 = new Moderator
+        {
+            Name = "Jan",
+            Surname = "Adamczyk",
+            Address = "Kaukaska 9, 02-760 Warszawa",
+            Email = "jadamczyk@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "jadamczyk",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
+            HireDate = new DateTime(2023, 1, 12)
+        };
+        var moderator3 = new Moderator
+        {
+            Name = "Zbyszek",
+            Surname = "Moderator",
+            Address = "Kormoranów 1, 02-836 Warszawa",
+            Email = "zmoderator@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "zmoderator",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
+            HireDate = new DateTime(2023, 2, 7),
+        };
+
+        dbContext.Moderators.AddRange(moderator1, moderator2, moderator3);
+
+        #endregion
+
         #region Student
 
         var student1 = new Student
@@ -184,25 +232,6 @@ public static class DataSeeder
 
         #endregion
 
-        #region Moderator
-
-        var moderator1 = new Moderator
-        {
-            Name = "Zbyszek",
-            Surname = "Moderator",
-            Address = "Kormoranów 1, 02-836 Warszawa",
-            Email = "zmoderator@gmail.com",
-            PhoneNumber = "123456789",
-            AccountCreationDate = new DateTime(2023, 1, 12),
-            LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "zmoderator",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
-            HireDate = new DateTime(2023, 2, 7),
-        };
-
-        dbContext.Moderators.AddRange(moderator1);
-
-        #endregion
 
         #region Flat
 
@@ -426,7 +455,7 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
-        
+
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
 
         ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
@@ -580,7 +609,7 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
-            PlotArea= 200,
+            PlotArea = 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
         var house2 = new House
@@ -603,7 +632,7 @@ public static class DataSeeder
             NumberOfFloors = 2,
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
-        };        
+        };
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -624,7 +653,7 @@ public static class DataSeeder
             NumberOfFloors = 4,
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
-        };        
+        };
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -667,7 +696,7 @@ public static class DataSeeder
             PlotArea = 140,
             Equipment = { equipment2, equipment6, equipment10, equipment11 }
         };
-        
+
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
 
@@ -1026,6 +1055,100 @@ public static class DataSeeder
         };
 
         dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15);
+
+        #endregion
+
+        #region Argument
+
+        var argument1 = new Argument
+        {
+            Description = "sprzeczka pierwsza ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = 0,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument2 = new Argument
+        {
+            Description = "a to jest druga ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = 0,
+            InterventionNeed = false,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument3 = new Argument
+        {
+            Description = "a tutaj sobie wpiszę lorem pisum",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument4 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = false,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4);
+
+        #endregion
+
+        #region ArgumentIntervention
+
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 1, 12),
+            Justification = "string",
+            Argument = argument1,
+            Moderator = moderator1
+        };
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1);
+
+        #endregion
+
+        #region SurveyStudent
+
+        var surveyStudent1 = new SurveyStudent
+        {
+            Party = 0,
+            Tidiness = 0,
+            Smoking = true,
+            Sociability = 0,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 0,
+            RoommateGender = 0,
+            MinRoommateAge = 0,
+            MaxRoommateAge = 0,
+            Student = student1
+        };
+
+
+         dbContext.StudentSurveys.AddRange(surveyStudent1);
 
         #endregion
 

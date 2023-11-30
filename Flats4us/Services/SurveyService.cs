@@ -8,6 +8,7 @@ using Helpers;
 using System.Xml;
 using System.Text.Encodings.Web;
 using Flats4us.Services.Interfaces;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services
 {
@@ -18,7 +19,6 @@ namespace Flats4us.Services
             WriteIndented = true,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
-
         public async Task<string> MakingSurvey(Type type, string title, string lang)
         {
             XmlDocument xmlDoc = new XmlDocument();

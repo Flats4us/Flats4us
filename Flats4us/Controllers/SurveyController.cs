@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,7 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        // GET: /api/Survey/GetSurveyStudent?lang=XX
-        [HttpGet]
-        [Route("GetSurveyStudent")]
+        [HttpGet("surveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
         {
             try
@@ -38,9 +37,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
-        [HttpGet]
-        [Route("GetSurveyOwnerOffer")]
+        
+        [HttpGet("SurveyOwnerOffer")]
         public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
         {
             try

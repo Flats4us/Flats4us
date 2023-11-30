@@ -32,6 +32,7 @@ builder.Services.AddScoped<IOwnerService, OwnerService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IArgumentService, ArgumentService>();
 
 builder.Services.AddControllers();
 
