@@ -155,37 +155,23 @@ public static class DataSeeder
         var moderator1 = new Moderator
         {
             Name = "Jan",
-            Surname = "Adamczyk",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
-            Email = "jadamczyk@gmail.com",
+            Surname = "Majewski",
+            Address = "Przykładowa 10, 02-789 Warszawa",
+            Email = "jmajewski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "jadamczyk",
+            Username = "jmajewski",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
             HireDate = new DateTime(2023, 1, 12)
 
         };
 
-        dbContext.Moderators.AddRange(moderator1);
-
-        #endregion
-
-        #region Student
-
-        var moderator1 = new Moderator
+        var moderator2 = new Moderator
         {
             Name = "Jan",
             Surname = "Adamczyk",
-            Street = "Kaukaska",
-            Number = "9",
-            Flat = 2,
-            City = "Warszawa",
-            PostalCode = "02-760",
+            Address = "Kaukaska 9, 02-760 Warszawa",
             Email = "jadamczyk@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
@@ -193,10 +179,22 @@ public static class DataSeeder
             Username = "jadamczyk",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
             HireDate = new DateTime(2023, 1, 12)
-
+        };
+        var moderator3 = new Moderator
+        {
+            Name = "Zbyszek",
+            Surname = "Moderator",
+            Address = "Kormoranów 1, 02-836 Warszawa",
+            Email = "zmoderator@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "zmoderator",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
+            HireDate = new DateTime(2023, 2, 7),
         };
 
-        dbContext.Moderators.AddRange(moderator1);
+        dbContext.Moderators.AddRange(moderator1, moderator2, moderator3);
 
         #endregion
 
@@ -234,25 +232,6 @@ public static class DataSeeder
 
         #endregion
 
-        #region Moderator
-
-        var moderator1 = new Moderator
-        {
-            Name = "Zbyszek",
-            Surname = "Moderator",
-            Address = "Kormoranów 1, 02-836 Warszawa",
-            Email = "zmoderator@gmail.com",
-            PhoneNumber = "123456789",
-            AccountCreationDate = new DateTime(2023, 1, 12),
-            LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "zmoderator",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
-            HireDate = new DateTime(2023, 2, 7),
-        };
-
-        dbContext.Moderators.AddRange(moderator1);
-
-        #endregion
 
         #region Flat
 
