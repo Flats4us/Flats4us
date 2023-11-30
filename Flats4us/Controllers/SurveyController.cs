@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,53 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        // GET: /api/Survey/GetSurveyStudent?lang=XX
-        [HttpGet]
-        [Route("GetSurveyStudent")]
+        [HttpGet("student")]
+        //[Route("GetSurveyStudent")]
+        public async Task<IActionResult> GetSurveyStudents()
+        {
+            _logger.LogInformation("Getting SurveyStudent");
+            var surveyStudent = await _surveyService.GetAllSurveyStudentsAsync();
+
+            return Ok(surveyStudent);
+        }
+
+
+        [HttpGet("{id}")]
+        //[Route("GetSurveyStudent")]
+        public async Task<IActionResult> GetSurveyStudentById(int id)
+        {
+            _logger.LogInformation("Getting SurveyStudent by ID");
+            var surveyStudent = await _surveyService.GetSurveyStudentById(id);
+
+            return Ok(surveyStudent);
+        }
+
+        [HttpPost]
+        //[Route("GetSurveyStudent")]
+        public async Task<IActionResult> PostSurveyStudent(SurveyStudentDto input)
+        {
+
+            try
+            {
+                _logger.LogInformation("Getting SurveyStudent");
+                await _surveyService.AddSurveyStudentAsync(input);
+                return Ok("dodano ankiete");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+
+
+
+
+
+
+
+        [HttpGet("surveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
         {
             try
@@ -38,9 +83,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
-        [HttpGet]
-        [Route("GetSurveyOwnerOffer")]
+        
+        [HttpGet("SurveyOwnerOffer")]
         public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
         {
             try

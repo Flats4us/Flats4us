@@ -150,6 +150,31 @@ public static class DataSeeder
 
         #endregion
 
+        #region Moderator
+
+        var moderator1 = new Moderator
+        {
+            Name = "Jan",
+            Surname = "Adamczyk",
+            Street = "Kaukaska",
+            Number = "9",
+            Flat = 2,
+            City = "Warszawa",
+            PostalCode = "02-760",
+            Email = "jadamczyk@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            Username = "jadamczyk",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("jadamczyk123"),
+            HireDate = new DateTime(2023, 1, 12)
+
+        };
+
+        dbContext.Moderators.AddRange(moderator1);
+
+        #endregion
+
         #region Student
 
         var student1 = new Student
@@ -1028,6 +1053,78 @@ public static class DataSeeder
         dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15);
 
         #endregion
+
+        #region Argument
+
+        var argument1 = new Argument
+        {
+            Description = "sprzeczka pierwsza ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = 0,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument2 = new Argument
+        {
+            Description = "a to jest druga ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = 0,
+            InterventionNeed = false,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument3 = new Argument
+        {
+            Description = "a tutaj sobie wpiszę lorem pisum",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+        var argument4 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = null,
+            OwnerAcceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = false,
+            MederatorDecisionDate = null,
+            Offer = offer1,
+            Student = student1
+        };
+
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4);
+
+        #endregion
+
+        #region ArgumentIntervention
+
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 1, 12),
+            Justification = "string",
+            Argument = argument1,
+            Moderator = moderator1
+        };
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1);
+
+        #endregion
+
 
         dbContext.SaveChanges();
     }
