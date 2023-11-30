@@ -31,8 +31,6 @@ namespace Flats4us.Services
             student.Facebook = studentDto.Facebook;
             student.Twitter_X = studentDto.Twitter_X;
             student.Instagram = studentDto.Instagram;
-            student.RoommatesStatus = studentDto.RoommatesStatus;
-            student.IsTenant = studentDto.IsTenant;
             student.ImagesPath = imageFolder;
             return student;
         }

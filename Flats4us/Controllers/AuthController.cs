@@ -36,8 +36,8 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _studentService.RegisterAsync(request);
-                return Ok("User added successfully");
+                await _userService.RegisterStudentAsync(request);
+                return Ok("Registered successfully");
             }
             catch (Exception ex)
             {
@@ -50,9 +50,8 @@ namespace Flats4us.Controllers
         {
             try
             {
-
-                var user = await _ownerService.RegisterAsync(request);
-                return Ok(user);
+                await _userService.RegisterOwnerAsync(request);
+                return Ok("Registered successfully");
             }
             catch (Exception ex)
             {

@@ -37,7 +37,9 @@ namespace Flats4us.Entities
         [Required]
         public DateTime AccountCreationDate { get; set; }
 
+        public DateTime? LastLoginDate { get; set; }
+
         [Required]
-        public DateTime LastLoginDate { get; set; }
+        public bool ActivityStatus { get; set; }
     }
 }
