@@ -61,11 +61,18 @@
 						class="inline-block h-32"
 						src="../../../../assets/560893601bcc7_o_medium.webp"
 						alt="student card"
+						(click)="
+							openImageDialog('../../../../assets/560893601bcc7_o_medium.webp')
+						"
 					/>
+					<ng-template #enlargedImageTemplate let-data>
+						<img alt="Enlarged Image" class="full-width" [src]="data.src" />
+					</ng-template>
 					<img
 						class="inline-block h-32"
 						src="../../../../assets/legitymacja-template-1.png"
 						alt="student card"
+						(click)="openImageDialog('../../../../assets/legitymacja-template-1.png')"
 					/>
 				</div>
 			</div>

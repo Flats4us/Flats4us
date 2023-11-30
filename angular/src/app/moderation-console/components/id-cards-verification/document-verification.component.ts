@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	ViewChild,
+	TemplateRef,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTable } from '@angular/material/table';
 import {
@@ -12,6 +17,7 @@ import { IUser } from './document.interface';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-id-cards-verification',
@@ -33,7 +39,8 @@ export class DocumentVerificationComponent {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	@ViewChild(MatTable) public table: MatTable<IUser>;
-
+	@ViewChild('enlargedImageTemplate')
+	public enlargedImageTemplate!: TemplateRef<never>;
 	public columnsToDisplay: Map<string, string> = new Map<string, string>([
 		['email', 'Email'],
 		['studentNumber', 'Nr albumu'],
@@ -52,9 +59,17 @@ export class DocumentVerificationComponent {
 	constructor(
 		private snackBar: MatSnackBar,
 		private service: ModerationConsoleService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private matDialog: MatDialog
 	) {
 		this.dataSource$ = /*this.loadData();*/ this.service.getStudentCards();
+	}
+
+	public openImageDialog(imageSrc: string): void {
+		this.matDialog.open(this.enlargedImageTemplate, {
+			data: { src: imageSrc },
+			panelClass: 'custom-dialog-container',
+		});
 	}
 
 	/*public loadData(): Observable<IStudentCard[]> {
