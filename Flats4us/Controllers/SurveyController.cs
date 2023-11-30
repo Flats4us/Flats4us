@@ -21,52 +21,6 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        [HttpGet("student")]
-        //[Route("GetSurveyStudent")]
-        public async Task<IActionResult> GetSurveyStudents()
-        {
-            _logger.LogInformation("Getting SurveyStudent");
-            var surveyStudent = await _surveyService.GetAllSurveyStudentsAsync();
-
-            return Ok(surveyStudent);
-        }
-
-
-        [HttpGet("{id}")]
-        //[Route("GetSurveyStudent")]
-        public async Task<IActionResult> GetSurveyStudentById(int id)
-        {
-            _logger.LogInformation("Getting SurveyStudent by ID");
-            var surveyStudent = await _surveyService.GetSurveyStudentById(id);
-
-            return Ok(surveyStudent);
-        }
-
-        [HttpPost]
-        //[Route("GetSurveyStudent")]
-        public async Task<IActionResult> PostSurveyStudent(SurveyStudentDto input)
-        {
-
-            try
-            {
-                _logger.LogInformation("Getting SurveyStudent");
-                await _surveyService.AddSurveyStudentAsync(input);
-                return Ok("dodano ankiete");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"FAILED: Adding offar - body: {input}");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
-            }
-        }
-
-
-
-
-
-
-
-
         [HttpGet("surveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
         {
