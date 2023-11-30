@@ -25,10 +25,17 @@ namespace Flats4us.Controllers
         [Route("GetSurveyStudent")]
         public async Task<IActionResult> GetSurveyStudents(string lang)
         {
-            _logger.LogInformation("Getting SurveyStudent");
-            var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", lang);
-            
-            return Ok(surveyStudent);
+            try
+            {
+                _logger.LogInformation("Getting SurveyStudent");
+                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", lang);
+
+                return Ok(surveyStudent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException?.Message);
+            }
         }
 
         // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
@@ -36,10 +43,17 @@ namespace Flats4us.Controllers
         [Route("GetSurveyOwnerOffer")]
         public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
         {
-            _logger.LogInformation("Getting SurveyOwnerOffer");
-            var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", lang);
-          
-            return Ok(surveyOwnerOffer);
+            try
+            {
+                _logger.LogInformation("Getting SurveyOwnerOffer");
+                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", lang);
+
+                return Ok(surveyOwnerOffer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message + ex.InnerException?.Message);
+            }
         }
     }
 }
