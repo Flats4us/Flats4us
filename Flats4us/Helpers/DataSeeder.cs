@@ -14,7 +14,7 @@ public static class DataSeeder
 
         #region Equipment
 
-        var equipment1 = new Equipment { 
+        var equipment1 = new Equipment {
             Name = "Dishwasher"
         };
         var equipment2 = new Equipment
@@ -447,10 +447,10 @@ public static class DataSeeder
             Elevator = true,
             Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
-        
+
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
 
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath);  
+        ImageUtility.SeedPropertyImage(flat1.ImagesPath);
         ImageUtility.SeedPropertyImage(flat2.ImagesPath);
         ImageUtility.SeedPropertyImage(flat3.ImagesPath);
         ImageUtility.SeedPropertyImage(flat4.ImagesPath);
@@ -601,7 +601,7 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
-            PlotArea= 200,
+            PlotArea = 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
         var house2 = new House
@@ -624,7 +624,7 @@ public static class DataSeeder
             NumberOfFloors = 2,
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
-        };        
+        };
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -645,7 +645,7 @@ public static class DataSeeder
             NumberOfFloors = 4,
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
-        };        
+        };
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -688,7 +688,7 @@ public static class DataSeeder
             PlotArea = 140,
             Equipment = { equipment2, equipment6, equipment10, equipment11 }
         };
-        
+
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
 
@@ -1085,6 +1085,28 @@ public static class DataSeeder
 
         #endregion
 
+        #region SurveyStudent
+
+        var surveyStudent1 = new SurveyStudent
+        {
+            Party = 0,
+            Tidiness = 0,
+            Smoking = true,
+            Sociability = 0,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 0,
+            RoommateGender = 0,
+            MinRoommateAge = 0,
+            MaxRoommateAge = 0,
+            Student = student1
+        };
+
+
+         dbContext.StudentSurveys.AddRange(surveyStudent1);
+
+        #endregion
 
         dbContext.SaveChanges();
     }
