@@ -12,9 +12,6 @@ namespace Flats4us.Entities
         public DocumentType DocumentType { get; set; }
 
         [Required]
-        public VerificationStatus VerificationStatus { get; set; }
-
-        [Required]
         public DateTime DocumentExpireDate { get; set; }
     }
 }

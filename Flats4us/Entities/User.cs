@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Flats4us.Helpers.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -41,5 +42,8 @@ namespace Flats4us.Entities
 
         [Required]
         public bool ActivityStatus { get; set; }
+
+        [Required]
+        public VerificationStatus VerificationStatus { get; set; }
     }
 }
