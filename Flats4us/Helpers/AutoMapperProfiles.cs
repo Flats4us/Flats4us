@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers.AutoMapperResolvers;
 using Flats4us.Helpers.Enums;
 
 namespace Flats4us.Helpers
@@ -28,10 +29,14 @@ namespace Flats4us.Helpers
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 
             CreateMap<Student, UserForVerificationDto>()
-                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student));
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
+                .ForMember(dest => dest.ProfilePictureURL, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<UserDocumentUrlResolver>());
 
             CreateMap<Owner, UserForVerificationDto>()
-                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner));
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
+                .ForMember(dest => dest.ProfilePictureURL, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<UserDocumentUrlResolver>());
         }
     }
 }

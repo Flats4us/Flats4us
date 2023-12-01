@@ -10,6 +10,8 @@ using Microsoft.OpenApi.Models;
 using Hangfire;
 using Flats4us.Helpers;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -137,6 +139,13 @@ using (var scope = app.Services.CreateScope())
         DataSeeder.SeedData(dbContext);
     }
 }
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath = "/Images"
+});
 
 app.UseSwagger();
 app.UseSwaggerUI();
