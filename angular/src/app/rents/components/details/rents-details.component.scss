@@ -4,13 +4,35 @@
 	overflow: hidden;
 	position: relative;
 	background: #ffffff;
-	margin-top: 20px;
+	margin-top: 4px;
 }
 
 .slide {
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.offer-title-outer {
+	position: absolute;
+	padding: 4px;
+	top: 0;
+	left: 0;
+}
+
+.offer-title-inner {
+	background: rgba(0, 0, 0, 0.204);
+	color: white;
+	position: absolute;
+	min-width: max-content;
+	padding: 4px;
+}
+
+.menu-title {
+	position: absolute;
+	padding: 4px;
+	top: 0;
+	right: 0;
 }
 
 .arrow {
@@ -119,23 +141,9 @@
 	background-color: transparent;
 }
 
-.box-1 {
-	display: inline-flex;
-}
-
 .box-icon {
 	transform: scale(1.2);
-	margin: 8px;
-}
-
-.box-icon-2 {
-	transform: scale(0.8);
-	color: green;
-}
-
-.box-icon-3 {
-	transform: scale(0.8);
-	color: grey;
+	margin: 4px;
 }
 
 .button-box {
@@ -153,17 +161,12 @@
 	color: red;
 }
 
-.column-1 {
+.column-header-description {
 	width: 50%;
 	padding: 4px;
 }
 
-.column-2 {
-	width: 50%;
-	padding: 4px;
-}
-
-.container-2 {
+.container-description {
 	display: flex;
 	flex-wrap: wrap;
 	min-height: 300px;
@@ -177,7 +180,7 @@
 .gallery {
 	display: flex;
 	justify-content: center;
-	max-width: 100%;
+	width: 100%;
 	height: auto;
 }
 
@@ -186,7 +189,7 @@
 	margin-right: 4px;
 }
 
-.label-1 {
+.label-price {
 	display: inline-flex;
 	justify-content: right;
 	padding: 4px;
@@ -194,13 +197,13 @@
 	margin-left: auto;
 }
 
-.label-2 {
+.label-description {
 	padding: 4px;
 	min-width: 160px;
 	float: left;
 }
 
-.label-3 {
+.label-box {
 	display: inline-block;
 	justify-content: left;
 	padding: 4px 0;
@@ -211,26 +214,30 @@
 	padding-bottom: 12px;
 }
 
-.title {
-	width: 100%;
-}
-
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
 		min-height: 300px;
 		overflow: hidden;
 		position: relative;
-		background: #e6e6e6;
-		border: 20px solid #fff;
-		margin-top: 20px;
+		background: #ffffff;
+		margin-top: 4px;
 	}
-	.label-1 {
+	.label-price {
 		display: inline-flex;
 		justify-content: right;
 		padding: 4px;
 		min-width: 200px;
 		margin-left: auto;
-		text-shadow: 1px 2px rgba(0, 0, 0, 0.116);
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.offer-title-inner {
+		background: rgba(0, 0, 0, 0.204);
+		color: white;
+		position: absolute;
+		min-width: 300px;
+		padding: 4px;
 	}
 }

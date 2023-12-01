@@ -2,7 +2,7 @@
 	<div class="text-4xl p-4 font-semibold">Przeglądanie wynajmów</div>
 </div>
 <div class="rents">
-	<div class="container-1">
+	<div class="container-list">
 		<h1 class="text-3xl pl-4 font-semibold">
 			Moje wynajmy
 			<button
@@ -23,20 +23,24 @@
 				mat-list-item
 				class="item-list"
 				routerLink="{{ rent.id }}"
-				><div class="box-1">
+				><div class="box-title">
 					<span class="text-xl font-bold">{{ rent.title }}</span>
-					<mat-icon *ngIf="rent.status !== statusName.SUSPENDED" class="box-icon-2"
+					<mat-icon
+						*ngIf="rent.status !== statusName.SUSPENDED"
+						class="box-icon-valid"
 						>check_circle</mat-icon
 					>
-					<mat-icon *ngIf="rent.status === statusName.SUSPENDED" class="box-icon-3"
+					<mat-icon
+						*ngIf="rent.status === statusName.SUSPENDED"
+						class="box-icon-invalid"
 						>check_circle</mat-icon
 					>
 				</div>
-				<div class="box-2">Data {{ rent.publishDate }}</div>
+				<div class="box-date">Data {{ rent.publishDate }}</div>
 			</a>
 		</mat-nav-list>
 	</div>
-	<div class="container-2">
+	<div class="container-outlet">
 		<router-outlet></router-outlet>
 	</div>
 </div>
