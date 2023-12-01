@@ -279,6 +279,7 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zmoderator123"),
             ActivityStatus = false,
+            VerificationStatus = VerificationStatus.Verified,
             HireDate = new DateTime(2023, 2, 7),
         };
 

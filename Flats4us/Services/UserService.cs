@@ -202,8 +202,9 @@ namespace Flats4us.Services
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()), // Add the user ID claim
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Role, user.GetType().Name),
+                new Claim("VerificationStatus", user.VerificationStatus.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
