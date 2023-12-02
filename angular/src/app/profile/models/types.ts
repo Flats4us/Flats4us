@@ -4,8 +4,8 @@ export enum userType {
 }
 
 export enum modificationType {
-	CREATE,
-	EDIT,
+	CREATE = 'create',
+	EDIT = 'edit',
 }
 
 export enum statusType {

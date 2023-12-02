@@ -24,6 +24,7 @@ export class CreateProfileComponent {
 	public mType = modificationType;
 
 	public user$: Observable<string>;
+	public modificationType$: Observable<string>;
 
 	public registerForm = this.formBuilder.group({
 		name: new FormControl('', Validators.required),
@@ -35,6 +36,9 @@ export class CreateProfileComponent {
 	constructor(private formBuilder: FormBuilder, private route: ActivatedRoute) {
 		this.user$ = this.route.paramMap.pipe(
 			map(params => params.get('user') ?? '')
+		);
+		this.modificationType$ = this.route.paramMap.pipe(
+			map(params => params.get('modificationType') ?? '')
 		);
 	}
 }

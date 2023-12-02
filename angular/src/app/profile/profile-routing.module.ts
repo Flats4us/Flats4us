@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { SurveyComponent } from './survey/survey.component';
 import { CreateProfileComponent } from './create/create-profile.component';
-import { EditProfileComponent } from './edit/edit-profile.component';
 
 const routes: Routes = [
 	{
@@ -12,11 +11,11 @@ const routes: Routes = [
 		component: SurveyComponent,
 	},
 	{
-		path: 'edit/:user/:id',
-		component: EditProfileComponent,
+		path: ':modificationType/:user',
+		component: CreateProfileComponent,
 	},
 	{
-		path: 'create/:user',
+		path: ':modificationType/:user/:id',
 		component: CreateProfileComponent,
 	},
 	{
