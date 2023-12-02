@@ -115,6 +115,14 @@ namespace Flats4us.Services
 
             student.SurveyStudent = studentSurvey;
 
+            var interestIds = input.Interests.Select(ii => ii.InterestId).ToList();
+
+            var interests = await _context.Interests
+                .Where(i => interestIds.Contains(i.InterestId))
+                .ToListAsync();
+
+            student.Interests = interests;
+
             if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
             {
                 await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, $"Images/Users/{student.ImagesPath}/ProfilePicture");

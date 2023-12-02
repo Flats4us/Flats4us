@@ -32,8 +32,6 @@ builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 builder.Services.AddScoped<IInterestService, InterestService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
-builder.Services.AddScoped<IOwnerService, OwnerService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 

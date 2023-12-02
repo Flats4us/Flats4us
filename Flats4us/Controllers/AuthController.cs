@@ -18,16 +18,10 @@ namespace Flats4us.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
-        private readonly IOwnerService _ownerService;
-        private readonly IStudentService _studentService;
         private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, IOwnerService ownerService, IStudentService studentService, IUserService userService)
+        public AuthController(IUserService userService)
         {
-            _configuration = configuration;
-            _ownerService = ownerService;
-            _studentService = studentService;
             _userService = userService;
         }
 

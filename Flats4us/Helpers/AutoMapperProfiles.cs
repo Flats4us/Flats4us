@@ -79,6 +79,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified))
                 .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false));
 
+            CreateMap<InterestDto, Interest>();
+
             CreateMap<StudentRegisterDto, SurveyStudent>();
 
         }
