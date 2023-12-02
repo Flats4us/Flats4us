@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Hangfire;
 using Flats4us.Helpers;
 using AutoMapper;
+using Flats4us.Helpers.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 
@@ -29,9 +30,8 @@ builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
 builder.Services.AddScoped<IEquipmentService, EquipmentService>();
+builder.Services.AddScoped<IInterestService, InterestService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
-builder.Services.AddScoped<IOwnerService, OwnerService>();
-builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -83,6 +83,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Moderator", policy =>
     {
         policy.RequireRole("Moderator");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
     options.AddPolicy("Student", policy =>
@@ -93,6 +94,30 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Owner", policy =>
     {
         policy.RequireRole("Owner");
+    });
+
+    options.AddPolicy("VerifiedStudent", policy =>
+    {
+        policy.RequireRole("Student");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
+
+    options.AddPolicy("VerifiedOwner", policy =>
+    {
+        policy.RequireRole("Owner");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
+
+    options.AddPolicy("VerifiedStudent", policy =>
+    {
+        policy.RequireRole("Student");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
+
+    options.AddPolicy("VerifiedOwner", policy =>
+    {
+        policy.RequireRole("Owner");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 });
 
