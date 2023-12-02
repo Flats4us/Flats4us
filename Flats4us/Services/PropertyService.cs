@@ -24,7 +24,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
+        public async Task<List<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync()
         {
             var flats = await _context.Flats
                 .Include(x => x.Equipment)
@@ -41,11 +41,11 @@ namespace Flats4us.Services
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
-            var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
-            var houseDtos = _mapper.Map<List<PropertyDto>>(houses);
-            var roomDtos = _mapper.Map<List<PropertyDto>>(rooms);
+            var flatDtos = _mapper.Map<List<PropertyForVerificationDto>>(flats);
+            var houseDtos = _mapper.Map<List<PropertyForVerificationDto>>(houses);
+            var roomDtos = _mapper.Map<List<PropertyForVerificationDto>>(rooms);
 
-            var result = new List<PropertyDto>();
+            var result = new List<PropertyForVerificationDto>();
             result.AddRange(flatDtos);
             result.AddRange(houseDtos);
             result.AddRange(roomDtos);

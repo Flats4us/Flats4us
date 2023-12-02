@@ -8,7 +8,7 @@ namespace Flats4us.Helpers.AutoMapperResolvers
     {
         public string Resolve(Property source, PropertyForVerificationDto destination, string destMember, ResolutionContext context)
         {
-            var directoryPath = Path.Combine("Images", "Properties", source.ImagesPath, "Documents");
+            var directoryPath = Path.Combine("Images", "Properties", source.ImagesPath, "TitleDeed");
 
             if (Directory.Exists(directoryPath))
             {
