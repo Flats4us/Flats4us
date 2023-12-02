@@ -39,6 +39,8 @@ namespace Flats4us.Controllers
             }
         }
 
+        // TODO: Add GetMyProperties
+
         // PUT: api/Property/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProperty(int id, [FromForm] AddEditPropertyDto input)

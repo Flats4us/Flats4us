@@ -1,10 +1,9 @@
 ﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flats4us.Entities.Dto
 {
-    public class PropertyDto
+    public class PropertyForVerificationDto
     {
         [Required]
         public int PropertyId { get; set; }
@@ -52,6 +51,9 @@ namespace Flats4us.Entities.Dto
         public List<string> ImagesURLs { get; set; }
 
         [Required]
+        public string DocumentURL { get; set; }
+
+        [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
         public int? NumberOfRooms { get; set; }
@@ -61,7 +63,5 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         public int? Floor { get; set; }
-
-        public ICollection<EquipmentDto> Equipment { get; set; }
     }
 }

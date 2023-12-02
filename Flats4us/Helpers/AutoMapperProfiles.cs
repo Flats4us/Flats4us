@@ -13,13 +13,31 @@ namespace Flats4us.Helpers
             CreateMap<Equipment, EquipmentDto>();
 
             CreateMap<Flat, PropertyDto>()
-                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat));
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<Room, PropertyDto>()
-                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room));
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<House, PropertyDto>()
-                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House));
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
+
+            CreateMap<Flat, PropertyForVerificationDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>());
+
+            CreateMap<Room, PropertyForVerificationDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>());
+
+            CreateMap<House, PropertyForVerificationDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
+                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>());
 
             CreateMap<Offer, OfferDto>()
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner));

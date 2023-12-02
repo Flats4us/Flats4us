@@ -4,11 +4,11 @@ using Flats4us.Entities;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class UserDocumentUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, string>
+    public class PropertyDocumentUrlResolver : IValueResolver<Property, PropertyForVerificationDto, string>
     {
-        public string Resolve(OwnerStudent source, UserForVerificationDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Property source, PropertyForVerificationDto destination, string destMember, ResolutionContext context)
         {
-            var directoryPath = Path.Combine("Images", "Users", source.ImagesPath, "Documents");
+            var directoryPath = Path.Combine("Images", "Properties", source.ImagesPath, "Documents");
 
             if (Directory.Exists(directoryPath))
             {
