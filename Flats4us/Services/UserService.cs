@@ -145,23 +145,6 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        protected User PopulateCommonFieldsFromDto(User user, UserRegisterDto request)
-        {
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            user.AccountCreationDate = DateTime.UtcNow;
-            user.LastLoginDate = DateTime.UtcNow;
-            user.Name = request.Name;
-            user.Surname = request.Surname;
-            user.Address = (request.Flat != null) ?
-                $"{request.Street} {request.Number}/{request.Flat}, {request.PostalCode} {request.City}" :
-                $"{request.Street} {request.Number}, {request.PostalCode} {request.City}";
-            user.Email = request.Email;
-            user.PhoneNumber = request.PhoneNumber;
-            // ... any other common fields ...
-
-            return user;
-        }
-
         public async Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync()
         {
             var students = await _context.Students
