@@ -47,13 +47,13 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int OwnerId { get; set; }
 
-        public int NumberOfRooms { get; set; }
+        public int? NumberOfRooms { get; set; }
 
-        public int Floor { get; set; }
+        public int? Floor { get; set; }
 
-        public int NumberOfFloors { get; set; }
+        public int? NumberOfFloors { get; set; }
 
-        public int PlotArea { get; set; }
+        public int? PlotArea { get; set; }
 
         [Required]
         public string EquipmentJson { get; set; }

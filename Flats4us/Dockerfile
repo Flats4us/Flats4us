@@ -25,7 +25,6 @@ COPY --from=publish /publish/out .
 
 # Copy additional folders
 COPY Images/ Images/
-COPY Logs/ Logs/
 COPY Lang/ Lang/
 
 ENTRYPOINT ["dotnet", "Flats4us.dll"]

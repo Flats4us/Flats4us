@@ -33,6 +33,9 @@ namespace Flats4us.Entities.Dto
         public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
+        public DateTime AccountCreationDate { get; set; }
+
+        [Required]
         public DateTime DocumentExpireDate { get; set; }
 
         public string? StudentNumber { get; set; }

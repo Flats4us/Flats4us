@@ -52,6 +52,9 @@ namespace Flats4us.Entities
         public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
+        public DateTime CreationDate { get; set; }
+
+        [Required]
         public int OwnerId { get; set; }
 
         public virtual Owner Owner { get; set; }

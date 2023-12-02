@@ -159,8 +159,11 @@ namespace Flats4us.Services
             var ownerDtos = _mapper.Map<List<UserForVerificationDto>>(owners);
 
             var result = new List<UserForVerificationDto>();
+
             result.AddRange(studentDtos);
             result.AddRange(ownerDtos);
+
+            result = result.OrderBy(user => user.AccountCreationDate).ToList();
 
             return result;
         }
