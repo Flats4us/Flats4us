@@ -27,17 +27,17 @@ namespace Flats4us.Services
         public async Task<List<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync()
         {
             var flats = await _context.Flats
-                .Include(x => x.Equipment)
+                .Include(x => x.Owner)
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var houses = await _context.Houses
-                .Include(x => x.Equipment)
+                .Include(x => x.Owner)
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var rooms = await _context.Rooms
-                .Include(x => x.Equipment)
+                .Include(x => x.Owner)
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
@@ -46,9 +46,12 @@ namespace Flats4us.Services
             var roomDtos = _mapper.Map<List<PropertyForVerificationDto>>(rooms);
 
             var result = new List<PropertyForVerificationDto>();
+
             result.AddRange(flatDtos);
             result.AddRange(houseDtos);
             result.AddRange(roomDtos);
+
+            result = result.OrderBy(user => user.CreationDate).ToList();
 
             return result;
         }
@@ -90,6 +93,7 @@ namespace Flats4us.Services
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
+                        CreationDate = DateTime.Now,
                         NumberOfRooms = input.NumberOfRooms,
                         Floor = input.Floor,
                         Elevator = input.Elevator,
@@ -115,6 +119,7 @@ namespace Flats4us.Services
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
+                        CreationDate = DateTime.Now,
                         Floor = input.Floor,
                         Elevator = input.Elevator,
                         OwnerId = input.OwnerId,
@@ -139,6 +144,7 @@ namespace Flats4us.Services
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
+                        CreationDate = DateTime.Now,
                         NumberOfRooms = input.NumberOfRooms,
                         NumberOfFloors = input.NumberOfFloors,
                         PlotArea = input.PlotArea,
