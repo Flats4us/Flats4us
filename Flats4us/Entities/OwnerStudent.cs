@@ -9,13 +9,7 @@ namespace Flats4us.Entities
         public string ImagesPath { get; set; }
 
         [Required]
-        public bool ActivityStatus { get; set; }
-
-        [Required]
         public DocumentType DocumentType { get; set; }
-
-        [Required]
-        public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
         public DateTime DocumentExpireDate { get; set; }

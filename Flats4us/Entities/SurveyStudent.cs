@@ -23,13 +23,11 @@ namespace Flats4us.Entities
 
         // Yes/No
         [Required]
-        [SurveySlider(1, 10)]
         public bool Smoking { get; set; } 
 
         // Scale 1-10
         [Required]
-        [SurveySlider(1, 10)]
-        public int Sociability { get; set; }
+        public bool Sociability { get; set; }
 
         // Yes/No
         [Required]
@@ -43,23 +41,16 @@ namespace Flats4us.Entities
         [Required]
         public bool LookingForRoommate { get; set; }
 
-        // 0-6
-        [Required]
-        //[SurveySlider(1, 6)]
-        [SurveyIgnore]
-        public int MaxNumberOfRoommates { get; set; }
+        public int? MaxNumberOfRoommates { get; set; }
+
+        public Gender? RoommateGender { get; set; }
+
+        public int? MinRoommateAge { get; set; }
+
+        public int? MaxRoommateAge { get; set; }
 
         [Required]
-        [SurveyIgnore]
-        public Gender RoommateGender { get; set; }
-
-        [Required]
-        [SurveyIgnore]
-        public int MinRoommateAge { get; set; }
-
-        [Required]
-        [SurveyIgnore]
-        public int MaxRoommateAge { get; set; }
+        public int StudentId { get; set; }
 
         public virtual Student Student { get; set; }
     }

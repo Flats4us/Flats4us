@@ -21,8 +21,7 @@ namespace Flats4us.Entities
 
         public string? Instagram { get; set; }
 
-        [Required]
-        public RoommatesStatus RoommatesStatus { get; set; }
+        public RoommatesStatus? RoommatesStatus { get; set; }
 
         [Required]
         public bool IsTenant { get; set; }
