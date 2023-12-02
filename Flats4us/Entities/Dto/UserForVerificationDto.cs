@@ -21,7 +21,10 @@ namespace Flats4us.Entities.Dto
         public string Email { get; set; }
 
         [Required]
-        public string ImagesPath { get; set; }
+        public string ProfilePictureURL { get; set; }
+
+        [Required]
+        public string DocumentURL { get; set; }
 
         [Required]
         public DocumentType DocumentType { get; set; }
