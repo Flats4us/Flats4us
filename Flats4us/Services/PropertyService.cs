@@ -24,7 +24,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PropertyDto>> GetNotVerifiedPropertiesAsync()
+        public async Task<List<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync()
         {
             var flats = await _context.Flats
                 .Include(x => x.Equipment)
@@ -41,11 +41,11 @@ namespace Flats4us.Services
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
-            var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
-            var houseDtos = _mapper.Map<List<PropertyDto>>(houses);
-            var roomDtos = _mapper.Map<List<PropertyDto>>(rooms);
+            var flatDtos = _mapper.Map<List<PropertyForVerificationDto>>(flats);
+            var houseDtos = _mapper.Map<List<PropertyForVerificationDto>>(houses);
+            var roomDtos = _mapper.Map<List<PropertyForVerificationDto>>(rooms);
 
-            var result = new List<PropertyDto>();
+            var result = new List<PropertyForVerificationDto>();
             result.AddRange(flatDtos);
             result.AddRange(houseDtos);
             result.AddRange(roomDtos);
@@ -61,6 +61,8 @@ namespace Flats4us.Services
 
             var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
 
+            // TODO: Try change equipment mapping
+
             var equipmentList = await _context.Equipment
                 .Where(e => equipmentDtoList
                     .Select(e => e.EquipmentId)
@@ -68,6 +70,7 @@ namespace Flats4us.Services
                 )
                 .ToListAsync();
 
+            // TODO: Use AutoMapper
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
@@ -150,6 +153,7 @@ namespace Flats4us.Services
 
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
+                // TODO: Images refactor
                 await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"Images/Properties/{imageFolder}/TitleDeed");
             }
 
@@ -157,6 +161,7 @@ namespace Flats4us.Services
             {
                 foreach (var image in input.Images)
                 {
+                    // TODO: Images refactor
                     await ImageUtility.ProcessAndSaveImage(image, $"Images/Properties/{imageFolder}/Images");
                 }
             }
@@ -266,6 +271,7 @@ namespace Flats4us.Services
 
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
+                // TODO: Images refactor
                 await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"{imageDirectoryPath}/TitleDeed");
             }
 
@@ -273,6 +279,7 @@ namespace Flats4us.Services
             {
                 foreach (var image in input.Images)
                 {
+                    // TODO: Images refactor
                     await ImageUtility.ProcessAndSaveImage(image, $"{imageDirectoryPath}/Images");
                 }
             }
@@ -294,6 +301,7 @@ namespace Flats4us.Services
                 _context.Properties.Remove(propertyToDelete);
                 await _context.SaveChangesAsync();
 
+                // TODO: Images refactor
                 string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
 
                 await ImageUtility.DeleteDirectory(imageDirectoryPath);
