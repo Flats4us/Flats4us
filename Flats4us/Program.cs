@@ -109,6 +109,18 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Owner");
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
+
+    options.AddPolicy("VerifiedStudent", policy =>
+    {
+        policy.RequireRole("Student");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
+
+    options.AddPolicy("VerifiedOwner", policy =>
+    {
+        policy.RequireRole("Owner");
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
 });
 
 Log.Logger = new LoggerConfiguration()
