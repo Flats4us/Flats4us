@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
@@ -110,9 +111,9 @@ namespace Flats4us.Controllers
                 _logger.LogInformation($"Adding offer promotion for offer ID: {input.OfferId}");
                 return Ok("Offer promotion added successfully");
             }
-            catch (ForbiddenException)
+            catch (ForbiddenException ex)
             {
-                return StatusCode(403, "You do not own this offer");
+                return StatusCode(403, ex.Message);
             }
             catch (Exception ex)
             {

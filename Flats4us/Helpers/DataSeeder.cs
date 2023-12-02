@@ -62,6 +62,94 @@ public static class DataSeeder
 
         #endregion
 
+        #region Interest
+
+        var interest1 = new Interest
+        {
+            Name = "Photography"
+        };
+        var interest2 = new Interest
+        {
+            Name = "Hiking"
+        };
+        var interest3 = new Interest
+        {
+            Name = "Cooking"
+        };
+        var interest4 = new Interest
+        {
+            Name = "Travel"
+        };
+        var interest5 = new Interest
+        {
+            Name = "Reading"
+        };
+        var interest6 = new Interest
+        {
+            Name = "Gardening"
+        };
+        var interest7 = new Interest
+        {
+            Name = "Music"
+        };
+        var interest8 = new Interest
+        {
+            Name = "Volunteering"
+        };
+        var interest9 = new Interest
+        {
+            Name = "Sports"
+        };
+        var interest10 = new Interest
+        {
+            Name = "Languages"
+        };
+        var interest11 = new Interest
+        {
+            Name = "Painting"
+        };
+        var interest12 = new Interest
+        {
+            Name = "Cycling"
+        };
+        var interest13 = new Interest
+        {
+            Name = "Yoga"
+        };
+        var interest14 = new Interest
+        {
+            Name = "Gaming"
+        };
+        var interest15 = new Interest
+        {
+            Name = "Writing"
+        };
+        var interest16 = new Interest
+        {
+            Name = "Film"
+        };
+        var interest17 = new Interest
+        {
+            Name = "Technology"
+        };
+        var interest18 = new Interest
+        {
+            Name = "Astronomy"
+        };
+        var interest19 = new Interest
+        {
+            Name = "DIY"
+        };
+        var interest20 = new Interest
+        {
+            Name = "Birdwatching"
+        };
+
+
+        dbContext.Interests.AddRange(interest1, interest2, interest3, interest4, interest5, interest6, interest7, interest8, interest9, interest10, interest11, interest12, interest13, interest14, interest15, interest16, interest17, interest18, interest19, interest20);
+
+        #endregion
+
         #region Owner
 
         var owner1 = new Owner
@@ -73,8 +161,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "mkowalski",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("mkowalski123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
@@ -92,8 +179,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 3, 23),
             LastLoginDate = new DateTime(2023, 10, 10),
-            Username = "bnowak",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("bnowak123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bnowak123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.Passport,
@@ -111,8 +197,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
-            Username = "rpawlak",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("rpawlak123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rpawlak123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
@@ -130,8 +215,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
-            Username = "kklik",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("kklik123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kklik123"),
             ImagesPath = Guid.NewGuid().ToString(),
             ActivityStatus = false,
             DocumentType = DocumentType.ID,
@@ -161,8 +245,7 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "kkajetanski",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("kkajetanski123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -174,7 +257,6 @@ public static class DataSeeder
             Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
             Twitter_X = "https://twitter.com/kkajetanski",
             Instagram = "https://www.instagram.com/kkajetanski/",
-            RoommatesStatus = RoommatesStatus.Alone,
             IsTenant = false
         };
 
@@ -195,8 +277,9 @@ public static class DataSeeder
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            Username = "zmoderator",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("zmoderator123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zmoderator123"),
+            ActivityStatus = false,
+            VerificationStatus = VerificationStatus.Verified,
             HireDate = new DateTime(2023, 2, 7),
         };
 
