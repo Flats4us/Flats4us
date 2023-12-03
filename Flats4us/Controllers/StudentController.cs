@@ -8,7 +8,9 @@ namespace Flats4us.Controllers
     using System.Threading.Tasks;
     using Flats4us.Entities.Dto;
     using Flats4us.Services.Interfaces;
+    using Microsoft.AspNetCore.Cors;
 
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase

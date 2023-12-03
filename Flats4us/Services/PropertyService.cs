@@ -94,8 +94,8 @@ namespace Flats4us.Services
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
-                        NumberOfRooms = input.NumberOfRooms,
-                        Floor = input.Floor,
+                        NumberOfRooms = (int)input.NumberOfRooms,
+                        Floor = (int)input.Floor,
                         Elevator = input.Elevator,
                         OwnerId = input.OwnerId,
                         Equipment = equipmentList
@@ -120,7 +120,7 @@ namespace Flats4us.Services
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
-                        Floor = input.Floor,
+                        Floor = (int)input.Floor,
                         Elevator = input.Elevator,
                         OwnerId = input.OwnerId,
                         Equipment = equipmentList
@@ -145,9 +145,9 @@ namespace Flats4us.Services
                         ImagesPath = imageFolder,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
-                        NumberOfRooms = input.NumberOfRooms,
-                        NumberOfFloors = input.NumberOfFloors,
-                        PlotArea = input.PlotArea,
+                        NumberOfRooms = (int)input.NumberOfRooms,
+                        NumberOfFloors = (int)input.NumberOfFloors,
+                        PlotArea = (int)input.PlotArea,
                         OwnerId = input.OwnerId,
                         Equipment = equipmentList
                     };
@@ -215,8 +215,8 @@ namespace Flats4us.Services
                     flat.Area = input.Area;
                     flat.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     flat.ConstructionYear = input.ConstructionYear;
-                    flat.NumberOfRooms = input.NumberOfRooms;
-                    flat.Floor = input.Floor;
+                    flat.NumberOfRooms = (int)input.NumberOfRooms;
+                    flat.Floor = (int)input.Floor;
                     flat.Elevator = input.Elevator;
                     flat.Equipment = equipmentList;
                     break;
@@ -240,7 +240,7 @@ namespace Flats4us.Services
                     room.Area = input.Area;
                     room.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     room.ConstructionYear = input.ConstructionYear;
-                    room.Floor = input.Floor;
+                    room.Floor = (int)input.Floor;
                     room.Elevator = input.Elevator;
                     room.Equipment = equipmentList;
                     break;
@@ -264,9 +264,9 @@ namespace Flats4us.Services
                     house.Area = input.Area;
                     house.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     house.ConstructionYear = input.ConstructionYear;
-                    house.NumberOfRooms = input.NumberOfRooms;
-                    house.NumberOfFloors = input.NumberOfFloors;
-                    house.PlotArea = input.PlotArea;
+                    house.NumberOfRooms = (int)input.NumberOfRooms;
+                    house.NumberOfFloors = (int)input.NumberOfFloors;
+                    house.PlotArea = (int)input.PlotArea;
                     house.Equipment = equipmentList;
                     break;
             }
