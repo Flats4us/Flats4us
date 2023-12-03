@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Authorization;
 using Flats4us.Services.Interfaces;
 using Flats4us.Services;
 using Flats4us.Helpers.Exceptions;
+using Microsoft.AspNetCore.Cors;
 
 namespace Flats4us.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase

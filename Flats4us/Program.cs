@@ -165,6 +165,8 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.UseCors(options => options.AllowAnyOrigin());
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
@@ -174,8 +176,6 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
-app.UseCors(options => options.AllowAnyOrigin());
 
 //app.UseHttpsRedirection();
 
