@@ -34,7 +34,6 @@ namespace Flats4us.Entities.Dto
 
         public int? Floor { get; set; }
 
-        [FromBody]
         public List<EquipmentDto>? Equipment { get; set; }
 
         [Required]

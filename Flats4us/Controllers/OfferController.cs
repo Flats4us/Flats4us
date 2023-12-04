@@ -3,6 +3,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -58,7 +59,7 @@ namespace Flats4us.Controllers
         }
 
         // GET: api/Offer
-        [HttpPost("filtered")]
+        [HttpGet("filtered")]
         public async Task<IActionResult> GetFilteredAndSorted([FromQuery] GetFilteredAndSortedOffersDto input)
         {
             try
@@ -91,23 +92,17 @@ namespace Flats4us.Controllers
 
         // POST: api/Equipment
         [HttpPost("Promotion")]
+        [Authorize(Policy = "VerifiedOwner")]
         public async Task<IActionResult> AddOfferPromotion([FromForm] AddOfferPromotionDto input)
         {
             try
             {
-                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (string.IsNullOrEmpty(requestUserId))
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return Unauthorized("User not authenticated");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                if (!int.TryParse(requestUserId, out int userId))
-                {
-                    return BadRequest("Invalid user ID format");
-                }
-
-                await _offerService.AddOfferPromotionAsync(input, userId);
+                await _offerService.AddOfferPromotionAsync(input, requestUserId);
                 _logger.LogInformation($"Adding offer promotion for offer ID: {input.OfferId}");
                 return Ok("Offer promotion added successfully");
             }
@@ -122,23 +117,17 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("Interest")]
+        [Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> AddOfferInterest(int offerId)
         {
             try
             {
-                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (string.IsNullOrEmpty(requestUserId))
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return Unauthorized("User not authenticated");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                if (!int.TryParse(requestUserId, out int userId))
-                {
-                    return BadRequest("Invalid user ID format");
-                }
-
-                await _offerService.AddOfferInterest(offerId, userId);
+                await _offerService.AddOfferInterest(offerId, requestUserId);
                 _logger.LogInformation($"Adding offer interest for offer ID: {offerId}");
                 return Ok("Interest addded");
             }
@@ -153,19 +142,12 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (string.IsNullOrEmpty(requestUserId))
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return Unauthorized("User not authenticated");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                if (!int.TryParse(requestUserId, out int userId))
-                {
-                    return BadRequest("Invalid user ID format");
-                }
-
-                await _offerService.RemoveOfferInterest(offerId, userId);
+                await _offerService.RemoveOfferInterest(offerId, requestUserId);
                 _logger.LogInformation($"Removing offer interest for offer ID: {offerId}");
                 return Ok("Interest removed");
             }

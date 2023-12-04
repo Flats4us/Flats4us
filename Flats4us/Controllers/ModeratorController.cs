@@ -41,16 +41,16 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/Property/Verify/{id}
-        [HttpPost("Property/Verify/{id}")]
+        // POST: api/Moderator/Property/Verify/{id}/{decision}
+        [HttpPost("Property/Verify/{id}/{decision}")]
         [Authorize(Policy = "Moderator")]
-        public async Task<IActionResult> VerifyProperty(int id)
+        public async Task<IActionResult> VerifyProperty(int id, bool decision)
         {
             try
             {
-                await _propertyService.VerifyPropertyAsync(id);
+                await _propertyService.VerifyPropertyAsync(id, decision);
                 _logger.LogInformation($"Verifying property - id: {id}");
-                return Ok("Property verified successfully");
+                return Ok("Property verification status changed successfully");
             }
             catch (Exception ex)
             {
@@ -75,16 +75,16 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/User/Verify/{id}
-        [HttpPost("User/Verify/{id}")]
+        // POST: api/Moderator/User/Verify/{id}/{decision}
+        [HttpPost("User/Verify/{id}/{decision}")]
         [Authorize(Policy = "Moderator")]
-        public async Task<IActionResult> VerifyUser(int id)
+        public async Task<IActionResult> VerifyUser(int id, bool decision)
         {
             try
             {
-                await _userService.VerifyUserAsync(id);
+                await _userService.VerifyUserAsync(id, decision);
                 _logger.LogInformation($"Verifying user - id: {id}");
-                return Ok("User verified successfully");
+                return Ok("User verification status changed successfully");
             }
             catch (Exception ex)
             {

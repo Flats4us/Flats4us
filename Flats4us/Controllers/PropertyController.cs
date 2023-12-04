@@ -1,8 +1,12 @@
-﻿using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
@@ -24,18 +28,24 @@ namespace Flats4us.Controllers
 
         // POST: api/Property
         [HttpPost]
+        [Authorize(Policy = "VerifiedOwner")]
         public async Task<IActionResult> AddProperty([FromForm] AddEditPropertyDto input)
         {
             try
             {
-                await _propertyService.AddPropertyAsync(input);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _propertyService.AddPropertyAsync(input, requestUserId);
                 _logger.LogInformation($"Adding property - body: {input}");
                 return Ok("Property added successfully");
             }
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding property - body: {input}");
-                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -43,13 +53,23 @@ namespace Flats4us.Controllers
 
         // PUT: api/Property/{id}
         [HttpPut("{id}")]
+        [Authorize(Policy = "VerifiedOwner")]
         public async Task<IActionResult> UpdateProperty(int id, [FromForm] AddEditPropertyDto input)
         {
             try
             {
-                await _propertyService.UpdatePropertyAsync(id, input);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _propertyService.UpdatePropertyAsync(id, input, requestUserId);
                 _logger.LogInformation($"Updating property - id: {id}");
                 return Ok("Property updated successfully");
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
             }
             catch (Exception ex)
             {
@@ -61,13 +81,23 @@ namespace Flats4us.Controllers
 
         // DELETE: api/Property/{id}
         [HttpDelete("{id}")]
+        [Authorize(Policy = "VerifiedOwner")]
         public async Task<IActionResult> DeleteProperty(int id)
         {
             try
             {
-                await _propertyService.DeletePropertyAsync(id);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _propertyService.DeletePropertyAsync(id, requestUserId);
                 _logger.LogInformation($"Property with ID {id} has been deleted.");
                 return Ok("Property deleted successfully");
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
             }
             catch (Exception ex)
             {

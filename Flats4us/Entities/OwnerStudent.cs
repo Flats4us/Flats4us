@@ -13,5 +13,8 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime DocumentExpireDate { get; set; }
+
+        [Required]
+        public DateTime DateForVerificationSorting { get; set; }
     }
 }
