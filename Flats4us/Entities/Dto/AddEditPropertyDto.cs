@@ -44,9 +44,6 @@ namespace Flats4us.Entities.Dto
         [Required]
         public List<IFormFile> Images { get; set; }
 
-        [Required]
-        public int OwnerId { get; set; }
-
         public int? NumberOfRooms { get; set; }
 
         public int? Floor { get; set; }

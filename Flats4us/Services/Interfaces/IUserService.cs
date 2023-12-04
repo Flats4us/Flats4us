@@ -9,6 +9,6 @@ namespace Flats4us.Services.Interfaces
         Task RegisterOwnerAsync(OwnerRegisterDto input);
         Task RegisterStudentAsync(StudentRegisterDto input);
         Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync();
-        Task VerifyUserAsync(int id);
+        Task VerifyUserAsync(int id, bool decision);
     }
 }

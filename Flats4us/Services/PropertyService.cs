@@ -3,6 +3,7 @@ using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
+using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -51,14 +52,14 @@ namespace Flats4us.Services
             result.AddRange(houseDtos);
             result.AddRange(roomDtos);
 
-            result = result.OrderBy(user => user.CreationDate).ToList();
+            result = result.OrderBy(property => property.DateForVerificationSorting).ToList();
 
             return result;
         }
 
-        public async Task AddPropertyAsync(AddEditPropertyDto input)
+        public async Task AddPropertyAsync(AddEditPropertyDto input, int ownerId)
         {
-            var imageFolder = Guid.NewGuid().ToString();
+            var imageDirectory = Guid.NewGuid().ToString();
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
@@ -77,6 +78,10 @@ namespace Flats4us.Services
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
+                    if (input.NumberOfRooms is null) throw new ArgumentException("Property: NumberOfRooms is required when adding Flat");
+
+                    if (input.Floor is null) throw new ArgumentException("Property: Floor is required when adding Flat");
+
                     var flat = new Flat
                     {
                         Province = input.Province,
@@ -91,18 +96,21 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageFolder,
+                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
+                        DateForVerificationSorting = DateTime.Now,
                         NumberOfRooms = (int)input.NumberOfRooms,
                         Floor = (int)input.Floor,
                         Elevator = input.Elevator,
-                        OwnerId = input.OwnerId,
+                        OwnerId = ownerId,
                         Equipment = equipmentList
                     };
                     await _context.Flats.AddAsync(flat);
                     break;
                 case PropertyType.Room:
+                    if (input.Floor is null) throw new ArgumentException("Property: Floor is required when adding Room");
+
                     var room = new Room
                     {
                         Province = input.Province,
@@ -117,17 +125,24 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageFolder,
+                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
+                        DateForVerificationSorting = DateTime.Now,
                         Floor = (int)input.Floor,
                         Elevator = input.Elevator,
-                        OwnerId = input.OwnerId,
+                        OwnerId = ownerId,
                         Equipment = equipmentList
                     };
                     await _context.Rooms.AddAsync(room);
                     break;
                 case PropertyType.House:
+                    if (input.NumberOfRooms is null) throw new ArgumentException("Property: NumberOfRooms is required when adding House");
+
+                    if (input.NumberOfFloors is null) throw new ArgumentException("Property: NumberOfFloors is required when adding House");
+
+                    if (input.PlotArea is null) throw new ArgumentException("Property: PlotArea is required when adding House");
+
                     var house = new House
                     {
                         Province = input.Province,
@@ -142,13 +157,14 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageFolder,
+                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
+                        DateForVerificationSorting = DateTime.Now,
                         NumberOfRooms = (int)input.NumberOfRooms,
                         NumberOfFloors = (int)input.NumberOfFloors,
                         PlotArea = (int)input.PlotArea,
-                        OwnerId = input.OwnerId,
+                        OwnerId = ownerId,
                         Equipment = equipmentList
                     };
                     await _context.Houses.AddAsync(house);
@@ -160,7 +176,7 @@ namespace Flats4us.Services
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
                 // TODO: Images refactor
-                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"Images/Properties/{imageFolder}/TitleDeed");
+                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"Images/Properties/{imageDirectory}/TitleDeed");
             }
 
             if (input.Images != null && input.Images.Count > 0)
@@ -168,17 +184,18 @@ namespace Flats4us.Services
                 foreach (var image in input.Images)
                 {
                     // TODO: Images refactor
-                    await ImageUtility.ProcessAndSaveImage(image, $"Images/Properties/{imageFolder}/Images");
+                    await ImageUtility.ProcessAndSaveImage(image, $"Images/Properties/{imageDirectory}/Images");
                 }
             }
         }
 
-        public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input)
+        public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId)
         {
-            if (await _context.Properties.FindAsync(id) is null)
-            {
-                throw new ArgumentException($"Property with ID {id} not found.");
-            }
+            var property = await _context.Properties.FindAsync(id);
+
+            if (property is null) throw new ArgumentException($"Property with ID {id} not found.");
+            
+            if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
@@ -196,6 +213,10 @@ namespace Flats4us.Services
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
+                    if (input.NumberOfRooms is null) throw new ArgumentException("Property: NumberOfRooms is required when adding Flat");
+
+                    if (input.Floor is null) throw new ArgumentException("Property: Floor is required when adding Flat");
+
                     var flat = await _context.Flats
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
@@ -219,8 +240,14 @@ namespace Flats4us.Services
                     flat.Floor = (int)input.Floor;
                     flat.Elevator = input.Elevator;
                     flat.Equipment = equipmentList;
+                    flat.DateForVerificationSorting = DateTime.Now;
+
+                    if (flat.VerificationStatus == VerificationStatus.Rejected) flat.VerificationStatus = VerificationStatus.NotVerified;
+
                     break;
                 case PropertyType.Room:
+                    if (input.Floor is null) throw new ArgumentException("Property: Floor is required when adding Room");
+
                     var room = await _context.Rooms
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
@@ -243,8 +270,18 @@ namespace Flats4us.Services
                     room.Floor = (int)input.Floor;
                     room.Elevator = input.Elevator;
                     room.Equipment = equipmentList;
+                    room.DateForVerificationSorting = DateTime.Now;
+
+                    if (room.VerificationStatus == VerificationStatus.Rejected) room.VerificationStatus = VerificationStatus.NotVerified;
+
                     break;
                 case PropertyType.House:
+                    if (input.NumberOfRooms is null) throw new ArgumentException("Property: NumberOfRooms is required when adding House");
+
+                    if (input.NumberOfFloors is null) throw new ArgumentException("Property: NumberOfFloors is required when adding House");
+
+                    if (input.PlotArea is null) throw new ArgumentException("Property: PlotArea is required when adding House");
+
                     var house = await _context.Houses
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
@@ -268,6 +305,10 @@ namespace Flats4us.Services
                     house.NumberOfFloors = (int)input.NumberOfFloors;
                     house.PlotArea = (int)input.PlotArea;
                     house.Equipment = equipmentList;
+                    house.DateForVerificationSorting = DateTime.Now;
+
+                    if (house.VerificationStatus == VerificationStatus.Rejected) house.VerificationStatus = VerificationStatus.NotVerified;
+
                     break;
             }
 
@@ -291,52 +332,50 @@ namespace Flats4us.Services
             }
         }
 
-        public async Task DeletePropertyAsync(int id)
+        public async Task DeletePropertyAsync(int id, int requestUserId)
         {
             var propertyToDelete = await _context.Properties
                 .Include(p => p.Offers)
                 .FirstOrDefaultAsync(p => p.PropertyId == id);
 
-            if (propertyToDelete != null)
+            if (propertyToDelete is null) throw new ArgumentException($"Property with ID {id} not found.");
+
+            if (propertyToDelete.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+
+            if (propertyToDelete.Offers.Any())
             {
-                if (propertyToDelete.Offers.Any())
-                {
-                    throw new InvalidOperationException($"Property with ID {id} cannot be deleted because it has associated offers.");
-                }
-
-                _context.Properties.Remove(propertyToDelete);
-                await _context.SaveChangesAsync();
-
-                // TODO: Images refactor
-                string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
-
-                await ImageUtility.DeleteDirectory(imageDirectoryPath);
+                throw new InvalidOperationException($"Property with ID {id} cannot be deleted because it has associated offers.");
             }
-            else
-            {
-                throw new ArgumentException($"Property with ID {id} not found.");
-            }
+
+            _context.Properties.Remove(propertyToDelete);
+            await _context.SaveChangesAsync();
+
+            // TODO: Images refactor
+            string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
+
+            await ImageUtility.DeleteDirectory(imageDirectoryPath);
         }
 
-        public async Task VerifyPropertyAsync(int id)
+        public async Task VerifyPropertyAsync(int id, bool decision)
         {
             var property = await _context.Properties.FindAsync(id);
 
-            if (property is null)
+            if (property is null) throw new ArgumentException($"Property with ID {id} not found.");
+
+            if (property.VerificationStatus == VerificationStatus.Verified) throw new ArgumentException($"Property with ID {id} is already verified.");
+
+            if (decision)
             {
-                throw new ArgumentException($"Property with ID {id} not found.");
-            }
+                property.VerificationStatus = VerificationStatus.Verified;
 
-            if (property.VerificationStatus == VerificationStatus.Verified)
+                var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
+
+                await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
+            }
+            else
             {
-                throw new ArgumentException($"Property with ID {id} is already verified.");
+                property.VerificationStatus = VerificationStatus.Rejected;
             }
-
-            property.VerificationStatus = VerificationStatus.Verified;
-
-            var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
-
-            await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
 
             await _context.SaveChangesAsync();
         }

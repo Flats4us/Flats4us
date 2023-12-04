@@ -40,7 +40,8 @@
     public enum VerificationStatus
     {
         Verified,
-        NotVerified
+        NotVerified,
+        Rejected
     }
 
     public enum PaymentPurpose
