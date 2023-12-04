@@ -102,7 +102,9 @@ namespace Flats4us.Entities.Dto
 
         public int? MaxRoommateAge { get; set; }
 
-        public List<InterestDto> Interests { get; set; }
+        [Required]
+        [ValidInterestJson(ErrorMessage = "Invalid JSON format in the InterestJson field")]
+        public string InterestJson { get; set; }
     }
 
     public class OwnerRegisterDto : OwnerStudentRegisterDto

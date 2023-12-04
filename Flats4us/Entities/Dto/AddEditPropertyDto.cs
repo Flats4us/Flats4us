@@ -53,6 +53,7 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         [Required]
+        [ValidEquipmentJson(ErrorMessage = "Invalid JSON format in the EquipmentJson field")]
         public string EquipmentJson { get; set; }
     }
 }
