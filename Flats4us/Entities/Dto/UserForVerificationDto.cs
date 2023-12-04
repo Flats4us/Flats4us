@@ -33,7 +33,7 @@ namespace Flats4us.Entities.Dto
         public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
-        public DateTime AccountCreationDate { get; set; }
+        public DateTime DateForVerificationSorting { get; set; }
 
         [Required]
         public DateTime DocumentExpireDate { get; set; }

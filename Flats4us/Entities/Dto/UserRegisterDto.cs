@@ -1,5 +1,7 @@
-﻿using Flats4us.Helpers.Enums;
+﻿using Flats4us.Helpers;
+using Flats4us.Helpers.Enums;
 using Helpers;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
@@ -101,7 +103,6 @@ namespace Flats4us.Entities.Dto
         public int? MaxRoommateAge { get; set; }
 
         public List<InterestDto> Interests { get; set; }
-
     }
 
     public class OwnerRegisterDto : OwnerStudentRegisterDto

@@ -6,9 +6,9 @@ namespace Flats4us.Services.Interfaces
     public interface IPropertyService
     {
         Task<List<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync();
-        Task AddPropertyAsync(AddEditPropertyDto input);
-        Task UpdatePropertyAsync(int id, AddEditPropertyDto input);
-        Task DeletePropertyAsync(int id);
-        Task VerifyPropertyAsync(int id);
+        Task AddPropertyAsync(AddEditPropertyDto input, int requestUserId);
+        Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId);
+        Task DeletePropertyAsync(int id, int requestUserId);
+        Task VerifyPropertyAsync(int id, bool decision);
     }
 }

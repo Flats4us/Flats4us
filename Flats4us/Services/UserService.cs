@@ -34,10 +34,7 @@ namespace Flats4us.Services
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-            {
-                throw new AuthenticationException("Login failed: Invalid email or password.");
-            }
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) throw new AuthenticationException("Login failed: Invalid email or password.");
 
             user.ActivityStatus = true;
             user.LastLoginDate = DateTime.Now;
@@ -52,21 +49,13 @@ namespace Flats4us.Services
         public async Task RegisterOwnerAsync(OwnerRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
-            if (existingUser != null)
-            {
-                throw new Exception("Email already exists");
-            }
 
-            if (input.Password.Length < 8 || input.Password.Length > 50)
-            {
-                throw new Exception("Password must be between 8 and 50 characters");
-            }
+            if (existingUser != null) throw new Exception("Email already exists");
 
-            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit))
-            {
-                throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
-            }
+            if (input.Password.Length < 8 || input.Password.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
 
+            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+            
             var owner = _mapper.Map<Owner>(input);
 
             if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
@@ -94,20 +83,12 @@ namespace Flats4us.Services
         public async Task RegisterStudentAsync(StudentRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
-            if (existingUser != null)
-            {
-                throw new Exception("Email already exists");
-            }
 
-            if (input.Password.Length < 8 || input.Password.Length > 50)
-            {
-                throw new Exception("Password must be between 8 and 50 characters");
-            }
+            if (existingUser != null) throw new Exception("Email already exists");
 
-            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit))
-            {
-                throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
-            }
+            if (input.Password.Length < 8 || input.Password.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+
+            if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
 
             var student = _mapper.Map<Student>(input);
 
@@ -163,31 +144,32 @@ namespace Flats4us.Services
             result.AddRange(studentDtos);
             result.AddRange(ownerDtos);
 
-            result = result.OrderBy(user => user.AccountCreationDate).ToList();
+            result = result.OrderBy(user => user.DateForVerificationSorting).ToList();
 
             return result;
         }
 
-        public async Task VerifyUserAsync(int id)
+        public async Task VerifyUserAsync(int id, bool decision)
         {
             var user = await _context.OwnerStudents.FindAsync(id);
 
-            if (user is null)
+            if (user is null) throw new ArgumentException($"User with ID {id} not found.");
+
+            if (user.VerificationStatus == VerificationStatus.Verified) throw new ArgumentException($"User with ID {id} is already verified.");
+
+            if (decision)
             {
-                throw new ArgumentException($"User with ID {id} not found.");
-            }
+                user.VerificationStatus = VerificationStatus.Verified;
 
-            if (user.VerificationStatus == VerificationStatus.Verified)
+                var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
+
+                await ImageUtility.DeleteDirectory(documentDirectoryPath);
+            }
+            else
             {
-                throw new ArgumentException($"User with ID {id} is already verified.");
+                user.VerificationStatus = VerificationStatus.Rejected;
             }
-
-            user.VerificationStatus = VerificationStatus.Verified;
-
-            var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
-
-            await ImageUtility.DeleteDirectory(documentDirectoryPath);
-
+            
             await _context.SaveChangesAsync();
         }
 

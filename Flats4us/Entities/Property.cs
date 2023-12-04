@@ -55,6 +55,9 @@ namespace Flats4us.Entities
         public DateTime CreationDate { get; set; }
 
         [Required]
+        public DateTime DateForVerificationSorting { get; set; }
+
+        [Required]
         public int OwnerId { get; set; }
 
         public virtual Owner Owner { get; set; }
