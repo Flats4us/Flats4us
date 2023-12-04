@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
 using System;
+using Newtonsoft.Json;
 
 namespace Flats4us.Services
 {
@@ -187,9 +188,18 @@ namespace Flats4us.Services
                     .ToList();
             }
 
-            if (input.Equipment != null && input.Equipment.Any())
+            if (input.EquipmentJSON != null)
             {
-                notPromotedOffers = notPromotedOffers.Where(o => input.Equipment
+                var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJSON);
+
+                var equipmentList = await _context.Equipment
+                    .Where(e => equipmentDtoList
+                        .Select(e => e.EquipmentId)
+                        .Contains(e.EquipmentId)
+                    )
+                    .ToListAsync();
+
+                notPromotedOffers = notPromotedOffers.Where(o => equipmentList
                     .All(ie => o.Property.Equipment
                     .Any(e => e.EquipmentId == ie.EquipmentId)))
                     .ToList();

@@ -25,6 +25,36 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
+        public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId)
+        {
+            var flats = await _context.Flats
+                .Include(x => x.Equipment)
+                .Where(p => p.OwnerId == ownerId)
+                .ToListAsync();
+
+            var houses = await _context.Houses
+                .Include(x => x.Equipment)
+                .Where(p => p.OwnerId == ownerId)
+                .ToListAsync();
+
+            var rooms = await _context.Rooms
+                .Include(x => x.Equipment)
+                .Where(p => p.OwnerId == ownerId)
+                .ToListAsync();
+
+            var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
+            var houseDtos = _mapper.Map<List<PropertyDto>>(houses);
+            var roomDtos = _mapper.Map<List<PropertyDto>>(rooms);
+
+            var result = new List<PropertyDto>();
+
+            result.AddRange(flatDtos);
+            result.AddRange(houseDtos);
+            result.AddRange(roomDtos);
+
+            return result;
+        }
+
         public async Task<List<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync()
         {
             var flats = await _context.Flats
@@ -65,8 +95,6 @@ namespace Flats4us.Services
 
             var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
 
-            // TODO: Try change equipment mapping
-
             var equipmentList = await _context.Equipment
                 .Where(e => equipmentDtoList
                     .Select(e => e.EquipmentId)
@@ -74,7 +102,6 @@ namespace Flats4us.Services
                 )
                 .ToListAsync();
 
-            // TODO: Use AutoMapper
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:

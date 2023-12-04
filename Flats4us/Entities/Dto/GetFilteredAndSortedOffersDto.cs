@@ -34,7 +34,8 @@ namespace Flats4us.Entities.Dto
 
         public int? Floor { get; set; }
 
-        public List<EquipmentDto>? Equipment { get; set; }
+        [ValidEquipmentJson(ErrorMessage = "Invalid JSON format in the EquipmentJson field")]
+        public string? EquipmentJSON { get; set; }
 
         [Required]
         public string Sorting { get; set; }
