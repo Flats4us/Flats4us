@@ -9,6 +9,7 @@ using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -96,13 +97,16 @@ namespace Flats4us.Services
 
             student.SurveyStudent = studentSurvey;
 
-            var interestIds = input.Interests.Select(ii => ii.InterestId).ToList();
+            var interestDtoList = JsonConvert.DeserializeObject<List<InterestDto>>(input.InterestJson);
 
-            var interests = await _context.Interests
-                .Where(i => interestIds.Contains(i.InterestId))
+            var interestList = await _context.Interests
+                .Where(i => interestDtoList
+                    .Select(i => i.InterestId)
+                    .Contains(i.InterestId)
+                )
                 .ToListAsync();
 
-            student.Interests = interests;
+            student.Interests = interestList;
 
             if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
             {

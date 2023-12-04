@@ -26,6 +26,29 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
+        // GET: api/Property
+        [HttpGet]
+        [Authorize(Policy = "VerifiedOwner")]
+        public async Task<IActionResult> GetPropertiesForCurrentUser()
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var properties = await _propertyService.GetPropertiesForCurrentUserAsync(requestUserId);
+                _logger.LogInformation($"Getting properties for current user: {requestUserId}");
+                return Ok(properties);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Getting properties for current user");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
+        }
+
         // POST: api/Property
         [HttpPost]
         [Authorize(Policy = "VerifiedOwner")]
