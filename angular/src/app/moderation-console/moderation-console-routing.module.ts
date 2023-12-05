@@ -4,6 +4,7 @@ import { ModerationConsoleComponent } from './moderation-console.component';
 import { DocumentVerificationComponent } from './components/id-cards-verification/document-verification.component';
 import { DisputeComponent } from './components/dispute/dispute.component';
 import { DisputeConversationComponent } from './components/dispute-conversation/dispute-conversation.component';
+import { SurveyComponent } from '../profile/survey/survey.component';
 
 const routes: Routes = [
 	{
@@ -11,7 +12,10 @@ const routes: Routes = [
 		component: ModerationConsoleComponent,
 		children: [
 			{ path: '', pathMatch: 'full', redirectTo: 'verification' },
-			{ path: 'document-verification', component: DocumentVerificationComponent },
+			{
+				path: 'verify/:verification-type',
+				component: DocumentVerificationComponent,
+			},
 			{ path: 'dispute', component: DisputeComponent },
 			{ path: 'dispute/:id', component: DisputeConversationComponent },
 		],

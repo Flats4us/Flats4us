@@ -5,10 +5,12 @@
 	[dataSource]="dataSource$"
 >
 	<ng-container
-		*ngFor="let column of columnsToDisplay.keys()"
+		*ngFor="let column of userColumnsToDisplay.keys()"
 		matColumnDef="{{ column }}"
 	>
-		<th *matHeaderCellDef mat-header-cell>{{ columnsToDisplay.get(column) }}</th>
+		<th *matHeaderCellDef mat-header-cell>
+			{{ userColumnsToDisplay.get(column) }}
+		</th>
 		<td *matCellDef="let element" mat-cell>{{ element[column] }}</td>
 	</ng-container>
 

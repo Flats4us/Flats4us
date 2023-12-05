@@ -13,7 +13,7 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-import { IUser } from './document.interface';
+import { IUser } from './user.interface';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -41,18 +41,20 @@ export class DocumentVerificationComponent {
 	@ViewChild(MatTable) public table: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
-	public columnsToDisplay: Map<string, string> = new Map<string, string>([
+	public userColumnsToDisplay: Map<string, string> = new Map<string, string>([
 		['email', 'Email'],
-    ['university', 'Uczelnia'],
+		['university', 'Uczelnia'],
 		['studentNumber', 'Nr albumu'],
-    ['documentNumber', 'Nr dokumentu'],
-		['firstName', 'Imię'],
-		['lastName', 'Nazwisko'],
-		['cardExpirationDate', 'Data ważności legitymacji'],
+		['documentNumber', 'Nr dokumentu'],
+		['name', 'Imię'],
+		['surname', 'Nazwisko'],
+		['documentExpireDate', 'Data ważności legitymacji'],
 	]);
+	private verificationType =
+		this.route.snapshot.paramMap.get('verification-type');
 
 	public columnsToDisplayWithExpand = [
-		...this.columnsToDisplay.keys(),
+		...this.userColumnsToDisplay.keys(),
 		'expand',
 	];
 	public dataSource$: Observable<IUser[]>;
@@ -64,7 +66,7 @@ export class DocumentVerificationComponent {
 		private route: ActivatedRoute,
 		private matDialog: MatDialog
 	) {
-		this.dataSource$ = /*this.loadData();*/ this.service.getStudentCards();
+		this.dataSource$ = this.loadData();
 	}
 
 	public openImageDialog(imageSrc: string): void {
@@ -74,19 +76,15 @@ export class DocumentVerificationComponent {
 		});
 	}
 
-	/*public loadData(): Observable<IStudentCard[]> {
-		const param = this.route.snapshot.paramMap.get('');
-		if (param === 'verification') {
-			return this.service.getStudentCards();
+	public loadData(): Observable<any> {
+		if (this.verificationType === 'users') {
+			return this.service.getUsers();
+		} else {
+			return this.service.getProperty();
 		}
-		return this.service.getStudentCards();
-	}*/
+	}
 
 	public reject(email: string) {
-		/*ELEMENT_DATA.splice(
-			ELEMENT_DATA.findIndex(a => a.email === email),
-			1
-		);*/
 		this.table.renderRows();
 		this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
 			duration: 2000,
@@ -94,13 +92,21 @@ export class DocumentVerificationComponent {
 	}
 
 	public accept(email: string) {
-		/*ELEMENT_DATA.splice(
-			ELEMENT_DATA.findIndex(a => a.email === email),
-			1
-		);*/
-		this.table.renderRows();
-		this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
-			duration: 2000,
-		});
+		const param = this.route.snapshot.paramMap.get('verification-type');
+		if (param === 'users') {
+			this.dataSource$.subscribe(users => {
+				const user = users.find(user => user.email === email);
+				this.service.acceptUser(user).subscribe(result => {
+					// eslint-disable-next-line no-console
+					console.log(result);
+				});
+			});
+
+			this.dataSource$ = this.service.getUsers();
+			this.table.renderRows();
+			this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
+				duration: 2000,
+			});
+		}
 	}
 }
