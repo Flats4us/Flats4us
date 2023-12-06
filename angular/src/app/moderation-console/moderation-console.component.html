@@ -1,0 +1,25 @@
+<h1 class="text-4xl p-4 font-semibold">Konsola moderacyjna</h1>
+<div class="settings">
+	<mat-card>
+		<nav>
+			<ul>
+				<li>
+					<a routerLink="verify/users" routerLinkActive="active"
+						>Weryfikacja dokumentu tożsamości</a
+					>
+				</li>
+				<li>
+					<a routerLink="verify/properties" routerLinkActive="active"
+						>Weryfikacja aktu własności</a
+					>
+				</li>
+				<li>
+					<a routerLink="dispute" routerLinkActive="active">Interwencja w sporach</a>
+				</li>
+			</ul>
+		</nav>
+	</mat-card>
+	<div class="flex-1">
+		<router-outlet></router-outlet>
+	</div>
+</div>

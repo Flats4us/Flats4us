@@ -53,7 +53,8 @@
 							"constructors": "no-public"
 						}
 					}
-				]
+				],
+				"no-mixed-spaces-and-tabs": ["smart-tabs"]
 			}
 		},
 		{

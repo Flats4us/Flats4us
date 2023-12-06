@@ -1,0 +1,65 @@
+.disputes-wrapper {
+	display: flex;
+	gap: 16px;
+	flex-direction: column;
+	height: 100%;
+}
+
+.full-screen-tab-group {
+	flex-grow: 1;
+}
+.disputes-header {
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	padding: 10px;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title {
+	flex: 1;
+	text-align: center;
+}
+
+.disputes-choice {
+	background: #fff;
+	min-width: 300px;
+	overflow-y: auto;
+}
+
+.disputes-choice__conversation {
+	width: 100%;
+	min-height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 0 16px;
+	cursor: pointer;
+	border-bottom: 1px solid #e0e0e0;
+
+	> div {
+		display: flex;
+		gap: 4px;
+	}
+
+	.header-title,
+	.content-cell {
+		flex: 1;
+		text-align: center;
+		padding: 0 10px;
+	}
+
+	&:hover {
+		background: linear-gradient(
+				0deg,
+				rgba(187, 134, 252, 0.12) 0%,
+				rgba(187, 134, 252, 0.12) 100%
+			),
+			#fff;
+	}
+}
+
+.disputes-box {
+	flex: 1;
+}

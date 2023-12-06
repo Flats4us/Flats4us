@@ -1,0 +1,36 @@
+<div class="disputes-wrapper">
+	<table
+		mat-table
+		class="mat-elevation-z8"
+		multiTemplateDataRows
+		[dataSource]="dataSource$"
+	>
+		<ng-container
+			*ngFor="let column of columnsToDisplay.keys()"
+			matColumnDef="{{ column }}"
+		>
+			<th *matHeaderCellDef mat-header-cell>{{ columnsToDisplay.get(column) }}</th>
+			<td *matCellDef="let element" mat-cell>{{ element[column] }}</td>
+		</ng-container>
+
+		<ng-container matColumnDef="expand">
+			<th *matHeaderCellDef mat-header-cell aria-label="row actions">&nbsp;</th>
+			<td *matCellDef="let element" mat-cell>
+				<button mat-button mat-flat-button color="primary" routerLink="1">
+					Zobacz spór
+				</button>
+			</td>
+		</ng-container>
+
+		<tr *matHeaderRowDef="columnsToDisplayWithExpand" mat-header-row></tr>
+		<tr
+			*matRowDef="let element; columns: columnsToDisplayWithExpand"
+			mat-row
+			class="example-element-row"
+		></tr>
+	</table>
+
+	<div class="disputes-box">
+		<router-outlet></router-outlet>
+	</div>
+</div>
