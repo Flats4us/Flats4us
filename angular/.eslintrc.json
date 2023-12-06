@@ -54,7 +54,7 @@
 						}
 					}
 				],
-				"no-mixed-spaces-and-tabs": ["smart-tabs"]
+				"no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
 			}
 		},
 		{
