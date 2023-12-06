@@ -18,8 +18,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { VerificationComponent } from './components/verification/verification.component';
+import { ModerationConsoleService } from './services/moderation-console.service';
 
 @NgModule({
+	providers: [ModerationConsoleService],
 	declarations: [
 		ModerationConsoleComponent,
 		VerificationComponent,

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDispute } from './IDispute';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
+import { IDispute } from '../../Models/moderation-console.models';
 
 @Component({
 	selector: 'app-dispute',

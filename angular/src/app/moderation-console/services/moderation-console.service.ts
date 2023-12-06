@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IDispute } from '../components/dispute/IDispute';
-import { IUser } from '../components/verification/user.interface';
-import { IProperty } from '../components/verification/property.interface';
+import { IDispute, IUser } from '../Models/moderation-console.models';
+import { IProperty } from '../Models/moderation-console.models';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class ModerationConsoleService {
 	constructor(private http: HttpClient) {}
 

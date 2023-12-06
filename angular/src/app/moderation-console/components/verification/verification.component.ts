@@ -13,11 +13,12 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-import { IUser } from './user.interface';
+import { IProperty, IUser } from '../../Models/moderation-console.models';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { CdkTableDataSourceInput } from '@angular/cdk/table';
 
 @Component({
 	selector: 'app-verification',
@@ -39,7 +40,7 @@ export class VerificationComponent {
 	@ViewChild(MatTable) public table!: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
-	private verificationType =
+	public verificationType =
 		this.route.snapshot.paramMap.get('verification-type');
 
 	public columnsToDisplay: Map<string, string> =
@@ -67,7 +68,10 @@ export class VerificationComponent {
 		'expand',
 	];
 
-	public dataSource$: Observable<IUser[]>;
+	public usersDataSource$: CdkTableDataSourceInput<IUser>;
+	public propertiesDataSource$: CdkTableDataSourceInput<IProperty>;
+	public dataSource$: CdkTableDataSourceInput<any>;
+
 	public expandedElement: IUser | null | undefined;
 
 	constructor(
@@ -77,8 +81,14 @@ export class VerificationComponent {
 		private matDialog: MatDialog,
 		private router: Router
 	) {
-		this.dataSource$ = this.loadData();
+		this.usersDataSource$ = this.service.getUsers();
+		this.propertiesDataSource$ = this.service.getProperty();
+
 		this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+		this.dataSource$ =
+			this.verificationType === 'users'
+				? this.usersDataSource$
+				: this.propertiesDataSource$;
 	}
 
 	public openImageDialog(imageSrc: string): void {
@@ -86,14 +96,6 @@ export class VerificationComponent {
 			data: { src: imageSrc },
 			panelClass: 'custom-dialog-container',
 		});
-	}
-
-	public loadData(): Observable<any> {
-		if (this.verificationType === 'users') {
-			return this.service.getUsers();
-		} else {
-			return this.service.getProperty();
-		}
 	}
 
 	public reject(email: string) {
@@ -104,15 +106,11 @@ export class VerificationComponent {
 	}
 
 	public accept(email: string) {
-		const param = this.route.snapshot.paramMap.get('verification-type');
-		if (param === 'users') {
-			this.dataSource$.subscribe(users => {
+		if (this.verificationType === 'users') {
+			/*this.dataSource$.subscribe(users => {
 				const user = users.find(user => user.email === email);
-				this.service.acceptUser(user).subscribe(result => {
-					// eslint-disable-next-line no-console
-					console.log(result);
-				});
-			});
+				this.service.acceptUser(user);
+			});*/
 
 			this.dataSource$ = this.service.getUsers();
 			this.table.renderRows();
