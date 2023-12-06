@@ -19,17 +19,17 @@ namespace Flats4us.Services
         }
 
         // EXAMPLE
-        //public async Task TestAsync()
-        //{
-        //    _logger.LogInformation("Test job1 executed at: " + DateTime.Now);
+        public async Task TestAsync()
+        {
+            _logger.LogInformation("Test job1 executed at: " + DateTime.Now);
 
-        //    var result = await _context.Equipment
-        //        .Select(e => new EquipmentDto
-        //        {
-        //            EquipmentId = e.EquipmentId,
-        //            Name = e.Name
-        //        })
-        //        .ToListAsync();
-        //}
+            var result = await _context.Equipment
+                .Select(e => new EquipmentDto
+                {
+                    EquipmentId = e.EquipmentId,
+                    Name = e.Name
+                })
+                .ToListAsync();
+        }
     }
 }
