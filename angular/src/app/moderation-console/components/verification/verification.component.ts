@@ -52,7 +52,6 @@ export class VerificationComponent {
 					['name', 'Imię'],
 					['surname', 'Nazwisko'],
 					['documentExpireDate', 'Data ważności legitymacji'],
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  ])
 			: new Map<string, string>([
 					['propertyType', 'Typ nieruchomości'],
@@ -61,7 +60,6 @@ export class VerificationComponent {
 					['address', 'Addres nieruchomości'],
 					['propertyType', 'Typ nieruchomości'],
 					['creationDate', 'Data utworzenia'],
-					// eslint-disable-next-line no-mixed-spaces-and-tabs
 			  ]);
 
 	public columnsToDisplayWithExpand = [
