@@ -18,6 +18,8 @@ namespace Flats4us.Entities
         public virtual Student Student { get; set; }
 
         // TODO: Przypisanie powinno być chyba do wynajmu nie oferty
-        public virtual Offer Offer { get; set; }
+
+        public virtual Rent Rent { get; set; }
+        //public virtual Offer Offer { get; set; }
     }
 }

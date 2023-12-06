@@ -6,14 +6,14 @@ namespace Flats4us.Helpers
 {
     public static class HangfireSetup
     {
-        public static void ConfigureJobs(IServiceScopeFactory scopeFactory)
+        public  static void ConfigureJobs(IServiceScopeFactory scopeFactory)
         {
             using (var scope = scopeFactory.CreateScope())
             {
                 var backgroundJobService = scope.ServiceProvider.GetRequiredService<IBackgroundJobService>();
 
                 //EXAMPLE
-                //RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.TestAsync(), "*/3 * * * *");
+                RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.TestAsync(), "* * * * *");
             }
         }
     }
