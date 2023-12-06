@@ -28,7 +28,7 @@ import { MatDialog } from '@angular/material/dialog';
 			state('expanded', style({ height: '*' })),
 			transition(
 				'expanded <=> collapsed',
-				animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+				animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'),
 			),
 		]),
 	],
@@ -75,7 +75,7 @@ export class VerificationComponent {
 		private service: ModerationConsoleService,
 		private route: ActivatedRoute,
 		private matDialog: MatDialog,
-		private router: Router
+		private router: Router,
 	) {
 		this.dataSource$ = this.loadData();
 		this.router.routeReuseStrategy.shouldReuseRoute = () => false;
