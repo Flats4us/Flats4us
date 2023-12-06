@@ -16,12 +16,12 @@ import {
 import { IUser } from './user.interface';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-	selector: 'app-id-cards-verification',
-	templateUrl: './document-verification.component.html',
+	selector: 'app-verification',
+	templateUrl: './verification.component.html',
 	animations: [
 		trigger('detailExpand', [
 			state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -32,31 +32,45 @@ import { MatDialog } from '@angular/material/dialog';
 			),
 		]),
 	],
-	styleUrls: ['./document-verification.component.scss'],
+	styleUrls: ['./verification.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocumentVerificationComponent {
+export class VerificationComponent {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
 	@ViewChild(MatTable) public table: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
-	public userColumnsToDisplay: Map<string, string> = new Map<string, string>([
-		['email', 'Email'],
-		['university', 'Uczelnia'],
-		['studentNumber', 'Nr albumu'],
-		['documentNumber', 'Nr dokumentu'],
-		['name', 'Imię'],
-		['surname', 'Nazwisko'],
-		['documentExpireDate', 'Data ważności legitymacji'],
-	]);
 	private verificationType =
 		this.route.snapshot.paramMap.get('verification-type');
 
+	public columnsToDisplay: Map<string, string> =
+		this.verificationType == 'users'
+			? new Map<string, string>([
+					['email', 'Email'],
+					['university', 'Uczelnia'],
+					['studentNumber', 'Nr albumu'],
+					['documentNumber', 'Nr dokumentu'],
+					['name', 'Imię'],
+					['surname', 'Nazwisko'],
+					['documentExpireDate', 'Data ważności legitymacji'],
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
+			  ])
+			: new Map<string, string>([
+					['propertyType', 'Typ nieruchomości'],
+					['ownerName', 'Właściciel'],
+					['ownerEmail', 'Adres email właściciela'],
+					['address', 'Addres nieruchomości'],
+					['propertyType', 'Typ nieruchomości'],
+					['creationDate', 'Data utworzenia'],
+					// eslint-disable-next-line no-mixed-spaces-and-tabs
+			  ]);
+
 	public columnsToDisplayWithExpand = [
-		...this.userColumnsToDisplay.keys(),
+		...this.columnsToDisplay.keys(),
 		'expand',
 	];
+
 	public dataSource$: Observable<IUser[]>;
 	public expandedElement: IUser | null | undefined;
 
@@ -64,9 +78,11 @@ export class DocumentVerificationComponent {
 		private snackBar: MatSnackBar,
 		private service: ModerationConsoleService,
 		private route: ActivatedRoute,
-		private matDialog: MatDialog
+		private matDialog: MatDialog,
+		private router: Router
 	) {
 		this.dataSource$ = this.loadData();
+		this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 	}
 
 	public openImageDialog(imageSrc: string): void {

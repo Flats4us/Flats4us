@@ -17,12 +17,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
-import { DocumentVerificationComponent } from './components/id-cards-verification/document-verification.component';
+import { VerificationComponent } from './components/verification/verification.component';
 
 @NgModule({
 	declarations: [
 		ModerationConsoleComponent,
-		DocumentVerificationComponent,
+		VerificationComponent,
 		DisputeComponent,
 		DisputeConversationComponent,
 	],
