@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: flats4us_fe
     ports:
-      - "8080:80"
+      - "80:80"
   flats4us:
     build:
       context: ./Flats4us
