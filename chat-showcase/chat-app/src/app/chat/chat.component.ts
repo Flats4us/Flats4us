@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ChatService } from "../chat.service";
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-chat',
@@ -13,16 +14,17 @@ export class ChatComponent implements OnInit {
   message: string = '';
   receiverId: number = 0;
 
-  constructor(private chatService: ChatService) { }
+  constructor(private chatService: ChatService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.chatService.startConnection();
-    this.chatService.receiveMessage((user, message) => {
-      this.messages.push({user, message});
+
+    this.chatService.addReceiveMessageHandler((user, message) => {
+      this.messages.push({ user, message });
     });
-    this.chatService.receivePrivateMessage((user, message) => {
-      // You can add a condition or a flag to differentiate private messages
-      this.messages.push({user, message});
+
+    this.chatService.addReceivePrivateMessageHandler((user, message) => {
+      this.privateMessages.push({ user, message });
     });
   }
 

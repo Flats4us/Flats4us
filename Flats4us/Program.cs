@@ -67,6 +67,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
             ValidateAudience = false
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our hub...
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/chatHub"))) // Make sure this matches your SignalR hub route
+                {
+                    // Read the token out of the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 
@@ -115,6 +132,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+
 
 builder.Services.AddAuthorization(options =>
 {
