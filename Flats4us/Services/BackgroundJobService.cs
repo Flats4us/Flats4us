@@ -31,5 +31,32 @@ namespace Flats4us.Services
                 })
                 .ToListAsync();
         }
+        public async Task PaymentAsync()
+        {
+            _logger.LogInformation("Payment executed at: " + DateTime.Now);
+
+            var result = await _context.Rents
+                .Where(rent =>
+                    rent.PaymentDate.Date == DateTime.Now.AddDays(-7).Date
+                )
+                .ToListAsync();
+
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    item.Student.Payments.Add(new Payment
+                    {
+                        Amount = 100,
+                        Student = item.Student,
+                        Rent = item,
+                        PaymentPurpose = Helpers.Enums.PaymentPurpose.Rent
+                    });
+                }
+                await _context.SaveChangesAsync();
+            }
+
+
+        }
     }
 }

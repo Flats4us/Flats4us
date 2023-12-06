@@ -14,6 +14,8 @@ namespace Flats4us.Helpers
 
                 //EXAMPLE
                 RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.TestAsync(), "* * * * *");
+
+                RecurringJob.AddOrUpdate("payment", () => backgroundJobService.TestAsync(), "0 12 * * *");
             }
         }
     }
