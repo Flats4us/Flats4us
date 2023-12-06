@@ -16,6 +16,10 @@ import { WatchedOffersComponent } from './components/watched-offers/watched-offe
 import { MatChipsModule } from '@angular/material/chips';
 import { OfferService } from './services/offer-service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+	MatPaginatorIntl,
+	MatPaginatorModule,
+} from '@angular/material/paginator';
 
 @NgModule({
 	exports: [AddOfferComponent, WatchedOffersComponent],
@@ -34,7 +38,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatIconModule,
 		MatChipsModule,
 		MatTooltipModule,
+		MatPaginatorModule,
 	],
-	providers: [OfferService],
+	providers: [OfferService, MatPaginatorIntl],
 })
 export class OfferModule {}

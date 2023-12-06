@@ -1,10 +1,10 @@
 <div>
 	<h1 class="text-4xl p-4 font-semibold">Obserwowane oferty</h1>
 </div>
-<div class="watched-offers">
+<div *ngIf="watchedOffers$ | async as watchedOffers" class="watched-offers">
 	<div class="container">
 		<mat-card
-			*ngFor="let watchedOffer of watchedOffers$ | async"
+			*ngFor="let watchedOffer of watchedOffers.data"
 			class="card"
 			(click)="navigateToFlat(watchedOffer.url)"
 		>
@@ -61,4 +61,17 @@
 			</mat-card-content>
 		</mat-card>
 	</div>
+	<mat-paginator
+		#paginator
+		id="paginator2"
+		showFirstLastButtons
+		aria-label="Paginator"
+		[length]="watchedOffers.total"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
+		[pageSizeOptions]="[3, 6, 12, 18]"
+		(page)="changePage($event)"
+	>
+		>
+	</mat-paginator>
 </div>

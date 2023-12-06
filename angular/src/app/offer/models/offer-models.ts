@@ -12,3 +12,8 @@ export interface IWatchedOffer {
 	imgSource: string;
 	type: string;
 }
+
+export interface ISendOffers {
+	data: IWatchedOffer[];
+	total: number;
+}
