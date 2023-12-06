@@ -52,7 +52,7 @@ export class VerificationComponent {
 					['name', 'Imię'],
 					['surname', 'Nazwisko'],
 					['documentExpireDate', 'Data ważności legitymacji'],
-			  ])
+        ])
 			: new Map<string, string>([
 					['propertyType', 'Typ nieruchomości'],
 					['ownerName', 'Właściciel'],
@@ -60,7 +60,7 @@ export class VerificationComponent {
 					['address', 'Addres nieruchomości'],
 					['propertyType', 'Typ nieruchomości'],
 					['creationDate', 'Data utworzenia'],
-			  ]);
+        ]);
 
 	public columnsToDisplayWithExpand = [
 		...this.columnsToDisplay.keys(),
