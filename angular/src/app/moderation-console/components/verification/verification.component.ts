@@ -36,9 +36,7 @@ import { MatDialog } from '@angular/material/dialog';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerificationComponent {
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
-	@ViewChild(MatTable) public table: MatTable<IUser>;
+	@ViewChild(MatTable) public table!: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
 	private verificationType =
