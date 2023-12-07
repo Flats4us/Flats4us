@@ -10,28 +10,29 @@ import {
 } from 'rxjs';
 
 import { IAuthTokenResponse, IUser } from '../models/auth.models';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
-	private authTokenSubject: BehaviorSubject<string | null>;
+	protected apiRoute = `${environment.apiUrl}/auth`;
 
-	constructor(private http: HttpClient) {
-		this.authTokenSubject = new BehaviorSubject<string | null>(
-			localStorage.getItem('currentUser') as string
-		);
-	}
+	private authTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+		string | null
+	>(localStorage.getItem('currentUser'));
+
+	constructor(private http: HttpClient) {}
 
 	public login({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
-			.post<IAuthTokenResponse>('/api/auth/login', { email, password })
+			.post<IAuthTokenResponse>(`${this.apiRoute}/login`, { email, password })
 			.pipe(tap(response => this.setToken(response)));
 	}
 
 	public register({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
-			.post<IAuthTokenResponse>('/api/auth/register', { email, password })
+			.post<IAuthTokenResponse>(`${this.apiRoute}/register`, { email, password })
 			.pipe(tap(response => this.setToken(response)));
 	}
 
@@ -55,18 +56,18 @@ export class AuthService {
 	private refreshToken(): Observable<IAuthTokenResponse> {
 		const token = localStorage.getItem('authToken');
 		if (!token) {
-			return throwError('No auth token found');
+			return throwError(() => 'No auth token found');
 		}
 		return this.http
 			.post<IAuthTokenResponse>('/api/auth/refresh', { token })
 			.pipe(
 				tap(response => this.setToken(response)),
-				catchError(_error => {
+				catchError(error => {
 					this.authTokenSubject.next(null);
 					localStorage.removeItem('authToken');
 					localStorage.removeItem('authTokenExpirationTime');
 					localStorage.removeItem('authTokenTimeoutId');
-					return of();
+					return throwError(() => error);
 				})
 			);
 	}

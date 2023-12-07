@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { AuthGuard } from '@shared/services/auth.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'start' },
@@ -17,21 +18,25 @@ const routes: Routes = [
 		path: 'profile',
 		loadChildren: () =>
 			import('./profile/profile.module').then(m => m.ProfileModule),
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'settings',
 		loadChildren: () =>
 			import('./settings/settings.module').then(m => m.SettingsModule),
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'messages',
 		loadChildren: () =>
 			import('./messages/messages.module').then(m => m.MessagesModule),
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'disputes',
 		loadChildren: () =>
 			import('./disputes/disputes.module').then(m => m.DisputesModule),
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'real-estate',
