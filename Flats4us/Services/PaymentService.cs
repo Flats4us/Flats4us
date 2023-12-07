@@ -14,7 +14,7 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<Payment> GetPaymentByRentId(int id)
+        public async Task<List<Payment>> GetPaymentByRentId(int id)
         {
             return await _context.Payments.Where(x => x.RentId == id).ToListAsync();
         }
