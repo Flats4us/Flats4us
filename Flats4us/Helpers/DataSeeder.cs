@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using System;
@@ -1036,7 +1037,36 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
 
         #endregion
-          
+
+        //#region Rents
+
+        //var rent1 = new Rent
+        //{
+        //    StartDate = new DateTime(2023, 7, 15),
+        //    PaymentDate = new DateTime(2023, 7, 15),
+        //    RentPeriod = 1,
+        //    ContractInfo = "balbalb"
+        //};
+
+        //dbContext.Rents.AddRange(rent1);
+
+        //#endregion
+
+        //#region Payments
+
+        //var payment1 = new Payment
+        //{
+        //    PaymentPurpose = PaymentPurpose.Rent,
+        //    IsPaid = true,
+        //    Amount= 1500,
+        //    StudentId = 6,
+        //    RentId = 1
+        //};
+
+        //dbContext.Payments.AddRange(payment1);
+
+        //#endregion
+
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion

@@ -13,18 +13,14 @@ namespace Flats4us.Entities
         public PaymentPurpose PaymentPurpose { get; set; }
 
         [Required]
-        public PaymentStatus PaymentStatus { get; set; }
+        public bool IsPaid { get; set; }
 
         [Required]
         public int Amount { get; set; }
 
-        [Required]
-        public int StudentId { get; set; }
 
         [Required]
         public int RentId { get; set; }
-
-        public virtual Student Student { get; set; }
 
         // TODO: Przypisanie powinno być chyba do wynajmu nie oferty
 

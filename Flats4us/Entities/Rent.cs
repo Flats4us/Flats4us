@@ -24,7 +24,7 @@ namespace Flats4us.Entities
 
         public virtual OpinionRent OpinionRent { get; set; }
 
-        public virtual Offer Offers { get; set; }
+        public virtual Offer Offer { get; set; }
 
         public virtual Student Student { get; set; }
 

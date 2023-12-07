@@ -1,6 +1,7 @@
 ﻿using Flats4us.Controllers;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,10 +48,9 @@ namespace Flats4us.Services
                 {
                     item.Student.Payments.Add(new Payment
                     {
-                        Amount = 100,
-                        Student = item.Student,
+                        Amount = 2000,
                         Rent = item,
-                        PaymentPurpose = Helpers.Enums.PaymentPurpose.Rent
+                        PaymentPurpose = PaymentPurpose.Rent
                     });
                 }
                 await _context.SaveChangesAsync();
