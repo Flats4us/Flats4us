@@ -15,6 +15,8 @@ namespace Flats4us.Entities
         public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<GroupChat> GroupChats { get; set; }
+        public DbSet<UserGroupChat> UserGroupChats { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<House> Houses { get; set; }
@@ -119,6 +121,19 @@ namespace Flats4us.Entities
                 .WithMany(x => x.Meetings)
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserGroupChat>()
+       .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+
+            modelBuilder.Entity<UserGroupChat>()
+                .HasOne(ugc => ugc.User)
+                .WithMany(u => u.UserGroupChats)
+                .HasForeignKey(ugc => ugc.UserId);
+
+            modelBuilder.Entity<UserGroupChat>()
+                .HasOne(ugc => ugc.GroupChat)
+                .WithMany(gc => gc.UserGroupChats)
+                .HasForeignKey(ugc => ugc.GroupChatId);
         }
     }
 }

@@ -52,5 +52,7 @@ namespace Flats4us.Entities
         [Required]
         public DateTime LastLoginDate { get; set; }
 
+        public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
+
     }
 }

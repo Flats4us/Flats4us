@@ -989,6 +989,20 @@ public static class DataSeeder
 
         #endregion
 
+        var groupChat1 = new GroupChat
+        {
+            Name = "Study Group" // Optional
+                                 // No need to set GroupChatId as it's auto-generated
+        };
+        dbContext.GroupChats.Add(groupChat1);
+
+        var userGroupChat1 = new UserGroupChat
+        {
+            User = student1,
+            GroupChat = groupChat1
+        };
+        dbContext.UserGroupChats.Add(userGroupChat1);
+
         dbContext.SaveChanges();
     }
 }

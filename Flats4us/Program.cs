@@ -92,6 +92,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IOwnerService, OwnerService>();
 
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IGroupChatService, GroupChatService>();
+
 //builder.Services.AddScoped<OwnerService>();
 
 
