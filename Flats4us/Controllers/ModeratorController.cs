@@ -1,8 +1,10 @@
-﻿using Flats4us.Services;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -28,6 +30,10 @@ namespace Flats4us.Controllers
         // GET: api/Moderator/Property
         [HttpGet("Property")]
         [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns a list of properties requiring verification",
+            Description = "Requires moderator privileges"
+        )]
         public async Task<IActionResult> GetNotVerifiedProperties()
         {
             try
@@ -41,14 +47,18 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/Property/Verify/{id}/{decision}
-        [HttpPost("Property/Verify/{id}/{decision}")]
+        // POST: api/Moderator/Property/Verify/{id}
+        [HttpPut("Property/Verify/{id}")]
         [Authorize(Policy = "Moderator")]
-        public async Task<IActionResult> VerifyProperty(int id, bool decision)
+        [SwaggerOperation(
+            Summary = "Verifies property",
+            Description = "Requires moderator privileges"
+        )]
+        public async Task<IActionResult> VerifyProperty(int id, [FromBody] VerifyDto input)
         {
             try
             {
-                await _propertyService.VerifyPropertyAsync(id, decision);
+                await _propertyService.VerifyPropertyAsync(id, input.Decision);
                 _logger.LogInformation($"Verifying property - id: {id}");
                 return Ok("Property verification status changed successfully");
             }
@@ -62,6 +72,10 @@ namespace Flats4us.Controllers
         // GET: api/Moderator/User
         [HttpGet("User")]
         [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns a list of users requiring verification",
+            Description = "Requires moderator privileges"
+        )]
         public async Task<IActionResult> GetNotVerifiedUsers()
         {
             try
@@ -75,14 +89,18 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/User/Verify/{id}/{decision}
-        [HttpPost("User/Verify/{id}/{decision}")]
+        // POST: api/Moderator/User/Verify/{id}
+        [HttpPut("User/Verify/{id}")]
         [Authorize(Policy = "Moderator")]
-        public async Task<IActionResult> VerifyUser(int id, bool decision)
+        [SwaggerOperation(
+            Summary = "Verifies user",
+            Description = "Requires moderator privileges"
+        )]
+        public async Task<IActionResult> VerifyUser(int id, [FromBody] VerifyDto input)
         {
             try
             {
-                await _userService.VerifyUserAsync(id, decision);
+                await _userService.VerifyUserAsync(id, input.Decision);
                 _logger.LogInformation($"Verifying user - id: {id}");
                 return Ok("User verification status changed successfully");
             }

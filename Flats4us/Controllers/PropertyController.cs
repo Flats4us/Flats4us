@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace Flats4us.Controllers
@@ -29,6 +30,10 @@ namespace Flats4us.Controllers
         // GET: api/Property
         [HttpGet]
         [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Returns list of properties for current owner",
+            Description = "Requires verified owner privileges"
+        )]
         public async Task<IActionResult> GetPropertiesForCurrentUser()
         {
             try
@@ -52,6 +57,10 @@ namespace Flats4us.Controllers
         // POST: api/Property
         [HttpPost]
         [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Adds new property",
+            Description = "Requires verified owner privileges"
+        )]
         public async Task<IActionResult> AddProperty([FromForm] AddEditPropertyDto input)
         {
             try
@@ -72,11 +81,13 @@ namespace Flats4us.Controllers
             }
         }
 
-        // TODO: Add GetMyProperties
-
         // PUT: api/Property/{id}
         [HttpPut("{id}")]
         [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Updates existing property",
+            Description = "Requires verified owner privileges"
+        )]
         public async Task<IActionResult> UpdateProperty(int id, [FromForm] AddEditPropertyDto input)
         {
             try
@@ -105,6 +116,10 @@ namespace Flats4us.Controllers
         // DELETE: api/Property/{id}
         [HttpDelete("{id}")]
         [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Removes property",
+            Description = "Requires verified owner privileges"
+        )]
         public async Task<IActionResult> DeleteProperty(int id)
         {
             try

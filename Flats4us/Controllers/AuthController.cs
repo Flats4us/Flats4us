@@ -12,6 +12,7 @@ using Flats4us.Services.Interfaces;
 using Flats4us.Services;
 using Flats4us.Helpers.Exceptions;
 using Microsoft.AspNetCore.Cors;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -28,7 +29,10 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("register/Student")]
-        public async Task<ActionResult<User>> RegisterStudentAsync([FromForm] StudentRegisterDto request)
+        [SwaggerOperation(
+            Summary = "Registers new student"
+        )]
+        public async Task<ActionResult> RegisterStudentAsync([FromForm] StudentRegisterDto request)
         {
             try
             {
@@ -42,7 +46,10 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("register/Owner")]
-        public async Task<ActionResult<User>> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
+        [SwaggerOperation(
+            Summary = "Registers new owner"
+        )]
+        public async Task<ActionResult> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
         {
             try
             {
@@ -56,7 +63,10 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<String>> Login([FromForm] UserLoginDto request)
+        [SwaggerOperation(
+            Summary = "Logs the user in, returns a token"
+        )]
+        public async Task<ActionResult> Login([FromBody] UserLoginDto request)
         {
             try
             {

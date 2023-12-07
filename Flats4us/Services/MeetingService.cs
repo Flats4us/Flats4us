@@ -4,16 +4,47 @@ using Flats4us.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class MeetingService : IMeetingService
     {
         public readonly Flats4usContext _context;
+        private readonly IMapper _mapper;
 
-        public MeetingService(Flats4usContext context)
+        public MeetingService(Flats4usContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var meetings = new List<MeetingDto>();
+
+            if (user is Student)
+            {
+                meetings = await _context.Students
+                    .Where(s =>  s.UserId == userId)
+                    .SelectMany(s => s.Meetings)
+                    .Select(meeting => _mapper.Map<MeetingDto>(meeting))
+                    .ToListAsync();
+            }
+            else if (user is Owner)
+            {
+                meetings = await _context.Owners
+                    .Where(o => o.UserId == userId)
+                    .SelectMany(o => o.Properties)
+                    .SelectMany(p => p.Offers)
+                    .SelectMany(o => o.Meetings)
+                    .Select(meeting => _mapper.Map<MeetingDto>(meeting))
+                    .ToListAsync();
+            }
+            else throw new Exception("Unable to fetch meetings for current user");
+
+            return meetings;
         }
 
         public async Task AddMeetingAsync(AddMeetingDto input, int userId)

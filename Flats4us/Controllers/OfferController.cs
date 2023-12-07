@@ -6,6 +6,7 @@ using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace Flats4us.Controllers
@@ -28,6 +29,9 @@ namespace Flats4us.Controllers
 
         // GET: api/Offer
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Returns a list offers"
+        )]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -43,6 +47,9 @@ namespace Flats4us.Controllers
 
         // GET: api/Offer/{id}
         [HttpGet("{id}")]
+        [SwaggerOperation(
+            Summary = "Returns offer by id"
+        )]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -54,12 +61,13 @@ namespace Flats4us.Controllers
             {
                 return BadRequest($"An error occured: {ex.Message}");
             }
-            
-
         }
 
         // GET: api/Offer
         [HttpGet("filtered")]
+        [SwaggerOperation(
+            Summary = "Returns a filtered list of offers"
+        )]
         public async Task<IActionResult> GetFilteredAndSorted([FromQuery] GetFilteredAndSortedOffersDto input)
         {
             try
@@ -75,11 +83,21 @@ namespace Flats4us.Controllers
 
         // POST: api/Property
         [HttpPost]
-        public async Task<IActionResult> AddProperty([FromForm] AddEditOfferDto input)
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Adds an offer",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> AddOffer([FromBody] AddEditOfferDto input)
         {
             try
             {
-                await _offerService.AddOfferAsync(input);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _offerService.AddOfferAsync(input, requestUserId);
                 _logger.LogInformation($"Adding offer - body: {input}");
                 return Ok("Property added successfully");
             }
@@ -93,7 +111,11 @@ namespace Flats4us.Controllers
         // POST: api/Equipment
         [HttpPost("Promotion")]
         [Authorize(Policy = "VerifiedOwner")]
-        public async Task<IActionResult> AddOfferPromotion([FromForm] AddOfferPromotionDto input)
+        [SwaggerOperation(
+            Summary = "Adds an offer promotion",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> AddOfferPromotion([FromBody] AddOfferPromotionDto input)
         {
             try
             {
@@ -118,7 +140,11 @@ namespace Flats4us.Controllers
 
         [HttpPost("Interest")]
         [Authorize(Policy = "VerifiedStudent")]
-        public async Task<IActionResult> AddOfferInterest(int offerId)
+        [SwaggerOperation(
+            Summary = "Adds an offer interest",
+            Description = "Requires verified student privileges"
+        )]
+        public async Task<IActionResult> AddOfferInterest([FromBody] AddRemoveInterestDto input)
         {
             try
             {
@@ -127,8 +153,8 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.AddOfferInterest(offerId, requestUserId);
-                _logger.LogInformation($"Adding offer interest for offer ID: {offerId}");
+                await _offerService.AddOfferInterest(input.OfferId, requestUserId);
+                _logger.LogInformation($"Adding offer interest for offer ID: {input.OfferId}");
                 return Ok("Interest addded");
             }
             catch (Exception ex)
@@ -138,7 +164,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpDelete("Interest")]
-        public async Task<IActionResult> RemoveOfferInterest(int offerId)
+        [SwaggerOperation(
+            Summary = "Removes an offer interest",
+            Description = "Requires verified student privileges"
+        )]
+        public async Task<IActionResult> RemoveOfferInterest([FromBody] AddRemoveInterestDto input)
         {
             try
             {
@@ -147,8 +177,8 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.RemoveOfferInterest(offerId, requestUserId);
-                _logger.LogInformation($"Removing offer interest for offer ID: {offerId}");
+                await _offerService.RemoveOfferInterest(input.OfferId, requestUserId);
+                _logger.LogInformation($"Removing offer interest for offer ID: {input.OfferId}");
                 return Ok("Interest removed");
             }
             catch (Exception ex)

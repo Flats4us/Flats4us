@@ -62,6 +62,8 @@ namespace Flats4us.Helpers
 
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 
+            CreateMap<Meeting, MeetingDto>();
+
             CreateMap<Student, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
                 .ForMember(dest => dest.ProfilePictureURL, opt => opt.MapFrom<UserProfilePictureUrlResolver>())

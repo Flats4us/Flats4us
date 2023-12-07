@@ -1,8 +1,10 @@
 ﻿using Flats4us.Entities.Dto;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -24,6 +26,11 @@ namespace Flats4us.Controllers
 
         // GET: api/Equipment
         [HttpGet]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Returns list of equipment",
+            Description = "Requires verified owner privileges"
+        )]
         public async Task<IActionResult> GetAll()
         {
             try

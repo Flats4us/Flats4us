@@ -64,6 +64,7 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
+    options.EnableAnnotations();
 });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -108,15 +109,9 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
-    options.AddPolicy("VerifiedStudent", policy =>
+    options.AddPolicy("VerifiedOwnerOrStudent", policy =>
     {
-        policy.RequireRole("Student");
-        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
-    });
-
-    options.AddPolicy("VerifiedOwner", policy =>
-    {
-        policy.RequireRole("Owner");
+        policy.RequireRole("Owner", "Student");
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 });

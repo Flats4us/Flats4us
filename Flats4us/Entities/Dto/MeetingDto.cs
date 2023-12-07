@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
-    public class AddMeetingDto
+    public class MeetingDto
     {
         [Required]
-        [FutureDate(ErrorMessage = "Date must be from future")]
         public DateTime Date { get; set; }
 
         [Required]
@@ -17,8 +16,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int OfferId { get; set; }
-
-        [Required]
-        public List<int> StudentIds { get; set; }
     }
 }

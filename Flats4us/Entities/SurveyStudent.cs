@@ -50,6 +50,7 @@ namespace Flats4us.Entities
         public int? MaxRoommateAge { get; set; }
 
         [Required]
+        [SurveyIgnore]
         public int StudentId { get; set; }
 
         public virtual Student Student { get; set; }

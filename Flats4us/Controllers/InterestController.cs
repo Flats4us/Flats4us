@@ -1,6 +1,7 @@
 ﻿using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -22,6 +23,9 @@ namespace Flats4us.Controllers
 
         // GET: api/Interest
         [HttpGet]
+        [SwaggerOperation(
+            Summary = "Returns list of interests"
+        )]
         public async Task<IActionResult> GetAll()
         {
             try

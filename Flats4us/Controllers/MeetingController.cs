@@ -3,8 +3,10 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
 namespace Flats4us.Controllers
@@ -25,25 +27,50 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // POST: api/Meeting
-        [HttpPost]
-        public async Task<IActionResult> AddMeeting([FromForm] AddMeetingDto input)
+        // GEt: api/Meeting
+        [HttpGet]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Returns list of meetings for current user",
+            Description = "Requires verified owner or verified student privileges"
+        )]
+        public async Task<IActionResult> GetMeetingsForCurrentUser()
         {
             try
             {
-                var requestUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-                if (string.IsNullOrEmpty(requestUserId))
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return Unauthorized("User not authenticated");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                if (!int.TryParse(requestUserId, out int userId))
+                var meetings = await _meetingService.GetMeetingsForCurrentUserAsync(requestUserId);
+                _logger.LogInformation($"Getting meetings for current user: {requestUserId}");
+                return Ok(meetings);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Getting properties for current user");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
+        }
+
+        // POST: api/Meeting
+        [HttpPost]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Adds a new meeting",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> AddMeeting([FromBody] AddMeetingDto input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return BadRequest("Invalid user ID format");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _meetingService.AddMeetingAsync(input, userId);
+                await _meetingService.AddMeetingAsync(input, requestUserId);
                 _logger.LogInformation($"Adding meeting - body: {input}");
                 return Ok("Meeting added successfully");
             }
