@@ -6,7 +6,7 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IPaymentService
     {
-        public Task<List<Payment>> GetPaymentByRentId(int id);
-        public Task EditStatusPaymentAsync(int id, PaymentStatus status);
+        public Task<List<Payment>> GetPaymentsByRentIdAsync(int id);
+        public Task EditStatusPaymentAsync(int id, bool isPaid);
     }
 }

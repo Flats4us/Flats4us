@@ -51,12 +51,6 @@
         Repairs
     }
 
-    public enum PaymentStatus
-    {
-        Paid, 
-        Unpaid
-    }
-
     public enum PromotionType
     {
         type1,

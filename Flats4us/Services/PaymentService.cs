@@ -14,18 +14,18 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<List<Payment>> GetPaymentByRentId(int id)
+        public async Task<List<Payment>> GetPaymentsByRentIdAsync(int id)
         {
             return await _context.Payments.Where(x => x.RentId == id).ToListAsync();
         }
 
-        public async Task EditStatusPaymentAsync(int id, PaymentStatus status)
+        public async Task EditStatusPaymentAsync(int id, bool isPaid)
         {
             var payment = await _context.Payments.FirstAsync(x => x.PaymentId == id);
             if (payment == null)
                 return;
 
-            payment.PaymentStatus = status;
+            payment.IsPaid = isPaid;
 
             //await _context.Payments.UpdateAsync(payment);
             await _context.SaveChangesAsync();

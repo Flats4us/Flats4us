@@ -39,7 +39,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting Payment by RentId");
-                var payment = await _paymentService.GetPaymentByRentId(id);
+                var payment = await _paymentService.GetPaymentsByRentIdAsync(id);
 
                 if (payment == null)
                 {
@@ -57,12 +57,12 @@ namespace Flats4us.Controllers
         }
 
         [HttpPut("put_status_payment")]
-        public async Task<IActionResult> PutPayment(int id, PaymentStatus status)
+        public async Task<IActionResult> PutPayment(int id, bool isPaid)
         {
             try
             {
                 _logger.LogInformation("Put Payment");
-                await _paymentService.EditStatusPaymentAsync(id, status);
+                await _paymentService.EditStatusPaymentAsync(id, isPaid);
                 return Ok("Payment status changed");
             }
             catch (Exception ex)
