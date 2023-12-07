@@ -262,7 +262,8 @@ public static class DataSeeder
             Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
             Twitter_X = "https://twitter.com/kkajetanski",
             Instagram = "https://www.instagram.com/kkajetanski/",
-            IsTenant = false
+            IsTenant = false,
+            Interests = { interest12, interest14, interest1 }
         };
 
         var student2 = new Student
@@ -287,7 +288,8 @@ public static class DataSeeder
             Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
             Twitter_X = "https://twitter.com/aklocek",
             Instagram = "https://www.instagram.com/aklocek/",
-            IsTenant = false
+            IsTenant = false,
+            Interests = { interest8, interest7, interest2 }
         };
 
         dbContext.Students.AddRange(student1, student2);
@@ -1180,6 +1182,21 @@ public static class DataSeeder
         };
 
         dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15);
+
+        #endregion
+
+        #region Meetings
+
+        var meeting1 = new Meeting
+        {
+            Date = new DateTime(2023, 12, 28),
+            Place = "placeholder",
+            Reason = "placeholder",
+            Offer = offer4,
+            Students = { student2 }
+        };
+
+        dbContext.Meetings.AddRange(meeting1);
 
         #endregion
 

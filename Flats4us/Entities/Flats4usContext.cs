@@ -116,8 +116,6 @@ namespace Flats4us.Entities
                 .WithOne(soo => soo.Student)
                 .HasForeignKey<SurveyStudent>(soo => soo.StudentId);
 
-            modelBuilder.Entity<PropertyEquipment>().HasKey(pe => new { pe.PropertyId, pe.EquipmentId });
-
             modelBuilder.Entity<Meeting>()
                 .HasOne(x => x.Offer)
                 .WithMany(x => x.Meetings)
