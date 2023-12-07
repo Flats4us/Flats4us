@@ -24,8 +24,6 @@ namespace Flats4us.Entities
 
         public virtual ICollection<Student> Students { get; set; }
 
-
-
         public Meeting()
         {
             this.Students = new HashSet<Student>();
