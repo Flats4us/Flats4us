@@ -50,6 +50,7 @@ namespace Flats4us.Entities.Dto
         public DocumentType DocumentType { get; set; }
 
         [Required]
+        [FutureDate(ErrorMessage = "Date must be from future")]
         public DateTime DocumentExpireDate { get; set; }
     }
 

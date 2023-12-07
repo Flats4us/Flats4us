@@ -21,7 +21,7 @@ namespace Flats4us.Entities.Dto
         public int Deposit { get; set; }
 
         [Required]
-        public string Decription { get; set; }
+        public string Description { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }

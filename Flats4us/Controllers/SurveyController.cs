@@ -1,7 +1,9 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -20,10 +22,12 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        // GET: /api/Survey/GetSurveyStudent?lang=XX
-        [HttpGet]
-        [Route("GetSurveyStudent")]
-        public async Task<IActionResult> GetSurveyStudents(string lang)
+        // GET: /api/Survey/Template/Student
+        [HttpGet("Template/Student")]
+        [SwaggerOperation(
+            Summary = "Returns student survey template"
+        )]
+        public async Task<IActionResult> GetSurveyStudents([FromHeader(Name = "Accept-Language")] string lang)
         {
             try
             {
@@ -38,10 +42,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: /api/Survey/GetSurveyOwnerOffer?lang=XX
-        [HttpGet]
-        [Route("GetSurveyOwnerOffer")]
-        public async Task<IActionResult> GetSurveyOwnerOffer(string lang)
+        // GET: /api/Survey/Template/OwnerOffer
+        [HttpGet("Template/OwnerOffer")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Returns ownerOffer survey template",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> GetSurveyOwnerOffer([FromHeader(Name = "Accept-Language")] string lang)
         {
             try
             {

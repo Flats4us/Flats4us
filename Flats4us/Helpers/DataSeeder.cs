@@ -265,9 +265,35 @@ public static class DataSeeder
             IsTenant = false
         };
 
-        dbContext.Students.AddRange(student1);
+        var student2 = new Student
+        {
+            Name = "Adrian",
+            Surname = "Klocek",
+            Address = "Racławicka 26, 02-601 Warszawa",
+            Email = "aklocek@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Aklocek123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 12, 8),
+            BirthDate = new DateTime(2002, 12, 1),
+            StudentNumber = "s2137",
+            University = "PJATK",
+            Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
+            Twitter_X = "https://twitter.com/aklocek",
+            Instagram = "https://www.instagram.com/aklocek/",
+            IsTenant = false
+        };
 
-        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
+        dbContext.Students.AddRange(student1, student2);
+
+        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();;
+        ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait(); ;
 
         #endregion
 
@@ -1008,20 +1034,20 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
 
         #endregion
-
+          
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion
         {
             StartDate = new DateTime(2023, 11, 26),
-            EndDate = new DateTime(2023, 11, 30),
+            EndDate = new DateTime(2024, 11, 30),
             Price = 50,
             Offer = offer1
         };
         var offerPromotion2 = new OfferPromotion
         {
             StartDate = new DateTime(2023, 11, 26),
-            EndDate = new DateTime(2023, 11, 30),
+            EndDate = new DateTime(2024, 11, 30),
             Price = 50,
             Offer = offer2
         };

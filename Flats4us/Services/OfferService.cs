@@ -245,11 +245,13 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task AddOfferAsync(AddEditOfferDto input)
+        public async Task AddOfferAsync(AddEditOfferDto input, int ownerId)
         {
             var property = await _context.Properties.FindAsync(input.PropertyId);
 
             if (property is null) throw new ArgumentException($"Property with ID {input.PropertyId} not found.");
+
+            if (property.OwnerId != ownerId) throw new ForbiddenException($"You do not own this property");
 
             if (property.VerificationStatus == VerificationStatus.NotVerified) throw new ArgumentException($"Property with ID {input.PropertyId} is not verified.");
 
@@ -309,7 +311,7 @@ namespace Flats4us.Services
 
             if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
 
-            offer.NumberOfInterested = offer.NumberOfInterested++;
+            offer.NumberOfInterested++;
 
             var offerInterest = new OfferInterest
             {
@@ -337,7 +339,7 @@ namespace Flats4us.Services
             }
 
             _context.OfferInterests.Remove(offerInterest);
-            offer.NumberOfInterested = offer.NumberOfInterested--;
+            offer.NumberOfInterested--;
 
             await _context.SaveChangesAsync();
         }
