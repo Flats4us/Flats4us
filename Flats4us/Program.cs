@@ -114,6 +114,11 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Owner", "Student");
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
+
+    options.AddPolicy("RegisteredUser", policy =>
+    {
+        policy.RequireRole("Owner", "Student", "Moderator");
+    });
 });
 
 Log.Logger = new LoggerConfiguration()
