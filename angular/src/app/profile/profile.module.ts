@@ -11,7 +11,11 @@ import { SurveyComponent } from './survey/survey.component';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormGroupDirective,
+	FormsModule,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -71,6 +75,6 @@ import { RegisterComponent } from '../auth/components/register/register.componen
 		MatStepperModule,
 	],
 	exports: [ProfileComponent],
-	providers: [ProfileService],
+	providers: [ProfileService, FormGroupDirective],
 })
 export class ProfileModule {}

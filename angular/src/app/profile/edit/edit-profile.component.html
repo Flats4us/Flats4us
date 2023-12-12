@@ -322,8 +322,20 @@
 						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
+					<button
+						mat-raised-button
+						color="primary"
+						type="button"
+						aria-label="Edit"
+						(click)="changeSurvey()"
+					>
+						Edytuj ankietę
+						<mat-icon iconPositionEnd>edit</mat-icon>
+					</button>
+				</div>
 			</div>
-			<div class="btn-box-submit">
+			<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
 				<button mat-raised-button color="primary" type="submit">
 					Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
 				</button>
@@ -501,8 +513,20 @@
 						<mat-icon iconPositionEnd>edit</mat-icon>
 					</button>
 				</div>
+				<div *ngIf="modificationType === mType.EDIT" class="btn-box">
+					<button
+						mat-raised-button
+						color="primary"
+						type="button"
+						aria-label="Edit"
+						(click)="changeSurvey()"
+					>
+						Edytuj ankietę
+						<mat-icon iconPositionEnd>edit</mat-icon>
+					</button>
+				</div>
 			</div>
-			<div class="btn-box-submit">
+			<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
 				<button mat-raised-button color="primary" type="submit">
 					Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
 				</button>

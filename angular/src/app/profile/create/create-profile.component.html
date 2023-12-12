@@ -39,13 +39,53 @@
 						<ng-template matStepLabel
 							><span class="step-label">Tworzenie konta</span></ng-template
 						>
-						<app-profile-edit
-							[name]="registerForm.get('name')?.value ?? ''"
-							[surname]="registerForm.get('surname')?.value ?? ''"
-							[email]="registerForm.get('email')?.value ?? ''"
-							[modificationType]="mType.CREATE"
-						></app-profile-edit>
-						<form [formGroup]="createAccountForm"></form>
+						<form [formGroup]="createAccountForm">
+							<app-profile-edit
+								[name]="registerForm.get('name')?.value"
+								[surname]="registerForm.get('surname')?.value"
+								[email]="registerForm.get('email')?.value"
+								[modificationType]="mType.CREATE"
+								(newPhotoEvent)="setPhotoUrl($event)"
+								(newScanEvent)="setScanUrl($event)"
+							></app-profile-edit>
+							<div class="button-box">
+								<button mat-raised-button color="primary" matStepperPrevious>
+									Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+								</button>
+								<button
+									mat-raised-button
+									color="primary"
+									matStepperNext
+									[disabled]="!createAccountForm.valid || !photoUrl || !scanUrl"
+								>
+									Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+								</button>
+							</div>
+						</form>
+					</mat-step>
+				</div>
+				<div class="box">
+					<mat-step [stepControl]="surveyForm">
+						<ng-template matStepLabel
+							><span class="step-label">Tworzenie ankiety</span></ng-template
+						>
+						<form [formGroup]="surveyForm">
+							<app-student-survey [hideButtons]="true"></app-student-survey>
+							<div class="button-box">
+								<button mat-raised-button color="primary" matStepperPrevious>
+									Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+								</button>
+								<button
+									mat-raised-button
+									color="primary"
+									type="submit"
+									[disabled]="!surveyForm.valid"
+									(click)="onSubmit()"
+								>
+									Zatwierdź <mat-icon iconPositionEnd>done_outline</mat-icon>
+								</button>
+							</div>
+						</form>
 					</mat-step>
 				</div>
 			</div>

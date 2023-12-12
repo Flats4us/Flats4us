@@ -1,5 +1,5 @@
 <mat-card>
-	<h1>Ankieta</h1>
+	<h1 *ngIf="!hideButtons">Ankieta</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-2/5">
 		<form [formGroup]="studentSurveyForm" (ngSubmit)="onSubmit()">
 			<ng-container *ngFor="let question of questions$ | async; let i = index">
@@ -45,7 +45,7 @@
 					</mat-radio-group>
 				</div>
 			</ng-container>
-			<div class="buttons">
+			<div *ngIf="!hideButtons" class="buttons">
 				<button mat-flat-button class="btn-submit" type="submit">Zapisz</button>
 				<button
 					mat-flat-button

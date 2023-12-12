@@ -3,10 +3,12 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	EventEmitter,
 	Input,
 	OnChanges,
 	OnDestroy,
 	OnInit,
+	Output,
 	ViewChild,
 	inject,
 } from '@angular/core';
@@ -24,6 +26,7 @@ import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
+	FormGroupDirective,
 	ValidationErrors,
 	ValidatorFn,
 	Validators,
@@ -36,6 +39,7 @@ import { ProfileService } from '../services/profile.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { modificationType, statusType, userType } from '../models/types';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -44,14 +48,20 @@ import { modificationType, statusType, userType } from '../models/types';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
-	@Input()
-	public name = '';
+	@Output()
+	public newPhotoEvent = new EventEmitter<string>();
+
+	@Output()
+	public newScanEvent = new EventEmitter<string>();
 
 	@Input()
-	public surname = '';
+	public name: string | null | undefined = '';
 
 	@Input()
-	public email = '';
+	public surname: string | null | undefined = '';
+
+	@Input()
+	public email: string | null | undefined = '';
 
 	@Input()
 	public modificationType = modificationType.EDIT;
@@ -74,6 +84,8 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 	public actualStudent = {} as IStudent;
 	public actualOwner$?: Observable<IOwner>;
 	public actualOwner = {} as IOwner;
+
+	public createAccountForm: FormGroup = new FormGroup({});
 
 	public yearOfBirth = new FormControl('', [
 		Validators.required,
@@ -122,11 +134,13 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 	public startDate = new Date().getDate();
 
 	constructor(
+		private formDir: FormGroupDirective,
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private changeDetectorRef: ChangeDetectorRef,
 		private route: ActivatedRoute,
-		private profileService: ProfileService
+		private profileService: ProfileService,
+		private snackBar: MatSnackBar
 	) {
 		this.filteredHobbies$ = this.hobbyCtrl.valueChanges.pipe(
 			startWith(null),
@@ -172,6 +186,7 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		});
 	}
 	public ngOnInit(): void {
+		this.createAccountForm = this.formDir.form;
 		if (this.modificationType === modificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(
 				'yearOfBirth',
@@ -187,7 +202,7 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 			map(params => params.get('id') ?? '')
 		);
 		this.user$ = this.route.paramMap.pipe(
-			map(params => params.get('user') ?? '')
+			map(params => params.get('user')?.toUpperCase() ?? '')
 		);
 
 		this.user$
@@ -223,6 +238,10 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 					});
 			} else {
 				this.urlPhoto = this.urlAvatar;
+				this.createAccountForm.addControl(
+					'userAdditionalData',
+					this.dataFormGroupStudent
+				);
 			}
 		}
 
@@ -243,6 +262,10 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 				});
 			} else {
 				this.urlPhoto = this.urlAvatar;
+				this.createAccountForm.addControl(
+					'userAdditionalData',
+					this.dataFormGroupOwner
+				);
 			}
 		}
 	}
@@ -252,21 +275,31 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 			if (this.user === userType.STUDENT) {
 				this.actualStudent$ = of({
 					...this.actualStudent,
-					name: this.name,
-					surname: this.surname,
+					name: this.name ?? '',
+					surname: this.surname ?? '',
 					hobbies: [],
 					socialMedia: [],
-					email: this.email,
+					email: this.email ?? '',
 					status: statusType.UNVERIFIED,
 				});
+				this.createAccountForm.removeControl('userAdditionalData');
+				this.createAccountForm.addControl(
+					'userAdditionalData',
+					this.dataFormGroupStudent
+				);
 			}
 			if (this.user === userType.OWNER) {
 				this.actualOwner$ = of({
 					...this.actualOwner,
-					name: this.name,
-					surname: this.surname,
-					email: this.email,
+					name: this.name ?? '',
+					surname: this.surname ?? '',
+					email: this.email ?? '',
 				});
+				this.createAccountForm.removeControl('userAdditionalData');
+				this.createAccountForm.addControl(
+					'userAdditionalData',
+					this.dataFormGroupOwner
+				);
 			}
 		}
 	}
@@ -330,6 +363,15 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		this.router.navigate(['settings/password-change']);
 	}
 
+	public changeSurvey() {
+		if (this.user === userType.OWNER) {
+			this.router.navigate(['profile/survey/owner']);
+		}
+		if (this.user === userType.STUDENT) {
+			this.router.navigate(['profile/survey/student']);
+		}
+	}
+
 	public onSubmit() {
 		if (this.dataFormGroupStudent.valid || this.dataFormGroupOwner.valid) {
 			if (
@@ -337,7 +379,9 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 				this.urlNewScan &&
 				!this.isValidDocument
 			) {
-				this.router.navigate(['/']);
+				this.snackBar.open('Pomyślnie zmieniono dane!', 'Zamknij', {
+					duration: 2000,
+				});
 			}
 		}
 	}
@@ -379,12 +423,14 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 				this.filePhotoName = file.name;
 				formData.append(this.filePhotoName, file);
 				this.urlPhoto = <string>reader.result;
+				this.newPhotoEvent.emit(this.urlPhoto);
 			}
 			if (regex === this.regexScan) {
 				this.fileScanName = file.name;
 				formData.append(this.fileScanName, file);
 				this.urlScan = <string>reader.result;
 				this.urlNewScan = <string>reader.result;
+				this.newScanEvent.emit(this.urlNewScan);
 			}
 			this.changeDetectorRef.detectChanges();
 		};

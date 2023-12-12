@@ -3,14 +3,12 @@ import {
 	Component,
 	Input,
 	OnInit,
-	Optional,
 } from '@angular/core';
 import {
 	AbstractControl,
 	FormControl,
 	FormGroup,
 	FormGroupDirective,
-	FormGroupName,
 	ValidationErrors,
 	ValidatorFn,
 	Validators,
@@ -29,39 +27,44 @@ export class RegisterComponent implements OnInit {
 	public hidePassword = true;
 	public hideConfirmPasword = true;
 
-	public registerForm!: FormGroup;
+	public registerForm: FormGroup = new FormGroup({});
 
-	constructor(
-		private formDir: FormGroupDirective,
-		@Optional() private formGroupName: FormGroupName
-	) {}
+	constructor(private formDir: FormGroupDirective) {}
 
 	public ngOnInit() {
-		this.registerForm = this.formGroupName
-			? (this.formDir.form.controls['registerForm'] as FormGroup)
-			: this.formDir.form;
+		this.registerForm = this.formDir.form;
 		this.buildForm();
 	}
 
 	public buildForm() {
-		const ctrl1 = new FormControl('', Validators.required);
-		this.registerForm?.addControl('name', ctrl1);
-		const ctrl2 = new FormControl('', Validators.required);
-		this.registerForm?.addControl('surname', ctrl2);
-		const ctrl3 = new FormControl('', Validators.required);
-		this.registerForm?.addControl('email', ctrl3);
-		const ctrl4 = new FormControl('', [
-			Validators.required,
-			Validators.pattern(
-				'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-			),
-		]);
-		this.registerForm?.addControl('password1', ctrl4);
-		const ctrl5 = new FormControl('', [
-			Validators.required,
-			this.createPasswordStrengthValidator(),
-		]);
-		this.registerForm?.addControl('password2', ctrl5);
+		this.registerForm?.addControl(
+			'name',
+			new FormControl('', Validators.required)
+		);
+		this.registerForm?.addControl(
+			'surname',
+			new FormControl('', Validators.required)
+		);
+		this.registerForm?.addControl(
+			'email',
+			new FormControl('', Validators.required)
+		);
+		this.registerForm?.addControl(
+			'password1',
+			new FormControl('', [
+				Validators.required,
+				Validators.pattern(
+					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+				),
+			])
+		);
+		this.registerForm?.addControl(
+			'password2',
+			new FormControl('', [
+				Validators.required,
+				this.createPasswordStrengthValidator(),
+			])
+		);
 	}
 
 	public createPasswordStrengthValidator(): ValidatorFn {

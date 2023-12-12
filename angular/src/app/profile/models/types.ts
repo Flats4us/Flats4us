@@ -1,14 +1,14 @@
 export enum userType {
-	STUDENT = 'student',
-	OWNER = 'owner',
+	STUDENT = 'STUDENT',
+	OWNER = 'OWNER',
 }
 
 export enum modificationType {
-	CREATE = 'create',
-	EDIT = 'edit',
+	CREATE = 'CREATE',
+	EDIT = 'EDIT',
 }
 
 export enum statusType {
-	VERIFIED = 'zweryfikowany',
-	UNVERIFIED = 'niezweryfikowany',
+	VERIFIED = 'ZWERYFIKOWANY',
+	UNVERIFIED = 'NIEZWERYFIKOWANY',
 }
