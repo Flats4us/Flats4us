@@ -10,5 +10,6 @@ namespace Flats4us.Services.Interfaces
         Task RegisterStudentAsync(StudentRegisterDto input);
         Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync();
         Task VerifyUserAsync(int id, bool decision);
+        Task ChangePasswordAsync(string oldPassword, string newPassword, int userId);
     }
 }

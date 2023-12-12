@@ -22,10 +22,14 @@ namespace Flats4us.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IUserService userService)
+        public AuthController(
+            IUserService userService, 
+            ILogger<AuthController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [HttpPost("register/Student")]
@@ -77,6 +81,35 @@ namespace Flats4us.Controllers
             catch(AuthenticationException ex)
             {
                 return Unauthorized(ex.Message);
+            }
+        }
+
+        [HttpPut("change-password")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Changes user password"
+        )]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto request)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.ChangePasswordAsync(request.OldPassword, request.NewPassword, requestUserId);
+
+                _logger.LogInformation($"Changing password for user ID: {requestUserId}");
+                return Ok("Password changed");
+            }
+            catch (AuthenticationException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
             }
         }
     }

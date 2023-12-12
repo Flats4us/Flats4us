@@ -34,9 +34,9 @@ namespace Flats4us.Services
 
             var random = new Random();
 
-            var promotedOffers = await _context.Offers
-                .Where(o => o.OfferStatus == OfferStatus.Current &&
-                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate))
+            var offers = await _context.Offers
+                .Where(o => o.OfferStatus == OfferStatus.Current)
+                .Include(o => o.OfferPromotions)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
                 .Include(o => o.Property)
@@ -44,21 +44,24 @@ namespace Flats4us.Services
                 .Include(o => o.SurveyOwnerOffer)
                 .ToListAsync();
 
-            var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
+            var totalNumber = offers.Count();
 
-            var notPromotedOffers = await _context.Offers
-                .Where(o => o.OfferStatus == OfferStatus.Current &&
-                    (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)))
-                .Include(o => o.Property)
-                    .ThenInclude(p => p.Owner)
-                .Include(o => o.Property)
-                    .ThenInclude(p => p.Equipment)
-                .Include(o => o.SurveyOwnerOffer)
-                .Select(o => _mapper.Map<OfferDto>(o))
-                .ToListAsync();
+            var randomPromotedOffers = offers
+                .Where(o => o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate))
+                .ToList()
+                .OrderBy(o => random.Next())
+                .Take(3)
+                .Select(_mapper.Map<OfferDto>)
+                .ToList();                
+
+            var notPromotedOffers = offers
+                .Where(o => (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)))
+                .Select(_mapper.Map<OfferDto>)
+                .ToList();
 
             var result = new OfferListDto
             {
+                TotalNumberOfOffers = totalNumber,
                 PromotedOffers = randomPromotedOffers,
                 Offers = notPromotedOffers
             };
@@ -107,6 +110,8 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .ToListAsync();
+
+            var promotedOffersCount = promotedOffers.Count();
 
             var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
 
@@ -233,11 +238,15 @@ namespace Flats4us.Services
                 }
             }
 
+            var notPromotedOffersCount = notPromotedOffers.Count();
+            var totalCount = promotedOffersCount + notPromotedOffersCount;
+
             notPromotedOffers = notPromotedOffers.Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
 
             var result = new OfferListDto {
+                TotalNumberOfOffers = totalCount,
                 PromotedOffers = randomPromotedOffers,
                 Offers = notPromotedOffers
             };

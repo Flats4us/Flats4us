@@ -35,7 +35,7 @@ namespace Flats4us.Services
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) throw new AuthenticationException("Login failed: Invalid email or password.");
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) throw new AuthenticationException("Invalid email or password.");
 
             user.ActivityStatus = true;
             user.LastLoginDate = DateTime.Now;
@@ -174,6 +174,23 @@ namespace Flats4us.Services
                 user.VerificationStatus = VerificationStatus.Rejected;
             }
             
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangePasswordAsync(string oldPassword, string newPassword, int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.PasswordHash)) throw new AuthenticationException("Invalid old password.");
+
+            if (newPassword.Length < 8 || newPassword.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+
+            if (!newPassword.Any(char.IsUpper) || !newPassword.Any(char.IsLower) || !newPassword.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+
+            if (oldPassword.Equals(newPassword)) throw new Exception("Passwords must be different");
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
             await _context.SaveChangesAsync();
         }
 
