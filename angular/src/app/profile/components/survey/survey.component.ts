@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IQuestionsData } from '../../models/survey.models';
-import { Observable, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { typeName } from '../../models/survey.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
 
 @Component({
@@ -38,12 +38,16 @@ export class SurveyComponent {
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {
-		const param = this.route.snapshot.paramMap.get('survey-type');
-		if (param === 'student') {
-			return this.service.getStudentQuestions();
-		} else {
-			return this.service.getOwnerQuestions();
-		}
+		return this.route.paramMap.pipe(
+			switchMap((params: ParamMap) => {
+				const surveyType = params.get('survey-type');
+				if (surveyType === 'student') {
+					return this.service.getStudentQuestions();
+				} else {
+					return this.service.getOwnerQuestions();
+				}
+			})
+		);
 	}
 
 	public onSubmit() {

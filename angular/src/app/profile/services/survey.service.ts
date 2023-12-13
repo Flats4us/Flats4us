@@ -5,28 +5,26 @@ import { environment } from '../../../environments/environment.prod';
 
 @Injectable()
 export class SurveyService {
-	protected apiRoute = `${environment.apiUrl}/Survey/Template`;
+	protected apiRoute = `${environment.apiUrl}/survey/template`;
 
 	constructor(private http: HttpClient) {}
 
 	public getStudentQuestions() {
 		const headers = {
-			accept: '*/*',
 			'accept-language': 'PL',
 		};
 
-		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/Student`, {
+		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/student`, {
 			headers,
 		});
 	}
 
 	public getOwnerQuestions() {
 		const headers = {
-			accept: '*/*',
 			'accept-language': 'PL',
 		};
 
-		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/OwnerOffer`, {
+		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/owner-offer`, {
 			headers,
 		});
 	}
