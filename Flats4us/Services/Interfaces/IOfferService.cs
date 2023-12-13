@@ -10,7 +10,8 @@ namespace Flats4us.Services.Interfaces
         Task<OfferListDto> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input);
         Task AddOfferAsync(AddEditOfferDto input, int ownerId);
         Task AddOfferPromotionAsync(AddOfferPromotionDto input, int userId);
-        Task AddOfferInterest(int offerId, int studentId);
-        Task RemoveOfferInterest(int offerId, int studentId);
+        Task<List<OfferDto>> GetOffersByInterestAsync(int studentId);
+        Task AddOfferInterestAsync(int offerId, int studentId);
+        Task RemoveOfferInterestAsync(int offerId, int studentId);
     }
 }

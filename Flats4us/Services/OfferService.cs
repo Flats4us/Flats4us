@@ -310,7 +310,33 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddOfferInterest(int offerId, int studentId)
+        public async Task<List<OfferDto>> GetOffersByInterestAsync(int studentId)
+        {
+            var student = await _context.Students.FindAsync(studentId);
+
+            if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            var offers = await _context.Students
+                .Where(s => s.UserId == student.UserId)
+                .SelectMany(s => s.OfferInterests)
+                .Include(oi => oi.Offer)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(p => p.Owner)
+                .Include(oi => oi.Offer)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(p => p.Equipment)
+                .Include(oi => oi.Offer)
+                    .ThenInclude(o => o.SurveyOwnerOffer)
+                .Select(oi => oi.Offer)
+                .Where(o => o.OfferStatus == OfferStatus.Current)
+                .Select(offer => _mapper.Map<OfferDto>(offer))
+                .ToListAsync();
+
+            return offers;
+        }
+
+
+        public async Task AddOfferInterestAsync(int offerId, int studentId)
         {
             var offer = await _context.Offers.FindAsync(offerId);
 
@@ -319,6 +345,11 @@ namespace Flats4us.Services
             var student = await _context.Students.FindAsync(studentId);
 
             if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            var existingInterest = await _context.OfferInterests
+                .FirstOrDefaultAsync(oi => oi.Offer.OfferId == offerId && oi.Student.UserId == studentId);
+
+            if (existingInterest is not null) throw new ArgumentException($"Student with ID {studentId} is already following the offer with ID {offerId}.");
 
             offer.NumberOfInterested++;
 
@@ -333,7 +364,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveOfferInterest(int offerId, int studentId)
+        public async Task RemoveOfferInterestAsync(int offerId, int studentId)
         {
             var offer = await _context.Offers.FindAsync(offerId);
 
