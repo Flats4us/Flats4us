@@ -71,9 +71,13 @@ export class VerificationComponent {
 		'expand',
 	];
 
-	public usersDataSource$: Observable<IUser[]>;
-	public propertiesDataSource$: Observable<IProperty[]>;
-	public dataSource$: Observable<unknown[]>;
+	public usersDataSource$: Observable<IUser[]> = this.service.getUsers();
+	public propertiesDataSource$: Observable<IProperty[]> =
+		this.service.getProperty();
+	public dataSource$: Observable<unknown[]> =
+		this.verificationType === 'users'
+			? this.usersDataSource$
+			: this.propertiesDataSource$;
 
 	public expandedElement: IUser | null | undefined;
 
@@ -84,14 +88,7 @@ export class VerificationComponent {
 		private matDialog: MatDialog,
 		private router: Router
 	) {
-		this.usersDataSource$ = this.service.getUsers();
-		this.propertiesDataSource$ = this.service.getProperty();
-
 		this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-		this.dataSource$ =
-			this.verificationType === 'users'
-				? this.usersDataSource$
-				: this.propertiesDataSource$;
 	}
 
 	public openImageDialog(imageSrc: string): void {
