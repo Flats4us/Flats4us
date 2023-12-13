@@ -21,7 +21,6 @@ import { VerificationComponent } from './components/verification/verification.co
 import { ModerationConsoleService } from './services/moderation-console.service';
 
 @NgModule({
-	providers: [ModerationConsoleService],
 	declarations: [
 		ModerationConsoleComponent,
 		VerificationComponent,
@@ -46,6 +45,7 @@ import { ModerationConsoleService } from './services/moderation-console.service'
 		MatDialogModule,
 		MatMenuModule,
 	],
+	providers: [ModerationConsoleService],
 	exports: [ModerationConsoleComponent],
 })
 export class ModerationConsoleModule {}
