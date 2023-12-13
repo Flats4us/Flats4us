@@ -1,35 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IDispute, IUser } from '../Models/moderation-console.models';
-import { IProperty } from '../Models/moderation-console.models';
+import {
+	IDispute,
+	IProperty,
+	IUser,
+} from '../models/moderation-console.models';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable()
 export class ModerationConsoleService {
+	protected apiRoute = `${environment.apiUrl}/moderator`;
+
 	constructor(private http: HttpClient) {}
 
 	public getUsers(): Observable<IUser[]> {
-		const headers = new HttpHeaders().set(
-			'Authorization',
-			'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiem1vZGVyYXRvckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNb2RlcmF0b3IiLCJWZXJpZmljYXRpb25TdGF0dXMiOiJWZXJpZmllZCIsImV4cCI6MTcwMTk4MDM3NX0.sL1pYJbdEGpLZRTJOlXQvULRZpFeqp_DZJOcZpOwxWHjbwODcDcje-3aXT1qdu9DBB637WIWmyqfwS5qHYP9gw'
-		);
-		return this.http.get<IUser[]>(
-			'http://172.21.40.120:5166/api/Moderator/User',
-			{
-				headers,
-			}
-		);
+		return this.http.get<IUser[]>(`${this.apiRoute}/User`);
 	}
 
 	public getProperty(): Observable<IProperty[]> {
-		const headers = new HttpHeaders().set(
-			'Authorization',
-			'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiem1vZGVyYXRvckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNb2RlcmF0b3IiLCJWZXJpZmljYXRpb25TdGF0dXMiOiJWZXJpZmllZCIsImV4cCI6MTcwMTk4MDM3NX0.sL1pYJbdEGpLZRTJOlXQvULRZpFeqp_DZJOcZpOwxWHjbwODcDcje-3aXT1qdu9DBB637WIWmyqfwS5qHYP9gw'
-		);
-		return this.http.get<IProperty[]>(
-			'http://172.21.40.120:5166/api/Moderator/Property',
-			{ headers }
-		);
+		return this.http.get<IProperty[]>(`${this.apiRoute}/Property`);
 	}
 
 	public getDisputes(): Observable<IDispute[]> {
@@ -37,19 +27,14 @@ export class ModerationConsoleService {
 	}
 
 	public acceptUser(user: IUser | undefined) {
-		const headers = new HttpHeaders().set(
-			'Authorization',
-			'Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiem1vZGVyYXRvckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNb2RlcmF0b3IiLCJWZXJpZmljYXRpb25TdGF0dXMiOiJWZXJpZmllZCIsImV4cCI6MTcwMTk4MDM3NX0.sL1pYJbdEGpLZRTJOlXQvULRZpFeqp_DZJOcZpOwxWHjbwODcDcje-3aXT1qdu9DBB637WIWmyqfwS5qHYP9gw'
-		);
+		return this.http.put<IUser>(`${this.apiRoute}/User/Verify/` + user?.userId, {
+			decision: true,
+		});
+	}
 
-		return this.http.post<IUser[]>(
-			'http://172.21.40.120:5166/api/Moderator/User/Verify/' +
-				user?.userId +
-				'/true',
-			{},
-			{
-				headers,
-			}
-		);
+	public rejectUser(user: IUser | undefined) {
+		return this.http.put<IUser>(`${this.apiRoute}/User/Verify/` + user?.userId, {
+			decision: false,
+		});
 	}
 }

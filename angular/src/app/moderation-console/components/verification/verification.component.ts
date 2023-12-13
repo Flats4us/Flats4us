@@ -13,12 +13,11 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-import { IProperty, IUser } from '../../Models/moderation-console.models';
+import { IProperty, IUser } from '../../models/moderation-console.models';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
-import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { CdkTableDataSourceInput } from '@angular/cdk/table';
+import { Observable, switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-verification',
@@ -40,37 +39,41 @@ export class VerificationComponent {
 	@ViewChild(MatTable) public table!: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
+
 	public verificationType =
 		this.route.snapshot.paramMap.get('verification-type');
 
+	public userColumnsToDisplay: Map<string, string> = new Map<string, string>([
+		['email', 'Email'],
+		['university', 'Uczelnia'],
+		['studentNumber', 'Nr albumu'],
+		['documentNumber', 'Nr dokumentu'],
+		['name', 'Imię'],
+		['surname', 'Nazwisko'],
+		['documentExpireDate', 'Data ważności legitymacji'],
+	]);
+
+	public propertyColumnsToDisplay: Map<string, string> = new Map<string, string>(
+		[
+			['ownerName', 'Właściciel'],
+			['ownerEmail', 'Adres email właściciela'],
+			['address', 'Addres nieruchomości'],
+		]
+	);
+
 	public columnsToDisplay: Map<string, string> =
 		this.verificationType == 'users'
-			? new Map<string, string>([
-					['email', 'Email'],
-					['university', 'Uczelnia'],
-					['studentNumber', 'Nr albumu'],
-					['documentNumber', 'Nr dokumentu'],
-					['name', 'Imię'],
-					['surname', 'Nazwisko'],
-					['documentExpireDate', 'Data ważności legitymacji'],
-			  ])
-			: new Map<string, string>([
-					['propertyType', 'Typ nieruchomości'],
-					['ownerName', 'Właściciel'],
-					['ownerEmail', 'Adres email właściciela'],
-					['address', 'Addres nieruchomości'],
-					['propertyType', 'Typ nieruchomości'],
-					['creationDate', 'Data utworzenia'],
-			  ]);
+			? this.userColumnsToDisplay
+			: this.propertyColumnsToDisplay;
 
 	public columnsToDisplayWithExpand = [
 		...this.columnsToDisplay.keys(),
 		'expand',
 	];
 
-	public usersDataSource$: CdkTableDataSourceInput<IUser>;
-	public propertiesDataSource$: CdkTableDataSourceInput<IProperty>;
-	public dataSource$: CdkTableDataSourceInput<any>;
+	public usersDataSource$: Observable<IUser[]>;
+	public propertiesDataSource$: Observable<IProperty[]>;
+	public dataSource$: Observable<unknown[]>;
 
 	public expandedElement: IUser | null | undefined;
 
@@ -99,24 +102,32 @@ export class VerificationComponent {
 	}
 
 	public reject(email: string) {
-		this.table.renderRows();
-		this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
-			duration: 2000,
-		});
+		if (this.verificationType === 'users') {
+			this.usersDataSource$
+				.pipe(
+					switchMap(users => users?.filter(user => user.email === email)),
+					switchMap(user => this.service.rejectUser(user))
+				)
+				.subscribe(() =>
+					this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
+						duration: 2000,
+					})
+				);
+		}
 	}
 
 	public accept(email: string) {
 		if (this.verificationType === 'users') {
-			/*this.dataSource$.subscribe(users => {
-				const user = users.find(user => user.email === email);
-				this.service.acceptUser(user);
-			});*/
-
-			this.dataSource$ = this.service.getUsers();
-			this.table.renderRows();
-			this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
-				duration: 2000,
-			});
+			this.usersDataSource$
+				.pipe(
+					switchMap(users => users?.filter(user => user.email === email)),
+					switchMap(user => this.service.acceptUser(user))
+				)
+				.subscribe(() =>
+					this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
+						duration: 2000,
+					})
+				);
 		}
 	}
 }
