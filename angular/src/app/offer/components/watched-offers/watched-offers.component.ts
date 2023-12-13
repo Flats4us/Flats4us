@@ -24,7 +24,7 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WatchedOffersComponent implements OnInit {
-	public watchedOffers$?: Observable<ISendOffers>;
+	public watchedOffers$: Observable<ISendOffers>;
 
 	public pageEvent = new PageEvent();
 	public pageSize = 6;
@@ -43,7 +43,9 @@ export class WatchedOffersComponent implements OnInit {
 		public offerService: OfferService,
 		private router: Router,
 		private matPaginatorIntl: MatPaginatorIntl
-	) {}
+	) {
+		this.watchedOffers$ = this.offerService.getOffers(0, 6);
+	}
 
 	public ngOnInit() {
 		this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
@@ -67,7 +69,6 @@ export class WatchedOffersComponent implements OnInit {
 					: startIndex + pageSize;
 			return `${startIndex + 1} - ${endIndex} z ${length} ofert`;
 		};
-		this.watchedOffers$ = this.offerService.getOffers(0, 6);
 	}
 
 	public navigateToFlat(url: string) {
