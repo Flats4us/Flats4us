@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { SurveyComponent } from './survey/survey.component';
+import { SurveyComponent } from './components/survey/survey.component';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';

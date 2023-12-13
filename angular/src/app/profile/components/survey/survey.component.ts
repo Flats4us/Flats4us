@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpClient } from '@angular/common/http';
-import { IQuestionsData } from './questions-data.interface';
+import { IQuestionsData } from '../../models/survey.models';
 import { Observable, tap } from 'rxjs';
-import { typeName } from './typeName';
+import { typeName } from '../../models/survey.models';
 import { ActivatedRoute } from '@angular/router';
+import { SurveyService } from "../../services/survey.service";
 
 @Component({
 	selector: 'app-student-survey',
@@ -21,8 +21,8 @@ export class SurveyComponent {
 	constructor(
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
-		private http: HttpClient,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+    private service: SurveyService
 	) {
 		this.studentSurveyForm = this.formBuilder.group({
 			lookingForRoommate: [''],
@@ -40,9 +40,9 @@ export class SurveyComponent {
 	public getQuestions(): Observable<IQuestionsData[]> {
 		const param = this.route.snapshot.paramMap.get('survey-type');
 		if (param === 'student') {
-			return this.http.get<IQuestionsData[]>('../../assets/student-survey.json');
+      return this.service.getStudentQuestions();
 		} else {
-			return this.http.get<IQuestionsData[]>('../../assets/owner-survey.json');
+      return this.service.getOwnerQuestions();
 		}
 	}
 

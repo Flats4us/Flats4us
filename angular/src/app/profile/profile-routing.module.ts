@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
-import { SurveyComponent } from './survey/survey.component';
+import { SurveyComponent } from './components/survey/survey.component';
 
 const routes: Routes = [
 	{
