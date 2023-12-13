@@ -5,7 +5,7 @@ import { IQuestionsData } from '../../models/survey.models';
 import { Observable, tap } from 'rxjs';
 import { typeName } from '../../models/survey.models';
 import { ActivatedRoute } from '@angular/router';
-import { SurveyService } from "../../services/survey.service";
+import { SurveyService } from '../../services/survey.service';
 
 @Component({
 	selector: 'app-student-survey',
@@ -22,7 +22,7 @@ export class SurveyComponent {
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
 		private route: ActivatedRoute,
-    private service: SurveyService
+		private service: SurveyService
 	) {
 		this.studentSurveyForm = this.formBuilder.group({
 			lookingForRoommate: [''],
@@ -40,9 +40,9 @@ export class SurveyComponent {
 	public getQuestions(): Observable<IQuestionsData[]> {
 		const param = this.route.snapshot.paramMap.get('survey-type');
 		if (param === 'student') {
-      return this.service.getStudentQuestions();
+			return this.service.getStudentQuestions();
 		} else {
-      return this.service.getOwnerQuestions();
+			return this.service.getOwnerQuestions();
 		}
 	}
 
