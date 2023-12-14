@@ -9,11 +9,11 @@ namespace Flats4us.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GrindrId { get; set; }
 
-        [Required]
-        public bool isStudent1Interested { get; set; }
 
-        [Required]
-        public bool isStudent2Interested { get; set; }
+        public bool? isStudent1Interested { get; set; }
+
+
+        public bool? isStudent2Interested { get; set; }
 
         [Required]
         public int Student1Id { get; set; }

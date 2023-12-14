@@ -15,7 +15,7 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public List<Student> GetPotentialRoommate(int studentId)
+        public async Task<List<Student>> GetPotentialRoommate(int studentId)
         {
             var requestingStudent = _context.Students
                 .Include(s => s.SurveyStudent)
@@ -35,12 +35,12 @@ namespace Flats4us.Services
                     s.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
                     (!s.SurveyStudent.MinRoommateAge.HasValue || s.SurveyStudent.MinRoommateAge >= requestingStudent.SurveyStudent.MinRoommateAge) &&
                     (!s.SurveyStudent.MaxRoommateAge.HasValue || s.SurveyStudent.MaxRoommateAge <= requestingStudent.SurveyStudent.MaxRoommateAge))
-                .ToList();
+                .ToListAsync();
 
-            return potentialRoommates;
+            return await potentialRoommates;
         }
 
-        public void AcceptStudent(int student1Id, int student2Id, bool isAccept)
+        public async Task AcceptStudent(int student1Id, int student2Id, bool isAccept)
         {
             var h = _context.Grindr  
                 .Where( x =>(
@@ -72,7 +72,7 @@ namespace Flats4us.Services
                 }
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
