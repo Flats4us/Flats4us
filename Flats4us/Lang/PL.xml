@@ -15,8 +15,8 @@
 	<string name="Gender_Male">Mężczyzna</string>
 	<string name="Gender_Female">Kobieta</string>
 	<string name="Gender_Both">Bez znaczenia</string>
-	<string name="Smoking">Palenie dozwolone</string>
-	<string name="Parties">Imprezowanie dozwolone</string>
-	<string name="Animals">Zwierzęta dozwolone</string>
+	<string name="SmokingAllowed">Palenie dozwolone</string>
+	<string name="PartiesAllowed">Imprezowanie dozwolone</string>
+	<string name="AnimalsAllowed">Zwierzęta dozwolone</string>
 	<string name="Gender">Płeć</string>
 </resources>

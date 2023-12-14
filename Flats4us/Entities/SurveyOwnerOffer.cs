@@ -12,13 +12,13 @@ namespace Flats4us.Entities
         public int SurveyOwnerOfferId { get; set; }
 
         [Required]
-        public bool Smoking { get; set; }
+        public bool SmokingAllowed { get; set; }
 
         [Required]
-        public bool Parties { get; set; }
+        public bool PartiesAllowed { get; set; }
 
         [Required]
-        public bool Animals { get; set; }
+        public bool AnimalsAllowed { get; set; }
 
         [Required]
         public Gender Gender { get; set; }
