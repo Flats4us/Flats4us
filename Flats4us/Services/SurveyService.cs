@@ -37,46 +37,57 @@ namespace Flats4us.Services
 
                 XmlNode stringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{property.Name}']");
 
-                string content;
+                string content = stringNode != null ? stringNode.InnerText : "notFound";
 
-                if (stringNode != null)
-                {
-                    content = stringNode.InnerText;
-                }
-                else
-                {
-                    content = "notFound";
-                }
+                bool isSurveyTrigger = property.IsDefined(typeof(SurveyTriggerAttribute));
 
-                if (property.PropertyType == typeof(bool))
+                Type propertyType = property.PropertyType;
+                bool isNullable = Nullable.GetUnderlyingType(propertyType) != null;
+                Type underlyingType = isNullable ? Nullable.GetUnderlyingType(propertyType) : propertyType;
+
+                if (underlyingType == typeof(bool))
                 {
                     SurveyJson surveyJson = new()
                     {
-                        id = id++,
-                        title = title,
-                        content = content,
-                        typeName = "SWITCH",
-                        answers = new string[0]
+                        Id = id++,
+                        Title = title,
+                        Content = content,
+                        Trigger = isSurveyTrigger,
+                        Optional = isNullable,
+                        TypeName = "SWITCH",
+                        Answers = new string[0]
                     };
 
                     json.Add(surveyJson);
                 }
-                else if (property.PropertyType.IsEnum)
+                else if (underlyingType.IsEnum || (isNullable && Nullable.GetUnderlyingType(propertyType)?.IsEnum == true))
                 {
-                    string[] enumValues = Enum.GetNames(property.PropertyType);
+                    string[] enumValues = Enum.GetNames(underlyingType);
+
+                    string[] translatedEnumValues = new string[enumValues.Length];
+
+                    for (int i = 0; i < enumValues.Length; i++)
+                    {
+                        string enumKey = $"{underlyingType.Name}_{enumValues[i]}";
+
+                        XmlNode enumStringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{enumKey}']");
+                        translatedEnumValues[i] = enumStringNode != null ? enumStringNode.InnerText : enumValues[i];
+                    }
 
                     SurveyJson surveyJson = new()
                     {
-                        id = id++,
-                        title = title,
-                        content = content,
-                        typeName = "RADIOBUTTON",
-                        answers = enumValues,
+                        Id = id++,
+                        Title = title,
+                        Content = content,
+                        Trigger = isSurveyTrigger,
+                        Optional = isNullable,
+                        TypeName = "RADIOBUTTON",
+                        Answers = translatedEnumValues,
                     };
 
                     json.Add(surveyJson);
                 }
-                else if (property.PropertyType == typeof(int))
+                else if (underlyingType == typeof(int))
                 {
                     SurveyJson surveyJson;
 
@@ -85,22 +96,26 @@ namespace Flats4us.Services
                     {
                         surveyJson = new()
                         {
-                            id = id++,
-                            title = title,
-                            content = content,
-                            typeName = "SLIDER",
-                            answers = new string[] {slider.MinimumValue.ToString(), slider.MaximumValue.ToString() }
+                            Id = id++,
+                            Title = title,
+                            Content = content,
+                            Trigger = isSurveyTrigger,
+                            Optional = isNullable,
+                            TypeName = "SLIDER",
+                            Answers = new string[] {slider.MinimumValue.ToString(), slider.MaximumValue.ToString() }
                         };
                     }
                     else
                     {
                         surveyJson = new()
                         {
-                            id = id++,
-                            title = title,
-                            content = content,
-                            typeName = "NUMBER",
-                            answers = new string[0]
+                            Id = id++,
+                            Title = title,
+                            Content = content,
+                            Trigger = isSurveyTrigger,
+                            Optional = isNullable,
+                            TypeName = "NUMBER",
+                            Answers = new string[0]
                         };
                     }
                     json.Add(surveyJson);

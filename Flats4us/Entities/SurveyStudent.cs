@@ -1,4 +1,4 @@
-﻿using Flats4us.Helpers.Enums;
+﻿ using Flats4us.Helpers.Enums;
 using Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,6 +39,7 @@ namespace Flats4us.Entities
 
         // Yes/No
         [Required]
+        [SurveyTrigger]
         public bool LookingForRoommate { get; set; }
 
         public int? MaxNumberOfRoommates { get; set; }

@@ -1,7 +1,7 @@
 ﻿namespace Helpers
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class SurveyIgnoreAttribute : Attribute
+    public class SurveyTriggerAttribute : Attribute
     {
     }
 }
