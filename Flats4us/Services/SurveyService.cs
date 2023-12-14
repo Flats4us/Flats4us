@@ -50,7 +50,7 @@ namespace Flats4us.Services
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
-                        Title = title,
+                        Name = property.Name,
                         Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
@@ -77,7 +77,7 @@ namespace Flats4us.Services
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
-                        Title = title,
+                        Name = property.Name,
                         Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
@@ -97,7 +97,7 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             Id = id++,
-                            Title = title,
+                            Name = property.Name,
                             Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
@@ -110,7 +110,7 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             Id = id++,
-                            Title = title,
+                            Name = property.Name,
                             Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
