@@ -1062,121 +1062,121 @@ public static class DataSeeder
 
         var surveyOwnerOffer1 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = true,
-            Animals = true,
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer1
         };
         var surveyOwnerOffer2 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = false,
-            Animals = false,
+            SmokingAllowed = true,
+            PartiesAllowed = false,
+            AnimalsAllowed = false,
             Gender = Gender.Male,
             Offer = offer2
         };
         var surveyOwnerOffer3 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = true,
-            Animals = false,
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
             Gender = Gender.Female,
             Offer = offer3
         };
         var surveyOwnerOffer4 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = true,
-            Animals = true,
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer4
         };
         var surveyOwnerOffer5 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = true,
-            Animals = false,
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
             Gender = Gender.Male,
             Offer = offer5
         };
         var surveyOwnerOffer6 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = false,
-            Animals = true,
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer6
         };
         var surveyOwnerOffer7 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = false,
-            Animals = false,
+            SmokingAllowed = true,
+            PartiesAllowed = false,
+            AnimalsAllowed = false,
             Gender = Gender.Both,
             Offer = offer7
         };
         var surveyOwnerOffer8 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = true,
-            Animals = true,
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer8
         };
         var surveyOwnerOffer9 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = true,
-            Animals = false,
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
             Gender = Gender.Female,
             Offer = offer9
         };
         var surveyOwnerOffer10 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = false,
-            Animals = false,
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = false,
             Gender = Gender.Both,
             Offer = offer10
         };
         var surveyOwnerOffer11 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = true,
-            Animals = true,
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
             Gender = Gender.Male,
             Offer = offer11
         };
         var surveyOwnerOffer12 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = true,
-            Animals = false,
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
             Gender = Gender.Female,
             Offer = offer12
         };
         var surveyOwnerOffer13 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = false,
-            Animals = true,
+            SmokingAllowed = true,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer13
         };
         var surveyOwnerOffer14 = new SurveyOwnerOffer
         {
-            Smoking = false,
-            Parties = false,
-            Animals = false,
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = false,
             Gender = Gender.Both,
             Offer = offer14
         };
         var surveyOwnerOffer15 = new SurveyOwnerOffer
         {
-            Smoking = true,
-            Parties = true,
-            Animals = true,
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
             Gender = Gender.Both,
             Offer = offer15
         };

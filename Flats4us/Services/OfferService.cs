@@ -278,9 +278,9 @@ namespace Flats4us.Services
                 Property = property,
                 SurveyOwnerOffer = new SurveyOwnerOffer
                 {
-                    Smoking = input.Smoking,
-                    Parties = input.Parties,
-                    Animals = input.Animals,
+                    SmokingAllowed = input.SmokingAllowed,
+                    PartiesAllowed = input.PartiesAllowed,
+                    AnimalsAllowed = input.AnimalsAllowed,
                     Gender = input.Gender
                 }
             };

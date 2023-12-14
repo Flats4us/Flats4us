@@ -37,7 +37,7 @@ namespace Flats4us.Services
 
                 XmlNode stringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{property.Name}']");
 
-                string content = stringNode != null ? stringNode.InnerText : "notFound";
+                string content = stringNode != null ? stringNode.InnerText : property.Name;
 
                 bool isSurveyTrigger = property.IsDefined(typeof(SurveyTriggerAttribute));
 

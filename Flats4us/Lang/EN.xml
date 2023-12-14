@@ -15,8 +15,8 @@
 	<string name="Gender_Male">Male</string>
 	<string name="Gender_Female">Female</string>
 	<string name="Gender_Both">Both</string>
-	<string name="Smoking">Smoking allowed</string>
-	<string name="Parties">Partying allowed</string>
-	<string name="Animals">Animals allowed</string>
+	<string name="SmokingAllowed">Smoking allowed</string>
+	<string name="PartiesAllowed">Partying allowed</string>
+	<string name="AnimalsAllowed">Animals allowed</string>
 	<string name="Gender">Gender</string>
 </resources>
