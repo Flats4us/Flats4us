@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -7,9 +6,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -97,10 +94,8 @@ namespace Flats4us.Services
 
             student.SurveyStudent = studentSurvey;
 
-            var interestDtoList = JsonConvert.DeserializeObject<List<InterestDto>>(input.InterestJson);
-
             var interestList = await _context.Interests
-                .Where(i => interestDtoList
+                .Where(i => input.Interests
                     .Select(i => i.InterestId)
                     .Contains(i.InterestId)
                 )

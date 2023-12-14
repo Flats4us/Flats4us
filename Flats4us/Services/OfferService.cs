@@ -193,12 +193,10 @@ namespace Flats4us.Services
                     .ToList();
             }
 
-            if (input.EquipmentJSON != null)
+            if (input.Equipment != null)
             {
-                var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJSON);
-
                 var equipmentList = await _context.Equipment
-                    .Where(e => equipmentDtoList
+                    .Where(e => input.Equipment
                         .Select(e => e.EquipmentId)
                         .Contains(e.EquipmentId)
                     )

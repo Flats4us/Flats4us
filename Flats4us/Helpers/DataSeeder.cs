@@ -259,9 +259,7 @@ public static class DataSeeder
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
             University = "PJATK",
-            Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
-            Twitter_X = "https://twitter.com/kkajetanski",
-            Instagram = "https://www.instagram.com/kkajetanski/",
+            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/kkajetanski|https://www.instagram.com/kkajetanski/",
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
         };
@@ -285,17 +283,15 @@ public static class DataSeeder
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s2137",
             University = "PJATK",
-            Facebook = "https://www.facebook.com/profile.php?id=XXXXXXXXX",
-            Twitter_X = "https://twitter.com/aklocek",
-            Instagram = "https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
 
         dbContext.Students.AddRange(student1, student2);
 
-        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();;
-        ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait(); ;
+        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
 
         #endregion
 

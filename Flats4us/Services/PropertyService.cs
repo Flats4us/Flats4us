@@ -6,7 +6,6 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Flats4us.Services
 {
@@ -93,10 +92,8 @@ namespace Flats4us.Services
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
-            var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
-
             var equipmentList = await _context.Equipment
-                .Where(e => equipmentDtoList
+                .Where(e => input.Equipment
                     .Select(e => e.EquipmentId)
                     .Contains(e.EquipmentId)
                 )
@@ -226,10 +223,8 @@ namespace Flats4us.Services
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
-            var equipmentDtoList = JsonConvert.DeserializeObject<List<EquipmentDto>>(input.EquipmentJson);
-
             var equipmentList = await _context.Equipment
-                .Where(e => equipmentDtoList
+                .Where(e => input.Equipment
                     .Select(e => e.EquipmentId)
                     .Contains(e.EquipmentId)
                 )
