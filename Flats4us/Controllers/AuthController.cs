@@ -36,7 +36,7 @@ namespace Flats4us.Controllers
         [SwaggerOperation(
             Summary = "Registers new student"
         )]
-        public async Task<ActionResult> RegisterStudentAsync([FromForm] StudentRegisterDto request)
+        public async Task<ActionResult> RegisterStudentAsync([FromBody] StudentRegisterDto request)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Flats4us.Controllers
         [SwaggerOperation(
             Summary = "Registers new owner"
         )]
-        public async Task<ActionResult> RegisterOwnerAsync([FromForm] OwnerRegisterDto request)
+        public async Task<ActionResult> RegisterOwnerAsync([FromBody] OwnerRegisterDto request)
         {
             try
             {

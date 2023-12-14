@@ -39,10 +39,10 @@ namespace Flats4us.Entities.Dto
         public bool? Elevator { get; set; }
 
         [Required]
-        public IFormFile TitleDeed { get; set; }
+        public byte[] TitleDeed { get; set; }
 
         [Required]
-        public List<IFormFile> Images { get; set; }
+        public List<byte[]> Images { get; set; }
 
         public int? NumberOfRooms { get; set; }
 
@@ -53,7 +53,6 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         [Required]
-        [ValidEquipmentJson(ErrorMessage = "Invalid JSON format in the EquipmentJson field")]
-        public string EquipmentJson { get; set; }
+        public List<EquipmentDto> Equipment { get; set; }
     }
 }

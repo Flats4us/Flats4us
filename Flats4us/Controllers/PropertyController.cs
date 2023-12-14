@@ -1,11 +1,9 @@
-﻿using Flats4us.Entities;
-using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
@@ -61,7 +59,7 @@ namespace Flats4us.Controllers
             Summary = "Adds new property",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> AddProperty([FromForm] AddEditPropertyDto input)
+        public async Task<IActionResult> AddProperty([FromBody] AddEditPropertyDto input)
         {
             try
             {

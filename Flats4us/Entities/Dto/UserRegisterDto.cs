@@ -41,10 +41,10 @@ namespace Flats4us.Entities.Dto
     public class OwnerStudentRegisterDto : UserRegisterDto
     {
         [Required]
-        public IFormFile ProfilePicture { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
         [Required]
-        public IFormFile Document { get; set; }
+        public byte[] Document { get; set; }
 
         [Required]
         public DocumentType DocumentType { get; set; }
@@ -66,11 +66,8 @@ namespace Flats4us.Entities.Dto
         [Required]
         public string University { get; set; }
 
-        public string? Facebook { get; set; }
-
-        public string? Twitter_X { get; set; }
-
-        public string? Instagram { get; set; }
+        [Required]
+        public List<string> Links { get; set; }
 
         [Required]
         [Range(1, 10, ErrorMessage = "Value must be between 1 and 10.")]
@@ -104,8 +101,7 @@ namespace Flats4us.Entities.Dto
         public int? MaxRoommateAge { get; set; }
 
         [Required]
-        [ValidInterestJson(ErrorMessage = "Invalid JSON format in the InterestJson field")]
-        public string InterestJson { get; set; }
+        public List<InterestDto> Interests { get; set; }
     }
 
     public class OwnerRegisterDto : OwnerStudentRegisterDto

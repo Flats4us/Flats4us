@@ -97,7 +97,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified))
-                .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false));
+                .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false))
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links != null ? string.Join("|", src.Links) : null));
 
             CreateMap<InterestDto, Interest>();
 
