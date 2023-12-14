@@ -19,8 +19,22 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
+        [HttpGet("All-matches")]
+        public async Task<IActionResult> GetAllMatches()
+        {
+            try
+            {
+                _logger.LogInformation("Getting Matches");
+                return Ok(await _grindrtService.GetAllMatches());
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding argument - body: ");
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+            }
+        }
 
-        [HttpGet("get_match")]
+        [HttpGet("possible-matches")]
         public async Task<IActionResult> GetMatches(int studentId)
         {
             try
@@ -35,7 +49,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("Post_match")]
+        [HttpPost("match")]
         public async Task<IActionResult> PostMatche(int student1Id, int student2Id, bool isAccept)
         {
             try

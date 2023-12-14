@@ -23,6 +23,6 @@ namespace Flats4us.Entities
 
 
         public Student Student1 { get; set; }
-        public Student Stundet2 { get; set; }
+        public Student Student2 { get; set; }
     }
 }

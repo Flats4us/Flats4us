@@ -15,6 +15,12 @@ namespace Flats4us.Services
             _context = context;
         }
 
+        public async Task<List<Grindr>> GetMatches()
+        {
+
+        }
+
+
         public async Task<List<Student>> GetPotentialRoommate(int studentId)
         {
             var requestingStudent = _context.Students

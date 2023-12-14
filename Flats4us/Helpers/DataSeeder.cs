@@ -1038,7 +1038,7 @@ public static class DataSeeder
 
         #endregion
 
-        //#region Rents
+        #region Rents
 
         //var rent1 = new Rent
         //{
@@ -1050,9 +1050,9 @@ public static class DataSeeder
 
         //dbContext.Rents.AddRange(rent1);
 
-        //#endregion
+        #endregion
 
-        //#region Payments
+        #region Payments
 
         //var payment1 = new Payment
         //{
@@ -1065,7 +1065,27 @@ public static class DataSeeder
 
         //dbContext.Payments.AddRange(payment1);
 
-        //#endregion
+        #endregion
+
+
+
+        #region Grindr
+
+        var grindr1 = new Grindr
+        {
+            isStudent1Interested = true,
+            isStudent2Interested = false,
+            Student1 = student1,
+            Student2 = student2,
+        };
+
+        dbContext.Grindr.AddRange(grindr1);
+
+        #endregion
+
+
+
+
 
         #region OfferPromotions
 
