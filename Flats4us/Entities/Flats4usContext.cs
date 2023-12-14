@@ -16,6 +16,7 @@ namespace Flats4us.Entities
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Flat> Flats { get; set; }
+        public DbSet<Grindr> Grindr { get; set; }
         public DbSet<House> Houses { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
