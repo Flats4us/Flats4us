@@ -22,7 +22,7 @@ namespace Flats4us.Entities
         public int Student2Id { get; set; }
 
 
-        public Student Student1 { get; set; }
-        public Student Student2 { get; set; }
+        public virtual Student Student1 { get; set; }
+        public virtual Student Student2 { get; set; }
     }
 }

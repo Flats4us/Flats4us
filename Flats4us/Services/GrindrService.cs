@@ -15,9 +15,9 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<List<Grindr>> GetMatches()
+        public async Task<List<Grindr>> GetAllMatches()
         {
-
+            return await _context.Grindr.ToListAsync();
         }
 
 
