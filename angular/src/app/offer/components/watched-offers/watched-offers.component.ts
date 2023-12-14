@@ -24,15 +24,16 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WatchedOffersComponent implements OnInit {
-	public watchedOffers$: Observable<ISendOffers>;
+	public watchedOffers$: Observable<ISendOffers> = this.offerService.getOffers(
+		0,
+		6
+	);
 
-	public pageEvent = new PageEvent();
 	public pageSize = 6;
 	public pageIndex = 0;
 
-	@ViewChild(MatPaginator)
-	private paginator: MatPaginator = new MatPaginator(
-		this.matPaginatorIntl,
+	@ViewChild(MatPaginator) private paginator: MatPaginator = new MatPaginator(
+		new MatPaginatorIntl(),
 		ChangeDetectorRef.prototype
 	);
 
@@ -43,9 +44,7 @@ export class WatchedOffersComponent implements OnInit {
 		public offerService: OfferService,
 		private router: Router,
 		private matPaginatorIntl: MatPaginatorIntl
-	) {
-		this.watchedOffers$ = this.offerService.getOffers(0, 6);
-	}
+	) {}
 
 	public ngOnInit() {
 		this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
@@ -75,6 +74,17 @@ export class WatchedOffersComponent implements OnInit {
 		this.router.navigate([url]);
 	}
 	public deleteOffer(id: string) {
+		// 	this.offerService.deleteOffer(id).subscribe(
+		// 		() => {
+		// 			this.refreshData();
+		// 		}
+		// 	);
+		// }
+
+		// private refreshData() {
+		// 	this.watchedOffers$ = this.offerService.getOffers();
+		// }
+
 		this.watchedOffers$ = this.watchedOffers$?.pipe(
 			switchMap(offers =>
 				of({
@@ -84,8 +94,8 @@ export class WatchedOffersComponent implements OnInit {
 			)
 		);
 	}
+
 	public changePage(e: PageEvent) {
-		this.pageEvent = e;
 		this.pageSize = e.pageSize;
 		this.pageIndex = e.pageIndex;
 		this.filterOffers();
