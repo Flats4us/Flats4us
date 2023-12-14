@@ -8,10 +8,12 @@ namespace Helpers
 {
     internal class SurveyJson
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public string typeName { get; set; }
-        public string[] answers { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public bool Trigger { get; set; }
+        public bool Optional { get; set; }
+        public string TypeName { get; set; }
+        public string[] Answers { get; set; }
     }
 }

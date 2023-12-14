@@ -24,6 +24,7 @@ namespace Flats4us.Entities
         public Gender Gender { get; set; }
 
         [Required]
+        [SurveyIgnore]
         public int OfferId { get; set; }
 
         public virtual Offer Offer { get; set; }

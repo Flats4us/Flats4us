@@ -7,9 +7,16 @@
 	<string name="Animals">Posiadam zwierzę?</string>
 	<string name="Vegan">Jestem weganinem?</string>
 	<string name="LookingForRoommate">Szukam współlokatora?</string>
-	<string name="NumberOfInhabitants">Dla ilu osób chcesz wynająć nieruchomość?</string>
-	<string name="Smoking">Pali papierosy</string>
-	<string name="Parties">Imprezuje</string>
-	<string name="Animals">Zwierzęta</string>
+	<string name="MaxNumberOfRoommates">Maksymalna liczba współlokatorów?</string>
+	<string name="RoommateGender">Płeć współlokatora?</string>
+	<string name="MinRoommateAge">Minimalny wiek współlokatora</string>
+	<string name="MaxRoommateAge">Maksymalny wiek współlokatora</string>
+	<string name="NumberOfInhabitants">Maksymalna liczba lokatorów</string>
+	<string name="Gender_Male">Mężczyzna</string>
+	<string name="Gender_Female">Kobieta</string>
+	<string name="Gender_Both">Bez znaczenia</string>
+	<string name="Smoking">Palenie dozwolone</string>
+	<string name="Parties">Imprezowanie dozwolone</string>
+	<string name="Animals">Zwierzęta dozwolone</string>
 	<string name="Gender">Płeć</string>
 </resources>
