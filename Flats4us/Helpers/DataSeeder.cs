@@ -15,47 +15,47 @@ public static class DataSeeder
         #region Equipment
 
         var equipment1 = new Equipment { 
-            Name = "Dishwasher"
+            Name = "Zmywarka"
         };
         var equipment2 = new Equipment
         {
-            Name = "Washing Machine"
+            Name = "Pralka"
         };
         var equipment3 = new Equipment
         {
-            Name = "Iron"
+            Name = "Żelazko"
         };
         var equipment4 = new Equipment
         {
-            Name = "Kettle"
+            Name = "Czajnik"
         };
         var equipment5 = new Equipment
         {
-            Name = "Coffe Machine"
+            Name = "Ekspres do kawy"
         };
         var equipment6 = new Equipment
         {
-            Name = "Air Conditioning"
+            Name = "Klimatyzacja"
         };
         var equipment7 = new Equipment
         {
-            Name = "Balcony"
+            Name = "Balkon"
         };
         var equipment8 = new Equipment
         {
-            Name = "TV"
+            Name = "Telewizor"
         };
         var equipment9 = new Equipment
         {
-            Name = "Bath"
+            Name = "Wanna"
         };
         var equipment10 = new Equipment
         {
-            Name = "Oven"
+            Name = "Piekarnik"
         };
         var equipment11 = new Equipment
         {
-            Name = "Microwave"
+            Name = "Mikrofalówka"
         };
 
         dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11);
@@ -66,51 +66,51 @@ public static class DataSeeder
 
         var interest1 = new Interest
         {
-            Name = "Photography"
+            Name = "Fotografia"
         };
         var interest2 = new Interest
         {
-            Name = "Hiking"
+            Name = "Turystyka piesza"
         };
         var interest3 = new Interest
         {
-            Name = "Cooking"
+            Name = "Gotowanie"
         };
         var interest4 = new Interest
         {
-            Name = "Travel"
+            Name = "Podróże"
         };
         var interest5 = new Interest
         {
-            Name = "Reading"
+            Name = "Czytanie"
         };
         var interest6 = new Interest
         {
-            Name = "Gardening"
+            Name = "Ogrodnictwo"
         };
         var interest7 = new Interest
         {
-            Name = "Music"
+            Name = "Muzyka"
         };
         var interest8 = new Interest
         {
-            Name = "Volunteering"
+            Name = "Wolontariat"
         };
         var interest9 = new Interest
         {
-            Name = "Sports"
+            Name = "Sport"
         };
         var interest10 = new Interest
         {
-            Name = "Languages"
+            Name = "Języki"
         };
         var interest11 = new Interest
         {
-            Name = "Painting"
+            Name = "Malarstwo"
         };
         var interest12 = new Interest
         {
-            Name = "Cycling"
+            Name = "Rower"
         };
         var interest13 = new Interest
         {
@@ -118,11 +118,11 @@ public static class DataSeeder
         };
         var interest14 = new Interest
         {
-            Name = "Gaming"
+            Name = "Gry komputerowe"
         };
         var interest15 = new Interest
         {
-            Name = "Writing"
+            Name = "Pisanie"
         };
         var interest16 = new Interest
         {
@@ -130,11 +130,11 @@ public static class DataSeeder
         };
         var interest17 = new Interest
         {
-            Name = "Technology"
+            Name = "Technologia"
         };
         var interest18 = new Interest
         {
-            Name = "Astronomy"
+            Name = "Astronomia"
         };
         var interest19 = new Interest
         {
@@ -142,7 +142,7 @@ public static class DataSeeder
         };
         var interest20 = new Interest
         {
-            Name = "Birdwatching"
+            Name = "Modelarstwo"
         };
 
 
@@ -1189,7 +1189,7 @@ public static class DataSeeder
             Place = "placeholder",
             Reason = "placeholder",
             Offer = offer4,
-            Students = { student2 }
+            Student = student2
         };
 
         dbContext.Meetings.AddRange(meeting1);

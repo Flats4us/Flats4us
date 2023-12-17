@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/equipment")]
     [ApiController]
     public class EquipmentController : ControllerBase
     {
@@ -24,18 +24,18 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // GET: api/Equipment
+        // GET: api/equipment
         [HttpGet]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Returns list of equipment",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? name = null)
         {
             try
             {
-                var equipment = await _equipmentService.GetAll();
+                var equipment = await _equipmentService.GetAll(name);
                 return Ok(equipment);
             }
             catch (Exception ex)

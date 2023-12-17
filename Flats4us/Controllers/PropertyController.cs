@@ -10,7 +10,7 @@ using System.Security.Claims;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/properties")]
     [ApiController]
     public class PropertyController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // GET: api/Property
+        // GET: api/properties
         [HttpGet]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
@@ -52,7 +52,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Property
+        // POST: api/properties
         [HttpPost]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
@@ -68,9 +68,9 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _propertyService.AddPropertyAsync(input, requestUserId);
+                var id = await _propertyService.AddPropertyAsync(input, requestUserId);
                 _logger.LogInformation($"Adding property - body: {input}");
-                return Ok("Property added successfully");
+                return Ok(id);
             }
             catch (Exception ex)
             {
@@ -79,7 +79,27 @@ namespace Flats4us.Controllers
             }
         }
 
-        // PUT: api/Property/{id}
+        // POST: api/properties/{id}/files
+        [HttpPost("{id}/files")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Adds property files",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<ActionResult> AddPropertyFiles([FromForm] PropertyFilesDto input, int id)
+        {
+            try
+            {
+                await _propertyService.AddPropertyFilesAsync(input, id);
+                return Ok("Adding property completed");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // PUT: api/properties/{id}
         [HttpPut("{id}")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
@@ -111,7 +131,7 @@ namespace Flats4us.Controllers
 
         }
 
-        // DELETE: api/Property/{id}
+        // DELETE: api/properties/{id}
         [HttpDelete("{id}")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(

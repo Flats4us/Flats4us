@@ -27,7 +27,6 @@ namespace Flats4us.Entities
 
         public virtual ICollection<Interest> Interests { get; set; }
         public virtual ICollection<Meeting> Meetings { get; set; }
-
         public virtual ICollection<OpinionStudentStudent> ReceivedStudentStudentOpinions { get; set; }
         public virtual ICollection<OpinionStudentStudent> IssuedStudentStudentOpinions { get; set; }
         public virtual ICollection<OpinionOwnerStudent> ReceivedOwnertStudentOpinions { get; set; }

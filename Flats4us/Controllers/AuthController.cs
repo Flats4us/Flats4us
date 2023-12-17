@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -32,16 +32,17 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        [HttpPost("register/Student")]
+        // POST: api/auth/register/students
+        [HttpPost("register/students")]
         [SwaggerOperation(
-            Summary = "Registers new student"
+            Summary = "Registers new student, returns userId"
         )]
         public async Task<ActionResult> RegisterStudentAsync([FromBody] StudentRegisterDto request)
         {
             try
             {
-                await _userService.RegisterStudentAsync(request);
-                return Ok("Registered successfully");
+                var id = await _userService.RegisterStudentAsync(request);
+                return Ok(id);
             }
             catch (Exception ex)
             {
@@ -49,16 +50,17 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("register/Owner")]
+        // POST: api/auth/register/owners
+        [HttpPost("register/owners")]
         [SwaggerOperation(
-            Summary = "Registers new owner"
+            Summary = "Registers new owner, returns userId"
         )]
         public async Task<ActionResult> RegisterOwnerAsync([FromBody] OwnerRegisterDto request)
         {
             try
             {
-                await _userService.RegisterOwnerAsync(request);
-                return Ok("Registered successfully");
+                var id = await _userService.RegisterOwnerAsync(request);
+                return Ok(id);
             }
             catch (Exception ex)
             {
@@ -66,6 +68,24 @@ namespace Flats4us.Controllers
             }
         }
 
+        [HttpPost("register/users/{id}/files")]
+        [SwaggerOperation(
+            Summary = "Registers user files"
+        )]
+        public async Task<ActionResult> RegisterUserFiles([FromForm] UserRegisterFilesDto request, int id)
+        {
+            try
+            {
+                await _userService.RegisterUserFilesAsync(request, id);
+                return Ok("Registration completed");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // POST: api/auth/login
         [HttpPost("login")]
         [SwaggerOperation(
             Summary = "Logs the user in, returns a token"
@@ -84,6 +104,7 @@ namespace Flats4us.Controllers
             }
         }
 
+        // PUT: api/auth/change-password
         [HttpPut("change-password")]
         [Authorize(Policy = "RegisteredUser")]
         [SwaggerOperation(

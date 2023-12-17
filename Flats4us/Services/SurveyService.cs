@@ -19,11 +19,19 @@ namespace Flats4us.Services
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
-        public async Task<string> MakingSurvey(Type type, string title, string lang)
+        public async Task<string> MakingSurvey(Type type, string lang)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load($"Lang/{lang}.xml");
-               
+
+            try
+            {
+                xmlDoc.Load($"Lang/{lang}.xml");
+            }
+            catch (Exception)
+            {
+                xmlDoc.Load($"Lang/en.xml");
+            }
+
             var attributes = type.GetProperties();
 
             int id = 1;

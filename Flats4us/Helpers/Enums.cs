@@ -41,7 +41,8 @@
     {
         Verified,
         NotVerified,
-        Rejected
+        Rejected,
+        PreCreated
     }
 
     public enum PaymentPurpose
@@ -49,12 +50,6 @@
         Rent,
         Deposit,
         Repairs
-    }
-
-    public enum PromotionType
-    {
-        type1,
-        type2
     }
 
     public enum RoommatesStatus

@@ -50,7 +50,7 @@ namespace Flats4us.Services
             return meetings;
         }
 
-        public async Task AddMeetingAsync(AddMeetingDto input, int userId)
+        public async Task AddMeetingAsync(AddMeetingDto input, int studentId)
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
@@ -58,11 +58,9 @@ namespace Flats4us.Services
 
             if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
 
-            if (offer.Property.OwnerId != userId) throw new ForbiddenException($"You do not own this offer");
+            var student = await _context.Students.FindAsync(studentId);
 
-            var students = await _context.Students
-                .Where(s => input.StudentIds.Contains(s.UserId))
-                .ToListAsync();
+            if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
 
             var meeting = new Meeting
             {
@@ -70,7 +68,7 @@ namespace Flats4us.Services
                 Place = input.Place,
                 Reason = input.Reason,
                 OfferId = input.OfferId,
-                Students = students
+                StudentId = student.UserId
             };
 
             await _context.Meetings.AddAsync(meeting);

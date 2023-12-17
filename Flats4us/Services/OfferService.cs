@@ -28,47 +28,6 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<OfferListDto> GetAllAsync()
-        {
-            var currentDate = DateTime.Now;
-
-            var random = new Random();
-
-            var offers = await _context.Offers
-                .Where(o => o.OfferStatus == OfferStatus.Current)
-                .Include(o => o.OfferPromotions)
-                .Include(o => o.Property)
-                    .ThenInclude(p => p.Owner)
-                .Include(o => o.Property)
-                    .ThenInclude(p => p.Equipment)
-                .Include(o => o.SurveyOwnerOffer)
-                .ToListAsync();
-
-            var totalNumber = offers.Count();
-
-            var randomPromotedOffers = offers
-                .Where(o => o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate))
-                .ToList()
-                .OrderBy(o => random.Next())
-                .Take(3)
-                .Select(_mapper.Map<OfferDto>)
-                .ToList();                
-
-            var notPromotedOffers = offers
-                .Where(o => (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)))
-                .Select(_mapper.Map<OfferDto>)
-                .ToList();
-
-            var result = new OfferListDto
-            {
-                TotalNumberOfOffers = totalNumber,
-                PromotedOffers = randomPromotedOffers,
-                Offers = notPromotedOffers
-            };
-
-            return result;
-        }
-
         public async Task<OfferDto> GetByIdAsync(int id)
         {
             var offer = await _context.Offers
@@ -99,11 +58,22 @@ namespace Flats4us.Services
 
             var random = new Random();
 
-            var promotedOffers = await _context.Offers
-                .Where(o => o.OfferStatus == OfferStatus.Current &&
-                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate) &&
-                    o.Property.Province.Equals(input.Province) &&
-                    o.Property.City.Equals(input.City))
+            var promotedQuery = _context.Offers.AsQueryable();
+
+            promotedQuery = promotedQuery.Where(o => o.OfferStatus == OfferStatus.Current &&
+                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate));
+
+            if (!string.IsNullOrEmpty(input.Province))
+            {
+                promotedQuery = promotedQuery.Where(o => o.Property.Province.Equals(input.Province));
+            }
+
+            if (!string.IsNullOrEmpty(input.City))
+            {
+                promotedQuery = promotedQuery.Where(o => o.Property.City.Equals(input.City));
+            }
+
+            var promotedOffers = await promotedQuery
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
                 .Include(o => o.Property)
@@ -122,8 +92,15 @@ namespace Flats4us.Services
 
             if (!input.Distance.HasValue)
             {
-                query = query.Where(o => o.Property.Province.Equals(input.Province) &&
-                    o.Property.City.Equals(input.City));
+                if (!string.IsNullOrEmpty(input.Province))
+                {
+                    query = query.Where(o => o.Property.Province.Equals(input.Province));
+                }
+
+                if (!string.IsNullOrEmpty(input.City))
+                {
+                    query = query.Where(o => o.Property.City.Equals(input.City));
+                }
 
                 if (!string.IsNullOrEmpty(input.District))
                 {
@@ -186,7 +163,7 @@ namespace Flats4us.Services
                 notPromotedOffers = notPromotedOffers.Where(o => input.PropertyTypes.Contains(o.Property.PropertyType)).ToList();
             }
 
-            if (input.Distance.HasValue)
+            if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
                 notPromotedOffers = notPromotedOffers
                     .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
@@ -207,32 +184,34 @@ namespace Flats4us.Services
                     .Any(e => e.EquipmentId == ie.EquipmentId)))
                     .ToList();
             }
-
-            if (allowedSorts.Contains(input.Sorting))
+            if (!string.IsNullOrEmpty(input.Sorting))
             {
-                switch (input.Sorting)
+                if (allowedSorts.Contains(input.Sorting))
                 {
-                    case "Price ASC":
-                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Price).ToList();
-                        break;
-                    case "Price DSC":
-                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Price).ToList();
-                        break;
-                    case "Area ASC":
-                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.Area).ToList();
-                        break;
-                    case "Area DSC":
-                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.Area).ToList();
-                        break;
-                    case "NumberOfRooms ASC":
-                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.NumberOfRooms).ToList();
-                        break;
-                    case "NumberOfRooms DSC":
-                        notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.NumberOfRooms).ToList();
-                        break;
-                    default:
-                        notPromotedOffers = notPromotedOffers.OrderBy(o => o.OfferId).ToList();
-                        break;
+                    switch (input.Sorting)
+                    {
+                        case "Price ASC":
+                            notPromotedOffers = notPromotedOffers.OrderBy(o => o.Price).ToList();
+                            break;
+                        case "Price DSC":
+                            notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Price).ToList();
+                            break;
+                        case "Area ASC":
+                            notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.Area).ToList();
+                            break;
+                        case "Area DSC":
+                            notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.Area).ToList();
+                            break;
+                        case "NumberOfRooms ASC":
+                            notPromotedOffers = notPromotedOffers.OrderBy(o => o.Property.NumberOfRooms).ToList();
+                            break;
+                        case "NumberOfRooms DSC":
+                            notPromotedOffers = notPromotedOffers.OrderByDescending(o => o.Property.NumberOfRooms).ToList();
+                            break;
+                        default:
+                            notPromotedOffers = notPromotedOffers.OrderBy(o => o.OfferId).ToList();
+                            break;
+                    }
                 }
             }
 
@@ -287,28 +266,28 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddOfferPromotionAsync(AddOfferPromotionDto input, int userId)
+        public async Task AddOfferPromotionAsync(int duration, int offerId, int userId)
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
-                .FirstOrDefaultAsync(o => o.OfferId == input.OfferId);
+                .FirstOrDefaultAsync(o => o.OfferId == offerId);
 
-            if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
+            if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
 
             if (offer.Property.OwnerId != userId) throw new ForbiddenException($"You do not own this offer");
 
             var offerPromotion = new OfferPromotion
             {
                 StartDate = DateTime.Now.Date,
-                EndDate = DateTime.Now.Date.AddDays(input.Duration),
-                Price = input.Duration * OfferPromotion.PricePerDay,
+                EndDate = DateTime.Now.Date.AddDays(duration),
+                Price = duration * OfferPromotion.PricePerDay,
             };
 
             offer.OfferPromotions.Add(offerPromotion);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<OfferDto>> GetOffersByInterestAsync(int studentId)
+        public async Task<CountedListDto<OfferDto>> GetOffersByInterestAsync(PaginatorDto input, int studentId)
         {
             var student = await _context.Students.FindAsync(studentId);
 
@@ -330,7 +309,19 @@ namespace Flats4us.Services
                 .Select(offer => _mapper.Map<OfferDto>(offer))
                 .ToListAsync();
 
-            return offers;
+            var totalCount = offers.Count();
+
+            offers = offers.Skip((input.PageNumber - 1) * input.PageSize)
+                .Take(input.PageSize)
+                .ToList();
+
+            var result = new CountedListDto<OfferDto>
+            {
+                TotalCount = totalCount,
+                Result = offers
+            };
+
+            return result;
         }
 
 

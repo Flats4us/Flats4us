@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/meetings")]
     [ApiController]
     public class MeetingController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // GEt: api/Meeting
+        // GEt: api/meetings
         [HttpGet]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
@@ -54,12 +54,12 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Meeting
+        // POST: api/meetings
         [HttpPost]
-        [Authorize(Policy = "VerifiedOwner")]
+        [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
             Summary = "Adds a new meeting",
-            Description = "Requires verified owner privileges"
+            Description = "Requires verified student privileges"
         )]
         public async Task<IActionResult> AddMeeting([FromBody] AddMeetingDto input)
         {
