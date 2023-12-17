@@ -17,8 +17,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int OfferId { get; set; }
-
-        [Required]
-        public List<int> StudentIds { get; set; }
     }
 }

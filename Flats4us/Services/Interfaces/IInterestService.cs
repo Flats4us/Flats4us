@@ -4,6 +4,6 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IInterestService
     {
-        Task<List<InterestDto>> GetAll();
+        Task<List<InterestDto>> GetAll(string? name = null);
     }
 }

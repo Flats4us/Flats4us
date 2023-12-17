@@ -44,7 +44,7 @@ namespace Flats4us.Services
             return token;
         }
 
-        public async Task RegisterOwnerAsync(OwnerRegisterDto input)
+        public async Task<int> RegisterOwnerAsync(OwnerRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -56,29 +56,13 @@ namespace Flats4us.Services
             
             var owner = _mapper.Map<Owner>(input);
 
-            if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, $"Images/Users/{owner.ImagesPath}/ProfilePicture");
-            }
-            else
-            {
-                throw new Exception("Profile picture saving failure");
-            }
-
-            if (input.Document != null && input.Document.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.Document, $"Images/Users/{owner.ImagesPath}/Document");
-            }
-            else
-            {
-                throw new Exception("Document saving failure");
-            }
-
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
+
+            return owner.UserId;
         }
 
-        public async Task RegisterStudentAsync(StudentRegisterDto input)
+        public async Task<int> RegisterStudentAsync(StudentRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -103,29 +87,49 @@ namespace Flats4us.Services
 
             student.Interests = interestList;
 
+            _context.Students.Add(student);
+            await _context.SaveChangesAsync();
+
+            return student.UserId;
+        }
+
+        public async Task RegisterUserFilesAsync(UserRegisterFilesDto input, int userId)
+        {
+            var user = await _context.OwnerStudents.FindAsync(userId);
+
+            if (user is null) throw new Exception($"Cannot find user ID: {userId}");
+
+            if (user.VerificationStatus != VerificationStatus.PreCreated) throw new Exception("Files already uploaded");
+
+            var directoryPath = Path.Combine("Images/Users", user.ImagesPath);
+
             if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
             {
-                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, $"Images/Users/{student.ImagesPath}/ProfilePicture");
+                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, Path.Combine(directoryPath, "ProfilePicture"));
             }
             else
             {
+                _context.Users.Remove(user);
+                await ImageUtility.DeleteDirectory(directoryPath);
                 throw new Exception("Profile picture saving failure");
             }
 
             if (input.Document != null && input.Document.Length > 0)
             {
-                await ImageUtility.ProcessAndSaveImage(input.Document, $"Images/Users/{student.ImagesPath}/Document");
+                await ImageUtility.ProcessAndSaveImage(input.Document, Path.Combine(directoryPath, "Documents"));
             }
             else
             {
+                _context.Users.Remove(user);
+                await ImageUtility.DeleteDirectory(directoryPath);
                 throw new Exception("Document saving failure");
             }
 
-            _context.Students.Add(student);
+            user.VerificationStatus = VerificationStatus.NotVerified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<UserForVerificationDto>> GetNotVerifiedUsersAsync()
+        public async Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input)
         {
             var students = await _context.Students
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
@@ -138,12 +142,24 @@ namespace Flats4us.Services
             var studentDtos = _mapper.Map<List<UserForVerificationDto>>(students);
             var ownerDtos = _mapper.Map<List<UserForVerificationDto>>(owners);
 
-            var result = new List<UserForVerificationDto>();
+            var users = new List<UserForVerificationDto>();
 
-            result.AddRange(studentDtos);
-            result.AddRange(ownerDtos);
+            users.AddRange(studentDtos);
+            users.AddRange(ownerDtos);
 
-            result = result.OrderBy(user => user.DateForVerificationSorting).ToList();
+            var totalCount = users.Count();
+
+            users = users
+                .OrderBy(user => user.DateForVerificationSorting)
+                .Skip((input.PageNumber - 1) * input.PageSize)
+                .Take(input.PageSize)
+                .ToList();
+
+            var result = new CountedListDto<UserForVerificationDto>
+            {
+                TotalCount = totalCount,
+                Result = users
+            };
 
             return result;
         }

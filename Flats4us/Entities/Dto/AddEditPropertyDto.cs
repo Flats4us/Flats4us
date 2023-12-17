@@ -38,12 +38,6 @@ namespace Flats4us.Entities.Dto
 
         public bool? Elevator { get; set; }
 
-        [Required]
-        public byte[] TitleDeed { get; set; }
-
-        [Required]
-        public List<byte[]> Images { get; set; }
-
         public int? NumberOfRooms { get; set; }
 
         public int? Floor { get; set; }

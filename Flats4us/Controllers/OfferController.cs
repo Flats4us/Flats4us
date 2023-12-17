@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/offers")]
     [ApiController]
     public class OfferController : ControllerBase
     {
@@ -27,25 +27,7 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // GET: api/Offer
-        [HttpGet]
-        [SwaggerOperation(
-            Summary = "Returns a list offers"
-        )]
-        public async Task<IActionResult> GetAll()
-        {
-            try
-            {
-                var offers = await _offerService.GetAllAsync();
-                return Ok(offers);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred: {ex.Message}");
-            }
-        }
-
-        // GET: api/Offer/{id}
+        // GET: api/offers/{id}
         [HttpGet("{id}")]
         [SwaggerOperation(
             Summary = "Returns offer by id"
@@ -63,8 +45,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: api/Offer
-        [HttpGet("filtered")]
+        // GET: api/offers
+        [HttpGet]
         [SwaggerOperation(
             Summary = "Returns a filtered list of offers"
         )]
@@ -81,7 +63,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Property
+        // POST: api/offers
         [HttpPost]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
@@ -108,14 +90,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Equipment
-        [HttpPost("promotion")]
+        // POST: api/offers/{id}/promotion
+        [HttpPost("{id}/promotion")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Adds an offer promotion",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> AddOfferPromotion([FromBody] AddOfferPromotionDto input)
+        public async Task<IActionResult> AddOfferPromotion([FromBody] AddOfferPromotionDto input, int id)
         {
             try
             {
@@ -124,8 +106,8 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.AddOfferPromotionAsync(input, requestUserId);
-                _logger.LogInformation($"Adding offer promotion for offer ID: {input.OfferId}");
+                await _offerService.AddOfferPromotionAsync(input.Duration, id, requestUserId);
+                _logger.LogInformation($"Adding offer promotion for offer ID: {id}");
                 return Ok("Offer promotion added successfully");
             }
             catch (ForbiddenException ex)
@@ -138,12 +120,13 @@ namespace Flats4us.Controllers
             }
         }
 
+        // GET: api/offers/interest
         [HttpGet("interest")]
         [SwaggerOperation(
             Summary = "Returns a list of offers observed by the student",
             Description = "Requires verified student privileges"
         )]
-        public async Task<IActionResult> GetOffersByInterest()
+        public async Task<IActionResult> GetOffersByInterest([FromQuery] PaginatorDto input)
         {
             try
             {
@@ -152,7 +135,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                var observedOffers = await _offerService.GetOffersByInterestAsync(requestUserId);
+                var observedOffers = await _offerService.GetOffersByInterestAsync(input, requestUserId);
                 _logger.LogInformation($"Getting the list of offers observed by the student ID: {requestUserId}");
                 return Ok(observedOffers);
             }
@@ -162,13 +145,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("interest")]
+        // POST: api/offers/{id}/interest
+        [HttpPost("{id}/interest")]
         [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
             Summary = "Adds an offer interest",
             Description = "Requires verified student privileges"
         )]
-        public async Task<IActionResult> AddOfferInterest([FromBody] AddRemoveInterestDto input)
+        public async Task<IActionResult> AddOfferInterest(int id)
         {
             try
             {
@@ -177,8 +161,8 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.AddOfferInterestAsync(input.OfferId, requestUserId);
-                _logger.LogInformation($"Adding offer interest for offer ID: {input.OfferId}");
+                await _offerService.AddOfferInterestAsync(id, requestUserId);
+                _logger.LogInformation($"Adding offer interest for offer ID: {id}");
                 return Ok("Interest addded");
             }
             catch (Exception ex)
@@ -187,12 +171,13 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpDelete("interest")]
+        // DELETE: api/offers/{id}/interest
+        [HttpDelete("{id}/interest")]
         [SwaggerOperation(
             Summary = "Removes an offer interest",
             Description = "Requires verified student privileges"
         )]
-        public async Task<IActionResult> RemoveOfferInterest([FromBody] AddRemoveInterestDto input)
+        public async Task<IActionResult> RemoveOfferInterest(int id)
         {
             try
             {
@@ -201,8 +186,8 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.RemoveOfferInterestAsync(input.OfferId, requestUserId);
-                _logger.LogInformation($"Removing offer interest for offer ID: {input.OfferId}");
+                await _offerService.RemoveOfferInterestAsync(id, requestUserId);
+                _logger.LogInformation($"Removing offer interest for offer ID: {id}");
                 return Ok("Interest removed");
             }
             catch (Exception ex)

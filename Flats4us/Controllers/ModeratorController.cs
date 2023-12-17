@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/moderator")]
     [ApiController]
     public class ModeratorController : ControllerBase
     {
@@ -27,18 +27,18 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        // GET: api/Moderator/Property
-        [HttpGet("Property")]
+        // GET: api/moderator/properties
+        [HttpGet("properties")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns a list of properties requiring verification",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> GetNotVerifiedProperties()
+        public async Task<IActionResult> GetNotVerifiedProperties([FromQuery] PaginatorDto input)
         {
             try
             {
-                var notVerifiedProperties = await _propertyService.GetNotVerifiedPropertiesAsync();
+                var notVerifiedProperties = await _propertyService.GetNotVerifiedPropertiesAsync(input);
                 return Ok(notVerifiedProperties);
             }
             catch (Exception ex)
@@ -47,8 +47,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/Property/Verify/{id}
-        [HttpPut("Property/Verify/{id}")]
+        // PUT: api/moderator/properties/{id}/verify
+        [HttpPut("properties/{id}/verify")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Verifies property",
@@ -69,18 +69,18 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: api/Moderator/User
-        [HttpGet("User")]
+        // GET: api/moderator/users
+        [HttpGet("users")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns a list of users requiring verification",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> GetNotVerifiedUsers()
+        public async Task<IActionResult> GetNotVerifiedUsers([FromQuery] PaginatorDto input)
         {
             try
             {
-                var notVerifiedUsers = await _userService.GetNotVerifiedUsersAsync();
+                var notVerifiedUsers = await _userService.GetNotVerifiedUsersAsync(input);
                 return Ok(notVerifiedUsers);
             }
             catch (Exception ex)
@@ -89,8 +89,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/Moderator/User/Verify/{id}
-        [HttpPut("User/Verify/{id}")]
+        // PUT: api/moderator/users/{id}/verify
+        [HttpPut("users/{id}/verify")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Verifies user",

@@ -6,11 +6,9 @@ namespace Flats4us.Entities.Dto
 {
     public class GetFilteredAndSortedOffersDto
     {
-        [Required]
-        public string Province { get; set; }
+        public string? Province { get; set; }
 
-        [Required]
-        public string City { get; set; }
+        public string? City { get; set; }
 
         public int? Distance { get; set; }
 
@@ -36,8 +34,7 @@ namespace Flats4us.Entities.Dto
 
         public List<EquipmentDto> Equipment { get; set; }
 
-        [Required]
-        public string Sorting { get; set; }
+        public string? Sorting { get; set; }
 
         [Required]
         public int PageNumber { get; set; }

@@ -20,13 +20,11 @@ namespace Flats4us.Entities
         [Required]
         public int OfferId { get; set; }
 
+        [Required]
+        public int StudentId {  get; set; }
+
         public virtual Offer Offer { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-
-        public Meeting()
-        {
-            this.Students = new HashSet<Student>();
-        }
+        public virtual Student Student { get; set; }
     }
 }

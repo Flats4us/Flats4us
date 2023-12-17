@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/surveys")]
     [ApiController]
     public class SurveyController : ControllerBase
     {
@@ -22,17 +22,17 @@ namespace Flats4us.Controllers
             _surveyService = surveyStudentService;   
         }
 
-        // GET: /api/Survey/Template/Student
-        [HttpGet("Template/Student")]
+        // GET: /api/surveys/template/student
+        [HttpGet("template/student")]
         [SwaggerOperation(
             Summary = "Returns student survey template"
         )]
-        public async Task<IActionResult> GetSurveyStudents([FromHeader(Name = "Accept-Language")] string lang)
+        public async Task<IActionResult> GetSurveyStudents()
         {
             try
             {
                 _logger.LogInformation("Getting SurveyStudent");
-                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "STUDENT", lang);
+                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "pl");
 
                 return Ok(surveyStudent);
             }
@@ -42,8 +42,8 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: /api/Survey/Template/OwnerOffer
-        [HttpGet("Template/OwnerOffer")]
+        // GET: /api/surveys/template/OwnerOffer
+        [HttpGet("template/owner")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Returns ownerOffer survey template",
@@ -54,7 +54,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting SurveyOwnerOffer");
-                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "OWNER", lang);
+                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), lang);
 
                 return Ok(surveyOwnerOffer);
             }
