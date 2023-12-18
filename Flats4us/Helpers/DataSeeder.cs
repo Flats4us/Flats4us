@@ -1067,8 +1067,6 @@ public static class DataSeeder
 
         #endregion
 
-
-
         #region Grindr
 
         var grindr1 = new Grindr
@@ -1082,10 +1080,6 @@ public static class DataSeeder
         dbContext.Grindr.AddRange(grindr1);
 
         #endregion
-
-
-
-
 
         #region OfferPromotions
 

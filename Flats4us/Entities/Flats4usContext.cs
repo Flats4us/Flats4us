@@ -132,6 +132,12 @@ namespace Flats4us.Entities
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            /*modelBuilder.Entity<Grindr>()
+                .HasOne(x => x.Student1)
+                .WithMany("Grindr1")
+                .HasForeignKey(x => x.GrindrId)
+                .OnDelete(DeleteBehavior.Restrict);*/
         }
     }
 }
