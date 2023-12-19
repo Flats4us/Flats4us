@@ -33,7 +33,7 @@ export class WatchedOffersComponent implements OnInit {
 	public pageIndex = 0;
 
 	@ViewChild(MatPaginator) private paginator: MatPaginator = new MatPaginator(
-		new MatPaginatorIntl(),
+		this.matPaginatorIntl,
 		ChangeDetectorRef.prototype
 	);
 
@@ -74,17 +74,6 @@ export class WatchedOffersComponent implements OnInit {
 		this.router.navigate([url]);
 	}
 	public deleteOffer(id: string) {
-		// 	this.offerService.deleteOffer(id).subscribe(
-		// 		() => {
-		// 			this.refreshData();
-		// 		}
-		// 	);
-		// }
-
-		// private refreshData() {
-		// 	this.watchedOffers$ = this.offerService.getOffers();
-		// }
-
 		this.watchedOffers$ = this.watchedOffers$?.pipe(
 			switchMap(offers =>
 				of({
