@@ -34,6 +34,7 @@ builder.Services.AddScoped<IInterestService, InterestService>();
 builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IGrindrService, GrindrService>();
 
 builder.Services.AddControllers();
 
