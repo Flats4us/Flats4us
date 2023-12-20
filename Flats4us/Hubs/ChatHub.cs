@@ -65,7 +65,7 @@
             
             // Assuming the user ID claim is stored as "NameIdentifier"
             if (int.TryParse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
-            { // i never manage to find the userid
+            { 
                 return userId;
             }
             return null;
@@ -90,14 +90,50 @@
         }
 
         // This method sends a message to a specific user.
-        
 
 
-        private string GetConnectionIdByUserId(int userId)
+
+        private int? GetUserIdByConnectionId(string connectionId)
         {
-            _connections.TryGetValue(userId, out string connectionId);
-            return connectionId;
+            var userId = _connections.FirstOrDefault(x => x.Value == connectionId).Key;
+            return userId != 0 ? userId : (int?)null;
         }
+
+
+        public async Task JoinGroupChat(int groupChatId)
+        {
+            //var userId = GetUserId();
+            var userId = GetUserIdByConnectionId(Context.ConnectionId);
+
+            // var userId = (Context.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+
+            if (userId == null) return;
+
+            // Optionally, check if the user is a member of the group chat in the database
+            var isMember = await _context.UserGroupChats.AnyAsync(ugc => ugc.UserId == userId && ugc.GroupChatId == groupChatId);
+            if (!isMember) return;
+
+            // Join the SignalR group
+            await Groups.AddToGroupAsync(Context.ConnectionId, $"GroupChat-{groupChatId}");
+        }
+
+
+        public async Task SendGroupMessage(int groupChatId, string message)
+        {
+            var userId = GetUserId();
+            if (!userId.HasValue) return;
+            var isMember = await _context.UserGroupChats.AnyAsync(ugc => ugc.UserId == userId.Value && ugc.GroupChatId == groupChatId);
+            if (!isMember) return;
+
+            // Send message to the SignalR group
+            await Clients.Group($"GroupChat-{groupChatId}").SendAsync("ReceiveGroupMessage", groupChatId, userId.Value, message);
+        }
+        public async Task LeaveGroupChat(int groupChatId)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"GroupChat-{groupChatId}");
+        }
+
 
         public override async Task OnConnectedAsync()
         {

@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Flats4us.Services.Interfaces
         Task SaveMessage(ChatMessage chatMessage);
 
         Task<IEnumerable<ChatMessage>> GetChatHistory(int chatId);
+        Task<List<ChatInfoDto>> GetUserChatsAsync(int userId);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Web.Http.ModelBinding;
 
 namespace Flats4us.Controllers
@@ -17,6 +19,7 @@ namespace Flats4us.Controllers
             _groupChatService = groupChatService;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateGroupChat([FromBody] CreateGroupChatDto dto)
         {
@@ -37,12 +40,15 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("{groupChatId:int}/users/{userId:int}")]
-        public async Task<IActionResult> AddUserToGroupChat(int groupChatId, int userId)
+        [HttpPost("{groupChatId:int}/users/{newUserId:int}")]
+        [Authorize]
+        public async Task<IActionResult> AddUserToGroupChat(int groupChatId, int newUserId)
         {
             try
             {
-                await _groupChatService.AddUserToGroupChatAsync(groupChatId, userId);
+                int adderId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                await _groupChatService.AddUserToGroupChatAsync(adderId, groupChatId, newUserId);
                 return Ok();
             }
             catch (Exception ex)
@@ -53,26 +59,32 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("{groupChatId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetGroupChat(int groupChatId)
         {
-            var groupChat = await _groupChatService.GetGroupChatAsync(groupChatId);
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var groupChat = await _groupChatService.GetGroupChatAsync(userId, groupChatId);
             if (groupChat == null)
             {
                 return NotFound();
             }
             return Ok(groupChat);
         }
+
         [HttpPost("{groupChatId:int}/messages")]
+        [Authorize]
         public async Task<IActionResult> SendMessageToGroupChat(int groupChatId, [FromBody] SendMessageDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             try
             {
-                await _groupChatService.SendMessageToGroupChatAsync(groupChatId, dto.UserId, dto.Message);
+                await _groupChatService.SendMessageToGroupChatAsync(groupChatId, userId, dto.Message);
                 return Ok();
             }
             catch (Exception ex)
@@ -82,16 +94,18 @@ namespace Flats4us.Controllers
         }
 
         [HttpPut("{groupChatId:int}/name")]
+        [Authorize]
         public async Task<IActionResult> SetGroupName(int groupChatId, [FromBody] SetGroupNameDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             try
             {
-                await _groupChatService.SetGroupNameAsync(groupChatId, dto.NewName);
+                await _groupChatService.SetGroupNameAsync(userId, groupChatId, dto.NewName);
                 return Ok();
             }
             catch (Exception ex)
@@ -99,17 +113,39 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Authorize]
         [HttpGet("{groupChatId:int}/messages")]
         public async Task<IActionResult> GetGroupChatMessages(int groupChatId)
         {
             try
             {
-                var messageDtos = await _groupChatService.GetGroupChatMessagesAsync(groupChatId);
+                int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                var messageDtos = await _groupChatService.GetGroupChatMessagesAsync(userId, groupChatId);
                 return Ok(messageDtos);
             }
             catch (Exception ex)
             {
                 // Handle exceptions and add appropriate error responses
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [Authorize]
+        [HttpGet("user/groupchats")]
+        public async Task<IActionResult> GetUserGroupChats()
+        {
+            try
+            {
+                int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                var groupChats = await _groupChatService.GetGroupChats(userId);
+                return Ok(groupChats);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

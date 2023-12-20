@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,6 +66,33 @@ namespace Flats4us.Services
             }
 
             return chat;
+        }
+
+        public async Task<List<ChatInfoDto>> GetUserChatsAsync(int userId)
+        {
+            var userChats = new List<ChatInfoDto>();
+
+            // Fetch private chats
+            var privateChats = await _context.Chats
+                .Where(c => c.StudentId == userId || c.OwnerId == userId)
+                .ToListAsync();
+
+            foreach (var chat in privateChats)
+            {
+                var otherUserId = 0;
+                if (chat.OwnerId == userId) { otherUserId = chat.StudentId; } else { otherUserId = chat.OwnerId; }
+                var otherUser = _context.Users.SingleOrDefault(o => o.UserId == otherUserId);
+                
+                userChats.Add(new ChatInfoDto
+                {
+                    ChatId = chat.ChatId,
+                    OtherUserId = otherUser.UserId,
+                    OtherUsername = otherUser.Username
+                });
+            }
+
+            
+            return userChats;
         }
 
 

@@ -77,8 +77,31 @@ namespace Flats4us.Controllers
             return Ok(history);
         }
 
-        // Helper method to get the current user's ID
-        
+
+        [Authorize]
+        [HttpGet("user/chats")]
+        public async Task<IActionResult> GetUserChats()
+        {
+            try
+            {
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var verifiedUserId))
+                {
+                    return BadRequest("Sender user ID is not available.");
+                }
+
+                var chats = await _chatService.GetUserChatsAsync(verifiedUserId);
+                return Ok(chats);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                return BadRequest(ex.Message);
+            }
+
+            // Helper method to get the current user's ID
+
+        }
     }
 
 }
