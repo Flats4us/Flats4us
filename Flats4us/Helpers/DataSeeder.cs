@@ -1032,7 +1032,21 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
 
         #endregion
-          
+
+        #region Grindr
+
+        var grindr1 = new Grindr
+        {
+            isStudent1Interested = true, 
+            isStudent2Interested = false, 
+            GrindrId = 1,
+            Student2Id = 2
+        };
+
+        dbContext.Grindr.AddRange(grindr1);
+
+        #endregion
+
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion

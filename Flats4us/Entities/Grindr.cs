@@ -9,9 +9,7 @@ namespace Flats4us.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GrindrId { get; set; }
 
-
         public bool? isStudent1Interested { get; set; }
-
 
         public bool? isStudent2Interested { get; set; }
 
@@ -20,7 +18,6 @@ namespace Flats4us.Entities
 
         [Required]
         public int Student2Id { get; set; }
-
 
         public virtual Student Student1 { get; set; }
         public virtual Student Student2 { get; set; }
