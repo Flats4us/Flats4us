@@ -60,21 +60,21 @@ namespace Flats4us.Services
             {
                 h = new Grindr
                 {
-                    Student1Id = student1Id,
-                    Student2Id = student2Id,
-                    isStudent1Interested = isAccept,
-                    isStudent2Interested = null
+                    Student1Id = Math.Min(student1Id, student2Id),
+                    Student2Id = Math.Min(student1Id, student2Id),
+                    IsStudent1Interested = isAccept,
+                    IsStudent2Interested = null
                 };
             }
             else
             {
                 if (h.Student1Id == student1Id)
                 {
-                    h.isStudent1Interested = isAccept;
+                    h.IsStudent1Interested = isAccept;
                 }
                 else
                 {
-                    h.isStudent2Interested = isAccept;
+                    h.IsStudent2Interested = isAccept;
                 }
             }
 
