@@ -1083,20 +1083,6 @@ public static class DataSeeder
 
         #endregion
 
-        #region Grindr
-
-        var grindr1 = new Grindr
-        {
-            isStudent1Interested = true, 
-            isStudent2Interested = false, 
-            GrindrId = 1,
-            Student2Id = 2
-        };
-
-        dbContext.Grindr.AddRange(grindr1);
-
-        #endregion
-
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion
