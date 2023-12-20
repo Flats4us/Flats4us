@@ -135,6 +135,28 @@ namespace Flats4us.Entities
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Grindr>()
+                .HasOne(x => x.Student1)
+                .WithMany()
+                .HasForeignKey(x => x.Student1Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Grindr>()
+                .HasOne(x => x.Student2)
+                .WithMany()
+                .HasForeignKey(x => x.Student2Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Grindr>()
+                .HasIndex(x => new { x.Student1Id, x.Student2Id })
+                .IsUnique();
+
+            modelBuilder.Entity<Grindr>()
+                .ToTable(builder =>
+                {
+                    builder.HasCheckConstraint("CK_Grindr_StudentIds", "Student1Id < Student2Id");
+                });
+
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
