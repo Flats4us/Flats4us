@@ -1238,6 +1238,73 @@ public static class DataSeeder
 
         #endregion
 
+        #region OwnerOfferSurveys
+
+        var surveyStudent1 = new SurveyStudent
+        {
+            Party = 1,
+            Tidiness = 1,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 18,
+            MaxRoommateAge = 50,
+            Student = student1
+        };
+        var surveyStudent2 = new SurveyStudent
+        {
+            Party = 1,
+            Tidiness = 1,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 18,
+            MaxRoommateAge = 50,
+            Student = student2
+        };
+        var surveyStudent3 = new SurveyStudent
+        {
+            Party = 1,
+            Tidiness = 1,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 18,
+            MaxRoommateAge = 50,
+            Student = student3
+        };
+        var surveyStudent4 = new SurveyStudent
+        {
+            Party = 1,
+            Tidiness = 1,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 18,
+            MaxRoommateAge = 50,
+            Student = student4
+        };
+
+        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4);
+
+        #endregion
+
         #region Meetings
 
         var meeting1 = new Meeting
@@ -1258,7 +1325,7 @@ public static class DataSeeder
         var grindr1 = new Grindr
         {
             IsStudent1Interested = true,
-            IsStudent2Interested = true,
+            IsStudent2Interested = false,
             Student1 = student3,
             Student2 = student4
         };
@@ -1270,3 +1337,25 @@ public static class DataSeeder
         dbContext.SaveChanges();
     }
 }
+
+
+
+/*
+                A
+            B
+            C
+            D
+            E
+                F
+            G
+            H
+
+            1
+            2
+            3
+            4F
+            5A
+            6
+            7
+            8
+        */
