@@ -9,8 +9,7 @@ namespace Flats4us.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RentId { get; set; }
 
-        [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         public DateTime? NextPaymentDate { get; set; }
 
@@ -18,7 +17,7 @@ namespace Flats4us.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
-        public int StudentId { get; set; }
+        public int RentPeriod { get; set; }
 
         [Required]
         public int OfferId {  get; set; }
