@@ -16,14 +16,9 @@ namespace Flats4us.Entities
         [Required]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        public int RentPeriod { get; set; }
 
         [Required]
         public int OfferId {  get; set; }
-
-        [Required]
-        public int StudentId { get; set; }
 
         [Required]
         public int StudentId { get; set; }
