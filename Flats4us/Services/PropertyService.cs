@@ -99,7 +99,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<int> AddPropertyAsync(AddEditPropertyDto input, int ownerId)
+        public async Task<OutputDto<int>> AddPropertyAsync(AddEditPropertyDto input, int ownerId)
         {
             var imageDirectory = Guid.NewGuid().ToString();
 
@@ -230,7 +230,12 @@ namespace Flats4us.Services
                 throw new Exception("Property ID has not been properly set.");
             }
 
-            return propertyId;
+            var result = new OutputDto<int>
+            {
+                Result = propertyId,
+            };
+
+            return result;
         }
 
         public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId)
