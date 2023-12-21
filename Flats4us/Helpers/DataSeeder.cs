@@ -256,9 +256,9 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(2002, 12, 1),
+            BirthDate = new DateTime(1998, 12, 1),  //25 lat
             StudentNumber = "s27235",
-            University = "PJATK",
+            University = "SGH",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/kkajetanski|https://www.instagram.com/kkajetanski/",
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
@@ -280,9 +280,9 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(2002, 12, 1),
-            StudentNumber = "s2137",
-            University = "PJATK",
+            BirthDate = new DateTime(1988, 12, 1), //35 lat
+            StudentNumber = "s3131",
+            University = "Vistula",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -290,23 +290,23 @@ public static class DataSeeder
 
         var student3 = new Student
         {
-            Name = "Test",
-            Surname = "1",
+            Name = "Kuba",
+            Surname = "Filipek",
             Address = "Racławicka 26, 02-601 Warszawa",
-            Email = "test1@gmail.com",
+            Email = "kfilipek@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Test1123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kfilipek123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(2002, 12, 1),
+            BirthDate = new DateTime(1978, 12, 1), //45 lat
             StudentNumber = "s2137",
-            University = "PJATK",
+            University = "UW",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -314,23 +314,23 @@ public static class DataSeeder
         
         var student4 = new Student
         {
-            Name = "Test",
-            Surname = "2",
+            Name = "Lukasz",
+            Surname = "Guziewicz",
             Address = "Racławicka 26, 02-601 Warszawa",
-            Email = "test2@gmail.com",
+            Email = "lguziewicz@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Test2123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lguziewicz123"),
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(2002, 12, 1),
-            StudentNumber = "s2137",
-            University = "PJATK",
+            BirthDate = new DateTime(1968, 12, 1), //55 lat
+            StudentNumber = "s12345",
+            University = "AWF",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -1251,8 +1251,8 @@ public static class DataSeeder
             LookingForRoommate = true,
             MaxNumberOfRoommates = 3,
             RoommateGender = 0,
-            MinRoommateAge = 18,
-            MaxRoommateAge = 50,
+            MinRoommateAge = 20,
+            MaxRoommateAge = 30,
             Student = student1
         };
         var surveyStudent2 = new SurveyStudent
@@ -1266,7 +1266,7 @@ public static class DataSeeder
             LookingForRoommate = true,
             MaxNumberOfRoommates = 3,
             RoommateGender = 0,
-            MinRoommateAge = 18,
+            MinRoommateAge = 30,
             MaxRoommateAge = 50,
             Student = student2
         };
@@ -1281,8 +1281,8 @@ public static class DataSeeder
             LookingForRoommate = true,
             MaxNumberOfRoommates = 3,
             RoommateGender = 0,
-            MinRoommateAge = 18,
-            MaxRoommateAge = 50,
+            MinRoommateAge = 20,
+            MaxRoommateAge = 150,
             Student = student3
         };
         var surveyStudent4 = new SurveyStudent
@@ -1296,8 +1296,8 @@ public static class DataSeeder
             LookingForRoommate = true,
             MaxNumberOfRoommates = 3,
             RoommateGender = 0,
-            MinRoommateAge = 18,
-            MaxRoommateAge = 50,
+            MinRoommateAge = 70,
+            MaxRoommateAge = 100,
             Student = student4
         };
 
