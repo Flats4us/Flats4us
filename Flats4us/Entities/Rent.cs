@@ -22,13 +22,15 @@ namespace Flats4us.Entities
         [Required]
         public string ContractInfo { get; set; }
 
+        [Required]
+        public int StudentId { get; set; }
+
         public virtual OpinionRent OpinionRent { get; set; }
 
         public virtual Offer Offers { get; set; }
 
         public virtual Student Student { get; set; }
 
-        [NotMapped]
         public virtual ICollection<Student> OtherStudents { get; set; }
 
         public Rent()
