@@ -147,6 +147,11 @@ namespace Flats4us.Entities
             modelBuilder.Entity<Rent>()
                 .HasMany<Student>(x => x.OtherStudents)
                 .WithMany(x => x.RoommateInRents);
+
+            modelBuilder.Entity<Offer>()
+                .HasOne(o => o.Rent)
+                .WithOne(r => r.Offer)
+                .HasForeignKey<Rent>(r => r.OfferId);
         }
     }
 }

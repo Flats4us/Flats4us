@@ -254,7 +254,7 @@ public static class DataSeeder
             ActivityStatus = false,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
@@ -836,7 +836,7 @@ public static class DataSeeder
         var offer1 = new Offer
         {
             Date = new DateTime(2023, 10, 10),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2000,
             Deposit = 1500,
             Description = "placeholder",
@@ -849,7 +849,7 @@ public static class DataSeeder
         var offer2 = new Offer
         {
             Date = new DateTime(2023, 10, 5),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2200,
             Deposit = 1500,
             Description = "placeholder",
@@ -862,7 +862,7 @@ public static class DataSeeder
         var offer3 = new Offer
         {
             Date = new DateTime(2023, 9, 25),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1800,
             Deposit = 1500,
             Description = "placeholder",
@@ -875,7 +875,7 @@ public static class DataSeeder
         var offer4 = new Offer
         {
             Date = new DateTime(2023, 9, 20),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2100,
             Deposit = 1500,
             Description = "placeholder",
@@ -888,7 +888,7 @@ public static class DataSeeder
         var offer5 = new Offer
         {
             Date = new DateTime(2023, 9, 15),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1900,
             Deposit = 1500,
             Description = "placeholder",
@@ -901,7 +901,7 @@ public static class DataSeeder
         var offer6 = new Offer
         {
             Date = new DateTime(2023, 9, 10),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2050,
             Deposit = 1500,
             Description = "placeholder",
@@ -914,7 +914,7 @@ public static class DataSeeder
         var offer7 = new Offer
         {
             Date = new DateTime(2023, 9, 5),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1950,
             Deposit = 1500,
             Description = "placeholder",
@@ -927,7 +927,7 @@ public static class DataSeeder
         var offer8 = new Offer
         {
             Date = new DateTime(2023, 8, 25),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2100,
             Deposit = 1500,
             Description = "placeholder",
@@ -940,7 +940,7 @@ public static class DataSeeder
         var offer9 = new Offer
         {
             Date = new DateTime(2023, 8, 20),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2200,
             Deposit = 1500,
             Description = "placeholder",
@@ -953,7 +953,7 @@ public static class DataSeeder
         var offer10 = new Offer
         {
             Date = new DateTime(2023, 8, 15),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1800,
             Deposit = 1500,
             Description = "placeholder",
@@ -966,7 +966,7 @@ public static class DataSeeder
         var offer11 = new Offer
         {
             Date = new DateTime(2023, 8, 10),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2050,
             Deposit = 1500,
             Description = "placeholder",
@@ -979,7 +979,7 @@ public static class DataSeeder
         var offer12 = new Offer
         {
             Date = new DateTime(2023, 8, 5),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1950,
             Deposit = 1500,
             Description = "placeholder",
@@ -992,7 +992,7 @@ public static class DataSeeder
         var offer13 = new Offer
         {
             Date = new DateTime(2023, 7, 25),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 1900,
             Deposit = 1500,
             Description = "placeholder",
@@ -1005,7 +1005,7 @@ public static class DataSeeder
         var offer14 = new Offer
         {
             Date = new DateTime(2023, 7, 20),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2200,
             Deposit = 1500,
             Description = "placeholder",
@@ -1018,7 +1018,7 @@ public static class DataSeeder
         var offer15 = new Offer
         {
             Date = new DateTime(2023, 7, 15),
-            OfferStatus = OfferStatus.Current,
+            Status = OfferStatus.Current,
             Price = 2000,
             Deposit = 1500,
             Description = "placeholder",

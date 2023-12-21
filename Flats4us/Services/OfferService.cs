@@ -50,7 +50,7 @@ namespace Flats4us.Services
 
         public async Task<OfferListDto> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
         {
-            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
+            var allowedSorts = new List<string> { "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
@@ -60,7 +60,7 @@ namespace Flats4us.Services
 
             var promotedQuery = _context.Offers.AsQueryable();
 
-            promotedQuery = promotedQuery.Where(o => o.OfferStatus == OfferStatus.Current &&
+            promotedQuery = promotedQuery.Where(o => o.Status == OfferStatus.Current &&
                     o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate));
 
             if (!string.IsNullOrEmpty(input.Province))
@@ -87,8 +87,8 @@ namespace Flats4us.Services
 
             var query = _context.Offers.AsQueryable();
 
-            query = query.Where(o => o.OfferStatus == OfferStatus.Current &&
-                (!o.OfferPromotions.Any(op =>  op.StartDate <= currentDate && currentDate <= op.EndDate)));
+            query = query.Where(o => o.Status == OfferStatus.Current &&
+                (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)));
 
             if (!input.Distance.HasValue)
             {
@@ -222,7 +222,8 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
-            var result = new OfferListDto {
+            var result = new OfferListDto
+            {
                 TotalNumberOfOffers = totalCount,
                 PromotedOffers = randomPromotedOffers,
                 Offers = notPromotedOffers
@@ -244,7 +245,7 @@ namespace Flats4us.Services
             var offer = new Offer
             {
                 Date = DateTime.Now,
-                OfferStatus = OfferStatus.Current,
+                Status = OfferStatus.Current,
                 Price = input.Price,
                 Deposit = input.Deposit,
                 Description = input.Description,
@@ -305,7 +306,7 @@ namespace Flats4us.Services
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.SurveyOwnerOffer)
                 .Select(oi => oi.Offer)
-                .Where(o => o.OfferStatus == OfferStatus.Current)
+                .Where(o => o.Status == OfferStatus.Current)
                 .Select(offer => _mapper.Map<OfferDto>(offer))
                 .ToListAsync();
 
@@ -323,7 +324,6 @@ namespace Flats4us.Services
 
             return result;
         }
-
 
         public async Task AddOfferInterestAsync(int offerId, int studentId)
         {
@@ -369,6 +369,52 @@ namespace Flats4us.Services
 
             _context.OfferInterests.Remove(offerInterest);
             offer.NumberOfInterested--;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId)
+        {
+            var offer = await _context.Offers.FindAsync(offerId);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
+
+            if (offer.Status != OfferStatus.Current) throw new ArgumentException($"Offer with ID {offerId} is not currently available.");
+
+            var student = await _context.Students.FindAsync(studentId);
+
+            if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
+
+            var uniqueEmails = new HashSet<string>();
+            foreach (var email in input.RoommatesEmails)
+            {
+                if (!uniqueEmails.Add(email)) throw new ArgumentException($"Duplicate email found: {email}");
+            }
+
+            var verifiedRoommates = new List<Student>();
+
+            foreach (var roommateEmail in uniqueEmails)
+            {
+                var roommate = await _context.Students.FirstOrDefaultAsync(s => s.Email == roommateEmail);
+                if (roommate is null) throw new ArgumentException($"Student with Email {roommateEmail} not found.");
+
+                if (roommate.VerificationStatus != VerificationStatus.Verified) throw new ArgumentException($"Student with Email {roommateEmail} is not verified.");
+
+                verifiedRoommates.Add(roommate);
+            }
+
+            var newRent = new Rent
+            {
+                StartDate = null,
+                NextPaymentDate = null,
+                RentPeriod = 1,
+                ContractInfo = "placeholder",
+                Student = student,
+                OtherStudents = verifiedRoommates
+            };
+
+            offer.Rent = newRent;
+            offer.Status = OfferStatus.Waiting;
 
             await _context.SaveChangesAsync();
         }
