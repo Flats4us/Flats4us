@@ -18,18 +18,34 @@
 		<th *matHeaderCellDef mat-header-cell aria-label="row actions">&nbsp;</th>
 		<td *matCellDef="let element" mat-cell class="flex justify-end items-center">
 			<button
-				*ngIf="expandedElement === element"
+				*ngIf="expandedElement === element && verificationType === 'user'"
 				class="mr-2"
 				mat-stroked-button
-				(click)="accept(element.email)"
+				(click)="acceptUser(element.userId)"
 			>
 				Zaakceptuj
 			</button>
 			<button
-				*ngIf="expandedElement === element"
+				*ngIf="expandedElement === element && verificationType === 'properties'"
 				class="mr-2"
 				mat-stroked-button
-				(click)="reject(element.email)"
+				(click)="acceptProperty(element.propertyId)"
+			>
+				Zaakceptuj
+			</button>
+			<button
+				*ngIf="expandedElement === element && verificationType === 'user'"
+				class="mr-2"
+				mat-stroked-button
+				(click)="rejectUser(element.userId)"
+			>
+				Odrzuć
+			</button>
+			<button
+				*ngIf="expandedElement === element && verificationType === 'properties'"
+				class="mr-2"
+				mat-stroked-button
+				(click)="rejectProperty(element.propertyId)"
 			>
 				Odrzuć
 			</button>
@@ -61,21 +77,13 @@
 				<div class="example-element-description">
 					<img
 						class="inline-block h-32"
-						src="../../../../assets/560893601bcc7_o_medium.webp"
-						alt="student card"
-						(click)="
-							openImageDialog('../../../../assets/560893601bcc7_o_medium.webp')
-						"
+						alt="document"
+						src="{{ baseUrl }}/{{ element.documentURL }}"
+						(click)="openImageDialog(baseUrl + '/' + element.documentURL)"
 					/>
 					<ng-template #enlargedImageTemplate let-data>
 						<img alt="Enlarged Image" class="full-width" [src]="data.src" />
 					</ng-template>
-					<img
-						class="inline-block h-32"
-						src="../../../../assets/legitymacja-template-1.png"
-						alt="student card"
-						(click)="openImageDialog('../../../../assets/legitymacja-template-1.png')"
-					/>
 				</div>
 			</div>
 		</td>

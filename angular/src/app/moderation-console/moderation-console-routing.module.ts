@@ -10,7 +10,7 @@ const routes: Routes = [
 		path: '',
 		component: ModerationConsoleComponent,
 		children: [
-			{ path: '', pathMatch: 'full', redirectTo: 'verification' },
+			{ path: '', pathMatch: 'full', redirectTo: 'verify/user' },
 			{
 				path: 'verify/:verification-type',
 				component: VerificationComponent,

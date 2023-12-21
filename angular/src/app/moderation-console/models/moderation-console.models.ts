@@ -1,3 +1,8 @@
+export interface IPropertyData {
+  totalCount: number;
+  result: IProperty[];
+}
+
 export interface IProperty {
 	propertyId: number;
 	propertyType: number;
@@ -7,7 +12,12 @@ export interface IProperty {
 	imagesURLs: string[];
 	documentURL: string;
 	verificationStatus: number;
-	creationDate: Date;
+	dateForVerificationSorting: Date;
+}
+
+export interface IUserData {
+  totalCount: number;
+  result: IUser[];
 }
 
 export interface IUser {
@@ -16,7 +26,7 @@ export interface IUser {
 	name: string;
 	surName: string;
 	email: string;
-	imagesPath: string;
+	imagesPath: string[];
 	documentType: number;
 	verificationStatus: number;
 	documentExpireDate: Date;

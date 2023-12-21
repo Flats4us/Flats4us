@@ -1,11 +1,17 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTable } from '@angular/material/table';
+import { IProperty, IUser } from '../../models/moderation-console.models';
+import { ModerationConsoleService } from '../../services/moderation-console.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { environment } from '../../../../environments/environment.prod';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	ViewChild,
 	TemplateRef,
 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTable } from '@angular/material/table';
 import {
 	animate,
 	state,
@@ -13,11 +19,6 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
-import { IProperty, IUser } from '../../models/moderation-console.models';
-import { ModerationConsoleService } from '../../services/moderation-console.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable, switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-verification',
@@ -40,6 +41,8 @@ export class VerificationComponent {
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
 
+	private readonly unsubscribe$: Subject<void> = new Subject();
+	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public verificationType =
 		this.route.snapshot.paramMap.get('verification-type');
 
@@ -73,7 +76,7 @@ export class VerificationComponent {
 
 	public usersDataSource$: Observable<IUser[]> = this.service.getUsers();
 	public propertiesDataSource$: Observable<IProperty[]> =
-		this.service.getProperty();
+		this.service.getProperties();
 	public dataSource$: Observable<unknown[]> =
 		this.verificationType === 'users'
 			? this.usersDataSource$
@@ -98,33 +101,55 @@ export class VerificationComponent {
 		});
 	}
 
-	public reject(email: string) {
-		if (this.verificationType === 'users') {
-			this.usersDataSource$
-				.pipe(
-					switchMap(users => users?.filter(user => user.email === email)),
-					switchMap(user => this.service.rejectUser(user))
-				)
-				.subscribe(() =>
-					this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
-						duration: 2000,
-					})
-				);
-		}
+	public rejectUser(userId: number) {
+		this.service
+			.rejectUser(userId)
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(() =>
+				this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
+					duration: 2000,
+				})
+			);
+		this.dataSource$ = this.service.getUsers();
+		this.table.renderRows();
 	}
 
-	public accept(email: string) {
-		if (this.verificationType === 'users') {
-			this.usersDataSource$
-				.pipe(
-					switchMap(users => users?.filter(user => user.email === email)),
-					switchMap(user => this.service.acceptUser(user))
-				)
-				.subscribe(() =>
-					this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
-						duration: 2000,
-					})
-				);
-		}
+	public acceptUser(userId: number) {
+		this.service.acceptUser(userId).subscribe(() =>
+			this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
+				duration: 2000,
+			})
+		);
+		this.dataSource$ = this.service.getUsers();
+		this.table.renderRows();
+	}
+
+	public rejectProperty(propertyId: number) {
+		this.service.rejectProperty(propertyId).subscribe(() =>
+			this.snackBar.open('Nieruchomość została pomyślnie odrzucona!', 'Zamknij', {
+				duration: 2000,
+			})
+		);
+		this.dataSource$ = this.service.getProperties();
+		this.table.renderRows();
+	}
+
+	public acceptProperty(propertyId: number) {
+		this.service.acceptProperty(propertyId).subscribe(() =>
+			this.snackBar.open(
+				'Nieruchomość została pomyślnie zaakceptowana!',
+				'Zamknij',
+				{
+					duration: 2000,
+				}
+			)
+		);
+		this.dataSource$ = this.service.getProperties();
+		this.table.renderRows();
+	}
+
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 }
