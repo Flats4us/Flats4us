@@ -1330,25 +1330,3 @@ public static class DataSeeder
         dbContext.SaveChanges();
     }
 }
-
-
-
-/*
-                A
-            B
-            C
-            D
-            E
-                F
-            G
-            H
-
-            1
-            2
-            3
-            4F
-            5A
-            6
-            7
-            8
-        */
