@@ -12,7 +12,7 @@ namespace Flats4us.Entities.Dto
         public DateTime Date { get; set; }
 
         [Required]
-        public OfferStatus OfferStatus { get; set; }
+        public OfferStatus Status { get; set; }
 
         [Required]
         public int Price { get; set; }

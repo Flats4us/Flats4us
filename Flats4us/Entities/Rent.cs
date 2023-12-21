@@ -5,15 +5,13 @@ namespace Flats4us.Entities
 {
     public class Rent
     {
-        [Key]
+        [Key, ForeignKey("Offer")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RentId { get; set; }
 
-        [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        [Required]
-        public DateTime PaymentDate { get; set; }
+        public DateTime? NextPaymentDate { get; set; }
 
         // In Months
         [Required]
@@ -25,9 +23,12 @@ namespace Flats4us.Entities
         [Required]
         public int StudentId { get; set; }
 
+        [Required]
+        public int OfferId {  get; set; }
+
         public virtual OpinionRent OpinionRent { get; set; }
 
-        public virtual Offer Offers { get; set; }
+        public virtual Offer Offer { get; set; }
 
         public virtual Student Student { get; set; }
 
