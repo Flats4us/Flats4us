@@ -163,6 +163,16 @@ namespace Flats4us.Entities
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            modelBuilder.Entity<Rent>()
+                .HasOne(x => x.Student)
+                .WithMany(x => x.Rents)
+                .HasForeignKey(x => x.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Rent>()
+                .HasMany<Student>(x => x.OtherStudents)
+                .WithMany(x => x.RoommateInRents);
+
             modelBuilder.Entity<UserGroupChat>()
        .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
 
