@@ -13,5 +13,6 @@ namespace Flats4us.Services.Interfaces
         Task<CountedListDto<OfferDto>> GetOffersByInterestAsync(PaginatorDto input, int studentId);
         Task AddOfferInterestAsync(int offerId, int studentId);
         Task RemoveOfferInterestAsync(int offerId, int studentId);
+        Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId);
     }
 }

@@ -173,8 +173,13 @@ namespace Flats4us.Entities
                 .HasMany<Student>(x => x.OtherStudents)
                 .WithMany(x => x.RoommateInRents);
 
+            modelBuilder.Entity<Offer>()
+                .HasOne(o => o.Rent)
+                .WithOne(r => r.Offer)
+                .HasForeignKey<Rent>(r => r.OfferId);
+
             modelBuilder.Entity<UserGroupChat>()
-       .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+                .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
 
             modelBuilder.Entity<UserGroupChat>()
                 .HasOne(ugc => ugc.User)

@@ -13,9 +13,9 @@ namespace Flats4us.Helpers.Enums
     public enum OfferStatus
     {
         Current,
-        Outdated,
-        Suspended,
-        Rented
+        Waiting,
+        Rented,
+        Old
     }
 
     public enum Sender
