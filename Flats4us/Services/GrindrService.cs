@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,11 @@ namespace Flats4us.Services
         }
 
 
-        public async Task<List<Student>> GetPotentialRoommate(int studentId)
+        public async Task<List<StudentDto>> GetPotentialRoommate(int studentId)
         {
             var requestingStudent = _context.Students
-                .Include(s => s.SurveyStudent)
-                .FirstOrDefault(s => s.UserId == studentId);
+                .Include(requesting => requesting.SurveyStudent)
+                .FirstOrDefault(requesting => requesting.UserId == studentId);
 
             if (requestingStudent == null)
             { 
@@ -33,14 +34,23 @@ namespace Flats4us.Services
             }
 
             var potentialRoommates = _context.Students
-                .Include(s => s.SurveyStudent)
-                .Where(s =>
-                    s.SurveyStudent.LookingForRoommate &&
-                    s.UserId != studentId && 
-                    s.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
-                    s.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
-                    (!s.SurveyStudent.MinRoommateAge.HasValue || s.SurveyStudent.MinRoommateAge >= requestingStudent.SurveyStudent.MinRoommateAge) &&
-                    (!s.SurveyStudent.MaxRoommateAge.HasValue || s.SurveyStudent.MaxRoommateAge <= requestingStudent.SurveyStudent.MaxRoommateAge))
+                .Include(potential => potential.SurveyStudent)
+                .Where(potential =>
+                    potential.SurveyStudent.LookingForRoommate &&
+                    potential.UserId != studentId &&
+                    potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
+                    potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
+                    (!potential.SurveyStudent.MinRoommateAge.HasValue || requestingStudent.SurveyStudent.MinRoommateAge <= potential.BirthDate.Year) &&
+                    (!potential.SurveyStudent.MaxRoommateAge.HasValue || requestingStudent.SurveyStudent.MaxRoommateAge >= potential.BirthDate.Year))
+                .Select(potential => new StudentDto
+                {
+                    Name = potential.Name,
+                    Surname = potential.Surname,
+                    BirthDate = potential.BirthDate,
+                    StudentNumber = potential.StudentNumber,
+                    University = potential.University
+                    
+                })
                 .ToListAsync();
 
             return await potentialRoommates;
