@@ -40,8 +40,8 @@ namespace Flats4us.Services
                     potential.UserId != studentId &&
                     potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
-                    (!potential.SurveyStudent.MinRoommateAge.HasValue || requestingStudent.SurveyStudent.MinRoommateAge <= potential.BirthDate.Year) &&
-                    (!potential.SurveyStudent.MaxRoommateAge.HasValue || requestingStudent.SurveyStudent.MaxRoommateAge >= potential.BirthDate.Year))
+                    (/*!potential.SurveyStudent.MinRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year-potential.BirthDate.Year)) &&
+                    (/*!potential.SurveyStudent.MaxRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year-potential.BirthDate.Year)))
                 .Select(potential => new StudentDto
                 {
                     Name = potential.Name,
@@ -60,10 +60,8 @@ namespace Flats4us.Services
         {
             var h = _context.Grindr  
                 .Where( x =>(
-                x.Student1Id == student1Id && 
-                x.Student2Id == student2Id) || 
-                (x.Student1Id == student2Id && 
-                x.Student2Id == student1Id))
+                 x.Student1Id == student1Id && x.Student2Id == student2Id) || 
+                (x.Student1Id == student2Id && x.Student2Id == student1Id))
                 .FirstOrDefault();
 
             if (h == null)
@@ -72,20 +70,21 @@ namespace Flats4us.Services
                 {
                     Student1Id = Math.Min(student1Id, student2Id),
                     Student2Id = Math.Min(student1Id, student2Id),
-                    IsStudent1Interested = isAccept,
+                    IsStudent1Interested = true,
                     IsStudent2Interested = null
                 };
             }
             else
             {
-                if (h.Student1Id == student1Id)
-                {
-                    h.IsStudent1Interested = isAccept;
-                }
-                else
-                {
-                    h.IsStudent2Interested = isAccept;
-                }
+                h.IsStudent2Interested = isAccept;
+                //if (h.Student1Id == student1Id)
+                //{
+                //    h.IsStudent1Interested = isAccept;
+                //}
+                //else
+                //{
+                //    h.IsStudent2Interested = isAccept;
+                //}
             }
 
             await _context.SaveChangesAsync();
