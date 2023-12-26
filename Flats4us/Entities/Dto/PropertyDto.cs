@@ -49,7 +49,7 @@ namespace Flats4us.Entities.Dto
         public bool? Elevator { get; set; }
 
         [Required]
-        public List<string> ImagesURLs { get; set; }
+        public List<FileDto> Images { get; set; }
 
         [Required]
         public VerificationStatus VerificationStatus { get; set; }

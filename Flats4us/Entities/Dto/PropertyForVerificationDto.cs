@@ -21,10 +21,10 @@ namespace Flats4us.Entities.Dto
         public string Address { get; set; }
 
         [Required]
-        public List<string> ImagesURLs { get; set; }
+        public List<FileDto> Images { get; set; }
 
         [Required]
-        public string DocumentURL { get; set; }
+        public FileDto Document { get; set; }
 
         [Required]
         public VerificationStatus VerificationStatus { get; set; }

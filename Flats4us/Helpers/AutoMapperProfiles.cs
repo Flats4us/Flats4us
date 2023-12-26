@@ -14,20 +14,20 @@ namespace Flats4us.Helpers
 
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<Room, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<House, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>());
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<Flat, PropertyForVerificationDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
-                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.Owner.Email))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?
@@ -37,8 +37,8 @@ namespace Flats4us.Helpers
 
             CreateMap<Room, PropertyForVerificationDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
-                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.Owner.Email))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?
@@ -47,8 +47,8 @@ namespace Flats4us.Helpers
 
             CreateMap<House, PropertyForVerificationDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
-                .ForMember(dest => dest.ImagesURLs, opt => opt.MapFrom<PropertyImagesUrlResolver>())
-                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
+                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.Owner.Email))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?
@@ -66,13 +66,13 @@ namespace Flats4us.Helpers
 
             CreateMap<Student, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
-                .ForMember(dest => dest.ProfilePictureURL, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
-                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<UserDocumentUrlResolver>());
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
 
             CreateMap<Owner, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
-                .ForMember(dest => dest.ProfilePictureURL, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
-                .ForMember(dest => dest.DocumentURL, opt => opt.MapFrom<UserDocumentUrlResolver>());
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
 
             CreateMap<OwnerRegisterDto, Owner>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?

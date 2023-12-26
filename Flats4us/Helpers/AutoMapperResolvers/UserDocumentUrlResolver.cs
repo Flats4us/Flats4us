@@ -4,9 +4,9 @@ using Flats4us.Entities;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class UserDocumentUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, string>
+    public class UserDocumentUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, FileDto>
     {
-        public string Resolve(OwnerStudent source, UserForVerificationDto destination, string destMember, ResolutionContext context)
+        public FileDto Resolve(OwnerStudent source, UserForVerificationDto destination, FileDto destMember, ResolutionContext context)
         {
             var directoryPath = Path.Combine("Images", "Users", source.ImagesPath, "Documents");
 
@@ -16,11 +16,12 @@ namespace Flats4us.Helpers.AutoMapperResolvers
 
                 if (files.Length > 0)
                 {
-                    var fileName = Path.GetFileName(files[0]);
-                    return Path.Combine(directoryPath, fileName);
+                    var fileNameWithExtension = Path.GetFileName(files[0]);
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(files[0]);
+                    return new FileDto { Name = fileNameWithoutExtension, Path = Path.Combine(directoryPath, fileNameWithExtension) };
                 }
             }
-            return string.Empty;
+            return new FileDto();
         }
     }
 }
