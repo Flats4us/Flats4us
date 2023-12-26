@@ -4,23 +4,23 @@ using Flats4us.Entities;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class PropertyImagesUrlResolver : IValueResolver<Property, PropertyDto, List<string>>, IValueResolver<Property, PropertyForVerificationDto, List<string>>
+    public class PropertyImagesUrlResolver : IValueResolver<Property, PropertyDto, List<FileDto>>, IValueResolver<Property, PropertyForVerificationDto, List<FileDto>>
     {
-        public List<string> Resolve(Property source, PropertyDto destination, List<string> destMember, ResolutionContext context)
+        public List<FileDto> Resolve(Property source, PropertyDto destination, List<FileDto> destMember, ResolutionContext context)
         {
             return GetImageUrls(source.ImagesPath);
         }
 
-        public List<string> Resolve(Property source, PropertyForVerificationDto destination, List<string> destMember, ResolutionContext context)
+        public List<FileDto> Resolve(Property source, PropertyForVerificationDto destination, List<FileDto> destMember, ResolutionContext context)
         {
             return GetImageUrls(source.ImagesPath);
         }
 
-        private List<string> GetImageUrls(string directoryId)
+        private List<FileDto> GetImageUrls(string directoryId)
         {
             var directoryPath = Path.Combine("Images", "Properties", directoryId, "Images");
 
-            List<string> imageUrls = new List<string>();
+            List<FileDto> imageFiles = new List<FileDto>();
 
             if (Directory.Exists(directoryPath))
             {
@@ -28,11 +28,12 @@ namespace Flats4us.Helpers.AutoMapperResolvers
 
                 foreach (var file in files)
                 {
-                    var fileName = Path.GetFileName(file);
-                    imageUrls.Add(Path.Combine(directoryPath, fileName));
+                    var fileNameWithExtension = Path.GetFileName(file);
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+                    imageFiles.Add(new FileDto { Name = fileNameWithoutExtension, Path = Path.Combine(directoryPath, fileNameWithExtension) });
                 }
             }
-            return imageUrls;
+            return imageFiles;
         }
     }
 }

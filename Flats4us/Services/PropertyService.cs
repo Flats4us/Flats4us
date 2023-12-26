@@ -359,24 +359,7 @@ namespace Flats4us.Services
                     break;
             }
 
-                await _context.SaveChangesAsync();            
-             
-            await ImageUtility.DeleteDirectory(imageDirectoryPath);
-
-            //if (input.TitleDeed != null && input.TitleDeed.Length > 0)
-            //{
-            //    // TODO: Images refactor
-            //    await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"{imageDirectoryPath}/TitleDeed");
-            //}
-
-            //if (input.Images != null && input.Images.Count > 0)
-            //{
-            //    foreach (var image in input.Images)
-            //    {
-            //        // TODO: Images refactor
-            //        await ImageUtility.ProcessAndSaveImage(image, $"{imageDirectoryPath}/Images");
-            //    }
-            //}
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId)
