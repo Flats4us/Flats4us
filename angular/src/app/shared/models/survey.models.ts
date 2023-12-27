@@ -9,8 +9,10 @@ export enum typeName {
 
 export interface IQuestionsData {
 	id: string;
-	title: string;
+	name: string;
 	content: string;
+	trigger: boolean;
+	optional: boolean;
 	typeName: typeName;
 	answers: string[];
 }

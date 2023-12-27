@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { IQuestionsData } from '../../models/survey.models';
+import { IQuestionsData, typeName } from '../../models/survey.models';
 import { Observable, switchMap, tap } from 'rxjs';
-import { typeName } from '../../models/survey.models';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
 
@@ -15,7 +14,7 @@ import { SurveyService } from '../../services/survey.service';
 })
 export class SurveyComponent {
 	public questions$: Observable<IQuestionsData[]>;
-	public studentSurveyForm: FormGroup;
+	@Input() public offerForm: FormGroup;
 	public typeName: typeof typeName = typeName;
 
 	constructor(
@@ -24,17 +23,30 @@ export class SurveyComponent {
 		private route: ActivatedRoute,
 		private service: SurveyService
 	) {
-		this.studentSurveyForm = this.formBuilder.group({
+		this.offerForm = this.formBuilder.group({
 			lookingForRoommate: [''],
 		});
 
 		this.questions$ = this.getQuestions().pipe(
 			tap(questions =>
 				questions.forEach(question =>
-					this.studentSurveyForm.addControl(question.id, new FormControl(''))
+					this.offerForm.addControl(
+						question.name,
+						this.getInitialFormControl(question)
+					)
 				)
 			)
 		);
+	}
+
+	private getInitialFormControl(question: IQuestionsData) {
+		if (question.typeName === typeName.RADIOBUTTON) {
+			return new FormControl(2);
+		} else if (question.typeName === typeName.SWITCH) {
+			return new FormControl(false);
+		} else {
+			return new FormControl('');
+		}
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {
@@ -48,11 +60,5 @@ export class SurveyComponent {
 				}
 			})
 		);
-	}
-
-	public onSubmit() {
-		this.snackBar.open('Pomyślnie wypełniono ankietę!', 'Zamknij', {
-			duration: 2000,
-		});
 	}
 }
