@@ -15,10 +15,10 @@
 	</ng-container>
 
 	<ng-container matColumnDef="expand">
-		<th *matHeaderCellDef mat-header-cell aria-label="row actions">&nbsp;</th>
+		<th *matHeaderCellDef mat-header-cell aria-label="row actions"></th>
 		<td *matCellDef="let element" mat-cell class="flex justify-end items-center">
 			<button
-				*ngIf="expandedElement === element && verificationType === 'user'"
+				*ngIf="expandedElement === element && verificationType === 'users'"
 				class="mr-2"
 				mat-stroked-button
 				(click)="acceptUser(element.userId)"
@@ -34,7 +34,7 @@
 				Zaakceptuj
 			</button>
 			<button
-				*ngIf="expandedElement === element && verificationType === 'user'"
+				*ngIf="expandedElement === element && verificationType === 'users'"
 				class="mr-2"
 				mat-stroked-button
 				(click)="rejectUser(element.userId)"

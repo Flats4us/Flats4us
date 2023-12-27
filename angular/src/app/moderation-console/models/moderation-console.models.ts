@@ -1,6 +1,6 @@
 export interface IPropertyData {
-  totalCount: number;
-  result: IProperty[];
+	totalCount: number;
+	result: IProperty[];
 }
 
 export interface IProperty {
@@ -16,8 +16,8 @@ export interface IProperty {
 }
 
 export interface IUserData {
-  totalCount: number;
-  result: IUser[];
+	totalCount: number;
+	result: IUser[];
 }
 
 export interface IUser {

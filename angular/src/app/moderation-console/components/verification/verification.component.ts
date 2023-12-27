@@ -19,6 +19,7 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-verification',
@@ -36,7 +37,7 @@ import {
 	styleUrls: ['./verification.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VerificationComponent {
+export class VerificationComponent extends BaseComponent {
 	@ViewChild(MatTable) public table!: MatTable<IUser>;
 	@ViewChild('enlargedImageTemplate')
 	public enlargedImageTemplate!: TemplateRef<never>;
@@ -82,7 +83,7 @@ export class VerificationComponent {
 			? this.usersDataSource$
 			: this.propertiesDataSource$;
 
-	public expandedElement: IUser | null | undefined;
+	public expandedElement: IUser | null = null;
 
 	constructor(
 		private snackBar: MatSnackBar,
@@ -91,6 +92,7 @@ export class VerificationComponent {
 		private matDialog: MatDialog,
 		private router: Router
 	) {
+		super();
 		this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 	}
 
@@ -105,6 +107,7 @@ export class VerificationComponent {
 		this.service
 			.rejectUser(userId)
 			.pipe(takeUntil(this.unsubscribe$))
+			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
 					duration: 2000,
@@ -115,41 +118,45 @@ export class VerificationComponent {
 	}
 
 	public acceptUser(userId: number) {
-		this.service.acceptUser(userId).subscribe(() =>
-			this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
-				duration: 2000,
-			})
-		);
+		this.service
+			.acceptUser(userId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
+					duration: 2000,
+				})
+			);
 		this.dataSource$ = this.service.getUsers();
 		this.table.renderRows();
 	}
 
 	public rejectProperty(propertyId: number) {
-		this.service.rejectProperty(propertyId).subscribe(() =>
-			this.snackBar.open('Nieruchomość została pomyślnie odrzucona!', 'Zamknij', {
-				duration: 2000,
-			})
-		);
+		this.service
+			.rejectProperty(propertyId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open('Nieruchomość została pomyślnie odrzucona!', 'Zamknij', {
+					duration: 2000,
+				})
+			);
 		this.dataSource$ = this.service.getProperties();
 		this.table.renderRows();
 	}
 
 	public acceptProperty(propertyId: number) {
-		this.service.acceptProperty(propertyId).subscribe(() =>
-			this.snackBar.open(
-				'Nieruchomość została pomyślnie zaakceptowana!',
-				'Zamknij',
-				{
-					duration: 2000,
-				}
-			)
-		);
+		this.service
+			.acceptProperty(propertyId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open(
+					'Nieruchomość została pomyślnie zaakceptowana!',
+					'Zamknij',
+					{
+						duration: 2000,
+					}
+				)
+			);
 		this.dataSource$ = this.service.getProperties();
 		this.table.renderRows();
-	}
-
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }
