@@ -20,7 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
 import { MatRadioModule } from '@angular/material/radio';
-import { SurveyService } from "@shared/services/survey.service";
+import { SurveyService } from '@shared/services/survey.service';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -46,7 +46,7 @@ import { SurveyService } from "@shared/services/survey.service";
 		PasswordChangeModule,
 		MatRadioModule,
 	],
-  providers: [SurveyService],
+	providers: [SurveyService],
 	exports: [ProfileComponent],
 })
 export class ProfileModule {}
