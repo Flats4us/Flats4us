@@ -17,6 +17,7 @@ namespace Flats4us.Services
         {
             WriteIndented = true,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
         public async Task<string> MakingSurvey(Type type, string lang)
@@ -58,7 +59,7 @@ namespace Flats4us.Services
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
-                        Name = property.Name,
+                        Name = ToCamelCase(property.Name),
                         Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
@@ -85,7 +86,7 @@ namespace Flats4us.Services
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
-                        Name = property.Name,
+                        Name = ToCamelCase(property.Name),
                         Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
@@ -105,7 +106,7 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             Id = id++,
-                            Name = property.Name,
+                            Name = ToCamelCase(property.Name),
                             Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
@@ -118,7 +119,7 @@ namespace Flats4us.Services
                         surveyJson = new()
                         {
                             Id = id++,
-                            Name = property.Name,
+                            Name = ToCamelCase(property.Name),
                             Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
@@ -132,6 +133,15 @@ namespace Flats4us.Services
 
             string j = JsonSerializer.Serialize(json, options);
             return j;
+        }
+
+        private static string ToCamelCase(string str)
+        {
+            if (!string.IsNullOrEmpty(str) && char.IsUpper(str[0]))
+            {
+                return char.ToLowerInvariant(str[0]) + str.Substring(1);
+            }
+            return str;
         }
     }
 }
