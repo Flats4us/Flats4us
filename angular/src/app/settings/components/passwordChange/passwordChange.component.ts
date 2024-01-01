@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment.prod';
-import { PasswordChangeErrorStateMatcher } from '../emailChange/passwordChangeErrorStateMatcher';
+import { PasswordChangeErrorStateMatcher } from './passwordChangeErrorStateMatcher';
 
 @Component({
 	selector: 'app-password-change',
