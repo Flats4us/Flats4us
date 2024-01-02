@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmailChangeComponent } from './components/emailChange/emailChange.component';
 import { HelpCenterComponent } from './components/help-center/help-center.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
-import { PasswordChangeComponent } from './components/passwordChange/passwordChange.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import { SettingsComponent } from './settings.component';
 
 const routes: Routes = [

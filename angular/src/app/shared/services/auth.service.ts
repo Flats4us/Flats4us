@@ -2,9 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
-import { IAuthTokenResponse, IUser } from '../models/auth.models';
+import {
+	IAuthTokenResponse,
+	IPasswordChangeRequest,
+	IUser,
+} from '../models/auth.models';
 import { environment } from 'src/environments/environment.prod';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root',
@@ -94,14 +97,10 @@ export class AuthService {
 		}
 	}
 
-	public changePassword(form: FormGroup) {
-		const headers = {
-			'Content-Type': 'application/json',
-		};
-
-		return this.http.put(`${this.apiRoute}/change-password`, form.value, {
-			headers: headers,
-			responseType: 'text',
+	public changePassword({ oldPassword, newPassword }: IPasswordChangeRequest) {
+		return this.http.put(`${this.apiRoute}/change-password`, {
+			oldPassword,
+			newPassword,
 		});
 	}
 }
