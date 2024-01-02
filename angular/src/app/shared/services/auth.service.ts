@@ -1,16 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-	BehaviorSubject,
-	catchError,
-	Observable,
-	of,
-	tap,
-	throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
 import { IAuthTokenResponse, IUser } from '../models/auth.models';
 import { environment } from 'src/environments/environment.prod';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
 	providedIn: 'root',
@@ -98,5 +92,16 @@ export class AuthService {
 			clearTimeout(parseInt(timeoutId, 10));
 			localStorage.removeItem('authTokenTimeoutId');
 		}
+	}
+
+	public changePassword(form: FormGroup) {
+		const headers = {
+			'Content-Type': 'application/json',
+		};
+
+		return this.http.put(`${this.apiRoute}/change-password`, form.value, {
+			headers: headers,
+			responseType: 'text',
+		});
 	}
 }
