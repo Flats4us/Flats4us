@@ -90,44 +90,18 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _propertyService.AddPropertyFilesAsync(input, id);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _propertyService.AddPropertyFilesAsync(input, id, requestUserId);
                 return Ok("Adding property completed");
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        }
-
-        // POST: api/properties/{id}/file
-        [HttpPost("{id}/files/{type}")]
-        [Authorize(Policy = "VerifiedOwner")]
-        [SwaggerOperation(
-            Summary = "Adds property file",
-            Description = "Requires verified owner privileges"
-        )]
-        public async Task<ActionResult> AddPropertyFile([FromForm] AddFileDto input, int id, string type)
-        {
-            try
-            {
-                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
-                {
-                    return BadRequest("Server error: Failed to get user id from request");
-                }
-
-                await _propertyService.AddPropertyFileAsync(input, id, requestUserId, type);
-                _logger.LogInformation($"Adding file for property ID: {id}");
-                return Ok("File added");
-            }
-            catch (ForbiddenException ex)
-            {
-                return StatusCode(403, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            
         }
 
         // PUT: api/properties/{id}
