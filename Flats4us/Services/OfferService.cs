@@ -184,6 +184,7 @@ namespace Flats4us.Services
                     .Any(e => e.EquipmentId == ie.EquipmentId)))
                     .ToList();
             }
+
             if (!string.IsNullOrEmpty(input.Sorting))
             {
                 if (allowedSorts.Contains(input.Sorting))
