@@ -19,7 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
-import { PasswordChangeModule } from '../settings/components/passwordChange/passwordChange.module';
+import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({

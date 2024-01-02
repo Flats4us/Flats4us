@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PasswordChangeComponent } from './passwordChange.component';
+import { PasswordChangeComponent } from './password-change.component';
 
 describe('passwordChangeComponent', () => {
 	let component: PasswordChangeComponent;
