@@ -29,17 +29,20 @@ namespace Flats4us.Services
         {
             var flats = await _context.Flats
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
+                .Where(p => p.OwnerId == ownerId &&
+                            p.VerificationStatus == VerificationStatus.Verified)
                 .ToListAsync();
 
             var houses = await _context.Houses
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
+                .Where(p => p.OwnerId == ownerId &&
+                            p.VerificationStatus == VerificationStatus.Verified)
                 .ToListAsync();
 
             var rooms = await _context.Rooms
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
+                .Where(p => p.OwnerId == ownerId &&
+                            p.VerificationStatus == VerificationStatus.Verified)
                 .ToListAsync();
 
             var flatDtos = _mapper.Map<List<PropertyDto>>(flats);

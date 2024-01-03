@@ -32,7 +32,7 @@ namespace Flats4us.Entities.Dto
 
         public int? Floor { get; set; }
 
-        public List<EquipmentDto>? Equipment { get; set; }
+        public List<int>? Equipment { get; set; }
 
         public string? Sorting { get; set; }
 

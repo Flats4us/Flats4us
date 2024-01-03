@@ -174,9 +174,7 @@ namespace Flats4us.Services
             {
                 var equipmentList = await _context.Equipment
                     .Where(e => input.Equipment
-                        .Select(e => e.EquipmentId)
-                        .Contains(e.EquipmentId)
-                    )
+                        .Contains(e.EquipmentId))
                     .ToListAsync();
 
                 notPromotedOffers = notPromotedOffers.Where(o => equipmentList
