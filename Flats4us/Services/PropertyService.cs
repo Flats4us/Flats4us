@@ -25,25 +25,30 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId)
+        public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId, bool showOnlyVerified)
         {
-            var flats = await _context.Flats
+            IQueryable<Flat> flatQuery = _context.Flats
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId &&
-                            p.VerificationStatus == VerificationStatus.Verified)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
 
-            var houses = await _context.Houses
+            IQueryable<House> houseQuery = _context.Houses
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId &&
-                            p.VerificationStatus == VerificationStatus.Verified)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
 
-            var rooms = await _context.Rooms
+            IQueryable<Room> roomQuery = _context.Rooms
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId &&
-                            p.VerificationStatus == VerificationStatus.Verified)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
+
+            if (showOnlyVerified)
+            {
+                flatQuery = flatQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+                houseQuery = houseQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+                roomQuery = roomQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+            }
+
+            var flats = await flatQuery.ToListAsync();
+            var houses = await houseQuery.ToListAsync();
+            var rooms = await roomQuery.ToListAsync();
 
             var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
             var houseDtos = _mapper.Map<List<PropertyDto>>(houses);

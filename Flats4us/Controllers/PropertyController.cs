@@ -32,7 +32,7 @@ namespace Flats4us.Controllers
             Summary = "Returns list of properties for current owner",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> GetPropertiesForCurrentUser()
+        public async Task<IActionResult> GetPropertiesForCurrentUser([FromQuery] bool showOnlyVerified = false)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                var properties = await _propertyService.GetPropertiesForCurrentUserAsync(requestUserId);
+                var properties = await _propertyService.GetPropertiesForCurrentUserAsync(requestUserId, showOnlyVerified);
                 _logger.LogInformation($"Getting properties for current user: {requestUserId}");
                 return Ok(properties);
             }
