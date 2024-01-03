@@ -135,7 +135,7 @@ namespace Flats4us.Services
 
             if (input.MaxYear.HasValue)
             {
-                query = query.Where(o => o.Property.ConstructionYear <= input.MinYear);
+                query = query.Where(o => o.Property.ConstructionYear <= input.MaxYear);
             }
 
             if (input.MinNumberOfRooms.HasValue)
