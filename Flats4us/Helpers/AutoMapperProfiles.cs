@@ -84,7 +84,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.LastLoginDate, opt => opt.MapFrom(src => (DateTime?)null))
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
-                .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.PreCreated));
+                .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified));
 
             CreateMap<StudentRegisterDto, Student>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?
@@ -96,7 +96,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.LastLoginDate, opt => opt.MapFrom(src => (DateTime?)null))
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
                 .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
-                .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.PreCreated))
+                .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified))
                 .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links != null ? string.Join("|", src.Links) : null));
 

@@ -1,15 +1,8 @@
-﻿using Flats4us.Entities;
-using Flats4us.Entities.Dto;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
+﻿using Flats4us.Entities.Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Flats4us.Services.Interfaces;
-using Flats4us.Services;
 using Flats4us.Helpers.Exceptions;
 using Microsoft.AspNetCore.Cors;
 using Swashbuckle.AspNetCore.Annotations;
@@ -41,8 +34,8 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var id = await _userService.RegisterStudentAsync(request);
-                return Ok(id);
+                var token = await _userService.RegisterStudentAsync(request);
+                return Ok(token);
             }
             catch (Exception ex)
             {
@@ -61,23 +54,6 @@ namespace Flats4us.Controllers
             {
                 var id = await _userService.RegisterOwnerAsync(request);
                 return Ok(id);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("register/users/{id}/files")]
-        [SwaggerOperation(
-            Summary = "Registers user files"
-        )]
-        public async Task<ActionResult> RegisterUserFiles([FromForm] UserRegisterFilesDto request, int id)
-        {
-            try
-            {
-                await _userService.RegisterUserFilesAsync(request, id);
-                return Ok("Registration completed");
             }
             catch (Exception ex)
             {
@@ -108,7 +84,8 @@ namespace Flats4us.Controllers
         [HttpPut("change-password")]
         [Authorize(Policy = "RegisteredUser")]
         [SwaggerOperation(
-            Summary = "Changes user password"
+            Summary = "Changes user password",
+            Description = "Requires registered user privileges"
         )]
         public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordDto request)
         {

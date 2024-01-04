@@ -83,7 +83,7 @@ namespace Flats4us.Controllers
         [HttpPost("{id}/files")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Adds property files for new property",
+            Summary = "Adds property files",
             Description = "Requires verified owner privileges"
         )]
         public async Task<ActionResult> AddPropertyFiles([FromForm] PropertyFilesDto input, int id)
@@ -109,10 +109,10 @@ namespace Flats4us.Controllers
         }
 
         // DELETE: api/properties/{id}/files/{fileId}
-        [HttpPost("{id}/files/{fileId}")]
+        [HttpDelete("{id}/files/{fileId}")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Adds property files for new property",
+            Summary = "Deletes the file with the given id from the property",
             Description = "Requires verified owner privileges"
         )]
         public async Task<ActionResult> DeletePropertyFile(int id, string fileId)
