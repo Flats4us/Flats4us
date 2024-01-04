@@ -96,7 +96,7 @@ namespace Flats4us.Controllers
                 }
 
                 await _propertyService.AddPropertyFilesAsync(input, id, requestUserId);
-                return Ok("Adding property completed");
+                return Ok(new OutputDto<string>("Adding property completed"));
             }
             catch (ForbiddenException ex)
             {
@@ -125,7 +125,7 @@ namespace Flats4us.Controllers
                 }
 
                 await _propertyService.DeletePropertyFileAsync(id, fileId, requestUserId);
-                return Ok("Deleted property file successfully");
+                return Ok(new OutputDto<string>("Deleted property file successfully"));
             }
             catch (ForbiddenException ex)
             {
@@ -159,7 +159,7 @@ namespace Flats4us.Controllers
 
                 await _propertyService.UpdatePropertyAsync(id, input, requestUserId);
                 _logger.LogInformation($"Updating property - id: {id}");
-                return Ok("Property updated successfully");
+                return Ok(new OutputDto<string>("Property updated successfully"));
             }
             catch (ForbiddenException ex)
             {
@@ -191,7 +191,7 @@ namespace Flats4us.Controllers
 
                 await _propertyService.DeletePropertyAsync(id, requestUserId);
                 _logger.LogInformation($"Property with ID {id} has been deleted.");
-                return Ok("Property deleted successfully");
+                return Ok(new OutputDto<string>("Property deleted successfully"));
             }
             catch (ForbiddenException ex)
             {

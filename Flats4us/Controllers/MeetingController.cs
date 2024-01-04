@@ -72,7 +72,8 @@ namespace Flats4us.Controllers
 
                 await _meetingService.AddMeetingAsync(input, requestUserId);
                 _logger.LogInformation($"Adding meeting - body: {input}");
-                return Ok("Meeting added successfully");
+
+                return Ok(new OutputDto<string>("Meeting added successfully"));
             }
             catch (ForbiddenException ex)
             {

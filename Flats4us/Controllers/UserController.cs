@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
                 }
 
                 await _userService.AddUserFilesAsync(input, requestUserId);
-                return Ok("Registration completed");
+                return Ok(new OutputDto<string>("Files added"));
             }
             catch (Exception ex)
             {

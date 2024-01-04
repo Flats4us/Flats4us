@@ -60,7 +60,7 @@ namespace Flats4us.Controllers
             {
                 await _propertyService.VerifyPropertyAsync(id, input.Decision);
                 _logger.LogInformation($"Verifying property - id: {id}");
-                return Ok("Property verification status changed successfully");
+                return Ok(new OutputDto<string>("Property verification status changed successfully"));
             }
             catch (Exception ex)
             {
@@ -102,7 +102,7 @@ namespace Flats4us.Controllers
             {
                 await _userService.VerifyUserAsync(id, input.Decision);
                 _logger.LogInformation($"Verifying user - id: {id}");
-                return Ok("User verification status changed successfully");
+                return Ok(new OutputDto<string>("User verification status changed successfully"));
             }
             catch (Exception ex)
             {

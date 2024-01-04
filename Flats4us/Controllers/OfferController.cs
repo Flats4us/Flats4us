@@ -81,7 +81,7 @@ namespace Flats4us.Controllers
 
                 await _offerService.AddOfferAsync(input, requestUserId);
                 _logger.LogInformation($"Adding offer - body: {input}");
-                return Ok("Property added successfully");
+                return Ok(new OutputDto<string>("Property added successfully"));
             }
             catch (Exception ex)
             {
@@ -108,7 +108,7 @@ namespace Flats4us.Controllers
 
                 await _offerService.AddOfferPromotionAsync(input.Duration, id, requestUserId);
                 _logger.LogInformation($"Adding offer promotion for offer ID: {id}");
-                return Ok("Offer promotion added successfully");
+                return Ok(new OutputDto<string>("Offer promotion added successfully"));
             }
             catch (ForbiddenException ex)
             {
@@ -163,7 +163,7 @@ namespace Flats4us.Controllers
 
                 await _offerService.AddOfferInterestAsync(id, requestUserId);
                 _logger.LogInformation($"Adding offer interest for offer ID: {id}");
-                return Ok("Interest addded");
+                return Ok(new OutputDto<string>("Interest addded"));
             }
             catch (Exception ex)
             {
@@ -188,7 +188,7 @@ namespace Flats4us.Controllers
 
                 await _offerService.RemoveOfferInterestAsync(id, requestUserId);
                 _logger.LogInformation($"Removing offer interest for offer ID: {id}");
-                return Ok("Interest removed");
+                return Ok(new OutputDto<string>("Interest removed"));
             }
             catch (Exception ex)
             {

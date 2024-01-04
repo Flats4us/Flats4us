@@ -99,7 +99,7 @@ namespace Flats4us.Controllers
                 await _userService.ChangePasswordAsync(request.OldPassword, request.NewPassword, requestUserId);
 
                 _logger.LogInformation($"Changing password for user ID: {requestUserId}");
-                return Ok("Password changed");
+                return Ok(new OutputDto<string>("Password Changed"));
             }
             catch (AuthenticationException ex)
             {
