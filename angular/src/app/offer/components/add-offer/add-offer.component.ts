@@ -21,7 +21,7 @@ export class AddOfferComponent extends BaseComponent {
 		regulations: [''],
 	});
 
-	public properties$ = this.service.properties$;
+	public properties$ = this.service.getProperties();
 
 	constructor(
 		private service: OfferService,

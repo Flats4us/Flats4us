@@ -13,8 +13,8 @@ import { SurveyService } from '../../services/survey.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SurveyComponent {
-	public questions$: Observable<IQuestionsData[]>;
 	@Input() public offerForm: FormGroup;
+	public questions$: Observable<IQuestionsData[]>;
 	public typeName: typeof typeName = typeName;
 
 	constructor(
@@ -30,23 +30,10 @@ export class SurveyComponent {
 		this.questions$ = this.getQuestions().pipe(
 			tap(questions =>
 				questions.forEach(question =>
-					this.offerForm.addControl(
-						question.name,
-						this.getInitialFormControl(question)
-					)
+					this.offerForm.addControl(question.name, new FormControl(null))
 				)
 			)
 		);
-	}
-
-	private getInitialFormControl(question: IQuestionsData) {
-		if (question.typeName === typeName.RADIOBUTTON) {
-			return new FormControl(2);
-		} else if (question.typeName === typeName.SWITCH) {
-			return new FormControl(false);
-		} else {
-			return new FormControl('');
-		}
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {
