@@ -26,6 +26,35 @@ namespace Flats4us.Helpers
             }
         }
 
+        public static async Task DeletePropertyFileAsync(string propertyDirectory, string fileId)
+        {
+            string basePath = "Images/Properties";
+
+            string[] possibleDirectories = {
+                Path.Combine(basePath, propertyDirectory, "Images"),
+                Path.Combine(basePath, propertyDirectory, "TitleDeed")
+            };
+
+            try
+            {
+                foreach (var directory in possibleDirectories)
+                {
+                    if (Directory.Exists(directory))
+                    {
+                        var files = await Task.Run(() => Directory.GetFiles(directory, fileId + ".*"));
+                        foreach (var file in files)
+                        {
+                            await Task.Run(() => File.Delete(file));
+                        }
+                    }
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new IOException("Error during file operation: " + ex.Message);
+            }
+        }
+
         public static void SeedPropertyImage(string path, VerificationStatus status)
         {
             var directoryPath = $"Images/Properties/{path}";

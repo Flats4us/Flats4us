@@ -238,10 +238,7 @@ namespace Flats4us.Services
                 throw new Exception("Property ID has not been properly set.");
             }
 
-            var result = new OutputDto<int>
-            {
-                Result = propertyId,
-            };
+            var result = new OutputDto<int>(propertyId);
 
             return result;
         }
@@ -276,8 +273,24 @@ namespace Flats4us.Services
             {
                 throw new Exception("Images saving failure");
             }
+        }
 
-            await _context.SaveChangesAsync();
+        public async Task DeletePropertyFileAsync(int propertyId, string fileId, int requestUserId)
+        {
+            try
+            {
+                var property = await _context.Properties.FindAsync(propertyId);
+
+                if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
+                
+                if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+                
+                await ImageUtility.DeletePropertyFileAsync(property.ImagesPath, fileId);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"File operation failed: {ex.Message}");
+            }
         }
 
         public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId)
@@ -309,6 +322,7 @@ namespace Flats4us.Services
                     var flat = await _context.Flats
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (flat is null) throw new ArgumentException($"Flat with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", flat.ImagesPath);
@@ -340,6 +354,7 @@ namespace Flats4us.Services
                     var room = await _context.Rooms
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (room is null) throw new ArgumentException($"Room with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", room.ImagesPath);
@@ -374,6 +389,7 @@ namespace Flats4us.Services
                     var house = await _context.Houses
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (house is null) throw new ArgumentException($"House with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", house.ImagesPath);

@@ -59,10 +59,7 @@ namespace Flats4us.Services
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
 
-            var result = new OutputDto<int>
-            {
-                Result = owner.UserId,
-            };
+            var result = new OutputDto<int>(owner.UserId);
 
             return result;
         }
@@ -95,10 +92,7 @@ namespace Flats4us.Services
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            var result = new OutputDto<int>
-            {
-                Result = student.UserId,
-            };
+            var result = new OutputDto<int>(student.UserId);
 
             return result;
         }

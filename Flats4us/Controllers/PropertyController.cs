@@ -98,6 +98,43 @@ namespace Flats4us.Controllers
                 await _propertyService.AddPropertyFilesAsync(input, id, requestUserId);
                 return Ok("Adding property completed");
             }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // DELETE: api/properties/{id}/files/{fileId}
+        [HttpPost("{id}/files/{fileId}")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Adds property files for new property",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<ActionResult> DeletePropertyFile(int id, string fileId)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _propertyService.DeletePropertyFileAsync(id, fileId, requestUserId);
+                return Ok("Deleted property file successfully");
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (IOException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
