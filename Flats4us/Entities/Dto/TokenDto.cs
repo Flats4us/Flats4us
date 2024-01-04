@@ -8,6 +8,6 @@ namespace Flats4us.Entities.Dto
         public string Token { get; set; }
 
         [Required]
-        public DateTime ExpiresAt { get; set; }
+        public long ExpiresAt { get; set; }
     }
 }

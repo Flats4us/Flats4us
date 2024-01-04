@@ -7,6 +7,7 @@ using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -198,7 +199,9 @@ namespace Flats4us.Services
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var expiresAt = DateTime.Now.AddDays(1);
-
+            DateTimeOffset dateTimeOffset = new DateTimeOffset(expiresAt);
+            long unixTimestamp = dateTimeOffset.ToUnixTimeSeconds();
+            
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: expiresAt,
@@ -208,7 +211,7 @@ namespace Flats4us.Services
             var result = new TokenDto
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpiresAt = expiresAt
+                ExpiresAt = unixTimestamp
             };
 
             return result;
