@@ -37,6 +37,7 @@ namespace Flats4us.Entities
         public DbSet<Student> Students { get; set; }
         public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
         public DbSet<SurveyStudent> StudentSurveys { get; set; }
+        public DbSet<TechnicalProblem> TechnicalProblems { get; set; }
         public DbSet<User> Users { get; set; }
 
         public Flats4usContext() { }

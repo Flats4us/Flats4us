@@ -35,6 +35,9 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
+builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
+
+
 
 builder.Services.AddControllers();
 

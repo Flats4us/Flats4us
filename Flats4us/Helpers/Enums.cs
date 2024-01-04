@@ -1,5 +1,13 @@
 ﻿namespace Flats4us.Helpers.Enums
 {
+    public enum TechnicalProblem
+    {
+        ApplicationOperation,
+        Payment,
+        AccountPerformance,
+        Other
+    }
+
     public enum Gender
     {
         Male,
