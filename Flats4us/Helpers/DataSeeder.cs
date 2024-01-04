@@ -1181,6 +1181,27 @@ public static class DataSeeder
 
         #endregion
 
+        #region OwnerOfferSurveys
+
+        var technicalProblem1 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Other,
+            Description = "blablalba",
+            Date = DateTime.Now,
+            UserId = 1
+        };
+        var technicalProblem2 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Payment,
+            Description = "2blablalba",
+            Date = DateTime.Now,
+            UserId = 2
+        };
+
+        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2);
+
+        #endregion
+
         #region Meetings
 
         var meeting1 = new Meeting
