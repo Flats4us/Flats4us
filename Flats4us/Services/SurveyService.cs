@@ -30,7 +30,7 @@ namespace Flats4us.Services
             }
             catch (Exception)
             {
-                xmlDoc.Load($"Lang/en.xml");
+                xmlDoc.Load($"Lang/EN.xml");
             }
 
             var attributes = type.GetProperties();

@@ -32,7 +32,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting SurveyStudent");
-                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "pl");
+                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "PL");
 
                 return Ok(surveyStudent);
             }
@@ -42,19 +42,19 @@ namespace Flats4us.Controllers
             }
         }
 
-        // GET: /api/surveys/template/OwnerOffer
+        // GET: /api/surveys/template/owner
         [HttpGet("template/owner")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Returns ownerOffer survey template",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> GetSurveyOwnerOffer([FromHeader(Name = "Accept-Language")] string lang)
+        public async Task<IActionResult> GetSurveyOwnerOffer()
         {
             try
             {
                 _logger.LogInformation("Getting SurveyOwnerOffer");
-                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), lang);
+                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "PL");
 
                 return Ok(surveyOwnerOffer);
             }
