@@ -243,38 +243,6 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId, int requestUserId)
-        {
-            var property = await _context.Properties.FindAsync(propertyId);
-
-            if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
-
-            if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
-
-            var directoryPath = Path.Combine("Images/Properties", property.ImagesPath);
-
-            if (input.TitleDeed != null && input.TitleDeed.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, Path.Combine(directoryPath, "TitleDeed"));
-            }
-            else
-            {
-                throw new Exception("Title deed saving failure");
-            }
-
-            if (input.Images != null && input.Images.Count > 0)
-            {
-                foreach (var image in input.Images)
-                {
-                    await ImageUtility.ProcessAndSaveImage(image, Path.Combine(directoryPath, "Images"));
-                }
-            }
-            else
-            {
-                throw new Exception("Images saving failure");
-            }
-        }
-
         public async Task DeletePropertyFileAsync(int propertyId, string fileId, int requestUserId)
         {
             try

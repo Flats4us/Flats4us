@@ -28,7 +28,7 @@ namespace Flats4us.Controllers
         // POST: api/auth/register/students
         [HttpPost("register/students")]
         [SwaggerOperation(
-            Summary = "Registers new student, returns userId"
+            Summary = "Registers new student, returns token"
         )]
         public async Task<ActionResult> RegisterStudentAsync([FromBody] StudentRegisterDto request)
         {
@@ -46,14 +46,14 @@ namespace Flats4us.Controllers
         // POST: api/auth/register/owners
         [HttpPost("register/owners")]
         [SwaggerOperation(
-            Summary = "Registers new owner, returns userId"
+            Summary = "Registers new owner, returns token"
         )]
         public async Task<ActionResult> RegisterOwnerAsync([FromBody] OwnerRegisterDto request)
         {
             try
             {
-                var id = await _userService.RegisterOwnerAsync(request);
-                return Ok(id);
+                var token = await _userService.RegisterOwnerAsync(request);
+                return Ok(token);
             }
             catch (Exception ex)
             {
