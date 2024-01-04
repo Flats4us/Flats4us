@@ -44,7 +44,7 @@ namespace Flats4us.Services
             return token;
         }
 
-        public async Task<OutputDto<int>> RegisterOwnerAsync(OwnerRegisterDto input)
+        public async Task<TokenDto> RegisterOwnerAsync(OwnerRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -59,15 +59,12 @@ namespace Flats4us.Services
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
 
-            var result = new OutputDto<int>
-            {
-                Result = owner.UserId,
-            };
+            var token = CreateToken(owner);
 
-            return result;
+            return token;
         }
 
-        public async Task<OutputDto<int>> RegisterStudentAsync(StudentRegisterDto input)
+        public async Task<TokenDto> RegisterStudentAsync(StudentRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -95,48 +92,18 @@ namespace Flats4us.Services
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            var result = new OutputDto<int>
-            {
-                Result = student.UserId,
-            };
+            var token = CreateToken(student);
 
-            return result;
+            return token;
         }
 
-        public async Task RegisterUserFilesAsync(UserRegisterFilesDto input, int userId)
+        public async Task AddUserFilesAsync(UserFilesDto input, int userId)
         {
             var user = await _context.OwnerStudents.FindAsync(userId);
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-            if (user.VerificationStatus != VerificationStatus.PreCreated) throw new Exception("Files already uploaded");
-
-            var directoryPath = Path.Combine("Images/Users", user.ImagesPath);
-
-            if (input.ProfilePicture != null && input.ProfilePicture.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.ProfilePicture, Path.Combine(directoryPath, "ProfilePicture"));
-            }
-            else
-            {
-                _context.Users.Remove(user);
-                await ImageUtility.DeleteDirectory(directoryPath);
-                throw new Exception("Profile picture saving failure");
-            }
-
-            if (input.Document != null && input.Document.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.Document, Path.Combine(directoryPath, "Documents"));
-            }
-            else
-            {
-                _context.Users.Remove(user);
-                await ImageUtility.DeleteDirectory(directoryPath);
-                throw new Exception("Document saving failure");
-            }
-
-            user.VerificationStatus = VerificationStatus.NotVerified;
-            await _context.SaveChangesAsync();
+            await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
         }
 
         public async Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input)

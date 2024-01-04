@@ -4,9 +4,9 @@ using Flats4us.Entities;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class PropertyDocumentUrlResolver : IValueResolver<Property, PropertyForVerificationDto, string>
+    public class PropertyDocumentUrlResolver : IValueResolver<Property, PropertyForVerificationDto, FileDto>
     {
-        public string Resolve(Property source, PropertyForVerificationDto destination, string destMember, ResolutionContext context)
+        public FileDto Resolve(Property source, PropertyForVerificationDto destination, FileDto destMember, ResolutionContext context)
         {
             var directoryPath = Path.Combine("Images", "Properties", source.ImagesPath, "TitleDeed");
 
@@ -16,11 +16,12 @@ namespace Flats4us.Helpers.AutoMapperResolvers
 
                 if (files.Length > 0)
                 {
-                    var fileName = Path.GetFileName(files[0]);
-                    return Path.Combine(directoryPath, fileName);
+                    var fileNameWithExtension = Path.GetFileName(files[0]);
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(files[0]);
+                    return new FileDto { Name = fileNameWithoutExtension, Path = Path.Combine(directoryPath, fileNameWithExtension) };
                 }
             }
-            return string.Empty;
+            return new FileDto();
         }
     }
 }

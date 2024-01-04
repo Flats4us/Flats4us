@@ -1,4 +1,6 @@
-﻿using Flats4us.Helpers.Enums;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Enums;
+using System.IO;
 
 namespace Flats4us.Helpers
 {
@@ -23,6 +25,89 @@ namespace Flats4us.Helpers
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
+            }
+        }
+
+        public static async Task SaveUserFilesAsync(string userDirectory, UserFilesDto files)
+        {
+            string profilePicturePath = Path.Combine("Images/Users", userDirectory, "ProfilePicture");
+            string documentsPath = Path.Combine("Images/Users", userDirectory, "Documents");
+
+            if (!Directory.Exists(profilePicturePath))
+            {
+                Directory.CreateDirectory(profilePicturePath);
+            }
+
+            if (!Directory.Exists(documentsPath))
+            {
+                Directory.CreateDirectory(documentsPath);
+            }
+
+            if (files.ProfilePicture != null)
+            {
+                await SaveUserFileAsync(files.ProfilePicture, profilePicturePath);
+            }
+            if (files.Document != null)
+            {
+                await SaveUserFileAsync(files.Document, documentsPath);
+            }
+        }
+
+        private static async Task SaveUserFileAsync(IFormFile file, string directoryPath)
+        {
+            var fileExists = await Task.Run(() => Directory.EnumerateFiles(directoryPath).Any());
+            if (fileExists)
+            {
+                throw new InvalidOperationException("A file already exists in the directory.");
+            }
+
+            string extension = Path.GetExtension(file.FileName);
+            string uniqueFileName = Guid.NewGuid() + extension;
+            string filePath = Path.Combine(directoryPath, uniqueFileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }            
+        }
+
+        public static async Task DeletePropertyFileAsync(string propertyDirectory, string fileId)
+        {
+            string basePath = "Images/Properties";
+
+            string[] possibleDirectories = {
+                Path.Combine(basePath, propertyDirectory, "Images"),
+                Path.Combine(basePath, propertyDirectory, "TitleDeed")
+            };
+
+            bool fileFoundAndDeleted = false;
+
+            try
+            {
+                foreach (var directory in possibleDirectories)
+                {
+                    if (Directory.Exists(directory))
+                    {
+                        var files = await Task.Run(() => Directory.GetFiles(directory, fileId + ".*"));
+                        if (files.Length > 0)
+                        {
+                            fileFoundAndDeleted = true;
+                            foreach (var file in files)
+                            {
+                                await Task.Run(() => File.Delete(file));
+                            }
+                        }
+                    }
+                }
+
+                if (!fileFoundAndDeleted)
+                {
+                    throw new FileNotFoundException($"No files found with fileId: {fileId}");
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new IOException(ex.Message);
             }
         }
 

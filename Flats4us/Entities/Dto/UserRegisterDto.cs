@@ -40,12 +40,6 @@ namespace Flats4us.Entities.Dto
 
     public class OwnerStudentRegisterDto : UserRegisterDto
     {
-        //[Required]
-        //public byte[] ProfilePicture { get; set; }
-
-        //[Required]
-        //public byte[] Document { get; set; }
-
         [Required]
         public DocumentType DocumentType { get; set; }
 
@@ -113,12 +107,10 @@ namespace Flats4us.Entities.Dto
         public string DocumentNumber { get; set; }
     }
 
-    public class UserRegisterFilesDto
+    public class UserFilesDto
     {
-        [Required]
-        public IFormFile ProfilePicture { get; set; }
-
-        [Required]
-        public IFormFile Document { get; set; }
+        public IFormFile? ProfilePicture { get; set; }
+         
+        public IFormFile? Document { get; set; }
     }
 }

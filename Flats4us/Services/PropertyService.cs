@@ -144,7 +144,7 @@ namespace Flats4us.Services
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageDirectory,
-                        VerificationStatus = VerificationStatus.PreCreated,
+                        VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
                         NumberOfRooms = (int)input.NumberOfRooms,
@@ -178,7 +178,7 @@ namespace Flats4us.Services
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageDirectory,
-                        VerificationStatus = VerificationStatus.PreCreated,
+                        VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
                         Floor = (int)input.Floor,
@@ -215,7 +215,7 @@ namespace Flats4us.Services
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
                         ImagesPath = imageDirectory,
-                        VerificationStatus = VerificationStatus.PreCreated,
+                        VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
                         NumberOfRooms = (int)input.NumberOfRooms,
@@ -238,12 +238,93 @@ namespace Flats4us.Services
                 throw new Exception("Property ID has not been properly set.");
             }
 
-            var result = new OutputDto<int>
-            {
-                Result = propertyId,
-            };
+            var result = new OutputDto<int>(propertyId);
 
             return result;
+        }
+
+        public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId, int requestUserId)
+        {
+            var property = await _context.Properties.FindAsync(propertyId);
+
+            if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
+
+            if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+
+            var directoryPath = Path.Combine("Images/Properties", property.ImagesPath);
+
+            if (input.TitleDeed != null && input.TitleDeed.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, Path.Combine(directoryPath, "TitleDeed"));
+            }
+            else
+            {
+                throw new Exception("Title deed saving failure");
+            }
+
+            if (input.Images != null && input.Images.Count > 0)
+            {
+                foreach (var image in input.Images)
+                {
+                    await ImageUtility.ProcessAndSaveImage(image, Path.Combine(directoryPath, "Images"));
+                }
+            }
+            else
+            {
+                throw new Exception("Images saving failure");
+            }
+        }
+
+        public async Task DeletePropertyFileAsync(int propertyId, string fileId, int requestUserId)
+        {
+            try
+            {
+                var property = await _context.Properties.FindAsync(propertyId);
+
+                if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
+                
+                if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+                
+                await ImageUtility.DeletePropertyFileAsync(property.ImagesPath, fileId);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"File operation failed: {ex.Message}");
+            }
+        }
+
+        public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId, int requestUserId)
+        {
+            var property = await _context.Properties.FindAsync(propertyId);
+
+            if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
+
+            if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+
+            var directoryPath = Path.Combine("Images/Properties", property.ImagesPath);
+
+            if (input.TitleDeed != null && input.TitleDeed.Length > 0)
+            {
+                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, Path.Combine(directoryPath, "TitleDeed"));
+            }
+            else
+            {
+                throw new Exception("Title deed saving failure");
+            }
+
+            if (input.Images != null && input.Images.Count > 0)
+            {
+                foreach (var image in input.Images)
+                {
+                    await ImageUtility.ProcessAndSaveImage(image, Path.Combine(directoryPath, "Images"));
+                }
+            }
+            else
+            {
+                throw new Exception("Images saving failure");
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId)
@@ -275,6 +356,7 @@ namespace Flats4us.Services
                     var flat = await _context.Flats
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (flat is null) throw new ArgumentException($"Flat with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", flat.ImagesPath);
@@ -306,6 +388,7 @@ namespace Flats4us.Services
                     var room = await _context.Rooms
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (room is null) throw new ArgumentException($"Room with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", room.ImagesPath);
@@ -340,6 +423,7 @@ namespace Flats4us.Services
                     var house = await _context.Houses
                         .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
+
                     if (house is null) throw new ArgumentException($"House with ID {id} not found.");
 
                     imageDirectoryPath = Path.Combine("Images/Properties", house.ImagesPath);
@@ -367,63 +451,6 @@ namespace Flats4us.Services
                     break;
             }
 
-                await _context.SaveChangesAsync();            
-             
-            await ImageUtility.DeleteDirectory(imageDirectoryPath);
-
-            //if (input.TitleDeed != null && input.TitleDeed.Length > 0)
-            //{
-            //    // TODO: Images refactor
-            //    await ImageUtility.ProcessAndSaveImage(input.TitleDeed, $"{imageDirectoryPath}/TitleDeed");
-            //}
-
-            //if (input.Images != null && input.Images.Count > 0)
-            //{
-            //    foreach (var image in input.Images)
-            //    {
-            //        // TODO: Images refactor
-            //        await ImageUtility.ProcessAndSaveImage(image, $"{imageDirectoryPath}/Images");
-            //    }
-            //}
-        }
-
-        public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId)
-        {
-            var property = await _context.Properties.FindAsync(propertyId);
-
-            if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
-
-            if (property.VerificationStatus != VerificationStatus.PreCreated) throw new Exception("Files already uploaded");
-
-            var directoryPath = Path.Combine("Images/Properties", property.ImagesPath);
-
-            if (input.TitleDeed != null && input.TitleDeed.Length > 0)
-            {
-                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, Path.Combine(directoryPath, "TitleDeed"));
-            }
-            else
-            {
-                _context.Properties.Remove(property);
-                await ImageUtility.DeleteDirectory(directoryPath);
-                throw new Exception("Title deed saving failure");
-            }
-
-            if (input.Images != null && input.Images.Count > 0)
-            {
-                foreach (var image in input.Images)
-                {
-                    // TODO: Images refactor
-                    await ImageUtility.ProcessAndSaveImage(image, Path.Combine(directoryPath, "Images"));
-                }
-            }
-            else
-            {
-                _context.Properties.Remove(property);
-                await ImageUtility.DeleteDirectory(directoryPath);
-                throw new Exception("Images saving failure");
-            }
-
-            property.VerificationStatus = VerificationStatus.NotVerified;
             await _context.SaveChangesAsync();
         }
 
