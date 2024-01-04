@@ -83,7 +83,7 @@ namespace Flats4us.Controllers
         [HttpPost("{id}/files")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Adds property files",
+            Summary = "Adds property files for new property",
             Description = "Requires verified owner privileges"
         )]
         public async Task<ActionResult> AddPropertyFiles([FromForm] PropertyFilesDto input, int id)
