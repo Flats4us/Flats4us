@@ -26,10 +26,8 @@ namespace Flats4us.Controllers
 
         // GET: api/equipment
         [HttpGet]
-        [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Returns list of equipment",
-            Description = "Requires verified owner privileges"
+            Summary = "Returns list of equipment"
         )]
         public async Task<IActionResult> GetAll([FromQuery] string? name = null)
         {

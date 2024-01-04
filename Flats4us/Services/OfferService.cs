@@ -135,7 +135,7 @@ namespace Flats4us.Services
 
             if (input.MaxYear.HasValue)
             {
-                query = query.Where(o => o.Property.ConstructionYear <= input.MinYear);
+                query = query.Where(o => o.Property.ConstructionYear <= input.MaxYear);
             }
 
             if (input.MinNumberOfRooms.HasValue)
@@ -174,9 +174,7 @@ namespace Flats4us.Services
             {
                 var equipmentList = await _context.Equipment
                     .Where(e => input.Equipment
-                        .Select(e => e.EquipmentId)
-                        .Contains(e.EquipmentId)
-                    )
+                        .Contains(e.EquipmentId))
                     .ToListAsync();
 
                 notPromotedOffers = notPromotedOffers.Where(o => equipmentList
@@ -184,6 +182,7 @@ namespace Flats4us.Services
                     .Any(e => e.EquipmentId == ie.EquipmentId)))
                     .ToList();
             }
+
             if (!string.IsNullOrEmpty(input.Sorting))
             {
                 if (allowedSorts.Contains(input.Sorting))

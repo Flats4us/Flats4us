@@ -28,7 +28,7 @@ namespace Flats4us.Services
             _configuration = configuration;
         }
 
-        public async Task<string> AuthenticateAsync(string email, string password)
+        public async Task<TokenDto> AuthenticateAsync(string email, string password)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
@@ -44,7 +44,7 @@ namespace Flats4us.Services
             return token;
         }
 
-        public async Task<int> RegisterOwnerAsync(OwnerRegisterDto input)
+        public async Task<OutputDto<int>> RegisterOwnerAsync(OwnerRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -59,10 +59,15 @@ namespace Flats4us.Services
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
 
-            return owner.UserId;
+            var result = new OutputDto<int>
+            {
+                Result = owner.UserId,
+            };
+
+            return result;
         }
 
-        public async Task<int> RegisterStudentAsync(StudentRegisterDto input)
+        public async Task<OutputDto<int>> RegisterStudentAsync(StudentRegisterDto input)
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(x => x.Email == input.Email);
 
@@ -90,7 +95,12 @@ namespace Flats4us.Services
             _context.Students.Add(student);
             await _context.SaveChangesAsync();
 
-            return student.UserId;
+            var result = new OutputDto<int>
+            {
+                Result = student.UserId,
+            };
+
+            return result;
         }
 
         public async Task RegisterUserFilesAsync(UserRegisterFilesDto input, int userId)
@@ -205,7 +215,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        private string CreateToken(User user)
+        private TokenDto CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
@@ -220,15 +230,21 @@ namespace Flats4us.Services
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
+            var expiresAt = DateTime.Now.AddDays(1);
+
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(1),
+                expires: expiresAt,
                 signingCredentials: creds
                 );
 
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+            var result = new TokenDto
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresAt = expiresAt
+            };
 
-            return jwt;
+            return result;
         }
     }
 }

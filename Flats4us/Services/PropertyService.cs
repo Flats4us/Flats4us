@@ -25,22 +25,30 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId)
+        public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId, bool showOnlyVerified)
         {
-            var flats = await _context.Flats
+            IQueryable<Flat> flatQuery = _context.Flats
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
 
-            var houses = await _context.Houses
+            IQueryable<House> houseQuery = _context.Houses
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
 
-            var rooms = await _context.Rooms
+            IQueryable<Room> roomQuery = _context.Rooms
                 .Include(x => x.Equipment)
-                .Where(p => p.OwnerId == ownerId)
-                .ToListAsync();
+                .Where(p => p.OwnerId == ownerId);
+
+            if (showOnlyVerified)
+            {
+                flatQuery = flatQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+                houseQuery = houseQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+                roomQuery = roomQuery.Where(p => p.VerificationStatus == VerificationStatus.Verified);
+            }
+
+            var flats = await flatQuery.ToListAsync();
+            var houses = await houseQuery.ToListAsync();
+            var rooms = await roomQuery.ToListAsync();
 
             var flatDtos = _mapper.Map<List<PropertyDto>>(flats);
             var houseDtos = _mapper.Map<List<PropertyDto>>(houses);
@@ -99,7 +107,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<int> AddPropertyAsync(AddEditPropertyDto input, int ownerId)
+        public async Task<OutputDto<int>> AddPropertyAsync(AddEditPropertyDto input, int ownerId)
         {
             var imageDirectory = Guid.NewGuid().ToString();
 
@@ -230,7 +238,12 @@ namespace Flats4us.Services
                 throw new Exception("Property ID has not been properly set.");
             }
 
-            return propertyId;
+            var result = new OutputDto<int>
+            {
+                Result = propertyId,
+            };
+
+            return result;
         }
 
         public async Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId)

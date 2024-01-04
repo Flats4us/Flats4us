@@ -1,15 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-	BehaviorSubject,
-	catchError,
-	Observable,
-	of,
-	tap,
-	throwError,
-} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
-import { IAuthTokenResponse, IUser } from '../models/auth.models';
+import {
+	IAuthTokenResponse,
+	IPasswordChangeRequest,
+	IUser,
+} from '../models/auth.models';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -98,5 +95,12 @@ export class AuthService {
 			clearTimeout(parseInt(timeoutId, 10));
 			localStorage.removeItem('authTokenTimeoutId');
 		}
+	}
+
+	public changePassword({ oldPassword, newPassword }: IPasswordChangeRequest) {
+		return this.http.put(`${this.apiRoute}/change-password`, {
+			oldPassword,
+			newPassword,
+		});
 	}
 }
