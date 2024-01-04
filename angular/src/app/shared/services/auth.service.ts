@@ -15,11 +15,14 @@ import { environment } from 'src/environments/environment.prod';
 export class AuthService {
 	protected apiRoute = `${environment.apiUrl}/auth`;
 
-	private authTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<
-		string | null
-	>(localStorage.getItem('currentUser'));
+	private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false
+	);
+	public isLoggedIn$ = this.isLoggedIn.asObservable();
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {
+		setInterval(() => this.isLoggedIn.next(this.isValidToken()), 1000);
+	}
 
 	public login({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
@@ -36,44 +39,16 @@ export class AuthService {
 	private setToken(response: IAuthTokenResponse): void {
 		const { token, expiresAt } = response;
 		localStorage.setItem('authToken', token);
-		this.authTokenSubject.next(token);
-		const expirationTime = new Date().getTime() + expiresAt * 1000;
+		const expirationTime = expiresAt * 1000;
 		localStorage.setItem('authTokenExpirationTime', expirationTime.toString());
-		this.scheduleTokenRefresh(expiresAt);
-	}
-
-	private scheduleTokenRefresh(expiresAt: number): void {
-		const refreshTime = new Date().getTime() + expiresAt * 500;
-		const timeoutId = setTimeout(() => {
-			this.refreshToken().subscribe();
-		}, refreshTime);
-		localStorage.setItem('authTokenTimeoutId', timeoutId.toString());
-	}
-
-	private refreshToken(): Observable<IAuthTokenResponse> {
-		const token = localStorage.getItem('authToken');
-		if (!token) {
-			return throwError(() => 'No auth token found');
-		}
-		return this.http
-			.post<IAuthTokenResponse>('/api/auth/refresh', { token })
-			.pipe(
-				tap(response => this.setToken(response)),
-				catchError(error => {
-					this.authTokenSubject.next(null);
-					localStorage.removeItem('authToken');
-					localStorage.removeItem('authTokenExpirationTime');
-					localStorage.removeItem('authTokenTimeoutId');
-					return throwError(() => error);
-				})
-			);
+		this.isLoggedIn.next(true);
 	}
 
 	public getAuthToken(): string {
-		return this.authTokenSubject.value as string;
+		return localStorage.getItem('authToken') as string;
 	}
 
-	public isLoggedIn(): boolean {
+	public isValidToken(): boolean {
 		const token = this.getAuthToken();
 		if (!token) {
 			return false;
@@ -87,14 +62,9 @@ export class AuthService {
 	}
 
 	public logout(): void {
-		this.authTokenSubject.next(null);
 		localStorage.removeItem('authToken');
 		localStorage.removeItem('authTokenExpirationTime');
-		const timeoutId = localStorage.getItem('authTokenTimeoutId');
-		if (timeoutId) {
-			clearTimeout(parseInt(timeoutId, 10));
-			localStorage.removeItem('authTokenTimeoutId');
-		}
+		this.isLoggedIn.next(false);
 	}
 
 	public changePassword({ oldPassword, newPassword }: IPasswordChangeRequest) {

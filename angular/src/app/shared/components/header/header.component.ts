@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-header',
@@ -8,8 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public isUserLoggedIn = true;
 	public isUserLoggedInAsStudent = true;
 
 	public showSidenav = false;
+
+	constructor(public authService: AuthService) {}
 }
