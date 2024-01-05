@@ -9,6 +9,10 @@ mat-form-field {
 	margin: 16px 0;
 }
 
+form > mat-error {
+	text-align: center;
+}
+
 ::-ms-reveal {
 	display: none;
 }

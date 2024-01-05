@@ -4,7 +4,8 @@
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 			<mat-form-field class="no-border-style" appearance="outline">
 				<mat-label>Email</mat-label>
-				<input matInput formControlName="email" required email />
+				<input matInput formControlName="email" type="email" />
+				<mat-error>Pole jest wymagane</mat-error>
 			</mat-form-field>
 
 			<mat-form-field class="no-border-style" appearance="outline">
@@ -24,9 +25,16 @@
 				>
 					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
 				</button>
+				<mat-error>Pole jest wymagane</mat-error>
 			</mat-form-field>
 
-			<a href="" id="reset-password">Zapomniałeś hasła?</a>
+			<mat-error *ngIf="invalidCredentials$ | async"
+				>Nieprawidłowy email lub hasło</mat-error
+			>
+
+			<a routerLink="/auth/reset-password" id="reset-password"
+				>Zapomniałeś hasła?</a
+			>
 
 			<div class="buttons">
 				<button
@@ -41,7 +49,7 @@
 					mat-flat-button
 					class="btn-register"
 					type="button"
-					routerLink="../register"
+					routerLink="/auth/register"
 				>
 					Rejestracja
 				</button>
