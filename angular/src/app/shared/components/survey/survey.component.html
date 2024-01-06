@@ -1,4 +1,4 @@
-<form [formGroup]="offerForm">
+<form class="flex flex-col gap-8 mb-8" [formGroup]="offerForm">
 	<ng-container *ngFor="let question of questions$ | async; let i = index">
 		<div *ngIf="i < 7 || offerForm.get('16')">
 			<mat-label class="mr-3">{{ question.content }} </mat-label>
