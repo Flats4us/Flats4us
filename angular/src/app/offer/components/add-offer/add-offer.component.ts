@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfferService } from '../../services/offer.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,13 +12,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AddOfferComponent extends BaseComponent {
 	public offerForm: FormGroup = this.fb.group({
-		propertyId: [''],
-		price: [''],
-		deposit: [''],
-		description: [''],
-		startDate: [''],
-		endDate: [''],
-		regulations: [''],
+		propertyId: ['', Validators.required],
+		price: ['', Validators.required],
+		deposit: ['', Validators.required],
+		description: ['', Validators.required],
+		startDate: ['', Validators.required],
+		endDate: ['', Validators.required],
+		regulations: ['', Validators.required],
 	});
 
 	public properties$ = this.service.getProperties();

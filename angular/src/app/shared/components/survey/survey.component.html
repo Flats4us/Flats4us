@@ -1,6 +1,12 @@
 <form class="flex flex-col gap-8 mb-8" [formGroup]="offerForm">
 	<ng-container *ngFor="let question of questions$ | async; let i = index">
 		<div *ngIf="i < 7 || offerForm.get('16')">
+			<mat-slide-toggle
+				*ngIf="question.typeName === typeName.SWITCH"
+				class="mr-3"
+				[formControlName]="question.name"
+			></mat-slide-toggle>
+
 			<mat-label class="mr-3">{{ question.content }} </mat-label>
 
 			<mat-slider
@@ -20,11 +26,6 @@
 			>
 				<input matInput [formControlName]="question.name" />
 			</mat-form-field>
-
-			<mat-slide-toggle
-				*ngIf="question.typeName === typeName.SWITCH"
-				[formControlName]="question.name"
-			></mat-slide-toggle>
 
 			<section
 				*ngIf="question.typeName === typeName.CHECKBOX"

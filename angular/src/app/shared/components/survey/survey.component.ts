@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { IQuestionsData, typeName } from '../../models/survey.models';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -45,7 +50,10 @@ export class SurveyComponent {
 
 	public getFormControls(questions: IQuestionsData[]) {
 		questions.forEach(question =>
-			this.offerForm.addControl(question.name, new FormControl(null))
+			this.offerForm.addControl(
+				question.name,
+				new FormControl(null, Validators.required)
+			)
 		);
 	}
 }

@@ -1,67 +1,75 @@
-<mat-card class="m-auto w-[640px] flex justify-center">
-	<mat-card-header class="justify-center mx-auto pt-1 w-3/4 md:w-2/5">
-		<mat-card-title class="text-2xl">
-			<h1>Dodaj ofertę</h1>
-		</mat-card-title>
-	</mat-card-header>
-	<mat-card-content>
-		<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Cena: </mat-label>
-				<input type="number" matInput formControlName="price" />
-				<span matTextSuffix>zł</span>
-			</mat-form-field>
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Kaucja: </mat-label>
-				<input type="number" matInput formControlName="deposit" />
-				<span matTextSuffix>zł</span>
-			</mat-form-field>
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Okres wynajmu: </mat-label>
-				<mat-date-range-input [rangePicker]="picker">
-					<input matStartDate formControlName="startDate" placeholder="Początek" />
-					<input matEndDate formControlName="endDate" placeholder="Koniec" />
-				</mat-date-range-input>
-				<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-				<mat-date-range-picker #picker></mat-date-range-picker>
-			</mat-form-field>
+<div class="grid-container">
+	<div></div>
+	<mat-card class="flex justify-center">
+		<mat-card-header class="justify-center mx-auto pt-1 w-3/4 md:w-2/5">
+			<mat-card-title class="text-2xl">
+				<h1>Dodaj ofertę</h1>
+			</mat-card-title>
+		</mat-card-header>
+		<mat-card-content>
+			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Cena: </mat-label>
+					<input type="number" matInput formControlName="price" />
+					<span matTextSuffix>zł</span>
+				</mat-form-field>
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Kaucja: </mat-label>
+					<input type="number" matInput formControlName="deposit" />
+					<span matTextSuffix>zł</span>
+				</mat-form-field>
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Okres wynajmu: </mat-label>
+					<mat-date-range-input [rangePicker]="picker">
+						<input matStartDate formControlName="startDate" placeholder="Początek" />
+						<input matEndDate formControlName="endDate" placeholder="Koniec" />
+					</mat-date-range-input>
+					<mat-datepicker-toggle
+						matIconSuffix
+						[for]="picker"
+					></mat-datepicker-toggle>
+					<mat-date-range-picker #picker></mat-date-range-picker>
+				</mat-form-field>
 
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Wybierz nieruchomość: </mat-label>
-				<mat-select formControlName="propertyId">
-					<mat-option
-						*ngFor="let property of properties$ | async"
-						[value]="property.propertyId"
-						>{{ property.street }}</mat-option
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Wybierz nieruchomość: </mat-label>
+					<mat-select formControlName="propertyId">
+						<mat-option
+							*ngFor="let property of properties$ | async"
+							[value]="property.propertyId"
+							>{{
+								property.street + " " + property.number + ", " + property.city
+							}}</mat-option
+						>
+					</mat-select>
+				</mat-form-field>
+
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Opis: </mat-label>
+					<textarea matInput formControlName="description"></textarea>
+				</mat-form-field>
+
+				<mat-form-field class="md:w-2/3" appearance="outline">
+					<mat-label>Reguły wynajmu: </mat-label>
+					<textarea matInput formControlName="regulations"></textarea>
+				</mat-form-field>
+
+				<app-student-survey [offerForm]="offerForm"></app-student-survey>
+
+				<div class="flex justify-between">
+					<button
+						mat-flat-button
+						color="primary"
+						type="submit"
+						[disabled]="!offerForm.valid"
 					>
-				</mat-select>
-			</mat-form-field>
-
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Opis: </mat-label>
-				<textarea matInput formControlName="description"></textarea>
-			</mat-form-field>
-
-			<mat-form-field class="md:w-2/3" appearance="outline">
-				<mat-label>Reguły wynajmu: </mat-label>
-				<textarea matInput formControlName="regulations"></textarea>
-			</mat-form-field>
-
-			<app-student-survey [offerForm]="offerForm"></app-student-survey>
-
-			<div class="flex justify-between">
-				<button
-					mat-flat-button
-					color="primary"
-					type="submit"
-					[disabled]="!offerForm.valid"
-				>
-					Zapisz
-				</button>
-				<button mat-button color="accent" type="button" routerLink="/start">
-					Anuluj
-				</button>
-			</div>
-		</form>
-	</mat-card-content>
-</mat-card>
+						Zapisz
+					</button>
+					<button mat-button color="accent" type="button" routerLink="/start">
+						Anuluj
+					</button>
+				</div>
+			</form>
+		</mat-card-content>
+	</mat-card>
+</div>
