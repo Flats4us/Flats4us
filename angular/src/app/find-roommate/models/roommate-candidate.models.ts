@@ -4,5 +4,4 @@ export interface IStudent {
 	rating: number;
 	interests: string[];
 	profilePicture: string;
-	matchLevel: string;
 }

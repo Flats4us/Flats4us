@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
+import { RoommateCandidateService } from './services/roommate-candidate.service';
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { MatInputModule } from '@angular/material/input';
 		MatTooltipModule,
 		MatInputModule,
 	],
+	providers: [RoommateCandidateService],
 	exports: [FindRoommateComponent],
 })
 export class FindRoommateModule {}
