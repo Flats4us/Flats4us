@@ -48,7 +48,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<OfferListDto> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
+        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
         {
             var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
@@ -79,11 +79,14 @@ namespace Flats4us.Services
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.OfferPromotions)
                 .ToListAsync();
 
             var promotedOffersCount = promotedOffers.Count();
 
             var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
+
+            var randomPromotedOffersCount = randomPromotedOffers.Count();
 
             var query = _context.Offers.AsQueryable();
 
@@ -155,6 +158,7 @@ namespace Flats4us.Services
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.OfferPromotions)
                 .Select(o => _mapper.Map<OfferDto>(o))
                 .ToListAsync();
 
@@ -217,14 +221,15 @@ namespace Flats4us.Services
             var notPromotedOffersCount = notPromotedOffers.Count();
             var totalCount = promotedOffersCount + notPromotedOffersCount;
 
-            notPromotedOffers = notPromotedOffers.Skip((input.PageNumber - 1) * input.PageSize)
-                .Take(input.PageSize)
+            notPromotedOffers = notPromotedOffers.Skip((input.PageNumber - 1) * (input.PageSize-randomPromotedOffersCount))
+                .Take(input.PageSize-randomPromotedOffersCount)
                 .ToList();
 
-            var result = new OfferListDto {
-                TotalNumberOfOffers = totalCount,
-                PromotedOffers = randomPromotedOffers,
-                Offers = notPromotedOffers
+            var joinedOffers = randomPromotedOffers.Concat(notPromotedOffers).ToList();
+
+            var result = new CountedListDto<OfferDto> {
+                TotalCount = totalCount,
+                Result = joinedOffers
             };
 
             return result;

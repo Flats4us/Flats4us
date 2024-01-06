@@ -1049,8 +1049,15 @@ public static class DataSeeder
             Price = 50,
             Offer = offer2
         };
-        
-        dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2);
+        var offerPromotion3 = new OfferPromotion
+        {
+            StartDate = new DateTime(2022, 11, 26),
+            EndDate = new DateTime(2023, 11, 30),
+            Price = 50,
+            Offer = offer3
+        };
+
+        dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2, offerPromotion3);
 
         #endregion
 

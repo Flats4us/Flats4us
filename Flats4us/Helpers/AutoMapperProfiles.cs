@@ -56,7 +56,8 @@ namespace Flats4us.Helpers
                     $"{src.Street} {src.Number}, {src.PostalCode} {src.City}"));
 
             CreateMap<Offer, OfferDto>()
-                .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner));
+                .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner))
+                .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
             CreateMap<Owner, OwnerStudentDto>();
 

@@ -36,6 +36,9 @@ namespace Flats4us.Entities.Dto
         public string Regulations { get; set; }
 
         [Required]
+        public bool IsPromoted { get; set; }
+
+        [Required]
         public PropertyDto Property { get; set; }
 
         [Required]
