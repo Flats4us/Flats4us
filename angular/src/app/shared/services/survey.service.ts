@@ -10,22 +10,10 @@ export class SurveyService {
 	constructor(private http: HttpClient) {}
 
 	public getStudentQuestions() {
-		const headers = {
-			'accept-language': 'PL',
-		};
-
-		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/student`, {
-			headers,
-		});
+		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/student`);
 	}
 
 	public getOwnerQuestions() {
-		const headers = {
-			'accept-language': 'PL',
-		};
-
-		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/owner`, {
-			headers,
-		});
+		return this.http.get<IQuestionsData[]>(`${this.apiRoute}/owner`);
 	}
 }

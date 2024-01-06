@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { IQuestionsData, typeName } from '../../models/survey.models';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -19,7 +18,6 @@ export class SurveyComponent {
 
 	constructor(
 		private formBuilder: FormBuilder,
-		private snackBar: MatSnackBar,
 		private route: ActivatedRoute,
 		private service: SurveyService
 	) {
@@ -28,11 +26,7 @@ export class SurveyComponent {
 		});
 
 		this.questions$ = this.getQuestions().pipe(
-			tap(questions =>
-				questions.forEach(question =>
-					this.offerForm.addControl(question.name, new FormControl(null))
-				)
-			)
+			tap(questions => this.getFormControls(questions))
 		);
 	}
 
@@ -46,6 +40,12 @@ export class SurveyComponent {
 					return this.service.getOwnerQuestions();
 				}
 			})
+		);
+	}
+
+	public getFormControls(questions: IQuestionsData[]) {
+		questions.forEach(question =>
+			this.offerForm.addControl(question.name, new FormControl(null))
 		);
 	}
 }
