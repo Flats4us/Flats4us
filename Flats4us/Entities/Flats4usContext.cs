@@ -155,7 +155,7 @@ namespace Flats4us.Entities
             modelBuilder.Entity<Matcher>()
                 .ToTable(builder =>
                 {
-                    builder.HasCheckConstraint("CK_Grindr_StudentIds", "Student1Id < Student2Id");
+                    builder.HasCheckConstraint("CK_Matcher_StudentIds", "Student1Id < Student2Id");
                 });
 
             modelBuilder.Entity<User>()

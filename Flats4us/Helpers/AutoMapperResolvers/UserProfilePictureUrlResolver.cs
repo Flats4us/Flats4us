@@ -16,7 +16,6 @@ namespace Flats4us.Helpers.AutoMapperResolvers
             return GetProfilePictureUrl(source.ImagesPath);
         }
 
-
         public FileDto GetProfilePictureUrl(string directoryId)
         {
             var directoryPath = Path.Combine("Images", "Users", directoryId, "ProfilePicture");
@@ -34,12 +33,5 @@ namespace Flats4us.Helpers.AutoMapperResolvers
             }
             return new FileDto();
         }
-
-
-
-
-
-
-
     }
 }

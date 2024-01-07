@@ -6,7 +6,7 @@ namespace Flats4us.Services.Interfaces
     public interface IMatcherService
     {
         //public Task<List<Matcher>> GetAllMatches();
-        public Task<List<Matcher>> GetMatchByStudentId(int id);
+        public Task<List<StudentDto>> GetMatchByStudentId(int id);
         public Task<List<StudentForMatcherDto>> GetPotentialRoommateAsync(int studentId);
         public Task AcceptStudentAsync(int student1Id, int student2Id, bool isAccept);
     }
