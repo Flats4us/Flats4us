@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
 {
-    public class GrindrService : IGrindrService
+    public class MatcherService : IMatcherService
     {
         public readonly Flats4usContext _context;
 
-        public GrindrService(Flats4usContext context)
+        public MatcherService(Flats4usContext context)
         {
             _context = context;
         }

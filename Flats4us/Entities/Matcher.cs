@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    public class Grindr
+    public class Matcher
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
