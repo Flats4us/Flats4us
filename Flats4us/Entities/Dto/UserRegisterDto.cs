@@ -15,18 +15,7 @@ namespace Flats4us.Entities.Dto
         public string Surname { get; set; }
 
         [Required]
-        public string Street { get; set; }
-
-        [Required]
-        public string Number { get; set; }
-
-        public int? Flat { get; set; }
-
-        [Required]
-        public string City { get; set; }
-
-        [Required]
-        public string PostalCode { get; set; }
+        public string Address { get; set; }
 
         [Required]
         public string Password { get; set; }

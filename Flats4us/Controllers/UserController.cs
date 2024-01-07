@@ -30,7 +30,7 @@ namespace Flats4us.Controllers
             Summary = "Adds files for current user",
             Description = "Requires registered user privileges"
         )]
-        public async Task<ActionResult> RegisterUserFiles([FromForm] UserFilesDto input)
+        public async Task<ActionResult> AddUserFiles([FromForm] UserFilesDto input)
         {
             try
             {
