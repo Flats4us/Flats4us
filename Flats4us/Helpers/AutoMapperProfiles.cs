@@ -100,7 +100,6 @@ namespace Flats4us.Helpers
             CreateMap<Interest, InterestDto>();
 
             CreateMap<StudentRegisterDto, SurveyStudent>();
-
         }
     }
 }

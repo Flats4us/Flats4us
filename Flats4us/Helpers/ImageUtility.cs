@@ -74,17 +74,32 @@ namespace Flats4us.Helpers
         public static async Task DeletePropertyFileAsync(string propertyDirectory, string fileId)
         {
             string basePath = "Images/Properties";
-
             string[] possibleDirectories = {
                 Path.Combine(basePath, propertyDirectory, "Images"),
                 Path.Combine(basePath, propertyDirectory, "TitleDeed")
             };
 
+            await DeleteFileAsync(possibleDirectories, fileId);
+        }
+
+        public static async Task DeleteUserFileAsync(string userDirectory, string fileId)
+        {
+            string basePath = "Images/Users";
+            string[] possibleDirectories = {
+                Path.Combine(basePath, userDirectory, "ProfilePicture"),
+                Path.Combine(basePath, userDirectory, "Documents")
+            };
+
+            await DeleteFileAsync(possibleDirectories, fileId);
+        }
+
+        private static async Task DeleteFileAsync(string[] directories, string fileId)
+        {
             bool fileFoundAndDeleted = false;
 
             try
             {
-                foreach (var directory in possibleDirectories)
+                foreach (var directory in directories)
                 {
                     if (Directory.Exists(directory))
                     {

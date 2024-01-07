@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -41,6 +42,34 @@ namespace Flats4us.Controllers
 
                 await _userService.AddUserFilesAsync(input, requestUserId);
                 return Ok(new OutputDto<string>("Files added"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("files/{fileId}")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Deletes the file with the given id from the current user",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<ActionResult> DeleteUserFile(string fileId)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.DeleteUserFileAsync(fileId, requestUserId);
+                return Ok(new OutputDto<string>("Deleted user file successfully"));
+            }
+            catch (IOException ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
             catch (Exception ex)
             {

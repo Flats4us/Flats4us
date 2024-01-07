@@ -6,6 +6,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -105,6 +106,22 @@ namespace Flats4us.Services
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
             await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+        }
+
+        public async Task DeleteUserFileAsync(string fileId, int userId)
+        {
+            try
+            {
+                var ownerStudent = await _context.OwnerStudents.FindAsync(userId);
+
+                if (ownerStudent is null) throw new Exception($"Cannot find user ID: {userId}");
+
+                await ImageUtility.DeleteUserFileAsync(ownerStudent.ImagesPath, fileId);
+            }
+            catch (IOException ex)
+            {
+                throw new IOException($"File operation failed: {ex.Message}");
+            }
         }
 
         public async Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input)
