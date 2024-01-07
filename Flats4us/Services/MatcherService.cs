@@ -23,11 +23,21 @@ namespace Flats4us.Services
 
         }
 
-        public async Task<List<Matcher>> GetAllMatches()
-        {
-            return await _context.Matcher.ToListAsync();
-        }
+        //public async Task<List<Matcher>> GetAllMatches()
+        //{
+        //    return await _context.Matcher.ToListAsync();
+        //}
 
+        public async Task<List<Matcher>> GetMatchByStudentId(int id)
+        {
+            var matchers = await _context.Matcher
+                .Where(m => m.Student1Id == id || m.Student2Id == id)
+                .Include(m => m.Student1)
+                .Include(m => m.Student2)
+                .ToListAsync();
+
+            return matchers;
+        }
 
         public async Task<List<StudentForMatcherDto>> GetPotentialRoommateAsync(int studentId)
         {
