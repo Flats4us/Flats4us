@@ -16,9 +16,9 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<List<Grindr>> GetAllMatches()
+        public async Task<List<Matcher>> GetAllMatches()
         {
-            return await _context.Grindr.ToListAsync();
+            return await _context.Matcher.ToListAsync();
         }
 
 
@@ -58,7 +58,7 @@ namespace Flats4us.Services
 
         public async Task AcceptStudent(int student1Id, int student2Id, bool isAccept)
         {
-            var h = _context.Grindr  
+            var h = _context.Matcher  
                 .Where( x =>(
                  x.Student1Id == student1Id && x.Student2Id == student2Id) || 
                 (x.Student1Id == student2Id && x.Student2Id == student1Id))
@@ -66,7 +66,7 @@ namespace Flats4us.Services
 
             if (h == null)
             {
-                h = new Grindr
+                h = new Matcher
                 {
                     Student1Id = Math.Min(student1Id, student2Id),
                     Student2Id = Math.Min(student1Id, student2Id),
