@@ -4,16 +4,23 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Flats4us.Helpers.AutoMapperResolvers;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class MatcherService : IMatcherService
     {
         public readonly Flats4usContext _context;
+        private readonly IMapper _mapper;
 
-        public MatcherService(Flats4usContext context)
+        public MatcherService(
+            Flats4usContext context,
+            IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
+
         }
 
         public async Task<List<Matcher>> GetAllMatches()
@@ -22,7 +29,7 @@ namespace Flats4us.Services
         }
 
 
-        public async Task<List<StudentDto>> GetPotentialRoommate(int studentId)
+        public async Task<List<StudentForMatcherDto>> GetPotentialRoommate(int studentId)
         {
             var requestingStudent = _context.Students
                 .Include(requesting => requesting.SurveyStudent)
@@ -42,15 +49,15 @@ namespace Flats4us.Services
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
                     (/*!potential.SurveyStudent.MinRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year-potential.BirthDate.Year)) &&
                     (/*!potential.SurveyStudent.MaxRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year-potential.BirthDate.Year)))
-                .Select(potential => new StudentDto
+                .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
+                /*.Select(potential => new StudentDto
                 {
                     Name = potential.Name,
                     Surname = potential.Surname,
                     BirthDate = potential.BirthDate,
                     StudentNumber = potential.StudentNumber,
                     University = potential.University
-                    
-                })
+                })*/
                 .ToListAsync();
 
             return await potentialRoommates;
@@ -69,10 +76,11 @@ namespace Flats4us.Services
                 h = new Matcher
                 {
                     Student1Id = Math.Min(student1Id, student2Id),
-                    Student2Id = Math.Min(student1Id, student2Id),
+                    Student2Id = Math.Max(student1Id, student2Id),
                     IsStudent1Interested = true,
                     IsStudent2Interested = null
                 };
+                _context.Matcher.Add(h);
             }
             else
             {

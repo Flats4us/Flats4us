@@ -7,7 +7,7 @@ namespace Flats4us.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int GrindrId { get; set; }
+        public int MatcherId { get; set; }
 
 
         public bool? IsStudent1Interested { get; set; }

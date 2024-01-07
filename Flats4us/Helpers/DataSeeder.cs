@@ -335,8 +335,144 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
+        var student5 = new Student
+        {
+            Name = "Anna",
+            Surname = "Nowak",
+            Address = "Piotrkowska 22/8, 90-101 Łódź",
+            Email = "annanowak@gmail.com",
+            PhoneNumber = "987654321",
+            AccountCreationDate = new DateTime(2023, 2, 5),
+            DateForVerificationSorting = new DateTime(2023, 2, 5),
+            LastLoginDate = new DateTime(2023, 11, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Annanowak123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 6, 15),
+            BirthDate = new DateTime(1995, 5, 18),  //29 lat
+            StudentNumber = "s19876",
+            University = "Politechnika Łódzka",
+            Links = "https://www.facebook.com/anna.nowak|https://twitter.com/annanowak|https://www.instagram.com/annanowak/",
+            IsTenant = true,
+        };
 
-        dbContext.Students.AddRange(student1, student2, student3, student4);
+        var student6 = new Student
+        {
+            Name = "Mateusz",
+            Surname = "Kowalski",
+            Address = "Aleje Jerozolimskie 45/3, 00-697 Warszawa",
+            Email = "mateuszkowalski@gmail.com",
+            PhoneNumber = "555666777",
+            AccountCreationDate = new DateTime(2023, 3, 20),
+            DateForVerificationSorting = new DateTime(2023, 3, 20),
+            LastLoginDate = new DateTime(2023, 12, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mateuszkowalski123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 4, 30),
+            BirthDate = new DateTime(1990, 8, 7),  //33 lata
+            StudentNumber = "s12345",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/mateusz.kowalski|https://twitter.com/mateuszkowal|https://www.instagram.com/mateuszkowalski/",
+            IsTenant = false,
+        };
+        var student7 = new Student
+        {
+            Name = "Marta",
+            Surname = "Wiśniewska",
+            Address = "ul. Lecha 7/15, 50-501 Wrocław",
+            Email = "martawisniewska@gmail.com",
+            PhoneNumber = "789012345",
+            AccountCreationDate = new DateTime(2023, 4, 10),
+            DateForVerificationSorting = new DateTime(2023, 4, 10),
+            LastLoginDate = new DateTime(2024, 1, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Martawisniewska123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2028, 8, 22),
+            BirthDate = new DateTime(1993, 7, 14),  //28 lat
+            StudentNumber = "s33456",
+            University = "Uniwersytet Wrocławski",
+            Links = "https://www.facebook.com/marta.wisniewska|https://twitter.com/martawisniewska|https://www.instagram.com/martawisniewska/",
+            IsTenant = true,
+        };
+
+        var student8 = new Student
+        {
+            Name = "Piotr",
+            Surname = "Zawadzki",
+            Address = "ul. Mickiewicza 3/2, 30-059 Kraków",
+            Email = "piotrzawadzki@gmail.com",
+            PhoneNumber = "654321098",
+            AccountCreationDate = new DateTime(2023, 5, 15),
+            DateForVerificationSorting = new DateTime(2023, 5, 15),
+            LastLoginDate = new DateTime(2024, 2, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Piotrzawadzki123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.NotVerified,
+            DocumentExpireDate = new DateTime(2026, 5, 10),
+            BirthDate = new DateTime(1994, 11, 28),  //27 lat
+            StudentNumber = "s44567",
+            University = "AGH Kraków",
+            Links = "https://www.facebook.com/piotr.zawadzki|https://twitter.com/piotrzawadzki|https://www.instagram.com/piotrzawadzki/",
+            IsTenant = false,
+        };
+        var student9 = new Student
+        {
+            Name = "Karolina",
+            Surname = "Dąbrowska",
+            Address = "ul. Krakowska 18/7, 20-001 Lublin",
+            Email = "karolinadabrowska@gmail.com",
+            PhoneNumber = "876543210",
+            AccountCreationDate = new DateTime(2023, 6, 25),
+            DateForVerificationSorting = new DateTime(2023, 6, 25),
+            LastLoginDate = new DateTime(2024, 3, 25),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Karolinadabrowska123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2029, 9, 5),
+            BirthDate = new DateTime(1991, 3, 8),  //32 lata
+            StudentNumber = "s56789",
+            University = "Katolicki Uniwersytet Lubelski",
+            Links = "https://www.facebook.com/karolina.dabrowska|https://twitter.com/karolinadab|https://www.instagram.com/karolinadabrowska/",
+            IsTenant = true,
+        };
+
+        var student10 = new Student
+        {
+            Name = "Łukasz",
+            Surname = "Nowicki",
+            Address = "ul. Armii Krajowej 14/4, 33-100 Tarnów",
+            Email = "lukasznowicki@gmail.com",
+            PhoneNumber = "999888777",
+            AccountCreationDate = new DateTime(2023, 7, 10),
+            DateForVerificationSorting = new DateTime(2023, 7, 10),
+            LastLoginDate = new DateTime(2024, 4, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lukasznowicki123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 12, 18),
+            BirthDate = new DateTime(1992, 9, 22),  //29 lat
+            StudentNumber = "s67890",
+            University = "Politechnika Krakowska",
+            Links = "https://www.facebook.com/lukasz.nowicki|https://twitter.com/lukasznowicki|https://www.instagram.com/lukasznowicki/",
+            IsTenant = false,
+        };
+
+
+        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10);
 
         ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
         ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
@@ -1238,7 +1374,7 @@ public static class DataSeeder
 
         #endregion
 
-        #region OwnerOfferSurveys
+        #region StudentSurveys
 
         var surveyStudent1 = new SurveyStudent
         {
@@ -1320,9 +1456,9 @@ public static class DataSeeder
 
         #endregion
 
-        #region Grindr
+        #region Matcher
 
-        var grindr1 = new Matcher
+        var match1 = new Matcher
         {
             IsStudent1Interested = true,
             IsStudent2Interested = false,
@@ -1330,7 +1466,7 @@ public static class DataSeeder
             Student2 = student4
         };
 
-        dbContext.Matcher.AddRange(grindr1);
+        dbContext.Matcher.AddRange(match1);
 
         #endregion
 

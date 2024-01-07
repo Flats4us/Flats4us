@@ -31,7 +31,6 @@ namespace Flats4us.Entities
         public virtual ICollection<OpinionStudentStudent> IssuedStudentStudentOpinions { get; set; }
         public virtual ICollection<OpinionOwnerStudent> ReceivedOwnertStudentOpinions { get; set; }
         public virtual ICollection<OpinionStudentOwner> IssuedStudentOwnerOpinions { get; set; }
-        //public virtual ICollection<Grindr> Grindrs { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Argument> Arguments { get; set; }
         [NotMapped]

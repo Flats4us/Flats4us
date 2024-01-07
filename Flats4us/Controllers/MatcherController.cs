@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Flats4us.Services.Interfaces;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flats4us.Controllers
 {
@@ -21,7 +21,8 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        [HttpGet("All-matches")]
+        [HttpGet("All")]
+        //[Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> GetAllMatches()
         {
             try
@@ -32,12 +33,13 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding argument - body: ");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message}");
             }
         }
 
-        [HttpGet("possible-matches")]
-        public async Task<IActionResult> GetMatches(int studentId)
+        [HttpGet("possible")]
+        //[Authorize(Policy = "VerifiedStudent")]
+        public async Task<IActionResult> Potential(int studentId)
         {
             try
             {
@@ -52,7 +54,8 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("match")]
-        public async Task<IActionResult> PostMatche(int student1Id, int student2Id, bool isAccept)
+        //[Authorize(Policy = "VerifiedStudent")]
+        public async Task<IActionResult> PostAndAccept(int student1Id, int student2Id, bool isAccept)
         {
             try
             {

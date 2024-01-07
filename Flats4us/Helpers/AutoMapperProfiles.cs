@@ -107,6 +107,15 @@ namespace Flats4us.Helpers
 
             CreateMap<StudentRegisterDto, SurveyStudent>();
 
+            CreateMap<Student, StudentForMatcherDto>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year-src.BirthDate.Year))
+                .ForMember(dest => dest.Interests, opt => opt.MapFrom(src => src.Interests))
+                .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.University))
+                .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => src.ImagesPath));
+
+
         }
     }
 }
