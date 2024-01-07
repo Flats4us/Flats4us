@@ -45,6 +45,30 @@ namespace Flats4us.Controllers
             }
         }
 
+        [HttpGet("mine")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Returns list of offers for current owner",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<ActionResult> GetOffersForCurrentOwner()
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var offers = await _offerService.GetOffersForCurrentUserAsync(requestUserId);
+                return Ok(offers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
         // GET: api/offers
         [HttpGet]
         [SwaggerOperation(

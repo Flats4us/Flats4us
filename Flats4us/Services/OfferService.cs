@@ -38,10 +38,7 @@ namespace Flats4us.Services
                 .Include(o => o.SurveyOwnerOffer)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
-            if (offer is null)
-            {
-                throw new ArgumentException($"Offer with ID {id} not found.");
-            }
+            if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
 
             var result = _mapper.Map<OfferDto>(offer);
 
@@ -84,7 +81,11 @@ namespace Flats4us.Services
 
             var promotedOffersCount = promotedOffers.Count();
 
-            var randomPromotedOffers = promotedOffers.OrderBy(o => random.Next()).Take(3).Select(o => _mapper.Map<OfferDto>(o)).ToList();
+            var randomPromotedOffers = promotedOffers
+                .OrderBy(o => random.Next())
+                .Take(3)
+                .Select(o => _mapper.Map<OfferDto>(o))
+                .ToList();
 
             var randomPromotedOffersCount = randomPromotedOffers.Count();
 
@@ -225,11 +226,37 @@ namespace Flats4us.Services
                 .Take(input.PageSize-randomPromotedOffersCount)
                 .ToList();
 
-            var joinedOffers = randomPromotedOffers.Concat(notPromotedOffers).ToList();
+            var joinedOffers = new List<OfferDto>(notPromotedOffers);
+            foreach (var promoted in randomPromotedOffers)
+            {
+                int insertIndex = random.Next(0, joinedOffers.Count);
+                joinedOffers.Insert(insertIndex, promoted);
+            }
 
             var result = new CountedListDto<OfferDto> {
                 TotalCount = totalCount,
                 Result = joinedOffers
+            };
+
+            return result;
+        }
+
+        public async Task<CountedListDto<OfferDto>> GetOffersForCurrentUserAsync(int ownerId)
+        {
+            var offers = await _context.Offers
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Owner)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Equipment)
+                .Include(o => o.SurveyOwnerOffer)
+                .Where(o => o.Property.OwnerId == ownerId)
+                .Select(offer => _mapper.Map<OfferDto>(offer))
+                .ToListAsync();
+
+            var result = new CountedListDto<OfferDto>
+            {
+                TotalCount = offers.Count,
+                Result = offers
             };
 
             return result;
@@ -327,7 +354,6 @@ namespace Flats4us.Services
 
             return result;
         }
-
 
         public async Task AddOfferInterestAsync(int offerId, int studentId)
         {

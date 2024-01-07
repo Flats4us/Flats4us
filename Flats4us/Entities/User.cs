@@ -28,7 +28,7 @@ namespace Flats4us.Entities
         public string Email { get; set; }
 
         [MinLength(8)]
-        [MaxLength(70)]
+        [MaxLength(50)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
         public string PasswordHash { get; set; }
 
