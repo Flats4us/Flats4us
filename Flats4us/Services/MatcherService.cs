@@ -29,70 +29,55 @@ namespace Flats4us.Services
         }
 
 
-        public async Task<List<StudentForMatcherDto>> GetPotentialRoommate(int studentId)
+        public async Task<List<StudentForMatcherDto>> GetPotentialRoommateAsync(int studentId)
         {
-            var requestingStudent = _context.Students
+            var requestingStudent = await _context.Students
                 .Include(requesting => requesting.SurveyStudent)
-                .FirstOrDefault(requesting => requesting.UserId == studentId);
+                .FirstOrDefaultAsync(requesting => requesting.UserId == studentId);
 
             if (requestingStudent == null)
             { 
                 return null;
             }
 
-            var potentialRoommates = _context.Students
+            var potentialRoommates = await _context.Students
                 .Include(potential => potential.SurveyStudent)
+                .Include(potential => potential.Interests)
                 .Where(potential =>
                     potential.SurveyStudent.LookingForRoommate &&
                     potential.UserId != studentId &&
                     potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
-                    (/*!potential.SurveyStudent.MinRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year-potential.BirthDate.Year)) &&
-                    (/*!potential.SurveyStudent.MaxRoommateAge.HasValue ||*/ requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year-potential.BirthDate.Year)))
+                    (requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year-potential.BirthDate.Year)) &&
+                    (requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year-potential.BirthDate.Year)))
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
-                /*.Select(potential => new StudentDto
-                {
-                    Name = potential.Name,
-                    Surname = potential.Surname,
-                    BirthDate = potential.BirthDate,
-                    StudentNumber = potential.StudentNumber,
-                    University = potential.University
-                })*/
                 .ToListAsync();
 
-            return await potentialRoommates;
+            return potentialRoommates;
         }
 
-        public async Task AcceptStudent(int student1Id, int student2Id, bool isAccept)
+        public async Task AcceptStudentAsync(int student1Id, int student2Id, bool isAccept)
         {
-            var h = _context.Matcher  
+            var match = await _context.Matcher  
                 .Where( x =>(
                  x.Student1Id == student1Id && x.Student2Id == student2Id) || 
                 (x.Student1Id == student2Id && x.Student2Id == student1Id))
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
-            if (h == null)
+            if (match == null)
             {
-                h = new Matcher
+                match = new Matcher
                 {
                     Student1Id = Math.Min(student1Id, student2Id),
                     Student2Id = Math.Max(student1Id, student2Id),
                     IsStudent1Interested = true,
                     IsStudent2Interested = null
                 };
-                _context.Matcher.Add(h);
+                await _context.Matcher.AddAsync(match);
             }
             else
             {
-                h.IsStudent2Interested = isAccept;
-                //if (h.Student1Id == student1Id)
-                //{
-                //    h.IsStudent1Interested = isAccept;
-                //}
-                //else
-                //{
-                //    h.IsStudent2Interested = isAccept;
-                //}
+                match.IsStudent2Interested = isAccept;
             }
 
             await _context.SaveChangesAsync();

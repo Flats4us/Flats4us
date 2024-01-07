@@ -4,11 +4,24 @@ using Flats4us.Entities.Dto;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class UserProfilePictureUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, FileDto>
+    public class UserProfilePictureUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, List<FileDto>>, IValueResolver<Student, StudentForMatcherDto, List<FileDto>>
     {
-        public FileDto Resolve(OwnerStudent source, UserForVerificationDto destination, FileDto destMember, ResolutionContext context)
+        public List<FileDto> Resolve(OwnerStudent source, UserForVerificationDto destination, List<FileDto> destMember, ResolutionContext context)
         {
-            var directoryPath = Path.Combine("Images", "Users", source.ImagesPath, "ProfilePicture");
+            return GetProfilePictureUrl(source.ImagesPath);
+        }
+
+        public List<FileDto> Resolve(Student source, StudentForMatcherDto destination, List<FileDto> destMember, ResolutionContext context)
+        {
+            return GetProfilePictureUrl(source.ImagesPath);
+        }
+
+
+        public List<FileDto> GetProfilePictureUrl(string directoryId)
+        {
+            var directoryPath = Path.Combine("Images", "Users", directoryId, "ProfilePicture");
+            
+            List<FileDto> imageFiles = new List<FileDto>();
 
             if (Directory.Exists(directoryPath))
             {
@@ -18,10 +31,17 @@ namespace Flats4us.Helpers.AutoMapperResolvers
                 {
                     var fileNameWithExtension = Path.GetFileName(files[0]);
                     var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(files[0]);
-                    return new FileDto { Name = fileNameWithoutExtension, Path = Path.Combine(directoryPath, fileNameWithExtension) };
+                    imageFiles.Add( new FileDto { Name = fileNameWithoutExtension, Path = Path.Combine(directoryPath, fileNameWithExtension) });
                 }
             }
-            return new FileDto();
+            return imageFiles; 
         }
+
+
+
+
+
+
+
     }
 }
