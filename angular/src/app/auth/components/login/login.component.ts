@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -15,9 +15,9 @@ import { map } from 'rxjs';
 })
 export class LoginComponent extends BaseComponent {
 	public hide = true;
-	public loginForm: FormGroup = this.fb.group({
-		email: ['', Validators.required, Validators.email],
-		password: ['', Validators.required, Validators.minLength(8)],
+	public loginForm: FormGroup = new FormGroup({
+		email: new FormControl('', [Validators.required, Validators.email]),
+		password: new FormControl('', [Validators.required, Validators.minLength(8)]),
 	});
 	public invalidCredentials$ = this.loginForm.statusChanges.pipe(
 		map(() => this.loginForm.hasError('invalidCredentials')),
@@ -25,7 +25,6 @@ export class LoginComponent extends BaseComponent {
 	);
 
 	constructor(
-		private fb: FormBuilder,
 		private snackBar: MatSnackBar,
 		private service: AuthService,
 		private router: Router,
@@ -38,20 +37,20 @@ export class LoginComponent extends BaseComponent {
 		this.service
 			.login(this.loginForm.value)
 			.pipe(this.untilDestroyed())
-			.subscribe(
-				() => (
+			.subscribe({
+				next: () => {
 					this.snackBar.open('Zalogowano pomyślnie!', 'Zamknij', {
 						duration: 2000,
-					}),
+					});
 					this.router.navigateByUrl(
 						this.route.snapshot.queryParamMap.get('returnUrl') || '/'
-					)
-				),
-				(error: HttpErrorResponse) => {
+					);
+				},
+				error: (error: HttpErrorResponse) => {
 					if (error.status === 401) {
 						this.loginForm.setErrors({ invalidCredentials: true });
 					}
-				}
-			);
+				},
+			});
 	}
 }
