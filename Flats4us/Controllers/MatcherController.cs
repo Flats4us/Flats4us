@@ -78,9 +78,9 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("match")]
+        [HttpPost("api/matcher/accept/students/{student2Id}")]
         [Authorize(Policy = "VerifiedStudent")]
-        public async Task<IActionResult> PostOrAccept(int student2Id, [FromBody] bool isAccept)
+        public async Task<IActionResult> PostOrAccept([FromBody] bool isAccept)
         {
             try
             {
