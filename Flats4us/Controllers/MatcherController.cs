@@ -40,6 +40,7 @@ namespace Flats4us.Controllers
         //}
 
         [HttpGet("getMatchersByStudentId")]
+        [Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> ByStudentId()
         {
             try
@@ -78,9 +79,9 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("api/matcher/accept/students/{student2Id}")]
+        [HttpPost("accept/students/{studentId}")]
         [Authorize(Policy = "VerifiedStudent")]
-        public async Task<IActionResult> PostOrAccept([FromBody] bool isAccept)
+        public async Task<IActionResult> PostOrAccept(int studentId, [FromBody] bool isAccept)
         {
             try
             {
@@ -90,7 +91,7 @@ namespace Flats4us.Controllers
                 }
 
                 _logger.LogInformation("Posting Or Accepting Matcher");
-                await _matcherService.AcceptStudentAsync(requestUserId, student2Id, isAccept);
+                await _matcherService.AcceptStudentAsync(requestUserId, studentId, isAccept);
                 return Ok();
             }
             catch (Exception ex)
