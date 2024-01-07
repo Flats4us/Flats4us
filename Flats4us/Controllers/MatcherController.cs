@@ -22,7 +22,7 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("All")]
-        //[Authorize(Policy = "VerifiedStudent")]
+        [Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> GetAllMatches()
         {
             try
@@ -38,7 +38,7 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("possible")]
-        //[Authorize(Policy = "VerifiedStudent")]
+        [Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> Potential(int studentId)
         {
             try
@@ -54,7 +54,7 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("match")]
-        //[Authorize(Policy = "VerifiedStudent")]
+        [Authorize(Policy = "VerifiedStudent")]
         public async Task<IActionResult> PostAndAccept(int student1Id, int student2Id, bool isAccept)
         {
             try
