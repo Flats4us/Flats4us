@@ -1,6 +1,7 @@
 ﻿using Flats4us.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.FileSystemGlobbing;
 using System.Drawing;
 using System.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -16,9 +17,9 @@ namespace Flats4us.Entities
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Flat> Flats { get; set; }
-        public DbSet<Matcher> Matcher { get; set; }
         public DbSet<House> Houses { get; set; }
         public DbSet<Interest> Interests { get; set; }
+        public DbSet<Matcher> Matcher { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Moderator> Moderators { get; set; }
         public DbSet<Offer> Offers { get; set; }
