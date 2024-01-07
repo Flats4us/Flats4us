@@ -1322,7 +1322,7 @@ public static class DataSeeder
 
         #region Grindr
 
-        var grindr1 = new Grindr
+        var grindr1 = new Matcher
         {
             IsStudent1Interested = true,
             IsStudent2Interested = false,
@@ -1330,7 +1330,7 @@ public static class DataSeeder
             Student2 = student4
         };
 
-        dbContext.Grindr.AddRange(grindr1);
+        dbContext.Matcher.AddRange(grindr1);
 
         #endregion
 

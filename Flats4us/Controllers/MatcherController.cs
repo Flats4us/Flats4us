@@ -6,16 +6,16 @@ namespace Flats4us.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GrindrController : ControllerBase
+    public class MatcherController : ControllerBase
     {
-        private readonly IGrindrService _grindrtService;
-        private readonly ILogger<GrindrController> _logger;
+        private readonly IMatcherService _matcherService;
+        private readonly ILogger<MatcherController> _logger;
 
-        public GrindrController(
-            IGrindrService grindrService,
-            ILogger<GrindrController> logger)
+        public MatcherController(
+            IMatcherService matcherService,
+            ILogger<MatcherController> logger)
         {
-            _grindrtService = grindrService;
+            _matcherService = matcherService;
             _logger = logger;
         }
 
@@ -25,7 +25,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting Matches");
-                return Ok(await _grindrtService.GetAllMatches());
+                return Ok(await _matcherService.GetAllMatches());
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting Matches");
-                return Ok(await _grindrtService.GetPotentialRoommate(studentId));
+                return Ok(await _matcherService.GetPotentialRoommate(studentId));
             }
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Posting Argument");
-                await _grindrtService.AcceptStudent(student1Id, student2Id, isAccept);
+                await _matcherService.AcceptStudent(student1Id, student2Id, isAccept);
                 return Ok();
             }
             catch (Exception ex)
