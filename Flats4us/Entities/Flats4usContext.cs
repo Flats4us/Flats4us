@@ -18,6 +18,7 @@ namespace Flats4us.Entities
         public DbSet<Flat> Flats { get; set; }
         public DbSet<House> Houses { get; set; }
         public DbSet<Interest> Interests { get; set; }
+        public DbSet<Matcher> Matcher { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Moderator> Moderators { get; set; }
         public DbSet<Offer> Offers { get; set; }
@@ -133,6 +134,28 @@ namespace Flats4us.Entities
                 .WithMany(x => x.OfferPromotions)
                 .HasForeignKey(x => x.OfferId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Matcher>()
+                .HasOne(x => x.Student1)
+                .WithMany()
+                .HasForeignKey(x => x.Student1Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Matcher>()
+                .HasOne(x => x.Student2)
+                .WithMany()
+                .HasForeignKey(x => x.Student2Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Matcher>()
+                .HasIndex(x => new { x.Student1Id, x.Student2Id })
+                .IsUnique();
+
+            modelBuilder.Entity<Matcher>()
+                .ToTable(builder =>
+                {
+                    builder.HasCheckConstraint("CK_Matcher_StudentIds", "Student1Id < Student2Id");
+                });
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
