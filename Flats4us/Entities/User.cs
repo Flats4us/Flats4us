@@ -27,6 +27,7 @@ namespace Flats4us.Entities
         [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
         [MinLength(8)]
         [MaxLength(50)]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
