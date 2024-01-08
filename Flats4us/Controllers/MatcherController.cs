@@ -23,21 +23,21 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        [HttpGet("All")]
-        [Authorize(Policy = "VerifiedStudent")]
-        public async Task<IActionResult> GetAllMatches()
-        {
-            try
-            {
-                _logger.LogInformation("Getting Matches");
-                return Ok(await _matcherService.GetAllMatches());
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"FAILED: Adding argument - body: ");
-                return BadRequest($"An error occurred: {ex.Message}");
-            }
-        }
+        //[HttpGet("All")]
+        //[Authorize(Policy = "VerifiedStudent")]
+        //public async Task<IActionResult> GetAllMatches()
+        //{
+        //    try
+        //    {
+        //        _logger.LogInformation("Getting Matches");
+        //        return Ok(await _matcherService.GetAllMatches());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogInformation($"FAILED: Adding argument - body: ");
+        //        return BadRequest($"An error occurred: {ex.Message}");
+        //    }
+        //}
 
         [HttpGet("getMatchersByStudentId")]
         [Authorize(Policy = "VerifiedStudent")]
