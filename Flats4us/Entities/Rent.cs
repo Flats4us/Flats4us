@@ -9,19 +9,19 @@ namespace Flats4us.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RentId { get; set; }
 
-        public DateTime? StartDate { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
 
         public DateTime? NextPaymentDate { get; set; }
 
         [Required]
         public DateTime EndDate { get; set; }
 
+        [Required]
+        public int StudentId { get; set; }
 
         [Required]
         public int OfferId {  get; set; }
-
-        [Required]
-        public int StudentId { get; set; }
 
         public virtual OpinionRent OpinionRent { get; set; }
 
