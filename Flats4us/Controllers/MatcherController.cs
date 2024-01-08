@@ -53,7 +53,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Getting Students for Match for current user");
+                _logger.LogInformation($"FAILED: Getting Students for Match for student ID: {requestUserId}");
                 return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
@@ -74,7 +74,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Getting potential Matches for current user");
+                _logger.LogInformation($"FAILED: Getting potential Matches for student ID: {requestUserId}");
                 return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
