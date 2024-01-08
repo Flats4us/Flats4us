@@ -1457,10 +1457,10 @@ public static class DataSeeder
             Animals = false,
             Vegan = true,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 2,
+            MaxNumberOfRoommates = 3,
             RoommateGender = 0,
             MinRoommateAge = 25,
-            MaxRoommateAge = 35,
+            MaxRoommateAge = 50,
             Student = student5
         };
 
