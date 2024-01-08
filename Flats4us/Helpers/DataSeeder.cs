@@ -1230,7 +1230,7 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
 
         #endregion
-          
+        
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion
@@ -1457,10 +1457,10 @@ public static class DataSeeder
             Animals = false,
             Vegan = true,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 2,
+            MaxNumberOfRoommates = 3,
             RoommateGender = 0,
             MinRoommateAge = 25,
-            MaxRoommateAge = 35,
+            MaxRoommateAge = 50,
             Student = student5
         };
 
