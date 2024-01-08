@@ -27,9 +27,10 @@ namespace Flats4us.Entities
         [EmailAddress]
         public string Email { get; set; }
 
-        [MinLength(8)]
-        [MaxLength(50)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
+        [Required]
+        //[MinLength(8)]
+        //[MaxLength(50)]
+        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
         public string PasswordHash { get; set; }
 
         [Required]
