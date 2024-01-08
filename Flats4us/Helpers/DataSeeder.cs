@@ -1565,13 +1565,13 @@ public static class DataSeeder
 
         #region Matcher
 
-        //var match1 = new Matcher
-        //{
-        //    IsStudent1Interested = true,
-        //    IsStudent2Interested = false,
-        //    Student1 = student3,
-        //    Student2 = student4
-        //};
+        var match1 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = false,
+            Student1 = student3,
+            Student2 = student4
+        };
         var match2 = new Matcher
         {
             IsStudent1Interested = true,
@@ -1586,20 +1586,20 @@ public static class DataSeeder
             Student1 = student4,
             Student2 = student5
         };
-        //var match4 = new Matcher
-        //{
-        //    IsStudent1Interested = true,
-        //    IsStudent2Interested = true,
-        //    Student1 = student3,
-        //    Student2 = student7
-        //};
-        //var match5 = new Matcher
-        //{
-        //    IsStudent1Interested = true,
-        //    IsStudent2Interested = true,
-        //    Student1 = student3,
-        //    Student2 = student10
-        //};
+        var match4 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = true,
+            Student1 = student3,
+            Student2 = student7
+        };
+        var match5 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = true,
+            Student1 = student3,
+            Student2 = student10
+        };
         var match6 = new Matcher
         {
             IsStudent1Interested = true,
@@ -1608,7 +1608,7 @@ public static class DataSeeder
             Student2 = student3
         };
 
-        dbContext.Matcher.AddRange(/*match1,*/ match2, match3,/* match4, match5,*/ match6);
+        dbContext.Matcher.AddRange(match1, match2, match3, match4, match5, match6);
 
         #endregion
 
