@@ -5,7 +5,7 @@ import { IConversation } from '@shared/models/conversation.models';
 import { map, Observable } from 'rxjs';
 
 @Component({
-	selector: 'app-disputes-conversation',
+	selector: 'app-dispute-conversation-conversation',
 	templateUrl: './disputes-conversation.component.html',
 	styleUrls: ['./disputes-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

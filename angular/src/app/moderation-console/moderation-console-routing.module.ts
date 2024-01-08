@@ -15,8 +15,11 @@ const routes: Routes = [
 				path: 'verify/:verification-type',
 				component: VerificationComponent,
 			},
-			{ path: 'dispute', component: DisputeComponent },
-			{ path: 'dispute/:id', component: DisputeConversationComponent },
+			{
+				path: 'dispute',
+				component: DisputeComponent,
+				children: [{ path: ':id', component: DisputeConversationComponent }],
+			},
 		],
 	},
 ];

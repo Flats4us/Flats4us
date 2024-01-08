@@ -32,7 +32,7 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 	},
 	{
-		path: 'disputes',
+		path: 'dispute-conversation',
 		loadChildren: () =>
 			import('./disputes/disputes.module').then(m => m.DisputesModule),
 		canActivate: [AuthGuard],

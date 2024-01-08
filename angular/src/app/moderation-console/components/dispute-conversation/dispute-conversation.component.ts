@@ -6,11 +6,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 import { IConversation } from '@shared/models/conversation.models';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-dispute-conversation',
@@ -62,11 +63,16 @@ export class DisputeConversationComponent {
 	}
 
 	public OnSubmit() {
-		this.snackBar.open('Spór zostaw zamknięty', 'Zamknij', {
+		const ref = this.snackBar.open('Spór zostaw zamknięty', 'Zamknij', {
 			duration: 2000,
 		});
-		this.snackBar._openedSnackBarRef?.afterDismissed().subscribe(() => {
-			this.router.navigate(['moderation-console/dispute']);
-		});
+		const onDestroy = new Subject<void>();
+
+		ref
+			.afterDismissed()
+			.pipe(takeUntil(onDestroy))
+			.subscribe(() => {
+				this.router.navigate(['moderation-console/dispute']);
+			});
 	}
 }
