@@ -288,10 +288,35 @@ public static class DataSeeder
             Interests = { interest8, interest7, interest2 }
         };
 
-        dbContext.Students.AddRange(student1, student2);
+        var student3 = new Student
+        {
+            Name = "Kuba",
+            Surname = "Filipek",
+            Address = "Racławicka 26, 02-601 Warszawa",
+            Email = "kfilipek@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 1, 12),
+            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            LastLoginDate = new DateTime(2023, 10, 12),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kfilipek123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 12, 8),
+            BirthDate = new DateTime(1978, 12, 1),
+            StudentNumber = "s2137",
+            University = "UW",
+            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            IsTenant = false,
+            Interests = { interest8, interest7, interest2 }
+        };
+
+        dbContext.Students.AddRange(student1, student2, student3);
 
         ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
         ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student3.ImagesPath, student3.VerificationStatus, student3.DocumentType).Wait();
 
         #endregion
 

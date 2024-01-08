@@ -18,13 +18,16 @@ namespace Flats4us.Controllers
     public class OfferController : ControllerBase
     {
         private readonly IOfferService _offerService;
+        private readonly IRentService _rentService;
         private readonly ILogger<OfferController> _logger;
 
         public OfferController(
             IOfferService offerService,
+            IRentService rentService,
             ILogger<OfferController> logger)
         {
             _offerService = offerService;
+            _rentService = rentService;
             _logger = logger;
         }
 
@@ -239,33 +242,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _offerService.ProposeRentAsync(input, requestUserId, offerId);
-                _logger.LogInformation($"Adding rent proposition for offer ID: {offerId}");
-                return Ok("Rent proposition added");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred: {ex.Message}");
-            }
-        }
-
-        // POST: api/offers/{offerId}/rent
-        [HttpPost("{offerId}/rent")]
-        [Authorize(Policy = "VerifiedStudent")]
-        [SwaggerOperation(
-            Summary = "Adds rent proposition to an offer",
-            Description = "Requires verified student privileges"
-        )]
-        public async Task<IActionResult> ProposeRent(int offerId, ProposeRentDto input)
-        {
-            try
-            {
-                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
-                {
-                    return BadRequest("Server error: Failed to get user id from request");
-                }
-
-                await _offerService.ProposeRentAsync(input, requestUserId, offerId);
+                await _rentService.ProposeRentAsync(input, requestUserId, offerId);
                 _logger.LogInformation($"Adding rent proposition for offer ID: {offerId}");
                 return Ok("Rent proposition added");
             }

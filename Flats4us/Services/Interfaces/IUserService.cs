@@ -1,5 +1,4 @@
-﻿using Flats4us.Entities;
-using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services.Interfaces
 {
