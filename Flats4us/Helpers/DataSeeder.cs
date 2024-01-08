@@ -328,7 +328,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(1968, 12, 1), //55 lat
+            BirthDate = new DateTime(1998, 12, 1), //25 lat
             StudentNumber = "s12345",
             University = "AWF",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
@@ -391,7 +391,7 @@ public static class DataSeeder
             PhoneNumber = "789012345",
             AccountCreationDate = new DateTime(2023, 4, 10),
             DateForVerificationSorting = new DateTime(2023, 4, 10),
-            LastLoginDate = new DateTime(2024, 1, 10),
+            LastLoginDate = new DateTime(2024, 1, 1),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwisniewska123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
@@ -415,7 +415,7 @@ public static class DataSeeder
             PhoneNumber = "654321098",
             AccountCreationDate = new DateTime(2023, 5, 15),
             DateForVerificationSorting = new DateTime(2023, 5, 15),
-            LastLoginDate = new DateTime(2024, 2, 15),
+            LastLoginDate = new DateTime(2023, 12, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pzawadzki123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
@@ -438,7 +438,7 @@ public static class DataSeeder
             PhoneNumber = "876543210",
             AccountCreationDate = new DateTime(2023, 6, 25),
             DateForVerificationSorting = new DateTime(2023, 6, 25),
-            LastLoginDate = new DateTime(2024, 3, 25),
+            LastLoginDate = new DateTime(2023, 12, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kdabrowska123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
@@ -462,7 +462,7 @@ public static class DataSeeder
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 7, 10),
             DateForVerificationSorting = new DateTime(2023, 7, 10),
-            LastLoginDate = new DateTime(2024, 4, 10),
+            LastLoginDate = new DateTime(2023, 12, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lnowicki123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
@@ -484,6 +484,12 @@ public static class DataSeeder
         ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
         ImageUtility.SeedUserImage(student3.ImagesPath, student3.VerificationStatus, student3.DocumentType).Wait();
         ImageUtility.SeedUserImage(student4.ImagesPath, student4.VerificationStatus, student4.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student5.ImagesPath, student5.VerificationStatus, student5.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student6.ImagesPath, student6.VerificationStatus, student6.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student7.ImagesPath, student7.VerificationStatus, student7.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student8.ImagesPath, student8.VerificationStatus, student8.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student9.ImagesPath, student9.VerificationStatus, student9.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student10.ImagesPath, student10.VerificationStatus, student10.DocumentType).Wait();
 
         #endregion
 
@@ -1442,8 +1448,103 @@ public static class DataSeeder
             MaxRoommateAge = 100,
             Student = student4
         };
+        var surveyStudent5 = new SurveyStudent
+        {
+            Party = 3,
+            Tidiness = 2,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 35,
+            Student = student5
+        };
 
-        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4);
+        var surveyStudent6 = new SurveyStudent
+        {
+            Party = 2,
+            Tidiness = 3,
+            Smoking = false,
+            Sociability = true,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 4,
+            RoommateGender = 0,
+            MinRoommateAge = 22,
+            MaxRoommateAge = 28,
+            Student = student6
+        };
+
+        var surveyStudent7 = new SurveyStudent
+        {
+            Party = 4,
+            Tidiness = 1,
+            Smoking = true,
+            Sociability = false,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 28,
+            MaxRoommateAge = 40,
+            Student = student7
+        };
+
+        var surveyStudent8 = new SurveyStudent
+        {
+            Party = 2,
+            Tidiness = 2,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 24,
+            MaxRoommateAge = 32,
+            Student = student8
+        };
+        var surveyStudent9 = new SurveyStudent
+        {
+            Party = 3,
+            Tidiness = 3,
+            Smoking = false,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 26,
+            MaxRoommateAge = 36,
+            Student = student9
+        };
+
+        var surveyStudent10 = new SurveyStudent
+        {
+            Party = 1,
+            Tidiness = 2,
+            Smoking = true,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 4,
+            RoommateGender = 0,
+            MinRoommateAge = 23,
+            MaxRoommateAge = 29,
+            Student = student10
+        };
+
+
+        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10);
 
         #endregion
 
@@ -1485,8 +1586,22 @@ public static class DataSeeder
             Student1 = student4,
             Student2 = student5
         };
+        var match4 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = true,
+            Student1 = student3,
+            Student2 = student7
+        };
+        var match5 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = true,
+            Student1 = student3,
+            Student2 = student10
+        };
 
-        dbContext.Matcher.AddRange(match1, match2, match3);
+        dbContext.Matcher.AddRange(match1, match2, match3, match4, match5);
 
         #endregion
 
