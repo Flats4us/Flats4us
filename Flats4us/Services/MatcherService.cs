@@ -23,21 +23,39 @@ namespace Flats4us.Services
 
         }
 
-        //public async Task<List<Matcher>> GetAllMatches()
+        public async Task<List<Matcher>> GetAllMatches()
+        {
+            return await _context.Matcher.ToListAsync();
+        }
+
+        //public async Task<List<StudentDto>> GetMatchByStudentId(int id)
         //{
-        //    return await _context.Matcher.ToListAsync();
+        //    var matchers = await _context.Students
+        //        .Include(m => m.Matchers)
+        //        .Where(m => (m.Matchers.Any(x => (x.Student1Id == id || x.Student2Id == id)
+        //                && (x.IsStudent1Interested == true && x.IsStudent2Interested == true))))
+        //        .Select(potential => _mapper.Map<StudentDto>(potential))
+        //        .ToListAsync();
+
+        //    return matchers;
+
         //}
 
-        public async Task<List<StudentDto>> GetMatchByStudentId(int id)
+        public async Task<List<StudentForMatcherDto>> GetMatchByStudentId(int requestUserId)
         {
-            var matchers = await _context.Students
-                .Include(m => m.Matchers)
-                .Where(m =>( m.Matchers.Any(x => (x.Student1Id == id || x.Student2Id == id)
-                        && ( x.IsStudent1Interested == true && x.IsStudent2Interested == true))))
-                .Select(potential => _mapper.Map<StudentDto>(potential))
+            var matchingIds = await _context.Matcher
+                .Where(m => (m.Student1Id == requestUserId || m.Student2Id == requestUserId)
+                            && m.IsStudent1Interested == true && m.IsStudent2Interested == true)
+                .Select(m => m.Student1Id == requestUserId ? m.Student2Id : m.Student1Id)
+                .Distinct()
                 .ToListAsync();
 
-            return matchers;
+            var matchingStudents = await _context.Students
+                .Where(s => matchingIds.Contains(s.UserId) && s.UserId != requestUserId)
+                .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
+                .ToListAsync();
+
+            return matchingStudents;
         }
 
         public async Task<List<StudentForMatcherDto>> GetPotentialRoommateAsync(int studentId)

@@ -340,12 +340,12 @@ public static class DataSeeder
             Name = "Anna",
             Surname = "Nowak",
             Address = "Piotrkowska 22/8, 90-101 Łódź",
-            Email = "annanowak@gmail.com",
+            Email = "anowak@gmail.com",
             PhoneNumber = "987654321",
             AccountCreationDate = new DateTime(2023, 2, 5),
             DateForVerificationSorting = new DateTime(2023, 2, 5),
             LastLoginDate = new DateTime(2023, 11, 5),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Annanowak123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowak123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -356,6 +356,7 @@ public static class DataSeeder
             University = "Politechnika Łódzka",
             Links = "https://www.facebook.com/anna.nowak|https://twitter.com/annanowak|https://www.instagram.com/annanowak/",
             IsTenant = true,
+            Interests = { interest6, interest3, interest8 }
         };
 
         var student6 = new Student
@@ -363,12 +364,12 @@ public static class DataSeeder
             Name = "Mateusz",
             Surname = "Kowalski",
             Address = "Aleje Jerozolimskie 45/3, 00-697 Warszawa",
-            Email = "mateuszkowalski@gmail.com",
+            Email = "mkoowalski@gmail.com",
             PhoneNumber = "555666777",
             AccountCreationDate = new DateTime(2023, 3, 20),
             DateForVerificationSorting = new DateTime(2023, 3, 20),
             LastLoginDate = new DateTime(2023, 12, 20),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mateuszkowalski123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkoowalski123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -379,18 +380,19 @@ public static class DataSeeder
             University = "Uniwersytet Warszawski",
             Links = "https://www.facebook.com/mateusz.kowalski|https://twitter.com/mateuszkowal|https://www.instagram.com/mateuszkowalski/",
             IsTenant = false,
+            Interests = { interest1, interest3, interest9 }
         };
         var student7 = new Student
         {
             Name = "Marta",
             Surname = "Wiśniewska",
             Address = "ul. Lecha 7/15, 50-501 Wrocław",
-            Email = "martawisniewska@gmail.com",
+            Email = "mwisniewska@gmail.com",
             PhoneNumber = "789012345",
             AccountCreationDate = new DateTime(2023, 4, 10),
             DateForVerificationSorting = new DateTime(2023, 4, 10),
             LastLoginDate = new DateTime(2024, 1, 10),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Martawisniewska123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwisniewska123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -401,6 +403,7 @@ public static class DataSeeder
             University = "Uniwersytet Wrocławski",
             Links = "https://www.facebook.com/marta.wisniewska|https://twitter.com/martawisniewska|https://www.instagram.com/martawisniewska/",
             IsTenant = true,
+            Interests = { interest19, interest17, interest6 }
         };
 
         var student8 = new Student
@@ -408,12 +411,12 @@ public static class DataSeeder
             Name = "Piotr",
             Surname = "Zawadzki",
             Address = "ul. Mickiewicza 3/2, 30-059 Kraków",
-            Email = "piotrzawadzki@gmail.com",
+            Email = "pzawadzki@gmail.com",
             PhoneNumber = "654321098",
             AccountCreationDate = new DateTime(2023, 5, 15),
             DateForVerificationSorting = new DateTime(2023, 5, 15),
             LastLoginDate = new DateTime(2024, 2, 15),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Piotrzawadzki123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pzawadzki123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -424,18 +427,19 @@ public static class DataSeeder
             University = "AGH Kraków",
             Links = "https://www.facebook.com/piotr.zawadzki|https://twitter.com/piotrzawadzki|https://www.instagram.com/piotrzawadzki/",
             IsTenant = false,
+            Interests = { interest4, interest15, interest8 }
         };
         var student9 = new Student
         {
             Name = "Karolina",
             Surname = "Dąbrowska",
             Address = "ul. Krakowska 18/7, 20-001 Lublin",
-            Email = "karolinadabrowska@gmail.com",
+            Email = "kdabrowska@gmail.com",
             PhoneNumber = "876543210",
             AccountCreationDate = new DateTime(2023, 6, 25),
             DateForVerificationSorting = new DateTime(2023, 6, 25),
             LastLoginDate = new DateTime(2024, 3, 25),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Karolinadabrowska123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kdabrowska123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -446,6 +450,7 @@ public static class DataSeeder
             University = "Katolicki Uniwersytet Lubelski",
             Links = "https://www.facebook.com/karolina.dabrowska|https://twitter.com/karolinadab|https://www.instagram.com/karolinadabrowska/",
             IsTenant = true,
+            Interests = { interest17, interest4, interest6 }
         };
 
         var student10 = new Student
@@ -453,12 +458,12 @@ public static class DataSeeder
             Name = "Łukasz",
             Surname = "Nowicki",
             Address = "ul. Armii Krajowej 14/4, 33-100 Tarnów",
-            Email = "lukasznowicki@gmail.com",
+            Email = "lnowicki@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 7, 10),
             DateForVerificationSorting = new DateTime(2023, 7, 10),
             LastLoginDate = new DateTime(2024, 4, 10),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lukasznowicki123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lnowicki123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -469,6 +474,7 @@ public static class DataSeeder
             University = "Politechnika Krakowska",
             Links = "https://www.facebook.com/lukasz.nowicki|https://twitter.com/lukasznowicki|https://www.instagram.com/lukasznowicki/",
             IsTenant = false,
+            Interests = { interest15, interest13, interest18 }
         };
 
 
