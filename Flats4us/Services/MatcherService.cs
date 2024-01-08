@@ -23,10 +23,10 @@ namespace Flats4us.Services
 
         }
 
-        //public async Task<List<Matcher>> GetAllMatches()
-        //{
-        //    return await _context.Matcher.ToListAsync();
-        //}
+        public async Task<List<Matcher>> GetAllMatches()
+        {
+            return await _context.Matcher.ToListAsync();
+        }
 
         public async Task<List<StudentForMatcherDto>> GetMatchByStudentId(int requestUserId)
         {
@@ -67,8 +67,9 @@ namespace Flats4us.Services
                     (requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year - potential.BirthDate.Year)) &&
                     (requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) &&
                     !_context.Matcher.Any(matcher =>
-                        (matcher.Student1Id == studentId && matcher.Student2Id == potential.UserId && matcher.IsStudent1Interested == true)
-                    ))
+                        (matcher.Student1Id == studentId && matcher.Student2Id == potential.UserId && matcher.IsStudent1Interested != null) ||
+                        (matcher.Student1Id == potential.UserId && matcher.Student2Id == studentId && matcher.IsStudent2Interested != null)
+                     ))
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
                 .Take(5)
                 .ToListAsync();
