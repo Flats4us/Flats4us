@@ -1,9 +1,3 @@
-mat-card {
-	margin: auto;
-	max-width: 90vw;
-	width: 640px;
-}
-
 mat-card-content {
 	padding: 24px;
 }
@@ -12,6 +6,7 @@ mat-form-field {
 	display: inline;
 }
 
-.mdc-button {
-	justify-content: left;
+.grid-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
 }
