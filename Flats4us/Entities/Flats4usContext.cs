@@ -161,6 +161,12 @@ namespace Flats4us.Entities
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<TechnicalProblem>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.TechnicalProblems)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
