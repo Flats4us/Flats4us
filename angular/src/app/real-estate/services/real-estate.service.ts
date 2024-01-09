@@ -1,11 +1,16 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import {
+	IAddProperty,
+	IAddResult,
 	IGroup,
 	INumeric,
+	IProperty,
 	IRegionCity,
 } from 'src/app/real-estate/models/real-estate.models';
+import { IEquipment } from 'src/app/start/models/start-site.models';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class RealEstateService {
@@ -239,16 +244,69 @@ export class RealEstateService {
 		{ value: 50, viewValue: '40' },
 		{ value: 100, viewValue: '80' },
 	];
-	public yearOfBuilds: string[] = [
-		'do 1950',
-		'od 1950 do 1989',
-		'od 1990 do 2010',
-		'od 2010',
+	public yearOfBuilds: INumeric[] = [
+		{ value: 1, viewValue: 'do 1950' },
+		{ value: 2, viewValue: 'od 1950 do 1989' },
+		{ value: 3, viewValue: 'od 1990 do 2010' },
+		{ value: 4, viewValue: 'od 2010' },
 	];
-	public properties: string[] = ['Dom', 'Mieszkanie', 'Pokój'];
-	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
+	public properties: INumeric[] = [
+		{ value: 0, viewValue: 'Mieszkanie' },
+		{ value: 1, viewValue: 'Dom' },
+		{ value: 2, viewValue: 'Pokój' },
+	];
+	public equipment: IEquipment[] = [];
+
+	protected apiRoute = `${environment.apiUrl}`;
 
 	constructor(private httpClient: HttpClient) {}
+
+	public getPropertyType(index: number): string {
+		switch (index) {
+			case 0: {
+				return 'Mieszkanie';
+				break;
+			}
+			case 1: {
+				return 'Dom';
+				break;
+			}
+			case 2: {
+				return 'Pokój';
+				break;
+			}
+			default: {
+				return '';
+				break;
+			}
+		}
+	}
+
+	public getPropertyStatus(index: number): string {
+		switch (index) {
+			case 0: {
+				return 'zweryfikowana';
+				break;
+			}
+			case 1: {
+				return 'niezweryfikowana';
+				break;
+			}
+			default: {
+				return '';
+				break;
+			}
+		}
+	}
+
+	public readAllEquipment(): Observable<IEquipment[]> {
+		return this.getEquipment('').pipe(
+			map(equipments => {
+				equipments.forEach(equipment => this.equipment.push(equipment));
+				return this.equipment;
+			})
+		);
+	}
 
 	public readCitiesForRegions(
 		regionCityArray: IRegionCity[],
@@ -273,5 +331,35 @@ export class RealEstateService {
 					return regionCityArray;
 				})
 			);
+	}
+
+	public addRealEstateFiles(
+		id: number,
+		formData: FormData,
+		headers: HttpHeaders
+	): Observable<void> {
+		return this.httpClient.post<void>(
+			`${this.apiRoute}/properties/${id}/files`,
+			formData,
+			{ headers }
+		);
+	}
+	public deleteRealEstate(id: number): Observable<void> {
+		return this.httpClient.delete<void>(`${this.apiRoute}/properties/${id}`);
+	}
+	public addRealEstate(property: IAddProperty): Observable<number> {
+		return this.httpClient
+			.post<IAddResult>(`${this.apiRoute}/properties`, property)
+			.pipe(map(result => result.result));
+	}
+	public getRealEstates(showOnlyVerified: boolean): Observable<IProperty[]> {
+		return this.httpClient.get<IProperty[]>(
+			`${this.apiRoute}/properties?showOnlyVerified=${showOnlyVerified}`
+		);
+	}
+	public getEquipment(name: string): Observable<IEquipment[]> {
+		return this.httpClient.get<IEquipment[]>(
+			`${this.apiRoute}/equipment?name=${name}`
+		);
 	}
 }

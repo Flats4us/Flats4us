@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RentsComponent } from './rents.component';
 import { RentsDetailsComponent } from './components/details/rents-details.component';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 
 const routes: Routes = [
 	{
-		path: '',
+		path: ':user',
 		component: RentsComponent,
-		children: [{ path: ':id', component: RentsDetailsComponent }],
+		children: [
+			{ path: ':id', component: RentsDetailsComponent },
+			{ path: '**', component: NotFoundComponent },
+		],
 	},
+	{ path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

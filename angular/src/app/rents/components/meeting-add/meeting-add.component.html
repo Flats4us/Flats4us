@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Dodaj spotkanie</h1>
+<div mat-dialog-content>
+	<form class="flex flex-col" [formGroup]="form">
+		<mat-form-field>
+			<mat-label>Data</mat-label>
+			<input
+				matInput
+				readonly
+				formControlName="date"
+				[min]="minDate"
+				[matDatepicker]="datepicker"
+			/>
+			<mat-datepicker-toggle
+				matIconSuffix
+				[for]="datepicker"
+			></mat-datepicker-toggle>
+			<mat-datepicker #datepicker></mat-datepicker>
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Miejsce</mat-label>
+			<input matInput formControlName="place" type="text" />
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Temat</mat-label>
+			<input matInput formControlName="reason" type="text" />
+		</mat-form-field>
+	</form>
+</div>
+<div mat-dialog-actions>
+	<button mat-button mat-dialog-close cdkFocusInitial (click)="onAdd()">
+		Dodaj
+	</button>
+	<button mat-button mat-dialog-close cdkFocusInitial>Anuluj</button>
+</div>

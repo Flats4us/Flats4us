@@ -1,0 +1,61 @@
+<div *ngIf="user$ | async as user">
+	<div class="box-title">
+		<div
+			*ngIf="(user$ | async) === uType.OWNER"
+			class="text-4xl p-4 font-semibold"
+		>
+			Przeglądanie ofert
+		</div>
+		<div
+			*ngIf="(user$ | async) === uType.DETAILS"
+			class="text-4xl p-4 font-semibold"
+		>
+			Widok oferty
+		</div>
+	</div>
+	<div *ngIf="(user$ | async) === uType.OWNER" class="offers-owner">
+		<div class="container-list">
+			<h1 class="text-3xl pl-4 font-semibold">
+				Moje oferty
+				<button
+					mat-icon-button
+					id="add"
+					class="box-icon"
+					aria-label="Add"
+					matTooltip="Dodaj ofertę"
+					(click)="addOffer()"
+				>
+					<mat-icon>add</mat-icon>
+				</button>
+			</h1>
+			<mat-divider class="divider"></mat-divider>
+			<mat-nav-list>
+				<a
+					*ngFor="let offer of offersOptions$ | async"
+					mat-list-item
+					class="item-list"
+					routerLink="{{ offer.offerId }}"
+					><div class="box-title">
+						<span class="text-xl font-bold">{{ offer.property.propertyType }}</span>
+						<mat-icon *ngIf="offer.offerStatus === 0" class="box-icon-valid"
+							>check_circle</mat-icon
+						>
+						<mat-icon *ngIf="offer.offerStatus === 1" class="box-icon-invalid"
+							>check_circle</mat-icon
+						>
+					</div>
+					<div class="box-date">Data {{ offer.startDate }}</div>
+				</a>
+			</mat-nav-list>
+		</div>
+		<div class="container-outlet">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+	<div
+		*ngIf="(user$ | async) === uType.STUDENT || (user$ | async) === uType.DETAILS"
+		class="offers-student"
+	>
+		<router-outlet></router-outlet>
+	</div>
+</div>
