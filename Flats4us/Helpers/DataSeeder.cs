@@ -1625,14 +1625,40 @@ public static class DataSeeder
         {
             Kind = TechnicalProblemEnum.Other,
             Description = "blablalba",
-            Date = DateTime.Now,
+            Date = new DateTime(2024, 1, 08),
+            Solved = true,
             User = student3
         };
         var technicalProblem2 = new TechnicalProblem
         {
             Kind = TechnicalProblemEnum.Payment,
             Description = "2blablalba",
-            Date = DateTime.Now,
+            Date = new DateTime(2024, 1, 04),
+            Solved = true,
+            User = student4
+        };
+        var technicalProblem3 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Payment,
+            Description = "3blablalba",
+            Date = new DateTime(2024, 1, 04),
+            Solved = false,
+            User = student4
+        };
+        var technicalProblem4 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Payment,
+            Description = "4blablalba",
+            Date = new DateTime(2023, 12, 30),
+            Solved = false,
+            User = student4
+        };
+        var technicalProblem5 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Payment,
+            Description = "5blablalba",
+            Date = new DateTime(2023, 12, 29),
+            Solved = false,
             User = student4
         };
 

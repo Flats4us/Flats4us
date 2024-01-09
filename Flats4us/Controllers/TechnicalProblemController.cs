@@ -33,7 +33,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Editing argument");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message}");
             }
         }
 

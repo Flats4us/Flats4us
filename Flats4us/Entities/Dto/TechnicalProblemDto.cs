@@ -13,6 +13,9 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public DateTime Date { get; set; }
+        
+        [Required]
+        public bool Solved { get; set; }
 
         public int UserId { get; set; }
     }

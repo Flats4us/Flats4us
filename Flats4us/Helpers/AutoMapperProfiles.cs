@@ -112,6 +112,7 @@ namespace Flats4us.Helpers
             .ForMember(dest => dest.Kind, opt => opt.MapFrom(src => src.Kind))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
+            .ForMember(dest => dest.Solved, opt => opt.MapFrom(src => src.Solved))
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
         }
