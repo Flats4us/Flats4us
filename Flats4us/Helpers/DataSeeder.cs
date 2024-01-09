@@ -3,6 +3,7 @@ using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 public static class DataSeeder
@@ -1550,22 +1551,6 @@ public static class DataSeeder
 
         #region OwnerOfferSurveys
 
-        var technicalProblem1 = new TechnicalProblem
-        {
-            Kind = TechnicalProblemEnum.Other,
-            Description = "blablalba",
-            Date = DateTime.Now,
-            UserId = 1
-        };
-        var technicalProblem2 = new TechnicalProblem
-        {
-            Kind = TechnicalProblemEnum.Payment,
-            Description = "2blablalba",
-            Date = DateTime.Now,
-            UserId = 2
-        };
-
-        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2);
 
         #endregion
 
@@ -1630,6 +1615,28 @@ public static class DataSeeder
         };
 
         dbContext.Matcher.AddRange(match1, match2, match3, match4, match5, match6);
+
+        #endregion
+
+        #region TechnicalProblem
+
+
+        var technicalProblem1 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Other,
+            Description = "blablalba",
+            Date = DateTime.Now,
+            User = student3
+        };
+        var technicalProblem2 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemEnum.Payment,
+            Description = "2blablalba",
+            Date = DateTime.Now,
+            User = student4
+        };
+
+        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2);
 
         #endregion
 
