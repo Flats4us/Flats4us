@@ -108,7 +108,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.University))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
-            CreateMap<TechnicalProblem, TechnicalProblemDto>()
+            CreateMap<TechnicalProblem, TechnicalProblemForMapperDto>()
             .ForMember(dest => dest.Kind, opt => opt.MapFrom(src => src.Kind))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))

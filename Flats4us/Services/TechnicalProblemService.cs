@@ -20,21 +20,21 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<CountedListDto<TechnicalProblemDto>> GetAllAsync(PaginatorDto input)
+        public async Task<CountedListDto<TechnicalProblemForMapperDto>> GetAllAsync(PaginatorDto input)
         {
             var problems= await _context.TechnicalProblems
                     .OrderBy(x => x.Solved)  
                     .ThenBy(x => x.Date)     
                     .ToListAsync();
 
-            var problems2 = _mapper.Map<List<TechnicalProblemDto>>(problems);
+            var problems2 = _mapper.Map<List<TechnicalProblemForMapperDto>>(problems);
 
             problems2 =problems2
                 .Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
 
-            var result = new CountedListDto<TechnicalProblemDto>
+            var result = new CountedListDto<TechnicalProblemForMapperDto>
             {
                 TotalCount = problems2.Count,
                 Result = problems2

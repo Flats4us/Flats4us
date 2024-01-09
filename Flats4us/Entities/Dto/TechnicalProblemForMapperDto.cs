@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
-    public class TechnicalProblemDto
+    public class TechnicalProblemForMapperDto
     {
         [Required]
         public TechnicalProblemEnum Kind { get; set; }
@@ -13,6 +13,10 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public DateTime Date { get; set; }
+
+        [Required]
+        public bool Solved { get; set; }
+
         public int UserId { get; set; }
     }
 }

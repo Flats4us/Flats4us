@@ -1,6 +1,6 @@
 ﻿namespace Flats4us.Helpers.Enums
 {
-    public enum TechnicalProblemEnum
+    public enum TechnicalProblemType
     {
         ApplicationOperation,
         Payment,

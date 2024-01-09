@@ -85,27 +85,5 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.InnerException.Message}");
             }
         }
-
-        //[HttpDelete("delete")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    try
-        //    {
-        //        _logger.LogInformation("Posting Technical Problems");
-        //        await _technicalProblemService.Delete(id);
-        //        return Ok();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogInformation($"FAILED: Editing argument");
-        //        return BadRequest($"An error occurred: {ex.InnerException.Message}");
-        //    }
-        //}
-
-
-
-
-
-
     }
 }
