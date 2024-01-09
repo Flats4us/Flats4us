@@ -82,5 +82,6 @@ import { MatRadioModule } from '@angular/material/radio';
 		AddOfferComponent,
 		SurveyComponent,
 	],
+	providers: [OfferService, RealEstateService, RentsService],
 })
 export class OfferModule {}
