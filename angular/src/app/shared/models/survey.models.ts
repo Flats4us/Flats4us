@@ -6,3 +6,13 @@ export enum typeName {
 	CHECKBOX = 'CHECKBOX',
 	SUBQUESTION = 'SUBQUESTION',
 }
+
+export interface IQuestionsData {
+	id: string;
+	name: string;
+	content: string;
+	trigger: boolean;
+	optional: boolean;
+	typeName: typeName;
+	answers: string[];
+}
