@@ -5,6 +5,7 @@ using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Flats4us.Entities;
 using System.Security.Claims;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -39,8 +40,12 @@ namespace Flats4us.Controllers
         //    }
         //}
 
-        [HttpGet("getMatchersByStudentId")]
+        [HttpGet("existingById")]
         [Authorize(Policy = "VerifiedStudent")]
+        [SwaggerOperation(
+            Summary = "Return list of matches for current user",
+            Description = "Requires verified student privileges"
+        )]
         public async Task<IActionResult> ByStudentId()
         {
             try
@@ -58,8 +63,12 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("possible")]
+        [HttpGet("potentialById")]
         [Authorize(Policy = "VerifiedStudent")]
+        [SwaggerOperation(
+            Summary = "Return list of potentail matches for current user",
+            Description = "Requires verified student privileges"
+        )]
         public async Task<IActionResult> Potential()
         {
             try
@@ -81,6 +90,10 @@ namespace Flats4us.Controllers
 
         [HttpPost("accept/students/{studentId}")]
         [Authorize(Policy = "VerifiedStudent")]
+        [SwaggerOperation(
+            Summary = "Posting new match or updating existing one",
+            Description = "Requires verified student privileges"
+        )]
         public async Task<IActionResult> PostOrAccept(int studentId, [FromBody] bool isAccept)
         {
             try
