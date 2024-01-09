@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Flats4us.Entities;
 using System.Security.Claims;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Cors;
 
 namespace Flats4us.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/matcher")]
     [ApiController]
     public class MatcherController : ControllerBase
