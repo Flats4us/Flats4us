@@ -1,8 +1,10 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	ElementRef,
 	OnDestroy,
 	OnInit,
+	ViewChild,
 } from '@angular/core';
 import { RentsService } from '../../services/rents.service';
 import { IMenuOptions, IPayment } from '../../models/rents.models';

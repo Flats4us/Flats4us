@@ -10,7 +10,6 @@ import { RegisterComponent } from './register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-	declarations: [RegisterComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
