@@ -149,7 +149,6 @@ namespace Flats4us.Services
                         DateForVerificationSorting = DateTime.Now,
                         NumberOfRooms = (int)input.NumberOfRooms,
                         Floor = (int)input.Floor,
-                        Elevator = input.Elevator,
                         OwnerId = ownerId,
                         Equipment = equipmentList
                     };
@@ -182,7 +181,6 @@ namespace Flats4us.Services
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
                         Floor = (int)input.Floor,
-                        Elevator = input.Elevator,
                         OwnerId = ownerId,
                         Equipment = equipmentList
                     };
@@ -343,7 +341,6 @@ namespace Flats4us.Services
                     flat.ConstructionYear = input.ConstructionYear;
                     flat.NumberOfRooms = (int)input.NumberOfRooms;
                     flat.Floor = (int)input.Floor;
-                    flat.Elevator = input.Elevator;
                     flat.Equipment = equipmentList;
                     flat.DateForVerificationSorting = DateTime.Now;
 
@@ -374,7 +371,6 @@ namespace Flats4us.Services
                     room.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     room.ConstructionYear = input.ConstructionYear;
                     room.Floor = (int)input.Floor;
-                    room.Elevator = input.Elevator;
                     room.Equipment = equipmentList;
                     room.DateForVerificationSorting = DateTime.Now;
 

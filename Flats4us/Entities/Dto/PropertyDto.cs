@@ -46,8 +46,6 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int ConstructionYear { get; set; }
 
-        public bool? Elevator { get; set; }
-
         [Required]
         public List<FileDto> Images { get; set; }
 

@@ -36,8 +36,6 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int ConstructionYear { get; set; }
 
-        public bool? Elevator { get; set; }
-
         public int? NumberOfRooms { get; set; }
 
         public int? Floor { get; set; }

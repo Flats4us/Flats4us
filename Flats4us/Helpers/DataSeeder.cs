@@ -57,8 +57,12 @@ public static class DataSeeder
         {
             Name = "Mikrofalówka"
         };
+        var equipment12 = new Equipment
+        {
+            Name = "Winda"
+        };
 
-        dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11);
+        dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11, equipment12);
 
         #endregion
 
@@ -537,7 +541,6 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 2,
             Floor = 2,
-            Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5 }
         };
         var flat2 = new Flat
@@ -561,7 +564,6 @@ public static class DataSeeder
             Owner = owner1,
             NumberOfRooms = 3,
             Floor = 2,
-            Elevator = false,
             Equipment = { equipment7, equipment9, equipment11 }
         };
         var flat3 = new Flat
@@ -585,7 +587,6 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 2,
             Floor = 7,
-            Elevator = true,
             Equipment = { equipment1, equipment3, equipment5, equipment6, equipment8 }
         };
         var flat4 = new Flat
@@ -609,7 +610,6 @@ public static class DataSeeder
             Owner = owner2,
             NumberOfRooms = 3,
             Floor = 2,
-            Elevator = false,
             Equipment = { equipment2, equipment4, equipment7, equipment9, equipment10 }
         };
         var flat5 = new Flat
@@ -633,7 +633,6 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 2,
             Floor = 3,
-            Elevator = false,
             Equipment = { equipment1, equipment2, equipment5, equipment8 }
         };
         var flat6 = new Flat
@@ -657,7 +656,6 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 3,
-            Elevator = true,
             Equipment = { equipment4, equipment6, equipment9 }
         };
         var flat7 = new Flat
@@ -681,7 +679,6 @@ public static class DataSeeder
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 9,
-            Elevator = true,
             Equipment = { equipment3, equipment4, equipment7, equipment10, equipment11 }
         };
         var flat8 = new Flat
@@ -705,7 +702,6 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 10,
-            Elevator = true,
             Equipment = { equipment1, equipment2, equipment5, equipment7, equipment8 }
         };
         var flat9 = new Flat
@@ -729,7 +725,6 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 4,
-            Elevator = true,
             Equipment = { equipment3, equipment6, equipment11 }
         };
         var flat10 = new Flat
@@ -753,7 +748,6 @@ public static class DataSeeder
             Owner = owner4,
             NumberOfRooms = 4,
             Floor = 2,
-            Elevator = true,
             Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
         
@@ -794,7 +788,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 6, 23),
             Owner = owner1,
             Floor = 4,
-            Elevator = false,
             Equipment = { equipment4, equipment5, equipment7, equipment9, equipment11 }
         };
         var room2 = new Room
@@ -817,7 +810,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 7, 22),
             Owner = owner1,
             Floor = 3,
-            Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment7, equipment10 }
         };
         var room3 = new Room
@@ -840,7 +832,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 10, 3),
             Owner = owner2,
             Floor = 1,
-            Elevator = false,
             Equipment = { equipment3, equipment6, equipment8, equipment11 }
         };
         var room4 = new Room
@@ -863,7 +854,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 8, 30),
             Owner = owner3,
             Floor = 4,
-            Elevator = false,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment8 }
         };
         var room5 = new Room
@@ -886,7 +876,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 3, 17),
             Owner = owner4,
             Floor = 3,
-            Elevator = false,
             Equipment = { equipment3, equipment7, equipment9, equipment10 }
         };
 
