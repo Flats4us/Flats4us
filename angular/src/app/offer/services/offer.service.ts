@@ -1,22 +1,16 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
-import { IProperty } from '../models/offer.models';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { IOffer } from '../models/offer.models';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class OfferService {
 	protected apiRoute = `${environment.apiUrl}`;
 
-	constructor(private http: HttpClient) {}
+	constructor(private httpClient: HttpClient) {}
 
-	public getProperties(): Observable<IProperty[]> {
-		return this.http.get<IProperty[]>(
-			`${this.apiRoute}/properties?showOnlyVerified=true`
-		);
-	}
-	public addOffer(offer: FormGroup) {
-		return this.http.post(`${this.apiRoute}/offers`, offer.value);
+	public getOffers(): Observable<IOffer[]> {
+		return this.httpClient.get<IOffer[]>(`${this.apiRoute}/offers/mine`);
 	}
 }

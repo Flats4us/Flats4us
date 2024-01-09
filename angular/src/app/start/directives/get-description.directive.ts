@@ -24,7 +24,7 @@ export class GetDescriptionDirective implements OnChanges {
 	public getDescription(numberOfRecords: number) {
 		switch (true) {
 			case numberOfRecords == 1:
-				return `${numberOfRecords} oferta`;
+				return `${numberOfRecords} ofertę`;
 			case (numberOfRecords > 1 && numberOfRecords <= 4) ||
 				(numberOfRecords > 20 &&
 					numberOfRecords % 10 > 1 &&

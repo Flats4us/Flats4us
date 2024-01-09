@@ -1,0 +1,20 @@
+[
+	{
+		"id": "1",
+		"photo": "../../../assets/candidate.webp",
+		"name": "Jan",
+		"surname": "Kowalski",
+		"birthDate": "1999-12-07T00:00:00.000Z",
+		"indexNumber": "s25420",
+		"university": "PJATK",
+		"address": "Marszałkowska 30, 00-120 Warszawa",
+		"phoneNumber": "512256423",
+		"hobbies": [{"interestId": 7, "name": "Muzyka"}, {"interestId": 9, "name": "Sport"}],
+		"socialMedia": ["jk.twitter.com"],
+		"documentType": 0,
+		"documentScan": "../../../assets/candidate.webp",
+		"validTill": "2023-12-07T00:00:00.000Z",
+		"email": "jk@wp.pl",
+		"status": "ZWERYFIKOWANY"
+	}
+]

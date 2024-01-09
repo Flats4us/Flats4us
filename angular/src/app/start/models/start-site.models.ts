@@ -1,19 +1,17 @@
-import { IRegionCity } from 'src/app/real-estate/models/real-estate.models';
+import { IOffer } from 'src/app/offer/models/offer.models';
 
-export interface IFlatOffer {
-	regionCity: IRegionCity;
-	district: string;
-	price: number;
-	rent: number;
-	area: number;
-	rooms: number;
-	url: string;
-	imgSource: string;
-	type: string;
+export interface IEquipment {
+	equipmentId: number;
+	name: string;
 }
 
 export interface ISortOption {
 	type: string;
 	direction: string;
 	description: string;
+}
+
+export interface ISendOffers {
+	totalCount: number;
+	result: IOffer[];
 }
