@@ -30,10 +30,12 @@ namespace Flats4us.Entities
         public virtual Student Student { get; set; }
 
         public virtual ICollection<Student> OtherStudents { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
 
         public Rent()
         {
             OtherStudents = new HashSet<Student>();
+            Payments = new HashSet<Payment>();
         }
     }
 }
