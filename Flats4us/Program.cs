@@ -78,6 +78,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
             ValidateAudience = false
         };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our hub...
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/chatHub"))) // Make sure this matches your SignalR hub route
+                {
+                    // Read the token out of the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization(options =>
@@ -97,6 +114,9 @@ builder.Services.AddAuthorization(options =>
     {
         policy.RequireRole("Owner");
     });
+
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
     options.AddPolicy("VerifiedStudent", policy =>
     {
@@ -128,6 +148,8 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.ClearProviders();
@@ -141,6 +163,14 @@ builder.Services.AddCors(c =>
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        builder.WithOrigins("http://localhost:4200") // Add here the specific origins
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials()); // Allow credentials
+});
 
 builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -153,7 +183,8 @@ builder.Services.AddHangfireServer();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
-
+app.UseRouting();
+app.UseCors("AllowSpecificOrigin");
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -168,7 +199,10 @@ using (var scope = app.Services.CreateScope())
 
 app.UseCors(options => options.AllowAnyOrigin());
 
+app.MapHub<ChatHub>("/chatHub");
 app.UseStaticFiles(new StaticFileOptions
+
+
 {
     FileProvider = new PhysicalFileProvider(
         Path.Combine(Directory.GetCurrentDirectory(), "Images")),

@@ -58,11 +58,6 @@ const routes: Routes = [
 		path: 'rents',
 		loadChildren: () => import('./rents/rents.module').then(m => m.RentsModule),
 	},
-	{
-		path: 'calendar',
-		loadComponent: () =>
-			import('./calendar/calendar.component').then(c => c.CalendarComponent),
-	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
