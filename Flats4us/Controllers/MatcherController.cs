@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
         //    }
         //}
 
-        [HttpGet("existingById")]
+        [HttpGet("existing-by-id")]
         [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
             Summary = "Return list of matches for current user",
@@ -63,7 +63,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("potentialById")]
+        [HttpGet("potential-by-id")]
         [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
             Summary = "Return list of potentail matches for current user",
