@@ -1613,7 +1613,6 @@ public static class DataSeeder
 
         #region TechnicalProblem
 
-
         var technicalProblem1 = new TechnicalProblem
         {
             Kind = TechnicalProblemType.Other,

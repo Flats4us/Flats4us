@@ -46,6 +46,7 @@ namespace Flats4us.Entities
 
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
+
         public virtual ICollection<TechnicalProblem> TechnicalProblems { get; set; }
     }
 }

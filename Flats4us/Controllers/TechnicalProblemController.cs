@@ -17,7 +17,6 @@ namespace Flats4us.Controllers
         public TechnicalProblemController(
             ILogger<TechnicalProblemController> logger,     
             ITechnicalProblemService technicalProblemService)
-
         {
             _logger = logger;
             _technicalProblemService = technicalProblemService;
@@ -39,7 +38,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Editing argument");
+                _logger.LogInformation($"FAILED: Getting Technical Problem");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
@@ -50,7 +49,7 @@ namespace Flats4us.Controllers
             Summary = "Adding new technical problem",
             Description = "Requires registered user privileges"
         )]
-        public async Task<IActionResult> Post(TechnicalProblemDto input)
+        public async Task<IActionResult> Post(AddTechnicalProblemDto input)
         {
             try
             {
@@ -60,12 +59,12 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Editing argument");
+                _logger.LogInformation($"FAILED: Posting Technical Problem");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating technical problem to solved",
@@ -81,7 +80,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Editing argument");
+                _logger.LogInformation($"FAILED: Editing Technical Problem");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
