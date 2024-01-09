@@ -1662,7 +1662,7 @@ public static class DataSeeder
             User = student4
         };
 
-        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2);
+        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2, technicalProblem3, technicalProblem4, technicalProblem5);
 
         #endregion
 

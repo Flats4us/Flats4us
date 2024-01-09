@@ -37,13 +37,29 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPatch("post")]
+        [HttpPut("put")]
         public async Task<IActionResult> Post(TechnicalProblemDto input)
         {
             try
             {
                 _logger.LogInformation("Posting Technical Problems");
                 await _technicalProblemService.PostAsync(input);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Editing argument");
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+            }
+        }
+
+        [HttpPost("post")]
+        public async Task<IActionResult> Post(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Updating Technical Problems");
+                await _technicalProblemService.PutAsync(id);
                 return Ok();
             }
             catch (Exception ex)
