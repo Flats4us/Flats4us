@@ -84,6 +84,8 @@ namespace Flats4us.Entities.Dto
 
         public int? MaxRoommateAge { get; set; }
 
+        public string? City { get; set; }
+
         [Required]
         public List<InterestDto> Interests { get; set; }
     }

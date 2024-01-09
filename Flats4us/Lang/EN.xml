@@ -19,4 +19,5 @@
 	<string name="PartiesAllowed">Partying allowed</string>
 	<string name="AnimalsAllowed">Animals allowed</string>
 	<string name="Gender">Gender</string>
+	<string name="City">In what city are you looking for a roommate?</string>
 </resources>

@@ -258,7 +258,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
-            University = "PJATK",
+            University = "Warszawski Uniwersytet Medyczny",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/kkajetanski|https://www.instagram.com/kkajetanski/",
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
@@ -282,7 +282,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s2137",
-            University = "PJATK",
+            University = "Collegium Civitas w Warszawie",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -306,7 +306,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(1978, 12, 1), //45 lat
             StudentNumber = "s2137",
-            University = "UW",
+            University = "Wojskowa Akademia Techniczna w Warszawie",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -314,7 +314,7 @@ public static class DataSeeder
 
         var student4 = new Student
         {
-            Name = "Lukasz",
+            Name = "Łukasz",
             Surname = "Guziewicz",
             Address = "Racławicka 26, 02-601 Warszawa",
             Email = "lguziewicz@gmail.com",
@@ -330,7 +330,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(1998, 12, 1), //25 lat
             StudentNumber = "s12345",
-            University = "AWF",
+            University = "Szkoła Główna Gospodarstwa Wiejskiego w Warszawie",
             Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
@@ -353,7 +353,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2026, 6, 15),
             BirthDate = new DateTime(1995, 5, 18),  //29 lat
             StudentNumber = "s19876",
-            University = "Politechnika Łódzka",
+            University = "Polsko-Japońska Akademia Technik Komputerowych w Warszawie",
             Links = "https://www.facebook.com/anna.nowak|https://twitter.com/annanowak|https://www.instagram.com/annanowak/",
             IsTenant = true,
             Interests = { interest6, interest3, interest8 }
@@ -361,15 +361,15 @@ public static class DataSeeder
 
         var student6 = new Student
         {
-            Name = "Mateusz",
+            Name = "Zenon",
             Surname = "Kowalski",
             Address = "Aleje Jerozolimskie 45/3, 00-697 Warszawa",
-            Email = "mkoowalski@gmail.com",
+            Email = "zkowalski@gmail.com",
             PhoneNumber = "555666777",
             AccountCreationDate = new DateTime(2023, 3, 20),
             DateForVerificationSorting = new DateTime(2023, 3, 20),
             LastLoginDate = new DateTime(2023, 12, 20),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkoowalski123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zkowalski123"),
             ActivityStatus = true,
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
@@ -400,7 +400,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2028, 8, 22),
             BirthDate = new DateTime(1993, 7, 14),  //28 lat
             StudentNumber = "s33456",
-            University = "Uniwersytet Wrocławski",
+            University = "Politechnika Warszawska",
             Links = "https://www.facebook.com/marta.wisniewska|https://twitter.com/martawisniewska|https://www.instagram.com/martawisniewska/",
             IsTenant = true,
             Interests = { interest19, interest17, interest6 }
@@ -424,7 +424,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2026, 5, 10),
             BirthDate = new DateTime(1994, 11, 28),  //27 lat
             StudentNumber = "s44567",
-            University = "AGH Kraków",
+            University = "Akademia Leona Kożmińskiego w Warszawie",
             Links = "https://www.facebook.com/piotr.zawadzki|https://twitter.com/piotrzawadzki|https://www.instagram.com/piotrzawadzki/",
             IsTenant = false,
             Interests = { interest4, interest15, interest8 }
@@ -447,7 +447,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2029, 9, 5),
             BirthDate = new DateTime(1991, 3, 8),  //32 lata
             StudentNumber = "s56789",
-            University = "Katolicki Uniwersytet Lubelski",
+            University = "Collegium Humanum w Warszawie",
             Links = "https://www.facebook.com/karolina.dabrowska|https://twitter.com/karolinadab|https://www.instagram.com/karolinadabrowska/",
             IsTenant = true,
             Interests = { interest17, interest4, interest6 }
@@ -471,7 +471,7 @@ public static class DataSeeder
             DocumentExpireDate = new DateTime(2027, 12, 18),
             BirthDate = new DateTime(1992, 9, 22),  //29 lat
             StudentNumber = "s67890",
-            University = "Politechnika Krakowska",
+            University = "Uczelnia Łazarskiego w Warszawie",
             Links = "https://www.facebook.com/lukasz.nowicki|https://twitter.com/lukasznowicki|https://www.instagram.com/lukasznowicki/",
             IsTenant = false,
             Interests = { interest15, interest13, interest18 }
@@ -1401,6 +1401,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 20,
             MaxRoommateAge = 30,
+            City = "Warszawa",
             Student = student1
         };
         var surveyStudent2 = new SurveyStudent
@@ -1416,6 +1417,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 30,
             MaxRoommateAge = 50,
+            City = "Warszawa",
             Student = student2
         };
         var surveyStudent3 = new SurveyStudent
@@ -1431,6 +1433,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 20,
             MaxRoommateAge = 150,
+            City = "Warszawa",
             Student = student3
         };
         var surveyStudent4 = new SurveyStudent
@@ -1446,6 +1449,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 70,
             MaxRoommateAge = 100,
+            City = "Warszawa",
             Student = student4
         };
         var surveyStudent5 = new SurveyStudent
@@ -1461,6 +1465,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 25,
             MaxRoommateAge = 50,
+            City = "Warszawa",
             Student = student5
         };
 
@@ -1477,6 +1482,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 22,
             MaxRoommateAge = 28,
+            City = "Warszawa",
             Student = student6
         };
 
@@ -1493,6 +1499,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 28,
             MaxRoommateAge = 40,
+            City = "Warszawa",
             Student = student7
         };
 
@@ -1509,6 +1516,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 24,
             MaxRoommateAge = 32,
+            City = "Warszawa",
             Student = student8
         };
         var surveyStudent9 = new SurveyStudent
@@ -1524,6 +1532,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 26,
             MaxRoommateAge = 36,
+            City = "Warszawa",
             Student = student9
         };
 
@@ -1540,6 +1549,7 @@ public static class DataSeeder
             RoommateGender = 0,
             MinRoommateAge = 23,
             MaxRoommateAge = 29,
+            City = "Warszawa",
             Student = student10
         };
 

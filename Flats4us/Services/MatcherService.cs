@@ -38,6 +38,7 @@ namespace Flats4us.Services
                 .ToListAsync();
 
             var matchingStudents = await _context.Students
+                .Include(potential => potential.Interests)
                 .Where(s => matchingIds.Contains(s.UserId) && s.UserId != requestUserId)
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
                 .ToListAsync();
@@ -62,6 +63,7 @@ namespace Flats4us.Services
                 .Where(potential =>
                     potential.SurveyStudent.LookingForRoommate &&
                     potential.UserId != studentId &&
+                    potential.SurveyStudent.City == requestingStudent.SurveyStudent.City &&
                     potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
                     (requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year - potential.BirthDate.Year)) &&

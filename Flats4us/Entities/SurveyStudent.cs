@@ -50,6 +50,9 @@ namespace Flats4us.Entities
 
         public int? MaxRoommateAge { get; set; }
 
+        [SurveyNullableString] // Both 'string' and 'string?' have the same runtime type ('System.String'), requiring custom handling of nullability for survey template generator.
+        public string? City { get; set; }
+
         [Required]
         [SurveyIgnore]
         public int StudentId { get; set; }

@@ -19,4 +19,5 @@
 	<string name="PartiesAllowed">Imprezowanie dozwolone</string>
 	<string name="AnimalsAllowed">Zwierzęta dozwolone</string>
 	<string name="Gender">Płeć</string>
+	<string name="City">W jakim mieście szukasz współlokatora?</string>
 </resources>

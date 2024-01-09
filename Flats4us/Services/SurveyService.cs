@@ -125,6 +125,41 @@ namespace Flats4us.Services
                     }
                     json.Add(surveyJson);
                 }
+                else if (underlyingType == typeof(string))
+                {
+                    SurveyJson surveyJson;
+
+                    SurveyNullableString nullable = (SurveyNullableString)property.GetCustomAttribute(typeof(SurveyNullableString), true);
+
+                    if (nullable != null)
+                    {
+                        surveyJson = new()
+                        {
+                            Id = id++,
+                            Name = ToCamelCase(property.Name),
+                            Content = content,
+                            Trigger = isSurveyTrigger,
+                            Optional = true,
+                            TypeName = "TEXT",
+                            Answers = new string[0],
+                        };
+                    }
+                    else
+                    {
+                        surveyJson = new()
+                        {
+                            Id = id++,
+                            Name = ToCamelCase(property.Name),
+                            Content = content,
+                            Trigger = isSurveyTrigger,
+                            Optional = false,
+                            TypeName = "TEXT",
+                            Answers = new string[0],
+                        };
+                    }
+                    
+                    json.Add(surveyJson);
+                }
             }
 
             string j = JsonSerializer.Serialize(json, options);
