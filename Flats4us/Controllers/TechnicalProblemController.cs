@@ -1,7 +1,9 @@
 ﻿using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
@@ -21,7 +23,12 @@ namespace Flats4us.Controllers
             _technicalProblemService = technicalProblemService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns list of technical problems",
+            Description = "Requires moderator privileges"
+        )]
         public async Task<IActionResult> Get([FromQuery] PaginatorDto input)
         {
             try
@@ -37,7 +44,12 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("put")]
+        [HttpPost]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Adding new technical problem",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> Post(TechnicalProblemDto input)
         {
             try
@@ -53,8 +65,13 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("post")]
-        public async Task<IActionResult> Post(int id)
+        [HttpPut]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Updating technical problem to solved",
+            Description = "Requires moderator privileges"
+        )]
+        public async Task<IActionResult> Put(int id)
         {
             try
             {
