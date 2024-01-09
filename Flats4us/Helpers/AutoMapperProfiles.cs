@@ -63,6 +63,8 @@ namespace Flats4us.Helpers
 
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 
+            CreateMap<SurveyStudent, SurveyStudentDto>();
+
             CreateMap<Meeting, MeetingDto>();
 
             CreateMap<Student, UserForVerificationDto>()
@@ -74,6 +76,26 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
                 .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
+
+            CreateMap<Student, UserProfileFullDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>())
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Links) ? src.Links.Split(new[] { '|' }, StringSplitOptions.None).ToList() : new List<string>()));
+
+            CreateMap<Owner, UserProfileFullDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
+
+            CreateMap<Student, UserProfilePublicDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Links) ? src.Links.Split(new[] { '|' }, StringSplitOptions.None).ToList() : new List<string>()));
+
+            CreateMap<Owner, UserProfilePublicDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
             CreateMap<OwnerRegisterDto, Owner>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.Password)))
@@ -93,7 +115,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified))
                 .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false))
-                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links != null ? string.Join("|", src.Links) : null));
+                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links != null ? string.Join("|", src.Links) : string.Empty));
 
             CreateMap<InterestDto, Interest>();
 
