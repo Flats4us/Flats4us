@@ -8,7 +8,7 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { OfferService } from 'src/app/offer/services/offer-service';
-import { Observable, concatMap, of, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import {
 	MatPaginator,
@@ -24,19 +24,15 @@ import { environment } from 'src/environments/environment.prod';
 	styleUrls: ['./watched-offers.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WatchedOffersComponent implements OnInit{
-	public watchedOffers$: Observable<IWatchedOffer> = this.offerService.getWatchedOffers(
-		0,
-		3
-	);
+export class WatchedOffersComponent implements OnInit {
+	public watchedOffers$: Observable<IWatchedOffer> =
+		this.offerService.getWatchedOffers(0, 3);
 
 	public pageSize = 3;
 	public pageIndex = 0;
 
-	@ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator = new MatPaginator(
-		this.matPaginatorIntl,
-		ChangeDetectorRef.prototype
-	);
+	@ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator =
+		new MatPaginator(this.matPaginatorIntl, ChangeDetectorRef.prototype);
 
 	@Output()
 	public page: EventEmitter<PageEvent> = new EventEmitter();
@@ -91,9 +87,9 @@ export class WatchedOffersComponent implements OnInit{
 
 	public filterOffers() {
 		this.watchedOffers$ = this.offerService.getWatchedOffers(
-		  this.pageIndex,
-		  this.pageSize
-		)
+			this.pageIndex,
+			this.pageSize
+		);
 		this.cdr.detectChanges();
-	  }
+	}
 }

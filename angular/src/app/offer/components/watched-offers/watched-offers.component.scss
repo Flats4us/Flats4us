@@ -58,18 +58,18 @@ mat-card-subtitle {
 }
 
 .offer-title-outer {
-    position: absolute;
-    padding: 4px;
-    top: 0;
-    left: 0;
+	position: absolute;
+	padding: 4px;
+	top: 0;
+	left: 0;
 }
- 
+
 .offer-title-inner {
-    background: rgba(0, 0, 0, 0.204);
-    color: white;
-    position: absolute;
-    min-width: max-content;
-    padding: 4px;
+	background: rgba(0, 0, 0, 0.204);
+	color: white;
+	position: absolute;
+	min-width: max-content;
+	padding: 4px;
 }
 
 @media screen and (max-width: 992px) {

@@ -3,19 +3,17 @@
 </div>
 <div *ngIf="watchedOffers$ | async as watchedOffers" class="watched-offers">
 	<div class="container">
-		<mat-card
-			*ngFor="let watchedOffer of watchedOffers.result"
-			class="card"
-		>
+		<mat-card *ngFor="let watchedOffer of watchedOffers.result" class="card">
 			<mat-card-subtitle
-				>{{ watchedOffer.property.propertyType }} - {{ watchedOffer.property.city }},
+				>{{ watchedOffer.property.propertyType }} -
+				{{ watchedOffer.property.city }},
 				{{ watchedOffer.property.district }}</mat-card-subtitle
 			>
 			<img
 				mat-card-image
 				class="imgs"
 				alt="Mieszkanie"
-				src='{{baseUrl}}/{{watchedOffer.property.imagesURLs[0]}}'
+				src="{{ baseUrl }}/{{ watchedOffer.property.images[0].path }}"
 				(click)="navigateToFlat('/')"
 			/>
 			<mat-card-content matSort class="mcc-description">
