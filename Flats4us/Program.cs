@@ -13,6 +13,7 @@ using AutoMapper;
 using Flats4us.Helpers.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Flats4us.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 builder.Services.AddControllers();
 
@@ -115,8 +117,6 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Owner");
     });
 
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<IChatService, ChatService>();
 
     options.AddPolicy("VerifiedStudent", policy =>
     {
@@ -197,7 +197,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseCors(options => options.AllowAnyOrigin());
 
 app.MapHub<ChatHub>("/chatHub");
 app.UseStaticFiles(new StaticFileOptions

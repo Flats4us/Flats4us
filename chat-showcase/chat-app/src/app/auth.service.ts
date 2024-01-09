@@ -14,11 +14,15 @@ export class AuthService {
   login(username: string, password: string): Observable<any> {
     // Create form data
     const formData = new FormData();
-    formData.append('username', username);
+    formData.append('email', username);
     formData.append('password', password);
 
-    // You might not need to set the Content-Type header yourself,
-    // Angular's HttpClient does that automatically based on the request body.
-    return this.http.post(this.loginUrl, formData, { responseType: 'text' });
+    const requestBody = {
+      email: username,
+      password: password
+    };
+
+    // Change the responseType property to json
+    return this.http.post(this.loginUrl, requestBody, { responseType: 'json' });
   }
 }

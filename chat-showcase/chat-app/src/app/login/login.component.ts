@@ -22,8 +22,8 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe(
       response => {
         console.log(response); // Print the response to the console
-        localStorage.setItem('jwt', response); // Store the JWT token
-        this.chatService.startConnection(response); // Restart SignalR connection
+        localStorage.setItem('jwt', response.token); // Store the JWT token
+        this.chatService.startConnection(response.token); // Restart SignalR connection
       },
       error => {
         console.error('Login error:', error); // Print error to the console

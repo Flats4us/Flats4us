@@ -84,7 +84,7 @@ namespace Flats4us.Services
                          .Select(ugc => new UserInfoDto
                          {
                              Id = ugc.User.UserId,
-                             Username = ugc.User.Username
+                             Username = ugc.User.Email
                              // Add other properties as needed
                          })
                          .ToList()
@@ -107,7 +107,7 @@ namespace Flats4us.Services
             Users = ugc.GroupChat.UserGroupChats.Select(member => new UserInfoDto
             {
                 Id = member.User.UserId,
-                Username = member.User.Username
+                Username = member.User.Email
             }).ToList()
         })
         .ToListAsync();
@@ -133,7 +133,7 @@ namespace Flats4us.Services
                 {
                     Content = msg.Content,
                     DateTime = msg.DateTime,
-                    SenderUsername = msg.Sender.Username 
+                    SenderUsername = msg.Sender.Email 
                 })
                 .ToListAsync();
 

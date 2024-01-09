@@ -8,12 +8,12 @@ namespace Flats4us.Services
     public class ChatService: IChatService
     {
         public readonly Flats4usContext _context;
-        private readonly IOwnerService _ownerService;
+        private readonly IUserService _userService;
 
-        public ChatService(Flats4usContext context, IOwnerService ownerService)
+        public ChatService(Flats4usContext context, IUserService ownerService)
         {
             _context = context;
-            _ownerService = ownerService;
+            _userService = ownerService;
         }
 
         public async Task<IEnumerable<ChatMessage>> GetChatHistory(int chatId)
@@ -87,7 +87,7 @@ namespace Flats4us.Services
                 {
                     ChatId = chat.ChatId,
                     OtherUserId = otherUser.UserId,
-                    OtherUsername = otherUser.Username
+                    OtherUsername = otherUser.Email
                 });
             }
 
