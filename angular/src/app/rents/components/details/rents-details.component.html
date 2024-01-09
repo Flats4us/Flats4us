@@ -1,152 +1,217 @@
-<div *ngIf="actualRent$ | async as actualRent">
-	<mat-form-field appearance="fill" class="title">
-		<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
-		<span matSuffix>
-			<button
-				class="box-icon"
-				id="menu"
-				mat-icon-button
-				matTooltip="Więcej opcji"
-				aria-label="MenuButton"
-				[matMenuTriggerFor]="menu"
-				[disabled]="actualRent.status === statusName.SUSPENDED"
+<div *ngIf="user$ | async as user">
+	<div *ngIf="actualRent$ | async as actualRent">
+		<div *ngIf="user === uType.OWNER" class="label-box">
+			<mat-label class="label-description">
+				<span class="text-3xl"
+					>Status oferty:
+					{{ rentsService.getOfferStatus(actualRent.offerStatus) }}</span
+				></mat-label
 			>
-				<mat-icon>more_horiz</mat-icon>
-			</button>
-			<mat-menu #menu="matMenu" id="sort">
-				<button
-					*ngFor="let menuOption of this.rentsService.menuOptions"
-					mat-menu-item
-					[value]="menuOption.description"
-					(click)="onSelect(menuOption, actualRent)"
-				>
-					<span *ngIf="menuOption.option !== 'closeRent'">{{
-						menuOption.description
-					}}</span>
-					<span *ngIf="menuOption.option === 'closeRent'" class="close-rent">{{
-						menuOption.description
-					}}</span>
-				</button>
-			</mat-menu>
-		</span>
-		<input
-			#titleInput
-			id="title"
-			formControlName="title"
-			type="text"
-			placeholder="Tytuł"
-			aria-label="Title"
-			matInput
-			[disabled]="true"
-		/>
-	</mat-form-field>
-	<div class="gallery">
-		<div class="container slider">
-			<div [@slideAnimation]="currentIndex">
-				<ng-template
-					ngFor
-					[ngForOf]="actualRent.imageArray"
-					let-slide
-					let-i="index"
-				>
-					<img
-						*ngIf="isCurrentSlideIndex(i)"
-						class="slide slide-animation nonDraggableImage"
-						[src]="slide.image"
-						(swiperight)="nextSlide(actualRent.imageArray.length)"
-						(swipeleft)="prevSlide(actualRent.imageArray.length)"
-					/>
-				</ng-template>
-			</div>
-
-			<button
-				class="arrow prev"
-				(click)="nextSlide(actualRent.imageArray.length)"
-			></button>
-			<button
-				class="arrow next"
-				(click)="prevSlide(actualRent.imageArray.length)"
-			></button>
-			<nav class="nav">
-				<div class="wrapper">
-					<ul class="dots">
-						<li
-							*ngFor="let slide of actualRent.imageArray; let i = index"
-							class="dot"
+		</div>
+		<div class="gallery">
+			<div class="container slider">
+				<div [@slideAnimation]="currentIndex">
+					<ng-template
+						ngFor
+						[ngForOf]="actualRent.property.images"
+						let-slide
+						let-i="index"
+					>
+						<div class="offer-title-outer">
+							<span class="offer-title-inner"
+								><h1 class="text-3xl">
+									Wynajem -
+									{{
+										realEstateService.getPropertyType(actualRent.property.propertyType)
+									}}
+									{{ actualRent.property.area }} m² {{ actualRent.property.city }}
+								</h1></span
+							>
+						</div>
+						<div
+							*ngIf="user === uType.OWNER || user === uType.STUDENT"
+							class="menu-title"
 						>
-							<span
-								[ngClass]="{ active: isCurrentSlideIndex(i) }"
-								(click)="setCurrentSlideIndex(i)"
-							></span>
-						</li>
-					</ul>
+							<button
+								class="box-icon"
+								id="menu"
+								mat-mini-fab
+								color="primary"
+								matTooltip="Więcej opcji"
+								aria-label="MenuButton"
+								[matMenuTriggerFor]="menu"
+								[disabled]="
+									actualRent.offerStatus === 1 || actualRent.offerStatus === 2
+								"
+							>
+								<mat-icon>more_horiz</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu" id="sort">
+								<button
+									*ngFor="let menuOption of this.menuOptions"
+									mat-menu-item
+									[value]="menuOption.description"
+									(click)="onSelect(menuOption, actualRent)"
+								>
+									<span *ngIf="menuOption.option !== 'closeRent'">{{
+										menuOption.description
+									}}</span>
+									<span *ngIf="menuOption.option === 'closeRent'" class="close-rent">{{
+										menuOption.description
+									}}</span>
+								</button>
+							</mat-menu>
+						</div>
+						<img
+							*ngIf="actualRent.property.images.length > 0 && isCurrentSlideIndex(i)"
+							class="slide slide-animation nonDraggableImage"
+							src="{{ baseUrl }}/{{ slide.path }}"
+							(swiperight)="nextSlide(actualRent.property.images.length)"
+							(swipeleft)="prevSlide(actualRent.property.images.length)"
+						/>
+					</ng-template>
 				</div>
-			</nav>
+
+				<button
+					class="arrow prev"
+					(click)="nextSlide(actualRent.property.images.length)"
+				></button>
+				<button
+					class="arrow next"
+					(click)="prevSlide(actualRent.property.images.length)"
+				></button>
+				<nav class="nav">
+					<div class="wrapper">
+						<ul class="dots">
+							<li
+								*ngFor="let slide of actualRent.property.images; let i = index"
+								class="dot"
+							>
+								<span
+									[ngClass]="{ active: isCurrentSlideIndex(i) }"
+									(click)="setCurrentSlideIndex(i)"
+								></span>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
 		</div>
-	</div>
-	<div class="button-box">
-		<button
-			mat-button
-			class="btn"
-			[disabled]="actualRent.status === statusName.SUSPENDED"
-		>
-			Szczegóły oferty
-		</button>
-		<mat-label class="label-1">Cena {{ actualRent.price }} pln/msc</mat-label>
-	</div>
-	<div class="label-3">
-		<mat-label class="label-2"
-			><mat-icon>description</mat-icon><span>Opis oferty</span></mat-label
-		>
-		<mat-divider></mat-divider>
-	</div>
-	<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
-		<div class="column-1">
-			<p>Data wystawienia:</p>
-			<p>Data zakończenia:</p>
-			<p>Adres:</p>
-			<p>Metraż:</p>
-			<p>Data wystawienia oceny:</p>
-			<p>Okres wynajmu:</p>
-			<p>Maks. liczba mieszkańców:</p>
-			<p>Wyposażenie:</p>
-			<p>Data płatności czynszu:</p>
-			<p>Informacje o umowie:</p>
-			<p>Współlokatorzy:</p>
-		</div>
-		<div class="column-2">
-			<p>{{ actualRent?.publishDate }}</p>
-			<p>12-12-2024</p>
-			<p>Marszałkowska 44, {{ actualRent?.property?.regionCity?.city }}</p>
-			<p>{{ actualRent?.property?.area }} m²</p>
-			<p>-</p>
-			<p>{{ actualRent.period }} lata</p>
-			<p>4</p>
-			<p>-</p>
-			<p>10-12-2022</p>
-			<p>-</p>
-			<p>Jan Kowalski, Barbara Nowak</p>
-		</div>
-	</cdk-virtual-scroll-viewport>
-	<div class="label-3">
-		<mat-label class="label-2"
-			><mat-icon>attach_money</mat-icon><span>Płatności</span></mat-label
-		>
-		<mat-divider></mat-divider>
-	</div>
-	<div class="payments">
-		<table mat-table class="mat-elevation-z8" [dataSource]="actualRent.payments">
-			<ng-container
-				*ngFor="let column of this.rentsService.displayedColumns"
-				[matColumnDef]="column"
+		<div class="button-box">
+			<mat-label class="label-price"
+				><span class="text-3xl"
+					>Cena {{ actualRent.price | currency : "PLN" : true : ".2-2" }}/mies.</span
+				></mat-label
 			>
-				<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
-				<td *matCellDef="let payment" mat-cell>{{ payment[column] }}</td>
-			</ng-container>
-			<tr
-				*matRowDef="let paymentRow; columns: this.rentsService.displayedColumns"
-				mat-row
-			></tr>
-		</table>
+		</div>
+		<div class="label-box">
+			<mat-label class="label-description"
+				><mat-icon class="icon">description</mat-icon
+				><span class="text-3xl">Opis oferty</span></mat-label
+			>
+		</div>
+		<mat-divider></mat-divider>
+		<div class="container-description">
+			<div class="column-header-description">
+				<p class="text-2xl">Kaucja:</p>
+				<p class="text-2xl">Data wystawienia:</p>
+				<p class="text-2xl">Data zakończenia:</p>
+				<p class="text-2xl">Adres:</p>
+				<p class="text-2xl">Metraż:</p>
+				<p class="text-2xl">Liczba pokoi:</p>
+				<p class="text-2xl">Liczba pięter:</p>
+				<p class="text-2xl">Piętro:</p>
+				<p class="text-2xl">Maks. liczba mieszkańców:</p>
+				<p class="text-2xl">Rok budowy:</p>
+				<p class="text-2xl">Wyposażenie:</p>
+				<p class="text-2xl">Informacje o umowie:</p>
+				<p *ngIf="user === uType.OWNER || user === uType.STUDENT" class="text-2xl">
+					Współlokatorzy:
+				</p>
+			</div>
+			<div class="column-header-description">
+				<p class="text-2xl">
+					{{ actualRent.deposit | currency : "PLN" : true : ".2-2" }}
+				</p>
+				<p class="text-2xl">{{ actualRent.startDate | date }}</p>
+				<p class="text-2xl">{{ actualRent.endDate | date }}</p>
+				<p class="text-2xl">
+					{{ actualRent.property.postalCode }} {{ actualRent.property.city }}, ul.
+					{{ actualRent.property.street }} {{ actualRent.property.number }}
+				</p>
+				<p class="text-2xl">{{ actualRent.property.area }} m²</p>
+				<p class="text-2xl">{{ actualRent.property.numberOfRooms }}</p>
+				<p class="text-2xl">
+					{{
+						actualRent.property.numberOfFloors === null
+							? "-"
+							: actualRent.property.numberOfFloors
+					}}
+				</p>
+				<p class="text-2xl">
+					{{ actualRent.property.floor === null ? "-" : actualRent.property.floor }}
+				</p>
+				<p class="text-2xl">{{ actualRent.property.maxNumberOfInhabitants }}</p>
+				<p class="text-2xl">{{ actualRent.property.constructionYear }}</p>
+				<p class="text-2xl">
+					<span *ngFor="let equipment of actualRent.property.equipment"
+						>{{ equipment.name }},
+					</span>
+				</p>
+				<p class="text-2xl">{{ actualRent.regulations }}</p>
+				<p *ngIf="user === uType.OWNER || user === uType.STUDENT" class="text-2xl">
+					Jan Kowalski, Barbara Nowak
+				</p>
+			</div>
+		</div>
+		<div *ngIf="user === uType.OWNER" class="label-box">
+			<mat-label class="label-description"
+				><mat-icon class="icon">attach_money</mat-icon
+				><span class="text-3xl">Płatności</span></mat-label
+			>
+		</div>
+		<div *ngIf="user === uType.OWNER" class="payments">
+			<table mat-table class="mat-elevation-z8" [dataSource]="payments">
+				<ng-container
+					*ngFor="let column of this.displayedColumnsStudent"
+					[matColumnDef]="column"
+				>
+					<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
+					<td *matCellDef="let payment" mat-cell class="text-2xl">
+						{{ payment[column] }}
+					</td>
+				</ng-container>
+				<tr
+					*matRowDef="let paymentRow; columns: this.displayedColumnsStudent"
+					mat-row
+				></tr>
+			</table>
+		</div>
+		<div *ngIf="user === uType.STUDENT" class="button-box-options">
+			<button mat-raised-button color="primary">Dodaj współlokatorów</button>
+		</div>
+		<div *ngIf="user === uType.DETAILS" class="button-box-options">
+			<button mat-raised-button color="primary" (click)="startRent()">
+				Wynajmij
+			</button>
+		</div>
+		<div *ngIf="user !== uType.OWNER" class="button-box-options">
+			<button mat-raised-button color="primary" (click)="onAddMeeting()">
+				Dodaj spotkanie
+			</button>
+		</div>
+		<div *ngIf="user === uType.OWNER">
+			<mat-form-field>
+				<mat-label>Proponowani lokatorzy</mat-label>
+				<mat-chip-grid #chipGrid aria-label="Tenants">
+					<mat-chip-row *ngFor="let myTenant of myTenants">
+						{{ myTenant }}
+					</mat-chip-row>
+				</mat-chip-grid>
+				<div class="button-box-options">
+					<button mat-raised-button color="primary">Wynajmij</button>
+				</div>
+			</mat-form-field>
+		</div>
 	</div>
 </div>

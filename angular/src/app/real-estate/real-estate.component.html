@@ -1,1 +1,53 @@
-<p>real-estate works!</p>
+<div>
+	<div class="box-title">
+		<div class="text-4xl p-4 font-semibold">Przeglądanie nieruchomości</div>
+	</div>
+	<div class="real-estate-owner">
+		<div class="container-list">
+			<h1 class="text-3xl pl-4 font-semibold">
+				Moje nieruchomości
+				<button
+					mat-icon-button
+					id="add"
+					class="box-icon"
+					aria-label="Add"
+					matTooltip="Dodaj nieruchomość"
+					(click)="addRealEstate()"
+				>
+					<mat-icon>add</mat-icon>
+				</button>
+			</h1>
+			<mat-divider class="divider"></mat-divider>
+			<mat-nav-list>
+				<a
+					*ngFor="let realEstate of realEstateOptions$ | async"
+					mat-list-item
+					class="item-list"
+					routerLink="{{ realEstate.propertyId }}"
+					><div class="box-title">
+						<span class="text-xl font-bold">{{
+							realEstateService.getPropertyType(realEstate.propertyType)
+						}}</span>
+						<mat-icon
+							*ngIf="realEstate.verificationStatus === 0"
+							class="box-icon-valid"
+							>check_circle</mat-icon
+						>
+						<mat-icon
+							*ngIf="realEstate.verificationStatus !== 0"
+							class="box-icon-invalid"
+							>check_circle</mat-icon
+						>
+					</div>
+					<div class="box-subtitle">
+						{{ realEstate.city }}, ul. {{ realEstate.street }}
+						{{ realEstate.number }}, {{ realEstate.area }} m²
+					</div>
+				</a>
+			</mat-nav-list>
+		</div>
+		<div class="container-outlet">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>
