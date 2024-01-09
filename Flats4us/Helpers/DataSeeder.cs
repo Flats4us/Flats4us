@@ -1611,6 +1611,54 @@ public static class DataSeeder
 
         #endregion
 
+        #region TechnicalProblem
+
+
+        var technicalProblem1 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Other,
+            Description = "blablalba",
+            Date = new DateTime(2024, 1, 08),
+            Solved = true,
+            User = student3
+        };
+        var technicalProblem2 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Payment,
+            Description = "2blablalba",
+            Date = new DateTime(2024, 1, 04),
+            Solved = true,
+            User = student4
+        };
+        var technicalProblem3 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Payment,
+            Description = "3blablalba",
+            Date = new DateTime(2024, 1, 04),
+            Solved = false,
+            User = student4
+        };
+        var technicalProblem4 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Payment,
+            Description = "4blablalba",
+            Date = new DateTime(2023, 12, 30),
+            Solved = false,
+            User = student4
+        };
+        var technicalProblem5 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Payment,
+            Description = "5blablalba",
+            Date = new DateTime(2023, 12, 29),
+            Solved = false,
+            User = student4
+        };
+
+        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2, technicalProblem3, technicalProblem4, technicalProblem5);
+
+        #endregion
+
         dbContext.SaveChanges();
     }
 }
