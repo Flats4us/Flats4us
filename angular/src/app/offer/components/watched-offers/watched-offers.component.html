@@ -4,21 +4,21 @@
 <div *ngIf="watchedOffers$ | async as watchedOffers" class="watched-offers">
 	<div class="container">
 		<mat-card
-			*ngFor="let watchedOffer of watchedOffers.data"
+			*ngFor="let watchedOffer of watchedOffers.result"
 			class="card"
-			(click)="navigateToFlat(watchedOffer.url)"
 		>
 			<mat-card-subtitle
-				>{{ watchedOffer.type }} - {{ watchedOffer.regionCity.city }},
-				{{ watchedOffer.district }}</mat-card-subtitle
+				>{{ watchedOffer.property.propertyType }} - {{ watchedOffer.property.city }},
+				{{ watchedOffer.property.district }}</mat-card-subtitle
 			>
 			<img
 				mat-card-image
 				class="imgs"
 				alt="Mieszkanie"
-				[src]="watchedOffer.imgSource"
+				src='{{baseUrl}}/{{watchedOffer.property.imagesURLs[0]}}'
+				(click)="navigateToFlat('/')"
 			/>
-			<mat-card-content matSort>
+			<mat-card-content matSort class="mcc-description">
 				<mat-chip-listbox>
 					<mat-chip>
 						<div class="chip">
@@ -29,19 +29,19 @@
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>add</mat-icon
-							><span>Czynsz: {{ watchedOffer.rent }} zł/mc</span>
+							><span>Depozyt: {{ watchedOffer.deposit }} zł/mc</span>
 						</div>
 					</mat-chip>
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>straighten</mat-icon>
-							<span>Powierzchnia: {{ watchedOffer.area }} m²</span>
+							<span>Powierzchnia: {{ watchedOffer.property.area }} m²</span>
 						</div>
 					</mat-chip>
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>meeting_room</mat-icon>
-							<span>Liczba pokoi: {{ watchedOffer.rooms }}</span>
+							<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip>
@@ -52,7 +52,7 @@
 							mat-icon-button
 							matTooltip="Usuń z obserwowanych"
 							aria-label="DeleteOffer"
-							(click)="deleteOffer(watchedOffer.id)"
+							(click)="deleteInterest(watchedOffer.offerId)"
 						>
 							<mat-icon>delete_forever</mat-icon>
 						</mat-mini-fab>
@@ -66,7 +66,7 @@
 		id="paginator2"
 		showFirstLastButtons
 		aria-label="Paginator"
-		[length]="watchedOffers.total"
+		[length]="watchedOffers.totalCount"
 		[pageSize]="pageSize"
 		[pageIndex]="pageIndex"
 		[pageSizeOptions]="[3, 6, 12, 18]"

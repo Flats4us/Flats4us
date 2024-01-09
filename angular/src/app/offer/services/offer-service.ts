@@ -1,16 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { ISendOffers, IWatchedOffer } from '../models/offer-models';
+import { IWatchedOffer } from '../models/offer-models';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class OfferService {
+	protected apiRoute = `${environment.apiUrl}/offers`;
+
 	constructor(private httpClient: HttpClient) {}
 
-	public getOffers(begin: number, end: number): Observable<ISendOffers> {
-		const stream = this.httpClient
-			.get<IWatchedOffer[]>('./assets/watched-offers.json')
-			.pipe(map(el => ({ data: el.slice(begin, end), total: el.length })));
-		return stream;
-	}
+	public getWatchedOffers(pageIndex: number, pageSize: number): Observable<IWatchedOffer> {
+		return this.httpClient
+		  .get<IWatchedOffer>(`${this.apiRoute}/interest?PageNumber=${pageIndex + 1}&PageSize=${pageSize}`)
+		  .pipe(
+			map((response) => {
+			  return {
+				result: response.result,
+				totalCount: response.totalCount
+			  };
+			})
+		  );
+
+	  }
+
+	public deleteInterest(id: number): Observable<any> {
+		return this.httpClient.delete<any>(`${this.apiRoute}/${id}/interest`);
+	  }
+
+
+
 }
