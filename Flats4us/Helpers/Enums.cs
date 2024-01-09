@@ -71,6 +71,7 @@ namespace Flats4us.Helpers.Enums
     public enum UserType
     {
         Owner,
-        Student
+        Student,
+        Moderator
     }
 }

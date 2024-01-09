@@ -13,5 +13,7 @@ namespace Flats4us.Services.Interfaces
         Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input);
         Task VerifyUserAsync(int id, bool decision);
         Task ChangePasswordAsync(string oldPassword, string newPassword, int userId);
+        Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId);
+        Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId);
     }
 }
