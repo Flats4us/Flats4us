@@ -32,6 +32,9 @@ export class SurveyComponent implements OnInit {
 	public questions$: Observable<IQuestionsData[]>;
 	public typeName: typeof TypeName = TypeName;
 
+	@Input()
+	public createProfileMode = false;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,

@@ -25,7 +25,7 @@ import { RentsCancelDialogComponent } from './components/dialog/rents-cancel-dia
 import { OfferService } from '../offer/services/offer.service';
 
 @NgModule({
-	declarations: [RentsComponent],
+	declarations: [RentsComponent, RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		RentsRoutingModule,

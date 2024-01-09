@@ -8,7 +8,10 @@ const routes: Routes = [
 	{
 		path: ':user',
 		component: RentsComponent,
-		children: [{ path: ':id', component: RentsDetailsComponent }],
+		children: [
+			{ path: ':id', component: RentsDetailsComponent },
+			{ path: '**', component: NotFoundComponent },
+		],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

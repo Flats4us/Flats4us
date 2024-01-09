@@ -15,7 +15,7 @@ import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-
 import { RentsDetailsComponent } from './rents-details.component';
 
 @NgModule({
-	declarations: [RentsDetailsComponent],
+	declarations: [],
 	imports: [
 		CommonModule,
 		MatButtonModule,

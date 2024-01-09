@@ -22,4 +22,29 @@ export class RentsService {
 			.get<IRent[]>('./assets/rents.json')
 			.pipe(map(results => results.find(result => result.id === id) as IRent));
 	}
+
+	public getOfferStatus(index: number): string {
+		switch (index) {
+			case 0: {
+				return 'aktualna';
+				break;
+			}
+			case 1: {
+				return 'nieaktualna';
+				break;
+			}
+			case 2: {
+				return 'zawieszona';
+				break;
+			}
+			case 3: {
+				return 'wynajęta';
+				break;
+			}
+			default: {
+				return '';
+				break;
+			}
+		}
+	}
 }
