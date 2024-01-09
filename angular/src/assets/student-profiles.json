@@ -9,7 +9,10 @@
 		"university": "PJATK",
 		"address": "Marszałkowska 30, 00-120 Warszawa",
 		"phoneNumber": "512256423",
-		"hobbies": [{"interestId": 7, "name": "Muzyka"}, {"interestId": 9, "name": "Sport"}],
+		"hobbies": [
+			{ "interestId": 7, "name": "Muzyka" },
+			{ "interestId": 9, "name": "Sport" }
+		],
 		"socialMedia": ["jk.twitter.com"],
 		"documentType": 0,
 		"documentScan": "../../../assets/candidate.webp",
