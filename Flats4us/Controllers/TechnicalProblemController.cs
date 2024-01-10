@@ -4,10 +4,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Cors;
+using Flats4us.Services;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
-    [Route("api/[controller]")]
+    [EnableCors("AllowOrigin")]
+    [Route("technical-problems")]
     [ApiController]
     public class TechnicalProblemController : ControllerBase
     {
@@ -53,8 +57,12 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                    {
+                        return BadRequest("Server error: Failed to get user id from request");
+                    }
                 _logger.LogInformation("Posting Technical Problems");
-                await _technicalProblemService.PostAsync(input);
+                await _technicalProblemService.PostAsync(input, requestUserId);
                 return Ok();
             }
             catch (Exception ex)

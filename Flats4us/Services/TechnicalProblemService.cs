@@ -24,26 +24,25 @@ namespace Flats4us.Services
         {
             var problems = await _context.TechnicalProblems
                     .OrderBy(x => x.Solved)  
-                    .ThenBy(x => x.Date)     
+                    .ThenBy(x => x.Date)
+                    .Select(e => _mapper.Map<TechnicalProblemDto>(e))
                     .ToListAsync();
 
-            var problems2 = _mapper.Map<List<TechnicalProblemDto>>(problems);
-
-            problems2 = problems2
+            problems = problems
                 .Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
 
             var result = new CountedListDto<TechnicalProblemDto>
             {
-                TotalCount = problems2.Count,
-                Result = problems2
+                TotalCount = problems.Count,
+                Result = problems
             };
 
             return result;
         }
 
-        public async Task PostAsync(AddTechnicalProblemDto input)
+        public async Task PostAsync(AddTechnicalProblemDto input, int id)
         {
             var problem = new TechnicalProblem
             {
@@ -51,7 +50,7 @@ namespace Flats4us.Services
                 Description = input.Description,
                 Date = DateTime.Now,
                 Solved = false,
-                UserId = input.UserId
+                UserId = id
             };
 
             await _context.TechnicalProblems.AddAsync(problem);

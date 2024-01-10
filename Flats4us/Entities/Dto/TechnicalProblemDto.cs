@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
-    public class TechnicalProblemForMapperDto
+    public class TechnicalProblemDto
     {
+        [Required]
         public int TechnicalProblemId { get; set; }
 
         [Required]
@@ -18,7 +19,7 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public bool Solved { get; set; }
-
+        [Required]
         public int UserId { get; set; }
     }
 }

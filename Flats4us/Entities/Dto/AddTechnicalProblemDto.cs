@@ -10,6 +10,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string Description { get; set; }
-        public int UserId { get; set; }
     }
 }
