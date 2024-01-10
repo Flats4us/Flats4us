@@ -37,13 +37,7 @@ import { SurveyService } from '@shared/services/survey.service';
 import { UserService } from '@shared/services/user.service';
 
 @NgModule({
-	declarations: [
-		ProfileComponent,
-		SurveyComponent,
-		EditProfileComponent,
-		CreateProfileComponent,
-		RegisterComponent,
-	],
+	declarations: [ProfileComponent, EditProfileComponent, CreateProfileComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,

@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
+	declarations: [RegisterComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
