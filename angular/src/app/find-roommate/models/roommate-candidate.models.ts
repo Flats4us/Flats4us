@@ -16,3 +16,7 @@ export interface IProfilePicture {
 	name: string;
 	path: string;
 }
+
+export interface IDecision {
+	decision: boolean;
+}

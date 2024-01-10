@@ -34,11 +34,11 @@ export class RoommateCandidateComponent {
 
 	public accept(id: number) {
 		this.updateStudent();
-		this.service.accept(id, 'true').subscribe();
+		this.service.accept(id, { decision: true }).subscribe();
 	}
 
 	public reject(id: number) {
 		this.updateStudent();
-		this.service.accept(id, 'false').subscribe();
+		this.service.accept(id, { decision: false }).subscribe();
 	}
 }
