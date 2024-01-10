@@ -35,17 +35,12 @@ import { EditProfileComponent } from './edit/edit-profile.component';
 import { CreateProfileComponent } from './create/create-profile.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
-import { RegisterComponent } from '../auth/components/register/register.component';
 import { SurveyService } from '@shared/services/survey.service';
+import { RegisterModule } from '../auth/components/register/register.module';
+import { OfferModule } from '../offer/offer.module';
 
 @NgModule({
-	declarations: [
-		ProfileComponent,
-		SurveyComponent,
-		EditProfileComponent,
-		CreateProfileComponent,
-		RegisterComponent,
-	],
+	declarations: [ProfileComponent, EditProfileComponent, CreateProfileComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,
@@ -74,6 +69,8 @@ import { SurveyService } from '@shared/services/survey.service';
 		MatTooltipModule,
 		MatDividerModule,
 		MatStepperModule,
+		RegisterModule,
+		OfferModule,
 	],
 	providers: [SurveyService],
 	exports: [ProfileComponent],
