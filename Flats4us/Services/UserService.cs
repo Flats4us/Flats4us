@@ -200,60 +200,6 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
-
-            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
-
-            UserProfileFullDto result;
-
-            switch (user)
-            {
-                case Student:
-                    var student = await _context.Students
-                        .Include(s => s.SurveyStudent)
-                        .Include(s => s.Interests)
-                        .FirstOrDefaultAsync(o => o.UserId == userId);
-                    result = _mapper.Map<UserProfileFullDto>(student);
-                    break;
-                case Owner owner:
-                    result = _mapper.Map<UserProfileFullDto>(owner);
-                    break;
-                default:
-                    throw new ArgumentException($"Cannot get profile of this user");
-            }
-
-            return result;
-        }
-
-        public async Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
-
-            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
-
-            UserProfilePublicDto result;
-
-            switch (user)
-            {
-                case Student:
-                    var student = await _context.Students
-                        .Include(s => s.SurveyStudent)
-                        .Include(s => s.Interests)
-                        .FirstOrDefaultAsync(o => o.UserId == userId);
-                    result = _mapper.Map<UserProfilePublicDto>(student);
-                    break;
-                case Owner owner:
-                    result = _mapper.Map<UserProfilePublicDto>(owner);
-                    break;
-                default:
-                    throw new ArgumentException($"Cannot get profile of this user");
-            }
-
-            return result;
-        }
-
         private TokenDto CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>

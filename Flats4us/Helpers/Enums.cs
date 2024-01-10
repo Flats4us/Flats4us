@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Flats4us.Helpers.Enums
+﻿namespace Flats4us.Helpers.Enums
 {
     public enum Gender
     {
@@ -71,7 +68,6 @@ namespace Flats4us.Helpers.Enums
     public enum UserType
     {
         Owner,
-        Student,
-        Moderator
+        Student
     }
 }
