@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Flats4us.Helpers.Enums;
 using System.Linq.Dynamic.Core;
-using System.Security.Claims;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
-using System;
-using Newtonsoft.Json;
 
 namespace Flats4us.Services
 {
@@ -47,7 +44,7 @@ namespace Flats4us.Services
 
         public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
         {
-            var allowedSorts =  new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
+            var allowedSorts = new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
@@ -92,7 +89,7 @@ namespace Flats4us.Services
             var query = _context.Offers.AsQueryable();
 
             query = query.Where(o => o.OfferStatus == OfferStatus.Current &&
-                (!o.OfferPromotions.Any(op =>  op.StartDate <= currentDate && currentDate <= op.EndDate)));
+                (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)));
 
             if (!input.Distance.HasValue)
             {
