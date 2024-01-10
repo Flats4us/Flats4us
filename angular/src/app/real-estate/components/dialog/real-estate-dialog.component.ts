@@ -41,7 +41,7 @@ export class RealEstateDialogComponent implements OnDestroy {
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(() => {
 				this.router.navigate(['real-estate/owner']);
-				parent.parent.location.reload();
+				parent.location.reload();
 			});
 	}
 	public ngOnDestroy() {
