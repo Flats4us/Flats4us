@@ -14,6 +14,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 	declarations: [RegisterComponent],
 	imports: [
 		CommonModule,
+		AuthRoutingModule,
 		MatButtonModule,
 		MatCardModule,
 		MatFormFieldModule,
@@ -24,5 +25,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatSnackBarModule,
 	],
 	exports: [RegisterComponent],
+	providers: [FormGroupDirective],
 })
 export class RegisterModule {}

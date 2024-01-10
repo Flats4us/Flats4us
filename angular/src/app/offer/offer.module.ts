@@ -81,7 +81,7 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 		AddOfferComponent,
 		SurveyComponent,
 	],
-	providers: [OfferService, RealEstateService, RentsService],
+	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [
 		OfferComponent,
 		OfferDetailsComponent,

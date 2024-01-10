@@ -41,9 +41,7 @@ export class SurveyComponent implements OnInit {
 		private service: SurveyService,
 		private formDir: FormGroupDirective
 	) {
-		this.offerForm = this.formBuilder.group({
-			lookingForRoommate: [''],
-		});
+		this.offerForm = this.formBuilder.group({});
 
 		this.questions$ = this.getQuestions().pipe(
 			tap(questions => this.getFormControls(questions))
