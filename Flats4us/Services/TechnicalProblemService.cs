@@ -14,7 +14,9 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
 
-        public TechnicalProblemService(Flats4usContext context, IMapper mapper)
+        public TechnicalProblemService(
+            Flats4usContext context,
+            IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -25,13 +27,10 @@ namespace Flats4us.Services
             var problems = await _context.TechnicalProblems
                     .OrderBy(x => x.Solved)  
                     .ThenBy(x => x.Date)
+                    .Skip((input.PageNumber - 1) * input.PageSize)
+                    .Take(input.PageSize)
                     .Select(e => _mapper.Map<TechnicalProblemDto>(e))
                     .ToListAsync();
-
-            problems = problems
-                .Skip((input.PageNumber - 1) * input.PageSize)
-                .Take(input.PageSize)
-                .ToList();
 
             var result = new CountedListDto<TechnicalProblemDto>
             {
@@ -60,6 +59,9 @@ namespace Flats4us.Services
         public async Task PutAsync(int id)
         {
             var problem = await _context.TechnicalProblems.FindAsync(id);
+
+            if (problem == null) throw new ArgumentException($"Technical problem with ID: {id} not found");
+
             problem.Solved = true;
 
             await _context.SaveChangesAsync();

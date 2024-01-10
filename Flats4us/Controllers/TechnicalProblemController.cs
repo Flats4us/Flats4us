@@ -72,7 +72,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/solve")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating technical problem to solved",
@@ -84,7 +84,7 @@ namespace Flats4us.Controllers
             {
                 _logger.LogInformation("Updating Technical Problems");
                 await _technicalProblemService.PutAsync(id);
-                return Ok();
+                return Ok(new OutputDto<string>("TechnicalProblem marked as solved"));
             }
             catch (Exception ex)
             {
