@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { IStudent } from '../../models/roommate-candidate.models';
-import { RoommateCandidateService } from '../../services/roommate-candidate.service';
+import { FindRoommateService } from '../../services/find-roommate.service';
+import { environment } from '../../../../environments/environment.prod';
 
 @Component({
 	selector: 'app-roommate-candidate',
@@ -11,12 +11,34 @@ import { RoommateCandidateService } from '../../services/roommate-candidate.serv
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoommateCandidateComponent {
-	public starsScale: number[] = [1, 2, 3, 4, 5];
+	protected iterator = 0;
 
-	public dataSource$: Observable<IStudent> = this.service.getStudent();
+	public students$: Observable<IStudent[]> = this.service.getStudents();
 
-	constructor(
-		private http: HttpClient,
-		private service: RoommateCandidateService
-	) {}
+	public student$: Observable<IStudent> = this.students$.pipe(
+		map(students => students[this.iterator])
+	);
+
+	protected baseUrl = environment.apiUrl.replace('/api', '');
+
+	constructor(private service: FindRoommateService) {}
+
+	private updateStudent() {
+		this.iterator += 1;
+		if (this.iterator >= 5) {
+			this.students$ = this.service.getStudents();
+			this.iterator = 0;
+		}
+		this.student$ = this.students$.pipe(map(students => students[this.iterator]));
+	}
+
+	public accept(id: number) {
+		this.updateStudent();
+		this.service.accept(id, 'true').subscribe();
+	}
+
+	public reject(id: number) {
+		this.updateStudent();
+		this.service.accept(id, 'false').subscribe();
+	}
 }

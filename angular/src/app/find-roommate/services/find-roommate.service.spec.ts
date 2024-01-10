@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RoommateCandidateService } from './roommate-candidate.service';
+import { FindRoommateService } from './find-roommate.service';
 
 describe('RoommateCandidateService', () => {
-	let service: RoommateCandidateService;
+	let service: FindRoommateService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({});
-		service = TestBed.inject(RoommateCandidateService);
+		service = TestBed.inject(FindRoommateService);
 	});
 
 	it('should be created', () => {

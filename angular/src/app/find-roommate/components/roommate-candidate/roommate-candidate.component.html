@@ -1,4 +1,4 @@
-<mat-card *ngIf="dataSource$ | async as student" class="m-3 p-4">
+<mat-card *ngIf="student$ | async as student" class="m-3 p-4">
 	<mat-card-header>
 		<mat-icon mat-card-avatar>check_circle</mat-icon>
 		<mat-card-title class="text-2xl"
@@ -7,42 +7,43 @@
 	</mat-card-header>
 	<mat-card-content>
 		<img
-			class="m-auto mb-3"
+			mat-card-image
+			class="m-auto mb-3 w-full"
 			alt="Candidate image"
-			src="{{ student.profilePicture }}"
+			src="{{ baseUrl }}/{{ student.profilePicture.path }}"
 		/>
-
-		<div class="flex justify-between">
-			<div class="profile-rating__wrapper flex flex-col">
-				<div class="profile-rating__stars mx-auto">
-					<mat-icon *ngFor="let star of starsScale; let i = index"
-						>{{
-							i + 1 <= student.rating
-								? "star"
-								: i + 1 <= student.rating + 1
-								? "star_half"
-								: "star_outline"
-						}}
-						class="filled"
-					</mat-icon>
-				</div>
-			</div>
-			<span>ocena: {{ student.rating }}/5</span>
+		<div>
+			<mat-icon>school</mat-icon> Uczelnia:
+			<div>{{ student.university }}</div>
 		</div>
-		<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
-			<mat-chip *ngFor="let interest of student.interests">
-				<mat-icon matChipAvatar>check_circle</mat-icon>
-				{{ interest }}
-			</mat-chip>
-		</mat-chip-listbox>
+		<div>
+			<mat-icon>travel_explore</mat-icon>
+			Zainteresowania:
+			<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
+				<mat-chip *ngFor="let interest of student.interests">
+					<mat-icon matChipAvatar>check_circle</mat-icon>
+					{{ interest.name }}
+				</mat-chip>
+			</mat-chip-listbox>
+		</div>
 
-		<div class="flex justify-between">
-			<button class="scale-[3.0]" type="button" mat-icon-button>
+		<mat-card-actions class="flex justify-between">
+			<button
+				class="scale-[3.0]"
+				type="button"
+				mat-icon-button
+				(click)="reject(student.userId)"
+			>
 				<mat-icon class="icon-red">cancel</mat-icon>
 			</button>
-			<button class="scale-[3.0]" type="button" mat-icon-button>
+			<button
+				class="scale-[3.0]"
+				type="button"
+				mat-icon-button
+				(click)="accept(student.userId)"
+			>
 				<mat-icon class="icon-green">check_circle</mat-icon>
 			</button>
-		</div>
+		</mat-card-actions>
 	</mat-card-content>
 </mat-card>
