@@ -7,6 +7,7 @@ using Flats4us.Entities;
 using System.Security.Claims;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Cors;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Controllers
 {
@@ -107,7 +108,7 @@ namespace Flats4us.Controllers
 
                 _logger.LogInformation("Posting Or Accepting Matcher");
                 await _matcherService.AcceptStudentAsync(requestUserId, studentId, isAccept);
-                return Ok();
+                return Ok(new OutputDto<string>("Success"));
             }
             catch (Exception ex)
             {
