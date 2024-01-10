@@ -200,18 +200,5 @@
 				Dodaj spotkanie
 			</button>
 		</div>
-		<div *ngIf="user === uType.OWNER">
-			<mat-form-field>
-				<mat-label>Proponowani lokatorzy</mat-label>
-				<mat-chip-grid #chipGrid aria-label="Tenants">
-					<mat-chip-row *ngFor="let myTenant of myTenants">
-						{{ myTenant }}
-					</mat-chip-row>
-				</mat-chip-grid>
-				<div class="button-box-options">
-					<button mat-raised-button color="primary">Wynajmij</button>
-				</div>
-			</mat-form-field>
-		</div>
 	</div>
 </div>

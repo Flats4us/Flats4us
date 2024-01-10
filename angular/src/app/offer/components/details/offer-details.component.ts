@@ -29,7 +29,6 @@ import { RentsCancelDialogComponent } from 'src/app/rents/components/dialog/rent
 
 @Component({
 	selector: 'app-offer-details',
-	standalone: false,
 	templateUrl: './offer-details.component.html',
 	styleUrls: ['./offer-details.component.scss'],
 	animations: [slideAnimation],
@@ -44,9 +43,13 @@ export class OfferDetailsComponent implements OnInit, OnDestroy {
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public statusName: typeof statusName = statusName;
 	public actualRent$?: Observable<IOffer>;
-	public user$?: Observable<string>;
+	public user$?: Observable<string> = this.route.parent?.paramMap.pipe(
+		map(params => params.get('user')?.toUpperCase() ?? '')
+	);
 	public user = '';
-	private rentId$?: Observable<string>;
+	private rentId$: Observable<string> = this.route.paramMap.pipe(
+		map(params => params.get('id') ?? '')
+	);
 	private readonly unsubscribe$: Subject<void> = new Subject();
 	public tenantsCtrl = new FormControl('');
 	public filteredTenants$?: Observable<string[]>;
@@ -84,12 +87,6 @@ export class OfferDetailsComponent implements OnInit, OnDestroy {
 		);
 	}
 	public ngOnInit(): void {
-		this.user$ = this.route.parent?.paramMap.pipe(
-			map(params => params.get('user')?.toUpperCase() ?? '')
-		);
-		this.rentId$ = this.route.paramMap.pipe(
-			map(params => params.get('id') ?? '')
-		);
 		this.actualRent$ = this.rentId$?.pipe(
 			switchMap(value => this.rentsService.getOfferById(parseInt(value)))
 		);

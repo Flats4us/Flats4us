@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ISendOffers, ISortOption } from '../models/start-site.models';
+import { ISortOption } from '../models/start-site.models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { ISendOffers } from 'src/app/offer/models/offer.models';
 
 @Injectable()
 export class StartService {

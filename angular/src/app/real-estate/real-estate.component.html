@@ -9,7 +9,7 @@
 				<button
 					mat-icon-button
 					id="add"
-					class="box-icon"
+					class="box-icon-add"
 					aria-label="Add"
 					matTooltip="Dodaj nieruchomość"
 					(click)="addRealEstate()"
@@ -29,13 +29,12 @@
 							realEstateService.getPropertyType(realEstate.propertyType)
 						}}</span>
 						<mat-icon
-							*ngIf="realEstate.verificationStatus === 0"
 							class="box-icon-valid"
-							>check_circle</mat-icon
-						>
-						<mat-icon
-							*ngIf="realEstate.verificationStatus !== 0"
-							class="box-icon-invalid"
+							[ngClass]="
+								realEstate.verificationStatus === 0
+									? 'box-icon-valid'
+									: 'box-icon-invalid'
+							"
 							>check_circle</mat-icon
 						>
 					</div>

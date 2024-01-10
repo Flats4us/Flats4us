@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IOffer } from '../models/offer.models';
 import { environment } from 'src/environments/environment.prod';
+import { ISendOffers } from '../models/offer.models';
 
 @Injectable()
 export class OfferService {
@@ -10,7 +10,7 @@ export class OfferService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	public getOffers(): Observable<IOffer[]> {
-		return this.httpClient.get<IOffer[]>(`${this.apiRoute}/offers/mine`);
+	public getOffers(): Observable<ISendOffers> {
+		return this.httpClient.get<ISendOffers>(`${this.apiRoute}/offers/mine`);
 	}
 }

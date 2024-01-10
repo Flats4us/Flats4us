@@ -12,7 +12,7 @@ import { FormBuilder } from '@angular/forms';
 import { Observable, Subject, of } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ISendOffers, ISortOption } from './models/start-site.models';
+import { ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,6 +20,7 @@ import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
+import { ISendOffers } from '../offer/models/offer.models';
 
 @Component({
 	selector: 'app-start',
