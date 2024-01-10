@@ -15,9 +15,15 @@ namespace Flats4us.Entities
         [Required]
         public int Amount { get; set; }
 
-        public virtual Student Student { get; set; }
+        [Required]
+        public bool IsPaid {  get; set; }
 
-        // TODO: Przypisanie powinno być chyba do wynajmu nie oferty
-        public virtual Offer Offer { get; set; }
+        [Required]
+        public DateTime CreatedDate { get; set; }
+
+        [Required]
+        public DateTime PaymentDate { get; set; }
+
+        public virtual Rent Rent { get; set; }
     }
 }

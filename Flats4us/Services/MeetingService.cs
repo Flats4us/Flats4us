@@ -1,11 +1,8 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
-using Flats4us.Helpers.Enums;
 using Microsoft.EntityFrameworkCore;
-using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using AutoMapper;
-using System;
 
 namespace Flats4us.Services
 {

@@ -32,9 +32,7 @@ namespace Flats4us.Entities
         public virtual ICollection<OpinionStudentStudent> IssuedStudentStudentOpinions { get; set; }
         public virtual ICollection<OpinionOwnerStudent> ReceivedOwnertStudentOpinions { get; set; }
         public virtual ICollection<OpinionStudentOwner> IssuedStudentOwnerOpinions { get; set; }
-        public virtual ICollection<Payment> Payments { get; set; }
         public virtual ICollection<Argument> Arguments { get; set; }
-        [NotMapped]
         public virtual ICollection<Rent> RoommateInRents { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
         public virtual ICollection<OfferInterest> OfferInterests { get; set; }
@@ -48,7 +46,6 @@ namespace Flats4us.Entities
             this.IssuedStudentStudentOpinions= new HashSet<OpinionStudentStudent>();
             this.ReceivedOwnertStudentOpinions = new HashSet<OpinionOwnerStudent>();
             this.IssuedStudentOwnerOpinions = new HashSet<OpinionStudentOwner>();
-            this.Payments = new HashSet<Payment>();
             this.Arguments = new HashSet<Argument>();
             this.RoommateInRents= new HashSet<Rent>();
             this.Rents = new HashSet<Rent>();
