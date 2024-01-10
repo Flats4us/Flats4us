@@ -54,7 +54,7 @@ namespace Flats4us.Controllers
             Summary = "Verifies property",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> VerifyProperty(int id, [FromBody] VerifyDto input)
+        public async Task<IActionResult> VerifyProperty(int id, [FromBody] AcceptDto input)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace Flats4us.Controllers
             Summary = "Verifies user",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> VerifyUser(int id, [FromBody] VerifyDto input)
+        public async Task<IActionResult> VerifyUser(int id, [FromBody] AcceptDto input)
         {
             try
             {
