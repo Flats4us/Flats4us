@@ -30,7 +30,6 @@ import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { RentsService } from '../rents/services/rents.service';
 
 @NgModule({
-	exports: [OfferComponent, OfferDetailsComponent, AddOfferComponent],
 	declarations: [AddOfferComponent, OfferComponent, OfferDetailsComponent],
 	imports: [
 		CommonModule,
@@ -57,5 +56,6 @@ import { RentsService } from '../rents/services/rents.service';
 		MatFormFieldModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService],
+	exports: [OfferComponent, OfferDetailsComponent, AddOfferComponent],
 })
 export class OfferModule {}

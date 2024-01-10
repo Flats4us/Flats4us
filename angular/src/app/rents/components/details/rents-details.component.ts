@@ -1,10 +1,8 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	ElementRef,
 	OnDestroy,
 	OnInit,
-	ViewChild,
 } from '@angular/core';
 import { RentsService } from '../../services/rents.service';
 import { IMenuOptions, IPayment } from '../../models/rents.models';
@@ -13,7 +11,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject, map, switchMap } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
-import { FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { RentsTenantsDialogComponent } from '../dialog/rents-tenants-dialog.component';
 import { environment } from 'src/environments/environment.prod';
@@ -34,23 +31,17 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public uType = userType;
 
-	@ViewChild('tenantsInput')
-	public tenantsInput!: ElementRef<HTMLInputElement>;
-
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public statusName: typeof statusName = statusName;
 	public actualRent$?: Observable<IOffer>;
 	public user$?: Observable<string>;
-	private rentId$?: Observable<string>;
+	private rentId$: Observable<string> = this.route.paramMap.pipe(
+		map(params => params.get('id') ?? '')
+	);
 	private readonly unsubscribe$: Subject<void> = new Subject();
-	public tenantsCtrl = new FormControl('');
-	public filteredTenants$?: Observable<string[]>;
-	public myTenants: string[] = [];
 	public payments: IPayment[] = [
 		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
 	];
-
-	private tenants: string[] = ['jk@wp.pl', 'sk@wp.pl', 'kl@onet.pl'];
 
 	public currentIndex = 0;
 
@@ -72,9 +63,6 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	public ngOnInit(): void {
 		this.user$ = this.route.parent?.paramMap.pipe(
 			map(params => params.get('user')?.toUpperCase() ?? '')
-		);
-		this.rentId$ = this.route.paramMap.pipe(
-			map(params => params.get('id') ?? '')
 		);
 		this.actualRent$ = this.rentId$?.pipe(
 			switchMap(value => this.rentsService.getOfferById(parseInt(value)))

@@ -9,18 +9,18 @@
 	margin-bottom: 16px;
 }
 
-.box-icon {
-	transform: scale(1.2);
+.box-icon-add {
+	transform: scale(1.6);
 	margin: 8px;
 }
 
 .box-icon-valid {
-	transform: scale(0.8);
+	font-size: x-large;
 	color: green;
 }
 
 .box-icon-invalid {
-	transform: scale(0.8);
+	font-size: x-large;
 	color: grey;
 }
 

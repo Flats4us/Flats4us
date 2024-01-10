@@ -25,7 +25,9 @@ export class RealEstateDetailsComponent implements OnInit, OnDestroy {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public actualRealEstate$?: Observable<IProperty>;
-	private realEstateId$?: Observable<string>;
+	private realEstateId$: Observable<string> = this.route.paramMap.pipe(
+		map(params => params.get('id') ?? '')
+	);
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public currentIndex = 0;
@@ -41,9 +43,6 @@ export class RealEstateDetailsComponent implements OnInit, OnDestroy {
 		private dialog: MatDialog
 	) {}
 	public ngOnInit(): void {
-		this.realEstateId$ = this.route.paramMap.pipe(
-			map(params => params.get('id') ?? '')
-		);
 		this.actualRealEstate$ = this.realEstateId$?.pipe(
 			switchMap(id =>
 				this.realEstateService
