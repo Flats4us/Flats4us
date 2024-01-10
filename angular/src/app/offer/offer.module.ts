@@ -28,9 +28,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { OfferService } from './services/offer.service';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { RentsService } from '../rents/services/rents.service';
+import { SurveyComponent } from '@shared/components/survey/survey.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
-	declarations: [AddOfferComponent, OfferComponent, OfferDetailsComponent],
+	declarations: [
+		AddOfferComponent,
+		OfferComponent,
+		OfferDetailsComponent,
+		SurveyComponent,
+	],
 	imports: [
 		CommonModule,
 		OfferRoutingModule,
@@ -54,8 +67,20 @@ import { RentsService } from '../rents/services/rents.service';
 		MatAutocompleteModule,
 		ReactiveFormsModule,
 		MatFormFieldModule,
+		MatNativeDateModule,
+		MatSliderModule,
+		MatSnackBarModule,
+		MatSlideToggleModule,
+		HttpClientModule,
+		MatCheckboxModule,
+		MatRadioModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService],
-	exports: [OfferComponent, OfferDetailsComponent, AddOfferComponent],
+	exports: [
+		OfferComponent,
+		OfferDetailsComponent,
+		AddOfferComponent,
+		SurveyComponent,
+	],
 })
 export class OfferModule {}
