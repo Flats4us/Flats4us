@@ -31,20 +31,25 @@
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
 				<a
-					*ngFor="let offer of offersOptions$ | async"
+					*ngFor="let offer of (offersOptions$ | async)?.result"
 					mat-list-item
 					class="item-list"
 					routerLink="{{ offer.offerId }}"
 					><div class="box-title">
-						<span class="text-xl font-bold">{{ offer.property.propertyType }}</span>
-						<mat-icon *ngIf="offer.offerStatus === 0" class="box-icon-valid"
-							>check_circle</mat-icon
+						<span class="text-xl font-bold">
+							Wynajem -
+							{{ realEstateService.getPropertyType(offer.property.propertyType) }}
+							{{ offer.property.area }} m² {{ offer.property.city }}</span
 						>
-						<mat-icon *ngIf="offer.offerStatus === 1" class="box-icon-invalid"
+						<mat-icon
+							class="box-icon-valid"
+							[ngClass]="
+								offer.offerStatus === 0 ? 'box-icon-valid' : 'box-icon-invalid'
+							"
 							>check_circle</mat-icon
 						>
 					</div>
-					<div class="box-date">Data {{ offer.startDate }}</div>
+					<div class="box-date">Data {{ offer.startDate | date }}</div>
 				</a>
 			</mat-nav-list>
 		</div>

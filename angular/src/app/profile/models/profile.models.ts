@@ -1,12 +1,5 @@
 import { statusType } from './types';
 
-export interface ISurveyOwnerOffer {
-	smokingAllowed: boolean;
-	partiesAllowed: boolean;
-	animalsAllowed: boolean;
-	gender: number;
-}
-
 export interface IStudent extends IUser {
 	birthDate: string;
 	indexNumber: string;

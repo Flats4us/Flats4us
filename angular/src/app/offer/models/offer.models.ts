@@ -1,8 +1,4 @@
 import {
-	IOwner,
-	ISurveyOwnerOffer,
-} from 'src/app/profile/models/profile.models';
-import {
 	IProperty,
 	IRegionCity,
 } from 'src/app/real-estate/models/real-estate.models';
@@ -22,6 +18,28 @@ export interface IOffer {
 	property: IProperty;
 	owner: IOwner;
 	surveyOwnerOffer: ISurveyOwnerOffer;
+}
+
+export interface ISendOffers {
+	totalCount: number;
+	result: IOffer[];
+}
+
+export interface IOwner {
+	userId: number;
+	name: string;
+	surname: string;
+	email: string;
+	phoneNumber: string;
+	imagesPath: string;
+	activityStatus: boolean;
+}
+
+export interface ISurveyOwnerOffer {
+	smokingAllowed: boolean;
+	partiesAllowed: boolean;
+	animalsAllowed: boolean;
+	gender: number;
 }
 
 export interface IFlatOffer {

@@ -5,7 +5,7 @@
 	align-items: center;
 	flex-direction: column;
 	text-decoration: none;
-	padding-top: 0px;
+	padding-top: 0;
 	justify-content: center;
 	margin: 0 16px;
 }
@@ -54,8 +54,7 @@
 .container-offers {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-row-gap: 40px;
-	grid-column-gap: 40px;
+	gap: 40px;
 	padding: 0 40px 40px 40px;
 	justify-content: center;
 }
@@ -141,7 +140,7 @@ mat-card-content {
 }
 
 .box-icon-watched {
-	transform: scale(1.2);
+	font-size: x-large;
 	display: flex;
 	align-content: center;
 	justify-content: center;
