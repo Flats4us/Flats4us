@@ -16,7 +16,8 @@ namespace Flats4us.Entities
         public string University { get; set; }
 
 
-        public string? Links { get; set; }
+        [Required]
+        public string Links { get; set; }
 
         public RoommatesStatus? RoommatesStatus { get; set; }
 

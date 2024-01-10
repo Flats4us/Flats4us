@@ -76,5 +76,48 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("my-profile")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns current user profiile",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<ActionResult> GetCurrentUserProfile()
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var profile = await _userService.GetCurrentUserProfileAsync(requestUserId);
+                return Ok(profile);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}/profile")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns user profiile by id",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<ActionResult> GetCurrentUserProfile(int id)
+        {
+            try
+            {
+                var profile = await _userService.GetUserProfileByIdAsync(id);
+                return Ok(profile);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

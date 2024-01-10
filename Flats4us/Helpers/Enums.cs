@@ -68,6 +68,7 @@
     public enum UserType
     {
         Owner,
-        Student
+        Student,
+        Moderator
     }
 }
