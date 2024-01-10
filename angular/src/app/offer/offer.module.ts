@@ -36,6 +36,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { SurveyService } from '@shared/services/survey.service';
 
 @NgModule({
 	declarations: [
@@ -75,7 +76,7 @@ import { MatRadioModule } from '@angular/material/radio';
 		MatCheckboxModule,
 		MatRadioModule,
 	],
-	providers: [OfferService, RealEstateService, RentsService],
+	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [
 		OfferComponent,
 		OfferDetailsComponent,
