@@ -137,8 +137,8 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			hobbies: this.hobbyCtrl,
-			socialMedia: this.socialMediaCtrl,
+			hobbies: new FormControl(this.myHobbies),
+			socialMedia: new FormControl(this.socialMedias),
 			documentType: new FormControl('', Validators.required),
 			validTill: new FormControl(null, [
 				Validators.required,
