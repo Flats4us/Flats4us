@@ -6,8 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { RegisterComponent } from './register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
+	declarations: [RegisterComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -15,6 +18,8 @@ import { MatInputModule } from '@angular/material/input';
 		MatFormFieldModule,
 		MatIconModule,
 		MatInputModule,
+		ReactiveFormsModule,
 	],
+	exports: [RegisterComponent],
 })
 export class RegisterModule {}
