@@ -1,7 +1,6 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	OnChanges,
 	OnDestroy,
 	OnInit,
 	ViewChild,
@@ -13,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
-import { HttpHeaders } from '@angular/common/http';
 import { IAddOwner, IAddStudent } from '../models/profile.models';
 import { IUser } from '@shared/models/auth.models';
 import { AuthService } from '@shared/services/auth.service';

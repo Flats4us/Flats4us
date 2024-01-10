@@ -44,13 +44,12 @@
 					><div class="box-title">
 						<span class="text-xl font-bold">{{ rent.title }}</span>
 						<mat-icon
-							*ngIf="rent.status !== statusName.SUSPENDED"
-							class="box-icon-valid"
-							>check_circle</mat-icon
-						>
-						<mat-icon
-							*ngIf="rent.status === statusName.SUSPENDED"
 							class="box-icon-invalid"
+							[ngClass]="
+								rent.status === statusName.SUSPENDED
+									? 'box-icon-invalid'
+									: 'box-icon-valid'
+							"
 							>check_circle</mat-icon
 						>
 					</div>
