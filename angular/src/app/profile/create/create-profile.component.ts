@@ -184,7 +184,12 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
 									password: this.studentToAdd.password,
 								} as IUser)
 								.pipe(takeUntil(this.unsubscribe$))
-								.subscribe()
+								.subscribe(() =>
+									this.profileService
+										.addProfileFiles(this.formData)
+										.pipe(takeUntil(this.unsubscribe$))
+										.subscribe()
+								)
 						);
 				}
 				if (this.user === userType.OWNER) {

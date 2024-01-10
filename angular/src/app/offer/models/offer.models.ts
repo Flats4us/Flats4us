@@ -25,6 +25,10 @@ export interface ISendOffers {
 	result: IOffer[];
 }
 
+export interface IPromotion {
+	duration: number;
+}
+
 export interface IOwner {
 	userId: number;
 	name: string;

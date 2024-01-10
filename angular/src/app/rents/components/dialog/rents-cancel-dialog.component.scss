@@ -1,4 +1,7 @@
 .button-box {
 	display: flex;
-	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	min-width: 200px;
+	min-height: 100px;
 }

@@ -221,7 +221,7 @@ export class StartComponent implements OnInit, OnDestroy {
 	}
 
 	public navigateToFlat(id: number) {
-		this.router.navigate([`rents/details/${id}`]);
+		this.router.navigate([`offer/details/${id}`]);
 	}
 	public validateForm() {
 		return this.startSiteForm.valid;

@@ -135,7 +135,13 @@
 			<p class="text-2xl">
 				{{ actualRealEstate.floor === null ? "-" : actualRealEstate.floor }}
 			</p>
-			<p class="text-2xl">{{ actualRealEstate.maxNumberOfInhabitants }}</p>
+			<p class="text-2xl">
+				{{
+					actualRealEstate.maxNumberOfInhabitants === null
+						? "-"
+						: actualRealEstate.maxNumberOfInhabitants
+				}}
+			</p>
 			<p class="text-2xl">{{ actualRealEstate.constructionYear }}</p>
 			<p class="text-2xl">
 				<span *ngFor="let equipment of actualRealEstate.equipment"

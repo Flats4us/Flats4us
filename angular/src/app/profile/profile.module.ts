@@ -72,7 +72,6 @@ import { OfferModule } from '../offer/offer.module';
 		RegisterModule,
 		OfferModule,
 	],
-	providers: [SurveyService],
 	exports: [ProfileComponent],
 	providers: [ProfileService, FormGroupDirective, SurveyService],
 })
