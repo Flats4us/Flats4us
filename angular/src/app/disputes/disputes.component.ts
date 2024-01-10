@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-	selector: 'app-dispute-conversation',
+	selector: 'app-disputes',
 	templateUrl: './disputes.component.html',
 	styleUrls: ['./disputes.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

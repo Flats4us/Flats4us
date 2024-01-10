@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { map, Observable, Subject } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IConversation } from '@shared/models/conversation.models';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { takeUntil } from 'rxjs/operators';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-dispute-conversation',
@@ -19,7 +19,7 @@ import { takeUntil } from 'rxjs/operators';
 	styleUrls: ['./dispute-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DisputeConversationComponent {
+export class DisputeConversationComponent extends BaseComponent {
 	public conversationId$: Observable<string>;
 	public messageControl = new FormControl();
 	public currentUser = 'Moderator';
@@ -39,6 +39,7 @@ export class DisputeConversationComponent {
 		private snackBar: MatSnackBar,
 		private router: Router
 	) {
+		super();
 		this.conversationId$ = route.paramMap.pipe(
 			map(params => params.get('id') ?? '')
 		);
@@ -62,15 +63,14 @@ export class DisputeConversationComponent {
 		this.messageControl.reset();
 	}
 
-	public OnSubmit() {
+	public onSubmit() {
 		const ref = this.snackBar.open('Spór zostaw zamknięty', 'Zamknij', {
 			duration: 2000,
 		});
-		const onDestroy = new Subject<void>();
 
 		ref
 			.afterDismissed()
-			.pipe(takeUntil(onDestroy))
+			.pipe(this.untilDestroyed())
 			.subscribe(() => {
 				this.router.navigate(['moderation-console/dispute']);
 			});
