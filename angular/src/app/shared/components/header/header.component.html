@@ -9,20 +9,18 @@
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
-	<button mat-button class="languages" [matMenuTriggerFor]="languages">
-		PL<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
-	</button>
-	<mat-menu #languages="matMenu">
-		<button mat-menu-item>PL</button>
-		<button mat-menu-item>EN</button>
-	</mat-menu>
-	<button mat-button class="dark-theme" aria-label="Switch to dark theme">
-		<mat-icon class="material-icons-outlined">dark_mode</mat-icon>
-	</button>
 
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
-		<button class="your-profile" [matMenuTriggerFor]="myProfile">
-			<img class="your-photo" src="../../assets/1.jpg" alt="Twój profil" />
+		<button
+			*ngIf="user$ | async as user"
+			class="your-profile"
+			[matMenuTriggerFor]="myProfile"
+		>
+			<img
+				class="your-photo"
+				alt="Twój profil"
+				src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+			/>
 		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
@@ -107,18 +105,8 @@
 		Ustawienia
 	</button>
 	<mat-menu #settings="matMenu">
-		<button mat-menu-item routerLink="settings/notifications">
-			Ustawienia powiadomień
-		</button>
 		<button mat-menu-item routerLink="settings/password-change">
 			Zmień hasło
-		</button>
-		<button mat-menu-item [matMenuTriggerFor]="helpCenter">Centrum pomocy</button>
-	</mat-menu>
-
-	<mat-menu #helpCenter="matMenu">
-		<button mat-menu-item routerLink="settings/help-center">
-			Wyślij zgłoszenie do moderatora
 		</button>
 	</mat-menu>
 
@@ -129,19 +117,7 @@
 
 	<mat-menu #extended="matMenu">
 		<button mat-menu-item>Obserwowane oferty</button>
-		<button mat-menu-item>Ostatnio oglądane oferty</button>
-		<button mat-menu-item>Opinie</button>
 		<button mat-menu-item routerLink="calendar">Kalendarz</button>
-		<button
-			*ngIf="isUserLoggedInAsStudent"
-			mat-menu-item
-			[matMenuTriggerFor]="roommates"
-		>
-			Współlokatorzy
-		</button>
-	</mat-menu>
-	<mat-menu #roommates="matMenu">
-		<button mat-menu-item>Moje wybory</button>
-		<button mat-menu-item>Wybory w których mnie wybrano</button>
+		<button mat-menu-item routerLink="find-roommate">Znajdź wspołlokatora</button>
 	</mat-menu>
 </ng-template>
