@@ -493,7 +493,12 @@ namespace Flats4us.Services
             // Update Student-specific data
             if (user is Student student)
             {
-                student.Links = input.Links ?? student.Links;
+
+                if (input.Links != null)
+                {
+                    student.Links = string.Join("|", input.Links);
+                }
+
                 if (input.BirthDate != null || input.StudentNumber != null || input.University != null)
                 {
                     isSensitiveDataUpdated = true;

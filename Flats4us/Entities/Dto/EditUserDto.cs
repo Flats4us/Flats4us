@@ -20,6 +20,6 @@
         public DateTime? BirthDate { get; set; }
         public string? StudentNumber { get; set; }
         public string? University { get; set; }
-        public string? Links { get; set; }
+        public List<string>? Links { get; set; }
     }
 }
