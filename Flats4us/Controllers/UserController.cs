@@ -119,5 +119,103 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [HttpPut("edit-general")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+    Summary = "Edit general user information",
+    Description = "Requires registered user privileges"
+)]
+        public async Task<ActionResult> EditUserGeneralInfo([FromBody] EditUserGeneral input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+                {
+                    return BadRequest("Server error: Failed to get user id from token");
+                }
+
+                await _userService.EditUserGeneral(input, userId);
+                return Ok("User general information updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("edit-sensitive")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Edit sensitive user information",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<ActionResult> EditUserSensitiveInfo([FromBody] EditUserSensitive input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+                {
+                    return BadRequest("Server error: Failed to get user id from token");
+                }
+
+                await _userService.EditUserSensitive(input, userId);
+                return Ok("User sensitive information updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("edit-owner-sensitive")]
+        [Authorize(Policy = "Owner")]
+        [SwaggerOperation(
+            Summary = "Edit sensitive owner information"
+        )]
+        public async Task<ActionResult> EditOwnerSensitiveInfo([FromBody] EditOwnerSensitiveDto input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+                {
+                    return BadRequest("Server error: Failed to get user id from token");
+                }
+
+                await _userService.EditOwnerSensitive(input, userId);
+                return Ok("Owner sensitive information updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("edit-student-sensitive")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+    Summary = "Edit sensitive student information",
+    Description = "Requires registered user privileges"
+)]
+        public async Task<ActionResult> EditStudentSensitiveInfo([FromBody] EditStudentSensitiveDto input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+                {
+                    return BadRequest("Server error: Failed to get user id from token");
+                }
+
+                await _userService.EditStudentSensitive(input, userId);
+                return Ok("Student sensitive information updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+
     }
 }

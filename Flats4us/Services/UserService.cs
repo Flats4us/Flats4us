@@ -5,6 +5,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -105,7 +106,13 @@ namespace Flats4us.Services
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-            await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+
+            if (input.Document != null)
+            {
+                user.VerificationStatus = VerificationStatus.NotVerified;
+                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
@@ -288,14 +295,54 @@ namespace Flats4us.Services
             return result;
         }
 
-        public Task<EditUserGeneral> EditUserGeneral(int userId)
+        public async Task EditUserGeneral(EditUserGeneral input, int userId)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(userId);
+            user.Address = input.Address;
+            user.Email = input.Email;
+            user.PhoneNumber = input.PhoneNumber;
+
+            await _context.SaveChangesAsync();
+            
         }
 
-        public Task<EditUserSensitive> EditUserSensitive(int userId)
+        public async Task EditUserSensitive(EditUserSensitive input, int userId)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(userId);
+            user.Name = input.Name;
+            user.Surname = input.Surname;
+            user.VerificationStatus = VerificationStatus.NotVerified;
+
+            await _context.SaveChangesAsync();
         }
+        public async Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId)
+        {
+            var user = await _context.Owners.FindAsync(userId);
+            user.DocumentNumber = input.DocumentNumber;
+            user.DocumentExpireDate = (DateTime)input.DocumentExpireDate;
+            user.VerificationStatus = VerificationStatus.NotVerified;
+            await _context.SaveChangesAsync();
+        }
+        public async Task EditStudentSensitive(EditStudentSensitiveDto input, int userId)
+        {
+            var student = await _context.Students.FindAsync(userId);
+
+            if (student == null)
+            {
+                throw new Exception($"Cannot find student with ID: {userId}");
+            }
+
+            student.BirthDate = input.BirthDate;
+            student.StudentNumber = input.StudentNumber;
+            student.University = input.University;
+            student.VerificationStatus = VerificationStatus.NotVerified;
+
+            await _context.SaveChangesAsync();
+        }
+
+
+
+
+
     }
 }
