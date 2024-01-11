@@ -28,7 +28,7 @@ namespace Flats4us.Entities.Dto
 
         // Student
 
-        public DateTime? BirthDate { get; set; }
+        public int? Age { get; set; }
 
         public string? University { get; set; }
 
