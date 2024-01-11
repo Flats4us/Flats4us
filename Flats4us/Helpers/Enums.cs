@@ -48,8 +48,7 @@
     {
         Verified,
         NotVerified,
-        Rejected,
-        PreCreated
+        Rejected
     }
 
     public enum PaymentPurpose
