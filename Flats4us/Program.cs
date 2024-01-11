@@ -38,6 +38,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
 
 builder.Services.AddControllers();
 

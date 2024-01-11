@@ -128,6 +128,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year))
                 .ForMember(dest => dest.University, opt => opt.MapFrom(src => src.University))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
+
+            CreateMap<TechnicalProblem, TechnicalProblemDto>();
         }
     }
 }

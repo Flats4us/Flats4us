@@ -39,6 +39,7 @@ namespace Flats4us.Entities
         public DbSet<Student> Students { get; set; }
         public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
         public DbSet<SurveyStudent> StudentSurveys { get; set; }
+        public DbSet<TechnicalProblem> TechnicalProblems { get; set; }
         public DbSet<User> Users { get; set; }
 
         public Flats4usContext() { }
@@ -158,6 +159,12 @@ namespace Flats4us.Entities
                 {
                     builder.HasCheckConstraint("CK_Matcher_StudentIds", "Student1Id < Student2Id");
                 });
+
+            modelBuilder.Entity<TechnicalProblem>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.TechnicalProblems)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
