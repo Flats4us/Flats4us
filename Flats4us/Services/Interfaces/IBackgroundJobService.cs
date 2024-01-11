@@ -2,7 +2,6 @@
 {
     public interface IBackgroundJobService
     {
-        // EXAMPLE
-        //Task TestAsync();
+        Task GeneratePaymentsAsync();
     }
 }

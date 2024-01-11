@@ -17,9 +17,9 @@
     public enum OfferStatus
     {
         Current,
-        Outdated,
-        Suspended,
-        Rented
+        Waiting,
+        Rented,
+        Old
     }
 
     public enum Sender
@@ -48,8 +48,7 @@
     {
         Verified,
         NotVerified,
-        Rejected,
-        PreCreated
+        Rejected
     }
 
     public enum PaymentPurpose

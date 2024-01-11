@@ -11,7 +11,6 @@ using Hangfire;
 using Flats4us.Helpers;
 using AutoMapper;
 using Flats4us.Helpers.Enums;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +23,6 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
     ServiceLifetime.Scoped
 );
 
-builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
@@ -35,6 +33,7 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
+builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
 
 builder.Services.AddControllers();
