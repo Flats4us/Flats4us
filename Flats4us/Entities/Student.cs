@@ -13,7 +13,7 @@ namespace Flats4us.Entities
         public string StudentNumber { get; set; }
 
         [Required]
-        public string University { get; set; }
+        public string University { get; set; }  
 
         [Required]
         public string Links { get; set; }

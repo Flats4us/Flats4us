@@ -6,6 +6,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -113,7 +114,13 @@ namespace Flats4us.Services
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-            await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+
+            if (input.Document != null)
+            {
+                user.VerificationStatus = VerificationStatus.NotVerified;
+                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
