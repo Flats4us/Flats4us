@@ -21,6 +21,7 @@ import { EmailChangeModule } from '../settings/components/emailChange/emailChang
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { MatRadioModule } from '@angular/material/radio';
 import { SurveyService } from '@shared/services/survey.service';
+import { UserService } from '@shared/services/user.service';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -46,7 +47,7 @@ import { SurveyService } from '@shared/services/survey.service';
 		PasswordChangeModule,
 		MatRadioModule,
 	],
-	providers: [SurveyService],
+	providers: [SurveyService, UserService],
 	exports: [ProfileComponent],
 })
 export class ProfileModule {}
