@@ -13,6 +13,7 @@ using AutoMapper;
 using Flats4us.Helpers.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
+using Flats4us.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ builder.Services.AddScoped<IMeetingService, MeetingService>();
 builder.Services.AddTransient<IBackgroundJobService, BackgroundJobService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
+builder.Services.AddScoped<IGroupChatService, GroupChatService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 
 builder.Services.AddControllers();
 
@@ -74,9 +77,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
             ValidateIssuer = false,
             ValidateAudience = false
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our hub...
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/chatHub"))) // Make sure this matches your SignalR hub route
+                {
+                    // Read the token out of the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -134,13 +155,23 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.AddSerilog();
 });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", options => options
-        .AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod());
+    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()
+                                                    .AllowAnyHeader()
+                                                    .AllowAnyMethod());
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", builder =>
+        builder.WithOrigins("http://localhost:4200") // Add here the specific origins
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowCredentials()); // Allow credentials
+});
+
 
 builder.Services.AddHangfire(configuration => configuration
     .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
@@ -149,10 +180,10 @@ builder.Services.AddHangfire(configuration => configuration
     .UseSqlServerStorage(builder.Configuration.GetConnectionString("Flats4usConn")));
 
 builder.Services.AddHangfireServer();
-
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
+app.UseRouting();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -166,7 +197,9 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseCors(options => options.AllowAnyOrigin());
+
+app.MapHub<ChatHub>("/chatHub");
+
 
 app.UseStaticFiles(new StaticFileOptions
 {
