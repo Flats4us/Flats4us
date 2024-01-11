@@ -22,8 +22,6 @@ export class ProfileComponent {
 			filter(Boolean)
 		);
 
-		this.user$ = this.id$.pipe(
-			switchMap(id => this.userService.getUserById(id)) // Replace getUserById with the actual method name that calls the API
-		);
+		this.user$ = this.id$.pipe(switchMap(id => this.userService.getUserById(id)));
 	}
 }
