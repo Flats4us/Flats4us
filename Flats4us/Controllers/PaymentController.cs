@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
@@ -34,8 +35,13 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
                 _logger.LogInformation($"Paying payment ID: {id}");
-                await _paymentService.PayPaymentAsync(id);
+                await _paymentService.PayPaymentAsync(id, requestUserId);
                 return Ok(new OutputDto<string>("Payment status changed"));
             }
             catch (Exception ex)

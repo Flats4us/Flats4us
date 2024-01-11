@@ -96,7 +96,7 @@ namespace Flats4us.Services
 
                 var depositPayment = new Payment
                 {
-                    PaymentPurpose = PaymentPurpose.Rent,
+                    PaymentPurpose = PaymentPurpose.Deposit,
                     Amount = offer.Price,
                     IsPaid = false,
                     CreatedDate = DateTime.Now,

@@ -2,6 +2,6 @@
 {
     public interface IPaymentService
     {
-        Task PayPaymentAsync(int id);
+        Task PayPaymentAsync(int id, int requestUserId);
     }
 }
