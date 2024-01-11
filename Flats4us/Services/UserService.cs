@@ -287,5 +287,15 @@ namespace Flats4us.Services
 
             return result;
         }
+
+        public Task<EditUserGeneral> EditUserGeneral(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EditUserSensitive> EditUserSensitive(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
