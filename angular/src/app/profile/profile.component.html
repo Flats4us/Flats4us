@@ -1,7 +1,7 @@
 <h1 class="text-4xl p-4 font-semibold">Profil użytkownika</h1>
 <mat-card *ngIf="user$ | async as user">
 	<mat-card-content>
-		<section>
+		<section class="flex flex-col items-center">
 			<div class="flex justify-center">
 				<img
 					mat-card-avatar
@@ -35,10 +35,12 @@
 					</mat-chip>
 				</mat-chip-listbox>
 			</div>
-			<div class="flex flex-col items-center">
+			<div class="flex flex-col items-start">
 				<div *ngFor="let link of user.links" class="text-gray-400">
-					<mat-icon>link</mat-icon>
-					<a href="{{ link }}">{{ link }}</a>
+					<div>
+						<mat-icon>link</mat-icon>
+						<a href="{{ link }}">{{ link }}</a>
+					</div>
 				</div>
 			</div>
 		</section>
