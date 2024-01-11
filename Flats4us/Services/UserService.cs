@@ -332,7 +332,7 @@ namespace Flats4us.Services
                 throw new Exception($"Cannot find student with ID: {userId}");
             }
 
-            student.BirthDate = input.BirthDate;
+            student.BirthDate = (DateTime)input.BirthDate;
             student.StudentNumber = input.StudentNumber;
             student.University = input.University;
             student.VerificationStatus = VerificationStatus.NotVerified;
