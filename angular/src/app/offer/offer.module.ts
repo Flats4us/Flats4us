@@ -74,19 +74,7 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 		MeetingAddComponent,
 		OfferPromotionDialogComponent,
 	],
-	providers: [OfferService, RealEstateService, RentsService, SurveyService],
-	exports: [
-		OfferComponent,
-		OfferDetailsComponent,
-		AddOfferComponent,
-		SurveyComponent,
-	],
-	providers: [OfferService, RealEstateService, RentsService],
-	exports: [
-		OfferComponent,
-		OfferDetailsComponent,
-		AddOfferComponent,
-		SurveyComponent,
-	],
+	providers: [OfferService, RealEstateService, SurveyService],
+	exports: [OfferComponent],
 })
 export class OfferModule {}

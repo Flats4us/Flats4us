@@ -27,6 +27,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ProfileService } from './services/profile.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatStepperModule } from '@angular/material/stepper';
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { SurveyService } from '@shared/services/survey.service';
 import { UserService } from '@shared/services/user.service';
@@ -68,6 +77,7 @@ import { UserService } from '@shared/services/user.service';
 	],
 	providers: [SurveyService, UserService],
 	exports: [ProfileComponent],
+	providers: [ProfileService, SurveyService],
 	providers: [ProfileService, SurveyService],
 })
 export class ProfileModule {}
