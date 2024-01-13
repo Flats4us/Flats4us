@@ -73,6 +73,10 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 		OfferDetailsModule,
 		MeetingAddComponent,
 		OfferPromotionDialogComponent,
+		AddOfferModule,
+		OfferDetailsModule,
+		MeetingAddComponent,
+		OfferPromotionDialogComponent,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [

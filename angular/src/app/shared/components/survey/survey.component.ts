@@ -35,13 +35,20 @@ export class SurveyComponent implements OnInit {
 	@Input()
 	public createProfileMode = false;
 
+	public surveyForm = new FormGroup({});
+	public formToAdd = new FormGroup({});
+	public questions$: Observable<IQuestionsData[]>;
+	public typeName: typeof TypeName = TypeName;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private service: SurveyService,
 		private formDir: FormGroupDirective
 	) {
-		this.offerForm = this.formBuilder.group({});
+		this.offerForm = this.formBuilder.group({
+			lookingForRoommate: [''],
+		});
 
 		this.questions$ = this.getQuestions().pipe(
 			tap(questions => this.getFormControls(questions))

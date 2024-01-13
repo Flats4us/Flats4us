@@ -7,15 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { SurveyComponent } from '../shared/components/survey/survey.component';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {
-	FormGroupDirective,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -37,7 +32,7 @@ import { SurveyService } from '@shared/services/survey.service';
 import { UserService } from '@shared/services/user.service';
 
 @NgModule({
-	declarations: [ProfileComponent, EditProfileComponent, CreateProfileComponent],
+	declarations: [ProfileComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,

@@ -41,19 +41,19 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public buildForm() {
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'name',
 			new FormControl('', Validators.required)
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'surname',
 			new FormControl('', Validators.required)
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'email',
 			new FormControl('', [Validators.required, Validators.email])
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'password',
 			new FormControl('', [
 				Validators.required,
