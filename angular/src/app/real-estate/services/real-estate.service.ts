@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import {
@@ -259,45 +259,18 @@ export class RealEstateService {
 
 	protected apiRoute = `${environment.apiUrl}`;
 
+	public propertyTypes = new Map<number, string>([
+		[0, 'Mieszkanie'],
+		[1, 'Dom'],
+		[2, 'Pokój'],
+	]);
+
+	public propertyStatuses = new Map<number, string>([
+		[0, 'zweryfikowana'],
+		[1, 'niezweryfikowana'],
+	]);
+
 	constructor(private httpClient: HttpClient) {}
-
-	public getPropertyType(index: number): string {
-		switch (index) {
-			case 0: {
-				return 'Mieszkanie';
-				break;
-			}
-			case 1: {
-				return 'Dom';
-				break;
-			}
-			case 2: {
-				return 'Pokój';
-				break;
-			}
-			default: {
-				return '';
-				break;
-			}
-		}
-	}
-
-	public getPropertyStatus(index: number): string {
-		switch (index) {
-			case 0: {
-				return 'zweryfikowana';
-				break;
-			}
-			case 1: {
-				return 'niezweryfikowana';
-				break;
-			}
-			default: {
-				return '';
-				break;
-			}
-		}
-	}
 
 	public readAllEquipment(): Observable<IEquipment[]> {
 		return this.getEquipment('').pipe(
@@ -333,11 +306,9 @@ export class RealEstateService {
 			);
 	}
 
-	public addRealEstateFiles(
-		id: number,
-		formData: FormData,
-		headers: HttpHeaders
-	): Observable<void> {
+	public addRealEstateFiles(id: number, formData: FormData): Observable<void> {
+		const headers = new HttpHeaders();
+		headers.append('enctype', 'multipart/form-data');
 		return this.httpClient.post<void>(
 			`${this.apiRoute}/properties/${id}/files`,
 			formData,
@@ -353,13 +324,17 @@ export class RealEstateService {
 			.pipe(map(result => result.result));
 	}
 	public getRealEstates(showOnlyVerified: boolean): Observable<IProperty[]> {
-		return this.httpClient.get<IProperty[]>(
-			`${this.apiRoute}/properties?showOnlyVerified=${showOnlyVerified}`
-		);
+		let params = new HttpParams();
+		params = params.append('showOnlyVerified', showOnlyVerified);
+		return this.httpClient.get<IProperty[]>(`${this.apiRoute}/properties`, {
+			params: params,
+		});
 	}
 	public getEquipment(name: string): Observable<IEquipment[]> {
-		return this.httpClient.get<IEquipment[]>(
-			`${this.apiRoute}/equipment?name=${name}`
-		);
+		let params = new HttpParams();
+		params = params.append('name', name);
+		return this.httpClient.get<IEquipment[]>(`${this.apiRoute}/equipment`, {
+			params: params,
+		});
 	}
 }

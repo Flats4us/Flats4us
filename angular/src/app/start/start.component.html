@@ -46,10 +46,10 @@
 					</span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group of citiesGroupOptions$ | async"
-							[label]="group.whole"
+							*ngFor="let groupCities of citiesGroupOptions$ | async"
+							[label]="groupCities.whole"
 						>
-							<mat-option *ngFor="let city of group.parts" [value]="city">
+							<mat-option *ngFor="let city of groupCities.parts" [value]="city">
 								{{ city }}
 							</mat-option>
 						</mat-optgroup>
@@ -159,7 +159,7 @@
 						aria-label="ShowMoreFilters"
 						(click)="showFilters()"
 					>
-						<mat-icon>filter_list</mat-icon>
+						<mat-icon class="ico" [inline]="true">filter_list</mat-icon>
 					</button>
 
 					<button
@@ -171,7 +171,7 @@
 						aria-label="ShowMap"
 						(click)="showMap()"
 					>
-						<mat-icon>map</mat-icon>
+						<mat-icon class="ico" [inline]="true">map</mat-icon>
 					</button>
 
 					<button
@@ -183,7 +183,7 @@
 						aria-label="SearchForOffers"
 						[disabled]="!startSiteForm.valid"
 					>
-						<mat-icon>search</mat-icon>
+						<mat-icon class="ico" [inline]="true">search</mat-icon>
 					</button>
 					<button
 						class="box-icon-function"
@@ -194,7 +194,7 @@
 						aria-label="SortButton"
 						[matMenuTriggerFor]="menu"
 					>
-						<mat-icon>sort</mat-icon>
+						<mat-icon class="ico" [inline]="true">sort</mat-icon>
 					</button>
 					<mat-menu #menu="matMenu" id="sort">
 						<button
@@ -225,10 +225,13 @@
 					</span>
 					<mat-autocomplete #autoDistrict="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group2 of districtGroupOptions$ | async"
-							[label]="group2.whole"
+							*ngFor="let groupDistricts of districtGroupOptions$ | async"
+							[label]="groupDistricts.whole"
 						>
-							<mat-option *ngFor="let district of group2.parts" [value]="district">
+							<mat-option
+								*ngFor="let district of groupDistricts.parts"
+								[value]="district"
+							>
 								{{ district }}
 							</mat-option>
 						</mat-optgroup>
@@ -370,7 +373,7 @@
 		</div>
 	</form>
 	<div *ngIf="isLoading$ | async" class="container-spinner">
-		<app-spinner></app-spinner>
+		<mat-spinner color="primary"></mat-spinner>
 	</div>
 	<div
 		*ngIf="
@@ -393,11 +396,25 @@
 				</div>
 			</div>
 			<ng-template #flats let-flats="flats">
-				<mat-card *ngFor="let flat of flats" class="card">
-					<mat-card-subtitle
-						>{{ realEstateService.getPropertyType(flat.property.propertyType) }} -
-						{{ flat.property.city }}, {{ flat.property.district }}</mat-card-subtitle
-					>
+				<mat-card
+					*ngFor="let flat of flats"
+					[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
+				>
+					<div class="offer-title-outer">
+						<span class="offer-title-inner"
+							><h2 class="text-m">
+								Wynajem -
+								{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
+								{{ flat.property.area }} m² {{ flat.property.city }}
+								<mat-icon
+									*ngIf="flat.isPromoted"
+									class="promotion-icon"
+									matTooltip="Promowana oferta"
+									>new_releases</mat-icon
+								>
+							</h2>
+						</span>
+					</div>
 					<img
 						mat-card-image
 						class="imgs"
@@ -454,10 +471,12 @@
 				>
 				</ng-container>
 			</div>
-			<fieldset *ngIf="flatOptions.totalCount !== 0" class="promoted-offers">
-				<legend *ngIf="isSubmitted" class="text-2xl p-4">Promowane oferty</legend>
+			<fieldset
+				*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
+				class="container-offers"
+			>
 				<ng-container
-					class="promoted-offers"
+					class="container-offers"
 					[ngTemplateOutlet]="flats"
 					[ngTemplateOutletContext]="{
 						flats: (flatOptionsPromoted$ | async)?.result

@@ -12,7 +12,8 @@ import { IProperty } from './models/real-estate.models';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RealEstateComponent implements OnInit {
-	public realEstateOptions$?: Observable<IProperty[]>;
+	public realEstateOptions$: Observable<IProperty[]> =
+		this.realEstateService.getRealEstates(false);
 
 	public statusName: typeof statusName = statusName;
 
@@ -26,6 +27,6 @@ export class RealEstateComponent implements OnInit {
 	}
 
 	public addRealEstate() {
-		this.router.navigate(['real-estate/add']);
+		this.router.navigate(['/real-estate', 'add']);
 	}
 }

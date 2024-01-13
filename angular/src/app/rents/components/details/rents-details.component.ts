@@ -1,24 +1,20 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core';
-import { RentsService } from '../../services/rents.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IMenuOptions, IPayment } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject, map, switchMap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { RentsTenantsDialogComponent } from '../dialog/rents-tenants-dialog.component';
+import { RentsTenantsDialogComponent } from '../dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { IOffer } from 'src/app/offer/models/offer.models';
-import { userType } from 'src/app/profile/models/types';
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog.component';
+import { UserType } from 'src/app/profile/models/types';
+import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
+import { OfferService } from 'src/app/offer/services/offer.service';
+import { RentsService } from '../../services/rents.service';
 
 @Component({
 	selector: 'app-rents-details',
@@ -27,18 +23,21 @@ import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog.compon
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsDetailsComponent implements OnInit, OnDestroy {
+export class RentsDetailsComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
-	public uType = userType;
+	public uType = UserType;
 
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public statusName: typeof statusName = statusName;
-	public actualRent$?: Observable<IOffer>;
-	public user$?: Observable<string>;
+	public user$ = this.route.parent?.paramMap.pipe(
+		map(params => params.get('user')?.toUpperCase() ?? '')
+	);
 	private rentId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
 	);
-	private readonly unsubscribe$: Subject<void> = new Subject();
+	public actualRent$: Observable<IOffer> = this.rentId$?.pipe(
+		switchMap(value => this.offerService.getOfferById(parseInt(value)))
+	);
 	public payments: IPayment[] = [
 		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
 	];
@@ -48,60 +47,53 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
 	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
 	public menuOptions: IMenuOptions[] = [
-		{ option: 'offerDetails', description: 'Szczegóły oferty' },
+		{ option: 'rentDetails', description: 'Szczegóły najmu' },
 		{ option: 'startDispute', description: 'Rozpocznij spór' },
 		{ option: 'closeRent', description: 'Zakończ najem' },
 	];
 
 	constructor(
 		public realEstateService: RealEstateService,
-		public rentsService: RentsService,
+		public offerService: OfferService,
+		private rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute
 	) {}
-	public ngOnInit(): void {
-		this.user$ = this.route.parent?.paramMap.pipe(
-			map(params => params.get('user')?.toUpperCase() ?? '')
-		);
-		this.actualRent$ = this.rentId$?.pipe(
-			switchMap(value => this.rentsService.getOfferById(parseInt(value)))
-		);
-	}
 
 	public addOffer() {
-		this.router.navigate(['offer/add']);
+		this.router.navigate(['/offer', 'add']);
 	}
 
-	public openCancelDialog(actualRent: IOffer): void {
+	public openCancelDialog(id: number): void {
 		this.dialog.open(RentsCancelDialogComponent, {
 			disableClose: true,
-			data: actualRent,
+			data: id,
 		});
 	}
 
 	public openTenantsDialog(): void {
 		this.dialog.open(RentsTenantsDialogComponent, { disableClose: true });
 	}
-	public navigateToFlat(id: number) {
-		this.router.navigate([`rents/details/${id}`]);
+	public navigateToRent(id: number) {
+		this.router.navigate(['/rents', 'details', id]);
 	}
 	public startDispute(id: number) {
-		this.router.navigate([`disputes/${id}`]);
+		this.router.navigate([['/disputes', id]]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, actualRent: IOffer) {
+	public onSelect(menuOption: IMenuOptions, id: number) {
 		switch (menuOption.option) {
-			case 'offerDetails': {
-				this.navigateToFlat(actualRent.offerId);
+			case 'rentDetails': {
+				this.navigateToRent(id);
 				break;
 			}
 			case 'startDispute': {
-				this.startDispute(actualRent.offerId);
+				this.startDispute(id);
 				break;
 			}
 			case 'closeRent': {
-				this.openCancelDialog(actualRent);
+				this.openCancelDialog(id);
 				break;
 			}
 		}
@@ -132,10 +124,5 @@ export class RentsDetailsComponent implements OnInit, OnDestroy {
 
 	public nextSlide(length: number) {
 		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
-	}
-
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }

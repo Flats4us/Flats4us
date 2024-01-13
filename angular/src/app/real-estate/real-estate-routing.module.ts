@@ -7,11 +7,6 @@ import { NotFoundComponent } from '@shared/components/not-found/not-found.compon
 import { RealEstateDetailsComponent } from './components/details/real-estate-details.component';
 
 const routes: Routes = [
-	// {
-	// 	path: '',
-	// 	pathMatch: 'full',
-	// 	component: RealEstateComponent,
-	// },
 	{
 		path: 'add',
 		component: AddRealEstateComponent,
@@ -19,10 +14,7 @@ const routes: Routes = [
 	{
 		path: 'owner',
 		component: RealEstateComponent,
-		children: [
-			{ path: ':id', component: RealEstateDetailsComponent },
-			{ path: '**', component: NotFoundComponent },
-		],
+		children: [{ path: ':id', component: RealEstateDetailsComponent }],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

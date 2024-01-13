@@ -9,13 +9,13 @@
 					><span class="step-label">Dane adresowe</span></ng-template
 				>
 				<form class="container-form" [formGroup]="addRealEstateFormAddressData">
-					<div class="subtitle">Rodzaj nieruchomości:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Rodzaj nieruchomości</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>home</mat-icon></div>
 						</span>
-						<mat-select id="property" formControlName="property">
+						<mat-select id="propertyType" formControlName="propertyType">
 							<mat-option
 								*ngFor="let property of this.realEstateService.properties"
 								[value]="property.value"
@@ -24,7 +24,7 @@
 							</mat-option>
 						</mat-select>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['property'].errors?.['required']"
+							*ngIf="addRealEstateFormAddressData.controls['propertyType'].errors?.['required']"
 							class="error-text"
 						>
 							Nie wybrano rodzaju nieruchomości!
@@ -44,13 +44,13 @@
 							<mat-icon>map</mat-icon>
 						</button>
 					</div>
-					<div class="subtitle">Województwo:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Województwo</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
-						<mat-select id="region" formControlName="regionsGroup">
+						<mat-select id="region" formControlName="province">
 							<mat-option
 								*ngFor="let region of this.realEstateService.regions"
 								[value]="region"
@@ -59,13 +59,13 @@
 							</mat-option>
 						</mat-select>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['regionsGroup'].errors?.['required']"
+							*ngIf="addRealEstateFormAddressData.controls['province'].errors?.['required']"
 							class="error-text"
 						>
 							Nie wybrano województwa!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Miejscowość:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Miejscowość</mat-label>
 						<input
@@ -74,7 +74,7 @@
 							placeholder="Miejscowość"
 							aria-label="City"
 							matInput
-							formControlName="citiesGroup"
+							formControlName="city"
 							[matAutocomplete]="autoCity"
 						/>
 						<span matPrefix>
@@ -91,13 +91,13 @@
 							</mat-optgroup>
 						</mat-autocomplete>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['citiesGroup'].errors?.['required']"
+							*ngIf="addRealEstateFormAddressData.controls['city'].errors?.['required']"
 							class="error-text"
 						>
 							Nie wybrano miejscowości!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Dzielnica:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Dzielnica</mat-label>
 						<input
@@ -106,7 +106,7 @@
 							placeholder="Dzielnica"
 							aria-label="District"
 							matInput
-							formControlName="districtsGroup"
+							formControlName="district"
 							[matAutocomplete]="autoDistrict"
 						/>
 						<span matPrefix>
@@ -123,7 +123,7 @@
 							</mat-optgroup>
 						</mat-autocomplete>
 					</mat-form-field>
-					<div class="subtitle">Kod pocztowy:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Kod pocztowy</mat-label>
 						<span matPrefix>
@@ -150,7 +150,7 @@
 							Nieprawidłowy format kodu pocztowego!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Ulica:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Ulica</mat-label>
 						<span matPrefix>
@@ -171,7 +171,7 @@
 							Nie podano nazwy ulicy!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Numer ulicy:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Numer ulicy</mat-label>
 						<span matPrefix>
@@ -179,20 +179,20 @@
 						</span>
 						<input
 							id="streetNumber"
-							formControlName="streetNumber"
+							formControlName="number"
 							type="text"
 							placeholder="Numer ulicy"
 							aria-label="StreetNumber"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['streetNumber'].errors?.['required']"
+							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano numeru ulicy!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Numer mieszkania:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Numer mieszkania</mat-label>
 						<span matPrefix>
@@ -200,20 +200,20 @@
 						</span>
 						<input
 							id="flatNumber"
-							formControlName="flatNumber"
+							formControlName="flat"
 							type="text"
 							placeholder="Numer mieszkania"
 							aria-label="FlatNumber"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['flatNumber'].errors?.['required']"
+							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano numeru mieszkania!
 						</mat-error>
 						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['flatNumber'].errors?.['pattern']"
+							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['pattern']"
 							class="error-text"
 						>
 							Nieprawidłowy numer mieszkania!
@@ -238,7 +238,7 @@
 					><span class="step-label">Pozostałe dane</span></ng-template
 				>
 				<form class="container-form" [formGroup]="addRealEstateFormRemainingData">
-					<div class="subtitle">Powierzchnia:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Powierzchnia</mat-label>
 						<span matPrefix>
@@ -266,7 +266,7 @@
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Powierzchnia:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Powierzchnia działki</mat-label>
 						<span matPrefix>
@@ -294,28 +294,28 @@
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Maks. liczba mieszkańców:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Maks. l. mieszkańców</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>supervisor_account</mat-icon></div>
 						</span>
 						<input
-							id="maxResidents"
-							formControlName="maxResidents"
+							id="maxNumberOfInhabitants"
+							formControlName="maxNumberOfInhabitants"
 							type="number"
 							placeholder="Maks. l. mieszkańców"
-							aria-label="maxResidents"
+							aria-label="MaxNumberOfInhabitants"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['maxResidents'].errors?.['required']"
+							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano maks. l. mieszkańców!
 						</mat-error>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['maxResidents'].errors?.['min']"
+							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['min']"
 							class="error-text"
 						>
 							Nieprawidłowa wartość!
@@ -327,56 +327,56 @@
 							<div class="box-icon"><mat-icon>history</mat-icon></div>
 						</span>
 						<input
-							id="year"
-							formControlName="year"
+							id="constructionYear"
+							formControlName="constructionYear"
 							type="number"
 							placeholder="Rok budowy"
-							aria-label="Year"
+							aria-label="ConstructionYear"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['year'].errors?.['required']"
+							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano roku budowy!
 						</mat-error>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['year'].errors?.['pattern'] ||
-							addRealEstateFormRemainingData.controls['year'].errors?.['min'] || 
-							addRealEstateFormRemainingData.controls['year'].errors?.['max']"
+							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['pattern'] ||
+							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['min'] || 
+							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['max']"
 							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Liczba pokoi:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Liczba pokoi</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>meeting_room</mat-icon></div>
 						</span>
 						<input
-							id="rooms"
-							formControlName="rooms"
+							id="numberOfRooms"
+							formControlName="numberOfRooms"
 							type="number"
 							placeholder="Liczba pokoi"
 							aria-label="NumberOfRooms"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['rooms'].errors?.['required']"
+							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano liczby pokoi!
 						</mat-error>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['rooms'].errors?.['min']"
+							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['min']"
 							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Piętro:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Piętro</mat-label>
 						<span matPrefix>
@@ -403,34 +403,34 @@
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Liczba pięter:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Liczba pięter</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 						</span>
 						<input
-							id="floors"
-							formControlName="floors"
+							id="numberOfFloors"
+							formControlName="numberOfFloors"
 							type="number"
 							placeholder="Liczba pięter"
 							aria-label="NumberOfFloors"
 							matInput
 						/>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['floors'].errors?.['required']"
+							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['required']"
 							class="error-text"
 						>
 							Nie podano liczby pięter!
 						</mat-error>
 						<mat-error
-							*ngIf="addRealEstateFormRemainingData.controls['floors'].errors?.['min']"
+							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['min']"
 							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle">Wyposażenie:</div>
+					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Wyposażenie</mat-label>
 						<span matPrefix>
@@ -533,7 +533,7 @@
 						"
 						class="button-box-function"
 					>
-						<mat-icon class="success-icon"> insert_emoticon</mat-icon>
+						<mat-icon class="success-icon" [inline]="true"> insert_emoticon</mat-icon>
 						<h2>Formularz został pomyślnie wypełniony!</h2>
 						<h2>
 							Klikająć na przycisk "Zapisz nieruchomość" potwierdzasz prawdziwość

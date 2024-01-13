@@ -1,11 +1,6 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subject, map, switchMap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { slideAnimation } from 'src/app/rents/slide.animation';
@@ -21,15 +16,25 @@ import { IProperty } from '../../models/real-estate.models';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RealEstateDetailsComponent implements OnInit, OnDestroy {
+export class RealEstateDetailsComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
-	public actualRealEstate$?: Observable<IProperty>;
 	private realEstateId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
 	);
-	private readonly unsubscribe$: Subject<void> = new Subject();
-
+	public actualRealEstate$: Observable<IProperty> = this.realEstateId$?.pipe(
+		switchMap(id =>
+			this.realEstateService
+				.getRealEstates(false)
+				.pipe(
+					map(
+						realEstates =>
+							realEstates.find(realEstate => realEstate.propertyId === parseInt(id)) ??
+							({} as IProperty)
+					)
+				)
+		)
+	);
 	public currentIndex = 0;
 
 	public menuOptions: IMenuOptions[] = [
@@ -42,22 +47,6 @@ export class RealEstateDetailsComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private dialog: MatDialog
 	) {}
-	public ngOnInit(): void {
-		this.actualRealEstate$ = this.realEstateId$?.pipe(
-			switchMap(id =>
-				this.realEstateService
-					.getRealEstates(false)
-					.pipe(
-						map(
-							realEstates =>
-								realEstates.find(
-									realEstate => realEstate.propertyId === parseInt(id)
-								) ?? ({} as IProperty)
-						)
-					)
-			)
-		);
-	}
 
 	public onSelect(menuOption: IMenuOptions, id: number) {
 		switch (menuOption.option) {
@@ -73,7 +62,7 @@ export class RealEstateDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	public addRent() {
-		this.router.navigate([`offer/add`]);
+		this.router.navigate(['/offer', 'add']);
 	}
 
 	public setCurrentSlideIndex(index: number) {
@@ -90,10 +79,5 @@ export class RealEstateDetailsComponent implements OnInit, OnDestroy {
 
 	public nextSlide(length: number) {
 		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
-	}
-
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }

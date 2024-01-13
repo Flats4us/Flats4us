@@ -1,19 +1,12 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-	inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RentsService } from '../../services/rents.service';
-import { IRent } from '../../models/rents.models';
-import { statusName } from '../../statusName';
-import { Subject } from 'rxjs';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { RentsService } from '../../../services/rents.service';
+import { IRent } from '../../../models/rents.models';
+import { statusName } from '../../../statusName';
 import {
 	MatChipEditedEvent,
 	MatChipInputEvent,
@@ -40,14 +33,13 @@ import { CommonModule } from '@angular/common';
 		MatIconModule,
 		CommonModule,
 	],
+	providers: [RentsService],
 })
 export class RentsTenantsDialogComponent {
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public addOnBlur = true;
-	private announcer = inject(LiveAnnouncer);
 	public tenantsCtrl = new FormControl('');
 	public tenants: string[] = [];
-	private readonly unsubscribe$: Subject<void> = new Subject();
 	public statusName: typeof statusName = statusName;
 	constructor(
 		public rentsService: RentsService,
@@ -76,8 +68,6 @@ export class RentsTenantsDialogComponent {
 
 		if (index >= 0) {
 			items.splice(index, 1);
-
-			this.announcer.announce(`Removed ${item}`);
 		}
 	}
 

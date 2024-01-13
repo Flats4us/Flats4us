@@ -14,7 +14,7 @@
 					matTooltip="Dodaj nieruchomość"
 					(click)="addRealEstate()"
 				>
-					<mat-icon>add</mat-icon>
+					<mat-icon [inline]="true">add</mat-icon>
 				</button>
 			</h1>
 			<mat-divider class="divider"></mat-divider>
@@ -26,7 +26,7 @@
 					routerLink="{{ realEstate.propertyId }}"
 					><div class="box-title">
 						<span class="text-xl font-bold">{{
-							realEstateService.getPropertyType(realEstate.propertyType)
+							realEstateService.propertyTypes.get(realEstate.propertyType)
 						}}</span>
 						<mat-icon
 							class="box-icon-valid"
