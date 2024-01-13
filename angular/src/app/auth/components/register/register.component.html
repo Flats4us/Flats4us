@@ -1,31 +1,10 @@
-<mat-card *ngIf="!createProfileMode">
-	<div class="buttons">
-		<button
-			mat-raised-button
-			color="primary"
-			type="button"
-			[routerLink]="['profile/create/student']"
-		>
-			Rejestracja studenta
-		</button>
-		<button
-			mat-raised-button
-			color="primary"
-			type="button"
-			[routerLink]="['profile/create/owner']"
-		>
-			Rejestracja właściciela
-		</button>
-	</div>
-</mat-card>
 <mat-card *ngIf="createProfileMode">
-	<!-- <mat-card-title *ngIf="!createProfileMode">REJESTRACJA</mat-card-title> -->
 	<mat-card-content>
 		<form [formGroup]="registerForm">
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Imię</mat-label>
-					<input matInput formControlName="name" name="name" required />
+					<input matInput formControlName="name" name="name" />
 					<mat-error
 						*ngIf="registerForm.controls['name'].errors?.['required']"
 						class="error-text"
@@ -37,7 +16,7 @@
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Nazwisko</mat-label>
-					<input matInput formControlName="surname" name="surname" required />
+					<input matInput formControlName="surname" name="surname" />
 					<mat-error
 						*ngIf="registerForm.controls['surname'].errors?.['required']"
 						class="error-text"
@@ -49,7 +28,7 @@
 			<div class="form-group">
 				<mat-form-field>
 					<mat-label>Adres email</mat-label>
-					<input matInput formControlName="email" name="email" required />
+					<input matInput formControlName="email" name="email" />
 					<mat-error
 						*ngIf="registerForm.controls['email'].errors?.['required']"
 						class="error-text"
@@ -102,7 +81,7 @@
 					<input
 						matInput
 						name="confirmPassword"
-						formControlName="passwordRepeat"
+						formControlName="confirmPassword"
 						required
 						[type]="hideConfirmPasword ? 'password' : 'text'"
 					/>
@@ -110,27 +89,19 @@
 						hideConfirmPasword ? "visibility_off" : "visibility"
 					}}</mat-icon>
 					<mat-error
-						*ngIf="registerForm.controls['passwordRepeat'].errors?.['required']"
+						*ngIf="registerForm.controls['confirmPassword'].errors?.['required']"
 						class="error-text"
 					>
 						Nie powtórzono hasła!
 					</mat-error>
 					<mat-error
-						*ngIf="registerForm.controls['passwordRepeat'].errors?.['passwordValid']"
+						*ngIf="registerForm.controls['confirmPassword'].errors?.['passwordValid']"
 						class="error-text"
 					>
 						Hasła różnią się od siebie!
 					</mat-error>
 				</mat-form-field>
 			</div>
-			<!-- <div *ngIf="!createProfileMode" class="buttons">
-				<button mat-raised-button color="primary" type="submit">
-					ZAREJESTRUJ SIĘ
-				</button>
-				<button mat-raised-button color="basic" routerLink="/login">
-					ZALOGUJ SIĘ
-				</button>
-			</div> -->
 		</form>
 	</mat-card-content>
 </mat-card>

@@ -2,22 +2,23 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	OnDestroy,
 	OnInit,
 	ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
-	IAddProperty,
-	IGroup,
-	IRegionCity,
-} from '../../models/real-estate.models';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { IGroup, IRegionCity } from '../../models/real-estate.models';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-add-real-estate',
@@ -25,11 +26,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	styleUrls: ['./add-real-estate.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddRealEstateComponent implements OnInit, OnDestroy {
+export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	@ViewChild('stepper')
 	public stepper: MatStepper | undefined;
-
-	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public addRealEstateFormAddressData;
 	public addRealEstateFormRemainingData;
@@ -45,6 +44,24 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	public urls: string[] = [];
 	private filesArray: File[] = [];
 	private formData = new FormData();
+	private addRealEstateForm: FormGroup = new FormGroup({
+		propertyType: new FormControl(null),
+		province: new FormControl(''),
+		district: new FormControl(''),
+		street: new FormControl(''),
+		number: new FormControl(''),
+		flat: new FormControl(null),
+		city: new FormControl(''),
+		postalCode: new FormControl(''),
+		area: new FormControl(null),
+		maxNumberOfInhabitants: new FormControl(null),
+		constructionYear: new FormControl(null),
+		numberOfRooms: new FormControl(null),
+		floor: new FormControl(null),
+		numberOfFloors: new FormControl(null),
+		plotArea: new FormControl(null),
+		equipment: new FormControl([]),
+	});
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -54,18 +71,19 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 		private changeDetectorRef: ChangeDetectorRef,
 		private snackBar: MatSnackBar
 	) {
+		super();
 		this.addRealEstateFormAddressData = formBuilder.group({
-			regionsGroup: new FormControl('', Validators.required),
-			citiesGroup: new FormControl('', Validators.required),
-			districtsGroup: new FormControl(''),
+			province: new FormControl('', Validators.required),
+			city: new FormControl('', Validators.required),
+			district: new FormControl(''),
 			postalCode: new FormControl('', [
 				Validators.required,
 				Validators.pattern('^[0-9]{2}-[0-9]{3}$'),
 			]),
 			street: new FormControl('', Validators.required),
-			streetNumber: new FormControl('', Validators.required),
-			property: new FormControl(null, Validators.required),
-			flatNumber: new FormControl(null, [Validators.required, Validators.min(0)]),
+			number: new FormControl('', Validators.required),
+			propertyType: new FormControl(null, Validators.required),
+			flat: new FormControl(null, [Validators.required, Validators.min(0)]),
 		});
 
 		this.addRealEstateFormRemainingData = formBuilder.group({
@@ -78,13 +96,13 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 				Validators.min(1),
 				Validators.pattern('^[0-9]*$'),
 			]),
-			maxResidents: new FormControl(null, [
+			maxNumberOfInhabitants: new FormControl(null, [
 				Validators.required,
 				Validators.min(1),
 				Validators.pattern('^[0-9]*$'),
 			]),
 			equipment: new FormControl([]),
-			rooms: new FormControl(null, [
+			numberOfRooms: new FormControl(null, [
 				Validators.required,
 				Validators.min(1),
 				Validators.pattern('^[0-9]*$'),
@@ -94,12 +112,12 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 				Validators.min(0),
 				Validators.pattern('^[0-9]*$'),
 			]),
-			floors: new FormControl(null, [
+			numberOfFloors: new FormControl(null, [
 				Validators.required,
 				Validators.min(0),
 				Validators.pattern('^[0-9]*$'),
 			]),
-			year: new FormControl(null, [
+			constructionYear: new FormControl(null, [
 				Validators.required,
 				Validators.min(0),
 				Validators.max(new Date().getFullYear()),
@@ -116,7 +134,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
 			)
-			.pipe(takeUntil(this.unsubscribe$))
+			.pipe(this.untilDestroyed())
 			.subscribe();
 	}
 
@@ -158,7 +176,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	}
 
 	public showMap() {
-		this.router.navigate(['start/map']);
+		this.router.navigate(['/start', 'map']);
 	}
 
 	public saveRealEstate() {
@@ -174,68 +192,68 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 					duration: 4000,
 				})
 				.onAction()
-				.pipe(takeUntil(this.unsubscribe$))
+				.pipe(this.untilDestroyed())
 				.subscribe(() => {
-					this.router.navigate(['offer/add']);
+					this.router.navigate(['/offer', 'add']);
 				});
 		}
 	}
 
 	public addOffer() {
-		this.router.navigate(['offer/add']);
+		this.router.navigate(['/offer', 'add']);
 	}
 
 	public ngOnInit() {
 		this.realEstateService
 			.readAllEquipment()
-			.pipe(takeUntil(this.unsubscribe$))
+			.pipe(this.untilDestroyed())
 			.subscribe();
 
 		this.citiesGroupOptions$ = this.addRealEstateFormAddressData
-			.get('citiesGroup')
+			.get('city')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
 				map(value => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.addRealEstateFormAddressData
-			.get('districtsGroup')
+			.get('district')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
 				map(value => this.filterDistrictsGroup(value))
 			);
 
-		this.addRealEstateFormAddressData.get('flatNumber')?.disable();
+		this.addRealEstateFormAddressData.get('flat')?.disable();
 
 		this.addRealEstateFormAddressData
-			.get('citiesGroup')
-			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.get('city')
+			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(value => {
 				if (
 					this.realEstateService.districtGroups.find(distr => distr.whole === value)
 				) {
-					this.addRealEstateFormAddressData.get('districtsGroup')?.enable();
+					this.addRealEstateFormAddressData.get('district')?.enable();
 				} else {
-					this.addRealEstateFormAddressData.get('districtsGroup')?.reset();
+					this.addRealEstateFormAddressData.get('district')?.reset();
 				}
 			});
 		this.addRealEstateFormAddressData
-			.get('regionsGroup')
-			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			.get('province')
+			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(() => {
-				this.addRealEstateFormAddressData.get('citiesGroup')?.reset();
+				this.addRealEstateFormAddressData.get('city')?.reset();
 			});
 
 		this.addRealEstateFormAddressData
-			.get('property')
-			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
-			.subscribe(property => {
-				if (property === 0 || property === 2) {
-					this.addRealEstateFormAddressData.get('flatNumber')?.enable();
+			.get('propertyType')
+			?.valueChanges.pipe(this.untilDestroyed())
+			.subscribe(propertyType => {
+				if (propertyType === 0 || propertyType === 2) {
+					this.addRealEstateFormAddressData.get('flat')?.enable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.disable();
 					this.addRealEstateFormRemainingData.get('floor')?.enable();
 				} else {
-					this.addRealEstateFormAddressData.get('flatNumber')?.disable();
+					this.addRealEstateFormAddressData.get('flat')?.disable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.enable();
 					this.addRealEstateFormRemainingData.get('floor')?.disable();
 				}
@@ -251,8 +269,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole ===
-						this.addRealEstateFormAddressData.get('regionsGroup')?.value
+					group.whole === this.addRealEstateFormAddressData.get('province')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
@@ -264,7 +281,7 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.addRealEstateFormAddressData.get('citiesGroup')?.value
+					group.whole === this.addRealEstateFormAddressData.get('city')?.value
 			);
 	}
 
@@ -284,42 +301,16 @@ export class AddRealEstateComponent implements OnInit, OnDestroy {
 	}
 
 	public onAdd(): void {
-		const propertyToAdd: IAddProperty = {
-			propertyType: this.addRealEstateFormAddressData.get('property')?.value ?? 0,
-			province: this.addRealEstateFormAddressData.get('regionsGroup')?.value ?? '',
-			district:
-				this.addRealEstateFormAddressData.get('districtsGroup')?.value ?? '',
-			street: this.addRealEstateFormAddressData.get('street')?.value ?? '',
-			number: this.addRealEstateFormAddressData.get('streetNumber')?.value ?? '',
-			flat: this.addRealEstateFormAddressData.get('flatNumber')?.value ?? 0,
-			city: this.addRealEstateFormAddressData.get('citiesGroup')?.value ?? '',
-			postalCode: this.addRealEstateFormAddressData.get('postalCode')?.value ?? '',
-			area: this.addRealEstateFormRemainingData.get('area')?.value ?? 1,
-			maxNumberOfInhabitants:
-				this.addRealEstateFormRemainingData.get('maxResidents')?.value ?? 1,
-			constructionYear:
-				this.addRealEstateFormRemainingData.get('year')?.value ?? 0,
-			numberOfRooms: this.addRealEstateFormRemainingData.get('rooms')?.value ?? 1,
-			floor: this.addRealEstateFormRemainingData.get('floor')?.value ?? 0,
-			numberOfFloors:
-				this.addRealEstateFormRemainingData.get('floors')?.value ?? 1,
-			plotArea: this.addRealEstateFormRemainingData.get('plotArea')?.value ?? 1,
-			equipment: this.addRealEstateFormRemainingData.get('equipment')?.value ?? [],
-		};
-		const headers = new HttpHeaders();
-		headers.append('enctype', 'multipart/form-data');
+		this.addRealEstateForm.patchValue(this.addRealEstateFormAddressData.value);
+		this.addRealEstateForm.patchValue(this.addRealEstateFormRemainingData.value);
 		this.realEstateService
-			.addRealEstate(propertyToAdd)
-			.pipe(takeUntil(this.unsubscribe$))
+			.addRealEstate(this.addRealEstateForm.value)
+			.pipe(this.untilDestroyed())
 			.subscribe(id =>
 				this.realEstateService
-					.addRealEstateFiles(id, this.formData, headers)
-					.pipe(takeUntil(this.unsubscribe$))
+					.addRealEstateFiles(id, this.formData)
+					.pipe(this.untilDestroyed())
 					.subscribe()
 			);
-	}
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }

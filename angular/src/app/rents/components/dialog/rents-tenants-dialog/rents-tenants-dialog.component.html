@@ -1,10 +1,11 @@
+<h1 mat-dialog-title>Dodawanie najmu</h1>
 <div mat-dialog-content>
 	<p>Wprowadź proponowanych lokatorów</p>
 </div>
 <div mat-dialog-actions class="button-box">
 	<mat-form-field class="example-chip-list">
 		<mat-label>Wpisz adresy email</mat-label>
-		<mat-chip-grid #chipGrid2 aria-label="Social media">
+		<mat-chip-grid #chipGrid2 aria-label="Emails">
 			<mat-chip-row
 				*ngFor="let tenant of tenants"
 				[editable]="true"

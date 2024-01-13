@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile.component';
 import { SurveyComponent } from '../shared/components/survey/survey.component';
 import { CreateProfileComponent } from './create/create-profile.component';
 import { AuthGuard } from '@shared/services/auth.guard';
+import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
 
 const routes: Routes = [
 	{
@@ -30,6 +31,7 @@ const routes: Routes = [
 		component: ProfileComponent,
 		canActivate: [AuthGuard],
 	},
+	{ path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { statusType } from './types';
+import { StatusType } from './types';
 
 export interface IStudent extends IUser {
 	birthDate: string;
@@ -19,7 +19,7 @@ export interface IUser {
 	address: string;
 	phoneNumber: string;
 	email: string;
-	status: statusType;
+	status: StatusType;
 	documentType: number;
 	documentScan: string;
 	validTill: Date;

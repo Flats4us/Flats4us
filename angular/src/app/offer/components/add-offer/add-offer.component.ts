@@ -35,7 +35,7 @@ export class AddOfferComponent extends BaseComponent {
 
 	public onSubmit() {
 		this.offerService
-			.addOffer(this.offerForm)
+			.addOffer(this.offerForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {

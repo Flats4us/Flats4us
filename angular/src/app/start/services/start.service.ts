@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ISortOption } from '../models/start-site.models';
+import { IFilteredOffers, ISortOption } from '../models/start-site.models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
@@ -37,25 +37,10 @@ export class StartService {
 	constructor(private httpClient: HttpClient) {}
 
 	public getFilteredOffers(
-		region: string,
-		city: string,
-		distance: number,
-		property: string[],
-		minPrice: number,
-		maxPrice: number,
-		district: string,
-		minArea: number,
-		maxArea: number,
-		yearRange: string[],
-		rooms: number,
-		floors: number,
-		equipment: number[],
-		sorting: ISortOption,
-		pageIndex: number,
-		pageSize: number
+		filteredOptions: IFilteredOffers
 	): Observable<ISendOffers> {
-		const properties = property.join(', ').split(', ');
-		const years = yearRange.join(', ').split(', ');
+		const properties = filteredOptions.property.join(', ').split(', ');
+		const years = filteredOptions.year.join(', ').split(', ');
 		const minVal = Math.min(...years.map(year => parseInt(year)));
 		const maxVal = Math.max(...years.map(year => parseInt(year)));
 		let minYear = 0;
@@ -96,32 +81,62 @@ export class StartService {
 				break;
 			}
 		}
-		const queryParams = new HttpParams({ fromObject: { Equipment: equipment } })
-			.append('Province', region.charAt(0).toUpperCase() + region.slice(1))
-			.append('City', city)
-			.append(distance ? 'Distance' : ``, distance ?? '')
-			.append(properties[0] ? `PropertyTypes` : ``, properties[0] ?? '')
-			.append(properties[1] ? `PropertyTypes` : ``, properties[1] ?? '')
-			.append(properties[2] ? `PropertyTypes` : ``, properties[2] ?? '')
-			.append(minPrice ? 'MinPrice' : ``, minPrice ?? '')
-			.append(maxPrice ? 'MaxPrice' : ``, maxPrice ?? '')
-			.append(district ? 'District' : ``, district ?? '')
-			.append(minArea ? 'MinArea' : ``, minPrice ?? '')
-			.append(maxArea ? 'MaxArea' : ``, maxPrice ?? '')
-			.append(minYear ? 'MinYear' : ``, minYear ?? '')
-			.append(maxYear ? 'MaxYear' : ``, maxYear ?? '')
-			.append(rooms ? 'MinNumberOfRooms' : ``, rooms ?? '')
-			.append(floors ? 'Floor' : ``, floors ?? '')
-			.append(sorting.type ? 'Sorting' : ``, sorting.type ?? '')
-			.append('PageNumber', pageIndex + 1)
-			.append('PageSize', pageSize);
+		const queryParams = new HttpParams({
+			fromObject: { Equipment: filteredOptions.equipment },
+		})
+			.append(
+				'province',
+				filteredOptions.regionsGroup.charAt(0).toUpperCase() +
+					filteredOptions.regionsGroup.slice(1)
+			)
+			.append('city', filteredOptions.citiesGroup)
+			.append(
+				filteredOptions.distance ? 'distance' : ``,
+				filteredOptions.distance ?? ''
+			)
+			.append(properties[0] ? `propertyTypes` : ``, properties[0] ?? '')
+			.append(properties[1] ? `propertyTypes` : ``, properties[1] ?? '')
+			.append(properties[2] ? `propertyTypes` : ``, properties[2] ?? '')
+			.append(
+				filteredOptions.minPrice ? 'minPrice' : ``,
+				filteredOptions.minPrice ?? ''
+			)
+			.append(
+				filteredOptions.maxPrice ? 'maxPrice' : ``,
+				filteredOptions.maxPrice ?? ''
+			)
+			.append(
+				filteredOptions.districtsGroup ? 'district' : ``,
+				filteredOptions.districtsGroup ?? ''
+			)
+			.append(
+				filteredOptions.minArea ? 'minArea' : ``,
+				filteredOptions.minArea ?? ''
+			)
+			.append(
+				filteredOptions.maxArea ? 'maxArea' : ``,
+				filteredOptions.maxArea ?? ''
+			)
+			.append(minYear ? 'minYear' : ``, minYear ?? '')
+			.append(maxYear ? 'maxYear' : ``, maxYear ?? '')
+			.append(
+				filteredOptions.rooms ? 'minNumberOfRooms' : ``,
+				filteredOptions.rooms ?? ''
+			)
+			.append(filteredOptions.floors ? 'floor' : ``, filteredOptions.floors ?? '')
+			.append(
+				filteredOptions.sorting.type ? 'sorting' : ``,
+				filteredOptions.sorting.type ?? ''
+			)
+			.append('pageNumber', filteredOptions.pageIndex + 1)
+			.append('pageSize', filteredOptions.pageSize);
 		return this.httpClient.get<ISendOffers>(this.apiRoute, {
 			params: queryParams,
 		});
 	}
 
-	public addToWatched(id: number): Observable<string> {
+	public addToWatched(id: number) {
 		const url = `${this.apiRoute}/${id}/interest`;
-		return this.httpClient.post<string>(url, { responseType: 'text' });
+		return this.httpClient.post(url, { responseType: 'JSON' });
 	}
 }

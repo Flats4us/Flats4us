@@ -11,9 +11,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RealEstateDialogComponent } from '../dialog/real-estate-dialog.component';
+import { RealEstateDetailsComponent } from './real-estate-details.component';
 
 @NgModule({
-	declarations: [],
+	declarations: [RealEstateDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -30,5 +31,6 @@ import { RealEstateDialogComponent } from '../dialog/real-estate-dialog.componen
 		MatMenuModule,
 		RealEstateDialogComponent,
 	],
+	exports: [RealEstateDetailsComponent],
 })
 export class RealEstateDetailsModule {}

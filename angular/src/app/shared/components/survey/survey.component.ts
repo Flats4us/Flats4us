@@ -11,7 +11,7 @@ import {
 	FormGroupDirective,
 	Validators,
 } from '@angular/forms';
-import { IQuestionsData, typeName } from '../../models/survey.models';
+import { IQuestionsData, TypeName } from '../../models/survey.models';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
@@ -24,12 +24,13 @@ import { SurveyService } from '../../services/survey.service';
 })
 export class SurveyComponent implements OnInit {
 	@Input() public offerForm: FormGroup;
-	public surveyForm: FormGroup = new FormGroup({});
-	public questions$: Observable<IQuestionsData[]>;
-	public typeName: typeof typeName = typeName;
-
 	@Input()
 	public createProfileMode = false;
+
+	public surveyForm = new FormGroup({});
+	public formToAdd = new FormGroup({});
+	public questions$: Observable<IQuestionsData[]>;
+	public typeName: typeof TypeName = TypeName;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -37,7 +38,9 @@ export class SurveyComponent implements OnInit {
 		private service: SurveyService,
 		private formDir: FormGroupDirective
 	) {
-		this.offerForm = this.formBuilder.group({});
+		this.offerForm = this.formBuilder.group({
+			lookingForRoommate: [''],
+		});
 
 		this.questions$ = this.getQuestions().pipe(
 			tap(questions => this.getFormControls(questions))
@@ -46,7 +49,7 @@ export class SurveyComponent implements OnInit {
 
 	public ngOnInit() {
 		this.surveyForm = this.formDir.form;
-		this.surveyForm.addControl('survey', this.offerForm);
+		this.surveyForm.addControl('survey', this.formToAdd);
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {
@@ -63,11 +66,15 @@ export class SurveyComponent implements OnInit {
 	}
 
 	public getFormControls(questions: IQuestionsData[]) {
-		questions.forEach(question =>
+		questions.forEach(question => {
 			this.offerForm.addControl(
 				question.name,
 				new FormControl(null, Validators.required)
-			)
-		);
+			);
+			this.formToAdd.addControl(
+				question.name,
+				new FormControl(null, Validators.required)
+			);
+		});
 	}
 }

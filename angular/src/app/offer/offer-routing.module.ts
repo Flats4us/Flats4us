@@ -14,18 +14,12 @@ const routes: Routes = [
 	{
 		path: ':user',
 		component: OfferComponent,
-		children: [
-			{ path: ':id', component: OfferDetailsComponent },
-			{ path: '**', component: NotFoundComponent },
-		],
+		children: [{ path: ':id', component: OfferDetailsComponent }],
 	},
 	{
 		path: 'details',
 		component: OfferComponent,
-		children: [
-			{ path: ':id', component: OfferDetailsComponent },
-			{ path: '**', component: NotFoundComponent },
-		],
+		children: [{ path: ':id', component: OfferDetailsComponent }],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

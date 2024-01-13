@@ -10,9 +10,14 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OfferDetailsComponent } from './offer-details.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
-	declarations: [],
+	declarations: [OfferDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -27,6 +32,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatDialogModule,
 		MatIconModule,
 		MatMenuModule,
+		MatChipsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatAutocompleteModule,
+		MatFormFieldModule,
 	],
+	exports: [OfferDetailsComponent],
 })
 export class OfferDetailsModule {}

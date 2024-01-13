@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { OfferService } from './services/offer.service';
-import { userType } from '../profile/models/types';
+import { UserType } from '../profile/models/types';
 import { ISendOffers } from './models/offer.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 
@@ -13,9 +13,9 @@ import { RealEstateService } from '../real-estate/services/real-estate.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferComponent implements OnInit {
-	public offersOptions$?: Observable<ISendOffers>;
+	public offersOptions$: Observable<ISendOffers> = this.offerService.getOffers();
 
-	public uType = userType;
+	public uType = UserType;
 
 	public user$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('user')?.toUpperCase() ?? '')
@@ -32,6 +32,6 @@ export class OfferComponent implements OnInit {
 	}
 
 	public addOffer() {
-		this.router.navigate(['offer/add']);
+		this.router.navigate(['offer/', 'add']);
 	}
 }
