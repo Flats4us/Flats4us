@@ -2,15 +2,12 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
-	ElementRef,
 	EventEmitter,
 	Input,
 	OnChanges,
-	OnDestroy,
 	OnInit,
 	Output,
-	ViewChild,
-	inject,
+	SimpleChanges,
 } from '@angular/core';
 import {
 	Observable,
@@ -31,14 +28,13 @@ import {
 	ValidatorFn,
 	Validators,
 } from '@angular/forms';
-import { IInterest, IOwner, IStudent, IUser } from '../models/profile.models';
+import { IInterest, IOwner, IStudent } from '../models/profile.models';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { modificationType, statusType, userType } from '../models/types';
+import { ModificationType, StatusType, UserType } from '../models/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -47,7 +43,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 	styleUrls: ['./edit-profile.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
+export class EditProfileComponent implements OnInit, OnChanges {
 	@Output()
 	public newPhotoEvent = new EventEmitter<File>();
 
@@ -55,43 +51,42 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 	public newScanEvent = new EventEmitter<File>();
 
 	@Input()
-	public name: string | null | undefined = '';
+	public name = '';
 
 	@Input()
-	public surname: string | null | undefined = '';
+	public surname = '';
 
 	@Input()
-	public email: string | null | undefined = '';
+	public email = '';
 
 	@Input()
-	public modificationType = modificationType.EDIT;
-
-	@ViewChild('hobbiesInput')
-	public hobbiesInput!: ElementRef<HTMLInputElement>;
+	public modificationType = ModificationType.EDIT;
 
 	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public hobbyCtrl = new FormControl(null);
 	public socialMediaCtrl = new FormControl('');
-	public filteredHobbies$?: Observable<IInterest[]>;
-	private rentId$?: Observable<string>;
-	public user$?: Observable<string>;
+	public filteredHobbies$: Observable<IInterest[]>;
+	private userId$: Observable<string> = this.route.paramMap.pipe(
+		map(params => params.get('id') ?? '')
+	);
 	private user = '';
+	public user$: Observable<string> = this.route.paramMap.pipe(
+		map(params => params.get('user')?.toUpperCase() ?? '')
+	);
 	public myHobbies: IInterest[] = [];
 	public socialMedias: string[] = [];
-	public actualStudent$?: Observable<IStudent>;
-	public actualStudent = {} as IStudent;
-	public actualOwner$?: Observable<IOwner>;
-	public actualOwner = {} as IOwner;
+	public actualOwner$: Observable<IOwner> | undefined;
+	public actualStudent$: Observable<IStudent> | undefined;
+	public actualStudent: IStudent | undefined;
+	public actualOwner: IOwner | undefined;
 
-	public createAccountForm: FormGroup = new FormGroup({});
+	public createAccountForm?: FormGroup;
 
-	public uType = userType;
-	public mType = modificationType;
-	public sType = statusType;
-
-	private announcer = inject(LiveAnnouncer);
+	public uType = UserType;
+	public mType = ModificationType;
+	public sType = StatusType;
 
 	public urlAvatar = '../../../assets/avatar.png';
 	public fileScanName = '';
@@ -121,14 +116,12 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 	) {
 		this.filteredHobbies$ = this.hobbyCtrl.valueChanges.pipe(
 			startWith(null),
-			map((hobby: IInterest | string | null) =>
-				hobby
-					? this.filter(typeof hobby === 'string' ? hobby : hobby.name)
-					: this.profileService.interests.slice()
+			map(hobby =>
+				hobby ? this.filter(hobby) : this.profileService.interests.slice()
 			)
 		);
 		this.dataFormGroupStudent = this.formBuilder.group({
-			indexNumber: new FormControl('', Validators.required),
+			studentNumber: new FormControl('', Validators.required),
 			university: new FormControl('', Validators.required),
 			address: new FormControl('', Validators.required),
 			phoneNumber: new FormControl('', [
@@ -137,10 +130,10 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			hobbies: new FormControl(this.myHobbies),
-			socialMedia: new FormControl(this.socialMedias),
-			documentType: new FormControl('', Validators.required),
-			validTill: new FormControl(null, [
+			interests: new FormControl(this.myHobbies),
+			links: new FormControl(this.socialMedias),
+			documentType: new FormControl(''),
+			documentExpireDate: new FormControl(null, [
 				Validators.required,
 				this.validityTillValidator(),
 			]),
@@ -154,7 +147,8 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			validTill: new FormControl(null, [
+			documentType: new FormControl('', Validators.required),
+			documentExpireDate: new FormControl(null, [
 				Validators.required,
 				this.validityTillValidator(),
 			]),
@@ -162,54 +156,32 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 				Validators.required,
 				Validators.pattern('^[0-9]{26}$'),
 			]),
+			documentNumber: new FormControl('placeholder', Validators.required),
 		});
 	}
 	public ngOnInit(): void {
 		this.createAccountForm = this.formDir.form;
-		if (this.modificationType === modificationType.CREATE) {
+		if (this.modificationType === ModificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(
 				'birthDate',
 				new FormControl(null, [Validators.required, this.validityAgeValidator()])
 			);
 		}
 
-		this.rentId$ = this.route.paramMap.pipe(
-			map(params => params.get('id') ?? '')
-		);
-		this.user$ = this.route.paramMap.pipe(
-			map(params => params.get('user')?.toUpperCase() ?? '')
-		);
-
 		this.user$
 			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(user => (this.user = user));
 
-		if (this.user === userType.STUDENT) {
-			if (this.modificationType === modificationType.EDIT) {
-				this.actualStudent$ = this.rentId$.pipe(
+		if (this.user === UserType.STUDENT) {
+			if (this.modificationType === ModificationType.EDIT) {
+				this.actualStudent$ = this.userId$.pipe(
 					switchMap(value => this.profileService.getStudent(value))
 				);
 				this.actualStudent$
 					.pipe(takeUntil(this.unsubscribe$))
 					.subscribe(student => {
 						this.urlPhoto = student.photo ? student.photo : this.urlAvatar;
-						this.dataFormGroupStudent
-							.get('indexNumber')
-							?.setValue(student.indexNumber);
-						this.dataFormGroupStudent.get('university')?.setValue(student.university);
-						this.dataFormGroupStudent.get('address')?.setValue(student.address);
-						this.dataFormGroupStudent
-							.get('phoneNumber')
-							?.setValue(student.phoneNumber);
-						this.myHobbies = student.hobbies;
-						this.socialMedias = student.socialMedia;
-						this.dataFormGroupStudent
-							.get('documentType')
-							?.setValue(student.documentType);
-						this.urlScan = student.documentScan;
-						this.dataFormGroupStudent
-							.get('validTill')
-							?.setValue(new Date(student.validTill));
+						this.dataFormGroupStudent.patchValue(student);
 					});
 			} else {
 				this.urlPhoto = this.urlAvatar;
@@ -220,20 +192,14 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 			}
 		}
 
-		if (this.user === userType.OWNER) {
-			if (this.modificationType === modificationType.EDIT) {
-				this.actualOwner$ = this.rentId$.pipe(
+		if (this.user === UserType.OWNER) {
+			if (this.modificationType === ModificationType.EDIT) {
+				this.actualOwner$ = this.userId$.pipe(
 					switchMap(value => this.profileService.getOwner(value))
 				);
 				this.actualOwner$.pipe(takeUntil(this.unsubscribe$)).subscribe(owner => {
 					this.urlPhoto = owner.photo ? owner.photo : this.urlAvatar;
-					this.dataFormGroupOwner.get('address')?.setValue(owner.address);
-					this.dataFormGroupOwner.get('phoneNumber')?.setValue(owner.phoneNumber);
-					this.urlScan = owner.documentScan;
-					this.dataFormGroupOwner
-						.get('validTill')
-						?.setValue(new Date(owner.validTill));
-					this.dataFormGroupOwner.get('bankAccount')?.setValue(owner.bankAccount);
+					this.dataFormGroupOwner.patchValue(owner);
 				});
 			} else {
 				this.urlPhoto = this.urlAvatar;
@@ -245,36 +211,25 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 
-	public ngOnChanges() {
-		if (this.modificationType === modificationType.CREATE) {
-			if (this.user === userType.STUDENT) {
-				this.actualStudent$ = of({
-					...this.actualStudent,
-					name: this.name ?? '',
-					surname: this.surname ?? '',
-					hobbies: [],
-					socialMedia: [],
-					email: this.email ?? '',
-					status: statusType.UNVERIFIED,
-				});
-				this.createAccountForm.removeControl('userAdditionalData');
-				this.createAccountForm.addControl(
-					'userAdditionalData',
-					this.dataFormGroupStudent
-				);
-			}
-			if (this.user === userType.OWNER) {
-				this.actualOwner$ = of({
-					...this.actualOwner,
-					name: this.name ?? '',
-					surname: this.surname ?? '',
-					email: this.email ?? '',
-				});
-				this.createAccountForm.removeControl('userAdditionalData');
-				this.createAccountForm.addControl(
-					'userAdditionalData',
-					this.dataFormGroupOwner
-				);
+	public ngOnChanges(changes: SimpleChanges) {
+		if (this.modificationType === ModificationType.CREATE) {
+			if (changes['name'] || changes['surname'] || changes['email']) {
+				if (this.user === UserType.STUDENT) {
+					this.actualStudent$ = of({
+						...(this.actualStudent as IStudent),
+						name: this.name ?? '',
+						surname: this.surname ?? '',
+						email: this.email ?? '',
+					});
+				}
+				if (this.user === UserType.OWNER) {
+					this.actualOwner$ = of({
+						...(this.actualOwner as IOwner),
+						name: this.name ?? '',
+						surname: this.surname ?? '',
+						email: this.email ?? '',
+					});
+				}
 			}
 		}
 	}
@@ -298,8 +253,6 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 
 		if (index >= 0) {
 			items.splice(index, 1);
-
-			this.announcer.announce(`Removed ${item}`);
 		}
 	}
 
@@ -325,8 +278,6 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 
 		if (index >= 0) {
 			items.splice(index, 1);
-
-			this.announcer.announce(`Removed ${item}`);
 		}
 	}
 
@@ -348,30 +299,29 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		) {
 			this.myHobbies.push(event.option.value);
 		}
-		this.hobbiesInput.nativeElement.value = '';
 		this.hobbyCtrl.setValue(null);
 	}
 
-	private filter(value: string): IInterest[] {
-		const valueLowerCase = value.toLowerCase();
+	private filter(value: IInterest): IInterest[] {
+		const valueLowerCase = value.name.toLowerCase();
 		return this.profileService.interests.filter(hobby =>
 			hobby.name.toLowerCase().includes(valueLowerCase)
 		);
 	}
 
 	public changeEmail() {
-		this.router.navigate(['settings/email-change']);
+		this.router.navigate(['/settings', 'email-change']);
 	}
 	public changePassword() {
-		this.router.navigate(['settings/password-change']);
+		this.router.navigate(['/settings', 'password-change']);
 	}
 
 	public changeSurvey() {
-		if (this.user === userType.OWNER) {
-			this.router.navigate(['profile/survey/owner']);
+		if (this.user === UserType.OWNER) {
+			this.router.navigate(['/profile', 'survey', 'owner']);
 		}
-		if (this.user === userType.STUDENT) {
-			this.router.navigate(['profile/survey/student']);
+		if (this.user === UserType.STUDENT) {
+			this.router.navigate(['/profile', 'survey', 'student']);
 		}
 	}
 
@@ -403,7 +353,7 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		return age ? age.toString() : '';
 	}
 
-	public toLowerCase(type: statusType): string {
+	public toLowerCase(type: StatusType): string {
 		return type.toLowerCase();
 	}
 
@@ -481,16 +431,11 @@ export class EditProfileComponent implements OnInit, OnChanges, OnDestroy {
 		};
 	}
 
-	public toTypeOwner(value: Observable<IUser>): Observable<IOwner> {
+	public toTypeOwner(value: Observable<IOwner>): Observable<IOwner> {
 		return value as Observable<IOwner>;
 	}
 
-	public toTypeStudent(value: Observable<IUser>): Observable<IStudent> {
+	public toTypeStudent(value: Observable<IStudent>): Observable<IStudent> {
 		return value as Observable<IStudent>;
-	}
-
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }

@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {
 	AbstractControl,
+	FormBuilder,
 	FormControl,
 	FormGroup,
 	FormGroupDirective,
@@ -27,9 +28,12 @@ export class RegisterComponent implements OnInit {
 	public hidePassword = true;
 	public hideConfirmPasword = true;
 
-	public registerForm: FormGroup = new FormGroup({});
+	public registerForm: FormGroup = this.formDir.form;
 
-	constructor(private formDir: FormGroupDirective) {}
+	constructor(
+		private formDir: FormGroupDirective,
+		private formBuilder: FormBuilder
+	) {}
 
 	public ngOnInit() {
 		this.registerForm = this.formDir.form;
@@ -37,19 +41,19 @@ export class RegisterComponent implements OnInit {
 	}
 
 	public buildForm() {
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'name',
 			new FormControl('', Validators.required)
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'surname',
 			new FormControl('', Validators.required)
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'email',
 			new FormControl('', [Validators.required, Validators.email])
 		);
-		this.registerForm?.addControl(
+		this.registerForm.addControl(
 			'password',
 			new FormControl('', [
 				Validators.required,
@@ -58,8 +62,8 @@ export class RegisterComponent implements OnInit {
 				),
 			])
 		);
-		this.registerForm?.addControl(
-			'passwordRepeat',
+		this.registerForm.addControl(
+			'confirmPassword',
 			new FormControl('', [Validators.required, this.matchPasswordValidator()])
 		);
 	}

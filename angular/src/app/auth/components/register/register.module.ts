@@ -7,19 +7,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RegisterComponent } from './register.component';
-import {
-	FormGroupDirective,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthRoutingModule } from '../../auth-routing.module';
 
 @NgModule({
 	declarations: [RegisterComponent],
 	imports: [
 		CommonModule,
-		AuthRoutingModule,
 		MatButtonModule,
 		MatCardModule,
 		MatFormFieldModule,
@@ -30,6 +24,5 @@ import { AuthRoutingModule } from '../../auth-routing.module';
 		MatSnackBarModule,
 	],
 	exports: [RegisterComponent],
-	providers: [FormGroupDirective],
 })
 export class RegisterModule {}

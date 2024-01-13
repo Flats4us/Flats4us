@@ -4,13 +4,12 @@ import {
 	OnInit,
 	ViewChild,
 	ChangeDetectorRef,
-	OnDestroy,
 	Output,
 	EventEmitter,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, Subject, of } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -21,6 +20,7 @@ import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
 import { ISendOffers } from '../offer/models/offer.models';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-start',
@@ -28,30 +28,25 @@ import { ISendOffers } from '../offer/models/offer.models';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent implements OnInit, OnDestroy {
+export class StartComponent extends BaseComponent implements OnInit {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
-
-	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
 
 	public isSubmitted = false;
 
-	public startSiteForm: FormGroup = new FormGroup({});
+	public startSiteForm: FormGroup;
 
-	public loading = true;
-
-	public isLoading$?: Observable<boolean>;
+	public isLoading$: Observable<boolean> = of(false);
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
-	public flatOptions$?: Observable<ISendOffers>;
-	public flatOptionsPromoted$?: Observable<ISendOffers>;
 	private regionCityArray: IRegionCity[] = [];
-	private formBuilder: FormBuilder = new FormBuilder();
 	public pageEvent = new PageEvent();
 	public pageSize = 6;
 	public pageIndex = 0;
+	public flatOptions$: Observable<ISendOffers>;
+	public flatOptionsPromoted$: Observable<ISendOffers>;
 	private sortState: ISortOption = {
 		type: 'Price ASC',
 		direction: 'asc',
@@ -73,8 +68,10 @@ export class StartComponent implements OnInit, OnDestroy {
 		private matPaginatorIntl: MatPaginatorIntl,
 		public realEstateService: RealEstateService,
 		public startService: StartService,
-		private changeDetectorRef: ChangeDetectorRef
+		private changeDetectorRef: ChangeDetectorRef,
+		private formBuilder: FormBuilder
 	) {
+		super();
 		this.startSiteForm = this.formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
@@ -89,14 +86,28 @@ export class StartComponent implements OnInit, OnDestroy {
 			rooms: new FormControl(null, [Validators.min(1)]),
 			floors: new FormControl(null, [Validators.min(0)]),
 			equipment: new FormControl([]),
+			sorting: new FormControl(this.sortState),
+			pageIndex: new FormControl(this.pageIndex),
+			pageSize: new FormControl(this.pageSize),
 		});
 		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
 			)
-			.pipe(takeUntil(this.unsubscribe$))
+			.pipe(this.untilDestroyed())
 			.subscribe();
+		this.flatOptions$ = this.startService.getFilteredOffers(
+			this.startSiteForm.value
+		);
+		this.flatOptionsPromoted$ = this.startService
+			.getFilteredOffers(this.startSiteForm.value)
+			.pipe(
+				map(offers => ({
+					totalCount: offers.result.filter(offer => offer.isPromoted).length,
+					result: offers.result.filter(offer => offer.isPromoted === true),
+				}))
+			);
 	}
 
 	public ngOnInit() {
@@ -124,7 +135,7 @@ export class StartComponent implements OnInit, OnDestroy {
 
 		this.realEstateService
 			.readAllEquipment()
-			.pipe(takeUntil(this.unsubscribe$))
+			.pipe(this.untilDestroyed())
 			.subscribe();
 
 		this.citiesGroupOptions$ = this.startSiteForm
@@ -145,7 +156,7 @@ export class StartComponent implements OnInit, OnDestroy {
 
 		this.startSiteForm
 			.get('citiesGroup')
-			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(value => {
 				if (
 					this.realEstateService.districtGroups.find(distr => distr.whole === value)
@@ -158,7 +169,7 @@ export class StartComponent implements OnInit, OnDestroy {
 			});
 		this.startSiteForm
 			.get('regionsGroup')
-			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
+			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(() => {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
@@ -180,7 +191,7 @@ export class StartComponent implements OnInit, OnDestroy {
 	}
 
 	public addToWatched(id: number) {
-		this.startService.addToWatched(id).subscribe();
+		this.startService.addToWatched(id).pipe(this.untilDestroyed()).subscribe();
 	}
 
 	public onSubmit() {
@@ -221,7 +232,7 @@ export class StartComponent implements OnInit, OnDestroy {
 	}
 
 	public navigateToFlat(id: number) {
-		this.router.navigate([`offer/details/${id}`]);
+		this.router.navigate(['/offer', 'details', id]);
 	}
 	public validateForm() {
 		return this.startSiteForm.valid;
@@ -236,27 +247,9 @@ export class StartComponent implements OnInit, OnDestroy {
 
 	public async filterOffers() {
 		this.isLoading$ = of(true);
-		await new Promise(resolve => setTimeout(resolve, 1000));
 		this.startService
-			.getFilteredOffers(
-				this.startSiteForm.get('regionsGroup')?.value,
-				this.startSiteForm.get('citiesGroup')?.value,
-				this.startSiteForm.get('distance')?.value,
-				this.startSiteForm.get('property')?.value,
-				this.startSiteForm.get('minPrice')?.value,
-				this.startSiteForm.get('maxPrice')?.value,
-				this.startSiteForm.get('districtsGroup')?.value,
-				this.startSiteForm.get('minArea')?.value,
-				this.startSiteForm.get('maxArea')?.value,
-				this.startSiteForm.get('year')?.value,
-				this.startSiteForm.get('rooms')?.value,
-				this.startSiteForm.get('floors')?.value,
-				this.startSiteForm.get('equipment')?.value,
-				this.sortState,
-				this.pageIndex,
-				this.pageSize
-			)
-			.pipe(takeUntil(this.unsubscribe$))
+			.getFilteredOffers(this.startSiteForm.value)
+			.pipe(this.untilDestroyed())
 			.subscribe(result => {
 				this.flatOptions$ = of(result);
 				if (!this.isSubmitted) {
@@ -268,10 +261,5 @@ export class StartComponent implements OnInit, OnDestroy {
 				this.isLoading$ = of(false);
 				this.changeDetectorRef.markForCheck();
 			});
-	}
-
-	public ngOnDestroy() {
-		this.unsubscribe$.next();
-		this.unsubscribe$.complete();
 	}
 }

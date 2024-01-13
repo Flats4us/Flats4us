@@ -7,15 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { SurveyComponent } from '../shared/components/survey/survey.component';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {
-	FormGroupDirective,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,16 +26,16 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
-import { EditProfileComponent } from './edit/edit-profile.component';
-import { CreateProfileComponent } from './create/create-profile.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { SurveyService } from '@shared/services/survey.service';
 import { RegisterModule } from '../auth/components/register/register.module';
 import { OfferModule } from '../offer/offer.module';
+import { EditProfileModule } from './edit/edit-profile.module';
+import { CreateProfileModule } from './create/create-profile.module';
 
 @NgModule({
-	declarations: [ProfileComponent, EditProfileComponent, CreateProfileComponent],
+	declarations: [ProfileComponent],
 	imports: [
 		CommonModule,
 		ProfileRoutingModule,
@@ -71,8 +66,10 @@ import { OfferModule } from '../offer/offer.module';
 		MatStepperModule,
 		RegisterModule,
 		OfferModule,
+		EditProfileModule,
+		CreateProfileModule,
 	],
 	exports: [ProfileComponent],
-	providers: [ProfileService, FormGroupDirective, SurveyService],
+	providers: [ProfileService, SurveyService],
 })
 export class ProfileModule {}

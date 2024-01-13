@@ -26,7 +26,6 @@ import { StartService } from './services/start.service';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -51,7 +50,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 		MatTableModule,
 		MatSortModule,
 		MatMenuModule,
-		SpinnerComponent,
+		MatProgressSpinnerModule,
 	],
 })
 export class StartModule {}

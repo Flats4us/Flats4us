@@ -11,10 +11,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog.component';
+import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
+import { RentsDetailsComponent } from './rents-details.component';
 
 @NgModule({
-	declarations: [],
+	declarations: [RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
@@ -32,5 +33,6 @@ import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog.compon
 		MatIconModule,
 		MatMenuModule,
 	],
+	exports: [RentsDetailsComponent],
 })
 export class RentsDetailsModule {}

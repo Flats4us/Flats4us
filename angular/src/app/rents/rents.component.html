@@ -1,25 +1,16 @@
 <div *ngIf="user$ | async as user">
 	<div class="box-title">
-		<div
-			*ngIf="(user$ | async) === uType.OWNER"
-			class="text-4xl p-4 font-semibold"
-		>
+		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
 			Przeglądanie wynajmów
 		</div>
-		<div
-			*ngIf="(user$ | async) === uType.STUDENT"
-			class="text-4xl p-4 font-semibold"
-		>
+		<div *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
 			Mój najem
 		</div>
-		<div
-			*ngIf="(user$ | async) === uType.DETAILS"
-			class="text-4xl p-4 font-semibold"
-		>
+		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
 			Widok najmu
 		</div>
 	</div>
-	<div *ngIf="(user$ | async) === uType.OWNER" class="rents-owner">
+	<div *ngIf="user === uType.OWNER" class="rents-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
 				Moje wynajmy
@@ -31,7 +22,7 @@
 					matTooltip="Utwórz najem"
 					(click)="addOffer()"
 				>
-					<mat-icon>add</mat-icon>
+					<mat-icon [inline]="true">add</mat-icon>
 				</button>
 			</h1>
 			<mat-divider class="divider"></mat-divider>
@@ -62,7 +53,7 @@
 		</div>
 	</div>
 	<div
-		*ngIf="(user$ | async) === uType.STUDENT || (user$ | async) === uType.DETAILS"
+		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
 		class="rents-student"
 	>
 		<router-outlet></router-outlet>

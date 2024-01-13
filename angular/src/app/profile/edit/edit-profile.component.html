@@ -5,323 +5,328 @@
 	let-userType="userType"
 	let-toType="toType"
 >
-	<div *ngIf="modificationType !== mType.CREATE" class="container-title">
-		<h1
-			*ngIf="(userType | async) === uType.STUDENT"
-			class="text-4xl p-4 font-semibold"
-		>
-			Edycja profilu studenta
-		</h1>
-		<h1
-			*ngIf="(userType | async) === uType.OWNER"
-			class="text-4xl p-4 font-semibold"
-		>
-			Edycja profilu własciciela
-		</h1>
-	</div>
-	<form
-		*ngIf="actualUser | async as user"
-		[formGroup]="actualForm"
-		(ngSubmit)="onSubmit()"
+	<div
+		*ngIf="{ userType: userType | async, actualUser: actualUser | async } as data"
 	>
-		<div class="edit-profile">
-			<div class="container-photo">
-				<div class="image-box">
-					<img class="profile-avatar__image" [src]="urlPhoto" />
-					<input
-						#photoUpload
-						id="file"
-						class="file-upload"
-						type="file"
-						accept="image/*"
-						aria-label="File"
-						value="urlPhoto"
-						(change)="onFileSelected($event, regexImage)"
-					/>
-					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar" class="error-text"
-						>Nie wczytano zdjęcia!</mat-error
-					>
-					<div class="text-3xl p-4 semibold">
-						{{ toType(user).name }} {{ toType(user).surname }}
-					</div>
-					<div class="text-3xl pb-4 semibold">
-						status:
-						{{
-							toType(user).status === sType.VERIFIED
-								? toLowerCase(sType.VERIFIED)
-								: toLowerCase(sType.UNVERIFIED)
-						}}
-					</div>
-					<div class="text-3xl pb-4 semibold">email: {{ toType(user).email }}</div>
-					<div *ngIf="(userType | async) === uType.STUDENT">
-						<div
-							*ngIf="modificationType === mType.EDIT && getAge(toType(user).birthDate)"
-							class="text-3xl pb-4 semibold"
-						>
-							wiek {{ getAge(toType(user).birthDate) }}
-						</div>
-						<div
-							*ngIf="
-								modificationType === mType.CREATE &&
-								getAge(actualForm.get('birthDate')?.value)
-							"
-							class="text-3xl pb-4 semibold"
-						>
-							wiek {{ getAge(actualForm.get("birthDate")?.value ?? "") }}
-						</div>
-					</div>
-					<div class="button-box">
-						<button
-							mat-raised-button
-							color="primary"
-							id="upload"
-							type="button"
-							aria-label="Upload"
-							(click)="photoUpload.click()"
-						>
-							<span *ngIf="modificationType === mType.EDIT">Zmień zdjęcie</span>
-							<span *ngIf="modificationType === mType.CREATE">Dodaj zdjęcie</span>
-							<mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div class="container-inputs">
-				<div class="data-container">
-					<mat-form-field
-						*ngIf="
-							(userType | async) === uType.STUDENT && modificationType === mType.CREATE
-						"
-					>
-						<mat-label>Data urodzenia</mat-label>
-						<input matInput formControlName="birthDate" [matDatepicker]="picker" />
-						<mat-datepicker-toggle
-							matIconSuffix
-							[for]="picker"
-						></mat-datepicker-toggle>
-						<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-						<mat-error
-							*ngIf="actualForm.controls['birthDate'].errors?.['required']"
-							class="error-text"
-						>
-							Nie określono daty urodzenia!
-						</mat-error>
-						<mat-error
-							*ngIf="actualForm.controls['birthDate'].errors?.['validityAge']"
-							class="error-text"
-						>
-							Podano nieprawidłową datę urodzenia!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field *ngIf="(userType | async) === uType.STUDENT">
-						<mat-label>Numer studencki</mat-label>
+		<div *ngIf="modificationType !== mType.CREATE" class="container-title">
+			<h1
+				*ngIf="data.userType === uType.STUDENT"
+				class="text-4xl p-4 font-semibold"
+			>
+				Edycja profilu studenta
+			</h1>
+			<h1 *ngIf="data.userType === uType.OWNER" class="text-4xl p-4 font-semibold">
+				Edycja profilu własciciela
+			</h1>
+		</div>
+		<form
+			*ngIf="actualUser | async as user"
+			[formGroup]="actualForm"
+			(ngSubmit)="onSubmit()"
+		>
+			<div class="edit-profile">
+				<div class="container-photo">
+					<div class="image-box">
+						<img class="profile-avatar__image" [src]="urlPhoto" />
 						<input
-							id="indexNumber"
-							formControlName="indexNumber"
-							type="text"
-							placeholder="Numer studencki"
-							aria-label="IndexNumber"
-							matInput
-						/>
-						<mat-error
-							*ngIf="actualForm.controls['indexNumber'].errors?.['required']"
-							class="error-text"
-						>
-							Nie podano numeru studenta!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field *ngIf="(userType | async) === uType.STUDENT">
-						<mat-label>Uczelnia</mat-label>
-						<input
-							id="university"
-							formControlName="university"
-							type="text"
-							placeholder="Uczelnia"
-							aria-label="University"
-							matInput
-						/>
-						<mat-error
-							*ngIf="actualForm.controls['university'].errors?.['required']"
-							class="error-text"
-						>
-							Nie podano nazwy uczelni!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field>
-						<mat-label>Adres zamieszkania</mat-label>
-						<input
-							id="address"
-							formControlName="address"
-							type="text"
-							placeholder="Adres zamieszkania"
-							aria-label="Address"
-							matInput
-						/>
-						<mat-error
-							*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
-							class="error-text"
-						>
-							Nie podano adresu!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field>
-						<mat-label>Nr telefonu</mat-label>
-						<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
-						<mat-error
-							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
-							class="error-text"
-						>
-							Nie podano numeru telefonu!
-						</mat-error>
-						<mat-error
-							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
-							class="error-text"
-						>
-							Nieprawidłowy numer telefonu!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field *ngIf="(userType | async) === uType.OWNER">
-						<mat-label>Nr konta bankowego</mat-label>
-						<input
-							matInput
-							formControlName="bankAccount"
-							placeholder="Nr konta bankowego"
-						/>
-						<mat-error
-							*ngIf="actualForm.controls['bankAccount'].errors?.['required']"
-							class="error-text"
-						>
-							Nie podano numeru konta bankowego!
-						</mat-error>
-						<mat-error
-							*ngIf="actualForm.controls['bankAccount'].errors?.['pattern']"
-							class="error-text"
-						>
-							Nieprawidłowy numeru konta bankowego!
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field *ngIf="(userType | async) === uType.STUDENT">
-						<mat-label>Zainteresowania</mat-label>
-						<mat-chip-grid #chipGrid aria-label="Hobbies">
-							<mat-chip-row
-								*ngFor="let myHobby of myHobbies"
-								(removed)="removeHobby(myHobby, myHobbies)"
-							>
-								{{ myHobby.name }}
-								<button
-									matChipRemove
-									type="button"
-									[attr.aria-label]="'remove ' + myHobby.name"
-								>
-									<mat-icon>cancel</mat-icon>
-								</button>
-							</mat-chip-row>
-							<input
-								#hobbiesInput
-								[formControl]="hobbyCtrl"
-								[matChipInputFor]="chipGrid"
-								[matAutocomplete]="auto"
-								[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-								(matChipInputTokenEnd)="addHobby($event, myHobbies, hobbyCtrl)"
-							/>
-							<mat-autocomplete
-								#auto="matAutocomplete"
-								(optionSelected)="selected($event)"
-							>
-								<mat-option
-									*ngFor="let hobby of filteredHobbies$ | async"
-									[value]="hobby"
-									>{{ hobby.name }}</mat-option
-								>
-							</mat-autocomplete>
-						</mat-chip-grid>
-					</mat-form-field>
-					<mat-form-field
-						*ngIf="(userType | async) === uType.STUDENT"
-						class="example-chip-list"
-					>
-						<mat-label>Linki do social media</mat-label>
-						<mat-chip-grid #chipGrid2 aria-label="Social media">
-							<mat-chip-row
-								*ngFor="let socialMedia of socialMedias"
-								[editable]="true"
-								[aria-description]="'press enter to edit ' + socialMedia"
-								(removed)="removeSocialMedia(socialMedia, socialMedias)"
-								(edited)="editSocialMedia(socialMedia, $event)"
-							>
-								{{ socialMedia }}
-								<button
-									matChipRemove
-									type="button"
-									[attr.aria-label]="'remove ' + socialMedia"
-								>
-									<mat-icon>cancel</mat-icon>
-								</button>
-							</mat-chip-row>
-							<input
-								placeholder="Wpisz link do social media"
-								[formControl]="socialMediaCtrl"
-								[matChipInputFor]="chipGrid2"
-								[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-								[matChipInputAddOnBlur]="addOnBlur"
-								(matChipInputTokenEnd)="
-									addSocialMedia($event, socialMedias, socialMediaCtrl)
-								"
-							/>
-						</mat-chip-grid>
-					</mat-form-field>
-					<span
-						*ngIf="!checkValidityTill(toType(user).validTill)"
-						class="btn-upload-box"
-					>
-						<a *ngIf="(userType | async) === !urlNewScan"
-							>Wczytaj skan aktualnego dokumentu!</a
-						>
-						<button
-							mat-icon-button
-							type="button"
-							aria-label="Upload"
-							matTooltip="Wczytaj skan dokumentu"
-							(click)="scanUpload.click()"
-						>
-							<mat-icon>attachment</mat-icon>
-						</button>
-						<input
-							#scanUpload
-							id="documentScan"
+							#photoUpload
+							id="file"
 							class="file-upload"
 							type="file"
-							accept="image/*,application/pdf"
+							accept="image/*"
 							aria-label="File"
-							(change)="onFileSelected($event, regexScan)"
+							value="urlPhoto"
+							(change)="onFileSelected($event, regexImage)"
 						/>
-						<mat-error *ngIf="!urlNewScan" class="error-text"
-							>Nie wczytano skanu dokumentu!</mat-error
+						<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar" class="error-text"
+							>Nie wczytano zdjęcia!</mat-error
 						>
-					</span>
-					<mat-form-field
-						*ngIf="
-							(userType | async) === uType.STUDENT &&
-							!checkValidityTill(toType(user).validTill)
-						"
-					>
-						<mat-label>Dokument tożsamości</mat-label>
-						<mat-select id="documentType" formControlName="documentType">
-							<mat-option
-								*ngFor="let document of profileService.documentTypes"
-								[value]="document.value"
+						<div class="text-3xl p-4 semibold">
+							{{ toType(data.actualUser).name }} {{ toType(data.actualUser).surname }}
+						</div>
+						<div class="text-3xl pb-4 semibold">
+							status:
+							{{
+								toType(data.actualUser).status === sType.VERIFIED
+									? toLowerCase(sType.VERIFIED)
+									: toLowerCase(sType.UNVERIFIED)
+							}}
+						</div>
+						<div class="text-3xl pb-4 semibold">
+							email: {{ toType(data.actualUser).email }}
+						</div>
+						<div *ngIf="data.userType === uType.STUDENT">
+							<div
+								*ngIf="
+									modificationType === mType.EDIT &&
+									getAge(toType(data.actualUser).birthDate)
+								"
+								class="text-3xl pb-4 semibold"
 							>
-								{{ document.viewValue }}
-							</mat-option>
-						</mat-select>
-						<mat-error
-							*ngIf="actualForm.controls['documentType'].errors?.['required']"
-							class="error-text"
+								wiek {{ getAge(toType(data.actualUser).birthDate) }}
+							</div>
+							<div
+								*ngIf="
+									modificationType === mType.CREATE &&
+									getAge(actualForm.get('birthDate')?.value)
+								"
+								class="text-3xl pb-4 semibold"
+							>
+								wiek {{ getAge(actualForm.get("birthDate")?.value ?? "") }}
+							</div>
+						</div>
+						<div class="button-box">
+							<button
+								mat-raised-button
+								color="primary"
+								id="upload"
+								type="button"
+								aria-label="Upload"
+								(click)="photoUpload.click()"
+							>
+								<span *ngIf="modificationType === mType.EDIT">Zmień zdjęcie</span>
+								<span *ngIf="modificationType === mType.CREATE">Dodaj zdjęcie</span>
+								<mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="container-inputs">
+					<div class="data-container">
+						<mat-form-field
+							*ngIf="
+								data.userType === uType.STUDENT && modificationType === mType.CREATE
+							"
 						>
-							Nie wybrano rodzaju dokumentu!
-						</mat-error>
-					</mat-form-field>
-					<input
+							<mat-label>Data urodzenia</mat-label>
+							<input matInput formControlName="birthDate" [matDatepicker]="picker" />
+							<mat-datepicker-toggle
+								matIconSuffix
+								[for]="picker"
+							></mat-datepicker-toggle>
+							<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+							<mat-error
+								*ngIf="actualForm.controls['birthDate'].errors?.['required']"
+								class="error-text"
+							>
+								Nie określono daty urodzenia!
+							</mat-error>
+							<mat-error
+								*ngIf="actualForm.controls['birthDate'].errors?.['validityAge']"
+								class="error-text"
+							>
+								Podano nieprawidłową datę urodzenia!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field *ngIf="data.userType === uType.STUDENT">
+							<mat-label>Numer studencki</mat-label>
+							<input
+								id="studentNumber"
+								formControlName="studentNumber"
+								type="text"
+								placeholder="Numer studencki"
+								aria-label="StudentNumber"
+								matInput
+							/>
+							<mat-error
+								*ngIf="actualForm.controls['studentNumber'].errors?.['required']"
+								class="error-text"
+							>
+								Nie podano numeru studenta!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field *ngIf="data.userType === uType.STUDENT">
+							<mat-label>Uczelnia</mat-label>
+							<input
+								id="university"
+								formControlName="university"
+								type="text"
+								placeholder="Uczelnia"
+								aria-label="University"
+								matInput
+							/>
+							<mat-error
+								*ngIf="actualForm.controls['university'].errors?.['required']"
+								class="error-text"
+							>
+								Nie podano nazwy uczelni!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-label>Adres zamieszkania</mat-label>
+							<input
+								id="address"
+								formControlName="address"
+								type="text"
+								placeholder="Adres zamieszkania"
+								aria-label="Address"
+								matInput
+							/>
+							<mat-error
+								*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
+								class="error-text"
+							>
+								Nie podano adresu!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field>
+							<mat-label>Nr telefonu</mat-label>
+							<input
+								matInput
+								formControlName="phoneNumber"
+								placeholder="Nr telefonu"
+							/>
+							<mat-error
+								*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
+								class="error-text"
+							>
+								Nie podano numeru telefonu!
+							</mat-error>
+							<mat-error
+								*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
+								class="error-text"
+							>
+								Nieprawidłowy numer telefonu!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field *ngIf="data.userType === uType.OWNER">
+							<mat-label>Nr konta bankowego</mat-label>
+							<input
+								matInput
+								formControlName="bankAccount"
+								placeholder="Nr konta bankowego"
+							/>
+							<mat-error
+								*ngIf="actualForm.controls['bankAccount'].errors?.['required']"
+								class="error-text"
+							>
+								Nie podano numeru konta bankowego!
+							</mat-error>
+							<mat-error
+								*ngIf="actualForm.controls['bankAccount'].errors?.['pattern']"
+								class="error-text"
+							>
+								Nieprawidłowy numeru konta bankowego!
+							</mat-error>
+						</mat-form-field>
+						<mat-form-field *ngIf="data.userType === uType.STUDENT">
+							<mat-label>Zainteresowania</mat-label>
+							<mat-chip-grid #chipGrid aria-label="Interests">
+								<mat-chip-row
+									*ngFor="let myHobby of myHobbies"
+									(removed)="removeHobby(myHobby, myHobbies)"
+								>
+									{{ myHobby.name }}
+									<button
+										matChipRemove
+										type="button"
+										[attr.aria-label]="'remove ' + myHobby.name"
+									>
+										<mat-icon>cancel</mat-icon>
+									</button>
+								</mat-chip-row>
+								<input
+									#hobbiesInput
+									[formControl]="hobbyCtrl"
+									[matChipInputFor]="chipGrid"
+									[matAutocomplete]="auto"
+									[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+									(matChipInputTokenEnd)="addHobby($event, myHobbies, hobbyCtrl)"
+								/>
+								<mat-autocomplete
+									#auto="matAutocomplete"
+									(optionSelected)="selected($event)"
+								>
+									<mat-option
+										*ngFor="let hobby of filteredHobbies$ | async"
+										[value]="hobby"
+										>{{ hobby.name }}</mat-option
+									>
+								</mat-autocomplete>
+							</mat-chip-grid>
+						</mat-form-field>
+						<mat-form-field
+							*ngIf="data.userType === uType.STUDENT"
+							class="example-chip-list"
+						>
+							<mat-label>Linki do social media</mat-label>
+							<mat-chip-grid #chipGrid2 aria-label="Links">
+								<mat-chip-row
+									*ngFor="let socialMedia of socialMedias"
+									[editable]="true"
+									[aria-description]="'press enter to edit ' + socialMedia"
+									(removed)="removeSocialMedia(socialMedia, socialMedias)"
+									(edited)="editSocialMedia(socialMedia, $event)"
+								>
+									{{ socialMedia }}
+									<button
+										matChipRemove
+										type="button"
+										[attr.aria-label]="'remove ' + socialMedia"
+									>
+										<mat-icon>cancel</mat-icon>
+									</button>
+								</mat-chip-row>
+								<input
+									placeholder="Wpisz link do social media"
+									[formControl]="socialMediaCtrl"
+									[matChipInputFor]="chipGrid2"
+									[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+									[matChipInputAddOnBlur]="addOnBlur"
+									(matChipInputTokenEnd)="
+										addSocialMedia($event, socialMedias, socialMediaCtrl)
+									"
+								/>
+							</mat-chip-grid>
+						</mat-form-field>
+						<span
+							*ngIf="!checkValidityTill(toType(data.actualUser).validTill)"
+							class="btn-upload-box"
+						>
+							<a *ngIf="!urlNewScan">Wczytaj skan aktualnego dokumentu!</a>
+							<button
+								mat-icon-button
+								type="button"
+								aria-label="Upload"
+								matTooltip="Wczytaj skan dokumentu"
+								(click)="scanUpload.click()"
+							>
+								<mat-icon>attachment</mat-icon>
+							</button>
+							<input
+								#scanUpload
+								id="documentScan"
+								class="file-upload"
+								type="file"
+								accept="image/*,application/pdf"
+								aria-label="File"
+								(change)="onFileSelected($event, regexScan)"
+							/>
+							<mat-error *ngIf="!urlNewScan" class="error-text"
+								>Nie wczytano skanu dokumentu!</mat-error
+							>
+						</span>
+						<mat-form-field>
+							<mat-label>Dokument tożsamości</mat-label>
+							<mat-select id="documentType" formControlName="documentType">
+								<mat-option
+									*ngFor="let document of profileService.documentTypes"
+									[value]="document.value"
+									[disabled]="
+										data.userType === uType.OWNER && document.value === 1 ? true : false
+									"
+								>
+									{{ document.viewValue }}
+								</mat-option>
+							</mat-select>
+							<mat-error
+								*ngIf="actualForm.controls['documentType'].errors?.['required']"
+								class="error-text"
+							>
+								Nie wybrano rodzaju dokumentu!
+							</mat-error>
+						</mat-form-field>
+						<!-- <input
 						#scanUpload
 						id="documentScan"
 						class="file-upload"
@@ -329,91 +334,98 @@
 						accept="image/*,application/pdf"
 						aria-label="File"
 						(change)="onFileSelected($event, regexScan)"
-					/>
-					<mat-form-field>
-						<mat-label>Data ważności dokumentu</mat-label>
-						<input matInput formControlName="validTill" [matDatepicker]="picker" />
-						<mat-datepicker-toggle
-							matIconSuffix
-							[for]="picker"
-						></mat-datepicker-toggle>
-						<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-						<mat-error
-							*ngIf="actualForm.controls['validTill'].errors?.['required']"
-							class="error-text"
-						>
-							Nie określono daty ważności dokumentu!
-						</mat-error>
-						<mat-error
-							*ngIf="actualForm.controls['validTill'].errors?.['validityTill']"
-							class="error-text"
-						>
-							Termin ważności dokumentu upłynął!
-						</mat-error>
-					</mat-form-field>
-					<div *ngIf="modificationType === mType.EDIT" class="btn-box">
-						<button
-							mat-raised-button
-							color="primary"
-							type="button"
-							aria-label="Edit"
-							(click)="changeEmail()"
-						>
-							Edytuj email
-							<mat-icon iconPositionEnd>edit</mat-icon>
+					/> -->
+						<mat-form-field>
+							<mat-label>Data ważności dokumentu</mat-label>
+							<input
+								matInput
+								formControlName="documentExpireDate"
+								[matDatepicker]="picker"
+							/>
+							<mat-datepicker-toggle
+								matIconSuffix
+								[for]="picker"
+							></mat-datepicker-toggle>
+							<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
+							<mat-error
+								*ngIf="actualForm.controls['documentExpireDate'].errors?.['required']"
+								class="error-text"
+							>
+								Nie określono daty ważności dokumentu!
+							</mat-error>
+							<mat-error
+								*ngIf="actualForm.controls['documentExpireDate'].errors?.['validityTill']"
+								class="error-text"
+							>
+								Termin ważności dokumentu upłynął!
+							</mat-error>
+						</mat-form-field>
+						<div *ngIf="modificationType === mType.EDIT" class="btn-box">
+							<button
+								mat-raised-button
+								color="primary"
+								type="button"
+								aria-label="Edit"
+								(click)="changeEmail()"
+							>
+								Edytuj email
+								<mat-icon iconPositionEnd>edit</mat-icon>
+							</button>
+						</div>
+						<div *ngIf="modificationType === mType.EDIT" class="btn-box">
+							<button
+								mat-raised-button
+								color="primary"
+								type="button"
+								aria-label="Edit"
+								(click)="changePassword()"
+							>
+								Zmień hasło
+								<mat-icon iconPositionEnd>edit</mat-icon>
+							</button>
+						</div>
+						<div *ngIf="modificationType === mType.EDIT" class="btn-box">
+							<button
+								mat-raised-button
+								color="primary"
+								type="button"
+								aria-label="Edit"
+								(click)="changeSurvey()"
+							>
+								Edytuj ankietę
+								<mat-icon iconPositionEnd>edit</mat-icon>
+							</button>
+						</div>
+					</div>
+					<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
+						<button mat-raised-button color="primary" type="submit">
+							Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
 						</button>
 					</div>
-					<div *ngIf="modificationType === mType.EDIT" class="btn-box">
-						<button
-							mat-raised-button
-							color="primary"
-							type="button"
-							aria-label="Edit"
-							(click)="changePassword()"
-						>
-							Zmień hasło
-							<mat-icon iconPositionEnd>edit</mat-icon>
-						</button>
-					</div>
-					<div *ngIf="modificationType === mType.EDIT" class="btn-box">
-						<button
-							mat-raised-button
-							color="primary"
-							type="button"
-							aria-label="Edit"
-							(click)="changeSurvey()"
-						>
-							Edytuj ankietę
-							<mat-icon iconPositionEnd>edit</mat-icon>
-						</button>
-					</div>
-				</div>
-				<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
-					<button mat-raised-button color="primary" type="submit">
-						Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
-					</button>
 				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </ng-template>
-<ng-container
-	*ngIf="(user$ | async) === uType.STUDENT"
-	[ngTemplateOutlet]="modifyProfile"
-	[ngTemplateOutletContext]="{
-		actualForm: dataFormGroupStudent,
-		actualUser: actualStudent$,
-		userType: user$,
-		toType: toTypeStudent
-	}"
-></ng-container>
-<ng-container
-	*ngIf="(user$ | async) === uType.OWNER"
-	[ngTemplateOutlet]="modifyProfile"
-	[ngTemplateOutletContext]="{
-		actualForm: dataFormGroupOwner,
-		actualUser: actualOwner$,
-		userType: user$,
-		toType: toTypeOwner
-	}"
-></ng-container>
+<div *ngIf="user$ | async as user">
+	<ng-container
+		*ngIf="user === uType.STUDENT"
+		[ngTemplateOutlet]="modifyProfile"
+		[ngTemplateOutletContext]="{
+			actualForm: dataFormGroupStudent,
+			actualUser: actualStudent$,
+			userType: user$,
+			toType: toTypeStudent
+		}"
+	></ng-container>
+	<ng-container
+		*ngIf="user === uType.OWNER"
+		[ngTemplateOutlet]="modifyProfile"
+		[ngTemplateOutletContext]="{
+			actualForm: dataFormGroupOwner,
+			actualUser: actualOwner$,
+			userType: user$,
+			toType: toTypeOwner
+		}"
+	></ng-container>
+</div>

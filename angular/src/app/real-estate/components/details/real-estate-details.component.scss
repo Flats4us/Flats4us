@@ -4,6 +4,8 @@
 	overflow: hidden;
 	position: relative;
 	background: #ffffff;
+	border: 4px #00000012;
+	border-style: solid;
 }
 
 .slide {
@@ -55,25 +57,21 @@
 .arrow.prev {
 	opacity: 0.2;
 	left: 20px;
-	background-image: url(../../../../assets/paddle_prev_999.png);
 	transition: 0.2s linear all;
 }
 
 .arrow.next {
 	opacity: 0.2;
 	right: 20px;
-	background-image: url(../../../../assets/paddle_next_999.png);
 	transition: 0.2s linear all;
 }
 
 .arrow.prev:hover {
 	opacity: 1;
-	background-image: url(../../../../assets/paddle_prev_fff.png);
 }
 
 .arrow.next:hover {
 	opacity: 1;
-	background-image: url(../../../../assets/paddle_next_fff.png);
 }
 
 .nav {
@@ -87,7 +85,7 @@
 	height: 48px;
 }
 
-.nonDraggableImage {
+.non-draggable-image {
 	-webkit-user-drag: none;
 }
 
@@ -105,7 +103,6 @@
 .nav .dot,
 .nav .dot span {
 	display: inline-block;
-	zoom: 1;
 	cursor: pointer;
 }
 
@@ -145,8 +142,14 @@
 }
 
 .box-icon {
-	transform: scale(1.2);
+	font-size: large;
 	margin: 4px;
+}
+
+.icon {
+	font-size: xx-large;
+	width: 32px;
+	height: 38px;
 }
 
 .button-box {
@@ -157,7 +160,7 @@
 	float: right;
 }
 
-.close-rent {
+.delete-property {
 	color: red;
 }
 
@@ -181,11 +184,6 @@
 	background: rgba(0, 0, 0, 0.109);
 }
 
-.icon {
-	transform: scale(1.4);
-	margin-right: 4px;
-}
-
 .label-description {
 	padding: 4px;
 	min-width: 160px;
@@ -205,6 +203,8 @@
 		overflow: hidden;
 		position: relative;
 		background: #ffffff;
+		border: 4px #00000012;
+		border-style: solid;
 	}
 }
 

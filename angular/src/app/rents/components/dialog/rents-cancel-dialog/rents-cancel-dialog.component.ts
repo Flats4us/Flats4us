@@ -4,10 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RentsService } from '../../services/rents.service';
-import { statusName } from '../../statusName';
-import { Subject } from 'rxjs';
-import { IOffer } from 'src/app/offer/models/offer.models';
+import { RentsService } from '../../../services/rents.service';
+import { statusName } from '../../../statusName';
 
 @Component({
 	selector: 'app-rents-cancel-dialog',
@@ -22,13 +20,13 @@ import { IOffer } from 'src/app/offer/models/offer.models';
 		FormsModule,
 		MatButtonModule,
 	],
+	providers: [RentsService],
 })
 export class RentsCancelDialogComponent {
-	private readonly unsubscribe$: Subject<void> = new Subject();
 	public statusName: typeof statusName = statusName;
 	constructor(
 		public rentsService: RentsService,
-		@Inject(MAT_DIALOG_DATA) public data: IOffer
+		@Inject(MAT_DIALOG_DATA) public data: number
 	) {}
 
 	public onYesClick() {
