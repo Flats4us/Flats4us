@@ -19,9 +19,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { RentsTenantsDialogComponent } from './components/dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
-import { RentsCancelDialogComponent } from './components/dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { OfferService } from '../offer/services/offer.service';
 
 @NgModule({
@@ -39,8 +37,6 @@ import { OfferService } from '../offer/services/offer.service';
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
-		RentsCancelDialogComponent,
-		RentsTenantsDialogComponent,
 		RentsDetailsModule,
 		MatChipsModule,
 		MatAutocompleteModule,

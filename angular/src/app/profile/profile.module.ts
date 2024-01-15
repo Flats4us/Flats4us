@@ -62,11 +62,9 @@ import { UserService } from '@shared/services/user.service';
 		MatDividerModule,
 		MatStepperModule,
 		RegisterModule,
-		OfferModule,
 		EditProfileModule,
 		CreateProfileModule,
 	],
-	providers: [SurveyService, UserService],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService],
 })

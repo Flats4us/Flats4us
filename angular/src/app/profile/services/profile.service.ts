@@ -1,7 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { IInterest, IOwner, IStudent } from '../models/profile.models';
+import {
+	IInterest,
+	IOwner,
+	IStudent,
+	IUserProfile,
+} from '../models/profile.models';
 import { environment } from 'src/environments/environment.prod';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
 
@@ -34,6 +39,9 @@ export class ProfileService {
 
 	public getStudents(): Observable<IStudent[]> {
 		return this.httpClient.get<IStudent[]>('./assets/student-profiles.json');
+	}
+	public getActualProfile(): Observable<IUserProfile> {
+		return this.httpClient.get<IUserProfile>(`${this.apiRoute}/users/my-profile`);
 	}
 	public getOwners(): Observable<IOwner[]> {
 		return this.httpClient.get<IOwner[]>('./assets/owner-profiles.json');

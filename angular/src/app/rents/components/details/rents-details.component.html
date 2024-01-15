@@ -187,11 +187,6 @@
 	<div *ngIf="data.user === uType.STUDENT" class="button-box-options">
 		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
 	</div>
-	<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
-		<button mat-raised-button color="primary" (click)="startRent()">
-			Wynajmij
-		</button>
-	</div>
 	<div *ngIf="data.user !== uType.OWNER" class="button-box-options">
 		<button mat-raised-button color="primary" (click)="onAddMeeting()">
 			Dodaj spotkanie

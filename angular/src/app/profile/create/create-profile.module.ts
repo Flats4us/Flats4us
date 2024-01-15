@@ -28,14 +28,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SurveyService } from '@shared/services/survey.service';
 import { RegisterModule } from 'src/app/auth/components/register/register.module';
 import { OfferModule } from 'src/app/offer/offer.module';
-import { EmailChangeModule } from 'src/app/settings/components/emailChange/emailChange.module';
-import { PasswordChangeModule } from 'src/app/settings/components/password-change/password-change.module';
-import { SettingsRoutingModule } from 'src/app/settings/settings-routing.module';
 import { ProfileRoutingModule } from '../profile-routing.module';
 import { ProfileService } from '../services/profile.service';
 import { CreateProfileComponent } from './create-profile.component';
-import { SurveyModule } from '@shared/components/survey/survey.module';
 import { EditProfileModule } from '../edit/edit-profile.module';
+import { SurveyModule } from '@shared/components/survey/survey.module';
 
 @NgModule({
 	declarations: [CreateProfileComponent],
@@ -46,7 +43,6 @@ import { EditProfileModule } from '../edit/edit-profile.module';
 		MatButtonModule,
 		MatIconModule,
 		MatChipsModule,
-		SettingsRoutingModule,
 		MatSliderModule,
 		MatSnackBarModule,
 		FormsModule,
@@ -57,8 +53,6 @@ import { EditProfileModule } from '../edit/edit-profile.module';
 		MatSlideToggleModule,
 		HttpClientModule,
 		MatCheckboxModule,
-		EmailChangeModule,
-		PasswordChangeModule,
 		MatRadioModule,
 		MatSelectModule,
 		MatAutocompleteModule,
@@ -69,8 +63,8 @@ import { EditProfileModule } from '../edit/edit-profile.module';
 		MatStepperModule,
 		RegisterModule,
 		OfferModule,
-		SurveyModule,
 		EditProfileModule,
+		SurveyModule,
 	],
 	exports: [CreateProfileComponent],
 	providers: [ProfileService, FormGroupDirective, SurveyService],

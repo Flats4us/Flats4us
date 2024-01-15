@@ -25,7 +25,9 @@
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['/profile', 1]">Mój profil</button>
-		<button mat-menu-item>Edytuj profil</button>
+		<button mat-menu-item [routerLink]="['/profile', 'edit']">
+			Edytuj profil
+		</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"

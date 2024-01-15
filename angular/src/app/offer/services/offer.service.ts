@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { IOffer, IPromotion, ISendOffers } from '../models/offer.models';
+import {
+	IOffer,
+	IPromotion,
+	IRentProposition,
+	ISendOffers,
+} from '../models/offer.models';
 
 @Injectable()
 export class OfferService {
@@ -26,6 +31,12 @@ export class OfferService {
 	}
 	public addOffer(offer: IOffer) {
 		return this.httpClient.post(`${this.apiRoute}/offers`, offer);
+	}
+	public addRentProposition(rentProposition: IRentProposition, id: number) {
+		return this.httpClient.post(
+			`${this.apiRoute}/offers/${id}/rent`,
+			rentProposition
+		);
 	}
 	public addOfferPromotion(id: number, duration: IPromotion) {
 		return this.httpClient.post(
