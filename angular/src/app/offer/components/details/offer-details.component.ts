@@ -15,9 +15,9 @@ import { IOffer } from '../../models/offer.models';
 import { slideAnimation } from 'src/app/rents/slide.animation';
 import { UserType } from 'src/app/profile/models/types';
 import { RentsCancelDialogComponent } from 'src/app/rents/components/dialog/rents-cancel-dialog/rents-cancel-dialog.component';
-import { RentsTenantsDialogComponent } from 'src/app/rents/components/dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { OfferPromotionDialogComponent } from '../dialog/offer-promotion-dialog/offer-promotion-dialog.component';
 import { OfferService } from '../../services/offer.service';
+import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialog/rent-proposition-dialog.component';
 
 @Component({
 	selector: 'app-offer-details',
@@ -133,9 +133,6 @@ export class OfferDetailsComponent {
 		});
 	}
 
-	public openTenantsDialog(): void {
-		this.dialog.open(RentsTenantsDialogComponent, { disableClose: true });
-	}
 	public navigateToOffer(id: number) {
 		this.router.navigate(['/offer', 'details', id]);
 	}
@@ -171,8 +168,11 @@ export class OfferDetailsComponent {
 		});
 	}
 
-	public startRent() {
-		this.openTenantsDialog();
+	public startRent(id: number) {
+		this.dialog.open(RentPropositionDialogComponent, {
+			disableClose: true,
+			data: id,
+		});
 	}
 
 	public setCurrentSlideIndex(index: number) {

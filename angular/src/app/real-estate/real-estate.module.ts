@@ -19,8 +19,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDetailsModule } from '../rents/components/details/rents-details.module';
-import { RentsCancelDialogComponent } from '../rents/components/dialog/rents-cancel-dialog/rents-cancel-dialog.component';
-import { RentsTenantsDialogComponent } from '../rents/components/dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RealEstateDetailsModule } from './components/details/real-estate-details.module';
 
@@ -40,8 +38,6 @@ import { RealEstateDetailsModule } from './components/details/real-estate-detail
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
-		RentsCancelDialogComponent,
-		RentsTenantsDialogComponent,
 		RentsDetailsModule,
 		MatChipsModule,
 		MatAutocompleteModule,

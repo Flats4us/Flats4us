@@ -11,7 +11,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddOfferComponent } from './add-offer.component';
-import { SurveyModule } from '@shared/components/survey/survey.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -29,6 +28,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OfferRoutingModule } from '../../offer-routing.module';
 import { OfferService } from '../../services/offer.service';
 import { SurveyService } from '@shared/services/survey.service';
+import { SurveyModule } from '@shared/components/survey/survey.module';
 
 @NgModule({
 	declarations: [AddOfferComponent],
@@ -46,7 +46,6 @@ import { SurveyService } from '@shared/services/survey.service';
 		MatDialogModule,
 		MatIconModule,
 		MatMenuModule,
-		SurveyModule,
 		CommonModule,
 		OfferRoutingModule,
 		MatButtonModule,
@@ -73,6 +72,7 @@ import { SurveyService } from '@shared/services/survey.service';
 		HttpClientModule,
 		MatCheckboxModule,
 		MatRadioModule,
+		SurveyModule,
 	],
 	exports: [AddOfferComponent],
 	providers: [OfferService, SurveyService],

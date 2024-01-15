@@ -14,17 +14,13 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 	},
 	{
-		path: ':modificationType/:user',
-		component: CreateProfileComponent,
-	},
-	{
 		path: ':modificationType',
 		component: CreateProfileComponent,
+		//canActivate: [AuthGuard],
 	},
 	{
-		path: ':modificationType/:user/:id',
+		path: ':modificationType/:user',
 		component: CreateProfileComponent,
-		canActivate: [AuthGuard],
 	},
 	{
 		path: ':id',

@@ -6,7 +6,6 @@ import { Observable, map, switchMap } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { RentsTenantsDialogComponent } from '../dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
@@ -72,9 +71,6 @@ export class RentsDetailsComponent {
 		});
 	}
 
-	public openTenantsDialog(): void {
-		this.dialog.open(RentsTenantsDialogComponent, { disableClose: true });
-	}
 	public navigateToRent(id: number) {
 		this.router.navigate(['/rents', 'details', id]);
 	}
@@ -104,10 +100,6 @@ export class RentsDetailsComponent {
 			disableClose: true,
 			data: this.rentId$,
 		});
-	}
-
-	public startRent() {
-		this.openTenantsDialog();
 	}
 
 	public setCurrentSlideIndex(index: number) {

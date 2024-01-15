@@ -17,8 +17,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDetailsModule } from '../rents/components/details/rents-details.module';
-import { RentsCancelDialogComponent } from '../rents/components/dialog/rents-cancel-dialog/rents-cancel-dialog.component';
-import { RentsTenantsDialogComponent } from '../rents/components/dialog/rents-tenants-dialog/rents-tenants-dialog.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
@@ -34,8 +32,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SurveyService } from '@shared/services/survey.service';
 import { AddOfferModule } from './components/add-offer/add-offer.module';
 import { OfferDetailsModule } from './components/details/offer-details.module';
-import { MeetingAddComponent } from '../rents/components/meeting-add/meeting-add.component';
-import { OfferPromotionDialogComponent } from './components/dialog/offer-promotion-dialog/offer-promotion-dialog.component';
 
 @NgModule({
 	declarations: [OfferComponent],
@@ -55,8 +51,6 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 		MatDatepickerModule,
 		MatCardModule,
 		MatSelectModule,
-		RentsCancelDialogComponent,
-		RentsTenantsDialogComponent,
 		RentsDetailsModule,
 		MatChipsModule,
 		MatAutocompleteModule,
@@ -71,8 +65,6 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 		MatRadioModule,
 		AddOfferModule,
 		OfferDetailsModule,
-		MeetingAddComponent,
-		OfferPromotionDialogComponent,
 	],
 	providers: [OfferService, RealEstateService, SurveyService],
 	exports: [OfferComponent],

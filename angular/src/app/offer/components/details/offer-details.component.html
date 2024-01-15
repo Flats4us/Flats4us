@@ -215,7 +215,11 @@
 		>
 			Dodaj spotkanie
 		</button>
-		<button mat-raised-button color="primary" (click)="startRent()">
+		<button
+			mat-raised-button
+			color="primary"
+			(click)="startRent(data.offer?.offerId ?? 0)"
+		>
 			Wynajmij
 		</button>
 	</div>

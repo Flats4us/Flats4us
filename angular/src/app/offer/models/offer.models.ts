@@ -29,6 +29,12 @@ export interface IPromotion {
 	duration: number;
 }
 
+export interface IRentProposition {
+	roommatesEmails: string[];
+	startDate: Date;
+	duration: number;
+}
+
 export interface IOwner {
 	userId: number;
 	name: string;

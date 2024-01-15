@@ -68,6 +68,7 @@
 								[name]="registerForm.get('name')?.value ?? ''"
 								[surname]="registerForm.get('surname')?.value ?? ''"
 								[email]="registerForm.get('email')?.value ?? ''"
+								[user]="user"
 								[modificationType]="mType.CREATE"
 								(newPhotoEvent)="setPhoto($event)"
 								(newScanEvent)="setScan($event)"
