@@ -25,6 +25,9 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -43,6 +46,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 		MatIconModule,
 		CommonModule,
 		MatDatepickerModule,
+		MatSnackBarModule,
 	],
 	providers: [OfferService],
 })
@@ -60,6 +64,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	});
 
 	constructor(
+		private snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
 		@Inject(MAT_DIALOG_DATA) public data: number
@@ -72,10 +77,24 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	}
 
 	public onYesClick() {
-		this.offerService
-			.addRentProposition(this.rentPropositionForm.value, this.data)
-			.pipe(this.untilDestroyed())
-			.subscribe(() => this.dialogRef.close());
+		this.rentPropositionForm.markAllAsTouched();
+		if (this.rentPropositionForm.valid) {
+			this.offerService
+				.addRentProposition(this.rentPropositionForm.value, this.data)
+				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.subscribe({
+					next: () => {
+						this.dialogRef.close();
+					},
+					error: () => {
+						this.snackBar.open(
+							'Nie udało się dodać najmu. Być może wpisane adresy e-mail są nieprawidłowe.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
+					},
+				});
+		}
 	}
 	public add(
 		event: MatChipInputEvent,
@@ -109,5 +128,11 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (index >= 0) {
 			this.tenants[index] = value;
 		}
+	}
+
+	private handleError(error: HttpErrorResponse) {
+		return throwError(() => {
+			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
+		});
 	}
 }
