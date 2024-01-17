@@ -8,12 +8,13 @@ import { ModificationType, UserType } from '../models/types';
 import { MatStepper } from '@angular/material/stepper';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
 import { IAddOwner, IAddStudent } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-profile-create',
@@ -154,35 +155,55 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 				if (this.user === UserType.STUDENT) {
 					this.authService
 						.addProfileStudent(this.studentFormGroup.value)
-						.pipe(this.untilDestroyed())
-						.subscribe(() =>
-							this.profileService
-								.addProfileFiles(this.formData)
-								.pipe(this.untilDestroyed())
-								.subscribe()
-						);
+						.pipe(
+							this.untilDestroyed(),
+							catchError(this.handleError),
+							concatMap(() => this.profileService.addProfileFiles(this.formData))
+						)
+						.subscribe({
+							next: () =>
+								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
+									duration: 2000,
+								}),
+							error: () => {
+								this.snackBar.open(
+									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
+									'Zamknij',
+									{ duration: 2000 }
+								);
+							},
+							complete: () => this.router.navigate(['/']),
+						});
 				}
 				if (this.user === UserType.OWNER) {
 					this.authService
 						.addProfileOwner(this.ownerFormGroup.value)
-						.pipe(this.untilDestroyed())
-						.subscribe(() =>
-							this.profileService
-								.addProfileFiles(this.formData)
-								.pipe(this.untilDestroyed())
-								.subscribe()
-						);
+						.pipe(
+							this.untilDestroyed(),
+							catchError(this.handleError),
+							concatMap(() => this.profileService.addProfileFiles(this.formData))
+						)
+						.subscribe({
+							next: () =>
+								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
+									duration: 2000,
+								}),
+							error: () => {
+								this.snackBar.open(
+									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
+									'Zamknij',
+									{ duration: 2000 }
+								);
+							},
+							complete: () => this.router.navigate(['/']),
+						});
 				}
 			}
-			this.snackBar
-				.open('Pomyślnie utworzono konto!', 'Zamknij', {
-					duration: 2000,
-				})
-				.afterDismissed()
-				.pipe(this.untilDestroyed())
-				.subscribe(() => {
-					this.router.navigate(['/']);
-				});
 		}
+	}
+	private handleError(error: HttpErrorResponse) {
+		return throwError(
+			() => new Error('Nie udało się utworzyć konta. Spróbuj ponownie.')
+		);
 	}
 }

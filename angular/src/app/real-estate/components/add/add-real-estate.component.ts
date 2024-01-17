@@ -13,8 +13,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IGroup, IRegionCity } from '../../models/real-estate.models';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -305,12 +305,27 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		this.addRealEstateForm.patchValue(this.addRealEstateFormRemainingData.value);
 		this.realEstateService
 			.addRealEstate(this.addRealEstateForm.value)
-			.pipe(this.untilDestroyed())
-			.subscribe(id =>
-				this.realEstateService
-					.addRealEstateFiles(id, this.formData)
-					.pipe(this.untilDestroyed())
-					.subscribe()
-			);
+			.pipe(
+				this.untilDestroyed(),
+				catchError(this.handleError),
+				concatMap(id =>
+					this.realEstateService.addRealEstateFiles(id, this.formData)
+				)
+			)
+			.subscribe({
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się dodać nieruchomości. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+				},
+			});
+	}
+
+	private handleError(error: HttpErrorResponse) {
+		return throwError(
+			() => new Error('Nie udało się dodać nieruchomości. Spróbuj ponownie.')
+		);
 	}
 }
