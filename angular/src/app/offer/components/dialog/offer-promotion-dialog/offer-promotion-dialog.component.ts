@@ -48,12 +48,15 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 	}
 
 	public onYesClick() {
-		this.offerService
-			.addOfferPromotion(this.data, {
-				duration: this.promotionForm.get('promotionDays')?.value,
-			})
-			.pipe(this.untilDestroyed())
-			.subscribe(() => this.dialogRef.close());
+		this.promotionForm.markAllAsTouched();
+		if (this.promotionForm.valid) {
+			this.offerService
+				.addOfferPromotion(this.data, {
+					duration: this.promotionForm.get('promotionDays')?.value,
+				})
+				.pipe(this.untilDestroyed())
+				.subscribe(() => this.dialogRef.close());
+		}
 	}
 	public onClose() {
 		this.dialogRef.close();
