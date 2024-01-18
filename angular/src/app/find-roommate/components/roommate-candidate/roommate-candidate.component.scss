@@ -1,5 +1,5 @@
 .icon-red {
-	color: #f8595e; /* or any other shade of green */
+	color: #f8595e;
 }
 
 .icon-green {
@@ -10,4 +10,29 @@ mat-card-content {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
+}
+
+.big-icon-button {
+	width: 96px !important;
+	height: 96px !important;
+	padding: 0 !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+
+	& > *[role="img"] {
+		width: 72px;
+		height: 72px;
+		font-size: 72px;
+
+		svg {
+			width: 72px;
+			height: 72px;
+		}
+	}
+
+	.mat-mdc-button-touch-target {
+		width: 96px !important;
+		height: 96px !important;
+	}
 }
