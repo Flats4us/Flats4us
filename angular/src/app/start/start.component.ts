@@ -90,6 +90,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			pageIndex: new FormControl(this.pageIndex),
 			pageSize: new FormControl(this.pageSize),
 		});
+		this.startService.mapOffersForm = this.startSiteForm;
 		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
@@ -187,6 +188,11 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public showMap() {
+		this.realEstateService.addAddress(
+			this.startSiteForm.get('citiesGroup')?.value,
+			this.startSiteForm.get('districtsGroup')?.value
+		);
+		this.startService.mapOffersForm = this.startSiteForm;
 		this.router.navigate(['map'], { relativeTo: this.route });
 	}
 

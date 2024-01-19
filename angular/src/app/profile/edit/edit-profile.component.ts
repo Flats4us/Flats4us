@@ -28,6 +28,7 @@ import { ModificationType, StatusType, UserType } from '../models/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { environment } from 'src/environments/environment.prod';
+import { IMenuOptions } from 'src/app/rents/models/rents.models';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -89,6 +90,12 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public addOnBlur = true;
 
 	public startDate = new Date().getDate();
+
+	public menuOptions: IMenuOptions[] = [
+		{ option: 'editEmail', description: 'Edytuj email' },
+		{ option: 'changePassword', description: 'Zmień hasło' },
+		{ option: 'editSurvey', description: 'Edytuj ankietę' },
+	];
 
 	constructor(
 		private formDir: FormGroupDirective,
@@ -268,11 +275,23 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	public changeSurvey() {
-		if (this.user === UserType.OWNER) {
-			this.router.navigate(['/profile', 'survey', 'owner']);
-		}
-		if (this.user === UserType.STUDENT) {
-			this.router.navigate(['/profile', 'survey', 'student']);
+		this.router.navigate(['/profile', 'survey', 'student']);
+	}
+
+	public onSelect(menuOption: IMenuOptions) {
+		switch (menuOption.option) {
+			case 'editEmail': {
+				this.changeEmail();
+				break;
+			}
+			case 'changePassword': {
+				this.changePassword();
+				break;
+			}
+			case 'editSurvey': {
+				this.changeSurvey();
+				break;
+			}
 		}
 	}
 
