@@ -32,9 +32,37 @@
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
-			[routerLink]="['/rents']"
+			[routerLink]="['/rents', 'owner']"
 		>
 			Moje wynajmy
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/offer', 'owner']"
+		>
+			Moje oferty
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/real-estate', 'owner']"
+		>
+			Moje nieruchomości
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/real-estate', 'add']"
+		>
+			Dodaj nieruchomość
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/offer', 'add']"
+		>
+			Dodaj ofertę
 		</button>
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
 			Moje nieruchomości

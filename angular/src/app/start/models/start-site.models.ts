@@ -12,16 +12,16 @@ export interface ISortOption {
 export interface IFilteredOffers {
 	regionsGroup: string;
 	citiesGroup: string;
-	distance: number;
+	distance: number | null;
 	property: number[];
-	minPrice: number;
-	maxPrice: number;
+	minPrice: number | null;
+	maxPrice: number | null;
 	districtsGroup: string;
-	minArea: number;
-	maxArea: number;
+	minArea: number | null;
+	maxArea: number | null;
 	year: number[];
-	rooms: number;
-	floors: number;
+	rooms: number | null;
+	floors: number | null;
 	equipment: number[];
 	sorting: ISortOption;
 	pageIndex: number;

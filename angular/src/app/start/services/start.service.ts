@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { ISendOffers } from 'src/app/offer/models/offer.models';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Injectable()
 export class StartService {
@@ -32,7 +33,29 @@ export class StartService {
 		},
 	];
 
+	public pageSize = 6;
+	public pageIndex = 0;
+
 	protected apiRoute = `${environment.apiUrl}/offers`;
+
+	public mapOffersForm: FormGroup = new FormGroup({
+		regionsGroup: new FormControl(''),
+		citiesGroup: new FormControl(''),
+		distance: new FormControl(0),
+		property: new FormControl([]),
+		minPrice: new FormControl(null),
+		maxPrice: new FormControl(null),
+		districtsGroup: new FormControl(''),
+		minArea: new FormControl(null),
+		maxArea: new FormControl(null),
+		year: new FormControl([]),
+		rooms: new FormControl(null),
+		floors: new FormControl(null),
+		equipment: new FormControl([]),
+		sorting: new FormControl(this.sortByOptions[0]),
+		pageIndex: new FormControl(this.pageIndex),
+		pageSize: new FormControl(this.pageSize),
+	});
 
 	constructor(private httpClient: HttpClient) {}
 

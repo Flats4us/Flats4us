@@ -270,6 +270,8 @@ export class RealEstateService {
 		[1, 'niezweryfikowana'],
 	]);
 
+	public addresses: string[] = [];
+
 	constructor(private httpClient: HttpClient) {}
 
 	public readAllEquipment(): Observable<IEquipment[]> {
@@ -336,5 +338,10 @@ export class RealEstateService {
 		return this.httpClient.get<IEquipment[]>(`${this.apiRoute}/equipment`, {
 			params: params,
 		});
+	}
+	public addAddress(city: string, district: string) {
+		this.addresses.push(
+			city + (district ? ', ' + district + ', ' : ', ') + 'Poland'
+		);
 	}
 }

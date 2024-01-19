@@ -176,6 +176,10 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	public showMap() {
+		this.realEstateService.addAddress(
+			this.addRealEstateFormAddressData.get('city')?.value ?? '',
+			this.addRealEstateFormAddressData.get('district')?.value ?? ''
+		);
 		this.router.navigate(['/start', 'map']);
 	}
 

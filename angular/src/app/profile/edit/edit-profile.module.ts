@@ -34,6 +34,7 @@ import { SettingsRoutingModule } from 'src/app/settings/settings-routing.module'
 import { ProfileRoutingModule } from '../profile-routing.module';
 import { ProfileService } from '../services/profile.service';
 import { EditProfileComponent } from './edit-profile.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
 	declarations: [EditProfileComponent],
@@ -67,6 +68,7 @@ import { EditProfileComponent } from './edit-profile.component';
 		MatStepperModule,
 		RegisterModule,
 		OfferModule,
+		MatMenuModule,
 	],
 	exports: [EditProfileComponent],
 	providers: [ProfileService, FormGroupDirective, SurveyService],
