@@ -248,6 +248,12 @@ export class RealEstateService {
 	public properties: string[] = ['Dom', 'Mieszkanie', 'Pokój'];
 	public equipment: string[] = ['Winda', 'Pralka', 'Zmywarka'];
 
+	public propertyTypes = new Map<number, string>([
+		[0, 'Mieszkanie'],
+		[1, 'Dom'],
+		[2, 'Pokój'],
+	]);
+
 	constructor(private httpClient: HttpClient) {}
 
 	public readCitiesForRegions(

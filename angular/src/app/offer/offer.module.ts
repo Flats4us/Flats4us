@@ -22,10 +22,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { SurveyService } from '@shared/services/survey.service';
 import { OfferService } from './services/offer.service';
+import { WatchedOffersComponent } from './components/watched-offers/watched-offers.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RealEstateService } from '../real-estate/services/real-estate.service';
 
 @NgModule({
-	exports: [AddOfferComponent, SurveyComponent],
-	declarations: [AddOfferComponent, SurveyComponent],
+	exports: [AddOfferComponent, SurveyComponent, WatchedOffersComponent],
+	declarations: [AddOfferComponent, SurveyComponent, WatchedOffersComponent],
 	imports: [
 		CommonModule,
 		OfferRoutingModule,
@@ -46,7 +50,11 @@ import { OfferService } from './services/offer.service';
 		HttpClientModule,
 		MatCheckboxModule,
 		MatRadioModule,
+		MatButtonModule,
+		MatPaginatorModule,
+		MatButtonModule,
+		MatTooltipModule,
 	],
-	providers: [SurveyService, OfferService],
+	providers: [SurveyService, OfferService, RealEstateService],
 })
 export class OfferModule {}
