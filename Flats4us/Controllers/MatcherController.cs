@@ -47,28 +47,28 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("bufor-by-id")]
-        [Authorize(Policy = "VerifiedStudent")]
-        [SwaggerOperation(
-            Summary = "Return list of bufor matches for current user",
-            Description = "Requires verified student privileges"
-        )]
-        public async Task<IActionResult> BuforByStudentId()
-        {
-            try
-            {
-                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
-                {
-                    return BadRequest("Server error: Failed to get user id from request");
-                }
-                return Ok(await _matcherService.GetBuforMatchByStudentId(requestUserId));
-            }
-            catch (Exception ex)
-            {
-                _logger.LogInformation($"FAILED: Getting bufor Students for Match for current user");
-                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
-            }
-        }
+        //[HttpGet("bufor-by-id")]
+        //[Authorize(Policy = "VerifiedStudent")]
+        //[SwaggerOperation(
+        //    Summary = "Return list of bufor matches for current user",
+        //    Description = "Requires verified student privileges"
+        //)]
+        //public async Task<IActionResult> BuforByStudentId()
+        //{
+        //    try
+        //    {
+        //        if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+        //        {
+        //            return BadRequest("Server error: Failed to get user id from request");
+        //        }
+        //        return Ok(await _matcherService.GetBuforMatchByStudentId(requestUserId));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogInformation($"FAILED: Getting bufor Students for Match for current user");
+        //        return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+        //    }
+        //}
 
         [HttpGet("potential-by-id")]
         [Authorize(Policy = "VerifiedStudent")]
