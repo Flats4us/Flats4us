@@ -26,6 +26,8 @@ namespace Flats4us.Entities.Dto
 
         public FileDto? ProfilePicture { get; set; }
 
+        public List<UserOpinionDto> UserOpinions { get; set; }
+
         // Student
 
         public int? Age { get; set; }

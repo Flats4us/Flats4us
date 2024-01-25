@@ -119,5 +119,49 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{email}")]
+        [Authorize(Policy = "VerifiedStudent")]
+        [SwaggerOperation(
+            Summary = "Checks if student exists by email",
+            Description = "Requires verified student privileges"
+        )]
+        public async Task<ActionResult> CheckIfStudentExistsById(string email)
+        {
+            try
+            {
+                var result = await _userService.CheckIfStudentExistsByIdAsync(email);
+                return Ok(new OutputDto<bool>(result));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{targetUserId}/opinion")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Adds opinion to user",
+            Description = "Requires verified owner or verified student privileges"
+        )]
+        public async Task<ActionResult> AddUserOpinion(AddUserOpinionDto input, int targetUserId)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.AddUserOpinionAsync(input, targetUserId, requestUserId);
+                return Ok(new OutputDto<string>("Opinion added"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }

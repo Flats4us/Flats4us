@@ -4,7 +4,12 @@ using Flats4us.Entities.Dto;
 
 namespace Flats4us.Helpers.AutoMapperResolvers
 {
-    public class UserProfilePictureUrlResolver : IValueResolver<OwnerStudent, UserForVerificationDto, FileDto>, IValueResolver<Student, StudentForMatcherDto, FileDto>, IValueResolver<OwnerStudent, UserProfileFullDto, FileDto>, IValueResolver<OwnerStudent, UserProfilePublicDto, FileDto>
+    public class UserProfilePictureUrlResolver : 
+        IValueResolver<OwnerStudent, UserForVerificationDto, FileDto>,
+        IValueResolver<Student, StudentForMatcherDto, FileDto>,
+        IValueResolver<OwnerStudent, UserProfileFullDto, FileDto>,
+        IValueResolver<OwnerStudent, UserProfilePublicDto, FileDto>,
+        IValueResolver<UserOpinion, UserOpinionDto, FileDto>
     {
         public FileDto Resolve(OwnerStudent source, UserForVerificationDto destination, FileDto destMember, ResolutionContext context)
         {
@@ -24,6 +29,11 @@ namespace Flats4us.Helpers.AutoMapperResolvers
         public FileDto Resolve(OwnerStudent source, UserProfilePublicDto destination, FileDto destMember, ResolutionContext context)
         {
             return GetProfilePictureUrl(source.ImagesPath);
+        }
+
+        public FileDto Resolve(UserOpinion source, UserOpinionDto destination, FileDto destMember, ResolutionContext context)
+        {
+            return GetProfilePictureUrl(source.SourceUser.ImagesPath);
         }
 
         private FileDto GetProfilePictureUrl(string directoryId)
