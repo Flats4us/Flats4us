@@ -214,6 +214,8 @@ namespace Flats4us.Services
                     var student = await _context.Students
                         .Include(s => s.SurveyStudent)
                         .Include(s => s.Interests)
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(student);
                     break;
@@ -241,6 +243,8 @@ namespace Flats4us.Services
                     var student = await _context.Students
                         .Include(s => s.SurveyStudent)
                         .Include(s => s.Interests)
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfilePublicDto>(student);
                     break;
@@ -252,6 +256,36 @@ namespace Flats4us.Services
             }
 
             return result;
+        }
+
+        public async Task<bool> CheckIfStudentExistsByIdAsync(string email)
+        {
+            var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
+
+            return student != null;
+        }
+
+        public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)
+        {
+            var sourceUser = await _context.Users.FindAsync(requestUserId);
+
+            if (sourceUser is null) throw new ArgumentException($"User with ID {requestUserId} not found.");
+
+            var targetUser = await _context.Users.FindAsync(targetUserId);
+
+            if (targetUser is null) throw new ArgumentException($"User with ID {targetUserId} not found.");
+
+            var opinion = new UserOpinion
+            {
+                Date = DateTime.Now,
+                Rating = input.Rating,
+                Description = input.Description,
+                SourceUserId = sourceUser.UserId,
+                TargetUserId = targetUser.UserId
+            };
+
+            await _context.UserOinions.AddAsync(opinion);
+            await _context.SaveChangesAsync();
         }
 
         private TokenDto CreateToken(User user)

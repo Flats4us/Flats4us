@@ -43,6 +43,8 @@ namespace Flats4us.Entities.Dto
 
         public DateTime? DocumentExpireDate { get; set; }
 
+        public List<UserOpinionDto> UserOpinions { get; set; }
+
         // Student
 
         public DateTime? BirthDate { get; set; }

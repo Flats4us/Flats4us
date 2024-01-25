@@ -24,10 +24,6 @@ namespace Flats4us.Entities
         public DbSet<Offer> Offers { get; set; }
         public DbSet<OfferInterest> OfferInterests { get; set; }
         public DbSet<OfferPromotion> OfferPromotions { get; set; }
-        public DbSet<OpinionOwnerStudent> OwnerStudentOpinions { get; set; }
-        public DbSet<OpinionRent> RentOpinions { get; set; }
-        public DbSet<OpinionStudentOwner> StudentOwnerOpinions { get; set; }
-        public DbSet<OpinionStudentStudent> StudentStudentOpinions { get; set; }
         public DbSet<Owner> Owners { get; set; }
         public DbSet<OwnerStudent> OwnerStudents { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -39,6 +35,7 @@ namespace Flats4us.Entities
         public DbSet<SurveyStudent> StudentSurveys { get; set; }
         public DbSet<TechnicalProblem> TechnicalProblems { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserOpinion> UserOinions { get; set; }
 
         public Flats4usContext() { }
 
@@ -48,42 +45,6 @@ namespace Flats4us.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OpinionStudentStudent>()
-                .HasOne(x => x.Evaluated)
-                .WithMany(x => x.ReceivedStudentStudentOpinions)
-                .HasForeignKey(x => x.EvaluatedId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<OpinionStudentStudent>()
-                .HasOne(x => x.Evaluator)
-                .WithMany(x => x.IssuedStudentStudentOpinions)
-                .HasForeignKey(x => x.EvaluatorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<OpinionOwnerStudent>()
-                .HasOne(x => x.Evaluated)
-                .WithMany(x => x.ReceivedOwnertStudentOpinions)
-                .HasForeignKey(x => x.EvaluatedId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<OpinionOwnerStudent>()
-                .HasOne(x => x.Evaluator)
-                .WithMany(x => x.IssuedOwnerStudentOpinions)
-                .HasForeignKey(x => x.EvaluatorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<OpinionStudentOwner>()
-                .HasOne(x => x.Evaluator)
-                .WithMany(x => x.IssuedStudentOwnerOpinions)
-                .HasForeignKey(x => x.EvaluatorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<OpinionStudentOwner>()
-                .HasOne(x => x.Evaluated)
-                .WithMany(x => x.ReceivedStudentOwnerOpinions)
-                .HasForeignKey(x => x.EvaluatedId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Chat>()
                 .HasOne(x => x.Owner)
                 .WithMany(x => x.Chats)
@@ -182,6 +143,19 @@ namespace Flats4us.Entities
                 .HasOne(o => o.Rent)
                 .WithOne(r => r.Offer)
                 .HasForeignKey<Rent>(r => r.OfferId);
+
+            modelBuilder.Entity<UserOpinion>()
+                .HasOne(x => x.SourceUser)
+                .WithMany(x => x.IssuedUserOpinions)
+                .HasForeignKey(x => x.SourceUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserOpinion>()
+                .HasOne(x => x.TargetUser)
+                .WithMany(x => x.ReceivedUserOpinions)
+                .HasForeignKey(x => x.TargetUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }
