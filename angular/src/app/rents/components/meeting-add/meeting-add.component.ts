@@ -58,6 +58,7 @@ export class MeetingAddComponent extends BaseComponent {
 	) {
 		super();
 		this.meetingForm.controls['offerId'].setValue(data);
+		this.minDate.setDate(this.minDate.getDate() + 1);
 	}
 
 	public onAdd(): void {

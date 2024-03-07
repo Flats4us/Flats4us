@@ -10,8 +10,18 @@ export class RentsService {
 
 	constructor(private httpClient: HttpClient) {}
 
-	public addMeeting(meeting: IMeeting): Observable<void> {
-		return this.httpClient.post<void>(`${this.apiRoute}/meetings`, meeting);
+	public addMeeting(meeting: IMeeting) {
+		meeting = {
+			...meeting,
+			date: new Date(
+				Date.UTC(
+					meeting.date.getFullYear(),
+					meeting.date.getMonth(),
+					meeting.date.getDate()
+				)
+			),
+		};
+		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);
 	}
 
 	public getRents(): Observable<IRent[]> {
