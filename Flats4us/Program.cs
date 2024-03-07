@@ -24,6 +24,7 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
 );
 
 builder.Services.AddScoped<ISurveyService, SurveyService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IOfferService, OfferService>();
