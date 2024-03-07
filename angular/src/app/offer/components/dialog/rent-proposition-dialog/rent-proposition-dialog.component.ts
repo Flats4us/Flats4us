@@ -25,9 +25,10 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserService } from '@shared/services/user.service';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -56,6 +57,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenantsCtrl = new FormControl('');
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
+	public validEmails$: Observable<boolean> = of(true);
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),
@@ -67,6 +69,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		private snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
+		public userService: UserService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -77,7 +80,6 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	}
 
 	public onYesClick() {
-		this.rentPropositionForm.markAllAsTouched();
 		if (this.rentPropositionForm.valid) {
 			this.offerService
 				.addRentProposition(this.rentPropositionForm.value, this.data)

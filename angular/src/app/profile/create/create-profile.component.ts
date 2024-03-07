@@ -185,9 +185,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						)
 						.subscribe({
 							next: () =>
-								this.snackBar.open('Pomyślnie utworzono konto Właściciela!', 'Zamknij', {
-									duration: 2000,
-								}),
+								this.snackBar.open(
+									'Pomyślnie utworzono konto Właściciela!',
+									'Zamknij',
+									{
+										duration: 2000,
+									}
+								),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',

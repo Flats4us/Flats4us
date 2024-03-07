@@ -76,10 +76,6 @@ import { AddOfferComponent } from './components/add-offer/add-offer.component';
 		OfferDetailsModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
-	exports: [
-		OfferComponent,
-		OfferDetailsComponent,
-		AddOfferComponent
-	],
+	exports: [OfferComponent, OfferDetailsComponent, AddOfferComponent],
 })
 export class OfferModule {}
