@@ -204,7 +204,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public onSelect(sortByOption: ISortOption) {
-		this.startSiteForm.patchValue({sorting : sortByOption});
+		this.startSiteForm.patchValue({ sorting: sortByOption });
 		this.filterOffers();
 	}
 
