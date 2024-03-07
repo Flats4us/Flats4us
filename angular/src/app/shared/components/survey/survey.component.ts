@@ -31,15 +31,7 @@ export class SurveyComponent implements OnInit {
 	public formToAdd = new FormGroup({});
 	public questions$: Observable<IQuestionsData[]>;
 	public typeName: typeof TypeName = TypeName;
-
-	@Input()
-	public createProfileMode = false;
-
-	public surveyForm = new FormGroup({});
-	public formToAdd = new FormGroup({});
-	public questions$: Observable<IQuestionsData[]>;
-	public typeName: typeof TypeName = TypeName;
-
+	
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,

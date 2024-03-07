@@ -32,6 +32,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SurveyService } from '@shared/services/survey.service';
 import { AddOfferModule } from './components/add-offer/add-offer.module';
 import { OfferDetailsModule } from './components/details/offer-details.module';
+import { MeetingAddComponent } from '../rents/components/meeting-add/meeting-add.component';
+import { OfferPromotionDialogComponent } from './components/dialog/offer-promotion-dialog/offer-promotion-dialog.component';
+import { RentsService } from '../rents/services/rents.service';
+import { OfferDetailsComponent } from './components/details/offer-details.component';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
 
 @NgModule({
 	declarations: [OfferComponent],
@@ -69,22 +74,12 @@ import { OfferDetailsModule } from './components/details/offer-details.module';
 		OfferPromotionDialogComponent,
 		AddOfferModule,
 		OfferDetailsModule,
-		MeetingAddComponent,
-		OfferPromotionDialogComponent,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [
 		OfferComponent,
 		OfferDetailsComponent,
-		AddOfferComponent,
-		SurveyComponent,
-	],
-	providers: [OfferService, RealEstateService, RentsService, SurveyService],
-	exports: [
-		OfferComponent,
-		OfferDetailsComponent,
-		AddOfferComponent,
-		SurveyComponent,
+		AddOfferComponent
 	],
 })
 export class OfferModule {}

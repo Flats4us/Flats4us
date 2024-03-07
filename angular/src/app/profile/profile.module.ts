@@ -18,18 +18,21 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ProfileService } from './services/profile.service';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatStepperModule } from '@angular/material/stepper';
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { SurveyService } from '@shared/services/survey.service';
 import { UserService } from '@shared/services/user.service';
+import { RegisterModule } from '../auth/components/register/register.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ProfileService } from './services/profile.service';
+import { EditProfileModule } from './edit/edit-profile.module';
+import { CreateProfileModule } from './create/create-profile.module';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -66,6 +69,6 @@ import { UserService } from '@shared/services/user.service';
 		CreateProfileModule,
 	],
 	exports: [ProfileComponent],
-	providers: [ProfileService, SurveyService],
+	providers: [ProfileService, SurveyService, UserService],
 })
 export class ProfileModule {}

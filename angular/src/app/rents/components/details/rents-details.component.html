@@ -1,60 +1,72 @@
-<div *ngIf="actualRent$ | async as actualRent">
-	<mat-form-field appearance="fill" class="title">
-		<mat-label>Wynajem - {{ actualRent.title }}</mat-label>
-		<span matSuffix>
-			<button
-				class="box-icon"
-				id="menu"
-				mat-icon-button
-				matTooltip="Więcej opcji"
-				aria-label="MenuButton"
-				[matMenuTriggerFor]="menu"
-				[disabled]="actualRent.status === statusName.SUSPENDED"
-			>
-				<mat-icon>more_horiz</mat-icon>
-			</button>
-			<mat-menu #menu="matMenu" id="sort">
-				<button
-					*ngFor="let menuOption of this.rentsService.menuOptions"
-					mat-menu-item
-					[value]="menuOption.description"
-					(click)="onSelect(menuOption, actualRent)"
-				>
-					<span *ngIf="menuOption.option !== 'closeRent'">{{
-						menuOption.description
-					}}</span>
-					<span *ngIf="menuOption.option === 'closeRent'" class="close-rent">{{
-						menuOption.description
-					}}</span>
-				</button>
-			</mat-menu>
-		</span>
-		<input
-			#titleInput
-			id="title"
-			formControlName="title"
-			type="text"
-			placeholder="Tytuł"
-			aria-label="Title"
-			matInput
-			[disabled]="true"
-		/>
-	</mat-form-field>
+<div *ngIf="{ user: user$ | async, rent: actualRent$ | async } as data">
+	<div *ngIf="data.user === uType.OWNER" class="label-box">
+		<mat-label class="label-description">
+			<span class="text-3xl"
+				>Status oferty:
+				{{ offerService.offerStatuses.get(data.rent?.offerStatus ?? 0) }}</span
+			></mat-label
+		>
+	</div>
 	<div class="gallery">
 		<div class="container slider">
 			<div [@slideAnimation]="currentIndex">
 				<ng-template
 					ngFor
-					[ngForOf]="actualRent.imageArray"
+					[ngForOf]="data.rent?.property?.images"
 					let-slide
 					let-i="index"
 				>
+					<div class="offer-title-outer">
+						<span class="offer-title-inner"
+							><h1 class="text-3xl">
+								Wynajem -
+								{{
+									realEstateService.propertyTypes.get(
+										data.rent?.property?.propertyType ?? 0
+									)
+								}}
+								{{ data.rent?.property?.area }} m² {{ data.rent?.property?.city }}
+							</h1></span
+						>
+					</div>
+					<div
+						*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+						class="menu-title"
+					>
+						<button
+							class="box-icon"
+							id="menu"
+							mat-mini-fab
+							color="primary"
+							matTooltip="Więcej opcji"
+							aria-label="MenuButton"
+							[matMenuTriggerFor]="menu"
+							[disabled]="data.rent?.offerStatus === 1 || data.rent?.offerStatus === 2"
+						>
+							<mat-icon>more_horiz</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu" id="sort">
+							<button
+								*ngFor="let menuOption of this.menuOptions"
+								mat-menu-item
+								[value]="menuOption.description"
+								(click)="onSelect(menuOption, data.rent?.offerId ?? 0)"
+							>
+								<span
+									[ngClass]="menuOption.option === 'closeRent' ? 'close-rent' : ''"
+									>{{ menuOption.description }}</span
+								>
+							</button>
+						</mat-menu>
+					</div>
 					<img
-						*ngIf="isCurrentSlideIndex(i)"
-						class="slide slide-animation nonDraggableImage"
-						[src]="slide.image"
-						(swiperight)="nextSlide(actualRent.imageArray.length)"
-						(swipeleft)="prevSlide(actualRent.imageArray.length)"
+						*ngIf="
+							(data.rent?.property?.images?.length ?? 0) > 0 && isCurrentSlideIndex(i)
+						"
+						class="slide slide-animation non-draggable-image"
+						src="{{ baseUrl }}/{{ slide.path }}"
+						(swiperight)="nextSlide(data.rent?.property?.images?.length ?? 0)"
+						(swipeleft)="prevSlide(data.rent?.property?.images?.length ?? 0)"
 					/>
 				</ng-template>
 			</div>
