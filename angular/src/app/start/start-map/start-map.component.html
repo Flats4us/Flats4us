@@ -1,10 +1,24 @@
-<div class="search">
-	<input
-		type="text"
-		placeholder="Search..."
-		[(ngModel)]="search"
-		(keydown.enter)="onSubmit()"
-	/>
-	<button (click)="onSubmit()">Submit</button>
+<div>
+	<div class="box-title">
+		<div class="text-4xl p-4 font-semibold">Mapa ofert</div>
+	</div>
+	<div class="search">
+		<input
+			type="text"
+			placeholder="Wpisz: województwo, miasto"
+			[(ngModel)]="search"
+			(keydown.enter)="onSubmit()"
+		/>
+		<button
+			id="search"
+			type="submit"
+			class="box-icon-function"
+			mat-icon-button
+			matTooltip="Szukaj ofert"
+			(click)="onSubmit()"
+		>
+			<mat-icon class="ico" [inline]="true">search</mat-icon>
+		</button>
+	</div>
+	<div id="map"></div>
 </div>
-<div id="map"></div>

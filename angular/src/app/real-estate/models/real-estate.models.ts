@@ -24,6 +24,11 @@ export interface IAddResult {
 	result: number;
 }
 
+export interface IGeoLocation {
+	lat: number;
+	lon: number;
+}
+
 export interface IAddProperty {
 	propertyType: number;
 	province: string;

@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import {
 	IAddProperty,
 	IAddResult,
+	IGeoLocation,
 	IGroup,
 	INumeric,
 	IProperty,
@@ -270,8 +271,6 @@ export class RealEstateService {
 		[1, 'niezweryfikowana'],
 	]);
 
-	public addresses: string[] = [];
-
 	constructor(private httpClient: HttpClient) {}
 
 	public readAllEquipment(): Observable<IEquipment[]> {
@@ -339,9 +338,17 @@ export class RealEstateService {
 			params: params,
 		});
 	}
-	public addAddress(city: string, district: string) {
-		this.addresses.push(
-			city + (district ? ', ' + district + ', ' : ', ') + 'Poland'
-		);
+
+	public getLatLon(address: string): IGeoLocation {
+		let geoLocation: IGeoLocation = { lat: 0, lon: 0 };
+		const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+			address
+		)}&format=json`;
+		this.httpClient.get(url).subscribe((response: any) => {
+			if (response.length > 0) {
+				geoLocation = response[0];
+			}
+		});
+		return geoLocation;
 	}
 }
