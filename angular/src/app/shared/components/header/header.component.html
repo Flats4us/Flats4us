@@ -25,14 +25,44 @@
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['/profile', 1]">Mój profil</button>
-		<button mat-menu-item>Edytuj profil</button>
+		<button mat-menu-item [routerLink]="['/profile', 'edit']">
+			Edytuj profil
+		</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
-			[routerLink]="['/rents']"
+			[routerLink]="['/rents', 'owner']"
 		>
 			Moje wynajmy
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/offer', 'owner']"
+		>
+			Moje oferty
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/real-estate', 'owner']"
+		>
+			Moje nieruchomości
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/real-estate', 'add']"
+		>
+			Dodaj nieruchomość
+		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/offer', 'add']"
+		>
+			Dodaj ofertę
 		</button>
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
 			Moje nieruchomości
@@ -48,13 +78,17 @@
 
 	<ng-template #notLoggedIn>
 		<div class="start-navbar-button spacer">
-			<button class="button-log" mat-stroked-button [routerLink]="['/auth/login']">
+			<button
+				class="button-log"
+				mat-stroked-button
+				[routerLink]="['/auth', 'login']"
+			>
 				Logowanie
 			</button>
 			<button
 				class="button-sign"
 				mat-stroked-button
-				[routerLink]="['/auth/register']"
+				[routerLink]="['/profile', 'create']"
 			>
 				Rejestracja
 			</button>

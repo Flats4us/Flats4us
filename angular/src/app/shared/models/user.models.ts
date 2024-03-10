@@ -21,17 +21,17 @@ export interface IUser {
 	documentNumber: string;
 }
 
-interface IProfilePicture {
+export interface IProfilePicture {
 	name: string;
 	path: string;
 }
 
-interface IDocument {
+export interface IDocument {
 	name: string;
 	path: string;
 }
 
-interface ISurveyStudent {
+export interface ISurveyStudent {
 	party: number;
 	tidiness: number;
 	smoking: boolean;
@@ -46,7 +46,11 @@ interface ISurveyStudent {
 	city: string;
 }
 
-interface IInterest {
+export interface IInterest {
 	interestId: number;
 	name: string;
+}
+
+export interface IVerificationResult {
+	result: boolean;
 }

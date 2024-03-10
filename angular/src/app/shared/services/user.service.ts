@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
-import { IUser } from '@shared/models/user.models';
+import { IUser, IVerificationResult } from '@shared/models/user.models';
 
 @Injectable()
 export class UserService {
@@ -15,5 +15,9 @@ export class UserService {
 
 	public getUserById(id: string) {
 		return this.http.get<IUser>(`${this.apiRoute}/${id}/profile`);
+	}
+
+	public checkIfEmailExist(email: string) {
+		return this.http.get<IVerificationResult>(`${this.apiRoute}/${email}`);
 	}
 }

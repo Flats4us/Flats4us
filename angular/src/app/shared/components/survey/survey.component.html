@@ -1,4 +1,7 @@
-<form class="flex flex-col gap-8 mb-8" [formGroup]="offerForm">
+<form
+	class="flex flex-col gap-8 mb-8"
+	[formGroup]="createProfileMode ? formToAdd : offerForm"
+>
 	<ng-container *ngFor="let question of questions$ | async; let i = index">
 		<div *ngIf="i < 7 || offerForm.get('16')">
 			<mat-slide-toggle

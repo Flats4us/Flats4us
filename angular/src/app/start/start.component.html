@@ -1,15 +1,14 @@
 <div class="startsite">
 	<form
-		class="container-4"
-		[formGroup]="mainSiteForm"
-		(auto-submit)="(3000)"
+		class="container-form"
+		[formGroup]="startSiteForm"
 		(ngSubmit)="onSubmit()"
 	>
-		<div class="container-3">
-			<h1>Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
+		<div class="container-title">
+			<h1 class="text-4xl p-4">Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
 		</div>
 		<div class="container">
-			<div class="box-2">
+			<div class="box-filters">
 				<mat-form-field appearance="fill">
 					<mat-label>Województwo</mat-label>
 					<span matPrefix>
@@ -24,7 +23,7 @@
 						</mat-option>
 					</mat-select>
 					<mat-error
-						*ngIf="mainSiteForm.controls['regionsGroup'].errors?.['required']"
+						*ngIf="startSiteForm.controls['regionsGroup'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano województwa!
@@ -47,16 +46,16 @@
 					</span>
 					<mat-autocomplete #autoCity="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group of citiesGroupOptions$ | async"
-							[label]="group.whole"
+							*ngFor="let groupCities of citiesGroupOptions$ | async"
+							[label]="groupCities.whole"
 						>
-							<mat-option *ngFor="let city of group.parts" [value]="city">
+							<mat-option *ngFor="let city of groupCities.parts" [value]="city">
 								{{ city }}
 							</mat-option>
 						</mat-optgroup>
 					</mat-autocomplete>
 					<mat-error
-						*ngIf="mainSiteForm.controls['citiesGroup'].errors?.['required']"
+						*ngIf="startSiteForm.controls['citiesGroup'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano miasta!
@@ -86,13 +85,13 @@
 					<mat-select id="property" formControlName="property" multiple>
 						<mat-option
 							*ngFor="let property of this.realEstateService.properties"
-							[value]="property"
+							[value]="property.value"
 						>
-							{{ property }}
+							{{ property.viewValue }}
 						</mat-option>
 					</mat-select>
 					<mat-error
-						*ngIf="mainSiteForm.controls['property'].errors?.['required']"
+						*ngIf="startSiteForm.controls['property'].errors?.['required']"
 						class="error-text"
 					>
 						Nie wybrano nieruchomości!
@@ -152,7 +151,7 @@
 				</mat-form-field>
 				<div class="batch">
 					<button
-						class="box-icon-2"
+						class="box-icon-function"
 						id="showMoreFilters"
 						type="button"
 						mat-icon-button
@@ -160,11 +159,11 @@
 						aria-label="ShowMoreFilters"
 						(click)="showFilters()"
 					>
-						<mat-icon>filter_list</mat-icon>
+						<mat-icon class="ico" [inline]="true">filter_list</mat-icon>
 					</button>
 
 					<button
-						class="box-icon-2"
+						class="box-icon-function"
 						id="showMap"
 						type="button"
 						mat-icon-button
@@ -172,29 +171,30 @@
 						aria-label="ShowMap"
 						(click)="showMap()"
 					>
-						<mat-icon>map</mat-icon>
+						<mat-icon class="ico" [inline]="true">map</mat-icon>
 					</button>
 
 					<button
-						class="box-icon-2"
+						class="box-icon-function"
 						id="search"
 						type="submit"
 						mat-icon-button
 						matTooltip="Szukaj ofert"
 						aria-label="SearchForOffers"
-						[disabled]="!mainSiteForm.valid"
+						[disabled]="!startSiteForm.valid"
 					>
-						<mat-icon>search</mat-icon>
+						<mat-icon class="ico" [inline]="true">search</mat-icon>
 					</button>
 					<button
-						class="box-icon-2"
+						class="box-icon-function"
 						id="sort"
+						type="button"
 						mat-icon-button
 						matTooltip="Sortuj oferty według"
 						aria-label="SortButton"
 						[matMenuTriggerFor]="menu"
 					>
-						<mat-icon>sort</mat-icon>
+						<mat-icon class="ico" [inline]="true">sort</mat-icon>
 					</button>
 					<mat-menu #menu="matMenu" id="sort">
 						<button
@@ -208,7 +208,7 @@
 					</mat-menu>
 				</div>
 			</div>
-			<div *ngIf="showMoreFilters" class="box-3">
+			<div *ngIf="showMoreFilters" class="box-other-filters">
 				<mat-form-field appearance="fill">
 					<mat-label>Dzielnica</mat-label>
 					<input
@@ -225,10 +225,13 @@
 					</span>
 					<mat-autocomplete #autoDistrict="matAutocomplete">
 						<mat-optgroup
-							*ngFor="let group2 of districtGroupOptions$ | async"
-							[label]="group2.whole"
+							*ngFor="let groupDistricts of districtGroupOptions$ | async"
+							[label]="groupDistricts.whole"
 						>
-							<mat-option *ngFor="let district of group2.parts" [value]="district">
+							<mat-option
+								*ngFor="let district of groupDistricts.parts"
+								[value]="district"
+							>
 								{{ district }}
 							</mat-option>
 						</mat-optgroup>
@@ -295,9 +298,9 @@
 					<mat-select id="year" formControlName="year" multiple>
 						<mat-option
 							*ngFor="let year of this.realEstateService.yearOfBuilds"
-							[value]="year"
+							[value]="year.value"
 						>
-							{{ year }}
+							{{ year.viewValue }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -360,89 +363,144 @@
 					<mat-select id="equipment" formControlName="equipment" multiple>
 						<mat-option
 							*ngFor="let equipment of this.realEstateService.equipment"
-							[value]="equipment"
+							[value]="equipment.equipmentId"
 						>
-							{{ equipment }}
+							{{ equipment.name }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 		</div>
 	</form>
-	<div>
-		<div class="container-5">
-			<div *ngIf="isSubmitted" class="container-3">
-				<h1>
-					Znaleziono
-					<span
-						class="colour-text"
-						[appGetDescription]="this.startService.allFlatOffers.length"
-					></span>
-				</h1>
+	<div *ngIf="isLoading$ | async" class="container-spinner">
+		<mat-spinner color="primary"></mat-spinner>
+	</div>
+	<div
+		*ngIf="
+			(isLoading$ | async) === false && (flatOptions$ | async) as flatOptions
+		"
+	>
+		<div>
+			<div class="container-info">
+				<div *ngIf="isSubmitted" class="container-title">
+					<h1 *ngIf="flatOptions.totalCount !== 0">
+						Znaleziono
+						<span [appGetDescription]="flatOptions.totalCount"></span>
+					</h1>
+					<h1 *ngIf="flatOptions.totalCount === 0">
+						Nie znaleziono ofert dla podanych parametrów
+					</h1>
+				</div>
+				<div *ngIf="!isSubmitted" class="container-title">
+					<h1>Promowane oferty</h1>
+				</div>
 			</div>
-			<div *ngIf="!isSubmitted" class="container-3">
-				<h1>Promowane <span class="colour-text">oferty</span></h1>
-			</div>
-		</div>
-		<div class="container-2">
-			<mat-card
-				*ngFor="let flat of flatOptions$ | async"
-				class="card"
-				(click)="navigateToFlat(flat.url)"
-			>
-				<mat-card-subtitle
-					>{{ flat.type }} - {{ flat.regionCity.city }},
-					{{ flat.district }}</mat-card-subtitle
+			<ng-template #flats let-flats="flats">
+				<mat-card
+					*ngFor="let flat of flats"
+					[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
 				>
-				<img mat-card-image class="imgs" alt="Mieszkanie" [src]="flat.imgSource" />
-				<mat-card-content matSort>
-					<mat-chip-listbox>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>attach_money</mat-icon>
-								<span>Cena: {{ flat.price }} zł/mc</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>add</mat-icon><span>Czynsz: {{ flat.rent }} zł/mc</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>straighten</mat-icon>
-								<span>Powierzchnia: {{ flat.area }} m²</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<div class="chip">
-								<mat-icon>meeting_room</mat-icon>
-								<span>Liczba pokoi: {{ flat.rooms }}</span>
-							</div>
-						</mat-chip>
-						<mat-chip>
-							<mat-mini-fab
-								class="box-icon-3"
-								id="addToFavorite"
-								type="button"
-								mat-icon-button
-								matTooltip="Dodaj do ulubionych"
-								aria-label="AddToFavorite"
-								(click)="addToFavorite()"
-							>
-								<mat-icon>favorite_border</mat-icon>
-							</mat-mini-fab>
-						</mat-chip>
-					</mat-chip-listbox>
-				</mat-card-content>
-			</mat-card>
+					<div class="offer-title-outer">
+						<span class="offer-title-inner"
+							><h2 class="text-m">
+								Wynajem -
+								{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
+								{{ flat.property.area }} m² {{ flat.property.city }}
+								<mat-icon
+									*ngIf="flat.isPromoted"
+									class="promotion-icon"
+									matTooltip="Promowana oferta"
+									>new_releases</mat-icon
+								>
+							</h2>
+						</span>
+					</div>
+					<img
+						mat-card-image
+						class="imgs"
+						alt="Mieszkanie"
+						src="{{ baseUrl }}/{{ flat.property.images[0].path }}"
+						(click)="navigateToFlat(flat.offerId)"
+					/>
+					<mat-card-content matSort class="card-content">
+						<mat-chip-listbox>
+							<mat-chip>
+								<div class="chip">
+									<mat-icon>attach_money</mat-icon>
+									<span>Cena: {{ flat.price }} zł/mc</span>
+								</div>
+							</mat-chip>
+							<mat-chip>
+								<div class="chip">
+									<mat-icon>add</mat-icon><span>Kaucja: {{ flat.deposit }} zł/mc</span>
+								</div>
+							</mat-chip>
+							<mat-chip>
+								<div class="chip">
+									<mat-icon>straighten</mat-icon>
+									<span>Powierzchnia: {{ flat.property.area }} m²</span>
+								</div>
+							</mat-chip>
+							<mat-chip *ngIf="flat.property.propertyType !== 2">
+								<div class="chip">
+									<mat-icon>meeting_room</mat-icon>
+									<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
+								</div>
+							</mat-chip>
+							<mat-chip>
+								<button
+									class="box-icon-watched"
+									id="addToWatched"
+									type="button"
+									mat-icon-button
+									matTooltip="Dodaj do obserwowanych"
+									aria-label="AddToWatched"
+									(click)="addToWatched(flat.offerId)"
+								>
+									<mat-icon>favorite_border</mat-icon>
+								</button>
+							</mat-chip>
+						</mat-chip-listbox>
+					</mat-card-content>
+				</mat-card>
+			</ng-template>
+			<div *ngIf="isSubmitted" class="container-offers">
+				<ng-container
+					[ngTemplateOutlet]="flats"
+					[ngTemplateOutletContext]="{ flats: flatOptions.result }"
+				>
+				</ng-container>
+			</div>
+			<fieldset
+				*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
+				class="container-offers"
+			>
+				<ng-container
+					class="container-offers"
+					[ngTemplateOutlet]="flats"
+					[ngTemplateOutletContext]="{
+						flats: (flatOptionsPromoted$ | async)?.result
+					}"
+				></ng-container>
+			</fieldset>
+		</div>
+		<div class="paginator-box">
+			<mat-paginator
+				#paginator
+				id="paginator2"
+				showFirstLastButtons
+				aria-label="Paginator"
+				[length]="
+					isSubmitted
+						? flatOptions.totalCount
+						: (flatOptionsPromoted$ | async)?.totalCount
+				"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				[pageSizeOptions]="[6, 12, 18, 48]"
+				(page)="changePage($event)"
+			>
+			</mat-paginator>
 		</div>
 	</div>
-	<mat-paginator
-		id="paginator2"
-		showFirstLastButtons
-		aria-label="Paginator"
-		[pageSizeOptions]="[6, 12, 18, 48]"
-	>
-	</mat-paginator>
 </div>
