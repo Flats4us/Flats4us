@@ -6,9 +6,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -287,6 +285,15 @@ namespace Flats4us.Services
             await _context.UserOinions.AddAsync(opinion);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<UserInfoDto> GetUserInfo(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            return _mapper.Map<UserInfoDto>(user);
+        } 
 
         private TokenDto CreateToken(User user)
         {

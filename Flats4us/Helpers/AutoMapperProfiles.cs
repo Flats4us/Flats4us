@@ -3,6 +3,7 @@ using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers.AutoMapperResolvers;
 using Flats4us.Helpers.Enums;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace Flats4us.Helpers
 {
@@ -59,6 +60,9 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
             CreateMap<Owner, OwnerStudentDto>();
+
+            CreateMap<User, UserInfoDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
 
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 

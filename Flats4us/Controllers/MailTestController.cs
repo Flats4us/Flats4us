@@ -1,9 +1,11 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace Flats4us.Controllers
 {
@@ -23,22 +25,28 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
-        [HttpGet("send-email")]
+        [HttpPost("send-email")]
         [SwaggerOperation(
             Summary = "Logs the user in, returns a token"
         )]
         public async Task<ActionResult> SendEmail([FromBody] SendEmailDto request)
         {
-            await _emailService.SendEmailAsync(request.To, request.Subject, request.Body);
+            var body = new StringBuilder();
 
-            return Ok(new OutputDto<string>("ok"));
+            body.AppendLine(EmailHelper.HtmlHTag("Masz nową propozycje wynajmu!", 1))
+                .AppendLine(EmailHelper.HtmlPTag($"Użytkownik {EmailHelper.HtmlBTag("Jan Kowalski")} zgłasza chęć wynajęcia twojego lokalu"))
+                .AppendLine(EmailHelper.HtmlPTag($"Aby sprawdzić jego profil i podjąć decyzję naciśnij {EmailHelper.AddLinkToText("https://www.google.com/", "TUTAJ")}"));
+
+            await _emailService.SendEmailAsync(request.To, "Nowa propozycja wynajmu", body.ToString());
+
+            return Ok(new OutputDto<string>("Email sent"));
         }
     }
 
     public class SendEmailDto
     {
         [Required]
-        public string To { get; set; }
+        public int To { get; set; }
 
         [Required]
         public string Subject { get; set; }
