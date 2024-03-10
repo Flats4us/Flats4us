@@ -56,13 +56,56 @@ namespace Flats4us.Services
                 .Include(potential => potential.SurveyStudent)
                 .Include(potential => potential.Interests)
                 .Where(potential =>
-                    potential.SurveyStudent.LookingForRoommate &&
+
                     potential.UserId != studentId &&
-                    potential.SurveyStudent.City == requestingStudent.SurveyStudent.City &&
+
+                    (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party-2)) && (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) &&
+
+                    //  Party
+
+                    (potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) && (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) &&
+
+                    //  Tidiness
+
+                    potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking &&
+                    //  Smoking
+
+                    potential.SurveyStudent.Sociability == requestingStudent.SurveyStudent.Sociability &&
+
+                    //  Sociability
+
+                    potential.SurveyStudent.Animals == requestingStudent.SurveyStudent.Animals &&
+
+                    //  Animals
+
+                    potential.SurveyStudent.Vegan == requestingStudent.SurveyStudent.Vegan &&
+
+                    //  Vegan
+
+                    potential.SurveyStudent.LookingForRoommate &&
+
+                    //  LookingForRoommate
+
                     potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
+
+                    //  MaxNumberOfRoommates
+
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
+
+                    //  RoommateGender
+
                     (requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year - potential.BirthDate.Year)) &&
+
+                    //  MinRoommateAge
+
                     (requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) &&
+
+                    //  MaxRoommateAge
+
+                    potential.SurveyStudent.City == requestingStudent.SurveyStudent.City &&
+
+                    //  City
+
                     !_context.Matcher.Any(matcher =>
                         (matcher.Student1Id == studentId && matcher.Student2Id == potential.UserId && matcher.IsStudent1Interested != null) ||
                         (matcher.Student1Id == potential.UserId && matcher.Student2Id == studentId && matcher.IsStudent2Interested != null)
@@ -70,6 +113,7 @@ namespace Flats4us.Services
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
                 .Take(5)
                 .ToListAsync();
+
 
             return potentialRoommates;
         }
