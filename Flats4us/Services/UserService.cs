@@ -282,7 +282,7 @@ namespace Flats4us.Services
                 TargetUserId = targetUser.UserId
             };
 
-            await _context.UserOinions.AddAsync(opinion);
+            await _context.UserOpinions.AddAsync(opinion);
             await _context.SaveChangesAsync();
         }
 
