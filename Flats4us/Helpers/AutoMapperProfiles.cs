@@ -60,6 +60,9 @@ namespace Flats4us.Helpers
 
             CreateMap<Owner, OwnerStudentDto>();
 
+            CreateMap<User, UserInfoDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
+
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 
             CreateMap<SurveyStudent, SurveyStudentDto>();
