@@ -1,29 +1,21 @@
-<mat-card class="m-3 py-4">
+<mat-card *ngIf="matches$ | async as students" class="m-3 py-4">
 	<mat-card-header>
-		<mat-card-title class="text-2xl">Konwersacje</mat-card-title>
+		<mat-card-title class="text-2xl">Twoje dopasowania:</mat-card-title>
+		<mat-card-subtitle *ngIf="students.length === 0"
+			>Wróć tu później, dopasowania pojawią się w tym miejscu</mat-card-subtitle
+		>
 	</mat-card-header>
-
 	<mat-card-content>
-		<mat-card class="m-3">
-			<mat-card-header>
-				<mat-icon mat-card-avatar>face</mat-icon>
-				<mat-card-title>Tomek 21</mat-card-title>
-			</mat-card-header>
-			<mat-card-content> What's up? </mat-card-content>
-		</mat-card>
-		<mat-card class="m-3">
-			<mat-card-header>
-				<mat-icon mat-card-avatar>face_3</mat-icon>
-				<mat-card-title>Kasia 25</mat-card-title>
-			</mat-card-header>
-			<mat-card-content> What's up? </mat-card-content>
-		</mat-card>
-		<mat-card class="m-3">
-			<mat-card-header>
-				<mat-icon mat-card-avatar>face_2</mat-icon>
-				<mat-card-title>Basia 20</mat-card-title>
-			</mat-card-header>
-			<mat-card-content> What's up? </mat-card-content>
+		<mat-card *ngFor="let student of students" class="m-3">
+			<img
+				class="h-20"
+				alt="Candidate image"
+				src="{{ baseUrl }}/{{ student.profilePicture.path }}"
+			/>
+			{{ student.name }}, {{ student.age }}
+			<button mat-mini-fab color="primary">
+				<mat-icon>chat</mat-icon>
+			</button>
 		</mat-card>
 	</mat-card-content>
 </mat-card>
