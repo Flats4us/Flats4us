@@ -325,6 +325,7 @@ namespace Flats4us.Services
         }
         public async Task EditStudentSensitive(EditStudentSensitiveDto input, int userId)
         {
+            
             var student = await _context.Students.FindAsync(userId);
 
             if (student == null)
@@ -339,6 +340,65 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+        public async Task EditUser(EditUserDto input, int userId)
+        {
+            bool isSensitiveDataUpdated = false;
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new Exception($"User with ID {userId} not found.");
+            }
+
+            // Update general user data
+            user.Address = input.Address ?? user.Address;
+            user.Email = input.Email ?? user.Email;
+            user.PhoneNumber = input.PhoneNumber ?? user.PhoneNumber;
+
+            // Update sensitive user data
+            if (input.Name != null || input.Surname != null)
+            {
+                isSensitiveDataUpdated = true;
+                user.Name = input.Name ?? user.Name;
+                user.Surname = input.Surname ?? user.Surname;
+            }
+
+            // Update Student-specific data
+            if (user is Student student)
+            {
+                student.Links = input.Links ?? student.Links;
+                if (input.BirthDate != null || input.StudentNumber != null || input.University != null)
+                {
+                    isSensitiveDataUpdated = true;
+                    student.BirthDate = input.BirthDate ?? student.BirthDate;
+                    student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
+                    student.University = input.University ?? student.University;
+                }
+            }
+            // Update Owner-specific data
+            else if (user is Owner owner)
+            {
+                owner.BankAccount = input.BankAccount ?? owner.BankAccount;
+
+                if (input.DocumentNumber != null)
+                {
+                    isSensitiveDataUpdated = true;
+                    owner.DocumentNumber = input.DocumentNumber;
+                }
+                // Additional fields for Owner can be updated here
+            }
+
+            // Set verification status if sensitive data is updated
+            if (isSensitiveDataUpdated)
+            {
+                user.VerificationStatus = VerificationStatus.NotVerified;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+
+
 
 
 

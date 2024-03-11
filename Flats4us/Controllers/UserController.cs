@@ -214,6 +214,30 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("current")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Edit user information",
+            Description = "Allows editing general, sensitive, owner, and student information. Requires registered user privileges"
+        )]
+        public async Task<ActionResult> EditUserInfo([FromBody]  EditUserDto input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
+                {
+                    return BadRequest("Server error: Failed to get user id from token");
+                }
+
+                await _userService.EditUser(input, userId);
+                return Ok("User information updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                // Consider logging the exception here
+                return BadRequest(ex.Message);
+            }
+        }
 
 
 

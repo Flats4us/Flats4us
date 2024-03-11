@@ -19,6 +19,7 @@ namespace Flats4us.Services.Interfaces
         Task EditUserSensitive(EditUserSensitive input, int userId);
         Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId);
         Task EditStudentSensitive(EditStudentSensitiveDto input, int userId);
+        Task EditUser(EditUserDto input, int userId);
 
     }
 }
