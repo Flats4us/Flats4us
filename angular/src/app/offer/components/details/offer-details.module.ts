@@ -30,7 +30,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
-		MatIconModule,
 		MatMenuModule,
 		MatChipsModule,
 		FormsModule,

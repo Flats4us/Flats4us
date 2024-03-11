@@ -64,6 +64,13 @@
 		>
 			Dodaj ofertę
 		</button>
+		<button
+			*ngIf="isUserLoggedInAsStudent"
+			mat-menu-item
+			[routerLink]="['/offer', 'watched']"
+		>
+			Obserwowane oferty
+		</button>
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
 			Moje nieruchomości
 		</button>
@@ -150,7 +157,6 @@
 	</button>
 
 	<mat-menu #extended="matMenu">
-		<button mat-menu-item>Obserwowane oferty</button>
 		<button mat-menu-item routerLink="calendar">Kalendarz</button>
 		<button mat-menu-item routerLink="find-roommate">Znajdź wspołlokatora</button>
 	</mat-menu>

@@ -44,4 +44,21 @@ export class OfferService {
 			duration
 		);
 	}
+
+	public getWatchedOffers(
+		pageIndex: number,
+		pageSize: number
+	): Observable<ISendOffers> {
+		return this.httpClient.get<ISendOffers>(
+			`${this.apiRoute}/offers/interest?PageNumber=${
+				pageIndex + 1
+			}&PageSize=${pageSize}`
+		);
+	}
+
+	public deleteInterest(id: number): Observable<string> {
+		return this.httpClient.delete<string>(
+			`${this.apiRoute}/offers/${id}/interest`
+		);
+	}
 }

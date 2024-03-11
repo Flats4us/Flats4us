@@ -37,6 +37,8 @@ import { OfferPromotionDialogComponent } from './components/dialog/offer-promoti
 import { RentsService } from '../rents/services/rents.service';
 import { OfferDetailsComponent } from './components/details/offer-details.component';
 import { AddOfferComponent } from './components/add-offer/add-offer.component';
+import { WatchedOffersComponent } from './components/watched-offers/watched-offers.component';
+import { WatchedOffersModule } from './components/watched-offers/watched-offers.module';
 
 @NgModule({
 	declarations: [OfferComponent],
@@ -74,8 +76,14 @@ import { AddOfferComponent } from './components/add-offer/add-offer.component';
 		OfferPromotionDialogComponent,
 		AddOfferModule,
 		OfferDetailsModule,
+		WatchedOffersModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
-	exports: [OfferComponent, OfferDetailsComponent, AddOfferComponent],
+	exports: [
+		OfferComponent,
+		OfferDetailsComponent,
+		AddOfferComponent,
+		WatchedOffersComponent,
+	],
 })
 export class OfferModule {}
