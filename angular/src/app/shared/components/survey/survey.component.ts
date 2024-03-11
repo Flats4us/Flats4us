@@ -1,11 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnInit,
+} from '@angular/core';
 import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
+	FormGroupDirective,
 	Validators,
 } from '@angular/forms';
-import { IQuestionsData, typeName } from '../../models/survey.models';
+import { IQuestionsData, TypeName } from '../../models/survey.models';
 import { Observable, switchMap, tap } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
@@ -16,15 +22,21 @@ import { SurveyService } from '../../services/survey.service';
 	styleUrls: ['./survey.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SurveyComponent {
+export class SurveyComponent implements OnInit {
 	@Input() public offerForm: FormGroup;
+	@Input()
+	public createProfileMode = false;
+
+	public surveyForm = new FormGroup({});
+	public formToAdd = new FormGroup({});
 	public questions$: Observable<IQuestionsData[]>;
-	public typeName: typeof typeName = typeName;
+	public typeName: typeof TypeName = TypeName;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
-		private service: SurveyService
+		private service: SurveyService,
+		private formDir: FormGroupDirective
 	) {
 		this.offerForm = this.formBuilder.group({
 			lookingForRoommate: [''],
@@ -35,11 +47,16 @@ export class SurveyComponent {
 		);
 	}
 
+	public ngOnInit() {
+		this.surveyForm = this.formDir.form;
+		this.surveyForm.addControl('survey', this.formToAdd);
+	}
+
 	public getQuestions(): Observable<IQuestionsData[]> {
 		return this.route.paramMap.pipe(
 			switchMap((params: ParamMap) => {
 				const surveyType = params.get('survey-type');
-				if (surveyType === 'student') {
+				if (surveyType === 'student' || this.createProfileMode) {
 					return this.service.getStudentQuestions();
 				} else {
 					return this.service.getOwnerQuestions();
@@ -49,11 +66,15 @@ export class SurveyComponent {
 	}
 
 	public getFormControls(questions: IQuestionsData[]) {
-		questions.forEach(question =>
+		questions.forEach(question => {
 			this.offerForm.addControl(
 				question.name,
 				new FormControl(null, Validators.required)
-			)
-		);
+			);
+			this.formToAdd.addControl(
+				question.name,
+				new FormControl(null, Validators.required)
+			);
+		});
 	}
 }

@@ -1,0 +1,96 @@
+.watched-offers {
+	background-color: #ffffff;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	align-items: center;
+	flex-direction: column;
+	padding-top: 0;
+	justify-content: center;
+}
+
+.card {
+	height: auto;
+	min-width: 200px;
+	max-width: 500px;
+	cursor: pointer;
+}
+
+.promoted-card {
+	height: auto;
+	min-width: 200px;
+	max-width: 500px;
+	cursor: pointer;
+	border: 4px #fbbb8b;
+	border-style: solid;
+}
+
+.imgs {
+	object-fit: cover;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-row-gap: 40px;
+	gap: 40px;
+	padding: 0 40px 40px 40px;
+	justify-content: center;
+}
+
+.box-icon {
+	font-size: medium;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.mcc-description {
+	margin-top: auto;
+}
+
+mat-chip {
+	background-color: #fbbb8b;
+
+	.chip {
+		display: flex;
+		align-content: center;
+		justify-content: center;
+	}
+}
+
+mat-card-subtitle {
+	padding-top: 4px;
+	font-size: large;
+}
+
+.offer-title-outer {
+	position: absolute;
+	padding: 4px;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.offer-title-inner {
+	background: rgba(0, 0, 0, 0.32);
+	color: white;
+	position: absolute;
+	padding: 4px;
+	z-index: 996;
+	width: fit-content;
+	margin-right: 4px;
+}
+
+@media screen and (max-width: 992px) {
+	.container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.container {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}

@@ -1,0 +1,42 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { OfferDetailsComponent } from './offer-details.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+@NgModule({
+	declarations: [OfferDetailsComponent],
+	imports: [
+		CommonModule,
+		MatButtonModule,
+		MatIconModule,
+		MatInputModule,
+		MatListModule,
+		MatDividerModule,
+		MatTableModule,
+		MatMenuModule,
+		MatTooltipModule,
+		ScrollingModule,
+		MatDialogModule,
+		MatMenuModule,
+		MatChipsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatAutocompleteModule,
+		MatFormFieldModule,
+	],
+	exports: [OfferDetailsComponent],
+})
+export class OfferDetailsModule {}
