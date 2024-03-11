@@ -467,6 +467,7 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
         public async Task EditUser(EditUserDto input, int userId)
         {
             bool isSensitiveDataUpdated = false;
@@ -528,6 +529,9 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
+
+
 
     }
 }
