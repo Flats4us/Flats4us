@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment.prod';
 import { OfferService } from '../../services/offer.service';
 import { ISendOffers } from '../../models/offer.models';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-watched-offers',
@@ -25,7 +26,7 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 	styleUrls: ['./watched-offers.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WatchedOffersComponent implements OnInit {
+export class WatchedOffersComponent extends BaseComponent implements OnInit {
 	public watchedOffers$: Observable<ISendOffers> =
 		this.offerService.getWatchedOffers(0, 3);
 
@@ -44,7 +45,9 @@ export class WatchedOffersComponent implements OnInit {
 		private matPaginatorIntl: MatPaginatorIntl,
 		private cdr: ChangeDetectorRef,
 		public realEstateService: RealEstateService
-	) {}
+	) {
+		super();
+	}
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
@@ -78,7 +81,10 @@ export class WatchedOffersComponent implements OnInit {
 	}
 
 	public deleteInterest(id: number) {
-		this.offerService.deleteInterest(id).subscribe(() => this.filterOffers());
+		this.offerService
+			.deleteInterest(id)
+			.pipe(this.untilDestroyed())
+			.subscribe(() => this.filterOffers());
 	}
 
 	public changePage(e: PageEvent) {
