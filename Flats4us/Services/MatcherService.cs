@@ -59,11 +59,13 @@ namespace Flats4us.Services
 
                     potential.UserId != studentId &&
 
-                    (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party-2)) && (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) &&
+                    (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party-2)) && 
+                    (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) &&
 
                     //  Party
 
-                    (potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) && (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) &&
+                    (potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) && 
+                    (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) &&
 
                     //  Tidiness
 
@@ -114,7 +116,7 @@ namespace Flats4us.Services
 
                 .Select(potential => new
                 {
-                    Potential = potential,
+                    PotentialStudent = potential,
                     ConditionsMet = (
                         (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party - 2)) &&
                         (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) ? 1 : 0) +
@@ -142,9 +144,9 @@ namespace Flats4us.Services
 
                         (potential.SurveyStudent.City == requestingStudent.SurveyStudent.City ? 1 : 0)
                 })
-                .Where(result => result.ConditionsMet >= 0.8 * 12) // Check if 80% or more conditions are met
+                .Where(result => result.ConditionsMet >= 0.8 * 12) 
                 .OrderByDescending(result => result.ConditionsMet)
-                .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
+                .Select(potential => _mapper.Map<StudentForMatcherDto>(potential.PotentialStudent))
                 //.Take(5)
                 .ToListAsync();
 
