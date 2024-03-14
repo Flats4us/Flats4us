@@ -186,6 +186,9 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 var app = builder.Build();
 app.UseRouting();
 
+app.UseCors("AllowOrigin");
+
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
