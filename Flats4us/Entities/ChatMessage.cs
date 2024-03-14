@@ -17,8 +17,12 @@ namespace Flats4us.Entities
         public DateTime DateTime { get; set; }
 
         [Required]
-        public Sender Sender { get; set; }
+        //public int SenderUserId { get; set; }
+        public virtual User Sender { get; set; }
+        //public int? GroupChatId { get; set; }
+        //public int? ChatId { get; set; }
+        public virtual GroupChat? GroupChat { get; set; }
 
-        public virtual Chat Chat { get; set; }
+        public virtual Chat? Chat { get; set; }
     }
 }

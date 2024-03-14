@@ -78,7 +78,7 @@ namespace Flats4us.Controllers
             Summary = "Updating technical problem to solved",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> Put(int id)
+        public async Task<IActionResult> Put(int id) 
         {
             try
             {
