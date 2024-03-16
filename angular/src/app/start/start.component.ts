@@ -234,7 +234,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public navigateToFlat(id: number) {
-		this.router.navigate(['/offer', 'details', id]);
+		this.router.navigate(['offer', 'details', id]);
 	}
 	public validateForm() {
 		return this.startSiteForm.valid;

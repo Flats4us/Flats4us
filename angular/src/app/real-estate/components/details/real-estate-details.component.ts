@@ -62,7 +62,7 @@ export class RealEstateDetailsComponent {
 	}
 
 	public addRent() {
-		this.router.navigate(['/offer', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 
 	public setCurrentSlideIndex(index: number) {

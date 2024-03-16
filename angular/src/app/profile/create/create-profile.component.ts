@@ -6,7 +6,12 @@ import {
 } from '@angular/core';
 import { ModificationType, UserType } from '../models/types';
 import { MatStepper } from '@angular/material/stepper';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +20,7 @@ import { IAddOwner, IAddStudent } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { matchPasswordValidator } from '@shared/utils/validators';
 
 @Component({
 	selector: 'app-profile-create',
@@ -84,7 +90,21 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		map(params => params.get('modificationType')?.toUpperCase() ?? '')
 	);
 
-	public registerForm = new FormGroup({});
+	public registerForm = new FormGroup(
+		{
+			name: new FormControl('', Validators.required),
+			surname: new FormControl('', Validators.required),
+			email: new FormControl('', [Validators.required, Validators.email]),
+			password: new FormControl('', [
+				Validators.required,
+				Validators.pattern(
+					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+				),
+			]),
+			confirmPassword: new FormControl('', [Validators.required]),
+		},
+		{ validators: matchPasswordValidator }
+	);
 
 	public createAccountForm = new FormGroup({});
 

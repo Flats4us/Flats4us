@@ -176,7 +176,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	public showMap() {
-		this.router.navigate(['/start', 'map']);
+		this.router.navigate(['start', 'map']);
 	}
 
 	public saveRealEstate() {
@@ -194,13 +194,13 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				.onAction()
 				.pipe(this.untilDestroyed())
 				.subscribe(() => {
-					this.router.navigate(['/offer', 'add']);
+					this.router.navigate(['offer', 'add']);
 				});
 		}
 	}
 
 	public addOffer() {
-		this.router.navigate(['/offer', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 
 	public ngOnInit() {

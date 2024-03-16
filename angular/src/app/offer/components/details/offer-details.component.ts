@@ -116,7 +116,7 @@ export class OfferDetailsComponent {
 	}
 
 	public addOffer() {
-		this.router.navigate(['/offer', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 
 	public openCancelDialog(id: number): void {
@@ -134,10 +134,10 @@ export class OfferDetailsComponent {
 	}
 
 	public navigateToOffer(id: number) {
-		this.router.navigate(['/offer', 'details', id]);
+		this.router.navigate(['offer', 'details', id]);
 	}
 	public startDispute(id: number) {
-		this.router.navigate(['/disputes', id]);
+		this.router.navigate(['disputes', id]);
 	}
 
 	public onSelect(menuOption: IMenuOptions, id: number) {

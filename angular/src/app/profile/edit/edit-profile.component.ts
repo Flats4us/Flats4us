@@ -29,6 +29,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { environment } from 'src/environments/environment.prod';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
+import { validityAgeValidator } from '@shared/utils/validators';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -157,7 +158,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(
 				'birthDate',
-				new FormControl(null, [Validators.required, this.validityAgeValidator()])
+				new FormControl(null, [Validators.required, validityAgeValidator()])
 			);
 		}
 		if (this.modificationType === ModificationType.EDIT) {
@@ -268,14 +269,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	public changeEmail() {
-		this.router.navigate(['/settings', 'email-change']);
+		this.router.navigate(['settings', 'email-change']);
 	}
 	public changePassword() {
-		this.router.navigate(['/settings', 'password-change']);
+		this.router.navigate(['settings', 'password-change']);
 	}
 
 	public changeSurvey() {
-		this.router.navigate(['/profile', 'survey', 'student']);
+		this.router.navigate(['profile', 'survey', 'student']);
 	}
 
 	public onSelect(menuOption: IMenuOptions) {
@@ -337,14 +338,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		return this.isValidDocument;
 	}
 
-	public checkValidityAge(date: Date): boolean {
-		const endDate = new Date(date);
-		const actualDate = new Date();
-		const years = actualDate.getFullYear() - endDate.getFullYear();
-		const isValidAge = years >= 18 && years <= 150 ? true : false;
-		return isValidAge;
-	}
-
 	public onFileSelected(event: Event, regex: RegExp) {
 		const formData = new FormData();
 		const fileEvent = (event.target as HTMLInputElement).files;
@@ -386,18 +379,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			}
 
 			return !this.checkValidityTill(value) ? { validityTill: true } : null;
-		};
-	}
-
-	public validityAgeValidator(): ValidatorFn {
-		return (control: AbstractControl): ValidationErrors | null => {
-			const value = control.value;
-
-			if (!value) {
-				return null;
-			}
-
-			return !this.checkValidityAge(value) ? { validityAge: true } : null;
 		};
 	}
 }

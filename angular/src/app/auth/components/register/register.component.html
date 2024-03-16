@@ -95,7 +95,7 @@
 						Nie powtórzono hasła!
 					</mat-error>
 					<mat-error
-						*ngIf="registerForm.controls['confirmPassword'].errors?.['passwordValid']"
+						*ngIf="registerForm.errors?.['matchPassword']"
 						class="error-text"
 					>
 						Hasła różnią się od siebie!
