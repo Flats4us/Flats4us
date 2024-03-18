@@ -43,7 +43,7 @@
 				</button>
 			</mat-menu>
 		</div>
-		<div class="edit-profile">
+		<mat-card class="edit-profile">
 			<div class="container-photo">
 				<div class="image-box">
 					<img class="profile-avatar__image" [src]="urlPhoto" />
@@ -74,9 +74,9 @@
 					</div>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
-						class="text-3xl pb-4 semibold"
+						class="text-2xl pb-2"
 					>
-						status:
+						Status:
 						{{
 							actualUser.verificationStatus === 0
 								? toLowerCase(sType.VERIFIED)
@@ -85,14 +85,11 @@
 					</div>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
-						class="text-3xl pb-4 semibold"
+						class="text-2xl pb-2"
 					>
-						email: {{ actualUser.email }}
+						Email: {{ actualUser.email }}
 					</div>
-					<div
-						*ngIf="modificationType === mType.CREATE"
-						class="text-3xl pb-4 semibold"
-					>
+					<div *ngIf="modificationType === mType.CREATE" class="text-2xl pb-2">
 						email: {{ email }}
 					</div>
 					<div
@@ -106,9 +103,9 @@
 								modificationType === mType.EDIT &&
 								getAge(actualUser.birthDate)
 							"
-							class="text-3xl pb-4 semibold"
+							class="text-2xl pb-2"
 						>
-							wiek {{ getAge(actualUser.birthDate) }}
+							Wiek {{ getAge(actualUser.birthDate) }}
 						</div>
 						<div
 							*ngIf="
@@ -427,7 +424,7 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		</mat-card>
 	</form>
 </ng-template>
 <div *ngIf="modificationType === mType.EDIT">

@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { RentsDetailsComponent } from './rents-details.component';
+import { MatCardModule } from '@angular/material/card';
+import { CdkTableModule } from '@angular/cdk/table';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -32,6 +34,8 @@ import { RentsDetailsComponent } from './rents-details.component';
 		MeetingAddComponent,
 		MatIconModule,
 		MatMenuModule,
+		MatCardModule,
+		CdkTableModule,
 	],
 	exports: [RentsDetailsComponent],
 })
