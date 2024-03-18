@@ -11,7 +11,7 @@
 		</div>
 	</div>
 	<div *ngIf="user === uType.OWNER" class="rents-owner">
-		<div class="container-list">
+		<mat-card class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
 				Moje wynajmy
 				<button
@@ -47,7 +47,7 @@
 					<div class="box-date">Data {{ rent.publishDate }}</div>
 				</a>
 			</mat-nav-list>
-		</div>
+		</mat-card>
 		<div class="container-outlet">
 			<router-outlet></router-outlet>
 		</div>

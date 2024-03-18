@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { OfferService } from '../offer/services/offer.service';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -42,6 +43,7 @@ import { OfferService } from '../offer/services/offer.service';
 		MatAutocompleteModule,
 		ReactiveFormsModule,
 		MatFormFieldModule,
+		MatCardModule,
 	],
 	exports: [RentsComponent, RentsDetailsComponent],
 	providers: [RentsService, RealEstateService, OfferService],

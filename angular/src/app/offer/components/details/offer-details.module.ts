@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -36,6 +37,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 		ReactiveFormsModule,
 		MatAutocompleteModule,
 		MatFormFieldModule,
+		MatCardModule,
 	],
 	exports: [OfferDetailsComponent],
 })

@@ -1,7 +1,7 @@
 <div class="container-title">
 	<h1 class="text-4xl p-4 font-semibold">Kreator nieruchomości</h1>
 </div>
-<div class="add-real-estate">
+<mat-card class="add-real-estate">
 	<mat-stepper #stepper linear>
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
@@ -342,7 +342,7 @@
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['pattern'] ||
-							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['min'] || 
+							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['min'] ||
 							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['max']"
 							class="error-text"
 						>
@@ -604,4 +604,4 @@
 			</mat-step>
 		</div>
 	</mat-stepper>
-</div>
+</mat-card>
