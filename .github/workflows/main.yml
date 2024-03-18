@@ -1,11 +1,6 @@
-name: Build and publish Docker image with Pipelines
-
 on:
   pull_request:
   push:
-    branches:
-      - release
-      - main
 
 jobs:
   checks:
@@ -13,7 +8,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      
       - name: Change working directory
         run: |
           cd ./angular
@@ -21,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2-beta
         with:
-          node-version: "16.x"
+          node-version: '16.x'
 
       - name: Install dependencies
         working-directory: ./angular
@@ -35,53 +30,4 @@ jobs:
       - name: Run Prettier
         working-directory: ./angular
         run: npm run prettier:check
-
-  build-and-push-image:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Angular Docker image
-        working-directory: ./angular
-        run: |
-          docker build -t ${{ env.REGISTRY }}/${{ github.repository }}/angular .
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/angular
-
-      - name: Build and push Flats4Us Docker image
-        working-directory: ./Flats4Us
-        run: |
-          docker build -t ${{ env.REGISTRY }}/${{ github.repository }}/flats4us .
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/flats4us
-
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: Run ESLint
-        run: npm run lint
-
-      - name: Run Prettier
-        run: npm run prettier:check
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      
