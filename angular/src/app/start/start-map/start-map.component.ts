@@ -13,7 +13,7 @@ import * as L from 'leaflet';
 import { StartService } from '../services/start.service';
 import { IFilteredOffers, ISortOption } from '../models/start-site.models';
 import { environment } from 'src/environments/environment.prod';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -120,7 +120,11 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				marker([+offer.property.geoLat, +offer.property.geoLon], markerOptions)
 					.addTo(this.map as Map)
 					.bindPopup(
-						'<b>' +
+						'<style>' +
+							'.inner-element:hover {' +
+							'cursor: pointer;' +
+							'}</style>' +
+							'<b>' +
 							this.realEstateService.propertyTypes.get(offer.property.propertyType) +
 							'</b>' +
 							' ' +
@@ -134,13 +138,26 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							', cena: ' +
 							offer.price +
 							' zł' +
-							`<img src=${this.baseUrl}/${offer.property.images[0].path}></img><a href="/offer/details/${offer.offerId}">Przejdź do widoku oferty</a>`
+							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
 					)
-					.addEventListener('dblclick', () => {
-						this.router.navigate(['offer', 'details', offer.offerId]);
+					.on('popupopen', () => {
+						document
+							?.getElementById('propertyImage')
+							?.addEventListener('click', () => {
+								this.router.navigate(['offer', 'details', offer.offerId]);
+							});
+						document
+							?.getElementById('propertyLink')
+							?.addEventListener('click', () => {
+								this.router.navigate(['offer', 'details', offer.offerId]);
+							});
 					})
 			)
 		);
+	}
+
+	public navigateToFlat(id: number) {
+		this.router.navigate(['offer', 'details', id]);
 	}
 
 	public onSubmit(): void {

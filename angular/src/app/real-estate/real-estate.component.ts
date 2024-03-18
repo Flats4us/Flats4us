@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { statusName } from '../rents/statusName';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { IProperty } from './models/real-estate.models';
 	styleUrls: ['./real-estate.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RealEstateComponent implements OnInit {
+export class RealEstateComponent {
 	public realEstateOptions$: Observable<IProperty[]> =
 		this.realEstateService.getRealEstates(false);
 
@@ -22,11 +22,7 @@ export class RealEstateComponent implements OnInit {
 		private router: Router
 	) {}
 
-	public ngOnInit(): void {
-		this.realEstateOptions$ = this.realEstateService.getRealEstates(false);
-	}
-
 	public addRealEstate() {
-		this.router.navigate(['/real-estate', 'add']);
+		this.router.navigate(['real-estate', 'add']);
 	}
 }

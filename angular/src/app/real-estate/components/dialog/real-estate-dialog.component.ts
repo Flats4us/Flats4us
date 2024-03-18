@@ -37,7 +37,7 @@ export class RealEstateDialogComponent extends BaseComponent {
 			.deleteRealEstate(this.data)
 			.pipe(this.untilDestroyed())
 			.subscribe(() => {
-				this.router.navigate(['/real-estate', 'owner']);
+				this.router.navigate(['real-estate', 'owner']);
 			});
 	}
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { OfferService } from './services/offer.service';
@@ -12,7 +12,7 @@ import { RealEstateService } from '../real-estate/services/real-estate.service';
 	styleUrls: ['./offer.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferComponent implements OnInit {
+export class OfferComponent {
 	public offersOptions$: Observable<ISendOffers> = this.offerService.getOffers();
 
 	public uType = UserType;
@@ -27,11 +27,8 @@ export class OfferComponent implements OnInit {
 		private route: ActivatedRoute,
 		public realEstateService: RealEstateService
 	) {}
-	public ngOnInit(): void {
-		this.offersOptions$ = this.offerService.getOffers();
-	}
 
 	public addOffer() {
-		this.router.navigate(['offer/', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 }

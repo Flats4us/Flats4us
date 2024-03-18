@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
@@ -57,7 +57,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenantsCtrl = new FormControl('');
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
-	public validEmails$: Observable<boolean> = of(true);
+	public invalidEmail$: Observable<boolean> = of(false);
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),
@@ -80,6 +80,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	}
 
 	public onYesClick() {
+		this.rentPropositionForm.markAllAsTouched();
 		if (this.rentPropositionForm.valid) {
 			this.offerService
 				.addRentProposition(this.rentPropositionForm.value, this.data)
@@ -89,11 +90,9 @@ export class RentPropositionDialogComponent extends BaseComponent {
 						this.dialogRef.close();
 					},
 					error: () => {
-						this.snackBar.open(
-							'Nie udało się dodać najmu. Być może wpisane adresy e-mail są nieprawidłowe.',
-							'Zamknij',
-							{ duration: 2000 }
-						);
+						this.snackBar.open('Nie udało się dodać najmu.', 'Zamknij', {
+							duration: 2000,
+						});
 					},
 				});
 		}
@@ -103,9 +102,13 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		items: string[],
 		formControl: FormControl
 	): void {
+		this.invalidEmail$ = of(false);
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
 			items.push(value);
+			this.invalidEmail$ = this.userService
+				.checkIfEmailExist(value)
+				.pipe(map(result => !result.result));
 		}
 		event.chipInput.clear();
 

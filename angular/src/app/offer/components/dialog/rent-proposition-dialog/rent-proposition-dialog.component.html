@@ -73,6 +73,9 @@
 				/>
 			</mat-chip-grid>
 		</mat-form-field>
+		<mat-error *ngIf="invalidEmail$ | async">
+			Wpisany/e adres/y email nie istnieje/ą w systemie!
+		</mat-error>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">

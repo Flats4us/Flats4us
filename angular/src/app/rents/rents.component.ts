@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RentsService } from './services/rents.service';
 import { IRent } from './models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { UserType } from '../profile/models/types';
 	styleUrls: ['./rents.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsComponent implements OnInit {
+export class RentsComponent {
 	public uType = UserType;
 	public rentsOptions$: Observable<IRent[]> = this.rentsService.getRents();
 	public user$: Observable<string> = this.route.paramMap.pipe(
@@ -26,11 +26,8 @@ export class RentsComponent implements OnInit {
 		private router: Router,
 		private route: ActivatedRoute
 	) {}
-	public ngOnInit(): void {
-		this.rentsOptions$ = this.rentsService.getRents();
-	}
 
 	public addOffer() {
-		this.router.navigate(['/offer', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 }
