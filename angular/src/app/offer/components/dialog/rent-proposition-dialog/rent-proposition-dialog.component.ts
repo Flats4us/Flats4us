@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, of, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
@@ -57,7 +57,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenantsCtrl = new FormControl('');
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
-	public validEmail$: Observable<boolean> = of(true);
+	public invalidEmail$: Observable<boolean> = of(false);
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),
@@ -102,13 +102,13 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		items: string[],
 		formControl: FormControl
 	): void {
-		this.validEmail$ = of(true);
+		this.invalidEmail$ = of(false);
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
 			items.push(value);
-			this.validEmail$ = this.userService
+			this.invalidEmail$ = this.userService
 				.checkIfEmailExist(value)
-				.pipe(switchMap(result => of(result.result)));
+				.pipe(map(result => !result.result));
 		}
 		event.chipInput.clear();
 
