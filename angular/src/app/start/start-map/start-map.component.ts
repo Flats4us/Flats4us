@@ -10,10 +10,12 @@ import { Map, map, tileLayer, marker, icon as lIcon } from 'leaflet';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import * as L from 'leaflet';
+import 'leaflet.markercluster';
+
 import { StartService } from '../services/start.service';
 import { IFilteredOffers, ISortOption } from '../models/start-site.models';
 import { environment } from 'src/environments/environment.prod';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -36,6 +38,10 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	}
 
 	public map: Map | undefined;
+
+	public markerCluster = L.markerClusterGroup();
+
+	public markersList: L.Marker[] = [];
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
@@ -66,6 +72,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 		this.getLocation();
 		this.setMapView([52, 20]);
 		this.addMarkersForOffers(this.startService.mapOffersForm?.value);
+		this.map.addLayer(this.markerCluster);
 	}
 
 	public setMapView([latitude, longitude]: [number, number]): void {
@@ -93,10 +100,10 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						clickable: true,
 						draggable: false,
 						icon: L.icon({
-							iconUrl: '../../assets/leafletIcon.png',
-							iconSize: [40, 40],
+							iconUrl: '../../assets/leafletIcon.svg',
+							iconSize: [30, 30],
 							iconAnchor: [25, 16],
-							popupAnchor: [-3, -76],
+							popupAnchor: [-8, -16],
 						}),
 					};
 					marker([+lat, +lon], markerOptions).addTo(this.map as Map);
@@ -110,15 +117,19 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			clickable: true,
 			draggable: false,
 			icon: L.icon({
-				iconUrl: '../../assets/leafletIcon.png',
-				iconSize: [40, 40],
+				iconUrl: '../../assets/leafletIcon.svg',
+				iconSize: [30, 30],
 				iconAnchor: [25, 16],
+				popupAnchor: [-8, -16],
 			}),
 		};
-		this.startService.getFilteredOffers(filteredOptions).subscribe(result =>
-			result.result.forEach(offer =>
-				marker([+offer.property.geoLat, +offer.property.geoLon], markerOptions)
-					.addTo(this.map as Map)
+		this.startService.getFilteredOffers(filteredOptions).subscribe(result => {
+			result.result.forEach(offer => {
+				const marker = L.marker(
+					[+offer.property.geoLat, +offer.property.geoLon],
+					markerOptions
+				);
+				marker
 					.bindPopup(
 						'<style>' +
 							'.inner-element:hover {' +
@@ -140,7 +151,15 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							' zł' +
 							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
 					)
-					.on('popupopen', () => {
+					.on('popupopen', e => {
+						e.target.setIcon(
+							L.icon({
+								iconUrl: '../../assets/leafletIconClicked.svg',
+								iconSize: [30, 30],
+								iconAnchor: [25, 16],
+								popupAnchor: [-8, -16],
+							})
+						);
 						document
 							?.getElementById('propertyImage')
 							?.addEventListener('click', () => {
@@ -152,8 +171,20 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 								this.router.navigate(['offer', 'details', offer.offerId]);
 							});
 					})
-			)
-		);
+					.on('popupclose', e => {
+						e.target.setIcon(
+							L.icon({
+								iconUrl: '../../assets/leafletIcon.svg',
+								iconSize: [30, 30],
+								iconAnchor: [25, 16],
+								popupAnchor: [-8, -16],
+							})
+						);
+					});
+				this.markersList.push(marker);
+			});
+			this.markerCluster.addLayers(this.markersList);
+		});
 	}
 
 	public navigateToFlat(id: number) {
@@ -161,11 +192,8 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	}
 
 	public onSubmit(): void {
-		this.map?.eachLayer(layer => {
-			if (layer instanceof L.Marker) {
-				layer.remove();
-			}
-		});
+		this.markerCluster.removeLayers(this.markersList);
+		this.markersList = [];
 		const searchForm: FormGroup = this.startService.mapOffersForm;
 		if (this.searchInput.nativeElement.value.includes(',')) {
 			const searchArray = this.searchInput.nativeElement.value.split(',');

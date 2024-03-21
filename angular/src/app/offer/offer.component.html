@@ -43,7 +43,14 @@
 							>check_circle</mat-icon
 						>
 					</div>
-					<div class="box-date">Data {{ offer.startDate | date }}</div>
+					<div
+						class="box-date"
+						matBadge="!"
+						matBadgePosition="below after"
+						matBadgeColor="primary"
+					>
+						Data {{ offer.startDate | date }}
+					</div>
 				</a>
 			</mat-nav-list>
 		</div>

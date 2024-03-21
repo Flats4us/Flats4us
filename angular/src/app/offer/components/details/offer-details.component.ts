@@ -18,6 +18,7 @@ import { RentsCancelDialogComponent } from 'src/app/rents/components/dialog/rent
 import { OfferPromotionDialogComponent } from '../dialog/offer-promotion-dialog/offer-promotion-dialog.component';
 import { OfferService } from '../../services/offer.service';
 import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialog/rent-proposition-dialog.component';
+import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent-approval-dialog.component';
 
 @Component({
 	selector: 'app-offer-details',
@@ -170,6 +171,13 @@ export class OfferDetailsComponent {
 
 	public startRent(id: number) {
 		this.dialog.open(RentPropositionDialogComponent, {
+			disableClose: true,
+			data: id,
+		});
+	}
+
+	public onRentApproval(id: number): void {
+		this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
