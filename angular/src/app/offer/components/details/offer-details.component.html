@@ -8,6 +8,16 @@
 				<span class="text-3xl"
 					>Status oferty:
 					{{ offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) }}
+					<button
+						mat-mini-fab
+						class="box-icon"
+						color="primary"
+						matTooltip="Oferta najmu czeka na zaakceptowanie!"
+						aria-label="MenuButton"
+						(click)="onRentApproval(data.offer?.offerId ?? 0)"
+					>
+						<mat-icon>notifications</mat-icon>
+					</button>
 				</span></mat-label
 			>
 		</div>

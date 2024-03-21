@@ -6,6 +6,7 @@
 .box-date {
 	display: flex;
 	justify-content: left;
+	width: fit-content;
 	margin-bottom: 16px;
 }
 
@@ -13,6 +14,7 @@
 	font-size: 40px;
 	width: max-content;
 	height: max-content;
+	margin-left: 16px;
 }
 
 .box-icon-valid {
