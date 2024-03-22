@@ -100,7 +100,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						clickable: true,
 						draggable: false,
 						icon: L.icon({
-							iconUrl: '../../assets/leafletIcon.svg',
+							iconUrl: '../../assets/leafletIconShadow.svg',
 							iconSize: [30, 30],
 							iconAnchor: [25, 16],
 							popupAnchor: [-8, -16],
@@ -117,7 +117,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			clickable: true,
 			draggable: false,
 			icon: L.icon({
-				iconUrl: '../../assets/leafletIcon.svg',
+				iconUrl: '../../assets/leafletIconShadow.svg',
 				iconSize: [30, 30],
 				iconAnchor: [25, 16],
 				popupAnchor: [-8, -16],
@@ -154,7 +154,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					.on('popupopen', e => {
 						e.target.setIcon(
 							L.icon({
-								iconUrl: '../../assets/leafletIconClicked.svg',
+								iconUrl: '../../assets/leafletIconClickedShadow.svg',
 								iconSize: [30, 30],
 								iconAnchor: [25, 16],
 								popupAnchor: [-8, -16],
@@ -174,7 +174,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					.on('popupclose', e => {
 						e.target.setIcon(
 							L.icon({
-								iconUrl: '../../assets/leafletIcon.svg',
+								iconUrl: '../../assets/leafletIconShadow.svg',
 								iconSize: [30, 30],
 								iconAnchor: [25, 16],
 								popupAnchor: [-8, -16],
