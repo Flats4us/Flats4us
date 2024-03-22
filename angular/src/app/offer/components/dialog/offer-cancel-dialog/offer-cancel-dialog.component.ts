@@ -8,10 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  selector: 'app-offer-cancel-dialog',
-  standalone: true,
-  imports: [
-    CommonModule,
+	selector: 'app-offer-cancel-dialog',
+	standalone: true,
+	imports: [
+		CommonModule,
 		MatDialogModule,
 		MatFormFieldModule,
 		MatInputModule,
@@ -19,9 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
 		MatButtonModule,
 	],
 	providers: [OfferService],
-  templateUrl: './offer-cancel-dialog.component.html',
-  styleUrls: ['./offer-cancel-dialog.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+	templateUrl: './offer-cancel-dialog.component.html',
+	styleUrls: ['./offer-cancel-dialog.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferCancelDialogComponent {
 	constructor(
