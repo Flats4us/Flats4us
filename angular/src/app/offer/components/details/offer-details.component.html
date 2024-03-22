@@ -230,6 +230,9 @@
 		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
 	</div>
 	<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
+		<button mat-raised-button color="primary" (click)="returnStart()">
+			Powrót
+		</button>
 		<button
 			mat-raised-button
 			color="primary"
@@ -244,46 +247,5 @@
 		>
 			Wynajmij
 		</button>
-	</div>
-	<div *ngIf="data.user === uType.OWNER">
-		<mat-form-field>
-			<mat-label>Proponowani lokatorzy</mat-label>
-			<mat-chip-grid #chipGrid aria-label="Tenants">
-				<mat-chip-row
-					*ngFor="let myTenant of myTenants"
-					(removed)="remove(myTenant, myTenants)"
-				>
-					{{ myTenant }}
-					<button
-						matChipRemove
-						type="button"
-						[attr.aria-label]="'remove ' + myTenant"
-					>
-						<mat-icon>cancel</mat-icon>
-					</button>
-				</mat-chip-row>
-				<input
-					#tenantsInput
-					[formControl]="tenantsCtrl"
-					[matChipInputFor]="chipGrid"
-					[matAutocomplete]="auto"
-					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-					(matChipInputTokenEnd)="add($event, myTenants, tenantsCtrl)"
-				/>
-				<mat-autocomplete
-					#auto="matAutocomplete"
-					(optionSelected)="selected($event)"
-				>
-					<mat-option
-						*ngFor="let tenant of filteredTenants$ | async"
-						[value]="tenant"
-						>{{ tenant }}</mat-option
-					>
-				</mat-autocomplete>
-			</mat-chip-grid>
-			<div class="button-box-options">
-				<button mat-raised-button color="primary">Wynajmij</button>
-			</div>
-		</mat-form-field>
 	</div>
 </div>

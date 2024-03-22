@@ -13,9 +13,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { OfferDetailsComponent } from './offer-details.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+import { OfferService } from '../../services/offer.service';
+import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -35,10 +36,10 @@ import { MatCardModule } from '@angular/material/card';
 		MatChipsModule,
 		FormsModule,
 		ReactiveFormsModule,
-		MatAutocompleteModule,
 		MatFormFieldModule,
 		MatCardModule,
 	],
+	providers: [OfferService, RealEstateService],
 	exports: [OfferDetailsComponent],
 })
 export class OfferDetailsModule {}

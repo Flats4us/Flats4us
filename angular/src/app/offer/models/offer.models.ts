@@ -29,6 +29,10 @@ export interface IPromotion {
 	duration: number;
 }
 
+export interface IDecision {
+	decision: boolean;
+}
+
 export interface IRentProposition {
 	roommatesEmails: string[];
 	startDate: Date;
