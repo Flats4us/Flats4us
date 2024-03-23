@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Dodawanie spotkania</h1>
+<h1 class="text-2xl p-4 font-semibold">Dodawanie spotkania</h1>
 <div mat-dialog-content>
 	<form class="flex flex-col" [formGroup]="meetingForm" (ngSubmit)="onAdd()">
 		<mat-form-field>
@@ -15,10 +15,7 @@
 				[for]="datepicker"
 			></mat-datepicker-toggle>
 			<mat-datepicker #datepicker></mat-datepicker>
-			<mat-error
-				*ngIf="meetingForm.controls['date'].errors?.['required']"
-				class="error-text"
-			>
+			<mat-error *ngIf="meetingForm.controls['date'].errors?.['required']">
 				Pole jest wymagane!
 			</mat-error>
 		</mat-form-field>
@@ -26,10 +23,7 @@
 		<mat-form-field>
 			<mat-label>Miejsce</mat-label>
 			<input matInput formControlName="place" type="text" />
-			<mat-error
-				*ngIf="meetingForm.controls['place'].errors?.['required']"
-				class="error-text"
-			>
+			<mat-error *ngIf="meetingForm.controls['place'].errors?.['required']">
 				Pole jest wymagane!
 			</mat-error>
 		</mat-form-field>
@@ -37,10 +31,7 @@
 		<mat-form-field>
 			<mat-label>Temat</mat-label>
 			<input matInput formControlName="reason" type="text" />
-			<mat-error
-				*ngIf="meetingForm.controls['reason'].errors?.['required']"
-				class="error-text"
-			>
+			<mat-error *ngIf="meetingForm.controls['reason'].errors?.['required']">
 				Pole jest wymagane!
 			</mat-error>
 		</mat-form-field>

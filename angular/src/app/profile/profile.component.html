@@ -12,7 +12,7 @@
 			</div>
 			<div class="profile-name flex justify-center">{{ user.name }}</div>
 			<div class="profile-features__wrapper flex justify-center">
-				<mat-chip-listbox>
+				<mat-chip-listbox *ngIf="user.userType === 1">
 					<mat-chip *ngIf="!user.surveyStudent.smoking">
 						<div class="chip">
 							<mat-icon>smoke_free</mat-icon> <span>Nie pali</span>

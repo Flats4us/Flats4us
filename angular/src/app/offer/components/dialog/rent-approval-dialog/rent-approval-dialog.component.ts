@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import {
+	CUSTOM_ELEMENTS_SCHEMA,
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
 	MAT_DIALOG_DATA,
@@ -15,6 +20,8 @@ import { UserService } from '@shared/services/user.service';
 import { IUser } from '@shared/models/user.models';
 import { MatChipsModule } from '@angular/material/chips';
 import { environment } from 'src/environments/environment.prod';
+import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -25,7 +32,9 @@ import { environment } from 'src/environments/environment.prod';
 		MatButtonModule,
 		MatSnackBarModule,
 		MatChipsModule,
+		MatCardModule,
 	],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	providers: [OfferService, UserService],
 	templateUrl: './rent-approval-dialog.component.html',
 	styleUrls: ['./rent-approval-dialog.component.scss'],
@@ -40,6 +49,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 		public offerService: OfferService,
 		public userService: UserService,
 		private snackBar: MatSnackBar,
+		private router: Router,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -81,6 +91,10 @@ export class RentApprovalDialogComponent extends BaseComponent {
 					});
 				},
 			});
+	}
+
+	public showProfile(id: number) {
+		this.router.navigate(['profile', 'details', 'student', id]);
 	}
 
 	private handleError(error: HttpErrorResponse) {

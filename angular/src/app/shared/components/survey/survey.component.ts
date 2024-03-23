@@ -55,8 +55,10 @@ export class SurveyComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.surveyForm = this.formDir.form;
-		this.surveyForm.addControl('survey', this.formToAdd);
+		if (this.createProfileMode) {
+			this.surveyForm = this.formDir.form;
+			this.surveyForm.addControl('survey', this.formToAdd);
+		}
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {

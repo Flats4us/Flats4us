@@ -7,7 +7,6 @@
 					<input matInput formControlName="name" name="name" />
 					<mat-error
 						*ngIf="registerForm.controls['name'].errors?.['required']"
-						class="error-text"
 					>
 						Nie podano imienia!
 					</mat-error>
@@ -19,7 +18,6 @@
 					<input matInput formControlName="surname" name="surname" />
 					<mat-error
 						*ngIf="registerForm.controls['surname'].errors?.['required']"
-						class="error-text"
 					>
 						Nie podano nazwiska!
 					</mat-error>
@@ -31,13 +29,11 @@
 					<input matInput formControlName="email" name="email" />
 					<mat-error
 						*ngIf="registerForm.controls['email'].errors?.['required']"
-						class="error-text"
 					>
 						Nie podano adresu email!
 					</mat-error>
 					<mat-error
 						*ngIf="registerForm.controls['email'].errors?.['email']"
-						class="error-text"
 					>
 						Nieprawidłowy adres email!
 					</mat-error>
@@ -58,13 +54,11 @@
 					}}</mat-icon>
 					<mat-error
 						*ngIf="registerForm.controls['password'].errors?.['required']"
-						class="error-text"
 					>
 						Nie podano hasła!
 					</mat-error>
 					<mat-error
 						*ngIf="registerForm.controls['password'].errors?.['pattern']"
-						class="error-text"
 					>
 						Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery,
 						cyfry i symbole!
@@ -90,13 +84,11 @@
 					}}</mat-icon>
 					<mat-error
 						*ngIf="registerForm.controls['confirmPassword'].errors?.['required']"
-						class="error-text"
 					>
 						Nie powtórzono hasła!
 					</mat-error>
 					<mat-error
 						*ngIf="registerForm.errors?.['matchPassword']"
-						class="error-text"
 					>
 						Hasła różnią się od siebie!
 					</mat-error>

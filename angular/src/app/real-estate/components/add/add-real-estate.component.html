@@ -25,7 +25,6 @@
 						</mat-select>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['propertyType'].errors?.['required']"
-							class="error-text"
 						>
 							Nie wybrano rodzaju nieruchomości!
 						</mat-error>
@@ -60,7 +59,6 @@
 						</mat-select>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['province'].errors?.['required']"
-							class="error-text"
 						>
 							Nie wybrano województwa!
 						</mat-error>
@@ -92,7 +90,6 @@
 						</mat-autocomplete>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['city'].errors?.['required']"
-							class="error-text"
 						>
 							Nie wybrano miejscowości!
 						</mat-error>
@@ -139,13 +136,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['postalCode'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano kodu pocztowego!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['postalCode'].errors?.['pattern']"
-							class="error-text"
 						>
 							Nieprawidłowy format kodu pocztowego!
 						</mat-error>
@@ -166,7 +161,6 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['street'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano nazwy ulicy!
 						</mat-error>
@@ -187,7 +181,6 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano numeru ulicy!
 						</mat-error>
@@ -208,13 +201,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano numeru mieszkania!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['pattern']"
-							class="error-text"
 						>
 							Nieprawidłowy numer mieszkania!
 						</mat-error>
@@ -255,13 +246,11 @@
 						<span matSuffix class="suffix">m²</span>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano powierzchni!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -283,13 +272,11 @@
 						<span matSuffix class="suffix">m²</span>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['plotArea'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano powierzchni działki!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['plotArea'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -310,13 +297,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano maks. l. mieszkańców!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -336,7 +321,6 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano roku budowy!
 						</mat-error>
@@ -344,7 +328,6 @@
 							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['pattern'] ||
 							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['min'] ||
 							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['max']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -365,13 +348,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano liczby pokoi!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -392,13 +373,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['floor'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano piętra!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['floor'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
@@ -419,13 +398,11 @@
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano liczby pięter!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['min']"
-							class="error-text"
 						>
 							Nieprawidłowa wartość!
 						</mat-error>
