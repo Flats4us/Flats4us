@@ -44,7 +44,7 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private matPaginatorIntl: MatPaginatorIntl,
 		private cdr: ChangeDetectorRef,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
 	) {
 		super();
 	}
@@ -60,7 +60,7 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 		this.matPaginatorIntl.getRangeLabel = (
 			page: number,
 			pageSize: number,
-			length: number
+			length: number,
 		) => {
 			if (length == 0 || pageSize == 0) {
 				return `0 z ${length} ofert`;
@@ -96,7 +96,7 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 	public filterOffers() {
 		this.watchedOffers$ = this.offerService.getWatchedOffers(
 			this.pageIndex,
-			this.pageSize
+			this.pageSize,
 		);
 		this.cdr.detectChanges();
 	}

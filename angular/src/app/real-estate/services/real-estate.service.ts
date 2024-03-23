@@ -278,13 +278,13 @@ export class RealEstateService {
 			map(equipments => {
 				equipments.forEach(equipment => this.equipment.push(equipment));
 				return this.equipment;
-			})
+			}),
 		);
 	}
 
 	public readCitiesForRegions(
 		regionCityArray: IRegionCity[],
-		citiesGroups: IGroup[]
+		citiesGroups: IGroup[],
 	): Observable<IRegionCity[]> {
 		return this.httpClient
 			.get('./assets/wojewodztwa_miasta.csv', { responseType: 'text' })
@@ -303,7 +303,7 @@ export class RealEstateService {
 							?.parts.push(row[1]);
 					}
 					return regionCityArray;
-				})
+				}),
 			);
 	}
 
@@ -313,7 +313,7 @@ export class RealEstateService {
 		return this.httpClient.post<void>(
 			`${this.apiRoute}/properties/${id}/files`,
 			formData,
-			{ headers }
+			{ headers },
 		);
 	}
 	public deleteRealEstate(id: number): Observable<void> {
@@ -342,7 +342,7 @@ export class RealEstateService {
 	public getLatLon(address: string): IGeoLocation {
 		let geoLocation: IGeoLocation = { lat: 0, lon: 0 };
 		const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-			address
+			address,
 		)}&format=json`;
 		this.httpClient.get(url).subscribe((response: any) => {
 			if (response.length > 0) {

@@ -33,7 +33,7 @@ export class RentsDialogComponent {
 	constructor(
 		public rentsService: RentsService,
 		public dialogRef: MatDialogRef<RentsDialogComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: IRent
+		@Inject(MAT_DIALOG_DATA) public data: IRent,
 	) {}
 
 	public onYesClick() {

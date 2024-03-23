@@ -30,13 +30,13 @@ export class RentsDetailsComponent {
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public statusName: typeof statusName = statusName;
 	public user$ = this.route.parent?.paramMap.pipe(
-		map(params => params.get('user')?.toUpperCase() ?? '')
+		map(params => params.get('user')?.toUpperCase() ?? ''),
 	);
 	private rentId$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('id') ?? '')
+		map(params => params.get('id') ?? ''),
 	);
 	public actualRent$: Observable<IOffer> = this.rentId$?.pipe(
-		switchMap(value => this.offerService.getOfferById(parseInt(value)))
+		switchMap(value => this.offerService.getOfferById(parseInt(value))),
 	);
 	public payments: IPayment[] = [
 		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
@@ -58,7 +58,7 @@ export class RentsDetailsComponent {
 		private rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	public addOffer() {

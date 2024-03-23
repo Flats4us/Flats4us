@@ -29,7 +29,7 @@ export class ProfileService {
 			map(interests => {
 				interests.forEach(interest => this.interests.push(interest));
 				return this.interests;
-			})
+			}),
 		);
 	}
 

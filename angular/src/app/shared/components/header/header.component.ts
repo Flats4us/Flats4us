@@ -19,6 +19,6 @@ export class HeaderComponent {
 
 	constructor(
 		public authService: AuthService,
-		public userService: UserService
+		public userService: UserService,
 	) {}
 }

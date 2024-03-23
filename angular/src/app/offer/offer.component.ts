@@ -18,14 +18,14 @@ export class OfferComponent {
 	public uType = UserType;
 
 	public user$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('user')?.toUpperCase() ?? '')
+		map(params => params.get('user')?.toUpperCase() ?? ''),
 	);
 
 	constructor(
 		public offerService: OfferService,
 		private router: Router,
 		private route: ActivatedRoute,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
 	) {}
 
 	public addOffer() {

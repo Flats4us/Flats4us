@@ -17,7 +17,7 @@ export class GetDescriptionDirective implements OnChanges {
 
 	public ngOnChanges(changes: SimpleChanges) {
 		this.el.nativeElement.textContent = this.getDescription(
-			changes['count'].currentValue
+			changes['count'].currentValue,
 		);
 	}
 

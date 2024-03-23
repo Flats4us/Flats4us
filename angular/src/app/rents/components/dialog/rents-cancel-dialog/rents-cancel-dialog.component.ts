@@ -26,7 +26,7 @@ export class RentsCancelDialogComponent {
 	public statusName: typeof statusName = statusName;
 	constructor(
 		public rentsService: RentsService,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		@Inject(MAT_DIALOG_DATA) public data: number,
 	) {}
 
 	public onYesClick() {

@@ -12,7 +12,10 @@ export class EmailChangeComponent {
 	public hide = true;
 	public emailChangeForm: FormGroup;
 
-	constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
+	constructor(
+		private fb: FormBuilder,
+		private snackBar: MatSnackBar,
+	) {
 		this.emailChangeForm = this.fb.group({
 			email: ['s22900@pjwstk.edu.pl', [Validators.required, Validators.email]],
 			password: ['', Validators.required],

@@ -20,7 +20,7 @@ export class RealEstateDetailsComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	private realEstateId$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('id') ?? '')
+		map(params => params.get('id') ?? ''),
 	);
 	public actualRealEstate$: Observable<IProperty> = this.realEstateId$?.pipe(
 		switchMap(id =>
@@ -30,10 +30,10 @@ export class RealEstateDetailsComponent {
 					map(
 						realEstates =>
 							realEstates.find(realEstate => realEstate.propertyId === parseInt(id)) ??
-							({} as IProperty)
-					)
-				)
-		)
+							({} as IProperty),
+					),
+				),
+		),
 	);
 	public currentIndex = 0;
 
@@ -45,7 +45,7 @@ export class RealEstateDetailsComponent {
 		public realEstateService: RealEstateService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private dialog: MatDialog
+		private dialog: MatDialog,
 	) {}
 
 	public onSelect(menuOption: IMenuOptions, id: number) {

@@ -16,7 +16,7 @@ export class RentsComponent {
 	public uType = UserType;
 	public rentsOptions$: Observable<IRent[]> = this.rentsService.getRents();
 	public user$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('user')?.toUpperCase() ?? '')
+		map(params => params.get('user')?.toUpperCase() ?? ''),
 	);
 
 	public statusName: typeof statusName = statusName;
@@ -24,7 +24,7 @@ export class RentsComponent {
 	constructor(
 		public rentsService: RentsService,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {}
 
 	public addOffer() {

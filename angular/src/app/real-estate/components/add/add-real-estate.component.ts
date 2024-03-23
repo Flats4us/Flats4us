@@ -69,7 +69,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		private http: HttpClient,
 		public realEstateService: RealEstateService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
 	) {
 		super();
 		this.addRealEstateFormAddressData = formBuilder.group({
@@ -132,7 +132,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
-				this.realEstateService.citiesGroups
+				this.realEstateService.citiesGroups,
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe();
@@ -213,14 +213,14 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.get('city')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
-				map(value => this.filterCitiesGroup(value))
+				map(value => this.filterCitiesGroup(value)),
 			);
 
 		this.districtGroupOptions$ = this.addRealEstateFormAddressData
 			.get('district')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
-				map(value => this.filterDistrictsGroup(value))
+				map(value => this.filterDistrictsGroup(value)),
 			);
 
 		this.addRealEstateFormAddressData.get('flat')?.disable();
@@ -269,7 +269,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.addRealEstateFormAddressData.get('province')?.value
+					group.whole === this.addRealEstateFormAddressData.get('province')?.value,
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
@@ -281,7 +281,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.addRealEstateFormAddressData.get('city')?.value
+					group.whole === this.addRealEstateFormAddressData.get('city')?.value,
 			);
 	}
 
@@ -309,15 +309,15 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				this.untilDestroyed(),
 				catchError(this.handleError),
 				concatMap(id =>
-					this.realEstateService.addRealEstateFiles(id, this.formData)
-				)
+					this.realEstateService.addRealEstateFiles(id, this.formData),
+				),
 			)
 			.subscribe({
 				error: () => {
 					this.snackBar.open(
 						'Nie udało się dodać nieruchomości. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 2000 },
 					);
 				},
 			});
@@ -325,7 +325,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 	private handleError(error: HttpErrorResponse) {
 		return throwError(
-			() => new Error('Nie udało się dodać nieruchomości. Spróbuj ponownie.')
+			() => new Error('Nie udało się dodać nieruchomości. Spróbuj ponownie.'),
 		);
 	}
 }

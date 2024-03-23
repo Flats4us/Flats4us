@@ -28,7 +28,7 @@ export class AddOfferComponent extends BaseComponent {
 		private offerService: OfferService,
 		private realEstateService: RealEstateService,
 		private fb: FormBuilder,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
 	) {
 		super();
 	}
@@ -40,7 +40,7 @@ export class AddOfferComponent extends BaseComponent {
 			.subscribe(() =>
 				this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {
 					duration: 2000,
-				})
+				}),
 			);
 	}
 }

@@ -33,14 +33,14 @@ export class OfferDetailsComponent {
 	public statusName: typeof statusName = statusName;
 	public user$: Observable<string | undefined> =
 		this.route.parent?.paramMap.pipe(
-			map(params => params.get('user')?.toUpperCase())
+			map(params => params.get('user')?.toUpperCase()),
 		) ?? of('');
 
 	private offerId$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('id') ?? '')
+		map(params => params.get('id') ?? ''),
 	);
 	public actualOffer$: Observable<IOffer> = this.offerId$.pipe(
-		switchMap(value => this.offerService.getOfferById(parseInt(value)))
+		switchMap(value => this.offerService.getOfferById(parseInt(value))),
 	);
 	public tenantsCtrl = new FormControl('');
 	public filteredTenants$: Observable<string[]>;
@@ -68,20 +68,20 @@ export class OfferDetailsComponent {
 		public offerService: OfferService,
 		private router: Router,
 		private dialog: MatDialog,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
 	) {
 		this.filteredTenants$ = this.tenantsCtrl.valueChanges.pipe(
 			startWith(null),
 			map((tenant: string | null) =>
-				tenant ? this.filter(tenant) : this.tenants.slice()
-			)
+				tenant ? this.filter(tenant) : this.tenants.slice(),
+			),
 		);
 	}
 
 	public add(
 		event: MatChipInputEvent,
 		items: string[],
-		formControl: FormControl
+		formControl: FormControl,
 	): void {
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
@@ -111,7 +111,7 @@ export class OfferDetailsComponent {
 		const filterValue = value.toLowerCase().trim();
 
 		return this.tenants.filter(tenant =>
-			tenant.toLowerCase().includes(filterValue)
+			tenant.toLowerCase().includes(filterValue),
 		);
 	}
 

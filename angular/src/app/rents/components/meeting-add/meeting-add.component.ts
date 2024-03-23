@@ -54,7 +54,7 @@ export class MeetingAddComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private rentsService: RentsService,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		@Inject(MAT_DIALOG_DATA) public data: number,
 	) {
 		super();
 		this.meetingForm.controls['offerId'].setValue(data);
@@ -76,7 +76,7 @@ export class MeetingAddComponent extends BaseComponent {
 						this.snackBar.open(
 							'Nie udało się dodać spotkania. Spróbuj ponownie.',
 							'Zamknij',
-							{ duration: 2000 }
+							{ duration: 2000 },
 						);
 					},
 				});
@@ -85,7 +85,7 @@ export class MeetingAddComponent extends BaseComponent {
 
 	private handleError(error: HttpErrorResponse) {
 		return throwError(
-			() => new Error('Nie udało się dodać spotkania. Spróbuj później')
+			() => new Error('Nie udało się dodać spotkania. Spróbuj później'),
 		);
 	}
 }

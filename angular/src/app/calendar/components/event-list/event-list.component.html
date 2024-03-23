@@ -1,11 +1,11 @@
-<h1 mat-dialog-title>Wydarzenia {{ date | date : "dd.MM.YYYY" }}</h1>
+<h1 mat-dialog-title>Wydarzenia {{ date | date: "dd.MM.YYYY" }}</h1>
 <div mat-dialog-content>
 	<div class="flex flex-col gap-4 m-4">
 		<div *ngFor="let event of events">
 			<div>
 				<div class="mb-2">
 					<span class="text-black font-bold">Data: </span>
-					<span>{{ event.date | date : "dd.MM.YYY HH:mm" }}</span>
+					<span>{{ event.date | date: "dd.MM.YYY HH:mm" }}</span>
 				</div>
 				<div>
 					<span class="text-black font-bold">Nazwa: </span>

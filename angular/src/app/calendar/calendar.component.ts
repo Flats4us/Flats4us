@@ -37,15 +37,15 @@ export class CalendarComponent {
 		.pipe(
 			tap(events =>
 				events.forEach(
-					event => (this.hasEventsMap[new Date(event.date).toDateString()] = true)
-				)
-			)
+					event => (this.hasEventsMap[new Date(event.date).toDateString()] = true),
+				),
+			),
 		);
 
 	constructor(
 		private dateAdapter: DateAdapter<Date>,
 		public calendaService: CalendarService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
 	) {
 		this.dateAdapter.getFirstDayOfWeek = () => 1;
 	}
@@ -55,7 +55,7 @@ export class CalendarComponent {
 	}
 
 	public dateClass: MatCalendarCellClassFunction<Date> = (
-		date: Date
+		date: Date,
 	): string | string[] =>
 		this.hasEventsMap[date.toDateString()] ? 'has-event' : '';
 
@@ -63,13 +63,13 @@ export class CalendarComponent {
 		if (
 			event &&
 			calendar.find(
-				e => new Date(e.date).toDateString() === new Date(event).toDateString()
+				e => new Date(e.date).toDateString() === new Date(event).toDateString(),
 			)
 		) {
 			const ref = this.dialog.open(EventListComponent);
 			ref.componentInstance.date = event;
 			ref.componentInstance.events = calendar.filter(
-				e => new Date(e.date).toDateString() === new Date(event).toDateString()
+				e => new Date(e.date).toDateString() === new Date(event).toDateString(),
 			);
 		}
 	}

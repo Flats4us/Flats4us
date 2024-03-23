@@ -42,7 +42,7 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 		private offerService: OfferService,
 		private formBuilder: FormBuilder,
 		public dialogRef: MatDialogRef<number>,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		@Inject(MAT_DIALOG_DATA) public data: number,
 	) {
 		super();
 	}

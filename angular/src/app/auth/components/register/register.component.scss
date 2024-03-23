@@ -23,7 +23,9 @@
 	color: #fff;
 	border-style: solid;
 	border-color: #6200ee;
-	transition: background-color 0.3s ease, color 0.3s ease;
+	transition:
+		background-color 0.3s ease,
+		color 0.3s ease;
 }
 
 .buttons .btn-submit:hover {

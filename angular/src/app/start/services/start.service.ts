@@ -60,7 +60,7 @@ export class StartService {
 	constructor(private httpClient: HttpClient) {}
 
 	public getFilteredOffers(
-		filteredOptions: IFilteredOffers
+		filteredOptions: IFilteredOffers,
 	): Observable<ISendOffers> {
 		const properties = filteredOptions.property.join(', ').split(', ');
 		const years = filteredOptions.year.join(', ').split(', ');
@@ -110,46 +110,46 @@ export class StartService {
 			.append(
 				'province',
 				filteredOptions.regionsGroup.charAt(0).toUpperCase() +
-					filteredOptions.regionsGroup.slice(1)
+					filteredOptions.regionsGroup.slice(1),
 			)
 			.append('city', filteredOptions.citiesGroup)
 			.append(
 				filteredOptions.distance ? 'distance' : ``,
-				filteredOptions.distance ?? ''
+				filteredOptions.distance ?? '',
 			)
 			.append(properties[0] ? `propertyTypes` : ``, properties[0] ?? '')
 			.append(properties[1] ? `propertyTypes` : ``, properties[1] ?? '')
 			.append(properties[2] ? `propertyTypes` : ``, properties[2] ?? '')
 			.append(
 				filteredOptions.minPrice ? 'minPrice' : ``,
-				filteredOptions.minPrice ?? ''
+				filteredOptions.minPrice ?? '',
 			)
 			.append(
 				filteredOptions.maxPrice ? 'maxPrice' : ``,
-				filteredOptions.maxPrice ?? ''
+				filteredOptions.maxPrice ?? '',
 			)
 			.append(
 				filteredOptions.districtsGroup ? 'district' : ``,
-				filteredOptions.districtsGroup ?? ''
+				filteredOptions.districtsGroup ?? '',
 			)
 			.append(
 				filteredOptions.minArea ? 'minArea' : ``,
-				filteredOptions.minArea ?? ''
+				filteredOptions.minArea ?? '',
 			)
 			.append(
 				filteredOptions.maxArea ? 'maxArea' : ``,
-				filteredOptions.maxArea ?? ''
+				filteredOptions.maxArea ?? '',
 			)
 			.append(minYear ? 'minYear' : ``, minYear ?? '')
 			.append(maxYear ? 'maxYear' : ``, maxYear ?? '')
 			.append(
 				filteredOptions.rooms ? 'minNumberOfRooms' : ``,
-				filteredOptions.rooms ?? ''
+				filteredOptions.rooms ?? '',
 			)
 			.append(filteredOptions.floors ? 'floor' : ``, filteredOptions.floors ?? '')
 			.append(
 				filteredOptions.sorting.type ? 'sorting' : ``,
-				filteredOptions.sorting.type ?? ''
+				filteredOptions.sorting.type ?? '',
 			)
 			.append('pageNumber', filteredOptions.pageIndex + 1)
 			.append('pageSize', filteredOptions.pageSize);
