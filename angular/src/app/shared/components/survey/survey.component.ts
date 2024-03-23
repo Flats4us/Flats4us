@@ -17,7 +17,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SurveyService } from '../../services/survey.service';
 
 @Component({
-	selector: 'app-student-survey',
+	selector: 'app-survey',
 	templateUrl: './survey.component.html',
 	styleUrls: ['./survey.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

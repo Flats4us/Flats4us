@@ -210,12 +210,20 @@
 			</table>
 		</div>
 	</div>
-	<div *ngIf="data.user === uType.STUDENT" class="button-box-options">
-		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
-	</div>
-	<div *ngIf="data.user !== uType.OWNER" class="button-box-options">
-		<button mat-raised-button color="primary" (click)="onAddMeeting()">
+	<div class="button-box-options">
+		<button *ngIf="data.user === uType.STUDENT" mat-raised-button color="primary">
+			Dodaj współlokatorów
+		</button>
+		<button
+			*ngIf="data.user !== uType.OWNER"
+			mat-raised-button
+			color="primary"
+			(click)="onAddMeeting()"
+		>
 			Dodaj spotkanie
+		</button>
+		<button mat-raised-button color="primary" (click)="onRate()">
+			Oceń najem
 		</button>
 	</div>
 </div>

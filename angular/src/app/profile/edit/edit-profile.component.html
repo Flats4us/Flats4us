@@ -411,7 +411,9 @@
 							Nie określono daty ważności dokumentu!
 						</mat-error>
 						<mat-error
-							*ngIf="actualForm.controls['documentExpireDate'].errors?.['validityTill']"
+							*ngIf="
+								actualForm.controls['documentExpireDate'].errors?.['validityTill']
+							"
 							class="error-text"
 						>
 							Termin ważności dokumentu upłynął!
