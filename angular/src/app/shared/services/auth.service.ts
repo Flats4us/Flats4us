@@ -64,16 +64,8 @@ export class AuthService {
 	}
 
 	public isValidToken(): boolean {
-		const token = this.getAuthToken();
-		if (!token) {
-			return false;
-		}
-		const expirationTime = localStorage.getItem('authTokenExpirationTime');
-		if (!expirationTime) {
-			return false;
-		}
-		const now = new Date().getTime();
-		return now < parseInt(expirationTime, 10);
+		return true;
+		
 	}
 
 	public logout(): void {

@@ -14,6 +14,7 @@ import { UserType } from 'src/app/profile/models/types';
 import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { RentsService } from '../../services/rents.service';
+import { RentRateComponent } from '../rent-rate/rent-rate.component';
 
 @Component({
 	selector: 'app-rents-details',
@@ -99,6 +100,13 @@ export class RentsDetailsComponent {
 		this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
 			data: this.rentId$,
+		});
+	}
+
+	public onRate(): void {
+		this.dialog.open(RentRateComponent, {
+			disableClose: true,
+			data: this.actualRent$,
 		});
 	}
 
