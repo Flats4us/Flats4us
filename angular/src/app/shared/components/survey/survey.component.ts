@@ -31,6 +31,8 @@ export class SurveyComponent implements OnInit {
 	public formToAdd = new FormGroup({});
 	public questions$: Observable<IQuestionsData[]>;
 	public typeName: typeof TypeName = TypeName;
+	public showMoreQuestions = false;
+	public numberOfQuestions = 0;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -43,7 +45,12 @@ export class SurveyComponent implements OnInit {
 		});
 
 		this.questions$ = this.getQuestions().pipe(
-			tap(questions => this.getFormControls(questions))
+			tap(questions => {
+				{
+					this.getFormControls(questions);
+					this.numberOfQuestions = questions.length;
+				}
+			})
 		);
 	}
 
