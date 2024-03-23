@@ -91,7 +91,7 @@ export class OfferDetailsComponent {
 		this.router.navigate(['disputes', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number | undefined) {
+	public onSelect(menuOption: IMenuOptions, id?: number) {
 		switch (menuOption.option) {
 			case 'offerDetails': {
 				this.navigateToOffer(id ?? 0);
@@ -112,21 +112,21 @@ export class OfferDetailsComponent {
 		}
 	}
 
-	public onAddMeeting(id: number | undefined): void {
+	public onAddMeeting(id?: number): void {
 		this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
 			data: id ?? 0,
 		});
 	}
 
-	public startRent(id: number | undefined) {
+	public startRent(id?: number) {
 		this.dialog.open(RentPropositionDialogComponent, {
 			disableClose: true,
 			data: id ?? 0,
 		});
 	}
 
-	public onRentApproval(id: number | undefined): void {
+	public onRentApproval(id?: number): void {
 		this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
 			data: id ?? 0,
@@ -141,12 +141,12 @@ export class OfferDetailsComponent {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide(length: number | undefined) {
+	public prevSlide(length?: number) {
 		this.currentIndex =
 			this.currentIndex < (length ?? 0) - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide(length: number | undefined) {
+	public nextSlide(length?: number) {
 		this.currentIndex =
 			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
 	}

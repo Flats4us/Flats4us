@@ -79,7 +79,7 @@ export class RentsDetailsComponent {
 		this.router.navigate([['disputes', id]]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number | undefined) {
+	public onSelect(menuOption: IMenuOptions, id?: number) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
 				this.navigateToRent(id ?? 0);
@@ -118,12 +118,12 @@ export class RentsDetailsComponent {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide(length: number | undefined) {
+	public prevSlide(length?: number) {
 		this.currentIndex =
 			this.currentIndex < (length ?? 0) - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide(length: number | undefined) {
+	public nextSlide(length?: number) {
 		this.currentIndex =
 			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
 	}
