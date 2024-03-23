@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Dodawanie najmu</h1>
+<h1 class="text-2xl p-4 font-semibold">Dodawanie najmu</h1>
 <div mat-dialog-content>
 	<form
 		class="flex flex-col"
@@ -21,7 +21,6 @@
 			<mat-datepicker #datepicker></mat-datepicker>
 			<mat-error
 				*ngIf="rentPropositionForm.controls['startDate'].errors?.['required']"
-				class="error-text"
 			>
 				Pole jest wymagane!
 			</mat-error>
@@ -37,14 +36,10 @@
 			/>
 			<mat-error
 				*ngIf="rentPropositionForm.controls['duration'].errors?.['required']"
-				class="error-text"
 			>
 				Liczba dni jest wymagana!
 			</mat-error>
-			<mat-error
-				*ngIf="rentPropositionForm.controls['duration'].errors?.['min']"
-				class="error-text"
-			>
+			<mat-error *ngIf="rentPropositionForm.controls['duration'].errors?.['min']">
 				Wprowadzona liczba dni jest nieprawidłowa!
 			</mat-error>
 		</mat-form-field>

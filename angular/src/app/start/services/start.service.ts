@@ -104,7 +104,7 @@ export class StartService {
 				break;
 			}
 		}
-		const queryParams = new HttpParams({
+		let queryParams = new HttpParams({
 			fromObject: { Equipment: filteredOptions.equipment },
 		})
 			.append(
@@ -113,46 +113,46 @@ export class StartService {
 					filteredOptions.regionsGroup.slice(1)
 			)
 			.append('city', filteredOptions.citiesGroup)
-			.append(
-				filteredOptions.distance ? 'distance' : ``,
-				filteredOptions.distance ?? ''
-			)
-			.append(properties[0] ? `propertyTypes` : ``, properties[0] ?? '')
-			.append(properties[1] ? `propertyTypes` : ``, properties[1] ?? '')
-			.append(properties[2] ? `propertyTypes` : ``, properties[2] ?? '')
-			.append(
-				filteredOptions.minPrice ? 'minPrice' : ``,
-				filteredOptions.minPrice ?? ''
-			)
-			.append(
-				filteredOptions.maxPrice ? 'maxPrice' : ``,
-				filteredOptions.maxPrice ?? ''
-			)
-			.append(
-				filteredOptions.districtsGroup ? 'district' : ``,
-				filteredOptions.districtsGroup ?? ''
-			)
-			.append(
-				filteredOptions.minArea ? 'minArea' : ``,
-				filteredOptions.minArea ?? ''
-			)
-			.append(
-				filteredOptions.maxArea ? 'maxArea' : ``,
-				filteredOptions.maxArea ?? ''
-			)
-			.append(minYear ? 'minYear' : ``, minYear ?? '')
-			.append(maxYear ? 'maxYear' : ``, maxYear ?? '')
-			.append(
-				filteredOptions.rooms ? 'minNumberOfRooms' : ``,
-				filteredOptions.rooms ?? ''
-			)
-			.append(filteredOptions.floors ? 'floor' : ``, filteredOptions.floors ?? '')
-			.append(
-				filteredOptions.sorting.type ? 'sorting' : ``,
-				filteredOptions.sorting.type ?? ''
-			)
 			.append('pageNumber', filteredOptions.pageIndex + 1)
 			.append('pageSize', filteredOptions.pageSize);
+		if (filteredOptions.distance) {
+			queryParams = queryParams.append('distance', filteredOptions.distance);
+		}
+		for (let i = 0; i < 3; i++) {
+			if (properties[i]) {
+				queryParams = queryParams.append('propertyTypes', properties[i]);
+			}
+		}
+		if (filteredOptions.minPrice) {
+			queryParams = queryParams.append('minPrice', filteredOptions.minPrice);
+		}
+		if (filteredOptions.maxPrice) {
+			queryParams = queryParams.append('maxPrice', filteredOptions.maxPrice);
+		}
+		if (filteredOptions.districtsGroup) {
+			queryParams = queryParams.append('district', filteredOptions.districtsGroup);
+		}
+		if (filteredOptions.minArea) {
+			queryParams = queryParams.append('minArea', filteredOptions.minArea);
+		}
+		if (filteredOptions.maxArea) {
+			queryParams = queryParams.append('maxArea', filteredOptions.maxArea);
+		}
+		if (minYear) {
+			queryParams = queryParams.append('minYear', minYear);
+		}
+		if (maxYear) {
+			queryParams = queryParams.append('maxYear', maxYear);
+		}
+		if (filteredOptions.rooms) {
+			queryParams = queryParams.append('minNumberOfRooms', filteredOptions.rooms);
+		}
+		if (filteredOptions.floors) {
+			queryParams = queryParams.append('floor', filteredOptions.floors);
+		}
+		if (filteredOptions.sorting.type) {
+			queryParams = queryParams.append('sorting', filteredOptions.sorting.type);
+		}
 		return this.httpClient.get<ISendOffers>(this.apiRoute, {
 			params: queryParams,
 		});

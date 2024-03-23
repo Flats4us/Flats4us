@@ -70,7 +70,12 @@
 				</section>
 
 				<mat-radio-group
-					*ngIf="question.typeName === typeName.RADIOBUTTON && showMoreQuestions"
+					*ngIf="
+						(question.typeName === typeName.RADIOBUTTON && showMoreQuestions) ||
+						(i < 7 &&
+							question.typeName === typeName.RADIOBUTTON &&
+							!createProfileMode)
+					"
 					[formControlName]="question.name"
 				>
 					<mat-radio-button

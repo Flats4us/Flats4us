@@ -57,7 +57,7 @@
 						value="urlPhoto"
 						(change)="onFileSelected($event, regexImage)"
 					/>
-					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar" class="error-text"
+					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar"
 						>Nie wczytano zdjęcia!</mat-error
 					>
 					<div
@@ -145,15 +145,11 @@
 							[for]="picker"
 						></mat-datepicker-toggle>
 						<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
-						<mat-error
-							*ngIf="actualForm.controls['birthDate'].errors?.['required']"
-							class="error-text"
-						>
+						<mat-error *ngIf="actualForm.controls['birthDate'].errors?.['required']">
 							Nie określono daty urodzenia!
 						</mat-error>
 						<mat-error
 							*ngIf="actualForm.controls['birthDate'].errors?.['validityAge']"
-							class="error-text"
 						>
 							Podano nieprawidłową datę urodzenia!
 						</mat-error>
@@ -174,7 +170,6 @@
 						/>
 						<mat-error
 							*ngIf="actualForm.controls['studentNumber'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano numeru studenta!
 						</mat-error>
@@ -193,10 +188,7 @@
 							aria-label="University"
 							matInput
 						/>
-						<mat-error
-							*ngIf="actualForm.controls['university'].errors?.['required']"
-							class="error-text"
-						>
+						<mat-error *ngIf="actualForm.controls['university'].errors?.['required']">
 							Nie podano nazwy uczelni!
 						</mat-error>
 					</mat-form-field>
@@ -212,7 +204,6 @@
 						/>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano adresu!
 						</mat-error>
@@ -222,13 +213,11 @@
 						<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano numeru telefonu!
 						</mat-error>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
-							class="error-text"
 						>
 							Nieprawidłowy numer telefonu!
 						</mat-error>
@@ -246,14 +235,10 @@
 						/>
 						<mat-error
 							*ngIf="actualForm.controls['bankAccount'].errors?.['required']"
-							class="error-text"
 						>
 							Nie podano numeru konta bankowego!
 						</mat-error>
-						<mat-error
-							*ngIf="actualForm.controls['bankAccount'].errors?.['pattern']"
-							class="error-text"
-						>
+						<mat-error *ngIf="actualForm.controls['bankAccount'].errors?.['pattern']">
 							Nieprawidłowy numeru konta bankowego!
 						</mat-error>
 					</mat-form-field>
@@ -359,9 +344,7 @@
 							aria-label="File"
 							(change)="onFileSelected($event, regexScan)"
 						/>
-						<mat-error *ngIf="!urlNewScan" class="error-text"
-							>Nie wczytano skanu dokumentu!</mat-error
-						>
+						<mat-error *ngIf="!urlNewScan">Nie wczytano skanu dokumentu!</mat-error>
 					</span>
 					<mat-form-field
 						*ngIf="
@@ -387,7 +370,6 @@
 						</mat-select>
 						<mat-error
 							*ngIf="actualForm.controls['documentType'].errors?.['required']"
-							class="error-text"
 						>
 							Nie wybrano rodzaju dokumentu!
 						</mat-error>
@@ -406,15 +388,11 @@
 						<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
 						<mat-error
 							*ngIf="actualForm.controls['documentExpireDate'].errors?.['required']"
-							class="error-text"
 						>
 							Nie określono daty ważności dokumentu!
 						</mat-error>
 						<mat-error
-							*ngIf="
-								actualForm.controls['documentExpireDate'].errors?.['validityTill']
-							"
-							class="error-text"
+							*ngIf="actualForm.controls['documentExpireDate'].errors?.['validityTill']"
 						>
 							Termin ważności dokumentu upłynął!
 						</mat-error>
