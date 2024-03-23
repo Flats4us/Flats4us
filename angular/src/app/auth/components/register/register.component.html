@@ -5,9 +5,7 @@
 				<mat-form-field>
 					<mat-label>Imię</mat-label>
 					<input matInput formControlName="name" name="name" />
-					<mat-error
-						*ngIf="registerForm.controls['name'].errors?.['required']"
-					>
+					<mat-error *ngIf="registerForm.controls['name'].errors?.['required']">
 						Nie podano imienia!
 					</mat-error>
 				</mat-form-field>
@@ -16,9 +14,7 @@
 				<mat-form-field>
 					<mat-label>Nazwisko</mat-label>
 					<input matInput formControlName="surname" name="surname" />
-					<mat-error
-						*ngIf="registerForm.controls['surname'].errors?.['required']"
-					>
+					<mat-error *ngIf="registerForm.controls['surname'].errors?.['required']">
 						Nie podano nazwiska!
 					</mat-error>
 				</mat-form-field>
@@ -27,14 +23,10 @@
 				<mat-form-field>
 					<mat-label>Adres email</mat-label>
 					<input matInput formControlName="email" name="email" />
-					<mat-error
-						*ngIf="registerForm.controls['email'].errors?.['required']"
-					>
+					<mat-error *ngIf="registerForm.controls['email'].errors?.['required']">
 						Nie podano adresu email!
 					</mat-error>
-					<mat-error
-						*ngIf="registerForm.controls['email'].errors?.['email']"
-					>
+					<mat-error *ngIf="registerForm.controls['email'].errors?.['email']">
 						Nieprawidłowy adres email!
 					</mat-error>
 				</mat-form-field>
@@ -52,14 +44,10 @@
 					<mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
 						hidePassword ? "visibility_off" : "visibility"
 					}}</mat-icon>
-					<mat-error
-						*ngIf="registerForm.controls['password'].errors?.['required']"
-					>
+					<mat-error *ngIf="registerForm.controls['password'].errors?.['required']">
 						Nie podano hasła!
 					</mat-error>
-					<mat-error
-						*ngIf="registerForm.controls['password'].errors?.['pattern']"
-					>
+					<mat-error *ngIf="registerForm.controls['password'].errors?.['pattern']">
 						Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery,
 						cyfry i symbole!
 					</mat-error>
@@ -87,9 +75,7 @@
 					>
 						Nie powtórzono hasła!
 					</mat-error>
-					<mat-error
-						*ngIf="registerForm.errors?.['matchPassword']"
-					>
+					<mat-error *ngIf="registerForm.errors?.['matchPassword']">
 						Hasła różnią się od siebie!
 					</mat-error>
 				</mat-form-field>
