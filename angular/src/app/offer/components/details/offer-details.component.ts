@@ -91,45 +91,45 @@ export class OfferDetailsComponent {
 		this.router.navigate(['disputes', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number) {
+	public onSelect(menuOption: IMenuOptions, id: number | undefined) {
 		switch (menuOption.option) {
 			case 'offerDetails': {
-				this.navigateToOffer(id);
+				this.navigateToOffer(id ?? 0);
 				break;
 			}
 			case 'startDispute': {
-				this.startDispute(id);
+				this.startDispute(id ?? 0);
 				break;
 			}
 			case 'closeOffer': {
-				this.openCancelDialog(id);
+				this.openCancelDialog(id ?? 0);
 				break;
 			}
 			case 'promoteOffer': {
-				this.openPromotionDialog(id);
+				this.openPromotionDialog(id ?? 0);
 				break;
 			}
 		}
 	}
 
-	public onAddMeeting(id: number): void {
+	public onAddMeeting(id: number | undefined): void {
 		this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
-			data: id,
+			data: id ?? 0,
 		});
 	}
 
-	public startRent(id: number) {
+	public startRent(id: number | undefined) {
 		this.dialog.open(RentPropositionDialogComponent, {
 			disableClose: true,
-			data: id,
+			data: id ?? 0,
 		});
 	}
 
-	public onRentApproval(id: number): void {
+	public onRentApproval(id: number | undefined): void {
 		this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
-			data: id,
+			data: id ?? 0,
 		});
 	}
 
@@ -141,11 +141,13 @@ export class OfferDetailsComponent {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide(length: number) {
-		this.currentIndex = this.currentIndex < length - 1 ? ++this.currentIndex : 0;
+	public prevSlide(length: number | undefined) {
+		this.currentIndex =
+			this.currentIndex < (length ?? 0) - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide(length: number) {
-		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
+	public nextSlide(length: number | undefined) {
+		this.currentIndex =
+			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
 	}
 }

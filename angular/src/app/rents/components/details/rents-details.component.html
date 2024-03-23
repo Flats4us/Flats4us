@@ -56,7 +56,7 @@
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									(click)="onSelect(menuOption, data.rent?.offerId ?? 0)"
+									(click)="onSelect(menuOption, data.rent?.offerId)"
 								>
 									<span
 										[ngClass]="menuOption.option === 'closeRent' ? 'close-rent' : ''"
@@ -71,21 +71,21 @@
 							"
 							class="slide slide-animation non-draggable-image"
 							src="{{ baseUrl }}/{{ slide.path }}"
-							(swiperight)="nextSlide(data.rent?.property?.images?.length ?? 0)"
-							(swipeleft)="prevSlide(data.rent?.property?.images?.length ?? 0)"
+							(swiperight)="nextSlide(data.rent?.property?.images?.length)"
+							(swipeleft)="prevSlide(data.rent?.property?.images?.length)"
 						/>
 					</ng-template>
 				</div>
 
 				<button
 					class="arrow prev"
-					(click)="nextSlide(data.rent?.property?.images?.length ?? 0)"
+					(click)="nextSlide(data.rent?.property?.images?.length)"
 				>
 					<mat-icon>arrow_back_ios</mat-icon>
 				</button>
 				<button
 					class="arrow next"
-					(click)="prevSlide(data.rent?.property?.images?.length ?? 0)"
+					(click)="prevSlide(data.rent?.property?.images?.length)"
 				>
 					<mat-icon>arrow_forward_ios</mat-icon>
 				</button>

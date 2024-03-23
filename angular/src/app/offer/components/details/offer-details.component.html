@@ -14,7 +14,7 @@
 						color="primary"
 						matTooltip="Oferta najmu czeka na zaakceptowanie!"
 						aria-label="MenuButton"
-						(click)="onRentApproval(data.offer?.offerId ?? 0)"
+						(click)="onRentApproval(data.offer?.offerId)"
 					>
 						<mat-icon>notifications</mat-icon>
 					</button>
@@ -73,7 +73,7 @@
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									(click)="onSelect(menuOption, data.offer?.offerId ?? 0)"
+									(click)="onSelect(menuOption, data.offer?.offerId)"
 								>
 									<span
 										[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
@@ -89,21 +89,21 @@
 							"
 							class="slide slide-animation non-draggable-image"
 							src="{{ baseUrl }}/{{ slide.path }}"
-							(swiperight)="nextSlide(data.offer?.property?.images?.length ?? 0)"
-							(swipeleft)="prevSlide(data.offer?.property?.images?.length ?? 0)"
+							(swiperight)="nextSlide(data.offer?.property?.images?.length)"
+							(swipeleft)="prevSlide(data.offer?.property?.images?.length)"
 						/>
 					</ng-template>
 				</div>
 
 				<button
 					class="arrow prev"
-					(click)="nextSlide(data.offer?.property?.images?.length ?? 0)"
+					(click)="nextSlide(data.offer?.property?.images?.length)"
 				>
 					<mat-icon>arrow_back_ios</mat-icon>
 				</button>
 				<button
 					class="arrow next"
-					(click)="prevSlide(data.offer?.property?.images?.length ?? 0)"
+					(click)="prevSlide(data.offer?.property?.images?.length)"
 				>
 					<mat-icon>arrow_forward_ios</mat-icon>
 				</button>
@@ -236,14 +236,14 @@
 		<button
 			mat-raised-button
 			color="primary"
-			(click)="onAddMeeting(data.offer?.offerId ?? 0)"
+			(click)="onAddMeeting(data.offer?.offerId)"
 		>
 			Dodaj spotkanie
 		</button>
 		<button
 			mat-raised-button
 			color="primary"
-			(click)="startRent(data.offer?.offerId ?? 0)"
+			(click)="startRent(data.offer?.offerId)"
 		>
 			Wynajmij
 		</button>
