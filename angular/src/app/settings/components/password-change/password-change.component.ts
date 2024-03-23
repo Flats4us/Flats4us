@@ -51,7 +51,7 @@ export class PasswordChangeComponent extends BaseComponent {
 	constructor(
 		private fb: FormBuilder,
 		private snackBar: MatSnackBar,
-		private service: AuthService,
+		private service: AuthService
 	) {
 		super();
 	}

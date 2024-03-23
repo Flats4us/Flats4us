@@ -131,15 +131,9 @@
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
-	-webkit-transition:
-		background-color 0.25s,
-		border-color 0.25s;
-	-moz-transition:
-		background-color 0.25s,
-		border-color 0.25s;
-	transition:
-		background-color 0.25s,
-		border-color 0.25s;
+	-webkit-transition: background-color 0.25s, border-color 0.25s;
+	-moz-transition: background-color 0.25s, border-color 0.25s;
+	transition: background-color 0.25s, border-color 0.25s;
 }
 
 .dots .dot span.active {

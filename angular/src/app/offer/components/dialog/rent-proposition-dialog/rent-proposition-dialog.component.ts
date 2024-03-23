@@ -70,7 +70,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
 		public userService: UserService,
-		@Inject(MAT_DIALOG_DATA) public data: number,
+		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
 	}
@@ -100,7 +100,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public add(
 		event: MatChipInputEvent,
 		items: string[],
-		formControl: FormControl,
+		formControl: FormControl
 	): void {
 		this.invalidEmail$ = of(false);
 		const value = (event.value || '').trim();

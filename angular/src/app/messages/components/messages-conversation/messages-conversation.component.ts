@@ -22,7 +22,7 @@ export class MessagesConversationComponent {
 
 	constructor(public route: ActivatedRoute) {
 		this.conversationId$ = route.paramMap.pipe(
-			map(params => params.get('id') ?? ''),
+			map(params => params.get('id') ?? '')
 		);
 	}
 

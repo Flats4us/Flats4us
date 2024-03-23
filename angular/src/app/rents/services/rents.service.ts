@@ -17,8 +17,8 @@ export class RentsService {
 				Date.UTC(
 					meeting.date.getFullYear(),
 					meeting.date.getMonth(),
-					meeting.date.getDate(),
-				),
+					meeting.date.getDate()
+				)
 			),
 		};
 		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);

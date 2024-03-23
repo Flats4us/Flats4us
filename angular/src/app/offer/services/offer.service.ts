@@ -35,30 +35,30 @@ export class OfferService {
 	public addRentProposition(rentProposition: IRentProposition, id: number) {
 		return this.httpClient.post(
 			`${this.apiRoute}/offers/${id}/rent`,
-			rentProposition,
+			rentProposition
 		);
 	}
 	public addOfferPromotion(id: number, duration: IPromotion) {
 		return this.httpClient.post(
 			`${this.apiRoute}/offers/${id}/promotion`,
-			duration,
+			duration
 		);
 	}
 
 	public getWatchedOffers(
 		pageIndex: number,
-		pageSize: number,
+		pageSize: number
 	): Observable<ISendOffers> {
 		return this.httpClient.get<ISendOffers>(
 			`${this.apiRoute}/offers/interest?PageNumber=${
 				pageIndex + 1
-			}&PageSize=${pageSize}`,
+			}&PageSize=${pageSize}`
 		);
 	}
 
 	public deleteInterest(id: number): Observable<string> {
 		return this.httpClient.delete<string>(
-			`${this.apiRoute}/offers/${id}/interest`,
+			`${this.apiRoute}/offers/${id}/interest`
 		);
 	}
 }

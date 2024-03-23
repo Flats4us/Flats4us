@@ -17,7 +17,7 @@ export class RoommateCandidateComponent extends BaseComponent {
 	public students$: Observable<IStudent[]> = this.service.getStudents();
 
 	public student$: Observable<IStudent> = this.students$.pipe(
-		map(students => students[this.iterator]),
+		map(students => students[this.iterator])
 	);
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');

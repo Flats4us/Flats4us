@@ -36,14 +36,14 @@ export class SurveyComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private route: ActivatedRoute,
 		private service: SurveyService,
-		private formDir: FormGroupDirective,
+		private formDir: FormGroupDirective
 	) {
 		this.offerForm = this.formBuilder.group({
 			lookingForRoommate: [''],
 		});
 
 		this.questions$ = this.getQuestions().pipe(
-			tap(questions => this.getFormControls(questions)),
+			tap(questions => this.getFormControls(questions))
 		);
 	}
 
@@ -61,7 +61,7 @@ export class SurveyComponent implements OnInit {
 				} else {
 					return this.service.getOwnerQuestions();
 				}
-			}),
+			})
 		);
 	}
 
@@ -69,11 +69,11 @@ export class SurveyComponent implements OnInit {
 		questions.forEach(question => {
 			this.offerForm.addControl(
 				question.name,
-				new FormControl(null, Validators.required),
+				new FormControl(null, Validators.required)
 			);
 			this.formToAdd.addControl(
 				question.name,
-				new FormControl(null, Validators.required),
+				new FormControl(null, Validators.required)
 			);
 		});
 	}

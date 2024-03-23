@@ -105,14 +105,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private changeDetectorRef: ChangeDetectorRef,
 		private route: ActivatedRoute,
 		public profileService: ProfileService,
-		private snackBar: MatSnackBar,
+		private snackBar: MatSnackBar
 	) {
 		super();
 		this.filteredHobbies$ = this.hobbyCtrl.valueChanges.pipe(
 			startWith(null),
 			map(hobby =>
-				hobby ? this.filter(hobby) : this.profileService.interests.slice(),
-			),
+				hobby ? this.filter(hobby) : this.profileService.interests.slice()
+			)
 		);
 		this.dataFormGroupStudent = this.formBuilder.group({
 			studentNumber: new FormControl('', Validators.required),
@@ -121,7 +121,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			phoneNumber: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
-					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$',
+					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
 			interests: new FormControl(this.myHobbies),
@@ -138,7 +138,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			phoneNumber: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
-					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$',
+					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
 			documentType: new FormControl('', Validators.required),
@@ -158,7 +158,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(
 				'birthDate',
-				new FormControl(null, [Validators.required, validityAgeValidator()]),
+				new FormControl(null, [Validators.required, validityAgeValidator()])
 			);
 		}
 		if (this.modificationType === ModificationType.EDIT) {
@@ -182,12 +182,12 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			if (this.user === UserType.STUDENT) {
 				this.createAccountForm.addControl(
 					'userAdditionalData',
-					this.dataFormGroupStudent,
+					this.dataFormGroupStudent
 				);
 			} else if (this.user === UserType.OWNER) {
 				this.createAccountForm.addControl(
 					'userAdditionalData',
-					this.dataFormGroupOwner,
+					this.dataFormGroupOwner
 				);
 			}
 		}
@@ -196,7 +196,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public addSocialMedia(
 		event: MatChipInputEvent,
 		items: string[],
-		formControl: FormControl,
+		formControl: FormControl
 	): void {
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
@@ -218,13 +218,13 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public addHobby(
 		event: MatChipInputEvent,
 		items: IInterest[],
-		formControl: FormControl,
+		formControl: FormControl
 	): void {
 		const value = event.value;
 		if (!items.map(item => item.name).includes(value)) {
 			items.push(
 				this.profileService.interests.find(hobby => hobby.name === value) ??
-					({} as IInterest),
+					({} as IInterest)
 			);
 		}
 		event.chipInput.clear();
@@ -264,7 +264,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	private filter(value: IInterest): IInterest[] {
 		const valueLowerCase = value.name.toLowerCase();
 		return this.profileService.interests.filter(hobby =>
-			hobby.name.toLowerCase().includes(valueLowerCase),
+			hobby.name.toLowerCase().includes(valueLowerCase)
 		);
 	}
 
@@ -332,7 +332,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		const endDate = new Date(date);
 		const actualDate = new Date();
 		const days = Math.floor(
-			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24,
+			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24
 		);
 		this.isValidDocument = days > 0 ? true : false;
 		return this.isValidDocument;

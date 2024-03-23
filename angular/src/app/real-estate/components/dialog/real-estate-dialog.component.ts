@@ -27,7 +27,7 @@ export class RealEstateDialogComponent extends BaseComponent {
 	constructor(
 		public realEstateService: RealEstateService,
 		@Inject(MAT_DIALOG_DATA) public data: number,
-		private router: Router,
+		private router: Router
 	) {
 		super();
 	}

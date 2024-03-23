@@ -84,10 +84,10 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 	});
 
 	public user$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('user')?.toUpperCase() ?? ''),
+		map(params => params.get('user')?.toUpperCase() ?? '')
 	);
 	public modificationType$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('modificationType')?.toUpperCase() ?? ''),
+		map(params => params.get('modificationType')?.toUpperCase() ?? '')
 	);
 
 	public registerForm = new FormGroup(
@@ -98,12 +98,12 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			password: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
-					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$',
+					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
 				),
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 		},
-		{ validators: matchPasswordValidator },
+		{ validators: matchPasswordValidator }
 	);
 
 	public createAccountForm = new FormGroup({});
@@ -116,7 +116,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private profileService: ProfileService,
 		private authService: AuthService,
-		private formBuilder: FormBuilder,
+		private formBuilder: FormBuilder
 	) {
 		super();
 	}
@@ -136,17 +136,17 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			this.studentFormGroup.patchValue(this.registerForm.value);
 			this.studentFormGroup.patchValue(
 				this.createAccountForm.get('userAdditionalData')?.value ??
-					new FormControl(''),
+					new FormControl('')
 			);
 			this.studentFormGroup.patchValue(
-				this.surveyForm.get('survey')?.value ?? new FormControl(''),
+				this.surveyForm.get('survey')?.value ?? new FormControl('')
 			);
 		}
 		if (this.user === UserType.OWNER) {
 			this.ownerFormGroup.patchValue(this.registerForm.value);
 			this.ownerFormGroup.patchValue(
 				this.createAccountForm.get('userAdditionalData')?.value ??
-					new FormControl(''),
+					new FormControl('')
 			);
 		}
 		this.formData.append('ProfilePicture', this.photo as File);
@@ -178,7 +178,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.pipe(
 							this.untilDestroyed(),
 							catchError(this.handleError),
-							concatMap(() => this.profileService.addProfileFiles(this.formData)),
+							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
 							next: () =>
@@ -189,7 +189,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 2000 },
+									{ duration: 2000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -201,7 +201,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.pipe(
 							this.untilDestroyed(),
 							catchError(this.handleError),
-							concatMap(() => this.profileService.addProfileFiles(this.formData)),
+							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
 							next: () =>
@@ -210,13 +210,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 									'Zamknij',
 									{
 										duration: 2000,
-									},
+									}
 								),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 2000 },
+									{ duration: 2000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -227,7 +227,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 	}
 	private handleError(error: HttpErrorResponse) {
 		return throwError(
-			() => new Error('Nie udało się utworzyć konta. Spróbuj ponownie.'),
+			() => new Error('Nie udało się utworzyć konta. Spróbuj ponownie.')
 		);
 	}
 }

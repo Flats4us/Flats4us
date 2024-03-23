@@ -73,7 +73,7 @@ export class RentRateComponent {
 
 	constructor(
 		private dialogRef: MatDialogRef<RentRateComponent>,
-		@Inject(MAT_DIALOG_DATA) public data$: Observable<IOffer>,
+		@Inject(MAT_DIALOG_DATA) public data$: Observable<IOffer>
 	) {}
 
 	public onSubmit(): void {

@@ -30,7 +30,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 		private http: HttpClient,
 		public realEstateService: RealEstateService,
 		private startService: StartService,
-		private router: Router,
+		private router: Router
 	) {
 		super();
 	}
@@ -75,7 +75,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	private getLocation(): void {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(position =>
-				this.setMapView([position.coords.latitude, position.coords.longitude]),
+				this.setMapView([position.coords.latitude, position.coords.longitude])
 			);
 		}
 	}
@@ -83,7 +83,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	public addMarkersFromAddresses(addresses: string[]) {
 		addresses.forEach(address => {
 			const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-				address,
+				address
 			)}&format=json`;
 
 			this.http.get(url).subscribe((response: any) => {
@@ -138,7 +138,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							', cena: ' +
 							offer.price +
 							' zł' +
-							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`,
+							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
 					)
 					.on('popupopen', () => {
 						document
@@ -151,8 +151,8 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							?.addEventListener('click', () => {
 								this.router.navigate(['offer', 'details', offer.offerId]);
 							});
-					}),
-			),
+					})
+			)
 		);
 	}
 

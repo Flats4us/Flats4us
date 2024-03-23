@@ -56,7 +56,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	@ViewChild(MatPaginator)
 	private paginator: MatPaginator = new MatPaginator(
 		this.matPaginatorIntl,
-		ChangeDetectorRef.prototype,
+		ChangeDetectorRef.prototype
 	);
 
 	@Output()
@@ -69,7 +69,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 		public realEstateService: RealEstateService,
 		public startService: StartService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private formBuilder: FormBuilder,
+		private formBuilder: FormBuilder
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
@@ -94,12 +94,12 @@ export class StartComponent extends BaseComponent implements OnInit {
 		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
-				this.realEstateService.citiesGroups,
+				this.realEstateService.citiesGroups
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe();
 		this.flatOptions$ = this.startService.getFilteredOffers(
-			this.startSiteForm.value,
+			this.startSiteForm.value
 		);
 		this.flatOptionsPromoted$ = this.startService
 			.getFilteredOffers(this.startSiteForm.value)
@@ -107,7 +107,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 				map(offers => ({
 					totalCount: offers.result.filter(offer => offer.isPromoted).length,
 					result: offers.result.filter(offer => offer.isPromoted === true),
-				})),
+				}))
 			);
 	}
 
@@ -120,7 +120,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 		this.matPaginatorIntl.getRangeLabel = (
 			page: number,
 			pageSize: number,
-			length: number,
+			length: number
 		) => {
 			if (length == 0 || pageSize == 0) {
 				return `0 z ${length} ofert`;
@@ -143,14 +143,14 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.get('citiesGroup')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
-				map(value => this.filterCitiesGroup(value)),
+				map(value => this.filterCitiesGroup(value))
 			);
 
 		this.districtGroupOptions$ = this.startSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
-				map(value => this.filterDistrictsGroup(value)),
+				map(value => this.filterDistrictsGroup(value))
 			);
 
 		this.startSiteForm.get('districtsGroup')?.disable();
@@ -217,7 +217,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.startSiteForm.get('regionsGroup')?.value,
+					group.whole === this.startSiteForm.get('regionsGroup')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
@@ -229,7 +229,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.startSiteForm.get('citiesGroup')?.value,
+					group.whole === this.startSiteForm.get('citiesGroup')?.value
 			);
 	}
 

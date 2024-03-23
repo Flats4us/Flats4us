@@ -19,7 +19,7 @@ export class RealEstateComponent {
 
 	constructor(
 		public realEstateService: RealEstateService,
-		private router: Router,
+		private router: Router
 	) {}
 
 	public addRealEstate() {

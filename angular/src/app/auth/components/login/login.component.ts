@@ -21,14 +21,14 @@ export class LoginComponent extends BaseComponent {
 	});
 	public invalidCredentials$ = this.loginForm.statusChanges.pipe(
 		map(() => this.loginForm.hasError('invalidCredentials')),
-		this.untilDestroyed(),
+		this.untilDestroyed()
 	);
 
 	constructor(
 		private snackBar: MatSnackBar,
 		private service: AuthService,
 		private router: Router,
-		private route: ActivatedRoute,
+		private route: ActivatedRoute
 	) {
 		super();
 	}
@@ -43,7 +43,7 @@ export class LoginComponent extends BaseComponent {
 						duration: 2000,
 					});
 					this.router.navigateByUrl(
-						this.route.snapshot.queryParamMap.get('returnUrl') || '/',
+						this.route.snapshot.queryParamMap.get('returnUrl') || '/'
 					);
 				},
 				error: (error: HttpErrorResponse) => {

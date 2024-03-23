@@ -22,10 +22,10 @@ export const slideAnimation = trigger('slideAnimation', [
 					'0.5s ease-out',
 					style({
 						transform: 'translateX(-100%)',
-					}),
+					})
 				),
 			]),
-		]),
+		])
 	),
 	transition(
 		':decrement',
@@ -41,9 +41,9 @@ export const slideAnimation = trigger('slideAnimation', [
 					'0.5s ease-out',
 					style({
 						transform: 'translateX(100%)',
-					}),
+					})
 				),
 			]),
-		]),
+		])
 	),
 ]);

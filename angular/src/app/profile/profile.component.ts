@@ -16,13 +16,10 @@ export class ProfileComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	protected user$: Observable<IUser>;
 
-	constructor(
-		private route: ActivatedRoute,
-		public userService: UserService,
-	) {
+	constructor(private route: ActivatedRoute, public userService: UserService) {
 		this.id$ = this.route.paramMap.pipe(
 			map(params => params.get('id')),
-			filter(Boolean),
+			filter(Boolean)
 		);
 
 		this.user$ = this.id$.pipe(switchMap(id => this.userService.getUserById(id)));

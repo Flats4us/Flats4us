@@ -13,7 +13,7 @@ export function validityAgeValidator(): ValidatorFn {
 }
 
 export const matchPasswordValidator: ValidatorFn = (
-	control: AbstractControl,
+	control: AbstractControl
 ): ValidationErrors | null => {
 	const password = control.get('password');
 	const confirmPassword = control.get('confirmPassword');

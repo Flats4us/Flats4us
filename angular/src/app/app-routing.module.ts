@@ -46,7 +46,7 @@ const routes: Routes = [
 		path: 'find-roommate',
 		loadChildren: () =>
 			import('./find-roommate/find-roommate.module').then(
-				m => m.FindRoommateModule,
+				m => m.FindRoommateModule
 			),
 	},
 	{

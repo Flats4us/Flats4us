@@ -17,7 +17,7 @@ export class AuthService {
 	protected apiRoute = `${environment.apiUrl}/auth`;
 
 	private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 	public isLoggedIn$ = this.isLoggedIn.asObservable();
 
@@ -38,7 +38,7 @@ export class AuthService {
 	}
 
 	public addProfileStudent(
-		profile: IAddStudent,
+		profile: IAddStudent
 	): Observable<IAuthTokenResponse> {
 		return this.http
 			.post<IAuthTokenResponse>(`${this.apiRoute}/register/students`, profile)
