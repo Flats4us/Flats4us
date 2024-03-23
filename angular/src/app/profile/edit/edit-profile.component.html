@@ -16,34 +16,34 @@
 		</h1>
 	</div>
 	<form [formGroup]="actualForm" (ngSubmit)="onSubmit()">
-		<div *ngIf="modificationType === mType.EDIT" class="menu-btn">
-			<button
-				id="menu"
-				mat-mini-fab
-				color="primary"
-				matTooltip="Więcej opcji"
-				aria-label="MenuButton"
-				[matMenuTriggerFor]="menu"
-			>
-				<mat-icon>more_horiz</mat-icon>
-			</button>
-			<mat-menu #menu="matMenu" id="sort">
-				<button
-					*ngFor="let menuOption of this.menuOptions"
-					mat-menu-item
-					[value]="menuOption.description"
-					[disabled]="
-						actualUser.userType !== 1 && menuOption.option === 'editSurvey'
-							? true
-							: false
-					"
-					(click)="onSelect(menuOption)"
-				>
-					<span>{{ menuOption.description }}</span>
-				</button>
-			</mat-menu>
-		</div>
 		<mat-card class="edit-profile">
+			<div *ngIf="modificationType === mType.EDIT" class="menu-btn">
+				<button
+					id="menu"
+					mat-mini-fab
+					color="primary"
+					matTooltip="Więcej opcji"
+					aria-label="MenuButton"
+					[matMenuTriggerFor]="menu"
+				>
+					<mat-icon>more_horiz</mat-icon>
+				</button>
+				<mat-menu #menu="matMenu" id="sort">
+					<button
+						*ngFor="let menuOption of this.menuOptions"
+						mat-menu-item
+						[value]="menuOption.description"
+						[disabled]="
+							actualUser.userType !== 1 && menuOption.option === 'editSurvey'
+								? true
+								: false
+						"
+						(click)="onSelect(menuOption)"
+					>
+						<span>{{ menuOption.description }}</span>
+					</button>
+				</mat-menu>
+			</div>
 			<div class="container-photo">
 				<div class="image-box">
 					<img class="profile-avatar__image" [src]="urlPhoto" />

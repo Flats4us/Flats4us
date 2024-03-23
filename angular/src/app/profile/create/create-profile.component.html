@@ -38,7 +38,7 @@
 		</h1>
 	</div>
 	<div class="create-profile">
-		<mat-stepper #stepper linear>
+		<mat-stepper #stepper>
 			<div class="box">
 				<mat-step [stepControl]="registerForm">
 					<ng-template matStepLabel
@@ -106,9 +106,7 @@
 							><span class="step-label">Tworzenie ankiety</span></ng-template
 						>
 						<form [formGroup]="surveyForm">
-							<div class="box-survey">
-								<app-student-survey [createProfileMode]="true"></app-student-survey>
-							</div>
+							<app-student-survey [createProfileMode]="true"></app-student-survey>
 							<div class="button-box">
 								<button mat-raised-button color="primary" matStepperPrevious>
 									Poprzedni <mat-icon>arrow_back_ios</mat-icon>

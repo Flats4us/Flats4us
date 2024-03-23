@@ -20,7 +20,7 @@ import {
 } from '@angular/forms';
 import { IInterest, IUserProfile } from '../models/profile.models';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
@@ -103,7 +103,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private router: Router,
 		private changeDetectorRef: ChangeDetectorRef,
-		private route: ActivatedRoute,
 		public profileService: ProfileService,
 		private snackBar: MatSnackBar
 	) {

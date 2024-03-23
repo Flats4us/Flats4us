@@ -1,56 +1,85 @@
-<form
-	class="flex flex-col gap-8 mb-8"
-	[formGroup]="createProfileMode ? formToAdd : offerForm"
->
-	<ng-container *ngFor="let question of questions$ | async; let i = index">
-		<div *ngIf="i < 7 || offerForm.get('16')">
-			<mat-slide-toggle
-				*ngIf="question.typeName === typeName.SWITCH"
-				class="mr-3"
-				[formControlName]="question.name"
-			></mat-slide-toggle>
+<div class="survey">
+	<form
+		class="survey-form"
+		[formGroup]="createProfileMode ? formToAdd : offerForm"
+	>
+		<ng-container *ngFor="let question of questions$ | async; let i = index">
+			<div *ngIf="i < numberOfQuestions || offerForm.get('16')">
+				<div class="pt-4">
+					<mat-slide-toggle
+						*ngIf="
+							question.typeName === typeName.SWITCH &&
+							question.name !== 'lookingForRoommate'
+						"
+						[formControlName]="question.name"
+					></mat-slide-toggle>
+				</div>
 
-			<mat-label class="mr-3">{{ question.content }} </mat-label>
+				<div class="pt-4">
+					<mat-slide-toggle
+						*ngIf="
+							question.typeName === typeName.SWITCH &&
+							question.name === 'lookingForRoommate'
+						"
+						[formControlName]="question.name"
+						[(ngModel)]="showMoreQuestions"
+					></mat-slide-toggle>
+				</div>
 
-			<mat-slider
-				*ngIf="question.typeName === typeName.SLIDER"
-				discrete
-				min="0"
-				max="5"
-				step="1"
-			>
-				<input matSliderThumb [formControlName]="question.name" />
-			</mat-slider>
+				<mat-label *ngIf="i < 7">{{ question.content }} </mat-label>
 
-			<mat-form-field
-				*ngIf="question.typeName === typeName.FORM"
-				class="h-1/2"
-				appearance="outline"
-			>
-				<input matInput [formControlName]="question.name" />
-			</mat-form-field>
+				<mat-label *ngIf="i >= 7 && showMoreQuestions"
+					>{{ question.content }}
+				</mat-label>
 
-			<section
-				*ngIf="question.typeName === typeName.CHECKBOX"
-				class="example-section"
-			>
-				<mat-checkbox
-					*ngFor="let answer of question.answers; let i = index"
-					value="{{ i }}"
-					>{{ answer }}</mat-checkbox
+				<div class="pt-4">
+					<mat-slider
+						*ngIf="question.typeName === typeName.SLIDER"
+						discrete
+						min="0"
+						max="5"
+						step="1"
+					>
+						<input matSliderThumb [formControlName]="question.name" />
+					</mat-slider>
+				</div>
+
+				<mat-form-field
+					*ngIf="question.typeName === typeName.TEXT && showMoreQuestions"
+					class="h-min"
 				>
-			</section>
+					<input matInput type="text" [formControlName]="question.name" />
+				</mat-form-field>
 
-			<mat-radio-group
-				*ngIf="question.typeName === typeName.RADIOBUTTON"
-				[formControlName]="question.name"
-			>
-				<mat-radio-button
-					*ngFor="let answer of question.answers; let i = index"
-					[value]="i"
-					>{{ answer }}</mat-radio-button
+				<mat-form-field
+					*ngIf="question.typeName === typeName.NUMBER && showMoreQuestions"
+					class="h-min"
 				>
-			</mat-radio-group>
-		</div>
-	</ng-container>
-</form>
+					<input matInput type="number" min="0" [formControlName]="question.name" />
+				</mat-form-field>
+
+				<section
+					*ngIf="question.typeName === typeName.CHECKBOX && showMoreQuestions"
+					class="example-section"
+				>
+					<mat-checkbox
+						*ngFor="let answer of question.answers; let i = index"
+						value="{{ i }}"
+						>{{ answer }}</mat-checkbox
+					>
+				</section>
+
+				<mat-radio-group
+					*ngIf="question.typeName === typeName.RADIOBUTTON && showMoreQuestions"
+					[formControlName]="question.name"
+				>
+					<mat-radio-button
+						*ngFor="let answer of question.answers; let i = index"
+						[value]="i"
+						>{{ answer }}</mat-radio-button
+					>
+				</mat-radio-group>
+			</div>
+		</ng-container>
+	</form>
+</div>

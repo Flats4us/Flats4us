@@ -33,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProfileService } from './services/profile.service';
 import { EditProfileModule } from './edit/edit-profile.module';
 import { CreateProfileModule } from './create/create-profile.module';
+import { DetailsProfileModule } from './details/details-profile.module';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -67,6 +68,7 @@ import { CreateProfileModule } from './create/create-profile.module';
 		RegisterModule,
 		EditProfileModule,
 		CreateProfileModule,
+		DetailsProfileModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],
