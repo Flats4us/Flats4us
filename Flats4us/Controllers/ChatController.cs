@@ -52,8 +52,8 @@ namespace Flats4us.Controllers
             {
                 Content = message,
                 DateTime = DateTime.UtcNow,
-                Sender = senderUser,
-                Chat = chat
+                SenderId = senderUserId,
+                //Chat = chat
             };
 
             await _chatService.SaveMessage(chatMessage);

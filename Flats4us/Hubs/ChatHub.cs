@@ -42,7 +42,7 @@
             {
                 Content = message,
                 DateTime = DateTime.UtcNow,
-                Sender = sender,
+                SenderId = senderUserId.Value,
                 Chat = chat
             };
             await _chatService.SaveMessage(chatMessage);

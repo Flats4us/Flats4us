@@ -15,7 +15,7 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task<GroupChat> CreateGroupChatAsync(string groupName, IEnumerable<int> userIds)
+        public async Task<GroupChatDto> CreateGroupChatAsync(string groupName, IEnumerable<int> userIds)
         {
             var groupChat = new GroupChat { Name = groupName };
             _context.GroupChats.Add(groupChat);
@@ -32,7 +32,14 @@ namespace Flats4us.Services
             }
 
             await _context.SaveChangesAsync();
-            return groupChat;
+
+            var groupChatDto = new GroupChatDto
+            {
+                GroupChatId = groupChat.GroupChatId,
+                Name = groupChat.Name
+                // Map other properties as needed
+            };
+            return groupChatDto;
         }
 
         public async Task AddUserToGroupChatAsync(int adderId, int groupChatId, int newUserId)
@@ -83,8 +90,8 @@ namespace Flats4us.Services
                 Users = groupChat.UserGroupChats
                          .Select(ugc => new UserInfoDto
                          {
-                             Id = ugc.User.UserId,
-                             Username = ugc.User.Email
+                             UserId = ugc.User.UserId,
+                             Email = ugc.User.Email
                              // Add other properties as needed
                          })
                          .ToList()
@@ -106,8 +113,10 @@ namespace Flats4us.Services
             Name = ugc.GroupChat.Name,
             Users = ugc.GroupChat.UserGroupChats.Select(member => new UserInfoDto
             {
-                Id = member.User.UserId,
-                Username = member.User.Email
+                UserId = member.User.UserId,
+                Email = member.User.Email
+                
+
             }).ToList()
         })
         .ToListAsync();
@@ -128,12 +137,12 @@ namespace Flats4us.Services
             }
             var messages = await _context.ChatMessages
                 .Where(msg => msg.GroupChatId == groupChatId)
-                .Include(msg => msg.Sender) // If you need sender info
+                //.Include(msg => msg.Sender) // If you need sender info
                 .Select(msg => new ChatMessageDto
                 {
                     Content = msg.Content,
                     DateTime = msg.DateTime,
-                    SenderUsername = msg.Sender.Email 
+                    UserId = userId 
                 })
                 .ToListAsync();
 
@@ -160,9 +169,9 @@ namespace Flats4us.Services
             var chatMessage = new ChatMessage
             {
                 // Set properties for the message, like sender ID, content, etc.
-                SenderUserId = userId,
+                SenderId = userId,
                 Content = message,
-                GroupChatId = groupChatId,
+                //GroupChatId = groupChatId,
                 DateTime = DateTime.UtcNow,
 
                 // Set other necessary properties

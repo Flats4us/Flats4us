@@ -13,14 +13,15 @@ namespace Flats4us.Entities
         public string Name { get; set; } // Optional: Name of the group chat
 
         // Navigation property for messages in the group chat
-        public virtual ICollection<ChatMessage> GroupChatMessages { get; set; }
+        //public virtual ICollection<ChatMessage> GroupChatMessages { get; set; }
 
         // Navigation property for users in the group chat
+
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
 
         public GroupChat()
         {
-            this.GroupChatMessages = new HashSet<ChatMessage>();
+            //this.GroupChatMessages = new HashSet<ChatMessage>();    
             this.UserGroupChats = new HashSet<UserGroupChat>();
         }
     }

@@ -4,7 +4,7 @@
     {
         public string Content { get; set; }
         public DateTime DateTime { get; set; }
-        public string SenderUsername { get; set; } // Optional: Include if you want to show who sent the message
+        public int UserId { get; set; } // Optional: Include if you want to show who sent the message
 
     }
 

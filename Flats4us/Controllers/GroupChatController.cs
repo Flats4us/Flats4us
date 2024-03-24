@@ -23,10 +23,7 @@ namespace Flats4us.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroupChat([FromBody] CreateGroupChatDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            
 
             try
             {

@@ -5,7 +5,7 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IGroupChatService
     {
-        Task<GroupChat> CreateGroupChatAsync(string groupName, IEnumerable<int> userIds);
+        Task<GroupChatDto> CreateGroupChatAsync(string groupName, IEnumerable<int> userIds);
         Task AddUserToGroupChatAsync(int adderId, int groupChatId, int newUserId);
         Task SendMessageToGroupChatAsync(int groupChatId, int userId, string message);
         Task SetGroupNameAsync(int userId, int groupChatId, string newName);
