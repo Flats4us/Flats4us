@@ -8,7 +8,6 @@ import {
 	IUser,
 } from '../models/auth.models';
 import { environment } from 'src/environments/environment.prod';
-import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
 
 @Injectable({
 	providedIn: 'root',
@@ -34,20 +33,6 @@ export class AuthService {
 	public register({ email, password }: IUser): Observable<IAuthTokenResponse> {
 		return this.http
 			.post<IAuthTokenResponse>(`${this.apiRoute}/register`, { email, password })
-			.pipe(tap(response => this.setToken(response)));
-	}
-
-	public addProfileStudent(
-		profile: IAddStudent
-	): Observable<IAuthTokenResponse> {
-		return this.http
-			.post<IAuthTokenResponse>(`${this.apiRoute}/register/students`, profile)
-			.pipe(tap(response => this.setToken(response)));
-	}
-
-	public addProfileOwner(profile: IAddOwner): Observable<IAuthTokenResponse> {
-		return this.http
-			.post<IAuthTokenResponse>(`${this.apiRoute}/register/owners`, profile)
 			.pipe(tap(response => this.setToken(response)));
 	}
 

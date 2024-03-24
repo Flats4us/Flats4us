@@ -1,46 +1,50 @@
-<h1 class="text-4xl p-4 font-semibold">Profil użytkownika</h1>
-<mat-card *ngIf="user$ | async as user">
+<mat-card>
+	<mat-card-header>
+		<mat-card-title class="text-2xl">Profil użytkownika</mat-card-title>
+	</mat-card-header>
 	<mat-card-content>
-		<section class="flex flex-col items-center">
+		<section>
 			<div class="flex justify-center">
 				<img
 					mat-card-avatar
+					src="https://placehold.co/400"
 					alt="avatar"
 					class="profile-avatar__image"
-					src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 				/>
 			</div>
-			<div class="profile-name flex justify-center">{{ user.name }}</div>
+			<div class="profile-name flex justify-center">Agnieszka, 23</div>
+			<div class="profile-rating__wrapper flex flex-col">
+				<div class="profile-rating__stars mx-auto">
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon class="filled">star</mat-icon>
+					<mat-icon>star</mat-icon>
+					<mat-icon>menu</mat-icon>
+				</div>
+				<div class="text-xsm mx-auto">93% pozytywnych opinii</div>
+			</div>
 			<div class="profile-features__wrapper flex justify-center">
 				<mat-chip-listbox>
-					<mat-chip *ngIf="!user.surveyStudent.smoking">
+					<mat-chip>
 						<div class="chip">
 							<mat-icon>smoke_free</mat-icon> <span>Nie pali</span>
 						</div>
 					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.sociability">
-						<div class="chip">
-							<mat-icon>group</mat-icon> <span>Lubi towarzystwo</span>
-						</div>
-					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.animals">
-						<div class="chip">
-							<mat-icon>pets</mat-icon> <span>Ma zwierzęta</span>
-						</div>
-					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.vegan">
-						<div class="chip">
-							<mat-icon>cruelty_free</mat-icon> <span>Vegan</span>
-						</div>
+					<mat-chip>
+						<div class="chip"><mat-icon>shower</mat-icon> <span>Myje się</span></div>
 					</mat-chip>
 				</mat-chip-listbox>
 			</div>
-			<div class="flex flex-col items-start">
-				<div *ngFor="let link of user.links" class="text-gray-400">
-					<div>
-						<mat-icon>link</mat-icon>
-						<a href="{{ link }}">{{ link }}</a>
-					</div>
+			<div class="profile-socials__wrapper flex gap-2 justify-center mt-2">
+				<div>
+					<i class="fa fa-twitter fa-fw"></i>
+				</div>
+				<div>
+					<i class="fa-brands fa-facebook-messenger fa-fw"></i>
+				</div>
+				<div>
+					<i class="fa fa-instagram fa-fw"></i>
 				</div>
 			</div>
 		</section>
@@ -51,7 +55,7 @@
 					<span>Uczelnia</span>
 				</div>
 				<div class="text-gray-400">
-					{{ user.university }}
+					Polsko-Japońska Akademia Technik Komputerowych Kierunek: Informatyka
 				</div>
 			</div>
 			<div class="profile-interests__wrapper">
@@ -61,10 +65,17 @@
 				</div>
 				<div>
 					<mat-chip-listbox>
-						<mat-chip *ngFor="let interest of user.interests">{{
-							interest.name
-						}}</mat-chip>
+						<mat-chip>Wycieczki górskie</mat-chip>
+						<mat-chip>Dobre jedzenie</mat-chip>
+						<mat-chip>Fotografia</mat-chip>
 					</mat-chip-listbox>
+				</div>
+				<div class="text-gray-400">
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+					Lorem Ipsum has been the industry's standard dummy text ever since the
+					1500s, when an unknown printer took a galley of type and scrambled it to
+					make a type specimen book. It has survived not only five centuries, but
+					also the leap into electronic typesetting, remaining essentially unchanged.
 				</div>
 			</div>
 		</section>

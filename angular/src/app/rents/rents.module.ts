@@ -13,15 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RentsDialogComponent } from './components/dialog/rents-dialog.component';
 import { RentsDetailsModule } from './components/details/rents-details.module';
-import { RentsDetailsComponent } from './components/details/rents-details.component';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { RealEstateService } from '../real-estate/services/real-estate.service';
-import { OfferService } from '../offer/services/offer.service';
-import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -38,14 +31,10 @@ import { MatCardModule } from '@angular/material/card';
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
+		RentsDialogComponent,
 		RentsDetailsModule,
-		MatChipsModule,
-		MatAutocompleteModule,
-		ReactiveFormsModule,
-		MatFormFieldModule,
-		MatCardModule,
 	],
-	exports: [RentsComponent, RentsDetailsComponent],
-	providers: [RentsService, RealEstateService, OfferService],
+	exports: [RentsComponent],
+	providers: [RentsService],
 })
 export class RentsModule {}

@@ -1,10 +1,3 @@
-:host {
-	display: block;
-	position: sticky;
-	top: 0;
-	z-index: 1000;
-}
-
 .custom-toolbar {
 	background-color: #fbbb8b;
 }
@@ -40,6 +33,7 @@
 
 .button-log,
 .button-sign {
+	border-radius: 30px;
 	margin-right: 20px;
 }
 
@@ -49,8 +43,8 @@
 
 .your-photo {
 	border-radius: 100%;
-	width: 44px;
-	height: 44px;
+	width: 35px;
+	height: 35px;
 }
 
 .your-profile {

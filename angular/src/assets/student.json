@@ -1,8 +1,0 @@
-{
-	"name": "Maciek",
-	"age": 19,
-	"rating": 3.5,
-	"interests": ["Muzyka", "Gry", "Filmy", "Piłka nożna"],
-	"profilePicture": "../../../assets/candidate.webp",
-	"matchLevel": "70"
-}

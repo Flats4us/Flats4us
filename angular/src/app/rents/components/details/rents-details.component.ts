@@ -1,20 +1,18 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IMenuOptions, IPayment } from '../../models/rents.models';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+import { RentsService } from '../../services/rents.service';
+import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, switchMap } from 'rxjs';
+import { RentsDialogComponent } from '../dialog/rents-dialog.component';
+import { Observable, Subject, map, of, switchMap, takeUntil } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { environment } from 'src/environments/environment.prod';
-import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
-import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
-import { IOffer } from 'src/app/offer/models/offer.models';
-import { UserType } from 'src/app/profile/models/types';
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
-import { OfferService } from 'src/app/offer/services/offer.service';
-import { RentsService } from '../../services/rents.service';
-import { RentRateComponent } from '../rent-rate/rent-rate.component';
+import { StartDisputeDialogComponent } from '@shared/components/start-dispute-dialog/start-dispute-dialog.component';
 
 @Component({
 	selector: 'app-rents-details',
@@ -23,91 +21,62 @@ import { RentRateComponent } from '../rent-rate/rent-rate.component';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsDetailsComponent {
-	protected baseUrl = environment.apiUrl.replace('/api', '');
-	public uType = UserType;
-
-	public separatorKeysCodes: number[] = [ENTER, COMMA];
+export class RentsDetailsComponent implements OnInit, OnDestroy {
 	public statusName: typeof statusName = statusName;
-	public user$ = this.route.parent?.paramMap.pipe(
-		map(params => params.get('user')?.toUpperCase() ?? '')
-	);
-	private rentId$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('id') ?? '')
-	);
-	public actualRent$: Observable<IOffer> = this.rentId$?.pipe(
-		switchMap(value => this.offerService.getOfferById(parseInt(value)))
-	);
-	public payments: IPayment[] = [
-		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
-	];
+	public actualRent$?: Observable<IRent>;
+	private rentId$?: Observable<string>;
+	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
-	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
-	public menuOptions: IMenuOptions[] = [
-		{ option: 'rentDetails', description: 'Szczegóły najmu' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
-		{ option: 'closeRent', description: 'Zakończ najem' },
-	];
-
 	constructor(
-		public realEstateService: RealEstateService,
-		public offerService: OfferService,
-		private rentsService: RentsService,
+		public rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute
 	) {}
-
-	public addOffer() {
-		this.router.navigate(['offer', 'add']);
+	public ngOnInit(): void {
+		this.rentId$ = this.route.paramMap.pipe(
+			map(params => params.get('id') ?? '')
+		);
+		this.actualRent$ = this.rentId$.pipe(
+			switchMap(value => this.rentsService.getRent(value))
+		);
 	}
 
-	public openCancelDialog(id: number): void {
-		this.dialog.open(RentsCancelDialogComponent, {
-			disableClose: true,
-			data: id,
+	public addOffer() {
+		this.router.navigate(['offer/add']);
+	}
+
+	private startDispute() {
+		this.dialog.open(StartDisputeDialogComponent, {
+			width: '600px',
 		});
 	}
 
-	public navigateToRent(id: number) {
-		this.router.navigate(['rents', 'details', id]);
-	}
-	public startDispute(id: number) {
-		this.router.navigate([['disputes', id]]);
+	public openDialog(actualRent: IRent): void {
+		const dialogRef = this.dialog.open(RentsDialogComponent, {
+			data: actualRent,
+		});
+		dialogRef
+			.afterClosed()
+			.pipe(takeUntil(this.unsubscribe$))
+			.subscribe(result => {
+				this.actualRent$ = of(result);
+			});
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number) {
+	public onSelect(menuOption: IMenuOptions, actualRent: IRent) {
 		switch (menuOption.option) {
-			case 'rentDetails': {
-				this.navigateToRent(id);
-				break;
-			}
 			case 'startDispute': {
-				this.startDispute(id);
+				this.startDispute();
 				break;
 			}
 			case 'closeRent': {
-				this.openCancelDialog(id);
+				this.openDialog(actualRent);
 				break;
 			}
 		}
-	}
-
-	public onAddMeeting(): void {
-		this.dialog.open(MeetingAddComponent, {
-			disableClose: true,
-			data: this.rentId$,
-		});
-	}
-
-	public onRate(): void {
-		this.dialog.open(RentRateComponent, {
-			disableClose: true,
-			data: this.actualRent$,
-		});
 	}
 
 	public setCurrentSlideIndex(index: number) {
@@ -124,5 +93,10 @@ export class RentsDetailsComponent {
 
 	public nextSlide(length: number) {
 		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
+	}
+
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 }

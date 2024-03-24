@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Input,
-	OnInit,
-} from '@angular/core';
-import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 	selector: 'app-register',
@@ -12,18 +6,7 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 	styleUrls: ['./register.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent implements OnInit {
-	@Input()
-	public createProfileMode = false;
-
+export class RegisterComponent {
 	public hidePassword = true;
 	public hideConfirmPasword = true;
-
-	public registerForm: FormGroup = this.formDir.form;
-
-	constructor(private formDir: FormGroupDirective) {}
-
-	public ngOnInit() {
-		this.registerForm = this.formDir.form;
-	}
 }

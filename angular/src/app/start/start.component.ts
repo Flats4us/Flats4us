@@ -2,25 +2,25 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	OnInit,
+	AfterViewInit,
 	ViewChild,
 	ChangeDetectorRef,
-	Output,
-	EventEmitter,
+	OnDestroy,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ISortOption } from './models/start-site.models';
+import { IFlatOffer, ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
-import { environment } from 'src/environments/environment.prod';
-import { ISendOffers } from '../offer/models/offer.models';
-import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 
 @Component({
 	selector: 'app-start',
@@ -28,87 +28,100 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent extends BaseComponent implements OnInit {
-	protected baseUrl = environment.apiUrl.replace('/api', '');
+export class StartComponent implements AfterViewInit, OnInit, OnDestroy {
+	private readonly unsubscribe$: Subject<void> = new Subject();
 
 	public showMoreFilters = false;
 
-	public isSubmitted = false;
+	public isSubmitted: boolean;
 
-	public startSiteForm: FormGroup;
-
-	public isLoading$: Observable<boolean> = of(false);
+	public mainSiteForm: FormGroup = new FormGroup({});
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
+	public flatOptions$?: Observable<IFlatOffer[]>;
+
 	private regionCityArray: IRegionCity[] = [];
-	public pageEvent = new PageEvent();
-	public pageSize = 6;
-	public pageIndex = 0;
-	public flatOptions$: Observable<ISendOffers>;
-	public flatOptionsPromoted$: Observable<ISendOffers>;
-	private sortState: ISortOption = {
-		type: 'Price ASC',
-		direction: 'asc',
-		description: 'ceny: od najniższej',
-	};
+
+	private dataSource: MatTableDataSource<IFlatOffer> =
+		new MatTableDataSource<IFlatOffer>(this.startService.allFlatOffers);
+
+	private sortState: Sort = { active: 'price', direction: 'desc' };
 
 	@ViewChild(MatPaginator)
-	private paginator: MatPaginator = new MatPaginator(
+	public paginator: MatPaginator = new MatPaginator(
 		this.matPaginatorIntl,
 		ChangeDetectorRef.prototype
 	);
 
-	@Output()
-	public page: EventEmitter<PageEvent> = new EventEmitter();
+	@ViewChild(MatSort, { static: false })
+	public matSort: MatSort = new MatSort();
 
 	constructor(
+		private formBuilder: FormBuilder,
+		private http: HttpClient,
 		private router: Router,
 		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
 		public realEstateService: RealEstateService,
-		public startService: StartService,
-		private changeDetectorRef: ChangeDetectorRef,
-		private formBuilder: FormBuilder
+		public startService: StartService
 	) {
-		super();
-		this.startSiteForm = this.formBuilder.group({
+		this.mainSiteForm = formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
 			distance: new FormControl(0, Validators.required),
-			property: new FormControl([], Validators.required),
+			property: new FormControl('', Validators.required),
 			minPrice: new FormControl(null, [Validators.min(0)]),
 			maxPrice: new FormControl(null, [Validators.min(0)]),
 			districtsGroup: new FormControl(''),
 			minArea: new FormControl(null, [Validators.min(0)]),
 			maxArea: new FormControl(null, [Validators.min(0)]),
-			year: new FormControl([]),
+			year: new FormControl(''),
 			rooms: new FormControl(null, [Validators.min(1)]),
 			floors: new FormControl(null, [Validators.min(0)]),
-			equipment: new FormControl([]),
-			sorting: new FormControl(this.sortState),
-			pageIndex: new FormControl(this.pageIndex),
-			pageSize: new FormControl(this.pageSize),
+			equipment: new FormControl(''),
 		});
-		this.startService.mapOffersForm = this.startSiteForm;
 		this.realEstateService
 			.readCitiesForRegions(
 				this.regionCityArray,
 				this.realEstateService.citiesGroups
 			)
-			.pipe(this.untilDestroyed())
+			.pipe(takeUntil(this.unsubscribe$))
 			.subscribe();
-		this.flatOptions$ = this.startService.getFilteredOffers(
-			this.startSiteForm.value
-		);
-		this.flatOptionsPromoted$ = this.startService
-			.getFilteredOffers(this.startSiteForm.value)
-			.pipe(
-				map(offers => ({
-					totalCount: offers.result.filter(offer => offer.isPromoted).length,
-					result: offers.result.filter(offer => offer.isPromoted === true),
-				}))
-			);
+		this.isSubmitted = false;
+	}
+
+	public filter = (opt: string[], value: string): string[] => {
+		const filterValue = value.toLowerCase();
+
+		return opt.filter(item => item.toLowerCase().includes(filterValue));
+	};
+
+	public showFilters() {
+		this.showMoreFilters = !this.showMoreFilters;
+	}
+
+	public showMap() {
+		this.router.navigate(['map'], { relativeTo: this.route });
+	}
+
+	public addToFavorite() {
+		this.router.navigate(['/']);
+	}
+
+	public showDescription(url: string) {
+		this.router.navigate([url]);
+	}
+
+	public onSubmit() {
+		if (this.mainSiteForm.valid) {
+			this.isSubmitted = true;
+		}
+	}
+
+	public ngAfterViewInit() {
+		this.dataSource.paginator = this.paginator;
+		this.flatOptions$ = this.dataSource.connect();
 	}
 
 	public ngOnInit() {
@@ -134,78 +147,57 @@ export class StartComponent extends BaseComponent implements OnInit {
 			return `${startIndex + 1} - ${endIndex} z ${length} ofert`;
 		};
 
-		this.realEstateService
-			.readAllEquipment()
-			.pipe(this.untilDestroyed())
-			.subscribe();
-
-		this.citiesGroupOptions$ = this.startSiteForm
+		this.citiesGroupOptions$ = this.mainSiteForm
 			.get('citiesGroup')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
 				map(value => this.filterCitiesGroup(value))
 			);
 
-		this.districtGroupOptions$ = this.startSiteForm
+		this.districtGroupOptions$ = this.mainSiteForm
 			.get('districtsGroup')
 			?.valueChanges.pipe(
 				map(value => value ?? ''),
 				map(value => this.filterDistrictsGroup(value))
 			);
 
-		this.startSiteForm.get('districtsGroup')?.disable();
+		this.mainSiteForm.get('districtsGroup')?.disable();
 
-		this.startSiteForm
+		this.mainSiteForm
 			.get('citiesGroup')
-			?.valueChanges.pipe(this.untilDestroyed())
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(value => {
 				if (
 					this.realEstateService.districtGroups.find(distr => distr.whole === value)
 				) {
-					this.startSiteForm.get('districtsGroup')?.enable();
+					this.mainSiteForm.get('districtsGroup')?.enable();
 				} else {
-					this.startSiteForm.get('districtsGroup')?.reset();
-					this.startSiteForm.get('districtsGroup')?.disable();
+					this.mainSiteForm.get('districtsGroup')?.reset();
+					this.mainSiteForm.get('districtsGroup')?.disable();
 				}
 			});
-		this.startSiteForm
+		this.mainSiteForm
 			.get('regionsGroup')
-			?.valueChanges.pipe(this.untilDestroyed())
+			?.valueChanges.pipe(takeUntil(this.unsubscribe$))
 			.subscribe(() => {
-				this.startSiteForm.get('citiesGroup')?.reset();
+				this.mainSiteForm.get('citiesGroup')?.reset();
 			});
-
-		this.filterOffers();
-	}
-
-	public filter(opt: string[], value: string): string[] {
-		const filterValue = value.toLowerCase();
-		return opt.filter(item => item.toLowerCase().includes(filterValue));
-	}
-
-	public showFilters() {
-		this.showMoreFilters = !this.showMoreFilters;
-	}
-
-	public showMap() {
-		this.startService.mapOffersForm = this.startSiteForm;
-		this.router.navigate(['map'], { relativeTo: this.route });
-	}
-
-	public addToWatched(id: number) {
-		this.startService.addToWatched(id).pipe(this.untilDestroyed()).subscribe();
-	}
-
-	public onSubmit() {
-		if (this.startSiteForm.valid) {
-			this.isSubmitted = true;
-			this.filterOffers();
-		}
 	}
 
 	public onSelect(sortByOption: ISortOption) {
-		this.startSiteForm.patchValue({ sorting: sortByOption });
-		this.filterOffers();
+		this.dataSource.sort = this.matSort;
+		this.sortState = {
+			active: sortByOption.type,
+			direction: <SortDirection>sortByOption.direction,
+		};
+		this.matSort.active = this.sortState.active;
+		this.matSort.direction = this.sortState.direction;
+		this.matSort.sortChange.emit(this.sortState);
+	}
+
+	public ngOnDestroy() {
+		this.unsubscribe$.next();
+		this.unsubscribe$.complete();
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -217,7 +209,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.startSiteForm.get('regionsGroup')?.value
+					group.whole === this.mainSiteForm.get('regionsGroup')?.value
 			);
 	}
 	private filterDistrictsGroup(value: string): IGroup[] {
@@ -229,39 +221,14 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.filter(
 				group =>
 					group.parts.length > 0 &&
-					group.whole === this.startSiteForm.get('citiesGroup')?.value
+					group.whole === this.mainSiteForm.get('citiesGroup')?.value
 			);
 	}
 
-	public navigateToFlat(id: number) {
-		this.router.navigate(['offer', 'details', id]);
+	public navigateToFlat(url: string) {
+		this.router.navigate([url]);
 	}
 	public validateForm() {
-		return this.startSiteForm.valid;
-	}
-
-	public changePage(e: PageEvent) {
-		this.pageEvent = e;
-		this.pageSize = e.pageSize;
-		this.pageIndex = e.pageIndex;
-		this.filterOffers();
-	}
-
-	public async filterOffers() {
-		this.isLoading$ = of(true);
-		this.startService
-			.getFilteredOffers(this.startSiteForm.value)
-			.pipe(this.untilDestroyed())
-			.subscribe(result => {
-				this.flatOptions$ = of(result);
-				if (!this.isSubmitted) {
-					this.flatOptionsPromoted$ = of({
-						totalCount: result.result.filter(offer => offer.isPromoted).length,
-						result: result.result.filter(offer => offer.isPromoted),
-					});
-				}
-				this.isLoading$ = of(false);
-				this.changeDetectorRef.markForCheck();
-			});
+		return this.mainSiteForm.valid;
 	}
 }

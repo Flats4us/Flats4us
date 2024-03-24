@@ -32,6 +32,8 @@
 
 .profile-features__wrapper {
 	mat-chip {
+		background-color: #fbbb8b;
+
 		.chip {
 			display: flex;
 			align-content: center;
@@ -45,6 +47,12 @@
 		border: 1px solid black;
 		border-radius: 50%;
 		padding: 4px;
+	}
+}
+
+.profile-interests__wrapper {
+	mat-chip {
+		background-color: #44c3fa;
 	}
 }
 

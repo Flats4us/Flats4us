@@ -14,7 +14,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatStepperModule } from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { RealEstateService } from '../../services/real-estate.service';
 
 @NgModule({
 	declarations: [AddRealEstateComponent],
@@ -36,7 +35,6 @@ import { RealEstateService } from '../../services/real-estate.service';
 	exports: [AddRealEstateComponent],
 	providers: [
 		{ provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true } },
-		RealEstateService,
 	],
 })
 export class AddRealEstateModule {}
