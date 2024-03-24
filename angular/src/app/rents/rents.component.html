@@ -1,37 +1,61 @@
-<div class="rents">
-	<div class="container-1">
-		<h1>
-			Moje wynajmy
-			<button
-				mat-icon-button
-				id="add"
-				class="box-icon"
-				aria-label="Add"
-				matTooltip="Utwórz najem"
-				(click)="addOffer()"
-			>
-				<mat-icon>add</mat-icon>
-			</button>
-		</h1>
-		<mat-divider class="divider"></mat-divider>
-		<mat-nav-list>
-			<a
-				*ngFor="let rent of rentsOptions$ | async"
-				mat-list-item
-				routerLink="{{ rent.id }}"
-				><div class="box-1">
-					<span>{{ rent.title }}</span>
-					<mat-icon *ngIf="rent.status !== statusName.SUSPENDED" class="box-icon-2"
-						>check_circle</mat-icon
-					>
-					<mat-icon *ngIf="rent.status === statusName.SUSPENDED" class="box-icon-3"
-						>check_circle</mat-icon
-					>
-				</div></a
-			>
-		</mat-nav-list>
+<div *ngIf="user$ | async as user">
+	<div class="box-title">
+		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
+			Przeglądanie wynajmów
+		</div>
+		<div *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
+			Mój najem
+		</div>
+		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
+			Widok najmu
+		</div>
 	</div>
-	<div class="container-2">
+	<div *ngIf="user === uType.OWNER" class="rents-owner">
+		<mat-card class="container-list">
+			<h1 class="text-3xl pl-4 font-semibold">
+				Moje wynajmy
+				<button
+					mat-icon-button
+					id="add"
+					class="box-icon"
+					aria-label="Add"
+					matTooltip="Utwórz najem"
+					(click)="addOffer()"
+				>
+					<mat-icon [inline]="true">add</mat-icon>
+				</button>
+			</h1>
+			<mat-divider class="divider"></mat-divider>
+			<mat-nav-list>
+				<a
+					*ngFor="let rent of rentsOptions$ | async"
+					mat-list-item
+					class="item-list"
+					routerLink="{{ rent.id }}"
+					><div class="box-title">
+						<span class="text-xl font-bold">{{ rent.title }}</span>
+						<mat-icon
+							class="box-icon-invalid"
+							[ngClass]="
+								rent.status === statusName.SUSPENDED
+									? 'box-icon-invalid'
+									: 'box-icon-valid'
+							"
+							>check_circle</mat-icon
+						>
+					</div>
+					<div class="box-date">Data {{ rent.publishDate }}</div>
+				</a>
+			</mat-nav-list>
+		</mat-card>
+		<div class="container-outlet">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+	<div
+		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
+		class="rents-student"
+	>
 		<router-outlet></router-outlet>
 	</div>
 </div>

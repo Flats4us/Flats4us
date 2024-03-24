@@ -1,0 +1,60 @@
+<div *ngIf="user$ | async as user">
+	<div class="box-title">
+		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
+			Przeglądanie ofert
+		</div>
+		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
+			Widok oferty
+		</div>
+	</div>
+	<div *ngIf="user === uType.OWNER" class="offers-owner">
+		<div class="container-list">
+			<h1 class="text-3xl pl-4 font-semibold">
+				Moje oferty
+				<button
+					mat-icon-button
+					id="add"
+					class="box-icon"
+					aria-label="Add"
+					matTooltip="Dodaj ofertę"
+					(click)="addOffer()"
+				>
+					<mat-icon [inline]="true">add</mat-icon>
+				</button>
+			</h1>
+			<mat-divider class="divider"></mat-divider>
+			<mat-nav-list>
+				<a
+					*ngFor="let offer of (offersOptions$ | async)?.result"
+					mat-list-item
+					class="item-list"
+					routerLink="{{ offer.offerId }}"
+					><div class="box-title">
+						<span class="text-xl font-bold">
+							Wynajem -
+							{{ realEstateService.propertyTypes.get(offer.property.propertyType) }}
+							{{ offer.property.area }} m² {{ offer.property.city }}</span
+						>
+						<mat-icon
+							class="box-icon-valid"
+							[ngClass]="
+								offer.offerStatus === 0 ? 'box-icon-valid' : 'box-icon-invalid'
+							"
+							>check_circle</mat-icon
+						>
+					</div>
+					<div class="box-date">Data {{ offer.startDate | date }}</div>
+				</a>
+			</mat-nav-list>
+		</div>
+		<div class="container-outlet">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+	<div
+		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
+		class="offers-student"
+	>
+		<router-outlet></router-outlet>
+	</div>
+</div>

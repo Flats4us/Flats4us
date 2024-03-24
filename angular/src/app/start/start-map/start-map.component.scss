@@ -14,3 +14,21 @@
 		width: 100%;
 	}
 }
+
+.box-icon-function {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	justify-items: center;
+}
+
+.box-title {
+	display: flex;
+	justify-content: space-between;
+}
+
+.ico {
+	font-size: xx-large;
+	min-width: max-content;
+	min-height: max-content;
+}

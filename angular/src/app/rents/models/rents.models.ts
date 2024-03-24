@@ -1,4 +1,4 @@
-import { IFlatOffer } from 'src/app/start/models/start-site.models';
+import { IFlatOffer } from 'src/app/offer/models/offer.models';
 import { statusName } from '../statusName';
 
 export interface IGallery {
@@ -12,6 +12,13 @@ export interface IPayment {
 	sum: number;
 	date: string;
 	kind: string;
+}
+
+export interface IMeeting {
+	date: Date;
+	place: string;
+	reason: string;
+	offerId: number;
 }
 
 export interface IRent {

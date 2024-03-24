@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OfferService } from '../../services/offer.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 
 @Component({
 	selector: 'app-add-offer',
@@ -21,10 +22,11 @@ export class AddOfferComponent extends BaseComponent {
 		regulations: ['', Validators.required],
 	});
 
-	public properties$ = this.service.getProperties();
+	public properties$ = this.realEstateService.getRealEstates(true);
 
 	constructor(
-		private service: OfferService,
+		private offerService: OfferService,
+		private realEstateService: RealEstateService,
 		private fb: FormBuilder,
 		private snackBar: MatSnackBar
 	) {
@@ -32,8 +34,8 @@ export class AddOfferComponent extends BaseComponent {
 	}
 
 	public onSubmit() {
-		this.service
-			.addOffer(this.offerForm)
+		this.offerService
+			.addOffer(this.offerForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {
