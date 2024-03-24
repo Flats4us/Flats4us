@@ -1,5 +1,4 @@
-﻿using Flats4us.Entities;
-using Flats4us.Services.Interfaces;
+﻿using Flats4us.Services.Interfaces;
 using Hangfire;
 
 namespace Flats4us.Helpers
@@ -10,10 +9,9 @@ namespace Flats4us.Helpers
         {
             using (var scope = scopeFactory.CreateScope())
             {
-                var backgroundJobService = scope.ServiceProvider.GetRequiredService<IBackgroundJobService>();
+                var _backgroundJobService = scope.ServiceProvider.GetRequiredService<IBackgroundJobService>();
 
-                //EXAMPLE
-                //RecurringJob.AddOrUpdate("test-job3", () => backgroundJobService.TestAsync(), "*/3 * * * *");
+                RecurringJob.AddOrUpdate("GeneratePayments", () => _backgroundJobService.GeneratePaymentsAsync(), "0 3 * * *");
             }
         }
     }

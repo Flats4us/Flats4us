@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Flats4us.Services.Interfaces;
+﻿using Flats4us.Services.Interfaces;
 using Newtonsoft.Json;
 
 public class OpenStreetMapService : IOpenStreetMapService
@@ -15,8 +12,6 @@ public class OpenStreetMapService : IOpenStreetMapService
         _httpClient = new HttpClient();
         _httpClient.DefaultRequestHeaders.Add("User-Agent", "Flats4Us-StudentProject");
     }
-
-
 
     public async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string province, string? district, string? street, string? number, string city, string? postalCode)
     {

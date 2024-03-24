@@ -16,5 +16,10 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime DateForVerificationSorting { get; set; }
+
+        public virtual ICollection<UserOpinion> IssuedUserOpinions { get; set; }
+        public virtual ICollection<UserOpinion> ReceivedUserOpinions { get; set; }
+
+
     }
 }

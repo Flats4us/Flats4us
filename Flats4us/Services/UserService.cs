@@ -6,9 +6,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -199,6 +197,103 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            UserProfileFullDto result;
+
+            switch (user)
+            {
+                case Student:
+                    var student = await _context.Students
+                        .Include(s => s.SurveyStudent)
+                        .Include(s => s.Interests)
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
+                    result = _mapper.Map<UserProfileFullDto>(student);
+                    break;
+                case Owner owner:
+                    result = _mapper.Map<UserProfileFullDto>(owner);
+                    break;
+                default:
+                    throw new ArgumentException($"Cannot get profile of this user");
+            }
+
+            return result;
+        }
+
+        public async Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            UserProfilePublicDto result;
+
+            switch (user)
+            {
+                case Student:
+                    var student = await _context.Students
+                        .Include(s => s.SurveyStudent)
+                        .Include(s => s.Interests)
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
+                    result = _mapper.Map<UserProfilePublicDto>(student);
+                    break;
+                case Owner owner:
+                    result = _mapper.Map<UserProfilePublicDto>(owner);
+                    break;
+                default:
+                    throw new ArgumentException($"Cannot get profile of this user");
+            }
+
+            return result;
+        }
+
+        public async Task<bool> CheckIfStudentExistsByIdAsync(string email)
+        {
+            var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
+
+            return student != null;
+        }
+
+        public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)
+        {
+            var sourceUser = await _context.Users.FindAsync(requestUserId);
+
+            if (sourceUser is null) throw new ArgumentException($"User with ID {requestUserId} not found.");
+
+            var targetUser = await _context.Users.FindAsync(targetUserId);
+
+            if (targetUser is null) throw new ArgumentException($"User with ID {targetUserId} not found.");
+
+            var opinion = new UserOpinion
+            {
+                Date = DateTime.Now,
+                Rating = input.Rating,
+                Description = input.Description,
+                SourceUserId = sourceUser.UserId,
+                TargetUserId = targetUser.UserId
+            };
+
+            await _context.UserOpinions.AddAsync(opinion);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<UserInfoDto> GetUserInfo(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            return _mapper.Map<UserInfoDto>(user);
+        } 
 
         private TokenDto CreateToken(User user)
         {

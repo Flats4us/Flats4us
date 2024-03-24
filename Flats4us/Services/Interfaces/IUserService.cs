@@ -1,5 +1,4 @@
-﻿using Flats4us.Entities;
-using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services.Interfaces
 {
@@ -13,5 +12,10 @@ namespace Flats4us.Services.Interfaces
         Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input);
         Task VerifyUserAsync(int id, bool decision);
         Task ChangePasswordAsync(string oldPassword, string newPassword, int userId);
+        Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId);
+        Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId);
+        Task<bool> CheckIfStudentExistsByIdAsync(string email);
+        Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
+        Task<UserInfoDto> GetUserInfo(int userId);
     }
 }

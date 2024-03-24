@@ -1,7 +1,4 @@
-﻿using Flats4us.Entities.Dto;
-using Flats4us.Services;
-using Flats4us.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+﻿using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

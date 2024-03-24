@@ -28,9 +28,6 @@ namespace Flats4us.Entities
         public string Email { get; set; }
 
         [Required]
-        //[MinLength(8)]
-        //[MaxLength(50)]
-        //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,50}$")]
         public string PasswordHash { get; set; }
 
         [Required]
@@ -47,6 +44,6 @@ namespace Flats4us.Entities
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
-        public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
+        public virtual ICollection<TechnicalProblem> TechnicalProblems { get; set; }
     }
 }

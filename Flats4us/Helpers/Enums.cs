@@ -1,8 +1,12 @@
-﻿
-
-
-namespace Flats4us.Helpers.Enums
+﻿namespace Flats4us.Helpers.Enums
 {
+    public enum TechnicalProblemType
+    {
+        ApplicationOperation,
+        Payment,
+        AccountPerformance,
+        Other
+    }
     public enum Gender
     {
         Male,
@@ -13,9 +17,9 @@ namespace Flats4us.Helpers.Enums
     public enum OfferStatus
     {
         Current,
-        Outdated,
-        Suspended,
-        Rented
+        Waiting,
+        Rented,
+        Old
     }
 
     public enum Sender
@@ -44,8 +48,7 @@ namespace Flats4us.Helpers.Enums
     {
         Verified,
         NotVerified,
-        Rejected,
-        PreCreated
+        Rejected
     }
 
     public enum PaymentPurpose
@@ -71,6 +74,7 @@ namespace Flats4us.Helpers.Enums
     public enum UserType
     {
         Owner,
-        Student
+        Student,
+        Moderator
     }
 }

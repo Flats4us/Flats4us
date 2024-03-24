@@ -3,29 +3,30 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities
 {
-    public class OpinionStudentStudent
+    public class UserOpinion
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int OpinionStudentStudentId { get; set; }
+        public int UserOpinionId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
         [Required]
+        [Range(1, 10)]
         public int Rating { get; set; }
 
         [Required]
-        public int Check1 { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public int EvaluatedId { get; set; }
+        public int SourceUserId { get; set; }
 
         [Required]
-        public int EvaluatorId { get; set; }
+        public int TargetUserId { get; set; }
 
-        public virtual Student Evaluated { get; set; }
+        public virtual OwnerStudent SourceUser { get; set; }
 
-        public virtual Student Evaluator { get; set; }
+        public virtual OwnerStudent TargetUser { get; set; }
     }
 }
