@@ -18,17 +18,20 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
         public UserService(Flats4usContext context,
             IMapper mapper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            INotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
+            _notificationService = notificationService;
         }
 
-        public async Task<TokenDto> AuthenticateAsync(string email, string password)
+        public async Task<TokenDto> AuthenticateAsync(string email, string password, string fcmToken = null)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
@@ -37,6 +40,11 @@ namespace Flats4us.Services
             user.ActivityStatus = true;
             user.LastLoginDate = DateTime.Now;
 
+            // Save FCM token if provided
+            if (!string.IsNullOrEmpty(fcmToken))
+            {
+                user.FcmToken = fcmToken;
+            }
             await _context.SaveChangesAsync();
 
             var token = CreateToken(user);
@@ -196,6 +204,12 @@ namespace Flats4us.Services
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
 
             await _context.SaveChangesAsync();
+
+            // Notify the user of password change
+            var notificationTitle = "Password Changed";
+            var notificationBody = "Your password has been successfully changed.";
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userId);
+
         }
 
         public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)

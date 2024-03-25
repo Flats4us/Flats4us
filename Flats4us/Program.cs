@@ -14,6 +14,9 @@ using Flats4us.Helpers.Enums;
 using Microsoft.Extensions.FileProviders;
 using Flats4us.Hubs;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,7 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
     }, 
     ServiceLifetime.Scoped
 );
+
 
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
@@ -38,6 +42,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
 builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 
@@ -180,6 +185,14 @@ builder.Services.AddHangfire(configuration => configuration
     .UseSqlServerStorage(builder.Configuration.GetConnectionString("Flats4usConn")));
 
 builder.Services.AddHangfireServer();
+
+
+var firebaseApp = FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile("onlyflats-410722-firebase-adminsdk-2t3aj-e8b09bb560.json")
+});
+builder.Services.AddSingleton(firebaseApp);
+
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
