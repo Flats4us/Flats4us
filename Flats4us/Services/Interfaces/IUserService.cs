@@ -4,7 +4,7 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<TokenDto> AuthenticateAsync(string email, string password);
+        Task<TokenDto> AuthenticateAsync(string email, string password, string FcmToken);
         Task<TokenDto> RegisterOwnerAsync(OwnerRegisterDto input);
         Task<TokenDto> RegisterStudentAsync(StudentRegisterDto input);
         Task AddUserFilesAsync(UserFilesDto input, int userId);

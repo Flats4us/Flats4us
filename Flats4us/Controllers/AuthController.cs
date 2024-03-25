@@ -70,7 +70,8 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var token = await _userService.AuthenticateAsync(request.Email, request.Password);
+                var token = await _userService.AuthenticateAsync(request.Email, request.Password, request.FcmToken);
+
 
                 return Ok(token);    
             }

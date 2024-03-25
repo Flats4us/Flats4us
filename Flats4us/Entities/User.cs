@@ -45,5 +45,6 @@ namespace Flats4us.Entities
         public VerificationStatus VerificationStatus { get; set; }
 
         public virtual ICollection<TechnicalProblem> TechnicalProblems { get; set; }
+        public string? FcmToken { get; set; }
     }
 }
