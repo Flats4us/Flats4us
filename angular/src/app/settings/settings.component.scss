@@ -1,9 +1,7 @@
 .settings {
 	display: flex;
 	flex-direction: row;
-	gap: 20px;
 }
-
 mat-card {
 	width: 200px;
 	padding: 20px;
@@ -23,6 +21,7 @@ nav ul li a {
 	display: block;
 	position: relative;
 	padding-bottom: 5px;
+	color: #fbbb8b;
 	text-decoration: none;
 	font-weight: 500;
 }
@@ -48,4 +47,9 @@ nav ul li a:hover::after {
 
 nav ul li a.active::after {
 	width: 100%;
+}
+
+.router-outlet {
+	flex-grow: 1;
+	padding: 20px;
 }

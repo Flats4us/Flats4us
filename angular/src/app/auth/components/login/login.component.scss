@@ -28,6 +28,40 @@ form > mat-error {
 	margin-bottom: 10px;
 }
 
+.buttons .btn-loginSubmit {
+	background-color: #000000;
+	color: #f3f4f6;
+	border-style: solid;
+	border-color: #000000;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttons .btn-loginSubmit:hover,
+.buttons .btn-loginSubmit:focus {
+	background-color: #f3f4f6;
+	color: #000000;
+}
+
+.buttons .btn-register {
+	background-color: #6200ee;
+	color: #fff;
+	border-style: solid;
+	border-color: #6200ee;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.buttons .btn-register:hover,
+.buttons .btn-register:focus {
+	background-color: #fff;
+	color: #6200ee;
+}
+
 #reset-password {
 	text-decoration: underline;
+}
+
+.buttons .btn-loginSubmit:disabled {
+	background-color: #b8b8b8;
+	border-color: #b8b8b8;
+	color: #000000;
 }

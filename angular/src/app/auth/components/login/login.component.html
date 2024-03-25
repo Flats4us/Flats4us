@@ -2,13 +2,13 @@
 	<h1>Zaloguj się</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-			<mat-form-field appearance="outline">
+			<mat-form-field class="no-border-style" appearance="outline">
 				<mat-label>Email</mat-label>
 				<input matInput formControlName="email" type="email" />
 				<mat-error>Pole jest wymagane</mat-error>
 			</mat-form-field>
 
-			<mat-form-field appearance="outline">
+			<mat-form-field class="no-border-style" appearance="outline">
 				<mat-label>Hasło</mat-label>
 				<input
 					formControlName="password"
@@ -39,7 +39,6 @@
 			<div class="buttons">
 				<button
 					mat-flat-button
-					color="primary"
 					class="btn-loginSubmit"
 					type="submit"
 					[disabled]="!loginForm.valid"
@@ -48,7 +47,6 @@
 				</button>
 				<button
 					mat-flat-button
-					color="accent"
 					class="btn-register"
 					type="button"
 					routerLink="/auth/register"

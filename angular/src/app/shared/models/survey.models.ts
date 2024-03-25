@@ -1,4 +1,4 @@
-export enum TypeName {
+export enum typeName {
 	RADIOBUTTON = 'RADIOBUTTON',
 	FORM = 'FORM',
 	SWITCH = 'SWITCH',
@@ -13,6 +13,6 @@ export interface IQuestionsData {
 	content: string;
 	trigger: boolean;
 	optional: boolean;
-	typeName: TypeName;
+	typeName: typeName;
 	answers: string[];
 }

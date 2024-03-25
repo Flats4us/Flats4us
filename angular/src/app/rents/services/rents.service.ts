@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
-import { IMeeting, IRent } from '../models/rents.models';
+import { IMenuOptions, IPayment, IRent } from '../models/rents.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
 
 @Injectable()
 export class RentsService {
-	protected apiRoute = `${environment.apiUrl}`;
+	public payments: IPayment[] = [
+		{ sum: 1000, date: '9-12-2022', kind: 'KAUCJA' },
+		{ sum: 4000, date: '10-12-2022', kind: 'CZYNSZ' },
+	];
+	public displayedColumns: string[] = ['sum', 'date', 'kind'];
+	public menuOptions: IMenuOptions[] = [
+		{ option: 'startDispute', description: 'Rozpocznij spór' },
+		{ option: 'closeRent', description: 'Zakończ najem' },
+	];
 
 	constructor(private httpClient: HttpClient) {}
-
-	public addMeeting(meeting: IMeeting) {
-		meeting = {
-			...meeting,
-			date: new Date(
-				Date.UTC(
-					meeting.date.getFullYear(),
-					meeting.date.getMonth(),
-					meeting.date.getDate()
-				)
-			),
-		};
-		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);
-	}
 
 	public getRents(): Observable<IRent[]> {
 		return this.httpClient.get<IRent[]>('./assets/rents.json');

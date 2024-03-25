@@ -25,12 +25,9 @@ import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
-	exports: [StartComponent],
-	providers: [MatPaginatorIntl, RealEstateService, StartService],
 	imports: [
 		CommonModule,
 		MatFormFieldModule,
@@ -50,7 +47,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatTableModule,
 		MatSortModule,
 		MatMenuModule,
-		MatProgressSpinnerModule,
 	],
+	exports: [StartComponent],
+	providers: [MatPaginatorIntl, RealEstateService, StartService],
 })
 export class StartModule {}

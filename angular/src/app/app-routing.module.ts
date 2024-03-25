@@ -18,6 +18,7 @@ const routes: Routes = [
 		path: 'profile',
 		loadChildren: () =>
 			import('./profile/profile.module').then(m => m.ProfileModule),
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'settings',
@@ -56,11 +57,6 @@ const routes: Routes = [
 	{
 		path: 'rents',
 		loadChildren: () => import('./rents/rents.module').then(m => m.RentsModule),
-	},
-	{
-		path: 'calendar',
-		loadComponent: () =>
-			import('./calendar/calendar.component').then(c => c.CalendarComponent),
 	},
 	{ path: '**', component: NotFoundComponent },
 ];
