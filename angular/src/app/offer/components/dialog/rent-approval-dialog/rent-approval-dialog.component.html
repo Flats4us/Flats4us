@@ -1,0 +1,61 @@
+<h1 class="text-2xl p-4 font-semibold">Propozycja najmu</h1>
+<div mat-dialog-content>
+	<mat-card>
+		<p class="pt-4 font-semibold">Data rozpoczęcia najmu:</p>
+		<p>22-03-2024</p>
+		<p class="pt-4 font-semibold">Okres najmu:</p>
+		<p>1 rok</p>
+		<div *ngIf="userProfile$ | async as user">
+			<p class="pt-4 font-semibold">Proponowni lokatorzy:</p>
+			<mat-card class="mt-4" (click)="showProfile(user.userId)">
+				<div class="profile-details">
+					<mat-card-avatar
+						><img src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+					/></mat-card-avatar>
+					<div>
+						<mat-chip-set>
+							<mat-chip>Imię: {{ user.name }}</mat-chip>
+							<mat-chip>Wiek: {{ user.age }}</mat-chip>
+							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
+						</mat-chip-set>
+					</div>
+				</div>
+			</mat-card>
+			<mat-card class="mt-4" (click)="showProfile(user.userId)">
+				<div class="profile-details">
+					<mat-card-avatar
+						><img src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+					/></mat-card-avatar>
+					<div>
+						<mat-chip-set>
+							<mat-chip>Imię: {{ user.name }}</mat-chip>
+							<mat-chip>Wiek: {{ user.age }}</mat-chip>
+							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
+						</mat-chip-set>
+					</div>
+				</div>
+			</mat-card>
+		</div>
+	</mat-card>
+	<p class="pt-4">Czy akceptujesz propozycję najmu?</p>
+	<div mat-dialog-actions class="button-box">
+		<button
+			mat-button
+			mat-dialog-close
+			cdkFocusInitial
+			type="button"
+			(click)="onClose()"
+		>
+			Nie
+		</button>
+		<button
+			mat-button
+			mat-dialog-close
+			cdkFocusInitial
+			type="submit"
+			(click)="onYesClick()"
+		>
+			Tak
+		</button>
+	</div>
+</div>

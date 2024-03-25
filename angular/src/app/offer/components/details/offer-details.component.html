@@ -8,6 +8,16 @@
 				<span class="text-3xl"
 					>Status oferty:
 					{{ offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) }}
+					<button
+						mat-mini-fab
+						class="box-icon"
+						color="primary"
+						matTooltip="Oferta najmu czeka na zaakceptowanie!"
+						aria-label="MenuButton"
+						(click)="onRentApproval(data.offer?.offerId)"
+					>
+						<mat-icon>notifications</mat-icon>
+					</button>
 				</span></mat-label
 			>
 		</div>
@@ -63,7 +73,7 @@
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									(click)="onSelect(menuOption, data.offer?.offerId ?? 0)"
+									(click)="onSelect(menuOption, data.offer?.offerId)"
 								>
 									<span
 										[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
@@ -79,21 +89,21 @@
 							"
 							class="slide slide-animation non-draggable-image"
 							src="{{ baseUrl }}/{{ slide.path }}"
-							(swiperight)="nextSlide(data.offer?.property?.images?.length ?? 0)"
-							(swipeleft)="prevSlide(data.offer?.property?.images?.length ?? 0)"
+							(swiperight)="nextSlide(data.offer?.property?.images?.length)"
+							(swipeleft)="prevSlide(data.offer?.property?.images?.length)"
 						/>
 					</ng-template>
 				</div>
 
 				<button
 					class="arrow prev"
-					(click)="nextSlide(data.offer?.property?.images?.length ?? 0)"
+					(click)="nextSlide(data.offer?.property?.images?.length)"
 				>
 					<mat-icon>arrow_back_ios</mat-icon>
 				</button>
 				<button
 					class="arrow next"
-					(click)="prevSlide(data.offer?.property?.images?.length ?? 0)"
+					(click)="prevSlide(data.offer?.property?.images?.length)"
 				>
 					<mat-icon>arrow_forward_ios</mat-icon>
 				</button>
@@ -220,60 +230,22 @@
 		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
 	</div>
 	<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
+		<button mat-raised-button color="primary" (click)="returnStart()">
+			Powrót
+		</button>
 		<button
 			mat-raised-button
 			color="primary"
-			(click)="onAddMeeting(data.offer?.offerId ?? 0)"
+			(click)="onAddMeeting(data.offer?.offerId)"
 		>
 			Dodaj spotkanie
 		</button>
 		<button
 			mat-raised-button
 			color="primary"
-			(click)="startRent(data.offer?.offerId ?? 0)"
+			(click)="startRent(data.offer?.offerId)"
 		>
 			Wynajmij
 		</button>
-	</div>
-	<div *ngIf="data.user === uType.OWNER">
-		<mat-form-field>
-			<mat-label>Proponowani lokatorzy</mat-label>
-			<mat-chip-grid #chipGrid aria-label="Tenants">
-				<mat-chip-row
-					*ngFor="let myTenant of myTenants"
-					(removed)="remove(myTenant, myTenants)"
-				>
-					{{ myTenant }}
-					<button
-						matChipRemove
-						type="button"
-						[attr.aria-label]="'remove ' + myTenant"
-					>
-						<mat-icon>cancel</mat-icon>
-					</button>
-				</mat-chip-row>
-				<input
-					#tenantsInput
-					[formControl]="tenantsCtrl"
-					[matChipInputFor]="chipGrid"
-					[matAutocomplete]="auto"
-					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-					(matChipInputTokenEnd)="add($event, myTenants, tenantsCtrl)"
-				/>
-				<mat-autocomplete
-					#auto="matAutocomplete"
-					(optionSelected)="selected($event)"
-				>
-					<mat-option
-						*ngFor="let tenant of filteredTenants$ | async"
-						[value]="tenant"
-						>{{ tenant }}</mat-option
-					>
-				</mat-autocomplete>
-			</mat-chip-grid>
-			<div class="button-box-options">
-				<button mat-raised-button color="primary">Wynajmij</button>
-			</div>
-		</mat-form-field>
 	</div>
 </div>

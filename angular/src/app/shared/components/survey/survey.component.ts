@@ -31,6 +31,8 @@ export class SurveyComponent implements OnInit {
 	public formToAdd = new FormGroup({});
 	public questions$: Observable<IQuestionsData[]>;
 	public typeName: typeof TypeName = TypeName;
+	public showMoreQuestions = false;
+	public numberOfQuestions = 0;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -43,13 +45,20 @@ export class SurveyComponent implements OnInit {
 		});
 
 		this.questions$ = this.getQuestions().pipe(
-			tap(questions => this.getFormControls(questions))
+			tap(questions => {
+				{
+					this.getFormControls(questions);
+					this.numberOfQuestions = questions.length;
+				}
+			})
 		);
 	}
 
 	public ngOnInit() {
-		this.surveyForm = this.formDir.form;
-		this.surveyForm.addControl('survey', this.formToAdd);
+		if (this.createProfileMode) {
+			this.surveyForm = this.formDir.form;
+			this.surveyForm.addControl('survey', this.formToAdd);
+		}
 	}
 
 	public getQuestions(): Observable<IQuestionsData[]> {

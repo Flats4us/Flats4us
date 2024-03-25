@@ -1,0 +1,72 @@
+<h1 class="text-4xl p-4 font-semibold">Profil użytkownika</h1>
+<mat-card *ngIf="user$ | async as user">
+	<mat-card-content>
+		<section class="flex flex-col items-center">
+			<div class="flex justify-center">
+				<img
+					mat-card-avatar
+					alt="avatar"
+					class="profile-avatar__image"
+					src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+				/>
+			</div>
+			<div class="profile-name flex justify-center">{{ user.name }}</div>
+			<div class="profile-features__wrapper flex justify-center">
+				<mat-chip-listbox>
+					<mat-chip *ngIf="!user.surveyStudent.smoking">
+						<div class="chip">
+							<mat-icon>smoke_free</mat-icon> <span>Nie pali</span>
+						</div>
+					</mat-chip>
+					<mat-chip *ngIf="user.surveyStudent.sociability">
+						<div class="chip">
+							<mat-icon>group</mat-icon> <span>Lubi towarzystwo</span>
+						</div>
+					</mat-chip>
+					<mat-chip *ngIf="user.surveyStudent.animals">
+						<div class="chip">
+							<mat-icon>pets</mat-icon> <span>Ma zwierzęta</span>
+						</div>
+					</mat-chip>
+					<mat-chip *ngIf="user.surveyStudent.vegan">
+						<div class="chip">
+							<mat-icon>cruelty_free</mat-icon> <span>Vegan</span>
+						</div>
+					</mat-chip>
+				</mat-chip-listbox>
+			</div>
+			<div class="flex flex-col items-start">
+				<div *ngFor="let link of user.links" class="text-gray-400">
+					<div>
+						<mat-icon>link</mat-icon>
+						<a href="{{ link }}">{{ link }}</a>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="profile-education__wrapper mb-4">
+				<div class="profile-education__header text-2xl flex gap-2 content-center">
+					<mat-icon>school</mat-icon>
+					<span>Uczelnia</span>
+				</div>
+				<div class="text-gray-400">
+					{{ user.university }}
+				</div>
+			</div>
+			<div class="profile-interests__wrapper">
+				<div class="profile-interests__header text-2xl flex gap-2 content-center">
+					<mat-icon>travel_explore</mat-icon>
+					<span>Zainteresowania</span>
+				</div>
+				<div>
+					<mat-chip-listbox>
+						<mat-chip *ngFor="let interest of user.interests">{{
+							interest.name
+						}}</mat-chip>
+					</mat-chip-listbox>
+				</div>
+			</div>
+		</section>
+	</mat-card-content>
+</mat-card>

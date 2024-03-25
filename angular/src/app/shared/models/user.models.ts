@@ -2,6 +2,21 @@ export interface IUser {
 	userType: number;
 	userId: number;
 	name: string;
+	accountCreationDate: Date;
+	verificationStatus: number;
+	profilePicture: IProfilePicture;
+	userOpinions: IUserOpinion[];
+	age: number;
+	university: string;
+	links: string[];
+	surveyStudent: ISurveyStudent;
+	interests: IInterest[];
+}
+
+export interface IMyProfile {
+	userType: number;
+	userId: number;
+	name: string;
 	surname: string;
 	address: string;
 	email: string;
@@ -11,6 +26,7 @@ export interface IUser {
 	profilePicture: IProfilePicture;
 	document: IDocument;
 	documentExpireDate: Date;
+	userOpinions: IUserOpinion[];
 	birthDate: Date;
 	studentNumber: string;
 	university: string;
@@ -24,6 +40,11 @@ export interface IUser {
 export interface IProfilePicture {
 	name: string;
 	path: string;
+}
+
+export interface IUserOpinion {
+	rating: number;
+	description: string;
 }
 
 export interface IDocument {

@@ -1,24 +1,22 @@
+<h1 class="text-4xl p-4 font-semibold">Dodawanie oferty</h1>
 <div class="grid-container">
 	<div></div>
 	<mat-card class="flex justify-center">
 		<mat-card-header class="justify-center mx-auto pt-1 w-3/4 md:w-2/5">
-			<mat-card-title class="text-2xl">
-				<h1>Dodaj ofertę</h1>
-			</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
 			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Cena: </mat-label>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Kaucja: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Okres wynajmu: </mat-label>
 					<mat-date-range-input [rangePicker]="picker">
 						<input matStartDate formControlName="startDate" placeholder="Początek" />
@@ -31,7 +29,7 @@
 					<mat-date-range-picker #picker></mat-date-range-picker>
 				</mat-form-field>
 
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Wybierz nieruchomość: </mat-label>
 					<mat-select formControlName="propertyId">
 						<mat-option
@@ -44,12 +42,12 @@
 					</mat-select>
 				</mat-form-field>
 
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Opis: </mat-label>
 					<textarea matInput formControlName="description"></textarea>
 				</mat-form-field>
 
-				<mat-form-field class="md:w-2/3" appearance="outline">
+				<mat-form-field class="md:w-2/3">
 					<mat-label>Reguły wynajmu: </mat-label>
 					<textarea matInput formControlName="regulations"></textarea>
 				</mat-form-field>

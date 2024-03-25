@@ -79,18 +79,18 @@ export class RentsDetailsComponent {
 		this.router.navigate([['disputes', id]]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number) {
+	public onSelect(menuOption: IMenuOptions, id?: number) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
-				this.navigateToRent(id);
+				this.navigateToRent(id ?? 0);
 				break;
 			}
 			case 'startDispute': {
-				this.startDispute(id);
+				this.startDispute(id ?? 0);
 				break;
 			}
 			case 'closeRent': {
-				this.openCancelDialog(id);
+				this.openCancelDialog(id ?? 0);
 				break;
 			}
 		}
@@ -118,11 +118,13 @@ export class RentsDetailsComponent {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide(length: number) {
-		this.currentIndex = this.currentIndex < length - 1 ? ++this.currentIndex : 0;
+	public prevSlide(length?: number) {
+		this.currentIndex =
+			this.currentIndex < (length ?? 0) - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide(length: number) {
-		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
+	public nextSlide(length?: number) {
+		this.currentIndex =
+			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
 	}
 }

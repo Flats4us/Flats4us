@@ -1,0 +1,55 @@
+@import "utility";
+
+.mat-mdc-card-content {
+	display: grid;
+	gap: 16px;
+
+	grid-template-columns: 1fr;
+
+	@include min-screen(desktop) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+.profile-avatar__image {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+}
+
+.profile-name {
+	font-size: larger;
+	font-weight: bold;
+}
+
+.profile-rating {
+	&__stars {
+		mat-icon.filled {
+			color: gold;
+		}
+	}
+}
+
+.profile-features__wrapper {
+	mat-chip {
+		.chip {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+		}
+	}
+}
+
+.profile-socials__wrapper {
+	div {
+		border: 1px solid black;
+		border-radius: 50%;
+		padding: 4px;
+	}
+}
+
+.profile-education__wrapper,
+.profile-interests__wrapper {
+	display: grid;
+	gap: 8px;
+}

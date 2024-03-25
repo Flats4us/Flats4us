@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import {
+	IDecision,
 	IOffer,
 	IPromotion,
 	IRentProposition,
@@ -42,6 +43,12 @@ export class OfferService {
 		return this.httpClient.post(
 			`${this.apiRoute}/offers/${id}/promotion`,
 			duration
+		);
+	}
+	public addRentApproval(id: number, decision: IDecision) {
+		return this.httpClient.post(
+			`${this.apiRoute}/offers/${id}/rent/accept`,
+			decision
 		);
 	}
 

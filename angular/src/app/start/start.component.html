@@ -24,7 +24,6 @@
 					</mat-select>
 					<mat-error
 						*ngIf="startSiteForm.controls['regionsGroup'].errors?.['required']"
-						class="error-text"
 					>
 						Nie wybrano województwa!
 					</mat-error>
@@ -56,7 +55,6 @@
 					</mat-autocomplete>
 					<mat-error
 						*ngIf="startSiteForm.controls['citiesGroup'].errors?.['required']"
-						class="error-text"
 					>
 						Nie wybrano miasta!
 					</mat-error>
@@ -90,10 +88,7 @@
 							{{ property.viewValue }}
 						</mat-option>
 					</mat-select>
-					<mat-error
-						*ngIf="startSiteForm.controls['property'].errors?.['required']"
-						class="error-text"
-					>
+					<mat-error *ngIf="startSiteForm.controls['property'].errors?.['required']">
 						Nie wybrano nieruchomości!
 					</mat-error>
 				</mat-form-field>
@@ -121,7 +116,7 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -147,7 +142,7 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 				<div class="batch">
 					<button
@@ -261,7 +256,7 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -287,7 +282,7 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -327,7 +322,7 @@
 							{{ room.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -352,7 +347,7 @@
 							{{ floor.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error class="error-text"> Nieprawidłowa wartość! </mat-error>
+					<mat-error> Nieprawidłowa wartość! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Promowanie ofery</h1>
+<h1 class="text-2xl p-4 font-semibold">Promowanie oferty</h1>
 <form class="dialog" [formGroup]="promotionForm" (ngSubmit)="onYesClick()">
 	<mat-form-field>
 		<mat-label>Okres promownia</mat-label>
@@ -11,20 +11,13 @@
 		/>
 		<mat-error
 			*ngIf="promotionForm.controls['promotionDays'].errors?.['required']"
-			class="error-text"
 		>
 			Liczba dni jest wymagana!
 		</mat-error>
-		<mat-error
-			*ngIf="promotionForm.controls['promotionDays'].errors?.['min']"
-			class="error-text"
-		>
+		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['min']">
 			Wprowadzona liczba dni jest nieprawidłowa!
 		</mat-error>
-		<mat-error
-			*ngIf="promotionForm.controls['promotionDays'].errors?.['max']"
-			class="error-text"
-		>
+		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['max']">
 			Wprowadzona liczba dni jest nieprawidłowa!
 		</mat-error>
 	</mat-form-field>

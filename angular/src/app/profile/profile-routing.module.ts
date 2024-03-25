@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { ProfileComponent } from './profile.component';
 import { SurveyComponent } from '../shared/components/survey/survey.component';
 import { CreateProfileComponent } from './create/create-profile.component';
 import { AuthGuard } from '@shared/services/auth.guard';
 import { NotFoundComponent } from '@shared/components/not-found/not-found.component';
+import { DetailsProfileComponent } from './details/details-profile.component';
+import { ProfileComponent } from './profile.component';
 
 const routes: Routes = [
+	{ path: '', pathMatch: 'full', redirectTo: 'my' },
+	{
+		path: 'my',
+		component: ProfileComponent,
+	},
 	{
 		path: 'survey/:survey-type',
 		component: SurveyComponent,
@@ -22,8 +27,8 @@ const routes: Routes = [
 		component: CreateProfileComponent,
 	},
 	{
-		path: 'my/:id',
-		component: ProfileComponent,
+		path: 'details/student/:id',
+		component: DetailsProfileComponent,
 		canActivate: [AuthGuard],
 	},
 	{ path: '**', component: NotFoundComponent },

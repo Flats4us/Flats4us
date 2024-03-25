@@ -5,6 +5,8 @@ export enum TypeName {
 	SLIDER = 'SLIDER',
 	CHECKBOX = 'CHECKBOX',
 	SUBQUESTION = 'SUBQUESTION',
+	TEXT = 'TEXT',
+	NUMBER = 'NUMBER',
 }
 
 export interface IQuestionsData {
