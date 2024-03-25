@@ -36,6 +36,7 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
     ServiceLifetime.Scoped
 );
 
+
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
@@ -49,8 +50,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
 builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
