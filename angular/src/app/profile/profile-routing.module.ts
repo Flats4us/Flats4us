@@ -10,7 +10,7 @@ const routes: Routes = [
 		component: SurveyComponent,
 	},
 	{
-		path: ':id',
+		path: 'my/:id',
 		component: ProfileComponent,
 	},
 ];

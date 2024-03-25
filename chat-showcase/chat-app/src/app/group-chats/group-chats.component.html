@@ -1,0 +1,13 @@
+<div>
+    <input type="number" [(ngModel)]="currentGroupChatId" placeholder="Group Chat ID">
+    <button (click)="joinGroupChat()">Join Group Chat</button>
+    <br>
+  
+    <input type="text" [(ngModel)]="message" placeholder="Type a message">
+    <button (click)="sendMessage()">Send Message</button>
+  
+    <ul>
+        <li *ngFor="let msg of groupMessages">GroupId:{{msg.groupId}} | UserId:{{ msg.user }} - {{ msg.message }}</li>
+      </ul>
+    </div>
+  

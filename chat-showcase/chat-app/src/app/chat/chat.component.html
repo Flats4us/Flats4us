@@ -1,0 +1,20 @@
+<div>
+    <input [(ngModel)]="username" type="text" placeholder="Username" />
+    <input [(ngModel)]="message" type="text" placeholder="Message" />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+  <div>
+    <input [(ngModel)]="receiverId" type="number" placeholder="Receiver ID" />
+    <input [(ngModel)]="message" type="text" placeholder="Private Message" />
+    <button (click)="sendPrivateMessage(receiverId)">Send Private</button>
+  </div>
+
+  <ul>
+    <li *ngFor="let msg of messages">{{ msg.user }}: {{ msg.message }}</li>
+  </ul>
+
+  <h3>Private Messages</h3>
+<ul>
+  <li *ngFor="let msg of privateMessages">{{ msg.user }}: {{ msg.message }}</li>
+</ul>
+

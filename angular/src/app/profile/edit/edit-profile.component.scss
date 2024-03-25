@@ -1,0 +1,131 @@
+.edit-profile {
+	display: flex;
+	flex-direction: row;
+	margin: 0 16px;
+}
+
+.btn-box {
+	padding: 4px;
+}
+
+.btn-box-submit {
+	align-self: flex-end;
+}
+
+.btn-upload-box {
+	min-height: 80px;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+}
+
+.container-title {
+	text-align: left;
+	margin: 0 16px;
+	padding: 4px 0 32px 0;
+}
+
+.form-btn {
+	width: 80%;
+}
+
+.image-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.button-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.profile-avatar__image {
+	width: 250px;
+	height: 250px;
+	border-radius: 50%;
+}
+
+.container-photo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 50%;
+	margin-top: 16px;
+	margin-bottom: auto;
+	padding-bottom: 16px;
+}
+
+.container-inputs {
+	display: flex;
+	justify-content: space-between;
+	flex-grow: 1;
+	flex-direction: column;
+	margin: 16px;
+}
+
+.data-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.error-text {
+	color: #ff0000;
+	font-size: x-small;
+}
+
+.hobbies {
+	display: grid;
+	grid-template-columns: repeat(3, 108px);
+}
+
+.file-upload {
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+.file-name {
+	display: inline-block;
+	overflow: hidden;
+	max-width: 32px;
+}
+
+.menu-btn {
+	margin: 0 16px;
+	padding: 4px;
+}
+
+mat-chip-option {
+	min-width: 100px;
+	margin: 4px;
+}
+
+mat-form-field {
+	min-width: 400px;
+}
+
+@media screen and (max-width: 992px) {
+	.edit-profile {
+		display: flex;
+		flex-direction: column;
+		background-color: white;
+		justify-content: center;
+		align-items: center;
+	}
+	.container-photo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+	}
+	mat-form-field {
+		min-width: 100px;
+	}
+	.form-btn {
+		width: 60%;
+	}
+}

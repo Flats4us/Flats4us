@@ -1,0 +1,95 @@
+<h1 mat-dialog-title>Dodawanie najmu</h1>
+<div mat-dialog-content>
+	<form
+		class="flex flex-col"
+		[formGroup]="rentPropositionForm"
+		(ngSubmit)="onYesClick()"
+	>
+		<mat-form-field>
+			<mat-label>Data rozpoczęcia najmu</mat-label>
+			<input
+				matInput
+				readonly
+				formControlName="startDate"
+				[min]="minDate"
+				[matDatepicker]="datepicker"
+			/>
+			<mat-datepicker-toggle
+				matIconSuffix
+				[for]="datepicker"
+			></mat-datepicker-toggle>
+			<mat-datepicker #datepicker></mat-datepicker>
+			<mat-error
+				*ngIf="rentPropositionForm.controls['startDate'].errors?.['required']"
+				class="error-text"
+			>
+				Pole jest wymagane!
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field>
+			<mat-label>Okres najmu</mat-label>
+			<input
+				matInput
+				formControlName="duration"
+				placeholder="Liczba dni najmu"
+				type="number"
+				[min]="1"
+			/>
+			<mat-error
+				*ngIf="rentPropositionForm.controls['duration'].errors?.['required']"
+				class="error-text"
+			>
+				Liczba dni jest wymagana!
+			</mat-error>
+			<mat-error
+				*ngIf="rentPropositionForm.controls['duration'].errors?.['min']"
+				class="error-text"
+			>
+				Wprowadzona liczba dni jest nieprawidłowa!
+			</mat-error>
+		</mat-form-field>
+		<mat-form-field class="example-chip-list">
+			<mat-label>Adresy email współlokatorów</mat-label>
+			<mat-chip-grid #chipGrid2 aria-label="Emails">
+				<mat-chip-row
+					*ngFor="let tenant of tenants"
+					[editable]="true"
+					[aria-description]="'press enter to edit ' + tenant"
+					(removed)="remove(tenant, tenants)"
+					(edited)="edit(tenant, $event)"
+				>
+					{{ tenant }}
+					<button matChipRemove type="button" [attr.aria-label]="'remove ' + tenant">
+						<mat-icon>cancel</mat-icon>
+					</button>
+				</mat-chip-row>
+				<input
+					placeholder="Adresy email współlokatorów"
+					[formControl]="tenantsCtrl"
+					[matChipInputFor]="chipGrid2"
+					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+					[matChipInputAddOnBlur]="addOnBlur"
+					(matChipInputTokenEnd)="add($event, tenants, tenantsCtrl)"
+				/>
+			</mat-chip-grid>
+		</mat-form-field>
+		<mat-error *ngIf="invalidEmail$ | async">
+			Wpisany/e adres/y email nie istnieje/ą w systemie!
+		</mat-error>
+	</form>
+</div>
+<div mat-dialog-actions class="button-box">
+	<p>Czy potwierdzasz chęć zawarcie umowy najmu?</p>
+	<div class="button-box-yn">
+		<button
+			mat-button
+			mat-dialog-close
+			cdkFocusInitial
+			type="button"
+			(click)="onClose()"
+		>
+			Nie
+		</button>
+		<button mat-button type="submit" (click)="onYesClick()">Tak</button>
+	</div>
+</div>
