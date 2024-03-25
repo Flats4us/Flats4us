@@ -277,6 +277,16 @@ namespace Flats4us.Services
             {
                 Date = DateTime.Now,
                 Rating = input.Rating,
+                Helpful = input.Helpful,
+                Cooperative = input.Cooperative,
+                Tidy = input.Tidy,
+                Friendly = input.Friendly,
+                RespectingPrivacy = input.RespectingPrivacy,
+                Communicative = input.Communicative,
+                Unfair = input.Unfair,
+                Conflicting = input.Conflicting,
+                Noisy = input.Noisy,
+                NotFollowingTheArrangements = input.NotFollowingTheArrangements,
                 Description = input.Description,
                 SourceUserId = sourceUser.UserId,
                 TargetUserId = targetUser.UserId
