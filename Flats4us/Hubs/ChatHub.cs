@@ -53,7 +53,7 @@
             if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
             {
 
-                await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", Context.User.Identity.Name, message);
+                await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", chatMessage);
             }
             else
             {
