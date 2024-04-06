@@ -76,6 +76,24 @@ namespace Flats4us.Controllers
 
             return Ok(history);
         }
+        [Authorize]
+        [HttpGet("participant/{chatId}")]
+        public async Task<IActionResult> GetParticipantId(int chatId)
+        {
+            var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(senderUserIdClaim) || !int.TryParse(senderUserIdClaim, out var senderUserId))
+            {
+                return BadRequest("Sender user ID is not available.");
+            }
+
+            var participantId = await _chatService.GetChatParticipant(chatId, senderUserId);
+            if (participantId == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(participantId);
+        }
 
 
         [Authorize]
