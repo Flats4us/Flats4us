@@ -65,10 +65,10 @@
             
             // Assuming the user ID claim is stored as "NameIdentifier"
             if (int.TryParse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
-            { 
-                return userId;
-            }
-            return null;
+                { 
+                    return userId;
+                }
+                return null;
         }
 
 
