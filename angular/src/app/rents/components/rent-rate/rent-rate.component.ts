@@ -38,29 +38,6 @@ import { IOffer } from 'src/app/offer/models/offer.models';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentRateComponent {
-	public rates: IEnumerableItem[] = [
-		{
-			id: 1,
-			name: 'Bardzo zły',
-		},
-		{
-			id: 2,
-			name: 'Zły',
-		},
-		{
-			id: 3,
-			name: 'Średni',
-		},
-		{
-			id: 4,
-			name: 'Dobry',
-		},
-		{
-			id: 5,
-			name: 'Bardzo dobry',
-		},
-	];
-
 	public form = new FormGroup({
 		rate: new FormControl(null, Validators.required),
 		cleanliness: new FormControl(null, Validators.required),
@@ -68,7 +45,7 @@ export class RentRateComponent {
 		location: new FormControl(null, Validators.required),
 		equipment: new FormControl(null, Validators.required),
 		price: new FormControl(null, Validators.required),
-		opinion: new FormControl(null, Validators.required),
+		opinion: new FormControl(null),
 	});
 
 	constructor(

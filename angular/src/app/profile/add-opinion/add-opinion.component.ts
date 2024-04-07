@@ -1,11 +1,37 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+	FormBuilder,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-add-opinion',
 	templateUrl: './add-opinion.component.html',
 	styleUrls: ['./add-opinion.component.scss'],
+	standalone: true,
+	imports: [
+		CommonModule,
+		MatCardModule,
+		MatIconModule,
+		FormsModule,
+		MatButtonModule,
+		MatCheckboxModule,
+		MatInputModule,
+		MatListModule,
+		ReactiveFormsModule,
+		MatSnackBarModule,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddOpinionComponent {
