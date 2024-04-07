@@ -1,21 +1,25 @@
 <div class="grid-container">
 	<div></div>
-	<mat-card>
+	<mat-card *ngIf="user$ | async as user">
 		<mat-card-header class="justify-center">
 			<mat-card-title>
 				<h1 class="font-medium my-6">TWOJA OPINIA O UŻYTKOWNIKU</h1>
 			</mat-card-title>
 		</mat-card-header>
 		<mat-divider></mat-divider>
-		<form [formGroup]="opinionForm" (ngSubmit)="onSubmit()">
+		<form
+			*ngIf="profileId$ | async as profileId"
+			[formGroup]="opinionForm"
+			(ngSubmit)="onSubmit(parseInt(profileId))"
+		>
 			<mat-card-content class="flex flex-wrap justify-center">
 				<div class="flex-[1_1_400px] p-5">
-					<h2 class="font-medium text-2xl mb-4">KASIA, 19</h2>
+					<h2 class="font-medium text-2xl mb-4">{{ user.name }}, {{ user.age }}</h2>
 					<img
 						mat-card-avatar
-						src="../../../assets/typiara.jpg"
 						alt="avatar"
 						class="avatar__image m-auto"
+						src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 					/>
 
 					<div class="profile-rating__wrapper flex flex-col">
@@ -52,13 +56,13 @@
 								>
 							</li>
 							<li>
-								<mat-checkbox formControlName="organized">Dba o porządek</mat-checkbox>
+								<mat-checkbox formControlName="tidy">Dba o porządek</mat-checkbox>
 							</li>
 							<li>
 								<mat-checkbox formControlName="friendly">Przyjazny</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="respectfulOfPrivacy"
+								<mat-checkbox formControlName="respectingPrivacy"
 									>Szanujący prywatność innych</mat-checkbox
 								>
 							</li>
@@ -71,26 +75,24 @@
 
 						<ul class="bad-tags">
 							<li>
-								<mat-checkbox formControlName="dishonest">Nieuczciwy</mat-checkbox>
+								<mat-checkbox formControlName="unfair">Nieuczciwy</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="badPersonalHygiene"
+								<mat-checkbox formControlName="lackOfHygiene"
 									>Brak higieny osobistej</mat-checkbox
 								>
 							</li>
 							<li>
-								<mat-checkbox formControlName="disorganized"
-									>Nie dba o porządek</mat-checkbox
-								>
+								<mat-checkbox formControlName="untidy">Nie dba o porządek</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="conflictual">Konfliktowy</mat-checkbox>
+								<mat-checkbox formControlName="conflicting">Konfliktowy</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="tooNoisy">Zbyt głośny</mat-checkbox>
+								<mat-checkbox formControlName="noisy">Zbyt głośny</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="doesNotFollowArrangements"
+								<mat-checkbox formControlName="notFollowingTheArrangements"
 									>Nie przestrzega ustaleń</mat-checkbox
 								>
 							</li>
@@ -102,7 +104,7 @@
 							<mat-icon
 								*ngFor="let star of starsScale"
 								[ngClass]="{
-									selected: star <= this.opinionForm.controls['selectedGrade'].value
+									selected: star <= this.opinionForm.controls['rating'].value
 								}"
 								(click)="countStar(star)"
 							>
@@ -112,7 +114,7 @@
 					</div>
 					<mat-form-field class="w-full">
 						<mat-label>Tutaj wpisz uwagi...</mat-label>
-						<textarea matInput formControlName="comment"></textarea>
+						<textarea matInput formControlName="description"></textarea>
 					</mat-form-field>
 				</div>
 			</mat-card-content>

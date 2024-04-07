@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import {
 	IInterest,
+	IOpinion,
 	IOwner,
 	IStudent,
 	IUserProfile,
@@ -62,5 +63,8 @@ export class ProfileService {
 		return this.httpClient.get<IInterest[]>(`${this.apiRoute}/interests`, {
 			params: params,
 		});
+	}
+	public addOpinion(id: number, opinion: IOpinion) {
+		return this.httpClient.post(`${this.apiRoute}/users/${id}/opinion`, opinion);
 	}
 }

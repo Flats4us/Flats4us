@@ -109,3 +109,19 @@ export interface IAddOwner {
 	bankAccount: string;
 	documentNumber: string;
 }
+
+export interface IOpinion {
+	rating: number;
+	helpful: boolean;
+	cooperative: boolean;
+	tidy: boolean;
+	friendly: boolean;
+	respectingPrivacy: boolean;
+	communicative: boolean;
+	lackOfHygiene: boolean;
+	untidy: boolean;
+	conflicting: boolean;
+	noisy: boolean;
+	notFollowingTheArrangements: boolean;
+	description: string;
+}
