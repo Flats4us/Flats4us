@@ -34,6 +34,7 @@ import { ProfileService } from './services/profile.service';
 import { EditProfileModule } from './edit/edit-profile.module';
 import { CreateProfileModule } from './create/create-profile.module';
 import { DetailsProfileModule } from './details/details-profile.module';
+import { AddOpinionModule } from './add-opinion/add-opinion.module';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -69,6 +70,7 @@ import { DetailsProfileModule } from './details/details-profile.module';
 		EditProfileModule,
 		CreateProfileModule,
 		DetailsProfileModule,
+		AddOpinionModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],
