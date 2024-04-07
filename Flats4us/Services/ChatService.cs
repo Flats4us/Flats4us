@@ -35,7 +35,7 @@ namespace Flats4us.Services
             }
 
             int otherUserId = 0; 
-            if (chat.StudentId == senderUserId) { otherUserId = chat.StudentId; } else if (chat.OwnerId == senderUserId) { otherUserId = chat.OwnerId; }
+            if (chat.StudentId == senderUserId) { otherUserId = chat.OwnerId; } else if (chat.OwnerId == senderUserId) { otherUserId = chat.StudentId; }
             else return null;
 
 
