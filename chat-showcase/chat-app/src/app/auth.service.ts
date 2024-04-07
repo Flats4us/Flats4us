@@ -15,7 +15,7 @@ export class AuthService {
     // Create form data
     const formData = new FormData();
     formData.append('email', username);
-    formData.append('password', password);
+    formData.append('password', password); 
 
     const requestBody = {
       email: username,

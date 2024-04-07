@@ -53,7 +53,7 @@
             if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
             {
 
-                await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", chatMessage);
+                await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", senderUserId.Value, message, DateTime.UtcNow);
             }
             else
             {
@@ -65,10 +65,10 @@
             
             // Assuming the user ID claim is stored as "NameIdentifier"
             if (int.TryParse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
-            { 
-                return userId;
-            }
-            return null;
+                { 
+                    return userId;
+                }
+                return null;
         }
 
 
@@ -127,7 +127,7 @@
             if (!isMember) return;
 
             // Send message to the SignalR group
-            await Clients.Group($"GroupChat-{groupChatId}").SendAsync("ReceiveGroupMessage", groupChatId, userId.Value, message);
+            await Clients.Group($"GroupChat-{groupChatId}").SendAsync("ReceiveGroupMessage", groupChatId, userId.Value, message, DateTime.UtcNow);
         }
         public async Task LeaveGroupChat(int groupChatId)
         {

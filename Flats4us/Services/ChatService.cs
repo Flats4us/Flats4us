@@ -2,6 +2,7 @@
 using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Flats4us.Services
 {
@@ -22,6 +23,24 @@ namespace Flats4us.Services
                                  .Where(cm => cm.Chat.ChatId == chatId)
                                  .OrderBy(cm => cm.DateTime)
                                  .ToListAsync();
+        }
+
+        public async Task<int?> GetChatParticipant(int chatId, int senderUserId)
+        {
+            var chat = await _context.Chats.FindAsync(chatId);
+
+            if (chat == null)
+            {
+                throw new ArgumentException("Chat not found.");
+            }
+
+            int otherUserId = 0; 
+            if (chat.StudentId == senderUserId) { otherUserId = chat.StudentId; } else if (chat.OwnerId == senderUserId) { otherUserId = chat.OwnerId; }
+            else return null;
+
+
+            return otherUserId;
+
         }
 
 
