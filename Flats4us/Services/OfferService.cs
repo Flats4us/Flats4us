@@ -230,10 +230,7 @@ namespace Flats4us.Services
                 joinedOffers.Insert(insertIndex, promoted);
             }
 
-            var result = new CountedListDto<OfferDto> {
-                TotalCount = totalCount,
-                Result = joinedOffers
-            };
+            var result = new CountedListDto<OfferDto>(joinedOffers, totalCount);
 
             return result;
         }
@@ -371,11 +368,7 @@ namespace Flats4us.Services
             var joinedOffers = new List<SimpleOfferForMapDto>(promotedOffers);
             joinedOffers.AddRange(notPromotedOffers);
 
-            var result = new CountedListDto<SimpleOfferForMapDto>
-            {
-                TotalCount = joinedOffers.Count(),
-                Result = joinedOffers
-            };
+            var result = new CountedListDto<SimpleOfferForMapDto>(joinedOffers);
 
             return result;
         }
@@ -392,11 +385,7 @@ namespace Flats4us.Services
                 .Select(offer => _mapper.Map<OfferDto>(offer))
                 .ToListAsync();
 
-            var result = new CountedListDto<OfferDto>
-            {
-                TotalCount = offers.Count,
-                Result = offers
-            };
+            var result = new CountedListDto<OfferDto>(offers);
 
             return result;
         }
@@ -485,11 +474,7 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
-            var result = new CountedListDto<OfferDto>
-            {
-                TotalCount = totalCount,
-                Result = offers
-            };
+            var result = new CountedListDto<OfferDto>(offers, totalCount);
 
             return result;
         }

@@ -12,6 +12,8 @@ namespace Flats4us.Helpers
         {
             CreateMap<Equipment, EquipmentDto>();
 
+            CreateMap<Rent, RentDto>();
+
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
