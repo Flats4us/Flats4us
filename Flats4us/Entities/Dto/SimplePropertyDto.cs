@@ -14,6 +14,6 @@ namespace Flats4us.Entities.Dto
         [Required]
         public PropertyType PropertyType { get; set; }
 
-        public ICollection<EquipmentDto> Equipments { get; set; }
+        public ICollection<EquipmentDto> Equipment { get; set; }
     }
 }
