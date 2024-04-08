@@ -5,7 +5,6 @@ services:
     build:
       context: ./angular
       dockerfile: Dockerfile
-    env_file: .env
     container_name: flats4us_fe
     ports:
       - "80:80"
@@ -13,7 +12,6 @@ services:
     build:
       context: ./Flats4us
       dockerfile: Dockerfile
-    env_file: .env
     container_name: flats4us_be
     environment:
       - ASPNETCORE_URLS=http://*:80
