@@ -1658,7 +1658,46 @@ public static class DataSeeder
 
         #endregion
 
-        #region TechnicalProblem
+        #region Rent
+
+        var rent1 = new Rent
+        {
+            StartDate = new DateTime(2023, 1, 1),
+            Duration = 12,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer1,
+            Student = student1,
+            OtherStudents = { student2, student3 },
+            Payments = null
+        };
+
+        var rent2 = new Rent
+        {
+            StartDate = new DateTime(2023, 2, 1),
+            Duration = 12,
+            EndDate = new DateTime(2023, 12, 1),
+            Offer = offer1, 
+            Student = student2,
+            OtherStudents = { student1, student3 },
+            Payments = null
+        };
+
+        var rent3 = new Rent
+        {
+            StartDate = new DateTime(2023, 3, 1),
+            Duration = 12,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer1, 
+            Student = student3,
+            OtherStudents = { student1, student2 },
+            Payments = null
+        };
+
+        dbContext.Rents.AddRange(rent1);
+
+        #endregion
+
+        #region RentOpinion
 
         var rentOpinion1 = new RentOpinion
         {
@@ -1669,7 +1708,7 @@ public static class DataSeeder
             QualityForMoney = 1,
             Description = "bla bla bla",
             Student = student3,
-            Rent = 
+            Rent = rent1
         };
 
         dbContext.RentOpinions.AddRange(rentOpinion1);

@@ -7,6 +7,8 @@ using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Threading.Tasks;
 
 namespace Flats4us.Services
 {
@@ -465,5 +467,27 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<PropertyWithRentOpinionDto> GetPropertyByIdAsync(int PropertyId)
+        {
+            PropertyWithRentOpinionDto result;
+
+            var property = await _context.Properties
+                .Include(p => p.Offers)
+                    .ThenInclude(o => o.Rent)
+                        .ThenInclude(r => r.RentOpinions)
+                .FirstOrDefaultAsync();
+
+            var rentOpinions = property.Offers
+                .SelectMany(o => o.Rent?.RentOpinions ?? Enumerable.Empty<RentOpinion>())
+                .ToList();
+
+            result = _mapper.Map<PropertyWithRentOpinionDto>(property);
+
+            return result;
+
+        }
+        
+
     }
 }
