@@ -10,11 +10,13 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IUserService _userService;
+        private readonly INotificationService _notificationService;
 
-        public ChatService(Flats4usContext context, IUserService ownerService)
+        public ChatService(Flats4usContext context, IUserService ownerService, INotificationService notificationService)
         {
             _context = context;
             _userService = ownerService;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<ChatMessage>> GetChatHistory(int chatId)
@@ -47,7 +49,15 @@ namespace Flats4us.Services
         public async Task SaveMessage(ChatMessage chatMessage)
         {
             _context.ChatMessages.Add(chatMessage);
+            
             await _context.SaveChangesAsync();
+            // Notify the user of password change
+            var sender = await _context.Users.FindAsync(chatMessage.SenderId);
+
+            var notificationTitle = sender.Name + " " + sender.Surname;
+            var notificationBody = chatMessage.Content;
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId);
+
         }
 
         public async Task<Chat> EnsureChatSession(int user1Id, int user2Id)

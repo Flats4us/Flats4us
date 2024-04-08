@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Azure.Core;
+using Flats4us.Services;
 
 namespace Flats4us.Controllers
 {
@@ -33,6 +35,7 @@ namespace Flats4us.Controllers
         public async Task<IActionResult> SendMessage(int receiverUserId, string message)
         {
             var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             if (string.IsNullOrEmpty(senderUserIdClaim) || !int.TryParse(senderUserIdClaim, out var senderUserId))
             {
                 return BadRequest("Sender user ID is not available.");
