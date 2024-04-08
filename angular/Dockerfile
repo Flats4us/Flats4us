@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-RUN npm run build
+RUN npm run build --env=commitHash=$COMMIT_HASH --env=commitDate=$COMMIT_DATE
 
 FROM nginx:alpine
 COPY --from=build /app/dist/angular/ /usr/share/nginx/html
