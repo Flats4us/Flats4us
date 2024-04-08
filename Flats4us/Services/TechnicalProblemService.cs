@@ -32,11 +32,7 @@ namespace Flats4us.Services
                     .Select(e => _mapper.Map<TechnicalProblemDto>(e))
                     .ToListAsync();
 
-            var result = new CountedListDto<TechnicalProblemDto>
-            {
-                TotalCount = problems.Count,
-                Result = problems
-            };
+            var result = new CountedListDto<TechnicalProblemDto>(problems);
 
             return result;
         }

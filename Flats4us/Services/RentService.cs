@@ -5,6 +5,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Flats4us.Services
 {
@@ -118,6 +119,40 @@ namespace Flats4us.Services
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int pageSize, int pageNumber)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            var rents = new List<RentDto>();
+
+            if (user is Student)
+            {
+
+            }
+            else if (user is Owner)
+            {
+                rents = await _context.Owners
+                    .Where(o => o.UserId == userId)
+                    .SelectMany(o => o.Properties)
+                    .SelectMany(p => p.Offers)
+                    .Select(of => _mapper.Map<RentDto>(of.Rent))
+                    .ToListAsync();
+
+            }
+            else throw new Exception("Unable to fetch rents for current user");
+
+            var totalCount = rents.Count;
+
+            rents = rents
+                //.OrderBy(rent => rent.???)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var result = new CountedListDto<RentDto>(rents, totalCount);
+
+            return result;
         }
     }
 }

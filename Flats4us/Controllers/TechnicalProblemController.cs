@@ -11,7 +11,7 @@ using System.Security.Claims;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("technical-problems")]
+    [Route("api/technical-problems")]
     [ApiController]
     public class TechnicalProblemController : ControllerBase
     {

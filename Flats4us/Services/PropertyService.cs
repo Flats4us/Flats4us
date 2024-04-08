@@ -98,11 +98,7 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
-            var result = new CountedListDto<PropertyForVerificationDto>
-            {
-                TotalCount = totalCount,
-                Result = properties
-            };
+            var result = new CountedListDto<PropertyForVerificationDto>(properties, totalCount);
 
             return result;
         }

@@ -148,11 +148,7 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
-            var result = new CountedListDto<UserForVerificationDto>
-            {
-                TotalCount = totalCount,
-                Result = users
-            };
+            var result = new CountedListDto<UserForVerificationDto>(users, totalCount);
 
             return result;
         }

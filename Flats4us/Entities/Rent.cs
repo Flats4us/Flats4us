@@ -27,7 +27,6 @@ namespace Flats4us.Entities
         [Required]
         public int OfferId { get; set; }
 
-
         public virtual Offer Offer { get; set; }
         public virtual Student Student { get; set; }
 
