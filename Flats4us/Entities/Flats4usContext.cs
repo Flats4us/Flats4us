@@ -29,6 +29,7 @@ namespace Flats4us.Entities
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<Rent> Rents { get; set; }
+        public DbSet<RentOpinion> RentOpinions { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<SurveyOwnerOffer> OwnerOfferSurveys { get; set; }
@@ -156,6 +157,11 @@ namespace Flats4us.Entities
                 .HasForeignKey(x => x.TargetUserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<RentOpinion>()
+                .HasOne(x => x.Rent)
+                .WithMany(x => x.RentOpinions)
+                .HasForeignKey(x => x.RentId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

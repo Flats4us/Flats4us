@@ -16,18 +16,11 @@ namespace Flats4us.Services
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
-        public async Task<string> MakingSurvey(Type type, string lang)
+        public async Task<string> MakingSurvey(Type type)
         {
             XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load($"Helpers/PL.xml");
 
-            try
-            {
-                xmlDoc.Load($"Lang/{lang}.xml");
-            }
-            catch (Exception)
-            {
-                xmlDoc.Load($"Lang/EN.xml");
-            }
 
             var attributes = type.GetProperties();
 

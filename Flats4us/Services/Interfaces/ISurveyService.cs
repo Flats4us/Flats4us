@@ -2,6 +2,6 @@
 {
     public interface ISurveyService
     {
-        public Task<string> MakingSurvey(Type type, string lang);
+        public Task<string> MakingSurvey(Type type);
     }
 }

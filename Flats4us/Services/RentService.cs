@@ -119,5 +119,41 @@ namespace Flats4us.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task AddRentOpinionAsync(RentOpinionDto input, int UserId, int RentId)
+        {
+            var sourceUser = await _context.Users.FindAsync(UserId);
+
+            if (sourceUser is null) throw new ArgumentException($"User with ID {UserId} not found.");
+
+
+            var rent = _context.Rents
+                .FirstOrDefault(r => r.RentId == RentId && (r.StudentId == UserId ||
+                                                            r.OtherStudents.Any(s => s.UserId == UserId)));
+
+            if (rent is null) throw new ArgumentException($"Rent with ID {RentId} not found.");
+
+            if (DateTime.Now < rent.EndDate)
+            {
+                throw new InvalidOperationException("Opinion can only be added after the end of the rental period.");
+            }
+
+            var opinion = new RentOpinion
+            {
+                Rating = input.Rating,
+                Service = input.Service,
+                Location = input.Location,
+                Equipment = input.Equipment,
+                QualityForMoney = input.QualityForMoney,
+                Description = input.Description,
+                UserId = sourceUser.UserId,
+                RentId = input.RentId
+            };
+
+            await _context.RentOpinions.AddAsync(opinion);
+            await _context.SaveChangesAsync();
+
+        }
+
     }
 }

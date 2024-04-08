@@ -33,6 +33,7 @@ namespace Flats4us.Entities
 
         public virtual ICollection<Student> OtherStudents { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<RentOpinion> RentOpinions { get; set; }
 
         public Rent()
         {

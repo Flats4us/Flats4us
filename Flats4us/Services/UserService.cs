@@ -6,6 +6,7 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -328,5 +329,42 @@ namespace Flats4us.Services
 
             return result;
         }
+
+        public async Task AddRentOpinionAsync(RentOpinionDto input, int UserId, int RentId)
+        {
+            //var sourceUser = await _context.Users.FindAsync(RentId);
+
+            //if (sourceUser is null) throw new ArgumentException($"User with ID {RentId} not found.");
+
+            //var targetUser = await _context.Users.FindAsync(UserId);
+
+            //if (targetUser is null) throw new ArgumentException($"User with ID {UserId} not found.");
+
+
+            var rent = _context.Rents.FirstOrDefault(r => r.RentId == RentId &&
+                                                            (r.StudentId == UserId ||
+                                                             r.OtherStudents.Any(s => s.UserId == UserId)));
+
+
+            var opinion = new RentOpinion
+            {
+                Date = DateTime.Now,
+                Rating = input.Rating,
+                Description = input.Description,
+                UserId = input.UserId,
+                RentId = input.RentId
+            };
+
+            await _context.RentOpinions.AddAsync(opinion);
+            await _context.SaveChangesAsync();
+
+            /*
+            można oceniać dopiero po zakończeniu najmu, pewnie trzeba zrobić jakis warunek czy EndDate jest z przeszłości
+            cały endpoint ma być w RentSrvice
+
+            */
+
+        }
     }
+
 }

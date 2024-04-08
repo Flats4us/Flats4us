@@ -6,5 +6,6 @@ namespace Flats4us.Services.Interfaces
     {
         Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId);
         Task AcceptRentAsync(bool decision, int requestUserId, int offerId);
+        Task AddRentOpinionAsync(RentOpinionDto input, int UserId, int RentId);
     }
 }

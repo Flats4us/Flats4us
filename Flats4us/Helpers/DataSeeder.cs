@@ -1658,6 +1658,24 @@ public static class DataSeeder
 
         #endregion
 
+        #region TechnicalProblem
+
+        var rentOpinion1 = new RentOpinion
+        {
+            Rating = 1,
+            Service = 1,
+            Location = 1,
+            Equipment = 1,
+            QualityForMoney = 1,
+            Description = "bla bla bla",
+            Student = student3,
+            Rent = 
+        };
+
+        dbContext.RentOpinions.AddRange(rentOpinion1);
+
+        #endregion
+
         dbContext.SaveChanges();
     }
 }
