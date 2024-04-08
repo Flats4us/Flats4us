@@ -128,7 +128,20 @@ namespace Flats4us.Services
 
             if (user is Student)
             {
+                var mainStudentRents = await _context.Students
+                    .Where(s => s.UserId == userId)
+                    .SelectMany(s => s.Rents)
+                    .Select(rent => _mapper.Map<RentDto>(rent))
+                    .ToListAsync();
 
+                var roommateRents = await _context.Students
+                    .Where(s => s.UserId == userId)
+                    .SelectMany(s => s.RoommateInRents)
+                    .Select(rent => _mapper.Map<RentDto>(rent))
+                    .ToListAsync();
+
+                rents = mainStudentRents;
+                rents.AddRange(roommateRents);
             }
             else if (user is Owner)
             {
@@ -138,7 +151,6 @@ namespace Flats4us.Services
                     .SelectMany(p => p.Offers)
                     .Select(of => _mapper.Map<RentDto>(of.Rent))
                     .ToListAsync();
-
             }
             else throw new Exception("Unable to fetch rents for current user");
 
