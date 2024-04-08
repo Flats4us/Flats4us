@@ -43,6 +43,9 @@ namespace Flats4us.Entities.Dto
 
         public DateTime? DocumentExpireDate { get; set; }
 
+        [Required]
+        public decimal AvgRating { get; set; }
+
         public List<UserOpinionDto> UserOpinions { get; set; }
 
         // Student
