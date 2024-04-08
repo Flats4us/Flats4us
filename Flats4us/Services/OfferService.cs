@@ -238,6 +238,148 @@ namespace Flats4us.Services
             return result;
         }
 
+        public async Task<CountedListDto<SimpleOfferForMapDto>> GetFilteredOffersForMapAsync(GetFilteredOffersDto input)
+        {
+            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
+            var currentDate = DateTime.Now;
+
+            var promotedQuery = _context.Offers.AsQueryable();
+
+            promotedQuery = promotedQuery.Where(o => o.OfferStatus == OfferStatus.Current &&
+                    o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate));
+
+            if (!string.IsNullOrEmpty(input.Province))
+            {
+                promotedQuery = promotedQuery.Where(o => o.Property.Province.Equals(input.Province));
+            }
+
+            if (!string.IsNullOrEmpty(input.City))
+            {
+                promotedQuery = promotedQuery.Where(o => o.Property.City.Equals(input.City));
+            }
+
+            var promotedOffers = await promotedQuery
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Owner)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Equipment)
+                .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.OfferPromotions)
+                .Select(o => _mapper.Map<SimpleOfferForMapDto>(o))
+                .ToListAsync();
+
+            var query = _context.Offers.AsQueryable();
+
+            query = query.Where(o => o.OfferStatus == OfferStatus.Current &&
+                (!o.OfferPromotions.Any(op => op.StartDate <= currentDate && currentDate <= op.EndDate)));
+
+            if (!input.Distance.HasValue)
+            {
+                if (!string.IsNullOrEmpty(input.Province))
+                {
+                    query = query.Where(o => o.Property.Province.Equals(input.Province));
+                }
+
+                if (!string.IsNullOrEmpty(input.City))
+                {
+                    query = query.Where(o => o.Property.City.Equals(input.City));
+                }
+
+                if (!string.IsNullOrEmpty(input.District))
+                {
+                    query = query.Where(o => o.Property.District.Equals(input.District));
+                }
+            }
+
+            if (input.MinPrice.HasValue)
+            {
+                query = query.Where(o => o.Price >= input.MinPrice);
+            }
+
+            if (input.MaxPrice.HasValue)
+            {
+                query = query.Where(o => o.Price <= input.MaxPrice);
+            }
+
+            if (input.MinArea.HasValue)
+            {
+                query = query.Where(o => o.Property.Area >= input.MinArea);
+            }
+
+            if (input.MaxArea.HasValue)
+            {
+                query = query.Where(o => o.Property.Area <= input.MaxArea);
+            }
+
+            if (input.MinYear.HasValue)
+            {
+                query = query.Where(o => o.Property.ConstructionYear >= input.MinYear);
+            }
+
+            if (input.MaxYear.HasValue)
+            {
+                query = query.Where(o => o.Property.ConstructionYear <= input.MaxYear);
+            }
+
+            if (input.MinNumberOfRooms.HasValue)
+            {
+                query = query.Where(o => (o.Property.GetType() == typeof(House) ? ((House)o.Property).NumberOfRooms : o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).NumberOfRooms : 1) >= input.MinNumberOfRooms);
+            }
+
+            if (input.Floor.HasValue)
+            {
+                query = query.Where(o => o.Property.GetType() == typeof(Flat) || o.Property.GetType() == typeof(Room));
+                query = query.Where(o => (o.Property.GetType() == typeof(Flat) ? ((Flat)o.Property).Floor : o.Property.GetType() == typeof(Room) ? ((Room)o.Property).Flat : null) == input.Floor);
+            }
+
+            var notPromotedOffers = await query
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Owner)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Equipment)
+                .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.OfferPromotions)
+                .Select(o => _mapper.Map<SimpleOfferForMapDto>(o))
+                .ToListAsync();
+
+            if (!input.PropertyTypes.IsNullOrEmpty())
+            {
+                notPromotedOffers = notPromotedOffers.Where(o => input.PropertyTypes.Contains(o.Property.PropertyType)).ToList();
+            }
+
+            if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
+            {
+                notPromotedOffers = notPromotedOffers
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .ToList();
+            }
+
+            if (input.Equipment != null)
+            {
+                var equipmentList = await _context.Equipment
+                    .Where(e => input.Equipment
+                        .Contains(e.EquipmentId))
+                    .ToListAsync();
+
+                notPromotedOffers = notPromotedOffers.Where(o => equipmentList
+                    .All(ie => o.Property.Equipment
+                    .Any(e => e.EquipmentId == ie.EquipmentId)))
+                    .ToList();
+            }
+
+            var joinedOffers = new List<SimpleOfferForMapDto>(promotedOffers);
+            joinedOffers.AddRange(notPromotedOffers);
+
+            var result = new CountedListDto<SimpleOfferForMapDto>
+            {
+                TotalCount = joinedOffers.Count(),
+                Result = joinedOffers
+            };
+
+            return result;
+        }
+
         public async Task<CountedListDto<OfferDto>> GetOffersForCurrentUserAsync(int ownerId)
         {
             var offers = await _context.Offers

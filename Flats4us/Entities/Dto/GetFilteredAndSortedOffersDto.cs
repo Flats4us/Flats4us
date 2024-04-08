@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
-    public class GetFilteredAndSortedOffersDto
+    public class GetFilteredOffersDto
     {
         public string? Province { get; set; }
 
@@ -33,7 +33,10 @@ namespace Flats4us.Entities.Dto
         public int? Floor { get; set; }
 
         public List<int>? Equipment { get; set; }
+    }
 
+    public class GetFilteredAndSortedOffersDto : GetFilteredOffersDto
+    {
         public string? Sorting { get; set; }
 
         [Required]

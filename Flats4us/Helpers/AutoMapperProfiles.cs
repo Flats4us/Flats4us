@@ -24,6 +24,15 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
+            CreateMap<Flat, SimplePropertyDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat));
+
+            CreateMap<Room, SimplePropertyDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room));
+
+            CreateMap<House, SimplePropertyDto>()
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House));
+
             CreateMap<Flat, PropertyForVerificationDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>())
@@ -56,6 +65,9 @@ namespace Flats4us.Helpers
 
             CreateMap<Offer, OfferDto>()
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner))
+                .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
+
+            CreateMap<Offer, SimpleOfferForMapDto>()
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
             CreateMap<Owner, OwnerStudentDto>();

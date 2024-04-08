@@ -75,13 +75,31 @@ namespace Flats4us.Controllers
         // GET: api/offers
         [HttpGet]
         [SwaggerOperation(
-            Summary = "Returns a filtered list of offers"
+            Summary = "Returns a filtered and sorted list of offers"
         )]
         public async Task<IActionResult> GetFilteredAndSorted([FromQuery] GetFilteredAndSortedOffersDto input)
         {
             try
             {
                 var offers = await _offerService.GetFilteredAndSortedOffersAsync(input);
+                return Ok(offers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // GET: api/offers/map
+        [HttpGet("map")]
+        [SwaggerOperation(
+            Summary = "Returns a filtered list of offers for map"
+        )]
+        public async Task<IActionResult> GetFilteredForMap([FromQuery] GetFilteredOffersDto input)
+        {
+            try
+            {
+                var offers = await _offerService.GetFilteredOffersForMapAsync(input);
                 return Ok(offers);
             }
             catch (Exception ex)
