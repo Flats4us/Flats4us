@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MessagesConversationComponent } from './components/messages-conversation/messages-conversation.component';
-import { MessagesComponent } from './messages.component';
+import { ConversationsComponent } from './conversations.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MessagesComponent,
+		component: ConversationsComponent,
 		children: [{ path: ':id', component: MessagesConversationComponent }],
 	},
 ];
@@ -16,4 +16,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class MessagesRoutingModule {}
+export class ConversationsRoutingModule {}

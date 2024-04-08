@@ -1,30 +1,74 @@
-<div class="conversation-header">
-	<div class="avatar"></div>
-	<span class="conversation__user">Anon Testowy</span>
-</div>
-<h4>ID WYBRANEJ KONWERSACJI {{ conversationId$ | async }}</h4>
-<div class="conversation-list">
-	<div
-		*ngFor="let msg of messages; let index = index"
-		class="conversation"
-		[class]="
-			msg.sender === currentUser ? 'conversation-sent' : 'conversation-received'
-		"
-	>
-		<span>{{ msg.sender }}</span>
-		<span class="bubble">{{ msg.message }}</span>
-	</div>
-</div>
-<mat-form-field class="w-full">
-	<input
-		matInput
-		type="text"
-		placeholder="Wiadomość..."
-		[formControl]="messageControl"
-		(keydown.enter)="onSend()"
-	/>
+<ng-container *ngIf="currentUser$ | async as currentUser">
+	<ng-container *ngIf="otherUser$ | async as otherUser">
+		<ng-container *ngIf="messages$ | async as messagesHistory">
+			<div class="conversation-list">
+				<div
+					*ngFor="let message of messagesHistory; let index = index"
+					class="flex"
+				>
+					<img
+						*ngIf="message.senderId !== currentUser.userId"
+						alt="profile photo"
+						class="avatar self-center"
+						src="{{ baseUrl }}/{{ otherUser.profilePicture.path }}"
+					/>
+					<div
+						class="conversation"
+						[class]="
+							message.senderId === currentUser.userId
+								? 'conversation-sent'
+								: 'conversation-received'
+						"
+					>
+						<span *ngIf="message.senderId === currentUser.userId">{{
+							currentUser.name
+						}}</span>
 
-	<button matSuffix mat-icon-button (click)="onSend()">
-		<mat-icon>send</mat-icon>
-	</button>
-</mat-form-field>
+						<span *ngIf="message.senderId !== currentUser.userId">{{
+							otherUser.name
+						}}</span>
+						<span class="bubble">{{ message.content }}</span>
+					</div>
+				</div>
+				<div *ngFor="let msg of messages; let index = index" class="flex">
+					<div
+						class="conversation"
+						[class]="
+							msg.user === currentUser.userId
+								? 'conversation-sent'
+								: 'conversation-received'
+						"
+					>
+						<span *ngIf="msg.user === currentUser.userId">{{
+							currentUser.name
+						}}</span>
+						<img
+							*ngIf="msg.user !== currentUser.userId"
+							alt="profile photo"
+							class="avatar self-center"
+							src="{{ baseUrl }}/{{ otherUser.profilePicture.path }}"
+						/>
+						<span *ngIf="msg.user !== currentUser.userId">{{ otherUser.name }}</span>
+						<span class="bubble">{{ msg.message }}</span>
+					</div>
+				</div>
+			</div>
+			<mat-form-field class="w-full">
+				<input
+					matInput
+					type="text"
+					placeholder="Wiadomość..."
+					[formControl]="messageControl"
+					(keydown.enter)="onSend(currentUser.userId, otherUser.userId)"
+				/>
+				<button
+					matSuffix
+					mat-icon-button
+					(click)="onSend(currentUser.userId, otherUser.userId)"
+				>
+					<mat-icon>send</mat-icon>
+				</button>
+			</mat-form-field>
+		</ng-container>
+	</ng-container>
+</ng-container>

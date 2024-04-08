@@ -1,0 +1,17 @@
+<h1 class="text-4xl p-4 font-semibold">Konwersacje</h1>
+<div *ngIf="conversations$ | async as messages" class="messages-wrapper">
+	<mat-list class="messages-choice">
+		<mat-list-item
+			*ngFor="let message of this.messages"
+			class="messages-choice__conversation"
+			[routerLink]="message.chatId.toString()"
+		>
+			<ng-container>
+				<span>{{ message.otherUsername }}</span>
+			</ng-container>
+		</mat-list-item>
+	</mat-list>
+	<mat-card class="messages-box">
+		<router-outlet></router-outlet>
+	</mat-card>
+</div>
