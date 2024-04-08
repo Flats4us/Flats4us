@@ -232,13 +232,216 @@ public static class DataSeeder
             BankAccount = "12341234123412341234123412",
             DocumentNumber = "XXX 000000"
         };
+        var owner5 = new Owner
+        {
+            Name = "Anna",
+            Surname = "Nowakowska",
+            Address = "Północna 10, 03-065 Warszawa",
+            Email = "anowakowska@gmail.com",
+            PhoneNumber = "987654321",
+            AccountCreationDate = new DateTime(2022, 5, 20),
+            DateForVerificationSorting = new DateTime(2022, 5, 20),
+            LastLoginDate = new DateTime(2023, 5, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowakowska123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 11, 15),
+            BankAccount = "11112222333344445555666677",
+            DocumentNumber = "YYY 123456"
+        };
+        var owner6 = new Owner
+        {
+            Name = "Piotr",
+            Surname = "Dąbrowski",
+            Address = "Słoneczna 5, 30-001 Kraków",
+            Email = "pdabrowski@gmail.com",
+            PhoneNumber = "555444333",
+            AccountCreationDate = new DateTime(2023, 3, 10),
+            DateForVerificationSorting = new DateTime(2023, 3, 10),
+            LastLoginDate = new DateTime(2023, 8, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pdabrowski123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 10, 22),
+            BankAccount = "22223333444455556666777788",
+            DocumentNumber = "ZZZ 654321"
+        };
+        var owner7 = new Owner
+        {
+            Name = "Jan",
+            Surname = "Wiśniewski",
+            Address = "Łąkowa 7, 50-405 Wrocław",
+            Email = "jwisniewski@gmail.com",
+            PhoneNumber = "111222333",
+            AccountCreationDate = new DateTime(2023, 6, 15),
+            DateForVerificationSorting = new DateTime(2023, 6, 15),
+            LastLoginDate = new DateTime(2023, 11, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jwisniewski123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 8, 17),
+            BankAccount = "33334444555566667777888899",
+            DocumentNumber = "ABC 987654"
+        };
+        var owner8 = new Owner
+        {
+            Name = "Magdalena",
+            Surname = "Lewandowska",
+            Address = "Ogrodowa 3, 80-001 Gdańsk",
+            Email = "mlewandowska@gmail.com",
+            PhoneNumber = "777888999",
+            AccountCreationDate = new DateTime(2022, 8, 25),
+            DateForVerificationSorting = new DateTime(2022, 8, 25),
+            LastLoginDate = new DateTime(2023, 2, 25),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mlewandowska123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.NotVerified,
+            DocumentExpireDate = new DateTime(2025, 9, 30),
+            BankAccount = "44445555666677778888999900",
+            DocumentNumber = "DEF 123456"
+        };
 
-        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4);
+        var owner9 = new Owner
+        {
+            Name = "Karolina",
+            Surname = "Kaczmarek",
+            Address = "Polna 12, 60-123 Poznań",
+            Email = "kkaczmarek@gmail.com",
+            PhoneNumber = "999888777",
+            AccountCreationDate = new DateTime(2023, 4, 8),
+            DateForVerificationSorting = new DateTime(2023, 4, 8),
+            LastLoginDate = new DateTime(2023, 9, 8),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkaczmarek123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 7, 10),
+            BankAccount = "55556666777788889999000011",
+            DocumentNumber = "GHI 654321"
+        };
+
+        var owner10 = new Owner
+        {
+            Name = "Tomasz",
+            Surname = "Zając",
+            Address = "Lesna 4, 40-004 Katowice",
+            Email = "tzajac@gmail.com",
+            PhoneNumber = "444555666",
+            AccountCreationDate = new DateTime(2022, 10, 3),
+            DateForVerificationSorting = new DateTime(2022, 10, 3),
+            LastLoginDate = new DateTime(2023, 3, 3),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Tzajac123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.NotVerified,
+            DocumentExpireDate = new DateTime(2025, 8, 20),
+            BankAccount = "66667777888899990000111122",
+            DocumentNumber = "JKL 987654"
+        };
+
+        var owner11 = new Owner
+        {
+            Name = "Ewa",
+            Surname = "Wójcik",
+            Address = "Krótka 6, 70-005 Szczecin",
+            Email = "ewojcik@gmail.com",
+            PhoneNumber = "333222111",
+            AccountCreationDate = new DateTime(2023, 7, 18),
+            DateForVerificationSorting = new DateTime(2023, 7, 18),
+            LastLoginDate = new DateTime(2023, 12, 18),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ewojcik123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 5, 5),
+            BankAccount = "77778888999900001111222233",
+            DocumentNumber = "MNO 123456"
+        };
+        var owner12 = new Owner
+        {
+            Name = "Katarzyna",
+            Surname = "Wójcik",
+            Address = "Łączna 15, 90-005 Łódź",
+            Email = "kwojcik@gmail.com",
+            PhoneNumber = "999888777",
+            AccountCreationDate = new DateTime(2023, 4, 18),
+            DateForVerificationSorting = new DateTime(2023, 4, 18),
+            LastLoginDate = new DateTime(2023, 9, 18),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwojcik123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 10, 25),
+            BankAccount = "55556666777788889999000011",
+            DocumentNumber = "GHI 654321"
+        };
+        var owner13 = new Owner
+        {
+            Name = "Artur",
+            Surname = "Jankowski",
+            Address = "Słowiańska 12, 33-100 Tarnów",
+            Email = "ajankowski@gmail.com",
+            PhoneNumber = "222333444",
+            AccountCreationDate = new DateTime(2023, 2, 8),
+            DateForVerificationSorting = new DateTime(2023, 2, 8),
+            LastLoginDate = new DateTime(2023, 7, 8),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ajankowski123"),
+            ActivityStatus = false,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.NotVerified,
+            DocumentExpireDate = new DateTime(2025, 11, 20),
+            BankAccount = "66667777888899990000111122",
+            DocumentNumber = "JKL 987654"
+        };
+        var owner14 = new Owner
+        {
+            Name = "Barbara",
+            Surname = "Kamińska",
+            Address = "Krótka 20, 20-001 Lublin",
+            Email = "bkaminska@gmail.com",
+            PhoneNumber = "444555666",
+            AccountCreationDate = new DateTime(2023, 7, 21),
+            DateForVerificationSorting = new DateTime(2023, 7, 21),
+            LastLoginDate = new DateTime(2023, 12, 21),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bkaminska123"),
+            ActivityStatus = true,
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 1, 5),
+            BankAccount = "77778888999900001111222233",
+            DocumentNumber = "MNO 123456"
+        };
+
+        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14);
 
         ImageUtility.SeedUserImage(owner1.ImagesPath, owner1.VerificationStatus, owner1.DocumentType).Wait();
         ImageUtility.SeedUserImage(owner2.ImagesPath, owner2.VerificationStatus, owner2.DocumentType).Wait();
         ImageUtility.SeedUserImage(owner3.ImagesPath, owner3.VerificationStatus, owner3.DocumentType).Wait();
         ImageUtility.SeedUserImage(owner4.ImagesPath, owner4.VerificationStatus, owner4.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner5.ImagesPath, owner5.VerificationStatus, owner5.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner6.ImagesPath, owner6.VerificationStatus, owner6.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner7.ImagesPath, owner7.VerificationStatus, owner7.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner8.ImagesPath, owner8.VerificationStatus, owner8.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner9.ImagesPath, owner9.VerificationStatus, owner9.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner10.ImagesPath, owner10.VerificationStatus, owner10.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner11.ImagesPath, owner11.VerificationStatus, owner11.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner12.ImagesPath, owner12.VerificationStatus, owner12.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner13.ImagesPath, owner13.VerificationStatus, owner13.DocumentType).Wait();
+        ImageUtility.SeedUserImage(owner14.ImagesPath, owner14.VerificationStatus, owner14.DocumentType).Wait();
 
         #endregion
 
@@ -750,8 +953,100 @@ public static class DataSeeder
             Floor = 2,
             Equipment = { equipment1, equipment2, equipment3, equipment6, equipment8 }
         };
-        
-        dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10);
+        var flat11 = new Flat
+        {
+            Province = "Małopolskie",
+            District = "Stare Miasto",
+            Street = "Grodzka",
+            Number = "10",
+            Flat = 5,
+            City = "Kraków",
+            PostalCode = "31-006",
+            GeoLat = 50.061512,
+            GeoLon = 19.937788,
+            Area = 55,
+            MaxNumberOfInhabitants = 3,
+            ConstructionYear = 1960,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.NotVerified,
+            CreationDate = new DateTime(2023, 7, 15),
+            DateForVerificationSorting = new DateTime(2023, 7, 15),
+            Owner = owner5,
+            NumberOfRooms = 3,
+            Floor = 4,
+            Equipment = { equipment3, equipment5, equipment6 }
+        };
+        var flat12 = new Flat
+        {
+            Province = "Wielkopolskie",
+            District = "Stare Miasto",
+            Street = "Wrocławska",
+            Number = "20",
+            Flat = 1,
+            City = "Poznań",
+            PostalCode = "61-837",
+            GeoLat = 52.404219,
+            GeoLon = 16.931965,
+            Area = 70,
+            MaxNumberOfInhabitants = 4,
+            ConstructionYear = 1985,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 5, 20),
+            DateForVerificationSorting = new DateTime(2023, 5, 20),
+            Owner = owner7,
+            NumberOfRooms = 4,
+            Floor = 3,
+            Equipment = { equipment1, equipment4, equipment7 }
+        };
+        var flat13 = new Flat
+        {
+            Province = "Dolnośląskie",
+            District = "Krzyki",
+            Street = "Tęczowa",
+            Number = "8",
+            Flat = 12,
+            City = "Wrocław",
+            PostalCode = "53-601",
+            GeoLat = 51.097465,
+            GeoLon = 17.030298,
+            Area = 90,
+            MaxNumberOfInhabitants = 5,
+            ConstructionYear = 2010,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.NotVerified,
+            CreationDate = new DateTime(2023, 9, 28),
+            DateForVerificationSorting = new DateTime(2023, 9, 28),
+            Owner = owner8,
+            NumberOfRooms = 4,
+            Floor = 6,
+            Equipment = { equipment2, equipment5, equipment8 }
+        };
+        var flat14 = new Flat
+        {
+            Province = "Śląskie",
+            District = "Centrum",
+            Street = "3 Maja",
+            Number = "15",
+            Flat = 7,
+            City = "Katowice",
+            PostalCode = "40-097",
+            GeoLat = 50.259366,
+            GeoLon = 19.021578,
+            Area = 65,
+            MaxNumberOfInhabitants = 3,
+            ConstructionYear = 2005,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 12, 10),
+            DateForVerificationSorting = new DateTime(2023, 12, 10),
+            Owner = owner9,
+            NumberOfRooms = 3,
+            Floor = 3,
+            Equipment = { equipment3, equipment6, equipment9 }
+        };
+
+        dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14);
 
         ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
         ImageUtility.SeedPropertyImage(flat2.ImagesPath, flat2.VerificationStatus);
@@ -763,6 +1058,10 @@ public static class DataSeeder
         ImageUtility.SeedPropertyImage(flat8.ImagesPath, flat8.VerificationStatus);
         ImageUtility.SeedPropertyImage(flat9.ImagesPath, flat9.VerificationStatus);
         ImageUtility.SeedPropertyImage(flat10.ImagesPath, flat10.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat11.ImagesPath, flat11.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat12.ImagesPath, flat12.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat13.ImagesPath, flat13.VerificationStatus);
+        ImageUtility.SeedPropertyImage(flat14.ImagesPath, flat14.VerificationStatus);
 
         #endregion
 
@@ -878,14 +1177,84 @@ public static class DataSeeder
             Floor = 3,
             Equipment = { equipment3, equipment7, equipment9, equipment10 }
         };
+        var room6 = new Room
+        {
+            Province = "Małopolskie",
+            District = "Stare Miasto",
+            Street = "Grodzka",
+            Number = "15",
+            Flat = 3,
+            City = "Kraków",
+            PostalCode = "31-001",
+            GeoLat = 50.061829,
+            GeoLon = 19.937526,
+            Area = 25,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 1950,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.NotVerified,
+            CreationDate = new DateTime(2023, 8, 10),
+            DateForVerificationSorting = new DateTime(2023, 8, 10),
+            Owner = owner5,
+            Floor = 2,
+            Equipment = { equipment1, equipment3, equipment6, equipment8, equipment10 }
+        };
+        var room7 = new Room
+        {
+            Province = "Wielkopolskie",
+            District = "Stare Miasto",
+            Street = "Św. Marcin",
+            Number = "25",
+            Flat = 6,
+            City = "Poznań",
+            PostalCode = "61-803",
+            GeoLat = 52.406369,
+            GeoLon = 16.934847,
+            Area = 18,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 1985,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 9, 5),
+            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            Owner = owner6,
+            Floor = 3,
+            Equipment = { equipment2, equipment4, equipment7, equipment9, equipment11 }
+        };
+        var room8 = new Room
+        {
+            Province = "Łódzkie",
+            District = "Bałuty",
+            Street = "Piotrkowska",
+            Number = "120",
+            Flat = 9,
+            City = "Łódź",
+            PostalCode = "90-001",
+            GeoLat = 51.765188,
+            GeoLon = 19.458248,
+            Area = 22,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 1965,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.NotVerified,
+            CreationDate = new DateTime(2023, 10, 20),
+            DateForVerificationSorting = new DateTime(2023, 10, 20),
+            Owner = owner8,
+            Floor = 5,
+            Equipment = { equipment3, equipment5, equipment8, equipment10, equipment12 }
+        };
 
-        dbContext.Rooms.AddRange(room1, room2, room3, room4, room5);
+
+        dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8);
 
         ImageUtility.SeedPropertyImage(room1.ImagesPath, room1.VerificationStatus);
         ImageUtility.SeedPropertyImage(room2.ImagesPath, room2.VerificationStatus);
         ImageUtility.SeedPropertyImage(room3.ImagesPath, room3.VerificationStatus);
         ImageUtility.SeedPropertyImage(room4.ImagesPath, room4.VerificationStatus);
         ImageUtility.SeedPropertyImage(room5.ImagesPath, room5.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room6.ImagesPath, room6.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room7.ImagesPath, room7.VerificationStatus);
+        ImageUtility.SeedPropertyImage(room8.ImagesPath, room8.VerificationStatus);
 
         #endregion
 
@@ -1006,15 +1375,86 @@ public static class DataSeeder
             PlotArea = 140,
             Equipment = { equipment2, equipment6, equipment10, equipment11 }
         };
-        
+        var house6 = new House
+        {
+            Province = "Małopolskie",
+            District = "Stare Miasto",
+            Street = "Grodzka",
+            Number = "10",
+            City = "Kraków",
+            PostalCode = "31-044",
+            GeoLat = 50.060202,
+            GeoLon = 19.9348,
+            Area = 180,
+            MaxNumberOfInhabitants = 8,
+            ConstructionYear = 1985,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 5, 28),
+            DateForVerificationSorting = new DateTime(2023, 5, 28),
+            Owner = owner5,
+            NumberOfRooms = 6,
+            NumberOfFloors = 2,
+            PlotArea = 250,
+            Equipment = { equipment3, equipment4, equipment6, equipment8 }
+        };
+        var house7 = new House
+        {
+            Province = "Wielkopolskie",
+            District = "Jeżyce",
+            Street = "Święty Marcin",
+            Number = "80",
+            City = "Poznań",
+            PostalCode = "61-809",
+            GeoLat = 52.405333,
+            GeoLon = 16.933526,
+            Area = 130,
+            MaxNumberOfInhabitants = 5,
+            ConstructionYear = 1998,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 8, 10),
+            DateForVerificationSorting = new DateTime(2023, 8, 10),
+            Owner = owner6,
+            NumberOfRooms = 4,
+            NumberOfFloors = 2,
+            PlotArea = 180,
+            Equipment = { equipment1, equipment5, equipment7 }
+        };
+        var house8 = new House
+        {
+            Province = "Śląskie",
+            District = "Centrum",
+            Street = "Mariacka",
+            Number = "15",
+            City = "Katowice",
+            PostalCode = "40-014",
+            GeoLat = 50.2598,
+            GeoLon = 19.0238,
+            Area = 200,
+            MaxNumberOfInhabitants = 7,
+            ConstructionYear = 2005,
+            ImagesPath = Guid.NewGuid().ToString(),
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2023, 9, 5),
+            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            Owner = owner8,
+            NumberOfRooms = 7,
+            NumberOfFloors = 3,
+            PlotArea = 300,
+            Equipment = { equipment2, equipment3, equipment8 }
+        };
 
-        dbContext.Houses.AddRange(house1, house2, house3, house4, house5);
+        dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8);
 
         ImageUtility.SeedPropertyImage(house1.ImagesPath, house1.VerificationStatus);
         ImageUtility.SeedPropertyImage(house2.ImagesPath, house2.VerificationStatus);
         ImageUtility.SeedPropertyImage(house3.ImagesPath, house3.VerificationStatus);
         ImageUtility.SeedPropertyImage(house4.ImagesPath, house4.VerificationStatus);
         ImageUtility.SeedPropertyImage(house5.ImagesPath, house5.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house6.ImagesPath, house6.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house7.ImagesPath, house7.VerificationStatus);
+        ImageUtility.SeedPropertyImage(house8.ImagesPath, house8.VerificationStatus);
 
         #endregion
 
@@ -1215,8 +1655,138 @@ public static class DataSeeder
             Regulations = "placeholder",
             Property = room5
         };
+        var offer16 = new Offer
+        {
+            Date = new DateTime(2023, 10, 10),
+            OfferStatus = OfferStatus.Current,
+            Price = 2000,
+            Deposit = 1500,
+            Description = "Przestronne mieszkanie w centrum Krakowa.",
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 7, 1),
+            NumberOfInterested = 9,
+            Regulations = "Brak zwierząt.",
+            Property = flat11
+        };
+        var offer17 = new Offer
+        {
+            Date = new DateTime(2023, 9, 25),
+            OfferStatus = OfferStatus.Current,
+            Price = 1800,
+            Deposit = 2000,
+            Description = "Dom w świetnej lokalizacji, niedaleko Rynku.",
+            StartDate = new DateTime(2023, 11, 15),
+            EndDate = new DateTime(2024, 10, 15),
+            NumberOfInterested = 5,
+            Regulations = "Tylko osoby niepalące.",
+            Property = house6
+        };
+        var offer18 = new Offer
+        {
+            Date = new DateTime(2023, 11, 5),
+            OfferStatus = OfferStatus.Current,
+            Price = 1500,
+            Deposit = 1000,
+            Description = "Przytulne mieszkanie w pobliżu centrum Poznania.",
+            StartDate = new DateTime(2023, 12, 5),
+            EndDate = new DateTime(2024, 6, 5),
+            NumberOfInterested = 3,
+            Regulations = "Wynajem na min. rok.",
+            Property = flat12
+        };
+        var offer19 = new Offer
+        {
+            Date = new DateTime(2023, 10, 20),
+            OfferStatus = OfferStatus.Current,
+            Price = 2500,
+            Deposit = 2000,
+            Description = "Duży dom z ogrodem w centrum Katowic.",
+            StartDate = new DateTime(2023, 11, 30),
+            EndDate = new DateTime(2024, 11, 30),
+            NumberOfInterested = 7,
+            Regulations = "Brak zwierząt domowych.",
+            Property = house7
+        };
+        var offer20 = new Offer
+        {
+            Date = new DateTime(2023, 12, 1),
+            OfferStatus = OfferStatus.Current,
+            Price = 1200,
+            Deposit = 800,
+            Description = "Przyjemne mieszkanie w samym sercu Wrocławia.",
+            StartDate = new DateTime(2024, 1, 1),
+            EndDate = new DateTime(2024, 12, 31),
+            NumberOfInterested = 2,
+            Regulations = "Wynajem krótkoterminowy.",
+            Property = flat13
+        };
+        var offer21 = new Offer
+        {
+            Date = new DateTime(2023, 9, 10),
+            OfferStatus = OfferStatus.Current,
+            Price = 2200,
+            Deposit = 1800,
+            Description = "Elegancki apartament z widokiem na panoramę miasta.",
+            StartDate = new DateTime(2023, 11, 1),
+            EndDate = new DateTime(2024, 10, 31),
+            NumberOfInterested = 6,
+            Regulations = "Tylko dla osób pracujących.",
+            Property = flat14
+        };
+        var offer22 = new Offer
+        {
+            Date = new DateTime(2023, 11, 15),
+            OfferStatus = OfferStatus.Current,
+            Price = 3000,
+            Deposit = 2500,
+            Description = "Piękny dom z ogrodem w zacisznej okolicy.",
+            StartDate = new DateTime(2023, 12, 15),
+            EndDate = new DateTime(2024, 12, 15),
+            NumberOfInterested = 4,
+            Regulations = "Wynajem długoterminowy.",
+            Property = house8
+        };
+        var offer23 = new Offer
+        {
+            Date = new DateTime(2023, 10, 25),
+            OfferStatus = OfferStatus.Current,
+            Price = 1600,
+            Deposit = 1200,
+            Description = "Przestronne mieszkanie blisko centrum Łodzi.",
+            StartDate = new DateTime(2023, 11, 25),
+            EndDate = new DateTime(2024, 11, 25),
+            NumberOfInterested = 8,
+            Regulations = "Brak zwierząt.",
+            Property = room7
+        };
+        var offer24 = new Offer
+        {
+            Date = new DateTime(2023, 12, 5),
+            OfferStatus = OfferStatus.Current,
+            Price = 2800,
+            Deposit = 2000,
+            Description = "Wygodny apartament w pobliżu Rynku.",
+            StartDate = new DateTime(2024, 1, 5),
+            EndDate = new DateTime(2024, 12, 5),
+            NumberOfInterested = 3,
+            Regulations = "Tylko osoby niepalące",
+            Property = room8
+        };
+        var offer25 = new Offer
+        {
+            Date = new DateTime(2023, 11, 20),
+            OfferStatus = OfferStatus.Current,
+            Price = 3500,
+            Deposit = 3000,
+            Description = "Nowoczesny dom w spokojnej okolicy.",
+            StartDate = new DateTime(2023, 12, 20),
+            EndDate = new DateTime(2024, 12, 20),
+            NumberOfInterested = 6,
+            Regulations = "Brak zwierząt.",
+            Property = house8
+        };
 
-        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15);
+        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25);
 
         #endregion
         
