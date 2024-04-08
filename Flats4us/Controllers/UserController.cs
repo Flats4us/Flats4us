@@ -105,7 +105,7 @@ namespace Flats4us.Controllers
         [Authorize(Policy = "RegisteredUser")]
         [SwaggerOperation(
             Summary = "Returns user profiile by id",
-            Description = "Requires registered user privilege"
+            Description = "Requires registered user privileges"
         )]
         public async Task<ActionResult> GetCurrentUserProfile(int id)
         {
