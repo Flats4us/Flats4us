@@ -1769,7 +1769,7 @@ public static class DataSeeder
             StartDate = new DateTime(2024, 1, 5),
             EndDate = new DateTime(2024, 12, 5),
             NumberOfInterested = 3,
-            Regulations = "Tylko osoby niepalące.",
+            Regulations = "Tylko osoby niepalące",
             Property = room8
         };
         var offer25 = new Offer
