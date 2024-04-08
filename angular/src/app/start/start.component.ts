@@ -39,6 +39,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 
 	public isLoading$: Observable<boolean> = of(false);
 
+	public isMapMode = false;
+
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
 	private regionCityArray: IRegionCity[] = [];
@@ -188,8 +190,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public showMap() {
-		this.startService.mapOffersForm = this.startSiteForm;
-		this.router.navigate(['map'], { relativeTo: this.route });
+		this.isMapMode = this.isMapMode ? false : true;
 	}
 
 	public addToWatched(id: number) {

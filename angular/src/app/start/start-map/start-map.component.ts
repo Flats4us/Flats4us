@@ -100,10 +100,10 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						clickable: true,
 						draggable: false,
 						icon: L.icon({
-							iconUrl: '../../assets/leafletIconShadow.svg',
-							iconSize: [30, 30],
+							iconUrl: '../../assets/leafletIconShadowHouse.svg',
+							iconSize: [60, 60],
 							iconAnchor: [25, 16],
-							popupAnchor: [-8, -16],
+							popupAnchor: [6, -16],
 						}),
 					};
 					marker([+lat, +lon], markerOptions).addTo(this.map as Map);
@@ -118,9 +118,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			draggable: false,
 			icon: L.icon({
 				iconUrl: '../../assets/leafletIconShadow.svg',
-				iconSize: [30, 30],
+				iconSize: [60, 60],
 				iconAnchor: [25, 16],
-				popupAnchor: [-8, -16],
+				popupAnchor: [6, -16],
 			}),
 		};
 		this.startService.getFilteredOffers(filteredOptions).subscribe(result => {
@@ -130,6 +130,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					markerOptions
 				);
 				marker
+					.setIcon(this.getPropertyIcon(offer.property.propertyType, false))
 					.bindPopup(
 						'<style>' +
 							'.inner-element:hover {' +
@@ -152,14 +153,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
 					)
 					.on('popupopen', e => {
-						e.target.setIcon(
-							L.icon({
-								iconUrl: '../../assets/leafletIconClickedShadow.svg',
-								iconSize: [30, 30],
-								iconAnchor: [25, 16],
-								popupAnchor: [-8, -16],
-							})
-						);
+						e.target.setIcon(this.getPropertyIcon(offer.property.propertyType, true));
 						document
 							?.getElementById('propertyImage')
 							?.addEventListener('click', () => {
@@ -173,12 +167,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					})
 					.on('popupclose', e => {
 						e.target.setIcon(
-							L.icon({
-								iconUrl: '../../assets/leafletIconShadow.svg',
-								iconSize: [30, 30],
-								iconAnchor: [25, 16],
-								popupAnchor: [-8, -16],
-							})
+							this.getPropertyIcon(offer.property.propertyType, false)
 						);
 					});
 				this.markersList.push(marker);
@@ -193,6 +182,11 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 
 	public onSubmit(): void {
 		this.markerCluster.removeLayers(this.markersList);
+		this.map?.eachLayer(layer => {
+			if (layer instanceof L.Marker) {
+				layer.remove();
+			}
+		});
 		this.markersList = [];
 		const searchForm: FormGroup = this.startService.mapOffersForm;
 		if (this.searchInput.nativeElement.value.includes(',')) {
@@ -203,5 +197,60 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			searchForm.patchValue({ citiesGroup: cityName });
 		}
 		this.addMarkersForOffers(searchForm.value);
+	}
+
+	private getPropertyIcon(
+		propertyType: number,
+		isClicked: boolean
+	): L.Icon<L.IconOptions> {
+		let markerIcon = L.icon({
+			iconUrl: '../../assets/leafletIconShadow.svg',
+			iconSize: [60, 60],
+			iconAnchor: [25, 16],
+			popupAnchor: [6, -16],
+		});
+		switch (propertyType) {
+			case 0:
+				markerIcon = L.icon({
+					iconUrl: isClicked
+						? '../../assets/leafletIconClickedShadowFlat.svg'
+						: '../../assets/leafletIconShadowFlat.svg',
+					iconSize: [60, 60],
+					iconAnchor: [25, 16],
+					popupAnchor: [6, -16],
+				});
+				break;
+			case 1:
+				markerIcon = L.icon({
+					iconUrl: isClicked
+						? '../../assets/leafletIconClickedShadowHouse.svg'
+						: '../../assets/leafletIconShadowHouse.svg',
+					iconSize: [60, 60],
+					iconAnchor: [25, 16],
+					popupAnchor: [6, -16],
+				});
+				break;
+			case 2:
+				markerIcon = L.icon({
+					iconUrl: isClicked
+						? '../../assets/leafletIconClickedShadowRoom.svg'
+						: '../../assets/leafletIconShadowRoom.svg',
+					iconSize: [60, 60],
+					iconAnchor: [25, 16],
+					popupAnchor: [6, -16],
+				});
+				break;
+			default:
+				markerIcon = L.icon({
+					iconUrl: isClicked
+						? '../../assets/leafletIconClickedShadow.svg'
+						: '../../assets/leafletIconShadow.svg',
+					iconSize: [60, 60],
+					iconAnchor: [25, 16],
+					popupAnchor: [6, -16],
+				});
+				break;
+		}
+		return markerIcon;
 	}
 }

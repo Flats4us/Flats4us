@@ -17,6 +17,7 @@ import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -39,6 +40,7 @@ import { RentsDetailsComponent } from './rents-details.component';
 		MatMenuModule,
 		MatCardModule,
 		CdkTableModule,
+		MatChipsModule,
 	],
 	exports: [RentsDetailsComponent],
 })

@@ -22,6 +22,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { environment } from 'src/environments/environment.prod';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -33,6 +34,7 @@ import { Router } from '@angular/router';
 		MatSnackBarModule,
 		MatChipsModule,
 		MatCardModule,
+		MatTooltipModule,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	providers: [OfferService, UserService],

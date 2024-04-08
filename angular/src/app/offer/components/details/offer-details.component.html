@@ -143,18 +143,18 @@
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl">Kaucja:</p>
-				<p class="text-2xl">Data wystawienia:</p>
-				<p class="text-2xl">Data zakończenia:</p>
-				<p class="text-2xl">Adres:</p>
-				<p class="text-2xl">Metraż:</p>
-				<p class="text-2xl">Liczba pokoi:</p>
-				<p class="text-2xl">Liczba pięter:</p>
-				<p class="text-2xl">Piętro:</p>
-				<p class="text-2xl">Maks. liczba mieszkańców:</p>
-				<p class="text-2xl">Rok budowy:</p>
-				<p class="text-2xl">Wyposażenie:</p>
-				<p class="text-2xl">Informacje o umowie:</p>
+				<p class="text-2xl pt-4">Kaucja:</p>
+				<p class="text-2xl pt-4">Data wystawienia:</p>
+				<p class="text-2xl pt-4">Data zakończenia:</p>
+				<p class="text-2xl pt-4">Adres:</p>
+				<p class="text-2xl pt-4">Metraż:</p>
+				<p class="text-2xl pt-4">Liczba pokoi:</p>
+				<p class="text-2xl pt-4">Liczba pięter:</p>
+				<p class="text-2xl pt-4">Piętro:</p>
+				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
+				<p class="text-2xl pt-4">Rok budowy:</p>
+				<p class="text-2xl pt-4">Wyposażenie:</p>
+				<p class="text-2xl pt-4">Informacje o umowie:</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl"
@@ -163,40 +163,42 @@
 				</p>
 			</div>
 			<div class="column-header-description">
-				<p class="text-2xl">
+				<p class="text-2xl pt-4">
 					{{ data.offer?.deposit | currency : "PLN" : true : ".2-2" }}
 				</p>
-				<p class="text-2xl">{{ data.offer?.startDate | date }}</p>
-				<p class="text-2xl">{{ data.offer?.endDate | date }}</p>
-				<p class="text-2xl">
+				<p class="text-2xl pt-4">{{ data.offer?.startDate | date }}</p>
+				<p class="text-2xl pt-4">{{ data.offer?.endDate | date }}</p>
+				<p class="text-2xl pt-4">
 					{{ data.offer?.property?.postalCode }} {{ data.offer?.property?.city }},
 					ul. {{ data.offer?.property?.street }} {{ data.offer?.property?.number }}
 				</p>
-				<p class="text-2xl">{{ data.offer?.property?.area }} m²</p>
-				<p class="text-2xl">{{ data.offer?.property?.numberOfRooms }}</p>
-				<p class="text-2xl">
+				<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
+				<p class="text-2xl pt-4">{{ data.offer?.property?.numberOfRooms }}</p>
+				<p class="text-2xl pt-4">
 					{{
 						data.offer?.property?.numberOfFloors === null
 							? "-"
 							: data.offer?.property?.numberOfFloors
 					}}
 				</p>
-				<p class="text-2xl">
+				<p class="text-2xl pt-4">
 					{{
 						data.offer?.property?.floor === null ? "-" : data.offer?.property?.floor
 					}}
 				</p>
-				<p class="text-2xl">{{ data.offer?.property?.maxNumberOfInhabitants }}</p>
-				<p class="text-2xl">{{ data.offer?.property?.constructionYear }}</p>
-				<p class="text-2xl">
+				<p class="text-2xl pt-4">
+					{{ data.offer?.property?.maxNumberOfInhabitants }}
+				</p>
+				<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
+				<p class="text-2xl pt-4">
 					<span *ngFor="let equipment of data?.offer?.property?.equipment"
-						>{{ equipment.name }},
+						><mat-chip class="mr-4">{{ equipment.name }}</mat-chip>
 					</span>
 				</p>
-				<p class="text-2xl">{{ data.offer?.regulations }}</p>
+				<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-					class="text-2xl"
+					class="text-2xl pt-4"
 				>
 					Jan Kowalski, Barbara Nowak
 				</p>

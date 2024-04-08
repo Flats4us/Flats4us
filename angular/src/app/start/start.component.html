@@ -158,15 +158,29 @@
 					</button>
 
 					<button
+						*ngIf="!isMapMode"
 						class="box-icon-function"
 						id="showMap"
 						type="button"
 						mat-icon-button
-						matTooltip="Pokaż mapę"
+						matTooltip="Pokaż mapę ofert"
 						aria-label="ShowMap"
 						(click)="showMap()"
 					>
 						<mat-icon class="ico" [inline]="true">map</mat-icon>
+					</button>
+
+					<button
+						*ngIf="isMapMode"
+						class="box-icon-function"
+						id="showList"
+						type="button"
+						mat-icon-button
+						matTooltip="Pokaż listę ofert"
+						aria-label="ShowMap"
+						(click)="showMap()"
+					>
+						<mat-icon class="ico" [inline]="true">view_list</mat-icon>
 					</button>
 
 					<button
@@ -370,132 +384,150 @@
 	<div *ngIf="isLoading$ | async" class="container-spinner">
 		<mat-spinner color="primary"></mat-spinner>
 	</div>
-	<div
-		*ngIf="
-			(isLoading$ | async) === false && (flatOptions$ | async) as flatOptions
-		"
-	>
-		<div>
-			<div class="container-info">
-				<div *ngIf="isSubmitted" class="container-title">
-					<h1 *ngIf="flatOptions.totalCount !== 0">
-						Znaleziono
-						<span [appGetDescription]="flatOptions.totalCount"></span>
-					</h1>
-					<h1 *ngIf="flatOptions.totalCount === 0">
-						Nie znaleziono ofert dla podanych parametrów
-					</h1>
-				</div>
-				<div *ngIf="!isSubmitted" class="container-title">
-					<h1>Promowane oferty</h1>
-				</div>
-			</div>
-			<ng-template #flats let-flats="flats">
-				<mat-card
-					*ngFor="let flat of flats"
-					[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
-				>
-					<div class="offer-title-outer">
-						<span class="offer-title-inner"
-							><h2 class="text-m">
-								Wynajem -
-								{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
-								{{ flat.property.area }} m² {{ flat.property.city }}
-								<mat-icon
-									*ngIf="flat.isPromoted"
-									class="promotion-icon"
-									matTooltip="Promowana oferta"
-									>new_releases</mat-icon
-								>
-							</h2>
-						</span>
+	<ng-template #mapMode let-isLoading="isLoading">
+		<div *ngIf="!isLoading" class="container-map">
+			<app-start-map></app-start-map>
+		</div>
+	</ng-template>
+	<ng-template #listMode let-isLoading="isLoading" let-flatOptions="flatOptions">
+		<div *ngIf="!isLoading && flatOptions">
+			<div>
+				<div class="container-info">
+					<div *ngIf="isSubmitted" class="container-title">
+						<h1 *ngIf="flatOptions.totalCount !== 0">
+							Znaleziono
+							<span [appGetDescription]="flatOptions.totalCount"></span>
+						</h1>
+						<h1 *ngIf="flatOptions.totalCount === 0">
+							Nie znaleziono ofert dla podanych parametrów
+						</h1>
 					</div>
-					<img
-						mat-card-image
-						class="imgs"
-						alt="Mieszkanie"
-						src="{{ baseUrl }}/{{ flat.property.images[0].path }}"
-						(click)="navigateToFlat(flat.offerId)"
-					/>
-					<mat-card-content matSort class="card-content">
-						<mat-chip-listbox>
-							<mat-chip>
-								<div class="chip">
-									<mat-icon>attach_money</mat-icon>
-									<span>Cena: {{ flat.price }} zł/mc</span>
-								</div>
-							</mat-chip>
-							<mat-chip>
-								<div class="chip">
-									<mat-icon>add</mat-icon><span>Kaucja: {{ flat.deposit }} zł/mc</span>
-								</div>
-							</mat-chip>
-							<mat-chip>
-								<div class="chip">
-									<mat-icon>straighten</mat-icon>
-									<span>Powierzchnia: {{ flat.property.area }} m²</span>
-								</div>
-							</mat-chip>
-							<mat-chip *ngIf="flat.property.propertyType !== 2">
-								<div class="chip">
-									<mat-icon>meeting_room</mat-icon>
-									<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
-								</div>
-							</mat-chip>
-							<mat-chip>
-								<button
-									class="box-icon-watched"
-									id="addToWatched"
-									type="button"
-									mat-icon-button
-									matTooltip="Dodaj do obserwowanych"
-									aria-label="AddToWatched"
-									(click)="addToWatched(flat.offerId)"
-								>
-									<mat-icon>favorite_border</mat-icon>
-								</button>
-							</mat-chip>
-						</mat-chip-listbox>
-					</mat-card-content>
-				</mat-card>
-			</ng-template>
-			<div *ngIf="isSubmitted" class="container-offers">
-				<ng-container
-					[ngTemplateOutlet]="flats"
-					[ngTemplateOutletContext]="{ flats: flatOptions.result }"
-				>
-				</ng-container>
-			</div>
-			<fieldset
-				*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
-				class="container-offers"
-			>
-				<ng-container
+					<div *ngIf="!isSubmitted" class="container-title">
+						<h1>Promowane oferty</h1>
+					</div>
+				</div>
+				<ng-template #flats let-flats="flats">
+					<mat-card
+						*ngFor="let flat of flats"
+						[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
+					>
+						<div class="offer-title-outer">
+							<span class="offer-title-inner"
+								><h2 class="text-m">
+									Wynajem -
+									{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
+									{{ flat.property.area }} m² {{ flat.property.city }}
+									<mat-icon
+										*ngIf="flat.isPromoted"
+										class="promotion-icon"
+										matTooltip="Promowana oferta"
+										>new_releases</mat-icon
+									>
+								</h2>
+							</span>
+						</div>
+						<img
+							mat-card-image
+							class="imgs"
+							alt="Mieszkanie"
+							src="{{ baseUrl }}/{{ flat.property.images[0].path }}"
+							(click)="navigateToFlat(flat.offerId)"
+						/>
+						<mat-card-content matSort class="card-content">
+							<mat-chip-listbox>
+								<mat-chip>
+									<div class="chip">
+										<mat-icon>attach_money</mat-icon>
+										<span>Cena: {{ flat.price }} zł/mc</span>
+									</div>
+								</mat-chip>
+								<mat-chip>
+									<div class="chip">
+										<mat-icon>add</mat-icon><span>Kaucja: {{ flat.deposit }} zł/mc</span>
+									</div>
+								</mat-chip>
+								<mat-chip>
+									<div class="chip">
+										<mat-icon>straighten</mat-icon>
+										<span>Powierzchnia: {{ flat.property.area }} m²</span>
+									</div>
+								</mat-chip>
+								<mat-chip *ngIf="flat.property.propertyType !== 2">
+									<div class="chip">
+										<mat-icon>meeting_room</mat-icon>
+										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
+									</div>
+								</mat-chip>
+								<mat-chip>
+									<button
+										class="box-icon-watched"
+										id="addToWatched"
+										type="button"
+										mat-icon-button
+										matTooltip="Dodaj do obserwowanych"
+										aria-label="AddToWatched"
+										(click)="addToWatched(flat.offerId)"
+									>
+										<mat-icon>favorite_border</mat-icon>
+									</button>
+								</mat-chip>
+							</mat-chip-listbox>
+						</mat-card-content>
+					</mat-card>
+				</ng-template>
+				<div *ngIf="isSubmitted" class="container-offers">
+					<ng-container
+						[ngTemplateOutlet]="flats"
+						[ngTemplateOutletContext]="{ flats: flatOptions.result }"
+					>
+					</ng-container>
+				</div>
+				<fieldset
+					*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
 					class="container-offers"
-					[ngTemplateOutlet]="flats"
-					[ngTemplateOutletContext]="{
-						flats: (flatOptionsPromoted$ | async)?.result
-					}"
-				></ng-container>
-			</fieldset>
+				>
+					<ng-container
+						class="container-offers"
+						[ngTemplateOutlet]="flats"
+						[ngTemplateOutletContext]="{
+							flats: (flatOptionsPromoted$ | async)?.result
+						}"
+					></ng-container>
+				</fieldset>
+			</div>
+			<div class="paginator-box">
+				<mat-paginator
+					#paginator
+					id="paginator2"
+					showFirstLastButtons
+					aria-label="Paginator"
+					[length]="
+						isSubmitted
+							? flatOptions.totalCount
+							: (flatOptionsPromoted$ | async)?.totalCount
+					"
+					[pageSize]="pageSize"
+					[pageIndex]="pageIndex"
+					[pageSizeOptions]="[6, 12, 18, 48]"
+					(page)="changePage($event)"
+				>
+				</mat-paginator>
+			</div>
 		</div>
-		<div class="paginator-box">
-			<mat-paginator
-				#paginator
-				id="paginator2"
-				showFirstLastButtons
-				aria-label="Paginator"
-				[length]="
-					isSubmitted
-						? flatOptions.totalCount
-						: (flatOptionsPromoted$ | async)?.totalCount
-				"
-				[pageSize]="pageSize"
-				[pageIndex]="pageIndex"
-				[pageSizeOptions]="[6, 12, 18, 48]"
-				(page)="changePage($event)"
-			>
-			</mat-paginator>
-		</div>
-	</div>
+	</ng-template>
+	<ng-container
+		*ngIf="isMapMode"
+		[ngTemplateOutlet]="mapMode"
+		[ngTemplateOutletContext]="{
+			isLoading: isLoading$ | async
+		}"
+	></ng-container>
+	<ng-container
+		*ngIf="!isMapMode"
+		[ngTemplateOutlet]="listMode"
+		[ngTemplateOutletContext]="{
+			isLoading: isLoading$ | async,
+			flatOptions: flatOptions$ | async
+		}"
+	></ng-container>
 </div>

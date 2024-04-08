@@ -5,12 +5,17 @@
 		<p>22-03-2024</p>
 		<p class="pt-4 font-semibold">Okres najmu:</p>
 		<p>1 rok</p>
-		<div *ngIf="userProfile$ | async as user">
-			<p class="pt-4 font-semibold">Proponowni lokatorzy:</p>
-			<mat-card class="mt-4" (click)="showProfile(user.userId)">
-				<div class="profile-details">
+		<div *ngIf="userProfile$ | async as user" class="profiles-container">
+			<p class="pt-4 font-semibold">Najemcy:</p>
+			<mat-card class="profile-details" (click)="showProfile(user.userId)">
+				<div>
 					<mat-card-avatar
-						><img src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+						matTooltip="Pokaż profil"
+						(click)="showProfile(user.userId)"
+					>
+						<img
+							class="profile-avatar"
+							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 					/></mat-card-avatar>
 					<div>
 						<mat-chip-set>
@@ -21,10 +26,15 @@
 					</div>
 				</div>
 			</mat-card>
-			<mat-card class="mt-4" (click)="showProfile(user.userId)">
-				<div class="profile-details">
+			<mat-card class="profile-details">
+				<div>
 					<mat-card-avatar
-						><img src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+						matTooltip="Pokaż profil"
+						(click)="showProfile(user.userId)"
+					>
+						<img
+							class="profile-avatar"
+							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 					/></mat-card-avatar>
 					<div>
 						<mat-chip-set>
