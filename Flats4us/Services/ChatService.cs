@@ -27,6 +27,7 @@ namespace Flats4us.Services
             _mapper = mapper;
             _chatHub = chatHub;
             _notificationService = notificationService;
+            _userService = ownerService;
         }
 
         public async Task<List<ChatMessageDto>> GetChatHistoryAsync(int chatId, int requestUserId)
@@ -85,6 +86,13 @@ namespace Flats4us.Services
                     OtherUsername = c.User1Id == userId ? c.User2.Name + " " + c.User2.Surname : c.User1.Name + " " + c.User1.Surname
                 })
                 .ToListAsync();
+            // Notify the user of password change
+            var sender = await _context.Users.FindAsync(chatMessage.SenderId);
+
+            var notificationTitle = sender.Name + " " + sender.Surname;
+            var notificationBody = chatMessage.Content;
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId);
+
             // Notify the user of password change
             var sender = await _context.Users.FindAsync(chatMessage.SenderId);
 
