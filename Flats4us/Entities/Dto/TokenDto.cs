@@ -9,5 +9,8 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public long ExpiresAt { get; set; }
+
+        [Required]
+        public string Role { get; set; }
     }
 }

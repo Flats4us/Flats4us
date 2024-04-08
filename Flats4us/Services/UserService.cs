@@ -333,7 +333,8 @@ namespace Flats4us.Services
             var result = new TokenDto
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpiresAt = unixTimestamp
+                ExpiresAt = unixTimestamp,
+                Role = user.GetType().Name
             };
 
             return result;
