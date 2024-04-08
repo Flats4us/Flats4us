@@ -9,7 +9,7 @@ using System.Web.Http.ModelBinding;
 namespace Flats4us.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/group-chat")]
     public class GroupChatController : ControllerBase
     {
         private readonly IGroupChatService _groupChatService;

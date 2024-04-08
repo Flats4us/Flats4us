@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/chat")]
     [ApiController]
     public class ChatController : ControllerBase
     {
@@ -29,7 +29,7 @@ namespace Flats4us.Controllers
 
         // POST: chat/sendmessage
         [Authorize]
-        [HttpPost("sendmessage")]
+        [HttpPost("send-message")]
         public async Task<IActionResult> SendMessage(int receiverUserId, string message)
         {
             var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -65,7 +65,7 @@ namespace Flats4us.Controllers
         }
 
         // GET: chat/history/{chatId}
-        [HttpGet("history/{chatId}")]
+        [HttpGet("{chatId}/history")]
         public async Task<IActionResult> GetChatHistory(int chatId)
         {
             var history = await _chatService.GetChatHistory(chatId);
@@ -77,7 +77,7 @@ namespace Flats4us.Controllers
             return Ok(history);
         }
         [Authorize]
-        [HttpGet("participant/{chatId}")]
+        [HttpGet("{chatId}/participant")]
         public async Task<IActionResult> GetParticipantId(int chatId)
         {
             var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
