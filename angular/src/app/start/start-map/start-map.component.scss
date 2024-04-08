@@ -1,21 +1,7 @@
 #map {
 	height: 70vh;
-	width: 70vw;
-	max-width: 100%;
 	margin: 32px;
 	border-radius: 4px;
-}
-
-.search {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	gap: 16px;
-	padding: 16px;
-
-	> input {
-		width: 100%;
-	}
 }
 
 .box-icon-function {
