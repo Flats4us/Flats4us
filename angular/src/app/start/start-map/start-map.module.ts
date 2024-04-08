@@ -17,6 +17,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatIconModule,
 		MatTooltipModule,
 	],
+	exports: [StartMapComponent],
 	providers: [RealEstateService, StartService, RealEstateService],
 })
 export class StartMapModule {}
