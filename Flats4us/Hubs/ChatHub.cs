@@ -14,14 +14,19 @@
     {
         private readonly IChatService _chatService;
         public readonly Flats4usContext _context;
+        private readonly INotificationService _notificationService;
+
 
 
         private readonly static ConcurrentDictionary<int, string> _connections = new ConcurrentDictionary<int, string>();
 
-        public ChatHub(IChatService chatService, Flats4usContext context)
+        public ChatHub(IChatService chatService, 
+            Flats4usContext context,
+            INotificationService notificationService)
         {
             _chatService = chatService;
             _context = context;
+            _notificationService = notificationService;
         }
 
         public async Task SendMessage(string user, string message)
@@ -46,6 +51,8 @@
                 Chat = chat
             };
             await _chatService.SaveMessage(chatMessage);
+
+            
 
 
 
