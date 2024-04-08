@@ -217,7 +217,11 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(student);
                     break;
-                case Owner owner:
+                case Owner:
+                    var owner = await _context.Owners
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(owner);
                     break;
                 default:
@@ -246,7 +250,11 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfilePublicDto>(student);
                     break;
-                case Owner owner:
+                case Owner:
+                    var owner = await _context.Owners
+                        .Include(s => s.ReceivedUserOpinions)
+                            .ThenInclude(ruo => ruo.SourceUser)
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfilePublicDto>(owner);
                     break;
                 default:

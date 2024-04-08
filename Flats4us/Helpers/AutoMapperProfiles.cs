@@ -96,12 +96,14 @@ namespace Flats4us.Helpers
                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
                .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>())
                .ForMember(dest => dest.Links, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Links) ? src.Links.Split(new[] { '|' }, StringSplitOptions.None).ToList() : new List<string>()))
+               .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
                .ForMember(dest => dest.UserOpinions, opt => opt.MapFrom(src => src.ReceivedUserOpinions));
 
             CreateMap<Owner, UserProfileFullDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
                 .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>())
+                .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
                 .ForMember(dest => dest.UserOpinions, opt => opt.MapFrom(src => src.ReceivedUserOpinions));
 
             CreateMap<Student, UserProfilePublicDto>()
@@ -109,11 +111,13 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
                 .ForMember(dest => dest.Links, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Links) ? src.Links.Split(new[] { '|' }, StringSplitOptions.None).ToList() : new List<string>()))
+                .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
                 .ForMember(dest => dest.UserOpinions, opt => opt.MapFrom(src => src.ReceivedUserOpinions));
 
             CreateMap<Owner, UserProfilePublicDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
+                .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
                 .ForMember(dest => dest.UserOpinions, opt => opt.MapFrom(src => src.ReceivedUserOpinions));
 
             CreateMap<UserOpinion, UserOpinionDto>()
