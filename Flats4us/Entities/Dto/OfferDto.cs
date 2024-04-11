@@ -42,6 +42,9 @@ namespace Flats4us.Entities.Dto
         public PropertyDto Property { get; set; }
 
         [Required]
+        public RentDto Rent { get; set; }
+
+        [Required]
         public OwnerStudentDto Owner { get; set; }
 
         [Required]

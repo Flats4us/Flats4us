@@ -147,12 +147,11 @@ namespace Flats4us.Services
                 QualityForMoney = input.QualityForMoney,
                 Description = input.Description,
                 UserId = sourceUser.UserId,
-                RentId = input.RentId
+                RentId = rent.RentId
             };
 
             await _context.RentOpinions.AddAsync(opinion);
             await _context.SaveChangesAsync();
-
         }
 
     }

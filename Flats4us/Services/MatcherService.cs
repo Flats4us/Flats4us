@@ -120,7 +120,7 @@ namespace Flats4us.Services
                 await _context.Matcher.AddAsync(match);
             }
             
-            if(student1Id==match.Student1Id)
+            if(student1Id == match.Student1Id)
             {
                 match.IsStudent1Interested = isAccept;
             }

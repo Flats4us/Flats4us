@@ -32,6 +32,8 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Owner)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Rent)
+                    .ThenInclude(r => r.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 

@@ -13,6 +13,6 @@ namespace Flats4us.Services.Interfaces
         Task UpdatePropertyAsync(int id, AddEditPropertyDto input, int requestUserId);
         Task DeletePropertyAsync(int id, int requestUserId);
         Task VerifyPropertyAsync(int id, bool decision);
-        Task GetPropertyById(int id);
+        //Task<PropertyWithRentOpinionDto> GetPropertyByIdAsync(int PropertyId);
     }
 }

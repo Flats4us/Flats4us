@@ -468,25 +468,31 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PropertyWithRentOpinionDto> GetPropertyByIdAsync(int PropertyId)
-        {
-            PropertyWithRentOpinionDto result;
+        //public async Task<PropertyWithRentOpinionDto> GetPropertyByIdAsync(int PropertyId) 
+        //{
+        //    PropertyWithRentOpinionDto result;
 
-            var property = await _context.Properties
-                .Include(p => p.Offers)
-                    .ThenInclude(o => o.Rent)
-                        .ThenInclude(r => r.RentOpinions)
-                .FirstOrDefaultAsync();
+        //    var property = await _context.Properties
+        //        .Include(p => p.Offers)
+        //            .ThenInclude(o => o.Rent)
+        //                .ThenInclude(r => r.RentOpinions)
+        //        .FirstOrDefaultAsync();
 
-            var rentOpinions = property.Offers
-                .SelectMany(o => o.Rent?.RentOpinions ?? Enumerable.Empty<RentOpinion>())
-                .ToList();
+        //    var rentOpinions = property.Offers
+        //        .SelectMany(o => o.Rent?.RentOpinions ?? Enumerable.Empty<RentOpinion>())
+        //        .ToList();
 
-            result = _mapper.Map<PropertyWithRentOpinionDto>(property);
+        //    result = _mapper.Map<PropertyWithRentOpinionDto>(property);
 
-            return result;
+        //    return result;
 
-        }
+        //    /*
+            
+        //    sprawdź 35 linijka w OfferService
+             
+        //    */
+
+        //}
         
 
     }
