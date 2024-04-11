@@ -59,24 +59,21 @@ namespace Flats4us.Helpers
 
             CreateMap<Offer, OfferDto>()
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner))
-                .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
-                //.ForMember(dest => dest.Rent, opt => opt.MapFrom(src => new RentDto
-                //{
-                //    RentId = src.Rent.RentId,
-                //    RentOpinion = src.Rent.RentOpinions.Select(ro => new RentOpinionDto
-                //    {
-                //        RentOpinionId = ro.RentOpinionId,
-                //        Rating = ro.Rating,
-                //        Service = ro.Service,
-                //        Location = ro.Location,
-                //        Equipment = ro.Equipment,
-                //        QualityForMoney = ro.QualityForMoney,
-                //        Description = ro.Description
-                //        // jeśli masz UserId i RentId w RentOpinionDto, odkomentuj poniższe linie
-                //        // UserId = ro.UserId,
-                //        // RentId = ro.RentId
-                //    }).ToList()
-                //}));
+                .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)))
+            .ForMember(dest => dest.Rent, opt => opt.MapFrom(src => new RentDto
+             {
+                 RentId = src.Rent.RentId,
+                 RentOpinion = src.Rent.RentOpinions.Select(ro => new RentOpinionDto
+                 {
+                     RentOpinionId = ro.RentOpinionId,
+                     Rating = ro.Rating,
+                     Service = ro.Service,
+                     Location = ro.Location,
+                     Equipment = ro.Equipment,
+                     QualityForMoney = ro.QualityForMoney,
+                     Description = ro.Description
+                 }).ToList()
+             }));
 
             CreateMap<Owner, OwnerStudentDto>();
 
