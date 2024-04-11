@@ -5,6 +5,9 @@ namespace Flats4us.Entities.Dto
     public class RentOpinionDto
     {
         [Required]
+        public int RentOpinionId { get; set; }
+
+        [Required]
         [Range(1, 10)]
         public int Rating { get; set; }
 
@@ -27,10 +30,10 @@ namespace Flats4us.Entities.Dto
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public User UserId { get; set; }
+        //[Required]
+        //public User UserId { get; set; }
 
-        [Required]
-        public Rent RentId { get; set; }
+        //[Required]
+        //public Rent RentId { get; set; }
     }
 }
