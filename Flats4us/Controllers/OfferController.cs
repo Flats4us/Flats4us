@@ -297,7 +297,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                await _rentService.AddRentOpinionAsync(/*input.Decision*/input, requestUserId, rentId);
+                await _rentService.AddRentOpinionAsync(input, requestUserId, rentId);
                 _logger.LogInformation($"Adding rent opinion for rent ID: {rentId}");
                 return Ok(new OutputDto<string>("Opinion added"));
             }

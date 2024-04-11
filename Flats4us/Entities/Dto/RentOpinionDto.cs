@@ -4,8 +4,8 @@ namespace Flats4us.Entities.Dto
 {
     public class RentOpinionDto
     {
-        [Required]
-        public int RentOpinionId { get; set; }
+        //[Required]
+        //public int RentOpinionId { get; set; }
 
         [Required]
         [Range(1, 10)]

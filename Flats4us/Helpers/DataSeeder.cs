@@ -1693,7 +1693,7 @@ public static class DataSeeder
             Payments = null
         };
 
-        //dbContext.Rents.AddRange(rent1, rent2, rent3);
+        dbContext.Rents.AddRange(rent1, rent2, rent3);
 
         #endregion
 
@@ -1747,7 +1747,7 @@ public static class DataSeeder
             Rent = rent3
         };
 
-        //dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
+        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
 
         #endregion
 

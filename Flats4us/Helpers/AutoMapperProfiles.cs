@@ -65,7 +65,7 @@ namespace Flats4us.Helpers
                  RentId = src.Rent.RentId,
                  RentOpinion = src.Rent.RentOpinions.Select(ro => new RentOpinionDto
                  {
-                     RentOpinionId = ro.RentOpinionId,
+                     //RentOpinionId = ro.RentOpinionId,
                      Rating = ro.Rating,
                      Service = ro.Service,
                      Location = ro.Location,
