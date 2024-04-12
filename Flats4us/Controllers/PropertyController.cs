@@ -25,6 +25,28 @@ namespace Flats4us.Controllers
             _logger = logger;
         }
 
+        // GET: api/properties/{id}
+        [HttpGet("{id}")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns property by id",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<IActionResult> GetPropertyById(int id)
+        {
+            try
+            {
+                var property = await _propertyService.GetPropertyByIdAsync(id);
+                _logger.LogInformation($"Getting property by ID: {id}");
+                return Ok(property);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Getting property by id");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
+        }
+
         // GET: api/properties
         [HttpGet]
         [Authorize(Policy = "VerifiedOwner")]
