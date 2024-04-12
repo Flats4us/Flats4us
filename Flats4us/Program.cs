@@ -42,7 +42,10 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(new GitHeadersFilter());
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -102,6 +105,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             }
         };
     });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Moderator", policy =>
@@ -165,6 +169,7 @@ builder.Services.AddCors(c =>
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", builder =>
@@ -185,7 +190,9 @@ builder.Services.AddHangfireServer();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
+
 app.UseRouting();
+
 app.UseCors("AllowSpecificOrigin");
 
 using (var scope = app.Services.CreateScope())
