@@ -5,7 +5,6 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
@@ -23,6 +22,41 @@ namespace Flats4us.Services
             _context = context;
             _openStreetMapService = openStreetMapService;
             _mapper = mapper;
+        }
+
+        public async Task<PropertyDto> GetPropertyByIdAsync(int id)
+        {
+            var property = await _context.Properties.FindAsync(id);
+
+            if (property is null) throw new ArgumentException($"Property with ID {id} not found.");
+
+            PropertyDto result;
+
+            switch (property)
+            {
+                case Flat:
+                    var flat = await _context.Flats
+                        .Include(x => x.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    result = _mapper.Map<PropertyDto>(flat);
+                    break;
+                case Room:
+                    var room = await _context.Rooms
+                        .Include(x => x.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    result = _mapper.Map<PropertyDto>(room);
+                    break;
+                case House:
+                    var house = await _context.Houses
+                        .Include(x => x.Equipment)
+                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                    result = _mapper.Map<PropertyDto>(house);
+                    break;
+                default:
+                    throw new ArgumentException($"Cannot get this property");
+            }
+
+            return result;
         }
 
         public async Task<List<PropertyDto>> GetPropertiesForCurrentUserAsync(int ownerId, bool showOnlyVerified)
