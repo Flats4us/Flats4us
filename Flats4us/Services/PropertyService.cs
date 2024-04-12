@@ -53,7 +53,7 @@ namespace Flats4us.Services
                     result = _mapper.Map<PropertyDto>(house);
                     break;
                 default:
-                    throw new ArgumentException($"Cannot get this propert");
+                    throw new ArgumentException($"Cannot get this property");
             }
 
             return result;
