@@ -15,51 +15,51 @@ public static class DataSeeder
         #region Equipment
 
         var equipment1 = new Equipment { 
-            Name = "Zmywarka"
+            Name = "Dishwasher"
         };
         var equipment2 = new Equipment
         {
-            Name = "Pralka"
+            Name = "WashingMachine"
         };
         var equipment3 = new Equipment
         {
-            Name = "Żelazko"
+            Name = "Iron"
         };
         var equipment4 = new Equipment
         {
-            Name = "Czajnik"
+            Name = "Kettle"
         };
         var equipment5 = new Equipment
         {
-            Name = "Ekspres do kawy"
+            Name = "CoffeeMachine"
         };
         var equipment6 = new Equipment
         {
-            Name = "Klimatyzacja"
+            Name = "AirConditioning"
         };
         var equipment7 = new Equipment
         {
-            Name = "Balkon"
+            Name = "Balcony"
         };
         var equipment8 = new Equipment
         {
-            Name = "Telewizor"
+            Name = "TV"
         };
         var equipment9 = new Equipment
         {
-            Name = "Wanna"
+            Name = "Bath"
         };
         var equipment10 = new Equipment
         {
-            Name = "Piekarnik"
+            Name = "Oven"
         };
         var equipment11 = new Equipment
         {
-            Name = "Mikrofalówka"
+            Name = "Microwave"
         };
         var equipment12 = new Equipment
         {
-            Name = "Winda"
+            Name = "Elevator"
         };
 
         dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11, equipment12);
@@ -70,35 +70,35 @@ public static class DataSeeder
 
         var interest1 = new Interest
         {
-            Name = "Fotografia"
+            Name = "Photography"
         };
         var interest2 = new Interest
         {
-            Name = "Turystyka piesza"
+            Name = "Hiking"
         };
         var interest3 = new Interest
         {
-            Name = "Gotowanie"
+            Name = "Cooking"
         };
         var interest4 = new Interest
         {
-            Name = "Podróże"
+            Name = "Traveling"
         };
         var interest5 = new Interest
         {
-            Name = "Czytanie"
+            Name = "Reading"
         };
         var interest6 = new Interest
         {
-            Name = "Ogrodnictwo"
+            Name = "Gardening"
         };
         var interest7 = new Interest
         {
-            Name = "Muzyka"
+            Name = "Music"
         };
         var interest8 = new Interest
         {
-            Name = "Wolontariat"
+            Name = "Volunteering"
         };
         var interest9 = new Interest
         {
@@ -106,15 +106,15 @@ public static class DataSeeder
         };
         var interest10 = new Interest
         {
-            Name = "Języki"
+            Name = "Volunteering"
         };
         var interest11 = new Interest
         {
-            Name = "Malarstwo"
+            Name = "Painting"
         };
         var interest12 = new Interest
         {
-            Name = "Rower"
+            Name = "Cycling"
         };
         var interest13 = new Interest
         {
@@ -122,23 +122,23 @@ public static class DataSeeder
         };
         var interest14 = new Interest
         {
-            Name = "Gry komputerowe"
+            Name = "Games"
         };
         var interest15 = new Interest
         {
-            Name = "Pisanie"
+            Name = "Writing"
         };
         var interest16 = new Interest
         {
-            Name = "Film"
+            Name = "Movies"
         };
         var interest17 = new Interest
         {
-            Name = "Technologia"
+            Name = "Technology"
         };
         var interest18 = new Interest
         {
-            Name = "Astronomia"
+            Name = "Astronomy"
         };
         var interest19 = new Interest
         {
@@ -146,7 +146,7 @@ public static class DataSeeder
         };
         var interest20 = new Interest
         {
-            Name = "Modelarstwo"
+            Name = "Modeling"
         };
 
 
