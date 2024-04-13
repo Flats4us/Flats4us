@@ -24,8 +24,6 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 	public messageControl = new FormControl();
 
 	public messages: { user: number; message: string }[] = [];
-	public username = '';
-	public message = '';
 	public conversationId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
 	);

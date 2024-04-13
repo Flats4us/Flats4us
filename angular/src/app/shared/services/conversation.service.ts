@@ -6,7 +6,7 @@ import * as signalR from '@microsoft/signalr';
 
 @Injectable()
 export class ConversationService {
-	protected apiRoute = `${environment.apiUrl}/Chat`;
+	protected apiRoute = `${environment.apiUrl}/chat`;
 	public baseRoute = environment.apiUrl.replace('/api', '');
 	private hubConnection!: signalR.HubConnection;
 	private onReceivePrivateMessageCallbacks: ((
