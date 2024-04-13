@@ -7,11 +7,7 @@
 			</mat-card-title>
 		</mat-card-header>
 		<mat-divider></mat-divider>
-		<form
-			*ngIf="profileId$ | async as profileId"
-			[formGroup]="opinionForm"
-			(ngSubmit)="onSubmit(parseInt(profileId))"
-		>
+		<form [formGroup]="opinionForm" (ngSubmit)="onSubmit(user.userId)">
 			<mat-card-content class="flex flex-wrap justify-center">
 				<div class="flex-[1_1_400px] p-5">
 					<h2 class="font-medium text-2xl mb-4">{{ user.name }}, {{ user.age }}</h2>

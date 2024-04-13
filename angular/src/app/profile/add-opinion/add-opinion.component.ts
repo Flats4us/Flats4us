@@ -92,6 +92,4 @@ export class AddOpinionComponent extends BaseComponent {
 				})
 			);
 	}
-
-	protected readonly parseInt = parseInt;
 }
