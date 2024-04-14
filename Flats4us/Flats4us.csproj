@@ -10,6 +10,16 @@
     <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<WriteVersionToFileDependsOn>$(WriteVersionToFileDependsOn);WriteGitVersion</WriteVersionToFileDependsOn>
+  </PropertyGroup>
+
+	<Target Name="WriteGitVersion" BeforeTargets="BeforeBuild">
+		<Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(ProjectDir)get-git-version.ps1&quot; -outputPath &quot;$(OutputPath)version.txt&quot;" ConsoleToMSBuild="true">
+			<Output TaskParameter="ConsoleOutput" PropertyName="GitCommitHash" />
+		</Exec>
+	</Target>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
