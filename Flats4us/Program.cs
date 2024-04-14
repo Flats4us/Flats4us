@@ -42,9 +42,17 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+var versionPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "version.txt");
+var versionInfo = File.ReadAllLines(versionPath);
+var commitHash = versionInfo.Length > 0 ? versionInfo[0].Trim() : "unknown";
+var commitDate = versionInfo.Length > 1 ? versionInfo[1].Trim() : "unknown";
+
+builder.Services.AddSingleton(new AppInfo { CommitHash = commitHash, CommitDate = commitDate });
+builder.Services.AddSingleton<GitHeadersFilter>();
+
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add(new GitHeadersFilter());
+    options.Filters.Add(typeof(GitHeadersFilter));
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
