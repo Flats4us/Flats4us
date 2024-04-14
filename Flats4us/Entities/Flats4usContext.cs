@@ -186,6 +186,12 @@ namespace Flats4us.Entities
                .WithMany(x => x.RentOpinions)
                .HasForeignKey(x => x.PropertyId)
                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RentOpinion>()
+                .HasOne(ro => ro.Student) 
+                .WithMany()  
+                .HasForeignKey(ro => ro.StudentId)  
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

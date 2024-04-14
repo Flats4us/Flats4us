@@ -202,7 +202,7 @@ namespace Flats4us.Services
                 Equipment = input.Equipment,
                 QualityForMoney = input.QualityForMoney,
                 Description = input.Description,
-                UserId = sourceUser.UserId,
+                StudentId = sourceUser.UserId,
                 PropertyId = property.PropertyId
             };
 

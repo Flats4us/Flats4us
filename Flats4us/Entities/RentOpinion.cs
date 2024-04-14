@@ -33,7 +33,7 @@ namespace Flats4us.Entities
         public string Description { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public int StudentId { get; set; }
 
         [Required]
         public int PropertyId { get; set; }
