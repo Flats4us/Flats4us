@@ -157,6 +157,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
+
+            CreateMap<RentOpinion, RentOpinionDto>();
         }
     }
 }

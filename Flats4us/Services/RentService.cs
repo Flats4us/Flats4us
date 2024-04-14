@@ -166,5 +166,48 @@ namespace Flats4us.Services
 
             return result;
         }
+
+        public async Task AddRentOpinionAsync(RentOpinionDto input, int userId, int rentId)
+        {
+            var sourceUser = await _context.Users.
+                FindAsync(userId);
+            
+            if (sourceUser is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            var rent = _context.Rents
+                .FirstOrDefault(r => r.RentId == rentId && (r.StudentId == userId ||
+                                                            r.OtherStudents.Any(s => s.UserId == userId)));
+            
+            if (rent is null) throw new ArgumentException($"Rent with ID {rentId} not found.");
+
+            if (DateTime.Now < rent.EndDate)
+            {
+                throw new InvalidOperationException("Opinion can only be added after the end of the rental period.");
+            }
+
+            var offer = await _context.Offers.FindAsync(rent.OfferId);
+            
+            if (offer is null) throw new ArgumentException($"Offer associated with Rent ID {rentId} not found.");
+
+            var property = await _context.Properties.FindAsync(offer.PropertyId);
+            
+            if (property is null) throw new ArgumentException($"Property associated with Offer ID {offer.OfferId} not found.");
+
+
+            var opinion = new RentOpinion
+            {
+                Rating = input.Rating,
+                Service = input.Service,
+                Location = input.Location,
+                Equipment = input.Equipment,
+                QualityForMoney = input.QualityForMoney,
+                Description = input.Description,
+                UserId = sourceUser.UserId,
+                PropertyId = property.PropertyId
+            };
+
+            await _context.RentOpinions.AddAsync(opinion);
+            await _context.SaveChangesAsync();
+        }
     }
 }

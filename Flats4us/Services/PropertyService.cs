@@ -36,18 +36,21 @@ namespace Flats4us.Services
             {
                 case Flat:
                     var flat = await _context.Flats
+                        .Include(y => y.RentOpinions)
                         .Include(x => x.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(flat);
                     break;
                 case Room:
                     var room = await _context.Rooms
+                        .Include(y => y.RentOpinions)
                         .Include(x => x.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(room);
                     break;
                 case House:
                     var house = await _context.Houses
+                        .Include(y => y.RentOpinions)
                         .Include(x => x.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(house);
