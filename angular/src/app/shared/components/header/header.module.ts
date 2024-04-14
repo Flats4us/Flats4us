@@ -13,6 +13,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { UserService } from '@shared/services/user.service';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -28,6 +30,8 @@ import { UserService } from '@shared/services/user.service';
 		MatSlideToggleModule,
 		MatMenuModule,
 		RouterLink,
+		HttpClientModule,
+		TranslateModule,
 	],
 	providers: [UserService],
 	exports: [HeaderComponent],

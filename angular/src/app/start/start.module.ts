@@ -26,6 +26,9 @@ import { StartService } from './services/start.service';
 import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
 	declarations: [StartComponent, GetDescriptionDirective],
@@ -51,6 +54,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatSortModule,
 		MatMenuModule,
 		MatProgressSpinnerModule,
+		HttpClientModule,
+		TranslateModule,
 	],
 })
 export class StartModule {}

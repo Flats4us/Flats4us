@@ -24,17 +24,21 @@
 		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
-		<button mat-menu-item [routerLink]="['profile', 'my']">Mój profil</button>
-		<button mat-menu-item [routerLink]="['profile', 'edit']">
-			Edytuj profil
+		<button mat-menu-item [routerLink]="['profile', 'my']">
+			{{ "Mój profil" | translate }}
 		</button>
-		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
+		<button mat-menu-item [routerLink]="['profile', 'edit']">
+			{{ "Edytuj profil" | translate }}
+		</button>
+		<button mat-menu-item [matMenuTriggerFor]="payments">
+			{{ "Płatności" | translate }}
+		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['rents', 'owner']"
 		>
-			Moje wynajmy
+			{{ "Moje wynajmy" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
@@ -90,14 +94,20 @@
 				mat-stroked-button
 				[routerLink]="['auth', 'login']"
 			>
-				Logowanie
+				{{ "log" | translate }}
 			</button>
 			<button
 				class="button-sign"
 				mat-stroked-button
 				[routerLink]="['profile', 'create']"
 			>
-				Rejestracja
+				{{ "rej" | translate }}
+			</button>
+			<button class="button-pl" mat-stroked-button (click)="changeLanguage('pl')">
+				{{ "polishLanguage" | translate }}
+			</button>
+			<button class="button-en" mat-stroked-button (click)="changeLanguage('en')">
+				{{ "englishLanguage" | translate }}
 			</button>
 		</div>
 	</ng-template>
@@ -154,6 +164,13 @@
 	<button mat-button class="mr-2" [matMenuTriggerFor]="extended">
 		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
 		Dodatkowe
+	</button>
+
+	<button class="button-pl" mat-stroked-button (click)="changeLanguage('pl')">
+		{{ "polishLanguage" | translate }}
+	</button>
+	<button class="button-en" mat-stroked-button (click)="changeLanguage('en')">
+		{{ "englishLanguage" | translate }}
 	</button>
 
 	<mat-menu #extended="matMenu">

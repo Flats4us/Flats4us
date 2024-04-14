@@ -6,6 +6,8 @@ import {
 	ChangeDetectorRef,
 	Output,
 	EventEmitter,
+	OnChanges,
+	SimpleChanges,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -21,6 +23,7 @@ import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
 import { ISendOffers } from '../offer/models/offer.models';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start',
@@ -28,7 +31,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent extends BaseComponent implements OnInit {
+export class StartComponent extends BaseComponent implements OnInit, OnChanges {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public showMoreFilters = false;
@@ -69,9 +72,11 @@ export class StartComponent extends BaseComponent implements OnInit {
 		public realEstateService: RealEstateService,
 		public startService: StartService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		public translate: TranslateService
 	) {
 		super();
+		
 		this.startSiteForm = this.formBuilder.group({
 			regionsGroup: new FormControl('', Validators.required),
 			citiesGroup: new FormControl('', Validators.required),
@@ -89,6 +94,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			sorting: new FormControl(this.sortState),
 			pageIndex: new FormControl(this.pageIndex),
 			pageSize: new FormControl(this.pageSize),
+			
 		});
 		this.startService.mapOffersForm = this.startSiteForm;
 		this.realEstateService
@@ -112,7 +118,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
+		//this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
 		this.matPaginatorIntl.itemsPerPageLabel = 'Oferty na stronie';
 		this.matPaginatorIntl.lastPageLabel = 'ostatnia strona';
 		this.matPaginatorIntl.nextPageLabel = 'następna strona';
@@ -133,6 +139,39 @@ export class StartComponent extends BaseComponent implements OnInit {
 					: startIndex + pageSize;
 			return `${startIndex + 1} - ${endIndex} z ${length} ofert`;
 		};
+
+		
+
+		
+		//this.translate.get('pierwsza').subscribe(value => this.matPaginatorIntl.firstPageLabel = value)
+	  
+		//   this.translate.get('Oferty').subscribe((translatedItemsPerPageLabel: string) => {
+		// 	this.matPaginatorIntl.itemsPerPageLabel = translatedItemsPerPageLabel;
+		//   });
+	  
+		//   this.translate.get('ostatnia').subscribe((translatedLastPageLabel: string) => {
+		// 	this.matPaginatorIntl.lastPageLabel = translatedLastPageLabel;
+		//   });
+	  
+		//   this.translate.get('następna').subscribe((translatedNextPageLabel: string) => {
+		// 	this.matPaginatorIntl.nextPageLabel = translatedNextPageLabel;
+		//   });
+	  
+		//   this.translate.get('poprzednia').subscribe((translatedPreviousPageLabel: string) => {
+		// 	this.matPaginatorIntl.previousPageLabel = translatedPreviousPageLabel;
+		//   });
+	  
+		//   this.matPaginatorIntl.getRangeLabel = (
+		// 	page: number,
+		// 	pageSize: number,
+		// 	length: number
+		//   ) => {
+		// 	return this.translate.instant('paginator.range', {
+		// 	  startIndex: page * pageSize + 1,
+		// 	  endIndex: Math.min((page + 1) * pageSize, length),
+		// 	  length: length
+		// 	});
+		//   };
 
 		this.realEstateService
 			.readAllEquipment()
@@ -176,6 +215,10 @@ export class StartComponent extends BaseComponent implements OnInit {
 			});
 
 		this.filterOffers();
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		this.translate.instant('pierwsza', this.matPaginatorIntl.firstPageLabel);
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -264,4 +307,11 @@ export class StartComponent extends BaseComponent implements OnInit {
 				this.changeDetectorRef.markForCheck();
 			});
 	}
+
+	changeLanguage(lang: 'pl' | 'en') {
+		this.translate.use(lang); // Change the active language
+	  }
+
+
+	
 }

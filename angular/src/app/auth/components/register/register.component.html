@@ -3,37 +3,37 @@
 		<form [formGroup]="registerForm">
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Imię</mat-label>
+					<mat-label>{{ "Imię" | translate }}</mat-label>
 					<input matInput formControlName="name" name="name" />
 					<mat-error *ngIf="registerForm.controls['name'].errors?.['required']">
-						Nie podano imienia!
+						{{ "Nie podano imienia!" | translate }}
 					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Nazwisko</mat-label>
+					<mat-label>{{ "Nazwisko" | translate }}</mat-label>
 					<input matInput formControlName="surname" name="surname" />
 					<mat-error *ngIf="registerForm.controls['surname'].errors?.['required']">
-						Nie podano nazwiska!
+						{{ "Nie podano nazwiska!" | translate }}
 					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Adres email</mat-label>
+					<mat-label>{{ "Adres email" | translate }}</mat-label>
 					<input matInput formControlName="email" name="email" />
 					<mat-error *ngIf="registerForm.controls['email'].errors?.['required']">
-						Nie podano adresu email!
+						{{ "Nie podano adresu email!" | translate }}
 					</mat-error>
 					<mat-error *ngIf="registerForm.controls['email'].errors?.['email']">
-						Nieprawidłowy adres email!
+						{{ "Nieprawidłowy adres email!" | translate }}
 					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Hasło</mat-label>
+					<mat-label>{{ "Hasło" | translate }}</mat-label>
 					<input
 						matInput
 						name="password"
@@ -45,21 +45,23 @@
 						hidePassword ? "visibility_off" : "visibility"
 					}}</mat-icon>
 					<mat-error *ngIf="registerForm.controls['password'].errors?.['required']">
-						Nie podano hasła!
+						{{ "Nie podano hasła!" | translate }}
 					</mat-error>
 					<mat-error *ngIf="registerForm.controls['password'].errors?.['pattern']">
-						Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery,
-						cyfry i symbole!
+						{{
+							"Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery, cyfry i symbole!"
+								| translate
+						}}
 					</mat-error>
 				</mat-form-field>
-				<mat-hint class="text-sm"
-					>Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter,
-					cyfr i symboli</mat-hint
-				>
+				<mat-hint class="text-sm">{{
+					"Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter, cyfr i symboli"
+						| translate
+				}}</mat-hint>
 			</div>
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Powtórz hasło</mat-label>
+					<mat-label>{{ "Powtórz hasło" | translate }}</mat-label>
 					<input
 						matInput
 						name="confirmPassword"
@@ -73,10 +75,10 @@
 					<mat-error
 						*ngIf="registerForm.controls['confirmPassword'].errors?.['required']"
 					>
-						Nie powtórzono hasła!
+						{{ "Nie powtórzono hasła!" | translate }}
 					</mat-error>
 					<mat-error *ngIf="registerForm.errors?.['matchPassword']">
-						Hasła różnią się od siebie!
+						{{ "Hasła różnią się od siebie!" | translate }}
 					</mat-error>
 				</mat-form-field>
 			</div>
