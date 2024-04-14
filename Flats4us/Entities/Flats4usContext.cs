@@ -161,7 +161,7 @@ namespace Flats4us.Entities
                 .HasOne(x => x.Rent)
                 .WithMany(x => x.RentOpinions)
                 .HasForeignKey(x => x.RentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }
