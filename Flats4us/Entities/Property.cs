@@ -62,6 +62,7 @@ namespace Flats4us.Entities
 
         public virtual ICollection<Equipment> Equipment { get; set; }
         public virtual ICollection<Offer> Offers { get; set; }
+        public virtual ICollection<RentOpinion> RentOpinions { get; set; }
 
         public Property()
         {

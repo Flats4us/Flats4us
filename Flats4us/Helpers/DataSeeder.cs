@@ -2228,6 +2228,99 @@ public static class DataSeeder
 
         #endregion
 
+        #region Rent
+
+        var rent1 = new Rent
+        {
+            StartDate = new DateTime(2023, 1, 1),
+            Duration = 10,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer1,
+            Student = student1,
+            OtherStudents = { student2, student3 },
+            Payments = null
+        };
+
+        var rent2 = new Rent
+        {
+            StartDate = new DateTime(2023, 2, 1),
+            Duration = 10,
+            EndDate = new DateTime(2023, 12, 1),
+            Offer = offer2,
+            Student = student4,
+            OtherStudents = { student5, student6 },
+            Payments = null
+        };
+
+        var rent3 = new Rent
+        {
+            StartDate = new DateTime(2023, 3, 1),
+            Duration = 8,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer3,
+            Student = student7,
+            OtherStudents = { student8, student9 },
+            Payments = null
+        };
+
+        dbContext.Rents.AddRange(rent1, rent2, rent3);
+
+        #endregion
+
+        #region RentOpinion
+
+        var rentOpinion1 = new RentOpinion
+        {
+            Rating = 1,
+            Service = 1,
+            Location = 1,
+            Equipment = 1,
+            QualityForMoney = 1,
+            Description = "bla bla bla",
+            Student = student1,
+            Property = flat1
+        };
+
+        var rentOpinion2 = new RentOpinion
+        {
+            Rating = 2,
+            Service = 2,
+            Location = 2,
+            Equipment = 2,
+            QualityForMoney = 2,
+            Description = "Lorem ipsum dolor sit amet",
+            Student = student2,
+            Property = flat1
+        };
+
+        var rentOpinion3 = new RentOpinion
+        {
+            Rating = 3,
+            Service = 3,
+            Location = 3,
+            Equipment = 3,
+            QualityForMoney = 3,
+            Description = "Consectetur adipiscing elit",
+            Student = student3,
+            Property = flat1
+        };
+
+        var rentOpinion4 = new RentOpinion
+        {
+            Rating = 4,
+            Service = 4,
+            Location = 4,
+            Equipment = 4,
+            QualityForMoney = 4,
+            Description = "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+            Student = student4,
+            Property = house1
+        };
+
+        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
+
+        #endregion
+
         dbContext.SaveChanges();
     }
 }

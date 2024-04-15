@@ -298,5 +298,36 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpPost("{rentId}/rent/opinion")]
+        [Authorize(Policy = "Student")]
+        [SwaggerOperation(
+            Summary = "Adds rent opinion",
+            Description = "Requires verified student privileges"
+        )]
+        public async Task<IActionResult> AddRentOpinion(int rentId, RentOpinionDto input)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _rentService.AddRentOpinionAsync(input, requestUserId, rentId);
+                _logger.LogInformation($"Adding rent opinion for rent ID: {rentId}");
+                return Ok(new OutputDto<string>("Opinion added"));
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                //return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
+        }
     }
+
 }
