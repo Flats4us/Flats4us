@@ -155,7 +155,7 @@ export class StartService {
 		if (filteredOptions.floors) {
 			queryParams = queryParams.append('floor', filteredOptions.floors);
 		}
-		if (filteredOptions.sorting.type) {
+		if (filteredOptions.sorting?.type) {
 			queryParams = queryParams.append('sorting', filteredOptions.sorting.type);
 		}
 		return this.httpClient.get<ISendOffers>(this.apiRoute, {
