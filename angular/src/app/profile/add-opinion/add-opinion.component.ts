@@ -42,7 +42,6 @@ import { ProfileService } from '../services/profile.service';
 })
 export class AddOpinionComponent extends BaseComponent {
 	public starsScale: number[] = [1, 2, 3, 4, 5];
-	public rating = 4.98;
 	public opinionForm: FormGroup;
 	public profileId$ = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
