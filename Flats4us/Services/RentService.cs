@@ -6,6 +6,7 @@ using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Runtime.CompilerServices;
 
 namespace Flats4us.Services
 {
@@ -177,7 +178,7 @@ namespace Flats4us.Services
             var rent = _context.Rents
                 .FirstOrDefault(r => r.RentId == rentId && (r.StudentId == userId ||
                                                             r.OtherStudents.Any(s => s.UserId == userId)));
-            
+
             if (rent is null) throw new ArgumentException($"Rent with ID {rentId} not found.");
 
             if (DateTime.Now < rent.EndDate)
@@ -193,6 +194,9 @@ namespace Flats4us.Services
             
             if (property is null) throw new ArgumentException($"Property associated with Offer ID {offer.OfferId} not found.");
 
+            //var opinionExists = _context.RentOpinions.Where(x=>x.PropertyId == property.PropertyId).Where(y => y.StudentId == sourceUser.UserId);
+
+            //if (opinionExists is null) throw new ArgumentException("$You already added Opinion");
 
             var opinion = new RentOpinion
             {
