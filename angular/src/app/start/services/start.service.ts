@@ -108,13 +108,15 @@ export class StartService {
 		let queryParams = new HttpParams({
 			fromObject: { Equipment: filteredOptions.equipment },
 		})
-			.append(
-				'province',
-				filteredOptions.regionsGroup.charAt(0).toUpperCase() +
-					filteredOptions.regionsGroup.slice(1)
-			)
 			.append('pageNumber', index + 1)
 			.append('pageSize', size);
+		if (filteredOptions.regionsGroup) {
+			queryParams = queryParams.append(
+				'province',
+				filteredOptions.regionsGroup.charAt(0).toUpperCase() +
+					filteredOptions.regionsGroup?.slice(1)
+			);
+		}
 		if (filteredOptions.citiesGroup) {
 			queryParams = queryParams.append('city', filteredOptions.citiesGroup);
 		}
@@ -208,11 +210,14 @@ export class StartService {
 		}
 		let queryParams = new HttpParams({
 			fromObject: { Equipment: filteredOptions.equipment },
-		}).append(
-			'province',
-			filteredOptions.regionsGroup.charAt(0).toUpperCase() +
-				filteredOptions.regionsGroup.slice(1)
-		);
+		});
+		if (filteredOptions.regionsGroup) {
+			queryParams = queryParams.append(
+				'province',
+				filteredOptions.regionsGroup.charAt(0).toUpperCase() +
+					filteredOptions.regionsGroup?.slice(1)
+			);
+		}
 		if (filteredOptions.citiesGroup) {
 			queryParams = queryParams.append('city', filteredOptions.citiesGroup);
 		}
