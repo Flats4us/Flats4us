@@ -13,10 +13,13 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 
 import { StartService } from '../services/start.service';
-import { IFilteredOffers, ISortOption } from '../models/start-site.models';
+import { IFilteredMapOffers } from '../models/start-site.models';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { OfferService } from 'src/app/offer/services/offer.service';
+import { IOffer } from 'src/app/offer/models/offer.models';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-start-map',
@@ -32,6 +35,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 		private http: HttpClient,
 		public realEstateService: RealEstateService,
 		private startService: StartService,
+		private offerService: OfferService,
 		private router: Router
 	) {
 		super();
@@ -45,7 +49,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
-	public filteredOptions: IFilteredOffers = {
+	public filteredOptions: IFilteredMapOffers = {
 		regionsGroup: '',
 		citiesGroup: '',
 		distance: null,
@@ -59,9 +63,6 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 		rooms: null,
 		floors: null,
 		equipment: [],
-		sorting: {} as ISortOption,
-		pageIndex: 0,
-		pageSize: 48,
 	};
 
 	public ngOnInit(): void {
@@ -93,26 +94,29 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				address
 			)}&format=json`;
 
-			this.http.get(url).subscribe((response: any) => {
-				if (response.length > 0) {
-					const { lat, lon, icon } = response[0];
-					const markerOptions = {
-						clickable: true,
-						draggable: false,
-						icon: L.icon({
-							iconUrl: '../../assets/leafletIconShadowHouse.svg',
-							iconSize: [60, 60],
-							iconAnchor: [25, 16],
-							popupAnchor: [6, -16],
-						}),
-					};
-					marker([+lat, +lon], markerOptions).addTo(this.map as Map);
-				}
-			});
+			this.http
+				.get(url)
+				.pipe(this.untilDestroyed())
+				.subscribe((response: any) => {
+					if (response.length > 0) {
+						const { lat, lon, icon } = response[0];
+						const markerOptions = {
+							clickable: true,
+							draggable: false,
+							icon: L.icon({
+								iconUrl: '../../assets/leafletIconShadowHouse.svg',
+								iconSize: [60, 60],
+								iconAnchor: [25, 16],
+								popupAnchor: [6, -16],
+							}),
+						};
+						marker([+lat, +lon], markerOptions).addTo(this.map as Map);
+					}
+				});
 		});
 	}
 
-	public addMarkersForOffers(filteredOptions: IFilteredOffers) {
+	public addMarkersForOffers(filteredOptions: IFilteredMapOffers) {
 		const markerOptions = {
 			clickable: true,
 			draggable: false,
@@ -123,57 +127,64 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				popupAnchor: [6, -16],
 			}),
 		};
-		this.startService.getFilteredOffers(filteredOptions).subscribe(result => {
-			result.result.forEach(offer => {
-				const marker = L.marker(
-					[+offer.property.geoLat, +offer.property.geoLon],
-					markerOptions
-				);
-				marker
-					.setIcon(this.getPropertyIcon(offer.property.propertyType, false))
-					.bindPopup(
-						'<style>' +
-							'.inner-element:hover {' +
-							'cursor: pointer;' +
-							'}</style>' +
-							'<b>' +
-							this.realEstateService.propertyTypes.get(offer.property.propertyType) +
-							'</b>' +
-							' ' +
-							offer.property.area +
-							' m², ' +
-							offer.property.city +
-							', ulica ' +
-							offer.property.street +
-							' ' +
-							offer.property.number +
-							', cena: ' +
-							offer.price +
-							' zł' +
-							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0]?.path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
-					)
-					.on('popupopen', e => {
-						e.target.setIcon(this.getPropertyIcon(offer.property.propertyType, true));
-						document
-							?.getElementById('propertyImage')
-							?.addEventListener('click', () => {
+		this.startService
+			.getFilteredMapOffers(filteredOptions)
+			.pipe(this.untilDestroyed())
+			.subscribe(result => {
+				result.result.forEach(offer => {
+					const marker = L.marker(
+						[+offer.property.geoLat, +offer.property.geoLon],
+						markerOptions
+					);
+					let mapOffer$: Observable<IOffer> = this.offerService.getOfferById(0);
+					const popupContent = document.createElement('div');
+					popupContent.setAttribute('id', 'popup');
+					marker
+						.addEventListener('mouseover', () => {
+							mapOffer$ = this.offerService.getOfferById(offer.offerId);
+							mapOffer$.pipe(this.untilDestroyed()).subscribe(mapOffer => {
+								let description = '';
+								description =
+									'<style>' +
+									'.inner-element:hover {' +
+									'cursor: pointer;' +
+									'}</style>' +
+									'<b>' +
+									this.realEstateService.propertyTypes.get(offer.property.propertyType) +
+									'</b>' +
+									' ' +
+									mapOffer.property.area +
+									' m², ' +
+									mapOffer.property.city +
+									', ulica ' +
+									mapOffer.property.street +
+									' ' +
+									mapOffer.property.number +
+									', cena: ' +
+									mapOffer.price +
+									' zł' +
+									`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0].path} class="inner-element"></img>`;
+								popupContent.innerHTML = description;
+							});
+						})
+						.setIcon(this.getPropertyIcon(offer.property.propertyType, false))
+						.bindPopup(popupContent, {
+							autoPan: true,
+							autoClose: false,
+							keepInView: true,
+						})
+						.on('popupopen', e => {
+							e.target.setIcon(
+								this.getPropertyIcon(offer.property.propertyType, true)
+							);
+							document?.getElementById('popup')?.addEventListener('click', () => {
 								this.router.navigate(['offer', 'details', offer.offerId]);
 							});
-						document
-							?.getElementById('propertyLink')
-							?.addEventListener('click', () => {
-								this.router.navigate(['offer', 'details', offer.offerId]);
-							});
-					})
-					.on('popupclose', e => {
-						e.target.setIcon(
-							this.getPropertyIcon(offer.property.propertyType, false)
-						);
-					});
-				this.markersList.push(marker);
+						});
+					this.markersList.push(marker);
+				});
+				this.markerCluster.addLayers(this.markersList);
 			});
-			this.markerCluster.addLayers(this.markersList);
-		});
 	}
 
 	public navigateToFlat(id: number) {

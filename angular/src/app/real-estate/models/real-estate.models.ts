@@ -63,7 +63,6 @@ export interface IProperty {
 	area: number;
 	maxNumberOfInhabitants: number;
 	constructionYear: number;
-	elevator: boolean;
 	images: IImage[];
 	verificationStatus: number;
 	numberOfRooms: number;
