@@ -71,7 +71,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
-			regionsGroup: new FormControl('', Validators.required),
+			regionsGroup: new FormControl(''),
 			citiesGroup: new FormControl(''),
 			distance: new FormControl(0),
 			property: new FormControl([]),

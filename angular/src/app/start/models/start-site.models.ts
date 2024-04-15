@@ -28,7 +28,7 @@ export interface ISendMapOffers {
 }
 
 export interface IFilteredOffers {
-	regionsGroup: string;
+	regionsGroup: string | null;
 	citiesGroup: string | null;
 	distance: number | null;
 	property: number[];
