@@ -8,20 +8,24 @@ services:
     container_name: flats4us_fe
     ports:
       - "80:80"
-  # flats4us:
-  #   build:
-  #     context: ./Flats4us
-  #     dockerfile: Dockerfile
-  #   container_name: flats4us_be
-  #   environment:
-  #     - ASPNETCORE_URLS=http://*:80
-  #     - ASPNETCORE_ENVIRONMENT=Production
-  #   ports:
-  #     - "5166:80"
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - flats4us-network
+  flats4us:
+    build:
+      context: ./Flats4us
+      dockerfile: Dockerfile
+    container_name: flats4us_be
+    environment:
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Production
+      - COMMIT_HASH=${COMMIT_HASH}
+      - COMMIT_DATE=${COMMIT_DATE}
+    env_file:
+      - .env
+    ports:
+      - "5166:80"
+    depends_on:
+      - db
+    networks:
+      - flats4us-network
   db:
     image: mcr.microsoft.com/mssql/server
     environment:
