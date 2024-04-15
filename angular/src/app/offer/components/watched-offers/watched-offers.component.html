@@ -28,7 +28,7 @@
 				mat-card-image
 				class="imgs"
 				alt="Mieszkanie"
-				src="{{ baseUrl }}/{{ watchedOffer.property.images[0].path }}"
+				src="{{ baseUrl }}/{{ watchedOffer.property.images[0]?.path }}"
 				(click)="navigateToFlat(watchedOffer.offerId)"
 			/>
 			<mat-card-content matSort class="mcc-description">

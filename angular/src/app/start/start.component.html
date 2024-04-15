@@ -415,7 +415,7 @@
 							mat-card-image
 							class="imgs"
 							alt="Mieszkanie"
-							src="{{ baseUrl }}/{{ flat.property.images[0].path }}"
+							src="{{ baseUrl }}/{{ flat.property.images[0]?.path }}"
 							(click)="navigateToFlat(flat.offerId)"
 						/>
 						<mat-card-content matSort class="card-content">
