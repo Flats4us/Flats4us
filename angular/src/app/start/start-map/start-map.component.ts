@@ -150,7 +150,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							', cena: ' +
 							offer.price +
 							' zł' +
-							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0].path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
+							`<img id="propertyImage" src=${this.baseUrl}/${offer.property.images[0]?.path} class="inner-element"></img><a id="propertyLink" class="inner-element">Przejdź do widoku oferty</a>`
 					)
 					.on('popupopen', e => {
 						e.target.setIcon(this.getPropertyIcon(offer.property.propertyType, true));
