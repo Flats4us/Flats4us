@@ -22,11 +22,6 @@
 							{{ region }}
 						</mat-option>
 					</mat-select>
-					<mat-error
-						*ngIf="startSiteForm.controls['regionsGroup'].errors?.['required']"
-					>
-						Nie wybrano województwa!
-					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -194,6 +189,7 @@
 						matTooltip="Sortuj oferty według"
 						aria-label="SortButton"
 						[matMenuTriggerFor]="menu"
+						[disabled]="isMapMode"
 					>
 						<mat-icon class="ico" [inline]="true">sort</mat-icon>
 					</button>
