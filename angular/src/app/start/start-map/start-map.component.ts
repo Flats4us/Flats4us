@@ -163,7 +163,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 									', cena: ' +
 									mapOffer.price +
 									' zł' +
-									`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0].path} class="inner-element"></img>`;
+									`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element"></img>`;
 								popupContent.innerHTML = description;
 							});
 						})
