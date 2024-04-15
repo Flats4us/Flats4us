@@ -41,7 +41,7 @@ export interface IFilteredOffers {
 	rooms: number | null;
 	floors: number | null;
 	equipment: number[];
-	sorting: ISortOption;
+	sorting: ISortOption | null;
 }
 
 export interface IFilteredMapOffers {

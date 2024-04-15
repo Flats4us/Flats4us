@@ -164,8 +164,6 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.subscribe(() => {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
-
-		this.filterOffers();
 	}
 
 	public filter(opt: string[], value: string): string[] {
