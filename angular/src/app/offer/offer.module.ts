@@ -40,6 +40,7 @@ import { AddOfferComponent } from './components/add-offer/add-offer.component';
 import { WatchedOffersComponent } from './components/watched-offers/watched-offers.component';
 import { WatchedOffersModule } from './components/watched-offers/watched-offers.module';
 import { MatBadgeModule } from '@angular/material/badge';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [OfferComponent],
@@ -79,6 +80,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 		OfferDetailsModule,
 		WatchedOffersModule,
 		MatBadgeModule,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [

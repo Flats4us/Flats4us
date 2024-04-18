@@ -21,6 +21,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -35,6 +36,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 		MatDialogModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [RentsService],
 	templateUrl: './meeting-add.component.html',

@@ -5,9 +5,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { MessagesConversationComponent } from './messages-conversation.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [MessagesConversationComponent],
-	imports: [CommonModule, MatInputModule, MatIconModule, ReactiveFormsModule],
+	imports: [
+		CommonModule,
+		MatInputModule,
+		MatIconModule,
+		ReactiveFormsModule,
+		TranslateModule,
+	],
 })
 export class MessagesConversationModule {}

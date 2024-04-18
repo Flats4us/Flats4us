@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { CalendarService } from '../../services/calendar.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-event-add',
@@ -27,6 +28,7 @@ import { CalendarService } from '../../services/calendar.service';
 		MatInputModule,
 		MatDialogModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	templateUrl: './event-add.component.html',
 	styleUrls: ['./event-add.component.scss'],

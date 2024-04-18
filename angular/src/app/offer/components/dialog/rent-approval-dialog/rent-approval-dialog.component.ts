@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment.prod';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -35,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatChipsModule,
 		MatCardModule,
 		MatTooltipModule,
+		TranslateModule,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	providers: [OfferService, UserService],

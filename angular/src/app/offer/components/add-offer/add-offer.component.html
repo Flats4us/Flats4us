@@ -1,4 +1,4 @@
-<h1 class="text-4xl p-4 font-semibold">Dodawanie oferty</h1>
+<h1 class="text-4xl p-4 font-semibold">{{ "Offer.add-offer" | translate }}</h1>
 <div class="grid-container">
 	<div></div>
 	<mat-card class="flex justify-center">
@@ -7,17 +7,17 @@
 		<mat-card-content>
 			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Cena: </mat-label>
+					<mat-label>{{ "Offer.price" | translate }}: </mat-label>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Kaucja: </mat-label>
+					<mat-label>{{ "Offer.bail" | translate }}: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Okres wynajmu: </mat-label>
+					<mat-label>{{ "Offer.rental-period" | translate }}: </mat-label>
 					<mat-date-range-input [rangePicker]="picker">
 						<input matStartDate formControlName="startDate" placeholder="Początek" />
 						<input matEndDate formControlName="endDate" placeholder="Koniec" />
@@ -30,7 +30,7 @@
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Wybierz nieruchomość: </mat-label>
+					<mat-label>{{ "Offer.select-property" | translate }}: </mat-label>
 					<mat-select formControlName="propertyId">
 						<mat-option
 							*ngFor="let property of properties$ | async"
@@ -43,12 +43,12 @@
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Opis: </mat-label>
+					<mat-label>{{ "Offer-description" | translate }}: </mat-label>
 					<textarea matInput formControlName="description"></textarea>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Reguły wynajmu: </mat-label>
+					<mat-label>{{ "Offer.rental-rules" | translate }}: </mat-label>
 					<textarea matInput formControlName="regulations"></textarea>
 				</mat-form-field>
 
@@ -61,10 +61,10 @@
 						type="submit"
 						[disabled]="!offerForm.valid"
 					>
-						Zapisz
+						{{ "save" | translate }}
 					</button>
 					<button mat-flat-button color="accent" type="button" routerLink="/start">
-						Anuluj
+						{{ "cancel" | translate }}
 					</button>
 				</div>
 			</form>

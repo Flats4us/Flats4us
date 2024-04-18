@@ -20,6 +20,7 @@ import { environment } from '../../../environments/environment.prod';
 import { map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-opinion',
@@ -37,6 +38,7 @@ import { ProfileService } from '../services/profile.service';
 		MatListModule,
 		ReactiveFormsModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

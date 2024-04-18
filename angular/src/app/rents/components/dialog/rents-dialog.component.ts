@@ -12,6 +12,7 @@ import { RentsService } from '../../services/rents.service';
 import { IRent } from '../../models/rents.models';
 import { statusName } from '../../statusName';
 import { Subject } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rents-dialog',
@@ -25,6 +26,7 @@ import { Subject } from 'rxjs';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 })
 export class RentsDialogComponent {

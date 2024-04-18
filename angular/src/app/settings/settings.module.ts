@@ -8,6 +8,7 @@ import { NotificationsModule } from './components/notifications/notifications.mo
 import { PasswordChangeModule } from './components/password-change/password-change.module';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SettingsComponent } from './settings.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [SettingsComponent],
@@ -19,6 +20,7 @@ import { SettingsComponent } from './settings.component';
 		PasswordChangeModule,
 		HelpCenterModule,
 		MatCardModule,
+		TranslateModule,
 	],
 })
 export class SettingsModule {}

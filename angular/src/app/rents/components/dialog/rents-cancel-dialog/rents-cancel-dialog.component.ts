@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RentsService } from '../../../services/rents.service';
 import { statusName } from '../../../statusName';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rents-cancel-dialog',
@@ -19,6 +20,7 @@ import { statusName } from '../../../statusName';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	providers: [RentsService],
 })

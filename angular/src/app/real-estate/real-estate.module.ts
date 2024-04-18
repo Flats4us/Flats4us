@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDetailsModule } from '../rents/components/details/rents-details.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RealEstateDetailsModule } from './components/details/real-estate-details.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RealEstateComponent],
@@ -45,6 +46,7 @@ import { RealEstateDetailsModule } from './components/details/real-estate-detail
 		MatFormFieldModule,
 		MatSnackBarModule,
 		RealEstateDetailsModule,
+		TranslateModule,
 	],
 	exports: [RealEstateComponent],
 	providers: [RealEstateService],

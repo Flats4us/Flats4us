@@ -1,4 +1,6 @@
-<h1 class="text-4xl p-4 font-semibold">Mój profil</h1>
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Profile.my-profile" | translate }}
+</h1>
 <mat-card *ngIf="user$ | async as user">
 	<mat-card-content>
 		<section class="flex flex-col items-center">
@@ -15,17 +17,20 @@
 				<mat-chip-listbox *ngIf="user.userType === 1">
 					<mat-chip *ngIf="!user.surveyStudent.smoking">
 						<div class="chip">
-							<mat-icon>smoke_free</mat-icon> <span>Nie pali</span>
+							<mat-icon>smoke_free</mat-icon>
+							<span>{{ "Profile.smoking" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.sociability">
 						<div class="chip">
-							<mat-icon>group</mat-icon> <span>Lubi towarzystwo</span>
+							<mat-icon>group</mat-icon>
+							<span>{{ "Profile.sociable" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.animals">
 						<div class="chip">
-							<mat-icon>pets</mat-icon> <span>Ma zwierzęta</span>
+							<mat-icon>pets</mat-icon>
+							<span>{{ "Profile.has-animals" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.vegan">
@@ -48,7 +53,7 @@
 			<div class="profile-education__wrapper mb-4">
 				<div class="profile-education__header text-2xl flex gap-2 content-center">
 					<mat-icon>school</mat-icon>
-					<span>Uczelnia</span>
+					<span>{{ "Profile.university" | translate }}</span>
 				</div>
 				<div class="text-gray-400">
 					{{ user.university }}
@@ -57,7 +62,7 @@
 			<div class="profile-interests__wrapper">
 				<div class="profile-interests__header text-2xl flex gap-2 content-center">
 					<mat-icon>travel_explore</mat-icon>
-					<span>Zainteresowania</span>
+					<span>{{ "Profile.interest" | translate }}</span>
 				</div>
 				<div>
 					<mat-chip-listbox>

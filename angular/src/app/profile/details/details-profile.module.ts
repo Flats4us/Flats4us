@@ -8,6 +8,7 @@ import { DetailsProfileComponent } from './details-profile.component';
 import { UserService } from '@shared/services/user.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileRoutingModule } from '../profile-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [DetailsProfileComponent],
@@ -19,6 +20,7 @@ import { ProfileRoutingModule } from '../profile-routing.module';
 		MatIconModule,
 		MatListModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	providers: [UserService],
 })

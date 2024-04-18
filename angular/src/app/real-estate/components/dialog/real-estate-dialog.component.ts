@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RealEstateService } from '../../services/real-estate.service';
 import { Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-real-estate-dialog',
@@ -20,6 +21,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	providers: [RealEstateService],
 })

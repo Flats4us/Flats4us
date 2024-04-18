@@ -29,6 +29,7 @@ import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -48,6 +49,7 @@ import { UserService } from '@shared/services/user.service';
 		CommonModule,
 		MatDatepickerModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 })

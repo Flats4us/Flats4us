@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start-dispute-dialog',
@@ -23,6 +24,7 @@ import { CommonModule } from '@angular/common';
 		FormsModule,
 		MatButtonModule,
 		ReactiveFormsModule,
+		TranslateModule,
 	],
 })
 export class StartDisputeDialogComponent {

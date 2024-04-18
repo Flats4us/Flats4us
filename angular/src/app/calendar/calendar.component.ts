@@ -13,6 +13,7 @@ import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { IEvent } from './models/calendar.models';
 import { CalendarService } from './services/calendar.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-calendar',
@@ -23,6 +24,7 @@ import { CalendarService } from './services/calendar.service';
 		MatNativeDateModule,
 		MatButtonModule,
 		MatDialogModule,
+		TranslateModule,
 	],
 	templateUrl: './calendar.component.html',
 	styleUrls: ['./calendar.component.scss'],

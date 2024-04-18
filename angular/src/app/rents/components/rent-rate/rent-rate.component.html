@@ -1,10 +1,10 @@
 <h1 *ngIf="data$ | async as data" mat-dialog-title>
-	Oceń najem {{ data.description }}
+	{{ "Rents-details.rate-rental" | translate }} {{ data.description }}
 </h1>
 <div mat-dialog-content>
 	<form [formGroup]="form">
 		<mat-form-field appearance="fill">
-			<mat-label>Ocena</mat-label>
+			<mat-label>{{ "Rent-rate.rate" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -16,7 +16,7 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Czystość</mat-label>
+			<mat-label>{{ "Rent-rate.cleanliness" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -28,7 +28,7 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Obsługa</mat-label>
+			<mat-label>{{ "Rent-rate.service" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -40,7 +40,7 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Lokalizacja</mat-label>
+			<mat-label>{{ "Rent-rate.location" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -52,7 +52,7 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Wyposażenie</mat-label>
+			<mat-label>{{ "Rent-rate.equipment" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -64,7 +64,7 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Stosunek jakości do ceny</mat-label>
+			<mat-label>{{ "Rent-rate.value-for-money" | translate }}</mat-label>
 			<mat-slider
 				thumbLabel
 				tickInterval="1"
@@ -76,14 +76,16 @@
 		</mat-form-field>
 
 		<mat-form-field appearance="fill">
-			<mat-label>Opinia</mat-label>
+			<mat-label>{{ "Rent-rate.opinion" | translate }}</mat-label>
 			<textarea matInput formControlName="opinion"></textarea>
 		</mat-form-field>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
 	<button mat-button mat-dialog-close cdkFocusInitial type="button">
-		Anuluj
+		{{ "cancel" | translate }}
 	</button>
-	<button mat-raised-button color="primary" (click)="onSubmit()">Oceń</button>
+	<button mat-raised-button color="primary" (click)="onSubmit()">
+		{{ "Rent-rate.rate2" | translate }}
+	</button>
 </div>

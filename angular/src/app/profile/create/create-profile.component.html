@@ -3,7 +3,7 @@
 	class="container-title"
 >
 	<h1 *ngIf="user === ''" class="text-4xl p-4 font-semibold">
-		Tworzenie profilu
+		{{ "Profile-create.creating-profile" | translate }}
 	</h1>
 	<div>
 		<div class="buttons">
@@ -14,7 +14,7 @@
 				type="button"
 				[routerLink]="['/profile', 'create', 'student']"
 			>
-				Zarejestruj się jako Student
+				{{ "Profile-create.register-student" | translate }}
 			</button>
 			<button
 				mat-raised-button
@@ -23,7 +23,7 @@
 				type="button"
 				[routerLink]="['/profile', 'create', 'owner']"
 			>
-				Zarejestruj się jako Właściciel
+				{{ "Profile-create.register-owner" | translate }}
 			</button>
 		</div>
 	</div>
@@ -31,10 +31,10 @@
 <div *ngIf="modificationType === mType.CREATE && user !== ''">
 	<div class="container-title">
 		<h1 *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
-			Tworzenie profilu studenta
+			{{ "Profile-create-create-student" | translate }}
 		</h1>
 		<h1 *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
-			Tworzenie profilu właściciela
+			{{ "Profile-create.create-owner" | translate }}
 		</h1>
 	</div>
 	<div class="create-profile">
@@ -42,7 +42,9 @@
 			<div class="box">
 				<mat-step [stepControl]="registerForm">
 					<ng-template matStepLabel
-						><span class="step-label">Rejestracja użytkownika</span></ng-template
+						><span class="step-label">{{
+							"Profile-create.user-registration" | translate
+						}}</span></ng-template
 					>
 					<form [formGroup]="registerForm">
 						<app-register [createProfileMode]="true"></app-register>
@@ -53,7 +55,8 @@
 								matStepperNext
 								[disabled]="!registerForm.valid"
 							>
-								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+								{{ "next" | translate }}
+								<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 							</button>
 						</div>
 					</form>
@@ -61,7 +64,9 @@
 				<div class="box">
 					<mat-step [stepControl]="createAccountForm">
 						<ng-template matStepLabel
-							><span class="step-label">Tworzenie konta</span></ng-template
+							><span class="step-label">{{
+								"Profile-create.creating-account" | translate
+							}}</span></ng-template
 						>
 						<form [formGroup]="createAccountForm">
 							<app-profile-edit
@@ -75,7 +80,7 @@
 							></app-profile-edit>
 							<div class="button-box">
 								<button mat-raised-button color="primary" matStepperPrevious>
-									Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+									{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 								</button>
 								<button
 									*ngIf="user === uType.STUDENT"
@@ -84,7 +89,8 @@
 									matStepperNext
 									[disabled]="!createAccountForm.valid || !photoName || !scanName"
 								>
-									Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+									{{ "next" | translate }}
+									<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 								</button>
 								<button
 									*ngIf="user === uType.OWNER"
@@ -94,7 +100,8 @@
 									[disabled]="!createAccountForm.valid || !photoName || !scanName"
 									(click)="onSubmit()"
 								>
-									Zatwierdź <mat-icon iconPositionEnd>done_outline</mat-icon>
+									{{ "confirm" | translate }}
+									<mat-icon iconPositionEnd>done_outline</mat-icon>
 								</button>
 							</div>
 						</form>
@@ -103,13 +110,15 @@
 				<div *ngIf="user === uType.STUDENT" class="box">
 					<mat-step [stepControl]="surveyForm">
 						<ng-template matStepLabel
-							><span class="step-label">Tworzenie ankiety</span></ng-template
+							><span class="step-label">{{
+								"Profile-create.creating-survey" | translate
+							}}</span></ng-template
 						>
 						<form [formGroup]="surveyForm">
 							<app-survey [createProfileMode]="true"></app-survey>
 							<div class="button-box">
 								<button mat-raised-button color="primary" matStepperPrevious>
-									Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+									{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 								</button>
 								<button
 									mat-raised-button
@@ -118,7 +127,8 @@
 									[disabled]="!createAccountForm.valid || !photoName || !scanName"
 									(click)="onSubmit()"
 								>
-									Zatwierdź <mat-icon iconPositionEnd>done_outline</mat-icon>
+									{{ "confirm" | translate }}
+									<mat-icon iconPositionEnd>done_outline</mat-icon>
 								</button>
 							</div>
 						</form>

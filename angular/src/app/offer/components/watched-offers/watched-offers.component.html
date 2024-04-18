@@ -1,5 +1,7 @@
 <div>
-	<h1 class="text-4xl p-4 font-semibold">Obserwowane oferty</h1>
+	<h1 class="text-4xl p-4 font-semibold">
+		{{ "Offer.watched-offers" | translate }}
+	</h1>
 </div>
 <div *ngIf="watchedOffers$ | async as watchedOffers" class="watched-offers">
 	<div class="container">
@@ -10,7 +12,7 @@
 			<div class="offer-title-outer">
 				<span class="offer-title-inner"
 					><h2 class="text-m">
-						Wynajem -
+						{{ "Offer.rent1" | translate }} -
 						{{
 							realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
 						}}
@@ -36,25 +38,36 @@
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>attach_money</mat-icon>
-							<span>Cena: {{ watchedOffer.price }} zł/mc</span>
+							<span
+								>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/mc</span
+							>
 						</div>
 					</mat-chip>
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>add</mat-icon
-							><span>Depozyt: {{ watchedOffer.deposit }} zł/mc</span>
+							><span
+								>{{ "Offer.deposit" | translate }}:
+								{{ watchedOffer.deposit }} zł/mc</span
+							>
 						</div>
 					</mat-chip>
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>straighten</mat-icon>
-							<span>Powierzchnia: {{ watchedOffer.property.area }} m²</span>
+							<span
+								>{{ "Offer.area" | translate }}:
+								{{ watchedOffer.property.area }} m²</span
+							>
 						</div>
 					</mat-chip>
 					<mat-chip>
 						<div class="chip">
 							<mat-icon>meeting_room</mat-icon>
-							<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
+							<span
+								>{{ "Offer.room-number" | translate }}:
+								{{ watchedOffer.property.numberOfRooms }}</span
+							>
 						</div>
 					</mat-chip>
 					<mat-chip>

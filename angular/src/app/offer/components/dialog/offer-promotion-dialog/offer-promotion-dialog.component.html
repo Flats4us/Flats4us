@@ -1,7 +1,7 @@
-<h1 class="text-2xl p-4 font-semibold">Promowanie oferty</h1>
+<h1 class="text-2xl p-4 font-semibold">{{ "Offer.promoting" | translate }}</h1>
 <form class="dialog" [formGroup]="promotionForm" (ngSubmit)="onYesClick()">
 	<mat-form-field>
-		<mat-label>Okres promownia</mat-label>
+		<mat-label>{{ "Offer.promotion-period" | translate }}</mat-label>
 		<input
 			matInput
 			formControlName="promotionDays"
@@ -12,17 +12,17 @@
 		<mat-error
 			*ngIf="promotionForm.controls['promotionDays'].errors?.['required']"
 		>
-			Liczba dni jest wymagana!
+			{{ "Offer-promotion-info1" | translate }}!
 		</mat-error>
 		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['min']">
-			Wprowadzona liczba dni jest nieprawidłowa!
+			{{ "Offer-promotion-info2" | translate }}!
 		</mat-error>
 		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['max']">
-			Wprowadzona liczba dni jest nieprawidłowa!
+			{{ "Offer-promotion-info2" | translate }}!
 		</mat-error>
 	</mat-form-field>
 	<div mat-dialog-content>
-		<p>Czy potwierdzasz promowanie oferty?</p>
+		<p>{{ "Offer.promotion-info3" | translate }}?</p>
 	</div>
 	<div mat-dialog-actions class="button-box">
 		<button
@@ -32,7 +32,7 @@
 			type="button"
 			(click)="onClose()"
 		>
-			Nie
+			{{ "no" | translate }}
 		</button>
 		<button
 			mat-button
@@ -41,7 +41,7 @@
 			type="submit"
 			(click)="onYesClick()"
 		>
-			Tak
+			{{ "yes" | translate }}
 		</button>
 	</div>
 </form>

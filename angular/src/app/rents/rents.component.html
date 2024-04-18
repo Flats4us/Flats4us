@@ -1,19 +1,19 @@
 <div *ngIf="user$ | async as user">
 	<div class="box-title">
 		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
-			Przeglądanie wynajmów
+			{{ "Rents.browse-rentals" | translate }}
 		</div>
 		<div *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
-			Mój najem
+			{{ "Rents.my-rental" | translate }}
 		</div>
 		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-			Widok najmu
+			{{ "Rents.rental-view" | translate }}
 		</div>
 	</div>
 	<div *ngIf="user === uType.OWNER" class="rents-owner">
 		<mat-card class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje wynajmy
+				{{ "Header.my-rentals" | translate }}
 				<button
 					mat-icon-button
 					id="add"
@@ -44,7 +44,9 @@
 							>check_circle</mat-icon
 						>
 					</div>
-					<div class="box-date">Data {{ rent.publishDate }}</div>
+					<div class="box-date">
+						{{ "Calendar.date" | translate }} {{ rent.publishDate }}
+					</div>
 				</a>
 			</mat-nav-list>
 		</mat-card>

@@ -1,5 +1,9 @@
 import { registerLocaleData } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+	HTTP_INTERCEPTORS,
+	HttpClient,
+	HttpClientModule,
+} from '@angular/common/http';
 import localePl from '@angular/common/locales/pl';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -20,8 +24,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatCardModule } from '@angular/material/card';
 
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 registerLocaleData(localePl);
 import { FindRoommateModule } from './find-roommate/find-roommate.module';
+
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http);
+}
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -40,6 +51,13 @@ import { FindRoommateModule } from './find-roommate/find-roommate.module';
 		MatNativeDateModule,
 		MatCardModule,
 		FindRoommateModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'pl' },

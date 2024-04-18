@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { TranslateModule } from '@ngx-translate/core';
 import { IEnumerableItem } from '@shared/models/shared.models';
 import { Observable } from 'rxjs';
 import { IOffer } from 'src/app/offer/models/offer.models';
@@ -32,6 +33,7 @@ import { IOffer } from 'src/app/offer/models/offer.models';
 		MatSelectModule,
 		ReactiveFormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	templateUrl: './rent-rate.component.html',
 	styleUrls: ['./rent-rate.component.scss'],

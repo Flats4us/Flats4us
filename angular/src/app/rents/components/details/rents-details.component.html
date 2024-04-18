@@ -6,7 +6,7 @@
 		<div *ngIf="data.user === uType.OWNER" class="label-box">
 			<mat-label class="label-description">
 				<span class="text-3xl"
-					>Status oferty:
+					>{{ "Rents-details.offer-status" | translate }}
 					{{ offerService.offerStatuses.get(data.rent?.offerStatus ?? 0) }}</span
 				></mat-label
 			>
@@ -23,7 +23,7 @@
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
 								><h1 class="text-3xl">
-									Wynajem -
+									{{ "Rents-details.rent" | translate }} -
 									{{
 										realEstateService.propertyTypes.get(
 											data.rent?.property?.propertyType ?? 0
@@ -42,7 +42,7 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="Więcej opcji"
+								matTooltip="{{ 'more-options' | translate }}"
 								aria-label="MenuButton"
 								[matMenuTriggerFor]="menu"
 								[disabled]="
@@ -109,7 +109,8 @@
 		<div class="button-box">
 			<mat-label class="label-price"
 				><span class="text-3xl"
-					>Cena {{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
+					>{{ "Rents-details.price" | translate }}
+					{{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
 				></mat-label
 			>
 		</div>
@@ -119,29 +120,35 @@
 		<div class="label-box">
 			<mat-label class="label-description"
 				><mat-icon class="icon" [inline]="true">description</mat-icon
-				><span class="text-3xl">Opis oferty</span></mat-label
+				><span class="text-3xl">{{
+					"Rents-details.offer-description" | translate
+				}}</span></mat-label
 			>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">Kaucja:</p>
-				<p class="text-2xl pt-4">Data wystawienia:</p>
-				<p class="text-2xl pt-4">Data zakończenia:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Metraż:</p>
-				<p class="text-2xl pt-4">Liczba pokoi:</p>
-				<p class="text-2xl pt-4">Liczba pięter:</p>
-				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
-				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
-				<p class="text-2xl pt-4">Informacje o umowie:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.bail" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.start-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.end-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.address" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.metric-area" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.nr-room" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.nr-floor" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.floor" | translate }}:</p>
+				<p class="text-2xl pt-4">
+					{{ "Rents-details.max-inhabitans" | translate }}:
+				</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.build-year" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.equipment" | translate }}:</p>
+				<p class="text-2xl pt-4">
+					{{ "Rents-details.contract-info" | translate }}:
+				</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl"
 				>
-					Współlokatorzy:
+					{{ "Rents-details.roommates" | translate }}
 				</p>
 			</div>
 			<div class="column-header-description">
@@ -192,7 +199,9 @@
 		<mat-card *ngIf="data.user === uType.OWNER" class="w-full">
 			<mat-label class="label-description"
 				><mat-icon class="icon" [inline]="true">attach_money</mat-icon
-				><span class="text-3xl">Płatności</span></mat-label
+				><span class="text-3xl">{{
+					"Header.payments" | translate
+				}}</span></mat-label
 			>
 		</mat-card>
 		<div *ngIf="data.user === uType.OWNER">
@@ -215,7 +224,7 @@
 	</div>
 	<div class="button-box-options">
 		<button *ngIf="data.user === uType.STUDENT" mat-raised-button color="primary">
-			Dodaj współlokatorów
+			{{ "Rents-details.add-roommates" | translate }}
 		</button>
 		<button
 			*ngIf="data.user !== uType.OWNER"
@@ -223,10 +232,10 @@
 			color="primary"
 			(click)="onAddMeeting()"
 		>
-			Dodaj spotkanie
+			{{ "Rents-details.add-meeting" | translate }}
 		</button>
 		<button mat-raised-button color="primary" (click)="onRate()">
-			Oceń najem
+			{{ "Rents-details.rate-rental" | translate }}
 		</button>
 	</div>
 </div>

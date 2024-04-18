@@ -17,6 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { OfferService } from '../../services/offer.service';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -38,6 +39,7 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatCardModule,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService],
 	exports: [OfferDetailsComponent],

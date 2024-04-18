@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RealEstateDialogComponent } from '../dialog/real-estate-dialog.component';
 import { RealEstateDetailsComponent } from './real-estate-details.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RealEstateDetailsComponent],
@@ -30,6 +31,7 @@ import { RealEstateDetailsComponent } from './real-estate-details.component';
 		MatIconModule,
 		MatMenuModule,
 		RealEstateDialogComponent,
+		TranslateModule,
 	],
 	exports: [RealEstateDetailsComponent],
 })
