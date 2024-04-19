@@ -151,6 +151,11 @@
 	margin: 4px;
 }
 
+.box-equipment {
+	display: flex;
+	align-items: center;
+}
+
 .button-box {
 	display: flex;
 	padding: 8px;
@@ -194,6 +199,10 @@
 
 .details-box {
 	margin: 0 40px;
+}
+
+.ico {
+	display: flex;
 }
 
 .icon {
