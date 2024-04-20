@@ -3,6 +3,8 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flats4us.Controllers
 {
@@ -23,6 +25,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("get_argument")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns list of arguments",
+            Description = "Requires moderator privileges"
+        )]
         public async Task<IActionResult> GetArguments()
         {
             _logger.LogInformation("Geting Arguments");
@@ -32,6 +39,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("get_id_argument")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns argument by id",
+            Description = "Requires moderator privileges"
+        )]
         public async Task<IActionResult> GetArgumentById(int id)
         {
             _logger.LogInformation("Geting Argument by Id");
@@ -41,6 +53,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("post_argument")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Adding a new agrument",
+            Description = "Requires VerifiedOwnerOrStudent privileges"
+        )]
         public async Task<IActionResult> PostArgument(ArgumentDto input)
         {
             try
@@ -57,6 +74,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpPut("put_status_argument")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Updating argument status",
+            Description = "Requires Moderator privileges"
+        )]
         public async Task<IActionResult> PutArgument(int id, ArgumentStatus status)
         {
             try
@@ -73,6 +95,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("get_filtered_argument")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns filteres arguments",
+            Description = "Requires Moderator privileges"
+        )]
         public async Task<IActionResult> GetFilteredArguments()
         {
             _logger.LogInformation("Geting Arguments");

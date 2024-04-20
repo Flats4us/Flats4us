@@ -41,6 +41,7 @@ builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IArgumentService, ArgumentService>();
 
 var versionPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "version.txt");
 var versionInfo = File.ReadAllLines(versionPath);

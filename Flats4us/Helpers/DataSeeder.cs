@@ -2321,6 +2321,78 @@ public static class DataSeeder
 
         #endregion
 
+        #region Argument
+
+        var argument1 = new Argument
+        {
+            Description = "sprzeczka pierwsza ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = 0,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 1, 14),
+            Offer = offer1,
+            Student = student1
+        };
+        var argument2 = new Argument
+        {
+            Description = "a to jest druga ",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = 0,
+            InterventionNeed = false,
+            MederatorDecisionDate = new DateTime(2023, 1, 22),
+            Offer = offer1,
+            Student = student1
+        };
+        var argument3 = new Argument
+        {
+            Description = "a tutaj sobie wpiszę lorem pisum",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 1, 25),
+            Offer = offer1,
+            Student = student1
+        };
+        var argument4 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
+            StartDate = new DateTime(2023, 1, 12),
+            StudentAcceptanceDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = false,
+            MederatorDecisionDate = new DateTime(2023, 2, 10),
+            Offer = offer1,
+            Student = student1
+        };
+
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4);
+
+        #endregion
+
+        #region ArgumentIntervention
+
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 1, 12),
+            Justification = "string",
+            Argument = argument1,
+            Moderator = moderator1
+        };
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1);
+
+        #endregion
+
+
         dbContext.SaveChanges();
     }
 }
