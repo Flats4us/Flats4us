@@ -193,6 +193,18 @@ namespace Flats4us.Entities
                 .HasForeignKey(ro => ro.StudentId)  
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<ArgumentIntervention>()
+                .HasOne(x => x.Argument)
+                .WithMany(x => x.ArgumentInterventions)
+                .HasForeignKey(x => x.ArgumentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ArgumentIntervention>()
+                .HasOne(x => x.Moderator)
+                .WithMany(x => x.ArgumentInterventions)
+                .HasForeignKey(x => x.ModeratorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Rent)
                 .WithMany(r => r.Payments)
