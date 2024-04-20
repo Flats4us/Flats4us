@@ -42,7 +42,11 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
-builder.Services.AddSingleton(new AppInfo { CommitHash = "temp", CommitDate = "temp" });
+builder.Services.AddSingleton(new AppInfo { 
+    CommitHash = Environment.GetEnvironmentVariable("COMMIT_HASH") ?? "notFound", 
+    CommitDate = Environment.GetEnvironmentVariable("COMMIT_DATE") ?? "notFound"
+});
+
 builder.Services.AddSingleton<GitHeadersFilter>();
 
 builder.Services.AddControllers(options =>
