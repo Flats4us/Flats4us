@@ -81,8 +81,7 @@ namespace Flats4us.Services
             student.SurveyStudent = studentSurvey;
 
             var interestList = await _context.Interests
-                .Where(i => input.Interests
-                    .Select(i => i.InterestId)
+                .Where(i => input.InterestIds
                     .Contains(i.InterestId)
                 )
                 .ToListAsync();

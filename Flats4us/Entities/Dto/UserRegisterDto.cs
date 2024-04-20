@@ -87,7 +87,7 @@ namespace Flats4us.Entities.Dto
         public string? City { get; set; }
 
         [Required]
-        public List<InterestDto> Interests { get; set; }
+        public List<int> InterestIds { get; set; }
     }
 
     public class OwnerRegisterDto : OwnerStudentRegisterDto
