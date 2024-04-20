@@ -1,10 +1,7 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
-using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Flats4us.Helpers.AutoMapperResolvers;
 using AutoMapper;
 
 namespace Flats4us.Services
