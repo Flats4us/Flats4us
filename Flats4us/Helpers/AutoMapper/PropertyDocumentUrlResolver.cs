@@ -2,7 +2,7 @@
 using Flats4us.Entities.Dto;
 using Flats4us.Entities;
 
-namespace Flats4us.Helpers.AutoMapperResolvers
+namespace Flats4us.Helpers.AutoMapper
 {
     public class PropertyDocumentUrlResolver : IValueResolver<Property, PropertyForVerificationDto, FileDto>
     {

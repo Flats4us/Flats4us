@@ -45,6 +45,6 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         [Required]
-        public List<EquipmentDto> Equipment { get; set; }
+        public List<int> EquipmentIds { get; set; }
     }
 }

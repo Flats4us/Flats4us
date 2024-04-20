@@ -147,8 +147,7 @@ namespace Flats4us.Services
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
             var equipmentList = await _context.Equipment
-                .Where(e => input.Equipment
-                    .Select(e => e.EquipmentId)
+                .Where(e => input.EquipmentIds
                     .Contains(e.EquipmentId)
                 )
                 .ToListAsync();
@@ -337,8 +336,7 @@ namespace Flats4us.Services
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
             var equipmentList = await _context.Equipment
-                .Where(e => input.Equipment
-                    .Select(e => e.EquipmentId)
+                .Where(e => input.EquipmentIds
                     .Contains(e.EquipmentId)
                 )
                 .ToListAsync();

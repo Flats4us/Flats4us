@@ -288,6 +288,8 @@ namespace Flats4us.Services
                 RespectingPrivacy = input.RespectingPrivacy,
                 Communicative = input.Communicative,
                 Unfair = input.Unfair,
+                LackOfHygiene = input.LackOfHygiene,
+                Untidy = input.Untidy,
                 Conflicting = input.Conflicting,
                 Noisy = input.Noisy,
                 NotFollowingTheArrangements = input.NotFollowingTheArrangements,
