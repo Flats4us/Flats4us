@@ -7,7 +7,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IMessage } from '@shared/models/conversation.models';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 import { ConversationService } from '@shared/services/conversation.service';
 import { UserService } from '@shared/services/user.service';
 import { IMyProfile } from '@shared/models/user.models';
@@ -25,17 +25,27 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 
 	public messages: { user: number; message: string }[] = [];
 	public conversationId$: Observable<string> = this.route.paramMap.pipe(
-		map(params => params.get('id') ?? '')
+		map(params => params.get('conversationId') ?? '')
 	);
 	protected messages$: Observable<IMessage[]> = this.conversationId$.pipe(
-		switchMap(value => this.conversationService.getMessages(parseInt(value)))
+		switchMap(value => {
+			if (value) {
+				return this.conversationService.getMessages(parseInt(value));
+			} else {
+				return of([]);
+			}
+		})
 	);
 	public currentUser$: Observable<IMyProfile> = this.userService.getMyProfile();
-	public otherUserId$: Observable<number> = this.conversationId$.pipe(
+	public participantId$: Observable<string> = this.conversationId$.pipe(
 		switchMap(id => this.conversationService.getParticipantId(parseInt(id)))
 	);
-	public otherUser$ = this.otherUserId$.pipe(
-		switchMap(id => this.userService.getUserById(id))
+	public otherUser$ = this.route.paramMap.pipe(
+		switchMap(params => {
+			const receiverId = params.get('receiverId');
+			return receiverId ? of(receiverId) : this.participantId$;
+		}),
+		switchMap(receiverId => this.userService.getUserById(parseInt(receiverId)))
 	);
 	public baseUrl = environment.apiUrl.replace('/api', '');
 
@@ -59,18 +69,20 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 	}
 
 	public onSend(senderId: number, receiverId: number): void {
-		if (!this.messageControl.value) {
-			return;
-		}
-		this.conversationService.sendPrivateMessage(
-			receiverId,
-			this.messageControl.value
-		);
-		this.messages.push({
-			user: senderId,
-			message: this.messageControl.value,
-		});
+		if (senderId !== null && receiverId !== null) {
+			if (!this.messageControl.value) {
+				return;
+			}
+			this.conversationService.sendPrivateMessage(
+				receiverId,
+				this.messageControl.value
+			);
+			this.messages.push({
+				user: senderId,
+				message: this.messageControl.value,
+			});
 
-		this.messageControl.reset();
+			this.messageControl.reset();
+		}
 	}
 }

@@ -8,7 +8,13 @@ const routes: Routes = [
 	{
 		path: '',
 		component: ConversationsComponent,
-		children: [{ path: ':id', component: MessagesConversationComponent }],
+		children: [
+			{ path: ':conversationId', component: MessagesConversationComponent },
+			{
+				path: 'new/receiver/:receiverId',
+				component: MessagesConversationComponent,
+			},
+		],
 	},
 ];
 

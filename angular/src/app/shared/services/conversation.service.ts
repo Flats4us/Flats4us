@@ -73,6 +73,6 @@ export class ConversationService {
 	}
 
 	public getParticipantId(chatId: number) {
-		return this.http.get<number>(`${this.apiRoute}/participant/${chatId}`);
+		return this.http.get<string>(`${this.apiRoute}/participant/${chatId}`);
 	}
 }
