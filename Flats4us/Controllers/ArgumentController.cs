@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
@@ -62,8 +63,12 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
                 _logger.LogInformation("Posting Argument");
-                await _argumentService.AddArgumentAsync(input);
+                await _argumentService.AddArgumentAsync(input, requestUserId);
                 return Ok("Argument Added");
             }
             catch (Exception ex)
