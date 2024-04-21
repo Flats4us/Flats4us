@@ -276,7 +276,6 @@ export class RealEstateService {
 	public readAllEquipment(): Observable<IEquipment[]> {
 		return this.getEquipment('').pipe(
 			map(equipments => {
-				this.equipment = [];
 				equipments.forEach(equipment => this.equipment.push(equipment));
 				return this.equipment;
 			})

@@ -10,7 +10,7 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
@@ -33,6 +33,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 
 	public showMoreFilters = false;
 
+	public isSubmitted = false;
+
 	public startSiteForm: FormGroup;
 
 	public isLoading$: Observable<boolean> = of(false);
@@ -46,13 +48,14 @@ export class StartComponent extends BaseComponent implements OnInit {
 	public pageSize = 6;
 	public pageIndex = 0;
 	public flatOptions$: Observable<ISendOffers>;
+	public flatOptionsPromoted$: Observable<ISendOffers>;
 	private sortState: ISortOption = {
 		type: 'Price ASC',
 		direction: 'asc',
 		description: 'ceny: od najniższej',
 	};
 
-	@ViewChild(MatPaginator, { static: true })
+	@ViewChild(MatPaginator)
 	private paginator: MatPaginator = new MatPaginator(
 		this.matPaginatorIntl,
 		ChangeDetectorRef.prototype
@@ -63,6 +66,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 
 	constructor(
 		private router: Router,
+		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
 		public realEstateService: RealEstateService,
 		public startService: StartService,
@@ -71,10 +75,10 @@ export class StartComponent extends BaseComponent implements OnInit {
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
-			regionsGroup: new FormControl(''),
-			citiesGroup: new FormControl(''),
-			distance: new FormControl(0),
-			property: new FormControl([]),
+			regionsGroup: new FormControl('', Validators.required),
+			citiesGroup: new FormControl('', Validators.required),
+			distance: new FormControl(0, Validators.required),
+			property: new FormControl([], Validators.required),
 			minPrice: new FormControl(null, [Validators.min(0)]),
 			maxPrice: new FormControl(null, [Validators.min(0)]),
 			districtsGroup: new FormControl(''),
@@ -85,6 +89,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 			floors: new FormControl(null, [Validators.min(0)]),
 			equipment: new FormControl([]),
 			sorting: new FormControl(this.sortState),
+			pageIndex: new FormControl(this.pageIndex),
+			pageSize: new FormControl(this.pageSize),
 		});
 		this.startService.mapOffersForm = this.startSiteForm;
 		this.realEstateService
@@ -95,10 +101,16 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.pipe(this.untilDestroyed())
 			.subscribe();
 		this.flatOptions$ = this.startService.getFilteredOffers(
-			this.startSiteForm.value,
-			this.pageIndex,
-			this.pageSize
+			this.startSiteForm.value
 		);
+		this.flatOptionsPromoted$ = this.startService
+			.getFilteredOffers(this.startSiteForm.value)
+			.pipe(
+				map(offers => ({
+					totalCount: offers.result.filter(offer => offer.isPromoted).length,
+					result: offers.result.filter(offer => offer.isPromoted === true),
+				}))
+			);
 	}
 
 	public ngOnInit() {
@@ -164,6 +176,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.subscribe(() => {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
+
+		this.filterOffers();
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -185,6 +199,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 
 	public onSubmit() {
 		if (this.startSiteForm.valid) {
+			this.isSubmitted = true;
 			this.filterOffers();
 		}
 	}
@@ -236,10 +251,16 @@ export class StartComponent extends BaseComponent implements OnInit {
 	public async filterOffers() {
 		this.isLoading$ = of(true);
 		this.startService
-			.getFilteredOffers(this.startSiteForm.value, this.pageIndex, this.pageSize)
+			.getFilteredOffers(this.startSiteForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(result => {
 				this.flatOptions$ = of(result);
+				if (!this.isSubmitted) {
+					this.flatOptionsPromoted$ = of({
+						totalCount: result.result.filter(offer => offer.isPromoted).length,
+						result: result.result.filter(offer => offer.isPromoted),
+					});
+				}
 				this.isLoading$ = of(false);
 				this.changeDetectorRef.markForCheck();
 			});
