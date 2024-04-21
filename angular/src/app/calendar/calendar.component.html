@@ -1,6 +1,5 @@
 <div class="flex items-center">
 	<h1 class="text-4xl p-4 font-semibold flex-1">Kalendarz</h1>
-	<button mat-raised-button (click)="onAddEvent()">Dodaj wydarzenie</button>
 </div>
 <div *ngIf="calendar$ | async as calendar" class="calendar-wrapper">
 	<mat-calendar

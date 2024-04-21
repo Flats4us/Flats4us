@@ -9,7 +9,6 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, tap } from 'rxjs';
 
-import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { IEvent } from './models/calendar.models';
 import { CalendarService } from './services/calendar.service';
@@ -48,10 +47,6 @@ export class CalendarComponent {
 		private dialog: MatDialog
 	) {
 		this.dateAdapter.getFirstDayOfWeek = () => 1;
-	}
-
-	public onAddEvent(): void {
-		this.dialog.open(EventAddComponent, { disableClose: true });
 	}
 
 	public dateClass: MatCalendarCellClassFunction<Date> = (
