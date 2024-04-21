@@ -3,16 +3,20 @@ using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Flats4us.Services
 {
     public class ArgumentService : IArgumentService
     {
         public readonly Flats4usContext _context;
+        public readonly GroupChatService _groupChatService;
 
-        public ArgumentService(Flats4usContext context)
+        public ArgumentService(Flats4usContext context, GroupChatService groupChatService)
         {
             _context = context;
+            _groupChatService = groupChatService;
         }
         public async Task<List<Argument>> GetAllArgumentsAsync()
         {
@@ -23,8 +27,17 @@ namespace Flats4us.Services
             return await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
         }
 
-        public async Task AddArgumentAsync(ArgumentDto input)
+        public async Task AddArgumentAsync(ArgumentDto input, int studentId)
         {
+            var property = _context.Properties
+                .FirstOrDefault(r => r.PropertyId == input.OfferId);
+
+            if (property is null) throw new ArgumentException($"Property associated with Offer ID {input.OfferId} not found.");
+
+            //var owner = await _context.Owners.FindAsync(property.OwnerId);
+
+            //if (property is null) throw new ArgumentException($"Owner associated with Property ID {property.OwnerId} not found.");
+
             var argument = new Argument
             {
                 StartDate = DateTime.Now,
@@ -32,8 +45,13 @@ namespace Flats4us.Services
                 Description = input.Description,
                 OfferId = input.OfferId,
                 InterventionNeed = input.InterventionNeed,
-                StudentId = 5
+                StudentId = studentId
             };
+
+            await _groupChatService.CreateGroupChatAsync(
+                "Argument pomiędzy: student " + studentId + 
+                ", oraz właściciel: " + property.OwnerId, 
+                new int[] {studentId, property.OwnerId });
 
             await _context.Arguments.AddAsync(argument);
             await _context.SaveChangesAsync();
