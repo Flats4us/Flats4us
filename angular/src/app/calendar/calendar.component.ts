@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
-import { MatCalendarCellClassFunction, MatDatepickerModule } from '@angular/material/datepicker';
+import {
+	MatCalendarCellClassFunction,
+	MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, tap } from 'rxjs';
 
