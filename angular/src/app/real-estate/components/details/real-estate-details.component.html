@@ -107,47 +107,47 @@
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">Miasto:</p>
-				<p class="text-2xl pt-4">Dzielnica:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Metraż:</p>
-				<p class="text-2xl pt-4">Liczba pokoi:</p>
-				<p class="text-2xl pt-4">Liczba pięter:</p>
-				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
-				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
+				<p class="text-2xl">Miasto:</p>
+				<p class="text-2xl">Dzielnica:</p>
+				<p class="text-2xl">Adres:</p>
+				<p class="text-2xl">Metraż:</p>
+				<p class="text-2xl">Liczba pokoi:</p>
+				<p class="text-2xl">Liczba pięter:</p>
+				<p class="text-2xl">Piętro:</p>
+				<p class="text-2xl">Maks. liczba mieszkańców:</p>
+				<p class="text-2xl">Rok budowy:</p>
+				<p class="text-2xl">Wyposażenie:</p>
 			</div>
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">{{ actualRealEstate.city }}</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">{{ actualRealEstate.city }}</p>
+				<p class="text-2xl">
 					{{ actualRealEstate.district === null ? "-" : actualRealEstate.district }}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{ actualRealEstate.postalCode }} ul. {{ actualRealEstate.street }}
 					{{ actualRealEstate.number }}
 				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.area }} m²</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.numberOfRooms }}</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">{{ actualRealEstate.area }} m²</p>
+				<p class="text-2xl">{{ actualRealEstate.numberOfRooms }}</p>
+				<p class="text-2xl">
 					{{
 						actualRealEstate.numberOfFloors === null
 							? "-"
 							: actualRealEstate.numberOfFloors
 					}}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{ actualRealEstate.floor === null ? "-" : actualRealEstate.floor }}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{
 						actualRealEstate.maxNumberOfInhabitants === null
 							? "-"
 							: actualRealEstate.maxNumberOfInhabitants
 					}}
 				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.constructionYear }}</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">{{ actualRealEstate.constructionYear }}</p>
+				<p class="text-2xl">
 					<span *ngFor="let equipment of actualRealEstate.equipment"
 						>{{ equipment.name }},
 					</span>

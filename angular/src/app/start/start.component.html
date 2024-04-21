@@ -22,6 +22,11 @@
 							{{ region }}
 						</mat-option>
 					</mat-select>
+					<mat-error
+						*ngIf="startSiteForm.controls['regionsGroup'].errors?.['required']"
+					>
+						Nie wybrano województwa!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -48,6 +53,11 @@
 							</mat-option>
 						</mat-optgroup>
 					</mat-autocomplete>
+					<mat-error
+						*ngIf="startSiteForm.controls['citiesGroup'].errors?.['required']"
+					>
+						Nie wybrano miasta!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -78,6 +88,9 @@
 							{{ property.viewValue }}
 						</mat-option>
 					</mat-select>
+					<mat-error *ngIf="startSiteForm.controls['property'].errors?.['required']">
+						Nie wybrano nieruchomości!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -189,7 +202,6 @@
 						matTooltip="Sortuj oferty według"
 						aria-label="SortButton"
 						[matMenuTriggerFor]="menu"
-						[disabled]="isMapMode"
 					>
 						<mat-icon class="ico" [inline]="true">sort</mat-icon>
 					</button>
@@ -381,7 +393,7 @@
 		<div *ngIf="!isLoading && flatOptions">
 			<div>
 				<div class="container-info">
-					<div class="container-title">
+					<div *ngIf="isSubmitted" class="container-title">
 						<h1 *ngIf="flatOptions.totalCount !== 0">
 							Znaleziono
 							<span [appGetDescription]="flatOptions.totalCount"></span>
@@ -389,6 +401,9 @@
 						<h1 *ngIf="flatOptions.totalCount === 0">
 							Nie znaleziono ofert dla podanych parametrów
 						</h1>
+					</div>
+					<div *ngIf="!isSubmitted" class="container-title">
+						<h1>Promowane oferty</h1>
 					</div>
 				</div>
 				<ng-template #flats let-flats="flats">
@@ -460,13 +475,25 @@
 						</mat-card-content>
 					</mat-card>
 				</ng-template>
-				<div class="container-offers">
+				<div *ngIf="isSubmitted" class="container-offers">
 					<ng-container
 						[ngTemplateOutlet]="flats"
 						[ngTemplateOutletContext]="{ flats: flatOptions.result }"
 					>
 					</ng-container>
 				</div>
+				<fieldset
+					*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
+					class="container-offers"
+				>
+					<ng-container
+						class="container-offers"
+						[ngTemplateOutlet]="flats"
+						[ngTemplateOutletContext]="{
+							flats: (flatOptionsPromoted$ | async)?.result
+						}"
+					></ng-container>
+				</fieldset>
 			</div>
 			<div class="paginator-box">
 				<mat-paginator
@@ -474,7 +501,11 @@
 					id="paginator2"
 					showFirstLastButtons
 					aria-label="Paginator"
-					[length]="flatOptions.totalCount"
+					[length]="
+						isSubmitted
+							? flatOptions.totalCount
+							: (flatOptionsPromoted$ | async)?.totalCount
+					"
 					[pageSize]="pageSize"
 					[pageIndex]="pageIndex"
 					[pageSizeOptions]="[6, 12, 18, 48]"
