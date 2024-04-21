@@ -3,81 +3,45 @@
 </h1>
 <div mat-dialog-content>
 	<form [formGroup]="form">
-		<mat-form-field appearance="fill">
+		<div>
 			<mat-label>Ocena</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="rate"
-			></mat-slider>
-		</mat-form-field>
-
-		<mat-form-field appearance="fill">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="rating" />
+			</mat-slider>
+		</div>
+		<div>
 			<mat-label>Czystość</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="cleanliness"
-			></mat-slider>
-		</mat-form-field>
-
-		<mat-form-field appearance="fill">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="cleanliness" />
+			</mat-slider>
+		</div>
+		<div>
 			<mat-label>Obsługa</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="service"
-			></mat-slider>
-		</mat-form-field>
-
-		<mat-form-field appearance="fill">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="service" />
+			</mat-slider>
+		</div>
+		<div>
 			<mat-label>Lokalizacja</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="location"
-			></mat-slider>
-		</mat-form-field>
-
-		<mat-form-field appearance="fill">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="location" />
+			</mat-slider>
+		</div>
+		<div>
 			<mat-label>Wyposażenie</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="equipment"
-			></mat-slider>
-		</mat-form-field>
-
-		<mat-form-field appearance="fill">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="equipment" />
+			</mat-slider>
+		</div>
+		<div>
 			<mat-label>Stosunek jakości do ceny</mat-label>
-			<mat-slider
-				thumbLabel
-				tickInterval="1"
-				min="1"
-				max="5"
-				step="1"
-				formControlName="price"
-			></mat-slider>
-		</mat-form-field>
-
+			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+				<input matInput matSliderThumb formControlName="qualityForMoney" />
+			</mat-slider>
+		</div>
 		<mat-form-field appearance="fill">
 			<mat-label>Opinia</mat-label>
-			<textarea matInput formControlName="opinion"></textarea>
+			<textarea matInput formControlName="description"></textarea>
 		</mat-form-field>
 	</form>
 </div>

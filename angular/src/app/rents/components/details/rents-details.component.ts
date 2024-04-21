@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IMenuOptions, IPayment } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, map, shareReplay, switchMap } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -36,7 +36,8 @@ export class RentsDetailsComponent {
 		map(params => params.get('id') ?? '')
 	);
 	public actualRent$: Observable<IOffer> = this.rentId$?.pipe(
-		switchMap(value => this.offerService.getOfferById(parseInt(value)))
+		switchMap(value => this.offerService.getOfferById(parseInt(value))),
+		shareReplay(1)
 	);
 	public payments: IPayment[] = [
 		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },

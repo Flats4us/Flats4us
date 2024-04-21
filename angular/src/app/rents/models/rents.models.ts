@@ -37,6 +37,16 @@ export interface IRent {
 	property: IFlatOffer;
 }
 
+export interface IRentOpinion {
+	rating: boolean;
+	cleanliness: boolean;
+	service: boolean;
+	location: boolean;
+	equipment: boolean;
+	qualityForMoney: boolean;
+	description: string;
+}
+
 export interface IMenuOptions {
 	option: string;
 	description: string;
