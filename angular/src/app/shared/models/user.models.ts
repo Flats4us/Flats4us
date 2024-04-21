@@ -5,6 +5,7 @@ export interface IUser {
 	accountCreationDate: Date;
 	verificationStatus: number;
 	profilePicture: IProfilePicture;
+	avgRating: number;
 	userOpinions: IUserOpinion[];
 	age: number;
 	university: string;

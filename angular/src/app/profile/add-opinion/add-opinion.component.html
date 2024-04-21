@@ -22,9 +22,9 @@
 						<div class="profile-rating__stars mx-auto">
 							<mat-icon *ngFor="let star of starsScale; let i = index"
 								>{{
-									i + 1 <= rating
+									i + 1 <= user.avgRating
 										? "star"
-										: i + 1 <= rating + 1
+										: i + 1 < user.avgRating + 1
 										? "star_half"
 										: "star_outline"
 								}}
@@ -33,8 +33,8 @@
 						</div>
 					</div>
 
-					<div class="text-center">{{ rating }}</div>
-					<div class="text-center">OPINIE (12)</div>
+					<div class="text-center">Średnia ocena: {{ user.avgRating }}</div>
+					<div class="text-center">Opinie ({{ user.userOpinions.length }})</div>
 				</div>
 				<div class="flex-[2_2_500px] p-5">
 					<h2 class="flex justify-center font-medium drop-shadow-md mb-4">
