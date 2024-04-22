@@ -16,14 +16,17 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly IOpenStreetMapService _openStreetMapService;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
         public OfferService(Flats4usContext context,
             IOpenStreetMapService openStreetMapService,
-            IMapper mapper)
+            IMapper mapper,
+            IEmailService emailService)
         {
             _context = context;
             _openStreetMapService = openStreetMapService;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<OfferDto> GetByIdAsync(int id, int requestUserId)

@@ -15,12 +15,15 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
         public RentService(Flats4usContext context,
-            IMapper mapper)
+            IMapper mapper,
+            IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId)
@@ -105,13 +108,16 @@ namespace Flats4us.Services
                     CreatedDate = DateTime.Now,
                     PaymentDate = rent.StartDate.AddDays(7).Date
                 };
-
+                var messageBody = $"A new deposit payment of {offer.Price} has been scheduled for {rent.StartDate.AddDays(7).Date}.";
                 rent.Payments.Add(depositPayment);
                 rent.Payments.Add(firstPayment);
 
                 if ( rent.Duration > 1 ) rent.NextPaymentGenerationDate = rent.StartDate.AddMonths(1).Date;
 
                 await _context.SaveChangesAsync();
+                await _emailService.SendEmailAsync(requestUserId, "The rent offert has been accepted!", messageBody);
+                await _emailService.SendEmailAsync(requestUserId, "The rent offert has been accepted!", messageBody);
+
             }
             else
             {

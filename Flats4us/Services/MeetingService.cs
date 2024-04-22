@@ -14,6 +14,7 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
         public MeetingService(Flats4usContext context,
             INotificationService notificationService,
@@ -22,6 +23,7 @@ namespace Flats4us.Services
             _context = context;
             _notificationService = notificationService;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId)
@@ -75,6 +77,8 @@ namespace Flats4us.Services
                 .FirstOrDefaultAsync(o => o.OfferId == input.OfferId);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
+            var property = offer.Property;
+            var ownerId = property.OwnerId;
 
             Meeting meeting;
 

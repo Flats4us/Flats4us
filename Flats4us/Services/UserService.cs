@@ -59,6 +59,7 @@ namespace Flats4us.Services
 
             var token = CreateToken(user);
 
+
             return token;
         }
 
@@ -77,8 +78,8 @@ namespace Flats4us.Services
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
 
-            await _emailService.SendEmailAsync(owner.UserId, "Account registration successfull!", "Here are some tips to get you started....");
             var token = CreateToken(owner);
+            await _emailService.SendEmailAsync(owner.UserId, "Account registration successfull!", "Here are some tips to get you started....");
 
             return token;
         }
@@ -111,6 +112,9 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
 
             var token = CreateToken(student);
+
+            await _emailService.SendEmailAsync(student.UserId, "Account registration successfull!", "Here are some tips to get you started....");
+
 
             return token;
         }
