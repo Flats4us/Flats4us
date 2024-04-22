@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import {
 	IDispute,
@@ -17,22 +17,19 @@ export class ModerationConsoleService {
 	constructor(private http: HttpClient) {}
 
 	public getUsers(): Observable<IUser[]> {
-		const pageNumber = 1;
-		const pageSize = 3;
+		let params = new HttpParams();
+		params = params.append('pageNumber', 1).append('pageSize', 3);
 		return this.http
-			.get<IUserData>(
-				`${this.apiRoute}/users?PageNumber=${pageNumber}&PageSize=${pageSize}`
-			)
+			.get<IUserData>(`${this.apiRoute}/users`, { params: params })
 			.pipe(map(response => response.result));
 	}
 
 	public getProperties(): Observable<IProperty[]> {
-		const pageNumber = 1;
-		const pageSize = 3;
+		let params = new HttpParams();
+		params = params.append('pageNumber', 1).append('pageSize', 3);
+
 		return this.http
-			.get<IPropertyData>(
-				`${this.apiRoute}/properties?PageNumber=${pageNumber}&PageSize=${pageSize}`
-			)
+			.get<IPropertyData>(`${this.apiRoute}/properties`, { params: params })
 			.pipe(map(response => response.result));
 	}
 
@@ -41,20 +38,20 @@ export class ModerationConsoleService {
 	}
 
 	public acceptUser(userId: number) {
-		return this.http.put<IUser>(`${this.apiRoute}/users/` + userId + '/verify', {
+		return this.http.put<IUser>(`${this.apiRoute}/users/${userId}/verify`, {
 			decision: true,
 		});
 	}
 
 	public rejectUser(userId: number) {
-		return this.http.put<string>(`${this.apiRoute}/users/` + userId + '/verify', {
+		return this.http.put<string>(`${this.apiRoute}/users/${userId}/verify`, {
 			decision: false,
 		});
 	}
 
 	public acceptProperty(propertyId: number) {
 		return this.http.put<IUser>(
-			`${this.apiRoute}/properties/` + propertyId + '/verify',
+			`${this.apiRoute}/properties/${propertyId}/verify`,
 			{
 				decision: true,
 			}
@@ -63,7 +60,7 @@ export class ModerationConsoleService {
 
 	public rejectProperty(propertyId: number) {
 		return this.http.put<IUser>(
-			`${this.apiRoute}/properties/` + propertyId + '/verify',
+			`${this.apiRoute}/properties/${propertyId}/verify`,
 			{
 				decision: false,
 			}
