@@ -10,14 +10,16 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
         public MatcherService(
             Flats4usContext context,
-            IMapper mapper)
+            IMapper mapper,
+            INotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
-
+            _notificationService = notificationService;
         }
 
         public async Task<List<StudentForMatcherDto>> GetMatchByStudentId(int requestUserId)
@@ -128,7 +130,13 @@ namespace Flats4us.Services
                 match.IsStudent2Interested = isAccept;
             }
 
-            await _context.SaveChangesAsync();
+            if (match.IsStudent1Interested == true && match.IsStudent2Interested == true)
+            {
+                await _notificationService.SendNotificationAsync("You got a new match!", "Tap to see what's up.", student2Id);
+
+            }
+
+                await _context.SaveChangesAsync();
         }
     }
 }
