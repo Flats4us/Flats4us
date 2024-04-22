@@ -44,9 +44,11 @@ builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 builder.Services.AddSingleton(new AppInfo { 
     CommitHash = Environment.GetEnvironmentVariable("COMMIT_HASH") ?? "notFound", 
