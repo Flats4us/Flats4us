@@ -6,9 +6,7 @@
 	} as data"
 >
 	<div
-		*ngIf="
-			data.currentUser && data.otherUser && data.messagesHistory && participantId$
-		"
+		*ngIf="data.currentUser && data.otherUser && data.messagesHistory"
 		class="conversation-list"
 	>
 		<div
@@ -65,7 +63,7 @@
 		</div>
 	</div>
 	<mat-form-field
-		*ngIf="data.currentUser?.userId && data?.otherUser?.userId"
+		*ngIf="data.currentUser?.userId && data.otherUser?.userId"
 		class="w-full"
 	>
 		<input

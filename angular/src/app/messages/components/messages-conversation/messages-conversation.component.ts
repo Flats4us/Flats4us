@@ -29,11 +29,9 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 	);
 	protected messages$: Observable<IMessage[]> = this.conversationId$.pipe(
 		switchMap(value => {
-			if (value) {
-				return this.conversationService.getMessages(parseInt(value));
-			} else {
-				return of([]);
-			}
+			return value
+				? this.conversationService.getMessages(parseInt(value))
+				: of([]);
 		})
 	);
 	public currentUser$: Observable<IMyProfile> = this.userService.getMyProfile();
@@ -69,20 +67,18 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 	}
 
 	public onSend(senderId: number, receiverId: number): void {
-		if (senderId !== null && receiverId !== null) {
-			if (!this.messageControl.value) {
-				return;
-			}
-			this.conversationService.sendPrivateMessage(
-				receiverId,
-				this.messageControl.value
-			);
-			this.messages.push({
-				user: senderId,
-				message: this.messageControl.value,
-			});
-
-			this.messageControl.reset();
+		if (!this.messageControl.value) {
+			return;
 		}
+		this.conversationService.sendPrivateMessage(
+			receiverId,
+			this.messageControl.value
+		);
+		this.messages.push({
+			user: senderId,
+			message: this.messageControl.value,
+		});
+
+		this.messageControl.reset();
 	}
 }

@@ -7,7 +7,7 @@
 		</mat-card-header>
 		<mat-list class="messages-choice">
 			<mat-list-item
-				*ngFor="let message of this.messages"
+				*ngFor="let message of messages"
 				class="messages-choice__conversation"
 				[routerLink]="message.chatId.toString()"
 			>
