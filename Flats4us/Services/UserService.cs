@@ -20,16 +20,19 @@ namespace Flats4us.Services
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly IEmailService _emailService;
 
         public UserService(Flats4usContext context,
             IMapper mapper,
             IConfiguration configuration,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
             _notificationService = notificationService;
+            _emailService = emailService;
         }
 
         public async Task<TokenDto> AuthenticateAsync(string email, string password, string fcmToken = null)
@@ -68,6 +71,7 @@ namespace Flats4us.Services
             _context.Owners.Add(owner);
             await _context.SaveChangesAsync();
 
+            await _emailService.SendEmailAsync(owner.UserId, "Account registration successfull!", "Here are some tips to get you started....");
             var token = CreateToken(owner);
 
             return token;
