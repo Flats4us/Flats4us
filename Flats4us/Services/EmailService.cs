@@ -29,6 +29,8 @@ namespace Flats4us.Services
         public async Task SendEmailAsync(int toUserId, string subject, string body)
         {
             var userInfo = await _userService.GetUserInfo(toUserId);
+            if (!userInfo.EmailConsent)
+                return;
 
             using (var client = new SmtpClient())
             {

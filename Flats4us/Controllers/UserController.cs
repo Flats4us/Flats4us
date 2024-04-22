@@ -4,6 +4,7 @@ using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
 
@@ -161,6 +162,35 @@ namespace Flats4us.Controllers
             {
                 return BadRequest(ex.Message);
             }
+
+        }
+
+        [HttpPost("consent")]
+        [Authorize]
+        [SwaggerOperation(
+            Summary = "Change email and push consents of user"
+        )]
+        public async Task<ActionResult> UpdateConsent([FromForm] ConsentDto input)
+        {
+
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.UpdateConsentAsync(requestUserId, input);
+                return Ok(new OutputDto<string>("Consent updated!"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+            
+
 
         }
     }

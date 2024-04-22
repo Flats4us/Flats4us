@@ -17,5 +17,6 @@ namespace Flats4us.Services.Interfaces
         Task<bool> CheckIfStudentExistsByIdAsync(string email);
         Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
         Task<UserInfoDto> GetUserInfo(int userId);
+        Task UpdateConsentAsync(int userId, ConsentDto input);
     }
 }

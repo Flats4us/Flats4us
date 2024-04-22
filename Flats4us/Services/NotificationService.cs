@@ -31,6 +31,10 @@ namespace Flats4us.Services
             if (user == null || string.IsNullOrEmpty(user.FcmToken))
                 return false; // User not found or FCM token not available
 
+            if(!user.PushConsent)
+                return false;
+
+
             var message = new Message()
             {
                 Token = user.FcmToken,

@@ -5,6 +5,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -160,6 +161,21 @@ namespace Flats4us.Services
             return result;
         }
 
+        public async Task UpdateConsentAsync(int userId, ConsentDto input)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            user.PushConsent =  input.pushConsent;
+            user.EmailConsent = input.emailConsent;
+
+            await _context.SaveChangesAsync();
+            
+        }
+
+
+
         public async Task VerifyUserAsync(int id, bool decision)
         {
             var user = await _context.OwnerStudents.FindAsync(id);
@@ -289,6 +305,8 @@ namespace Flats4us.Services
             var targetUser = await _context.Users.FindAsync(targetUserId);
 
             if (targetUser is null) throw new ArgumentException($"User with ID {targetUserId} not found.");
+
+            await _notificationService.SendNotificationAsync("Ktoś dodał nową opinię do twojego konta!", "Sprawdź szczegóły...", targetUserId);
 
             var opinion = new UserOpinion
             {
