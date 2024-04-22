@@ -6,5 +6,8 @@
         public string Email { get; set; }
         public string FullName { get; set; }
         public FileDto ProfilePicture { get; set; }
+        public bool PushConsent { get; set; }
+        public bool EmailConsent { get; set; }
+
     }
 }

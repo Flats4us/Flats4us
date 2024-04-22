@@ -211,6 +211,21 @@ namespace Flats4us.Services
             return result;
         }
 
+        public async Task UpdateConsentAsync(int userId, ConsentDto input)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            user.PushConsent =  input.pushConsent;
+            user.EmailConsent = input.emailConsent;
+
+            await _context.SaveChangesAsync();
+            
+        }
+
+
+
         public async Task VerifyUserAsync(int id, bool decision)
         {
             var user = await _context.OwnerStudents
@@ -408,6 +423,8 @@ namespace Flats4us.Services
             if (targetUser is null) throw new ArgumentException($"User with ID {targetUserId} not found.");
 
             if (targetUser is Owner) throw new ArgumentException("You cannot add opinion about owner.");
+
+            await _notificationService.SendNotificationAsync("Ktoś dodał nową opinię do twojego konta!", "Sprawdź szczegóły...", targetUserId);
 
             var opinion = new UserOpinion
             {

@@ -25,5 +25,6 @@ namespace Flats4us.Services.Interfaces
         Task EditUser(EditUserDto input, int userId);
 
 
+        Task UpdateConsentAsync(int userId, ConsentDto input);
     }
 }

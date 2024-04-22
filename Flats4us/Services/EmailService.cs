@@ -38,7 +38,9 @@ namespace Flats4us.Services
 
             if (user is null) throw new ArgumentException($"User with ID {toUserId} not found.");
 
-            var userInfo = _mapper.Map<UserInfoDto>(user);
+            var userInfo = await _userService.GetUserInfo(toUserId);
+            if (!userInfo.EmailConsent)
+                return;
 
             using (var client = new SmtpClient())
             {
