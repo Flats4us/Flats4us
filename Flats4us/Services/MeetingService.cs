@@ -10,11 +10,13 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        private readonly IEmailService _emailService;
 
-        public MeetingService(Flats4usContext context, IMapper mapper)
+        public MeetingService(Flats4usContext context, IMapper mapper, IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId, int month, int year)
@@ -54,9 +56,10 @@ namespace Flats4us.Services
                 .FirstOrDefaultAsync(o => o.OfferId == input.OfferId);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
+            var property = offer.Property;
+            var ownerId = property.OwnerId;
 
             var student = await _context.Students.FindAsync(studentId);
-
             if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
 
             var meeting = new Meeting
@@ -70,6 +73,9 @@ namespace Flats4us.Services
 
             await _context.Meetings.AddAsync(meeting);
             await _context.SaveChangesAsync();
+            var messageBody = $"A new meeting has been scheduled for {input.Date} at {input.Place}.\nReason: {input.Reason}";
+            await _emailService.SendEmailAsync(meeting.StudentId, "New meeting added!", messageBody);
+            await _emailService.SendEmailAsync(ownerId, "New meeting added!", messageBody);
         }
     }
 }
