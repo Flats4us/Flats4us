@@ -34,7 +34,7 @@ namespace Flats4us.Controllers
             Summary = "Returns list of meetings for current user",
             Description = "Requires verified owner or verified student privileges"
         )]
-        public async Task<IActionResult> GetMeetingsForCurrentUser([FromQuery] GetMeetingsDto input)
+        public async Task<IActionResult> GetMeetingsForCurrentUser()
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                var meetings = await _meetingService.GetMeetingsForCurrentUserAsync(requestUserId, input.Month, input.Year);
+                var meetings = await _meetingService.GetMeetingsForCurrentUserAsync(requestUserId);
                 _logger.LogInformation($"Getting meetings for current user: {requestUserId}");
                 return Ok(meetings);
             }
