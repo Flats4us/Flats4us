@@ -34,7 +34,6 @@ namespace Flats4us.Services
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) throw new AuthenticationException("Invalid email or password.");
 
-            user.ActivityStatus = true;
             user.LastLoginDate = DateTime.Now;
 
             await _context.SaveChangesAsync();

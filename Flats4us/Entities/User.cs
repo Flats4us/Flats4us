@@ -39,9 +39,6 @@ namespace Flats4us.Entities
         public DateTime? LastLoginDate { get; set; }
 
         [Required]
-        public bool ActivityStatus { get; set; }
-
-        [Required]
         public VerificationStatus VerificationStatus { get; set; }
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
 

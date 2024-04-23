@@ -21,8 +21,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string ImagesPath { get; set; }
-
-        [Required]
-        public bool ActivityStatus { get; set; }
     }
 }
