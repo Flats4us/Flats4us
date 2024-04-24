@@ -54,7 +54,8 @@ namespace Flats4us.Helpers
             CreateMap<Offer, SimpleOfferForMapDto>()
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
-            CreateMap<Owner, OwnerStudentDto>();
+            CreateMap<Owner, OwnerStudentDto>()
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
             CreateMap<User, UserInfoDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
