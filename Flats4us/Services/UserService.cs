@@ -263,11 +263,24 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<bool> CheckIfStudentExistsByIdAsync(string email)
+        public async Task<bool> CheckIfStudentExistsByEmailAsync(string email)
         {
             var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
 
             return student != null;
+        }
+
+        public async Task SendPasswordResetLinkAsync(string email)
+        {
+            var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
+
+            if (student != null)
+            {
+                student.PasswordResetToken = Guid.NewGuid().ToString();
+                student.PasswordResetTokenExpireDate = DateTime.Now.AddMinutes(30);
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)

@@ -125,11 +125,11 @@ namespace Flats4us.Controllers
             Summary = "Checks if student exists by email",
             Description = "Requires verified student privileges"
         )]
-        public async Task<ActionResult> CheckIfStudentExistsById(string email)
+        public async Task<ActionResult> CheckIfStudentExistsByEmail(string email)
         {
             try
             {
-                var result = await _userService.CheckIfStudentExistsByIdAsync(email);
+                var result = await _userService.CheckIfStudentExistsByEmailAsync(email);
                 return Ok(new OutputDto<bool>(result));
             }
             catch (Exception ex)

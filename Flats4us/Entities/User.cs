@@ -38,6 +38,10 @@ namespace Flats4us.Entities
 
         public DateTime? LastLoginDate { get; set; }
 
+        public string? PasswordResetToken { get; set; }
+
+        public DateTime? PasswordResetTokenExpireDate { get; set; }
+
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }

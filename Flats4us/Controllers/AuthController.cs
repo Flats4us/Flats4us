@@ -110,5 +110,22 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
+
+        [HttpPost("{email}/send-password-reset-link")]
+        [SwaggerOperation(
+            Summary = "Sends email with password reset link"
+        )]
+        public async Task<ActionResult> SendPasswordResetLink(string email)
+        {
+            try
+            {
+                await _userService.SendPasswordResetLinkAsync(email);
+                return Ok(new OutputDto<string>("Link sent if user exists"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
