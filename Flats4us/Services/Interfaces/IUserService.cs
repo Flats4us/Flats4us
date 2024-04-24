@@ -16,6 +16,7 @@ namespace Flats4us.Services.Interfaces
         Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId);
         Task<bool> CheckIfStudentExistsByEmailAsync(string email);
         Task SendPasswordResetLinkAsync(string email);
+        Task ResetUserPasswordAsync(string newPassword, string passwordResetToken);
         Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
         Task<UserInfoDto> GetUserInfo(int userId);
     }
