@@ -218,6 +218,11 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(owner);
                     break;
+                case Moderator:
+                    var moderator = await _context.Moderators
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
+                    result = _mapper.Map<UserProfileFullDto>(moderator);
+                    break;
                 default:
                     throw new ArgumentException($"Cannot get profile of this user");
             }

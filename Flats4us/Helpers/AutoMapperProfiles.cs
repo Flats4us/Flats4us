@@ -86,6 +86,9 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
                 .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
 
+            CreateMap<Moderator, UserProfileFullDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Moderator));
+
             CreateMap<Student, UserProfilePublicDto>()
                 .MapBaseUserProfile()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
