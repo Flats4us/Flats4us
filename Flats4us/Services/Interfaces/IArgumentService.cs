@@ -11,7 +11,6 @@ namespace Flats4us.Services.Interfaces
         public Task AddArgumentAsync(ArgumentDto input, int studentId);
         public Task EditStatusArgumentAsync(int id, ArgumentStatus status);
         public Task<IEnumerable<Argument>> GetOngoingArgumentsAsync();
-
         public Task<List<ArgumentIntervention>> GetAllInterventionsAsync();
         public Task<ArgumentIntervention> GetInterventionById(int id);
         public Task AddInterventionAsync(ArgumentInterventionDto input);

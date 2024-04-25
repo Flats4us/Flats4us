@@ -2238,7 +2238,18 @@ public static class DataSeeder
             Payments = null
         };
 
-        dbContext.Rents.AddRange(rent1, rent2, rent3);
+        var rent4 = new Rent
+        {
+            StartDate = new DateTime(2023, 3, 1),
+            Duration = 8,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer3,
+            Student = student10,
+            OtherStudents = {},
+            Payments = null
+        };
+
+        dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
 
         #endregion
 
@@ -2307,7 +2318,7 @@ public static class DataSeeder
             ArgumentStatus = 0,
             InterventionNeed = true,
             MederatorDecisionDate = new DateTime(2023, 1, 14),
-            Offer = offer1,
+            Rent = rent1,
             Student = student1
         };
         var argument2 = new Argument
@@ -2319,7 +2330,7 @@ public static class DataSeeder
             ArgumentStatus = 0,
             InterventionNeed = false,
             MederatorDecisionDate = new DateTime(2023, 1, 22),
-            Offer = offer1,
+            Rent = rent2,
             Student = student1
         };
         var argument3 = new Argument
@@ -2331,7 +2342,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = true,
             MederatorDecisionDate = new DateTime(2023, 1, 25),
-            Offer = offer1,
+            Rent = rent3,
             Student = student1
         };
         var argument4 = new Argument
@@ -2343,7 +2354,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = false,
             MederatorDecisionDate = new DateTime(2023, 2, 10),
-            Offer = offer1,
+            Rent = rent4,
             Student = student1
         };
 
