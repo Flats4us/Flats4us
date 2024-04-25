@@ -29,12 +29,12 @@ namespace Flats4us.Entities
         public DateTime MederatorDecisionDate { get; set; }
 
         [Required]
-        public int OfferId { get; set; }
+        public int RentId { get; set; }
 
         [Required]
         public int StudentId { get; set; }
 
-        public virtual Offer Offer { get; set; }
+        public virtual Rent Rent { get; set; }
 
         public virtual Student Student { get; set; }
 

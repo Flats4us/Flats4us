@@ -43,7 +43,7 @@ namespace Flats4us.Services
                 StartDate = DateTime.Now,
                 ArgumentStatus = ArgumentStatus.Ongoing,
                 Description = input.Description,
-                OfferId = input.OfferId,
+                RentId = input.OfferId,
                 InterventionNeed = input.InterventionNeed,
                 StudentId = studentId
             };
