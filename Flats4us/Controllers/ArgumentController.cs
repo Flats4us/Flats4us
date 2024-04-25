@@ -90,7 +90,7 @@ namespace Flats4us.Controllers
             {
                 _logger.LogInformation("Put Argument");
                 await _argumentService.EditStatusArgumentAsync(id, status);
-                return Ok("Argument Added");
+                return Ok("Argument Updated");
             }
             catch (Exception ex)
             {
@@ -107,11 +107,68 @@ namespace Flats4us.Controllers
         )]
         public async Task<IActionResult> GetFilteredArguments()
         {
-            _logger.LogInformation("Geting Arguments");
+            _logger.LogInformation("Geting Filtered Arguments");
             var arguments = await _argumentService.GetOngoingArgumentsAsync();
 
             return Ok(arguments);
         }
+
+        [HttpGet("get_interventions")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns list of interventions",
+            Description = "Requires moderator privileges"
+        )]
+        public async Task<IActionResult> GetInterventions()
+        {
+            _logger.LogInformation("Geting Interventions");
+            var interventions = await _argumentService.GetAllInterventionsAsync();
+
+            return Ok(interventions);
+        }
+
+        [HttpGet("get_interventions_by_id")]
+        [Authorize(Policy = "Moderator")]
+        [SwaggerOperation(
+            Summary = "Returns list of interventions by id",
+            Description = "Requires moderator privileges"
+        )]
+        public async Task<IActionResult> GetInterventionsById(int id)
+        {
+            _logger.LogInformation("Geting Interventions by Id");
+            var interventions = await _argumentService.GetInterventionById(id);
+
+            return Ok(interventions);
+        }
+
+        [HttpPost("post_intervention")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Adding a new agrument",
+            Description = "Requires VerifiedOwnerOrStudent privileges"
+        )]
+        public async Task<IActionResult> PostIntervention(ArgumentInterventionDto input)
+        {
+            try
+            {
+                _logger.LogInformation("Posting Intervention");
+                await _argumentService.AddInterventionAsync(input);
+                return Ok("Intervention Added");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Adding intervention - body: {input}");
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+            }
+        }
+
+
+
+
+
+
+
+
 
 
     }

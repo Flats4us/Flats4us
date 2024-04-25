@@ -2,6 +2,7 @@
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,9 +12,9 @@ namespace Flats4us.Services
     public class ArgumentService : IArgumentService
     {
         public readonly Flats4usContext _context;
-        public readonly GroupChatService _groupChatService;
+        public readonly IGroupChatService _groupChatService;
 
-        public ArgumentService(Flats4usContext context, GroupChatService groupChatService)
+        public ArgumentService(Flats4usContext context, IGroupChatService groupChatService)
         {
             _context = context;
             _groupChatService = groupChatService;
@@ -24,7 +25,11 @@ namespace Flats4us.Services
         }
         public async Task<Argument> GetArgumentById(int id)
         {
-            return await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
+            var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
+            if (argument == null)
+                throw new ArgumentException($"Argument with ID: {id} not found");
+            
+            return argument;
         }
 
         public async Task AddArgumentAsync(ArgumentDto input, int studentId)
@@ -62,7 +67,7 @@ namespace Flats4us.Services
             var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
 
             if (argument == null)
-                return;
+                throw new ArgumentException($"Argument with ID: {id} not found");
 
             argument.ArgumentStatus = status;
 
@@ -87,7 +92,11 @@ namespace Flats4us.Services
 
         public async Task<ArgumentIntervention> GetInterventionById(int id)
         {
-            return await _context.ArgumentInterventions.FirstAsync(x => x.ArgumentInterventionId == id);
+            var intervention = await _context.ArgumentInterventions.FirstAsync(x => x.ArgumentInterventionId == id);
+            if (intervention == null) 
+                throw new ArgumentException($"Intervention with ID: {id} not found");
+
+            return intervention;
         }
 
         public async Task AddInterventionAsync(ArgumentInterventionDto input)
