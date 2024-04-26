@@ -8,7 +8,7 @@ namespace Flats4us.Entities.Dto
         public string Description { get; set; }
 
         [Required]
-        public int OfferId { get; set; }
+        public int RentId { get; set; }
 
         [Required]
         public bool InterventionNeed { get; set; }

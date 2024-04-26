@@ -35,9 +35,9 @@ namespace Flats4us.Services
         public async Task AddArgumentAsync(ArgumentDto input, int studentId)
         {
             var property = _context.Properties
-                .FirstOrDefault(r => r.PropertyId == input.OfferId);
+                .FirstOrDefault(r => r.PropertyId == input.RentId);
 
-            if (property is null) throw new ArgumentException($"Property associated with Offer ID {input.OfferId} not found.");
+            if (property is null) throw new ArgumentException($"Property associated with Offer ID {input.RentId} not found.");
 
             //var owner = await _context.Owners.FindAsync(property.OwnerId);
 
@@ -48,7 +48,7 @@ namespace Flats4us.Services
                 StartDate = DateTime.Now,
                 ArgumentStatus = ArgumentStatus.Ongoing,
                 Description = input.Description,
-                RentId = input.OfferId,
+                RentId = input.RentId,
                 InterventionNeed = input.InterventionNeed,
                 StudentId = studentId
             };
