@@ -25,7 +25,7 @@ namespace Flats4us.Controllers
             _argumentService = argumentService;
         }
 
-        [HttpGet("get_argument")]
+        [HttpGet("get")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns list of arguments",
@@ -39,7 +39,7 @@ namespace Flats4us.Controllers
             return Ok(arguments);
         }
 
-        [HttpGet("get_id_argument")]
+        [HttpGet("get_by_id")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns argument by id",
@@ -53,7 +53,7 @@ namespace Flats4us.Controllers
             return Ok(argument);
         }
 
-        [HttpPost("post_argument")]
+        [HttpPost("post")]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Adding a new agrument",
@@ -78,7 +78,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("put_status_argument")]
+        [HttpPut("put_status")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating argument status",
@@ -99,7 +99,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("get_filtered_argument")]
+        [HttpGet("get_filtered")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns filteres arguments",
