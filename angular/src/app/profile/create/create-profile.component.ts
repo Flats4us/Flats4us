@@ -13,14 +13,26 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
+import {
+	Observable,
+	catchError,
+	concatMap,
+	first,
+	map,
+	take,
+	takeUntil,
+	throwError,
+} from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
 import { IAddOwner, IAddStudent, IInterest } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { matchPasswordValidator } from '@shared/utils/validators';
+import {
+	matchPasswordValidator,
+	validityEmailValidator,
+} from '@shared/utils/validators';
 import { UserService } from '@shared/services/user.service';
 
 @Component({
@@ -95,7 +107,11 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		{
 			name: new FormControl('', Validators.required),
 			surname: new FormControl('', Validators.required),
-			email: new FormControl('', [Validators.required, Validators.email]),
+			email: new FormControl('', [
+				Validators.required,
+				Validators.email,
+				validityEmailValidator(this.userService, this.checkIfEmailExist),
+			]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,50}$'),
@@ -168,6 +184,15 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 	public setScan(scan: File) {
 		this.scan = scan;
 		this.scanName = scan.name;
+	}
+
+	public checkIfEmailExist(email: string, userService: UserService): boolean {
+		let exist = false;
+		userService
+			.checkIfEmailExist(email)
+			.pipe(first())
+			.subscribe(result => (exist = result.result));
+		return exist;
 	}
 
 	public onSubmit() {
