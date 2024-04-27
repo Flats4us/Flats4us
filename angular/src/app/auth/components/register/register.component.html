@@ -29,6 +29,11 @@
 					<mat-error *ngIf="registerForm.controls['email'].errors?.['email']">
 						Nieprawidłowy adres email!
 					</mat-error>
+					<mat-error
+						*ngIf="registerForm.controls['email'].errors?.['validityEmail']"
+					>
+						Podany adres email już istnieje w systemie!
+					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
