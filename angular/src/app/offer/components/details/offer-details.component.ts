@@ -15,6 +15,8 @@ import { OfferService } from '../../services/offer.service';
 import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialog/rent-proposition-dialog.component';
 import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent-approval-dialog.component';
 import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-cancel-dialog.component';
+import { AuthService } from '@shared/services/auth.service';
+import { LoggedUserType } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-offer-details',
@@ -43,6 +45,8 @@ export class OfferDetailsComponent {
 	];
 	public uType = UserType;
 
+	public loggedInUserType = LoggedUserType;
+
 	public currentIndex = 0;
 
 	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
@@ -59,7 +63,8 @@ export class OfferDetailsComponent {
 		public offerService: OfferService,
 		private router: Router,
 		private dialog: MatDialog,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		public authService: AuthService
 	) {}
 
 	public addOffer() {
