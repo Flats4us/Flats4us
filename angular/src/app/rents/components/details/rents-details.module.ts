@@ -18,13 +18,13 @@ import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
-		MatIconModule,
 		MatInputModule,
 		MatListModule,
 		MatDividerModule,
@@ -41,6 +41,7 @@ import { MatChipsModule } from '@angular/material/chips';
 		MatCardModule,
 		CdkTableModule,
 		MatChipsModule,
+		AccessControlDirective,
 	],
 	exports: [RentsDetailsComponent],
 })

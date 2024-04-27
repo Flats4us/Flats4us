@@ -1,15 +1,15 @@
 <mat-toolbar class="custom-toolbar" role="heading">
-	<a class="h-full logo" routerLink="/">
+	<a class="h-full logo" [routerLink]="['/']">
 		<img class="h-full w-auto" src="./assets/logoFlats4Us.svg" alt="" />
 	</a>
 	<div
-		*ngIf="authService.isLoggedIn$ | async"
+		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		mat-menu-item
 		class="flex items-center justify-around w-[750px]"
 	>
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
-
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
 		<button
 			*ngIf="user$ | async as user"
@@ -32,49 +32,55 @@
 		</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['rents', 'owner']"
 		>
 			Moje wynajmy
 		</button>
+		<div>
+			<button
+				*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+				mat-menu-item
+				[routerLink]="['rents', 'student']"
+			>
+				Mój najem
+			</button>
+		</div>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['offer', 'owner']"
 		>
 			Moje oferty
 		</button>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['real-estate', 'owner']"
 		>
 			Moje nieruchomości
 		</button>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['real-estate', 'add']"
 		>
 			Dodaj nieruchomość
 		</button>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['offer', 'add']"
 		>
 			Dodaj ofertę
 		</button>
 		<button
-			*ngIf="isUserLoggedInAsStudent"
+			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
 			mat-menu-item
 			[routerLink]="['offer', 'watched']"
 		>
 			Obserwowane oferty
-		</button>
-		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
-			Moje nieruchomości
 		</button>
 		<button mat-menu-item (click)="authService.logout()">Wyloguj się</button>
 	</mat-menu>
@@ -120,33 +126,15 @@
 
 <ng-template #buttons>
 	<a mat-button class="mr-2" [routerLink]="['/']">
-		<mat-icon class="material-symbols-outlined">home</mat-icon>
+		<mat-icon
+			class="material-icons-outlined"
+			aria-hidden="false"
+			aria-label="Example home icon"
+			fontIcon="home"
+		></mat-icon>
 		Strona główna
 	</a>
-	<a
-		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
-		class="mr-2"
-		mat-button
-		[routerLink]="['auth', 'login']"
-	>
-		<mat-icon class="material-symbols-outlined">login</mat-icon>
-		Logowanie
-	</a>
-	<a
-		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
-		class="mr-2"
-		mat-button
-		[routerLink]="['profile', 'create']"
-	>
-		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
-		Rejestracja
-	</a>
-	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
-		mat-button
-		class="mr-2"
-		[matMenuTriggerFor]="messages"
-	>
+	<button mat-button class="mr-2" [matMenuTriggerFor]="messages">
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
