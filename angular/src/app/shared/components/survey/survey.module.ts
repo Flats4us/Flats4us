@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OfferRoutingModule } from 'src/app/offer/offer-routing.module';
 import { RentsDetailsModule } from 'src/app/rents/components/details/rents-details.module';
+import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 
 @NgModule({
 	declarations: [SurveyComponent],
@@ -60,7 +61,7 @@ import { RentsDetailsModule } from 'src/app/rents/components/details/rents-detai
 		MatCheckboxModule,
 		MatRadioModule,
 	],
-	providers: [SurveyService],
+	providers: [SurveyService, RealEstateService],
 	exports: [SurveyComponent],
 })
 export class SurveyModule {}

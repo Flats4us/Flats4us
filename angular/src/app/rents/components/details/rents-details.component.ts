@@ -15,6 +15,7 @@ import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { RentsService } from '../../services/rents.service';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-rents-details',
@@ -58,7 +59,8 @@ export class RentsDetailsComponent {
 		private rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		public authService: AuthService
 	) {}
 
 	public addOffer() {

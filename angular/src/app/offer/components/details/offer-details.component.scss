@@ -212,8 +212,6 @@
 }
 
 .label-price {
-	display: inline-flex;
-	justify-content: right;
 	padding: 4px;
 	min-width: 300px;
 	margin-left: auto;
@@ -245,8 +243,6 @@
 		background: #ffffff;
 	}
 	.label-price {
-		display: inline-flex;
-		justify-content: right;
 		padding: 4px;
 		min-width: 200px;
 		margin-left: auto;
@@ -261,5 +257,11 @@
 		min-width: 300px;
 		padding: 4px;
 		z-index: 996;
+	}
+	.box-equipment {
+		display: flex;
+		align-items: center;
+		max-width: 150px;
+		overflow: hidden;
 	}
 }

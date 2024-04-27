@@ -21,6 +21,8 @@ import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
 import { ISendOffers } from '../offer/models/offer.models';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-start',
@@ -67,7 +69,9 @@ export class StartComponent extends BaseComponent implements OnInit {
 		public realEstateService: RealEstateService,
 		public startService: StartService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private snackBar: MatSnackBar,
+		public authService: AuthService
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
@@ -180,7 +184,22 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public addToWatched(id: number) {
-		this.startService.addToWatched(id).pipe(this.untilDestroyed()).subscribe();
+		this.startService
+			.addToWatched(id)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () =>
+					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
+						duration: 2000,
+					}),
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+				},
+			});
 	}
 
 	public onSubmit() {

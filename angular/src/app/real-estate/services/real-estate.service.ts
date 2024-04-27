@@ -295,6 +295,7 @@ export class RealEstateService {
 					for (let index = 1; index < csvToRowArray.length - 2; index++) {
 						const row = csvToRowArray[index].split(';');
 						const regionToLowerCase = row[2].trim().toLowerCase();
+						regionCityArray = [];
 						regionCityArray.push(<IRegionCity>{
 							region: regionToLowerCase,
 							city: row[1],
