@@ -12,6 +12,7 @@
 			<h1 class="text-3xl pl-4 font-semibold">
 				Moje oferty
 				<button
+					*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
 					mat-icon-button
 					id="add"
 					class="box-icon"

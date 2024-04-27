@@ -17,6 +17,10 @@ import { UserService } from '@shared/services/user.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { environment } from 'src/environments/environment.prod';
+import { MatCardModule } from '@angular/material/card';
+import { Router } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -29,6 +33,7 @@ import { environment } from 'src/environments/environment.prod';
 		MatChipsModule,
 		MatCardModule,
 		MatTooltipModule,
+		MatIconModule,
 	],
 	providers: [OfferService, UserService],
 	templateUrl: './rent-approval-dialog.component.html',
@@ -90,6 +95,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 
 	public showProfile(id: number) {
 		this.router.navigate(['profile', 'details', 'student', id]);
+		this.dialogRef.close();
 	}
 
 	private handleError() {

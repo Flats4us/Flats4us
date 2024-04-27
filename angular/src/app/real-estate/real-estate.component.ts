@@ -4,6 +4,7 @@ import { statusName } from '../rents/statusName';
 import { Router } from '@angular/router';
 import { RealEstateService } from './services/real-estate.service';
 import { IProperty } from './models/real-estate.models';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-real-estate',
@@ -19,7 +20,8 @@ export class RealEstateComponent {
 
 	constructor(
 		public realEstateService: RealEstateService,
-		private router: Router
+		private router: Router,
+		public authService: AuthService
 	) {}
 
 	public addRealEstate() {

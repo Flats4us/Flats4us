@@ -128,7 +128,13 @@
 					{{ actualRealEstate.number }}
 				</p>
 				<p class="text-2xl pt-4">{{ actualRealEstate.area }} m²</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.numberOfRooms }}</p>
+				<p class="text-2xl pt-4">
+					{{
+						actualRealEstate.numberOfRooms === null
+							? "-"
+							: actualRealEstate.numberOfRooms
+					}}
+				</p>
 				<p class="text-2xl pt-4">
 					{{
 						actualRealEstate.numberOfFloors === null
@@ -148,8 +154,52 @@
 				</p>
 				<p class="text-2xl pt-4">{{ actualRealEstate.constructionYear }}</p>
 				<p class="text-2xl pt-4">
-					<span *ngFor="let equipment of actualRealEstate.equipment"
-						>{{ equipment.name }},
+					<span *ngFor="let equipment of actualRealEstate?.equipment"
+						><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
+							<div *ngSwitchCase="1" class="box-equipment">
+								<span class="material-symbols-outlined">dishwasher</span
+								><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="2" class="box-equipment">
+								<mat-icon>local_laundry_service</mat-icon
+								><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="3" class="box-equipment">
+								<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="4" class="box-equipment">
+								<span class="material-symbols-outlined">kettle</span
+								><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="5" class="box-equipment">
+								<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="6" class="box-equipment">
+								<mat-icon>ac_unit</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="7" class="box-equipment">
+								<mat-icon>balcony</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="8" class="box-equipment">
+								<mat-icon>tv</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="9" class="box-equipment">
+								<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="10" class="box-equipment">
+								<span class="material-symbols-outlined">oven</span
+								><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="11" class="box-equipment">
+								<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="12" class="box-equipment">
+								<mat-icon>elevator</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchDefault class="box-equipment">
+								<mat-icon>devices</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+						</mat-chip>
 					</span>
 				</p>
 			</div>

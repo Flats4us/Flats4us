@@ -443,7 +443,9 @@
 										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
 									</div>
 								</mat-chip>
-								<mat-chip>
+								<mat-chip
+									*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+								>
 									<button
 										class="box-icon-watched"
 										id="addToWatched"

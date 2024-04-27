@@ -16,7 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
-import { IAddOwner, IAddStudent } from '../models/profile.models';
+import { IAddOwner, IAddStudent, IInterest } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -69,7 +69,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		minRoommateAge: new FormControl(null),
 		maxRoommateAge: new FormControl(null),
 		city: new FormControl(''),
-		interests: new FormControl([]),
+		interestIds: new FormControl([]),
 	});
 	private ownerFormGroup: FormGroup = this.formBuilder.group({
 		name: new FormControl(''),
@@ -98,9 +98,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			email: new FormControl('', [Validators.required, Validators.email]),
 			password: new FormControl('', [
 				Validators.required,
-				Validators.pattern(
-					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-				),
+				Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,50}$'),
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 		},
@@ -117,7 +115,8 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private profileService: ProfileService,
 		private authService: AuthService,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private userService: UserService
 	) {
 		super();
 	}
@@ -138,6 +137,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			this.studentFormGroup.patchValue(
 				this.createAccountForm.get('userAdditionalData')?.value ??
 					new FormControl('')
+			);
+			this.studentFormGroup.get('interestIds')?.setValue(
+				this.createAccountForm
+					.get('userAdditionalData')
+					?.get('interestIds')
+					?.getRawValue()
+					.map((hobby: IInterest) => hobby.interestId)
 			);
 			this.studentFormGroup.patchValue(
 				this.surveyForm.get('survey')?.value ?? new FormControl('')
