@@ -74,9 +74,7 @@
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
 			Moje nieruchomości
 		</button>
-		<button mat-menu-item routerLink="start" (click)="authService.logout()">
-			Wyloguj się
-		</button>
+		<button mat-menu-item (click)="authService.logout()">Wyloguj się</button>
 	</mat-menu>
 
 	<mat-menu #payments="matMenu">
