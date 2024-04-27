@@ -1,6 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { UserService } from '@shared/services/user.service';
-import { map, takeUntil } from 'rxjs';
 
 export function validityAgeValidator(): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
@@ -32,7 +31,10 @@ export function matchPasswordValidator(
 	}
 }
 
-export function validityEmailValidator(userService: UserService): ValidatorFn {
+export function validityEmailValidator(
+	userService: UserService,
+	checkIfEmailExist: (email: string, service: UserService) => boolean
+): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
 		const value = control.value;
 
@@ -50,12 +52,4 @@ function checkValidityAge(date: Date): boolean {
 	const years = actualDate.getFullYear() - endDate.getFullYear();
 	const isValidAge = years >= 18 && years <= 150 ? true : false;
 	return isValidAge;
-}
-
-function checkIfEmailExist(email: string, userService: UserService): boolean {
-	let exist = false;
-	userService
-		.checkIfEmailExist(email)
-		.subscribe(result => (exist = result.result));
-	return exist;
 }
