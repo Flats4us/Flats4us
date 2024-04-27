@@ -10,6 +10,7 @@ import {
 import { environment } from 'src/environments/environment.prod';
 import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
 import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root',
