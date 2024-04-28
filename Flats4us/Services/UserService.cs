@@ -263,11 +263,11 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<bool> CheckIfStudentExistsByIdAsync(string email)
+        public async Task<bool> CheckIfUserExistsByIdAsync(string email)
         {
-            var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
-            return student != null;
+            return user != null;
         }
 
         public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)

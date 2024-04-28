@@ -14,7 +14,7 @@ namespace Flats4us.Services.Interfaces
         Task ChangePasswordAsync(string oldPassword, string newPassword, int userId);
         Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId);
         Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId);
-        Task<bool> CheckIfStudentExistsByIdAsync(string email);
+        Task<bool> CheckIfUserExistsByIdAsync(string email);
         Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
         Task<UserInfoDto> GetUserInfo(int userId);
     }
