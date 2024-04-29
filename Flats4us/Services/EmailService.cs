@@ -1,13 +1,17 @@
-﻿using Flats4us.Helpers;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Entities;
+using Flats4us.Helpers;
 using Flats4us.Services.Interfaces;
 using System.Net;
 using System.Net.Mail;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IUserService _userService;
+        public readonly Flats4usContext _context;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
         private string Server => _configuration["Smtp:Server"];
@@ -19,16 +23,22 @@ namespace Flats4us.Services
         private bool UseDefaultCredentials => bool.Parse(_configuration["Smtp:UseDefaultCredentials"]);
 
         public EmailService(
-            IUserService userService, 
+            Flats4usContext context,
+            IMapper mapper,
             IConfiguration configuration)
         {
-            _userService = userService;
+            _context = context;
+            _mapper = mapper;
             _configuration = configuration;
         }
 
         public async Task SendEmailAsync(int toUserId, string subject, string body)
         {
-            var userInfo = await _userService.GetUserInfo(toUserId);
+            var user = await _context.Users.FindAsync(toUserId);
+
+            if (user is null) throw new ArgumentException($"User with ID {toUserId} not found.");
+
+            var userInfo = _mapper.Map<UserInfoDto>(user);
 
             using (var client = new SmtpClient())
             {
@@ -41,7 +51,7 @@ namespace Flats4us.Services
 
                 using var message = new MailMessage(
                     from: new MailAddress(SenderAddress, "Flats4us"),
-                    to: new MailAddress(userInfo.Email, userInfo.FullName)
+                    to: new MailAddress("flats4us.system@gmail.com", userInfo.FullName)
                 );
 
                 message.Subject = subject;

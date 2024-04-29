@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -16,14 +17,17 @@ namespace Flats4us.Services
     public class UserService : IUserService
     {
         public readonly Flats4usContext _context;
+        private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public UserService(Flats4usContext context,
+            IEmailService emailService,
             IMapper mapper,
             IConfiguration configuration)
         {
             _context = context;
+            _emailService = emailService;
             _mapper = mapper;
             _configuration = configuration;
         }
@@ -281,7 +285,17 @@ namespace Flats4us.Services
 
                 await _context.SaveChangesAsync();
 
-                // send email
+                var body = new StringBuilder();
+
+                var link = "xxx/" + user.PasswordResetToken;
+
+                body.AppendLine(EmailHelper.HtmlHTag("Dla twojego konta pojawiło się żądanie zmiany hasła", 1))
+                    .AppendLine(EmailHelper.HtmlPTag($"Aby przejść do zmiany hasła naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                    .AppendLine(EmailHelper.HtmlPTag($"{link}"))
+                    .AppendLine(EmailHelper.HtmlPTag("Jeżeli to nie ty prosiłeś o zmiane hasła wystarczy, że zignorujesz tę wiadomość"));
+
+
+                await _emailService.SendEmailAsync(user.UserId, "Zmiana hasła w serwisie Flats4us", body.ToString());
             }
         }
 
