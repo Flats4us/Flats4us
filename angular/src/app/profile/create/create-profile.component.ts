@@ -17,10 +17,9 @@ import {
 	Observable,
 	catchError,
 	concatMap,
-	first,
 	map,
-	take,
-	takeUntil,
+	of,
+	switchMap,
 	throwError,
 } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -29,10 +28,7 @@ import { IAddOwner, IAddStudent, IInterest } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-	matchPasswordValidator,
-	validityEmailValidator,
-} from '@shared/utils/validators';
+import { matchPasswordValidator } from '@shared/utils/validators';
 import { UserService } from '@shared/services/user.service';
 
 @Component({
@@ -56,6 +52,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 	public ownerToAdd?: IAddOwner;
 	public user = '';
 	public modificationType = '';
+	public emailExist$: Observable<boolean> = of(false);
 	private studentFormGroup: FormGroup = this.formBuilder.group({
 		name: new FormControl(''),
 		surname: new FormControl(''),
@@ -107,18 +104,14 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		{
 			name: new FormControl('', Validators.required),
 			surname: new FormControl('', Validators.required),
-			email: new FormControl('', [
-				Validators.required,
-				Validators.email,
-				validityEmailValidator(this.userService, this.checkIfEmailExist),
-			]),
+			email: new FormControl('', [Validators.required, Validators.email]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,50}$'),
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 		},
-		{ validators: matchPasswordValidator }
+		{ validators: [matchPasswordValidator] }
 	);
 
 	public createAccountForm = new FormGroup({});
@@ -145,6 +138,12 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		this.modificationType$
 			.pipe(this.untilDestroyed())
 			.subscribe(type => (this.modificationType = type));
+		this.emailExist$ =
+			this.registerForm
+				.get('email')
+				?.valueChanges.pipe(
+					switchMap(value => this.checkIfEmailExist(value ?? ''))
+				) ?? of(false);
 	}
 
 	public onAdd() {
@@ -186,19 +185,17 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		this.scanName = scan.name;
 	}
 
-	public checkIfEmailExist(email: string, userService: UserService): boolean {
-		let exist = false;
-		userService
+	public checkIfEmailExist(email: string): Observable<boolean> {
+		return this.userService
 			.checkIfEmailExist(email)
-			.pipe(first())
-			.subscribe(result => (exist = result.result));
-		return exist;
+			.pipe(map(result => result.result));
 	}
 
 	public onSubmit() {
 		if (
 			this.registerForm.valid &&
 			this.createAccountForm.valid &&
+			this.surveyForm.valid &&
 			this.photoName &&
 			this.scanName
 		) {

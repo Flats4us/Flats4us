@@ -89,7 +89,7 @@
 					"
 					class="h-min"
 				>
-					<input matInput type="number" min="0" [formControlName]="question.name" />
+					<input matInput type="number" min="1" [formControlName]="question.name" />
 					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
 						Podano nieprawidłową wartość!
 					</mat-error>
