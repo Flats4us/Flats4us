@@ -20,10 +20,8 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("reset")]
-        [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
-            Summary = "Resets database. This may take some time.",
-            Description = "Requires moderator privileges."
+            Summary = "Resets database. This may take some time."
         )]
         public IActionResult ResetDatabase()
         {
