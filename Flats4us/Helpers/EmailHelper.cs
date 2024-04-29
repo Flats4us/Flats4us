@@ -62,7 +62,7 @@
                     {value}
                 </div>
                 <div class='footer'>
-                    Ta wiadomość została wygenerowana automatycznie
+                    Ta wiadomość została wygenerowana automatycznie, prosimy o nie odpowiadanie na nią
                 </div>
             </body>
             </html>";
