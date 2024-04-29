@@ -112,14 +112,8 @@ export class SurveyComponent extends BaseComponent implements OnInit {
 					this.formToAdd.addControl(question.name, this.maxAgeControl);
 					break;
 				default:
-					this.offerForm.addControl(
-						question.name,
-						new FormControl(null, Validators.required)
-					);
-					this.formToAdd.addControl(
-						question.name,
-						new FormControl(null, Validators.required)
-					);
+					this.offerForm.addControl(question.name, new FormControl(null));
+					this.formToAdd.addControl(question.name, new FormControl(null));
 					break;
 			}
 		});
