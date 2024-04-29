@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { UserService } from '@shared/services/user.service';
 
 export function validityAgeValidator(): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
