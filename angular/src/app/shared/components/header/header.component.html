@@ -126,15 +126,33 @@
 
 <ng-template #buttons>
 	<a mat-button class="mr-2" [routerLink]="['/']">
-		<mat-icon
-			class="material-icons-outlined"
-			aria-hidden="false"
-			aria-label="Example home icon"
-			fontIcon="home"
-		></mat-icon>
+		<mat-icon class="material-symbols-outlined">home</mat-icon>
 		Strona główna
 	</a>
-	<button mat-button class="mr-2" [matMenuTriggerFor]="messages">
+	<a
+		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		class="mr-2"
+		mat-button
+		[routerLink]="['auth', 'login']"
+	>
+		<mat-icon class="material-symbols-outlined">login</mat-icon>
+		Logowanie
+	</a>
+	<a
+		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		class="mr-2"
+		mat-button
+		[routerLink]="['profile', 'create']"
+	>
+		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
+		Rejestracja
+	</a>
+	<button
+		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		mat-button
+		class="mr-2"
+		[matMenuTriggerFor]="messages"
+	>
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
