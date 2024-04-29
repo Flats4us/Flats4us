@@ -45,17 +45,90 @@
 				</div>
 
 				<mat-form-field
-					*ngIf="question.typeName === typeName.TEXT && showMoreQuestions"
+					*ngIf="
+						question.typeName === typeName.TEXT &&
+						showMoreQuestions &&
+						question.name !== 'city'
+					"
 					class="h-min"
 				>
 					<input matInput type="text" [formControlName]="question.name" />
 				</mat-form-field>
 
 				<mat-form-field
-					*ngIf="question.typeName === typeName.NUMBER && showMoreQuestions"
+					*ngIf="
+						question.typeName === typeName.TEXT &&
+						showMoreQuestions &&
+						question.name === 'city'
+					"
 					class="h-min"
 				>
-					<input matInput type="number" min="0" [formControlName]="question.name" />
+					<input
+						matInput
+						type="text"
+						[formControlName]="question.name"
+						[matAutocomplete]="autoCity"
+					/>
+					<mat-autocomplete #autoCity="matAutocomplete">
+						<mat-optgroup
+							*ngFor="let groupCities of citiesGroupOptions$ | async"
+							[label]="groupCities.whole"
+						>
+							<mat-option *ngFor="let city of groupCities.parts" [value]="city">
+								{{ city }}
+							</mat-option>
+						</mat-optgroup>
+					</mat-autocomplete>
+				</mat-form-field>
+
+				<mat-form-field
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'maxNumberOfRoommates'
+					"
+					class="h-min"
+				>
+					<input matInput type="number" min="1" [formControlName]="question.name" />
+					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
+						Podano nieprawidłową wartość!
+					</mat-error>
+				</mat-form-field>
+
+				<mat-form-field
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'minRoommateAge'
+					"
+					class="h-min"
+				>
+					<input
+						matInput
+						type="number"
+						min="18"
+						max="150"
+						[formControlName]="question.name"
+					/>
+					<mat-error> Podano nieprawidłowy wiek! </mat-error>
+				</mat-form-field>
+
+				<mat-form-field
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'maxRoommateAge'
+					"
+					class="h-min"
+				>
+					<input
+						matInput
+						type="number"
+						min="18"
+						max="150"
+						[formControlName]="question.name"
+					/>
+					<mat-error> Podano nieprawidłowy wiek! </mat-error>
 				</mat-form-field>
 
 				<section

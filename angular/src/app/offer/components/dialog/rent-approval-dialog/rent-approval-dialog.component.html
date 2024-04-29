@@ -4,11 +4,11 @@
 		<p class="pt-4 font-semibold">Data rozpoczęcia najmu:</p>
 		<p>22-03-2024</p>
 		<p class="pt-4 font-semibold">Okres najmu:</p>
-		<p>1 rok</p>
+		<p>24 miesiące</p>
 		<div *ngIf="userProfile$ | async as user" class="profiles-container">
 			<p class="pt-4 font-semibold">Najemcy:</p>
-			<mat-card class="profile-details" (click)="showProfile(user.userId)">
-				<div>
+			<mat-card class="mt-4" (click)="showProfile(user.userId)">
+				<div class="profile-details">
 					<mat-card-avatar
 						matTooltip="Pokaż profil"
 						(click)="showProfile(user.userId)"
@@ -17,31 +17,22 @@
 							class="profile-avatar"
 							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 					/></mat-card-avatar>
-					<div>
-						<mat-chip-set>
-							<mat-chip>Imię: {{ user.name }}</mat-chip>
-							<mat-chip>Wiek: {{ user.age }}</mat-chip>
-							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
-						</mat-chip-set>
-					</div>
-				</div>
-			</mat-card>
-			<mat-card class="profile-details">
-				<div>
-					<mat-card-avatar
-						matTooltip="Pokaż profil"
-						(click)="showProfile(user.userId)"
-					>
-						<img
-							class="profile-avatar"
-							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
-					/></mat-card-avatar>
-					<div>
-						<mat-chip-set>
-							<mat-chip>Imię: {{ user.name }}</mat-chip>
-							<mat-chip>Wiek: {{ user.age }}</mat-chip>
-							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
-						</mat-chip-set>
+					<div class="container-features">
+						<mat-chip matTooltip="Imię"
+							><div class="box-feature">
+								<mat-icon>account_circle</mat-icon><span>{{ user.name }}</span>
+							</div></mat-chip
+						>
+						<mat-chip matTooltip="Wiek"
+							><div class="box-feature">
+								<mat-icon>calendar_today</mat-icon><span>{{ user.age }}</span>
+							</div></mat-chip
+						>
+						<mat-chip matTooltip="Uczelnia"
+							><div class="box-feature">
+								<mat-icon>school</mat-icon><span>{{ user.university }}</span>
+							</div></mat-chip
+						>
 					</div>
 				</div>
 			</mat-card>

@@ -7,7 +7,7 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
 	AbstractControl,
 	FormBuilder,
@@ -23,7 +23,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { ModificationType, StatusType, UserType } from '../models/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -62,10 +61,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	protected baseUrl = environment.apiUrl.replace('/api', '/');
 
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
-	public hobbyCtrl = new FormControl(null);
+	public hobbyCtrl = new FormControl([] as IInterest[]);
 	public socialMediaCtrl = new FormControl('');
-	public filteredHobbies$: Observable<IInterest[]>;
-	public myHobbies: IInterest[] = [];
+	public filteredHobbies$: Observable<IInterest[]> =
+		this.profileService.getInterests();
 	public socialMedias: string[] = [];
 	public actualUser$?: Observable<IUserProfile>;
 
@@ -107,12 +106,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private snackBar: MatSnackBar
 	) {
 		super();
-		this.filteredHobbies$ = this.hobbyCtrl.valueChanges.pipe(
-			startWith(null),
-			map(hobby =>
-				hobby ? this.filter(hobby) : this.profileService.interests.slice()
-			)
-		);
 		this.dataFormGroupStudent = this.formBuilder.group({
 			studentNumber: new FormControl('', Validators.required),
 			university: new FormControl('', Validators.required),
@@ -123,7 +116,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			interests: new FormControl(this.myHobbies),
+			interestIds: this.hobbyCtrl,
 			links: new FormControl(this.socialMedias),
 			documentType: new FormControl(''),
 			documentExpireDate: new FormControl(null, [
@@ -167,7 +160,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					this.urlPhoto = this.baseUrl + user.profilePicture.path;
 					this.urlScan = this.baseUrl + user.document.path;
 					if (user.userType === 1) {
-						this.myHobbies = user.interests;
+						this.hobbyCtrl.setValue(user.interests);
 						this.socialMedias = user.links;
 						this.dataFormGroupStudent.patchValue(user);
 					} else {
@@ -214,28 +207,16 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	public addHobby(
-		event: MatChipInputEvent,
-		items: IInterest[],
-		formControl: FormControl
-	): void {
-		const value = event.value;
-		if (!items.map(item => item.name).includes(value)) {
-			items.push(
-				this.profileService.interests.find(hobby => hobby.name === value) ??
-					({} as IInterest)
-			);
-		}
-		event.chipInput.clear();
-
-		formControl.setValue(null);
+	public removeHobby(hobby: IInterest) {
+		const hobbies = this.hobbyCtrl.value as IInterest[];
+		this.removeFirst(hobbies, hobby);
+		this.hobbyCtrl.setValue(hobbies);
 	}
 
-	public removeHobby(item: IInterest, items: IInterest[]): void {
-		const index = items.indexOf(item);
-
-		if (index >= 0) {
-			items.splice(index, 1);
+	private removeFirst<T>(array: T[], toRemove: T): void {
+		const index = array.indexOf(toRemove);
+		if (index !== -1) {
+			array.splice(index, 1);
 		}
 	}
 
@@ -251,22 +232,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	public selected(event: MatAutocompleteSelectedEvent): void {
-		if (
-			!this.myHobbies.map(item => item.name).includes(event.option.value.name)
-		) {
-			this.myHobbies.push(event.option.value);
-		}
-		this.hobbyCtrl.setValue(null);
-	}
-
-	private filter(value: IInterest): IInterest[] {
-		const valueLowerCase = value.name.toLowerCase();
-		return this.profileService.interests.filter(hobby =>
-			hobby.name.toLowerCase().includes(valueLowerCase)
-		);
-	}
-
 	public changeEmail() {
 		this.router.navigate(['settings', 'email-change']);
 	}
@@ -276,6 +241,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
 	public changeSurvey() {
 		this.router.navigate(['profile', 'survey', 'student']);
+	}
+
+	public getTooltipScan(): string {
+		return !this.urlNewScan ? 'Wczytaj skan dokumentu' : 'Zmień skan dokumentu';
 	}
 
 	public onSelect(menuOption: IMenuOptions) {

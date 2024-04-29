@@ -153,14 +153,14 @@
 				<p class="text-2xl pt-4">Piętro:</p>
 				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
 				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
 				<p class="text-2xl pt-4">Informacje o umowie:</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-					class="text-2xl"
+					class="text-2xl pt-4"
 				>
-					Współlokatorzy:
+					Lokatorzy:
 				</p>
+				<p class="text-2xl pt-4">Wyposażenie:</p>
 			</div>
 			<div class="column-header-description">
 				<p class="text-2xl pt-4">
@@ -173,7 +173,13 @@
 					ul. {{ data.offer?.property?.street }} {{ data.offer?.property?.number }}
 				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
-				<p class="text-2xl pt-4">{{ data.offer?.property?.numberOfRooms }}</p>
+				<p class="text-2xl pt-4">
+					{{
+						data.offer?.property?.numberOfRooms === null
+							? "-"
+							: data.offer?.property?.numberOfRooms
+					}}
+				</p>
 				<p class="text-2xl pt-4">
 					{{
 						data.offer?.property?.numberOfFloors === null
@@ -187,20 +193,68 @@
 					}}
 				</p>
 				<p class="text-2xl pt-4">
-					{{ data.offer?.property?.maxNumberOfInhabitants }}
+					{{
+						data.offer?.property?.maxNumberOfInhabitants === null
+							? "-"
+							: data.offer?.property?.maxNumberOfInhabitants
+					}}
 				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
-				<p class="text-2xl pt-4">
-					<span *ngFor="let equipment of data?.offer?.property?.equipment"
-						><mat-chip class="mr-4">{{ equipment.name }}</mat-chip>
-					</span>
-				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl pt-4"
 				>
 					Jan Kowalski, Barbara Nowak
+				</p>
+				<p class="text-2xl pt-4">
+					<span *ngFor="let equipment of data?.offer?.property?.equipment"
+						><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
+							<div *ngSwitchCase="1" class="box-equipment">
+								<span class="material-symbols-outlined">dishwasher</span>
+								<span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="2" class="box-equipment">
+								<mat-icon>local_laundry_service</mat-icon
+								><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="3" class="box-equipment">
+								<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="4" class="box-equipment">
+								<span class="material-symbols-outlined">kettle</span>
+								<span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="5" class="box-equipment">
+								<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="6" class="box-equipment">
+								<mat-icon>ac_unit</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="7" class="box-equipment">
+								<mat-icon>balcony</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="8" class="box-equipment">
+								<mat-icon>tv</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="9" class="box-equipment">
+								<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="10" class="box-equipment">
+								<span class="material-symbols-outlined">oven</span>
+								<span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="11" class="box-equipment">
+								<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchCase="12" class="box-equipment">
+								<mat-icon>elevator</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+							<div *ngSwitchDefault class="box-equipment">
+								<mat-icon>devices</mat-icon><span>{{ equipment.name }}</span>
+							</div>
+						</mat-chip>
+					</span>
 				</p>
 			</div>
 		</div>
@@ -236,6 +290,7 @@
 			Powrót
 		</button>
 		<button
+			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="onAddMeeting(data.offer?.offerId)"
@@ -243,6 +298,7 @@
 			Dodaj spotkanie
 		</button>
 		<button
+			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="startRent(data.offer?.offerId)"
