@@ -124,41 +124,86 @@
 
 <ng-template #buttons>
 	<a mat-button class="mr-2" [routerLink]="['/']">
-		<mat-icon
-			class="material-icons-outlined"
-			aria-hidden="false"
-			aria-label="Example home icon"
-			fontIcon="home"
-		></mat-icon>
+		<mat-icon class="material-symbols-outlined">home</mat-icon>
 		Strona główna
 	</a>
-	<button mat-button class="mr-2" [matMenuTriggerFor]="messages">
+	<a
+		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		class="mr-2"
+		mat-button
+		[routerLink]="['auth', 'login']"
+	>
+		<mat-icon class="material-symbols-outlined">login</mat-icon>
+		Logowanie
+	</a>
+	<a
+		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		class="mr-2"
+		mat-button
+		[routerLink]="['profile', 'create']"
+	>
+		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
+		Rejestracja
+	</a>
+	<button
+		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		mat-button
+		class="mr-2"
+		[matMenuTriggerFor]="messages"
+	>
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
 	<mat-menu #messages="matMenu">
-		<button mat-menu-item routerLink="messages">Wiadomości z właścicielem</button>
-		<button mat-menu-item routerLink="messages">
-			Wiadomości z współlokatorami
+		<button
+			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			mat-menu-item
+			[routerLink]="['messages']"
+		>
+			Wiadomości z właścicielem
+		</button>
+		<button
+			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			mat-menu-item
+			[routerLink]="['messages']"
+		>
+			Wiadomości ze współlokatorami
+		</button>
+		<button
+			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			mat-menu-item
+			[routerLink]="['messages']"
+		>
+			Wiadomości z lokatorami
 		</button>
 	</mat-menu>
-	<button mat-button class="mr-2" [matMenuTriggerFor]="settings">
+	<button
+		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		mat-button
+		class="mr-2"
+		[matMenuTriggerFor]="settings"
+	>
 		<mat-icon class="material-icons-outlined">settings</mat-icon>
 		Ustawienia
 	</button>
 	<mat-menu #settings="matMenu">
-		<button mat-menu-item routerLink="settings/password-change">
+		<button mat-menu-item [routerLink]="['settings', 'password-change']">
 			Zmień hasło
 		</button>
 	</mat-menu>
 
-	<button mat-button class="mr-2" [matMenuTriggerFor]="extended">
+	<button
+		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		mat-button
+		class="mr-2"
+		[matMenuTriggerFor]="extended"
+	>
 		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
 		Dodatkowe
 	</button>
 
 	<mat-menu #extended="matMenu">
-		<button mat-menu-item routerLink="calendar">Kalendarz</button>
+		<button mat-menu-item [routerLink]="['calendar']">Kalendarz</button>
 		<button
 			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
 			mat-menu-item
