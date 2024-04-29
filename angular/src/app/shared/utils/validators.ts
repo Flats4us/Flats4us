@@ -1,5 +1,4 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { UserService } from '@shared/services/user.service';
 
 export function validityAgeValidator(): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
@@ -29,21 +28,6 @@ export function matchPasswordValidator(
 	} else {
 		return null;
 	}
-}
-
-export function validityEmailValidator(
-	userService: UserService,
-	checkIfEmailExist: (email: string, service: UserService) => boolean
-): ValidatorFn {
-	return (control: AbstractControl): ValidationErrors | null => {
-		const value = control.value;
-
-		if (!value) {
-			return null;
-		}
-
-		return checkIfEmailExist(value, userService) ? { validityEmail: true } : null;
-	};
 }
 
 function checkValidityAge(date: Date): boolean {
