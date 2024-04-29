@@ -50,6 +50,11 @@
 	margin-top: auto;
 }
 
+mat-paginator {
+	display: flex;
+	justify-content: center;
+}
+
 mat-chip {
 	background-color: #fbbb8b;
 
