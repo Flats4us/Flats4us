@@ -20,10 +20,7 @@ import { IAddOwner, IAddStudent } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-	matchPasswordValidator,
-	validityEmailValidator,
-} from '@shared/utils/validators';
+import { matchPasswordValidator } from '@shared/utils/validators';
 import { UserService } from '@shared/services/user.service';
 
 @Component({
@@ -98,11 +95,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		{
 			name: new FormControl('', Validators.required),
 			surname: new FormControl('', Validators.required),
-			email: new FormControl('', [
-				Validators.required,
-				Validators.email,
-				validityEmailValidator(this.userService, this.checkIfEmailExist),
-			]),
+			email: new FormControl('', [Validators.required, Validators.email]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
