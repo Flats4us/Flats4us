@@ -9,9 +9,12 @@ const routes: Routes = [
 		path: '',
 		component: ConversationsComponent,
 		children: [
-			{ path: ':conversationId', component: MessagesConversationComponent },
 			{
-				path: 'new/receiver/:receiverId',
+				path: 'receiver/:receiverId/conversation/:conversationId',
+				component: MessagesConversationComponent,
+			},
+			{
+				path: 'receiver/:receiverId/conversation/new',
 				component: MessagesConversationComponent,
 			},
 		],

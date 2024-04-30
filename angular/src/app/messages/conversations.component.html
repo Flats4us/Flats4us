@@ -9,7 +9,12 @@
 			<mat-list-item
 				*ngFor="let message of messages"
 				class="messages-choice__conversation"
-				[routerLink]="message.chatId.toString()"
+				[routerLink]="[
+					'receiver',
+					message.otherUserId,
+					'conversation',
+					message.chatId.toString()
+				]"
 			>
 				<ng-container>
 					<span>{{ message.otherUsername }}</span>
