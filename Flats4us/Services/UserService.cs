@@ -319,9 +319,12 @@ namespace Flats4us.Services
 
         public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)
         {
-            var sourceUser = await _context.Users.FindAsync(requestUserId);
+            var sourceUser = await _context.OwnerStudents.Include(s => s.IssuedUserOpinions)
+                .FirstOrDefaultAsync(x => x.UserId == requestUserId);
 
             if (sourceUser is null) throw new ArgumentException($"User with ID {requestUserId} not found.");
+
+            if (sourceUser.IssuedUserOpinions.Any(op => op.TargetUserId == targetUserId)) throw new Exception($"User {requestUserId} already added opinion for user {targetUserId}");
 
             var targetUser = await _context.Users.FindAsync(targetUserId);
 
