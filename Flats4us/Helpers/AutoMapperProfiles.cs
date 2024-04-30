@@ -12,7 +12,12 @@ namespace Flats4us.Helpers
         {
             CreateMap<Equipment, EquipmentDto>();
 
-            CreateMap<Rent, RentDto>();
+            CreateMap<Payment, PaymentDto>();
+
+            CreateMap<Rent, RentDto>()
+                .ForMember(dest => dest.PropertyId, opt => opt.MapFrom(src => src.Offer.PropertyId))
+                .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date < src.EndDate))
+                .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))

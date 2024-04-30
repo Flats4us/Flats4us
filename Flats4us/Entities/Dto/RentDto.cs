@@ -8,6 +8,15 @@ namespace Flats4us.Entities.Dto
         public int RentId { get; set; }
 
         [Required]
+        public int PropertyId { get; set; }
+
+        [Required]
+        public int OfferId { get; set; }
+
+        [Required]
+        public bool IsFinished { get; set; }
+
+        [Required]
         public DateTime StartDate { get; set; }
 
         [Required]
@@ -15,5 +24,11 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        [Required]
+        public ICollection<UserInfoDto> Tenants { get; set; }
+
+        [Required]
+        public ICollection<PaymentDto> Payments { get; set; }
     }
 }

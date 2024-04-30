@@ -374,8 +374,7 @@ namespace Flats4us.Services
                 new Claim("VerificationStatus", user.VerificationStatus.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("Jwt:Key").Value!));
+            var key = new SymmetricSecurityKey(Convert.FromBase64String(_configuration.GetSection("Jwt:Key").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
