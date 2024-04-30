@@ -15,6 +15,7 @@
 			*ngIf="user$ | async as user"
 			class="your-profile"
 			[matMenuTriggerFor]="myProfile"
+			(click)="showSidenav ? (showSidenav = false) : showSidenav"
 		>
 			<img
 				class="your-photo"
@@ -123,11 +124,11 @@
 </div>
 
 <ng-template #buttons>
-	<a mat-button class="mr-2" [routerLink]="['/']">
+	<button mat-button class="mr-2" [routerLink]="['/']">
 		<mat-icon class="material-symbols-outlined">home</mat-icon>
 		Strona główna
-	</a>
-	<a
+	</button>
+	<button
 		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
 		class="mr-2"
 		mat-button
@@ -135,8 +136,8 @@
 	>
 		<mat-icon class="material-symbols-outlined">login</mat-icon>
 		Logowanie
-	</a>
-	<a
+	</button>
+	<button
 		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
 		class="mr-2"
 		mat-button
@@ -144,7 +145,7 @@
 	>
 		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
 		Rejestracja
-	</a>
+	</button>
 	<button
 		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
 		mat-button
