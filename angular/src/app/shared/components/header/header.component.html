@@ -152,34 +152,11 @@
 		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
 		mat-button
 		class="mr-2"
-		[matMenuTriggerFor]="messages"
+		[routerLink]="['messages']"
 	>
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
-	<mat-menu #messages="matMenu">
-		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
-			mat-menu-item
-			[routerLink]="['messages']"
-		>
-			Wiadomości z właścicielem
-		</button>
-		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
-			mat-menu-item
-			[routerLink]="['messages']"
-		>
-			Wiadomości ze współlokatorami
-		</button>
-		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
-			mat-menu-item
-			[routerLink]="['messages']"
-		>
-			Wiadomości z lokatorami
-		</button>
-	</mat-menu>
 	<button
 		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
 		mat-button
