@@ -39,10 +39,6 @@ namespace Flats4us.Services
 
             if (property is null) throw new ArgumentException($"Property associated with Offer ID {input.RentId} not found.");
 
-            //var owner = await _context.Owners.FindAsync(property.OwnerId);
-
-            //if (property is null) throw new ArgumentException($"Owner associated with Property ID {property.OwnerId} not found.");
-
             var argument = new Argument
             {
                 StartDate = DateTime.Now,
@@ -71,7 +67,6 @@ namespace Flats4us.Services
 
             argument.ArgumentStatus = status;
 
-            //await _context.Arguments.UpdateAsync(argument);
             await _context.SaveChangesAsync();
         }
 

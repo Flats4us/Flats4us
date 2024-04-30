@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/arguments")]
     [ApiController]
     public class ArgumentController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace Flats4us.Controllers
             _argumentService = argumentService;
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns list of arguments",
@@ -39,7 +39,7 @@ namespace Flats4us.Controllers
             return Ok(arguments);
         }
 
-        [HttpGet("get_by_id")]
+        [HttpGet("{id}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns argument by id",
@@ -53,7 +53,7 @@ namespace Flats4us.Controllers
             return Ok(argument);
         }
 
-        [HttpPost("post")]
+        [HttpPost]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Adding a new agrument",
@@ -78,7 +78,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("put_status")]
+        [HttpPut("status")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating argument status",
@@ -99,7 +99,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("get_filtered")]
+        [HttpGet("ongoing")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns filteres arguments",
@@ -113,7 +113,7 @@ namespace Flats4us.Controllers
             return Ok(arguments);
         }
 
-        [HttpGet("get_interventions")]
+        [HttpGet("interventions")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns list of interventions",
@@ -127,7 +127,7 @@ namespace Flats4us.Controllers
             return Ok(interventions);
         }
 
-        [HttpGet("get_interventions_by_id")]
+        [HttpGet("intervention/{id}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns list of interventions by id",
@@ -141,7 +141,7 @@ namespace Flats4us.Controllers
             return Ok(interventions);
         }
 
-        [HttpPost("post_intervention")]
+        [HttpPost("intervention")]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Adding a new agrument",
@@ -161,15 +161,5 @@ namespace Flats4us.Controllers
                 return BadRequest($"An error occurred: {ex.InnerException.Message}");
             }
         }
-
-
-
-
-
-
-
-
-
-
     }
 }
