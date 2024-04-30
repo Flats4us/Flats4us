@@ -131,12 +131,14 @@ namespace Flats4us.Services
                 var mainStudentRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.Rents)
+                        .Include(r => r.Payments)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
                 var roommateRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.RoommateInRents)
+                        .Include(r => r.Payments)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 

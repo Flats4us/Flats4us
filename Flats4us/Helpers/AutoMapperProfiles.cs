@@ -12,6 +12,8 @@ namespace Flats4us.Helpers
         {
             CreateMap<Equipment, EquipmentDto>();
 
+            CreateMap<Payment, PaymentDto>();
+
             CreateMap<Rent, RentDto>();
 
             CreateMap<Flat, PropertyDto>()
