@@ -26,9 +26,9 @@ namespace Flats4us.Entities.Dto
         public DateTime EndDate { get; set; }
 
         [Required]
-        public StudentDto Tenants { get; set; }
+        public ICollection<UserInfoDto> Tenants { get; set; }
 
         [Required]
-        public PaymentDto Payments { get; set; }
+        public ICollection<PaymentDto> Payments { get; set; }
     }
 }
