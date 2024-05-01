@@ -37,7 +37,7 @@
 			</div>
 			<div class="flex flex-col items-start">
 				<div *ngFor="let link of user.links" class="text-gray-400">
-					<div>
+					<div class="profile-link">
 						<mat-icon>link</mat-icon>
 						<a href="{{ link }}">{{ link }}</a>
 					</div>
@@ -45,7 +45,7 @@
 			</div>
 		</section>
 		<section>
-			<div class="profile-education__wrapper mb-4">
+			<div class="profile-details__wrapper mb-4">
 				<div class="profile-education__header text-2xl flex gap-2 content-center">
 					<mat-icon>school</mat-icon>
 					<span>Uczelnia</span>
@@ -54,7 +54,7 @@
 					{{ user.university }}
 				</div>
 			</div>
-			<div class="profile-interests__wrapper">
+			<div class="profile-details__wrapper mb-4">
 				<div class="profile-interests__header text-2xl flex gap-2 content-center">
 					<mat-icon>travel_explore</mat-icon>
 					<span>Zainteresowania</span>
@@ -65,6 +65,64 @@
 							interest.name
 						}}</mat-chip>
 					</mat-chip-listbox>
+				</div>
+			</div>
+			<div class="profile-details__wrapper">
+				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
+					<mat-icon>rate_review</mat-icon>
+					<span>Opinie</span>
+				</div>
+				<div>
+					<ul>
+						<li>
+							<span>Pomocny:</span>
+							<span>{{ user.sumHelpful }}</span>
+						</li>
+						<li>
+							<span>Gotowy do współpracy:</span>
+							<span>{{ user.sumCooperative }}</span>
+						</li>
+						<li>
+							<span>Dba o porządek:</span>
+							<span>{{ user.sumTidy }}</span>
+						</li>
+						<li>
+							<span>Przyjazny:</span>
+							<span>{{ user.sumFriendly }}</span>
+						</li>
+						<li>
+							<span>Szanujący prywatność innych:</span>
+							<span>{{ user.sumRespectingPrivacy }}</span>
+						</li>
+						<li>
+							<span>Komunikatywny:</span>
+							<span>{{ user.sumCommunicative }}</span>
+						</li>
+						<li>
+							<span>Nieuczciwy:</span>
+							<span>{{ user.sumUnfair }}</span>
+						</li>
+						<li>
+							<span>Brak higieny osobistej:</span>
+							<span>{{ user.sumLackOfHygiene }}</span>
+						</li>
+						<li>
+							<span>Nie dba o porządek:</span>
+							<span>{{ user.sumUntidy }}</span>
+						</li>
+						<li>
+							<span>Konfliktowy:</span>
+							<span>{{ user.sumConflicting }}</span>
+						</li>
+						<li>
+							<span>Zbyt głośny:</span>
+							<span>{{ user.sumNoisy }}</span>
+						</li>
+						<li>
+							<span>Nie przestrzega ustaleń:</span>
+							<span>{{ user.sumNotFollowingTheArrangements }}</span>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</section>

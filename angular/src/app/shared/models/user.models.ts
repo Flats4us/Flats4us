@@ -12,28 +12,29 @@ export interface IUser {
 	links: string[];
 	surveyStudent: ISurveyStudent;
 	interests: IInterest[];
+	sumHelpful: number;
+	sumCooperative: number;
+	sumTidy: number;
+	sumFriendly: number;
+	sumRespectingPrivacy: number;
+	sumCommunicative: number;
+	sumUnfair: number;
+	sumLackOfHygiene: number;
+	sumUntidy: number;
+	sumConflicting: number;
+	sumNoisy: number;
+	sumNotFollowingTheArrangements: number;
 }
 
-export interface IMyProfile {
-	userType: number;
-	userId: number;
-	name: string;
+export interface IMyProfile extends IUser {
 	surname: string;
 	address: string;
 	email: string;
 	phoneNumber: string;
-	accountCreationDate: Date;
-	verificationStatus: number;
-	profilePicture: IProfilePicture;
 	document: IDocument;
 	documentExpireDate: Date;
-	userOpinions: IUserOpinion[];
 	birthDate: Date;
 	studentNumber: string;
-	university: string;
-	links: string[];
-	surveyStudent: ISurveyStudent;
-	interests: IInterest[];
 	bankAccount: string;
 	documentNumber: string;
 }

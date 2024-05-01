@@ -30,6 +30,12 @@
 	}
 }
 
+.profile-link {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
+
 .profile-features__wrapper {
 	mat-chip {
 		.chip {
@@ -48,8 +54,32 @@
 	}
 }
 
-.profile-education__wrapper,
-.profile-interests__wrapper {
-	display: grid;
-	gap: 8px;
+.profile-details__wrapper {
+	background-color: #f9f9f9;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+.profile-opinions__header {
+	align-items: center;
+}
+
+.profile-opinions__header span {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+}
+
+li {
+	margin-bottom: 10px;
+}
+
+span {
+	margin-left: 10px;
 }

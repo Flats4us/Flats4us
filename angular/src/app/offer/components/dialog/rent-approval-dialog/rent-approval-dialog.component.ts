@@ -1,28 +1,23 @@
-import {
-	CUSTOM_ELEMENTS_SCHEMA,
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import {
 	MAT_DIALOG_DATA,
 	MatDialogModule,
 	MatDialogRef,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { OfferService } from 'src/app/offer/services/offer.service';
-import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, throwError } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpErrorResponse } from '@angular/common/http';
-import { UserService } from '@shared/services/user.service';
-import { IUser } from '@shared/models/user.models';
-import { MatChipsModule } from '@angular/material/chips';
-import { environment } from 'src/environments/environment.prod';
-import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { IUser } from '@shared/models/user.models';
+import { UserService } from '@shared/services/user.service';
+import { catchError, Observable, throwError } from 'rxjs';
+import { OfferService } from 'src/app/offer/services/offer.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -36,14 +31,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatCardModule,
 		MatTooltipModule,
 	],
-	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	providers: [OfferService, UserService],
 	templateUrl: './rent-approval-dialog.component.html',
 	styleUrls: ['./rent-approval-dialog.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentApprovalDialogComponent extends BaseComponent {
-	public userProfile$: Observable<IUser> = this.userService.getUserById(6);
+	public userProfile$: Observable<IUser> = this.userService.getUserById('6');
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	constructor(

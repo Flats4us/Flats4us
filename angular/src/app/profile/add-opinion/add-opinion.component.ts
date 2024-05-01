@@ -14,11 +14,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
-import { environment } from '../../../environments/environment.prod';
 import { map, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+
+import { environment } from '../../../environments/environment.prod';
 import { ProfileService } from '../services/profile.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class AddOpinionComponent extends BaseComponent {
 		map(params => params.get('id') ?? '')
 	);
 	public user$ = this.profileId$.pipe(
-		switchMap(id => this.userService.getUserById(parseInt(id)))
+		switchMap(id => this.userService.getUserById(id))
 	);
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 

@@ -13,9 +13,6 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
-	@Input()
-	public createProfileMode = false;
-
 	public hidePassword = true;
 	public hideConfirmPasword = true;
 
