@@ -15,7 +15,6 @@
 			*ngIf="user$ | async as user"
 			class="your-profile"
 			[matMenuTriggerFor]="myProfile"
-			(click)="showSidenav ? (showSidenav = false) : showSidenav"
 		>
 			<img
 				class="your-photo"
@@ -112,7 +111,7 @@
 </mat-toolbar>
 <div
 	*ngIf="showSidenav"
-	class="sidenav flex flex-col w-[180px] min-h-max bg-white"
+	class="sidenav flex flex-col w-[180px] h-full bg-white"
 >
 	<ng-container *ngTemplateOutlet="buttons"></ng-container>
 </div>
@@ -136,27 +135,23 @@
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
-	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
-		mat-button
-		class="mr-2"
-		[matMenuTriggerFor]="settings"
-	>
+	<mat-menu #messages="matMenu">
+		<button mat-menu-item routerLink="messages">Wiadomości z właścicielem</button>
+		<button mat-menu-item routerLink="messages">
+			Wiadomości z współlokatorami
+		</button>
+	</mat-menu>
+	<button mat-button class="mr-2" [matMenuTriggerFor]="settings">
 		<mat-icon class="material-icons-outlined">settings</mat-icon>
 		Ustawienia
 	</button>
 	<mat-menu #settings="matMenu">
-		<button mat-menu-item [routerLink]="['settings', 'password-change']">
+		<button mat-menu-item routerLink="settings/password-change">
 			Zmień hasło
 		</button>
 	</mat-menu>
 
-	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
-		mat-button
-		class="mr-2"
-		[matMenuTriggerFor]="extended"
-	>
+	<button mat-button class="mr-2" [matMenuTriggerFor]="extended">
 		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
 		Dodatkowe
 	</button>

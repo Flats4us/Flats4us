@@ -125,42 +125,6 @@
 			</div>
 		</div>
 		<div class="button-box">
-			<mat-label class="label-survey">
-				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
-					<mat-icon
-						*ngSwitchCase="false"
-						class="icon"
-						matTooltip="Palenie niedozwolone"
-						[inline]="true"
-						>smoke_free
-					</mat-icon>
-					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
-						matTooltip="Palenie dozwolone"
-						[inline]="true"
-						>smoking_rooms
-					</mat-icon>
-				</span>
-				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.animalsAllowed">
-					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
-						matTooltip="Zwierzęta dozwolone"
-						[inline]="true"
-						>pets</mat-icon
-					>
-				</span>
-				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
-					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
-						matTooltip="Imprezy dozwolone"
-						[inline]="true"
-						>cake</mat-icon
-					>
-				</span>
-			</mat-label>
 			<mat-label class="label-price"
 				><span class="text-3xl"
 					>Cena

@@ -77,7 +77,7 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 	}
 
 	public navigateToFlat(url: number) {
-		this.router.navigate(['offer', 'details', url]);
+		this.router.navigate([url]);
 	}
 
 	public deleteInterest(id: number) {
