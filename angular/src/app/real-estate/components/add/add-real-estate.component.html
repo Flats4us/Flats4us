@@ -167,7 +167,7 @@
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Numer budynku</mat-label>
+						<mat-label>Numer ulicy</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -175,19 +175,14 @@
 							id="streetNumber"
 							formControlName="number"
 							type="text"
-							placeholder="Numer budynku"
+							placeholder="Numer ulicy"
 							aria-label="StreetNumber"
 							matInput
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['required']"
 						>
-							Nie podano numeru budynku!
-						</mat-error>
-						<mat-error
-							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['pattern']"
-						>
-							Nieprawidłowy numer ulicy!
+							Nie podano numeru ulicy!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
@@ -418,10 +413,10 @@
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>category</mat-icon></div>
 						</span>
-						<mat-select id="equipment" formControlName="equipmentIds" multiple>
+						<mat-select id="equipment" formControlName="equipment" multiple>
 							<mat-option
 								*ngFor="let equipment of this.realEstateService.equipment"
-								[value]="equipment.equipmentId"
+								[value]="equipment"
 							>
 								{{ equipment.name }}
 							</mat-option>

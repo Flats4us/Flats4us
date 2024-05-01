@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { statusName } from './statusName';
 import { UserType } from '../profile/models/types';
-import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-rents',
@@ -25,8 +24,7 @@ export class RentsComponent {
 	constructor(
 		public rentsService: RentsService,
 		private router: Router,
-		private route: ActivatedRoute,
-		public authService: AuthService
+		private route: ActivatedRoute
 	) {}
 
 	public addOffer() {

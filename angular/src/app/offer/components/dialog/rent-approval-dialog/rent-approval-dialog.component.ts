@@ -23,7 +23,6 @@ import { environment } from 'src/environments/environment.prod';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -36,7 +35,6 @@ import { MatIconModule } from '@angular/material/icon';
 		MatChipsModule,
 		MatCardModule,
 		MatTooltipModule,
-		MatIconModule,
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	providers: [OfferService, UserService],
@@ -99,7 +97,6 @@ export class RentApprovalDialogComponent extends BaseComponent {
 
 	public showProfile(id: number) {
 		this.router.navigate(['profile', 'details', 'student', id]);
-		this.dialogRef.close();
 	}
 
 	private handleError(error: HttpErrorResponse) {

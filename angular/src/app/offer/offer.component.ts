@@ -5,7 +5,6 @@ import { OfferService } from './services/offer.service';
 import { UserType } from '../profile/models/types';
 import { ISendOffers } from './models/offer.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
-import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-offers',
@@ -26,8 +25,7 @@ export class OfferComponent {
 		public offerService: OfferService,
 		private router: Router,
 		private route: ActivatedRoute,
-		public realEstateService: RealEstateService,
-		public authService: AuthService
+		public realEstateService: RealEstateService
 	) {}
 
 	public addOffer() {

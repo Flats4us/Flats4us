@@ -146,11 +146,6 @@
 	margin: 4px;
 }
 
-.box-equipment {
-	display: flex;
-	align-items: center;
-}
-
 .icon {
 	font-size: xx-large;
 	width: 32px;
@@ -221,11 +216,5 @@
 		min-width: 300px;
 		padding: 4px;
 		z-index: 996;
-	}
-	.box-equipment {
-		display: flex;
-		align-items: center;
-		max-width: 150px;
-		overflow: hidden;
 	}
 }

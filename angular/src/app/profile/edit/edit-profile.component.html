@@ -57,11 +57,9 @@
 						value="urlPhoto"
 						(change)="onFileSelected($event, regexImage)"
 					/>
-					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar">
-						<div class="text-xl flex justify-center items-center">
-							<mat-icon>error</mat-icon><span>Nie wczytano zdjęcia!</span>
-						</div>
-					</mat-error>
+					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar"
+						>Nie wczytano zdjęcia!</mat-error
+					>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
 						class="text-3xl p-4 semibold"
@@ -129,19 +127,7 @@
 							(click)="photoUpload.click()"
 						>
 							<span *ngIf="modificationType === mType.EDIT">Zmień zdjęcie</span>
-							<span
-								*ngIf="
-									(modificationType === mType.CREATE && !urlPhoto) ||
-									urlPhoto === urlAvatar
-								"
-								>Dodaj zdjęcie</span
-							>
-							<span
-								*ngIf="
-									modificationType === mType.CREATE && urlPhoto && urlPhoto !== urlAvatar
-								"
-								>Zmień zdjęcie</span
-							>
+							<span *ngIf="modificationType === mType.CREATE">Dodaj zdjęcie</span>
 							<mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
 						</button>
 					</div>
@@ -262,25 +248,39 @@
 						"
 					>
 						<mat-label>Zainteresowania</mat-label>
-						<mat-select multiple [formControl]="hobbyCtrl">
-							<mat-select-trigger>
-								<mat-chip-set>
-									<mat-chip
-										*ngFor="let myHobby of hobbyCtrl.value"
-										[removable]="true"
-										(removed)="removeHobby(myHobby)"
-									>
-										{{ myHobby.name }}
-										<mat-icon matChipRemove>cancel</mat-icon>
-									</mat-chip>
-								</mat-chip-set>
-							</mat-select-trigger>
-							<mat-option
-								*ngFor="let hobby of filteredHobbies$ | async"
-								[value]="hobby"
-								>{{ hobby.name }}</mat-option
+						<mat-chip-grid #chipGrid aria-label="Interests">
+							<mat-chip-row
+								*ngFor="let myHobby of myHobbies"
+								(removed)="removeHobby(myHobby, myHobbies)"
 							>
-						</mat-select>
+								{{ myHobby.name }}
+								<button
+									matChipRemove
+									type="button"
+									[attr.aria-label]="'remove ' + myHobby.name"
+								>
+									<mat-icon>cancel</mat-icon>
+								</button>
+							</mat-chip-row>
+							<input
+								#hobbiesInput
+								[formControl]="hobbyCtrl"
+								[matChipInputFor]="chipGrid"
+								[matAutocomplete]="auto"
+								[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+								(matChipInputTokenEnd)="addHobby($event, myHobbies, hobbyCtrl)"
+							/>
+							<mat-autocomplete
+								#auto="matAutocomplete"
+								(optionSelected)="selected($event)"
+							>
+								<mat-option
+									*ngFor="let hobby of filteredHobbies$ | async"
+									[value]="hobby"
+									>{{ hobby.name }}</mat-option
+								>
+							</mat-autocomplete>
+						</mat-chip-grid>
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="
@@ -330,12 +330,11 @@
 							mat-icon-button
 							type="button"
 							aria-label="Upload"
-							matTooltip="{{ getTooltipScan() }}"
+							matTooltip="Wczytaj skan dokumentu"
 							(click)="scanUpload.click()"
 						>
 							<mat-icon>attachment</mat-icon>
 						</button>
-						<span *ngIf="urlNewScan" class="scan-url-box">{{ fileScanName }}</span>
 						<input
 							#scanUpload
 							id="documentScan"

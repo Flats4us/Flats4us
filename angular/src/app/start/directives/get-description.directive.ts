@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 
 @Directive({
-	standalone: true,
 	selector: '[appGetDescription]',
 })
 export class GetDescriptionDirective implements OnChanges {

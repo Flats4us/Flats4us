@@ -60,7 +60,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		floor: new FormControl(null),
 		numberOfFloors: new FormControl(null),
 		plotArea: new FormControl(null),
-		equipmentIds: new FormControl([]),
+		equipment: new FormControl([]),
 	});
 
 	constructor(
@@ -81,10 +81,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				Validators.pattern('^[0-9]{2}-[0-9]{3}$'),
 			]),
 			street: new FormControl('', Validators.required),
-			number: new FormControl('', [
-				Validators.required,
-				Validators.pattern('^[0-9]+[a-zA-Z]*$'),
-			]),
+			number: new FormControl('', Validators.required),
 			propertyType: new FormControl(null, Validators.required),
 			flat: new FormControl(null, [Validators.required, Validators.min(0)]),
 		});
@@ -104,7 +101,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				Validators.min(1),
 				Validators.pattern('^[0-9]*$'),
 			]),
-			equipmentIds: new FormControl([]),
+			equipment: new FormControl([]),
 			numberOfRooms: new FormControl(null, [
 				Validators.required,
 				Validators.min(1),

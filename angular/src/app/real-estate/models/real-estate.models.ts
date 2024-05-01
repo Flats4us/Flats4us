@@ -45,7 +45,7 @@ export interface IAddProperty {
 	numberOfFloors: number;
 	plotArea: number;
 	floor: number;
-	equipmentIds: number[];
+	equipment: IEquipment[];
 }
 
 export interface IProperty {
@@ -63,6 +63,7 @@ export interface IProperty {
 	area: number;
 	maxNumberOfInhabitants: number;
 	constructionYear: number;
+	elevator: boolean;
 	images: IImage[];
 	verificationStatus: number;
 	numberOfRooms: number;

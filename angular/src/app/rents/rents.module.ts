@@ -22,7 +22,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { OfferService } from '../offer/services/offer.service';
 import { MatCardModule } from '@angular/material/card';
-import { AccessControlDirective } from '@shared/directives/access-control.directive';
 
 @NgModule({
 	declarations: [RentsComponent],
@@ -45,7 +44,6 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatCardModule,
-		AccessControlDirective,
 	],
 	exports: [RentsComponent, RentsDetailsComponent],
 	providers: [RentsService, RealEstateService, OfferService],

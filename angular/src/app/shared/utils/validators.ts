@@ -12,23 +12,15 @@ export function validityAgeValidator(): ValidatorFn {
 	};
 }
 
-export function matchPasswordValidator(
+export const matchPasswordValidator: ValidatorFn = (
 	control: AbstractControl
-): ValidationErrors | null {
+): ValidationErrors | null => {
 	const password = control.get('password');
 	const confirmPassword = control.get('confirmPassword');
-	if (!(password || confirmPassword)) {
-		return null;
-	} else if (
-		password &&
-		confirmPassword &&
-		password.value !== confirmPassword.value
-	) {
-		return { matchPassword: true };
-	} else {
-		return null;
-	}
-}
+	return password && confirmPassword && password.value !== confirmPassword.value
+		? { matchPassword: true }
+		: null;
+};
 
 function checkValidityAge(date: Date): boolean {
 	const endDate = new Date(date);

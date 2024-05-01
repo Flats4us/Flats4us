@@ -45,10 +45,7 @@
 						><span class="step-label">Rejestracja użytkownika</span></ng-template
 					>
 					<form [formGroup]="registerForm">
-						<app-register
-							[createProfileMode]="true"
-							[emailExist]="(emailExist$ | async) ?? false"
-						></app-register>
+						<app-register [createProfileMode]="true"></app-register>
 						<div class="button-box">
 							<button
 								mat-raised-button
@@ -118,12 +115,7 @@
 									mat-raised-button
 									color="primary"
 									type="submit"
-									[disabled]="
-										!createAccountForm.valid ||
-										!photoName ||
-										!scanName ||
-										!surveyForm.valid
-									"
+									[disabled]="!createAccountForm.valid || !photoName || !scanName"
 									(click)="onSubmit()"
 								>
 									Zatwierdź <mat-icon iconPositionEnd>done_outline</mat-icon>

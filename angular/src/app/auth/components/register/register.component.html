@@ -29,9 +29,6 @@
 					<mat-error *ngIf="registerForm.controls['email'].errors?.['email']">
 						Nieprawidłowy adres email!
 					</mat-error>
-					<mat-error *ngIf="registerForm.controls['email'].errors?.['emailExist']">
-						Podany adres email istnieje już w systemie!
-					</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
@@ -51,13 +48,13 @@
 						Nie podano hasła!
 					</mat-error>
 					<mat-error *ngIf="registerForm.controls['password'].errors?.['pattern']">
-						Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery
-						oraz cyfry!
+						Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery,
+						cyfry i symbole!
 					</mat-error>
 				</mat-form-field>
 				<mat-hint class="text-sm"
-					>Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter
-					oraz cyfr</mat-hint
+					>Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter,
+					cyfr i symboli</mat-hint
 				>
 			</div>
 			<div class="form-group">
@@ -78,10 +75,10 @@
 					>
 						Nie powtórzono hasła!
 					</mat-error>
+					<mat-error *ngIf="registerForm.errors?.['matchPassword']">
+						Hasła różnią się od siebie!
+					</mat-error>
 				</mat-form-field>
-				<mat-error *ngIf="registerForm.errors?.['matchPassword']" class="pl-4">
-					Hasła różnią się od siebie!
-				</mat-error>
 			</div>
 		</form>
 	</mat-card-content>

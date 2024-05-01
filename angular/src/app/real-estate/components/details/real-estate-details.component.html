@@ -107,99 +107,49 @@
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">Miasto:</p>
-				<p class="text-2xl pt-4">Dzielnica:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Metraż:</p>
-				<p class="text-2xl pt-4">Liczba pokoi:</p>
-				<p class="text-2xl pt-4">Liczba pięter:</p>
-				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
-				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
+				<p class="text-2xl">Miasto:</p>
+				<p class="text-2xl">Dzielnica:</p>
+				<p class="text-2xl">Adres:</p>
+				<p class="text-2xl">Metraż:</p>
+				<p class="text-2xl">Liczba pokoi:</p>
+				<p class="text-2xl">Liczba pięter:</p>
+				<p class="text-2xl">Piętro:</p>
+				<p class="text-2xl">Maks. liczba mieszkańców:</p>
+				<p class="text-2xl">Rok budowy:</p>
+				<p class="text-2xl">Wyposażenie:</p>
 			</div>
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">{{ actualRealEstate.city }}</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">{{ actualRealEstate.city }}</p>
+				<p class="text-2xl">
 					{{ actualRealEstate.district === null ? "-" : actualRealEstate.district }}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{ actualRealEstate.postalCode }} ul. {{ actualRealEstate.street }}
 					{{ actualRealEstate.number }}
 				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.area }} m²</p>
-				<p class="text-2xl pt-4">
-					{{
-						actualRealEstate.numberOfRooms === null
-							? "-"
-							: actualRealEstate.numberOfRooms
-					}}
-				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">{{ actualRealEstate.area }} m²</p>
+				<p class="text-2xl">{{ actualRealEstate.numberOfRooms }}</p>
+				<p class="text-2xl">
 					{{
 						actualRealEstate.numberOfFloors === null
 							? "-"
 							: actualRealEstate.numberOfFloors
 					}}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{ actualRealEstate.floor === null ? "-" : actualRealEstate.floor }}
 				</p>
-				<p class="text-2xl pt-4">
+				<p class="text-2xl">
 					{{
 						actualRealEstate.maxNumberOfInhabitants === null
 							? "-"
 							: actualRealEstate.maxNumberOfInhabitants
 					}}
 				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.constructionYear }}</p>
-				<p class="text-2xl pt-4">
-					<span *ngFor="let equipment of actualRealEstate?.equipment"
-						><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
-							<div *ngSwitchCase="1" class="box-equipment">
-								<span class="material-symbols-outlined">dishwasher</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="2" class="box-equipment">
-								<mat-icon>local_laundry_service</mat-icon
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="3" class="box-equipment">
-								<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="4" class="box-equipment">
-								<span class="material-symbols-outlined">kettle</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="5" class="box-equipment">
-								<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="6" class="box-equipment">
-								<mat-icon>ac_unit</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="7" class="box-equipment">
-								<mat-icon>balcony</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="8" class="box-equipment">
-								<mat-icon>tv</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="9" class="box-equipment">
-								<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="10" class="box-equipment">
-								<span class="material-symbols-outlined">oven</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="11" class="box-equipment">
-								<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="12" class="box-equipment">
-								<mat-icon>elevator</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchDefault class="box-equipment">
-								<mat-icon>devices</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-						</mat-chip>
+				<p class="text-2xl">{{ actualRealEstate.constructionYear }}</p>
+				<p class="text-2xl">
+					<span *ngFor="let equipment of actualRealEstate.equipment"
+						>{{ equipment.name }},
 					</span>
 				</p>
 			</div>

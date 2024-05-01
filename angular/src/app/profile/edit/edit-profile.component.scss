@@ -93,12 +93,6 @@
 	padding: 4px;
 }
 
-.scan-url-box {
-	display: inline-block;
-	max-width: 400px;
-	overflow: hidden;
-}
-
 mat-chip-option {
 	min-width: 100px;
 	margin: 4px;
@@ -128,10 +122,5 @@ mat-form-field {
 	}
 	.form-btn {
 		width: 60%;
-	}
-	.scan-url-box {
-		display: inline-block;
-		max-width: 100px;
-		overflow: hidden;
 	}
 }

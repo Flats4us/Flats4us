@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { GetDescriptionDirective } from './directives/get-description.directive';
 import {
 	MatPaginatorIntl,
 	MatPaginatorModule,
@@ -27,12 +27,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StartMapModule } from './start-map/start-map.module';
-import { GetDescriptionDirective } from './directives/get-description.directive';
-import { AccessControlDirective } from '@shared/directives/access-control.directive';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-	declarations: [StartComponent],
+	declarations: [StartComponent, GetDescriptionDirective],
 	exports: [StartComponent],
 	providers: [MatPaginatorIntl, RealEstateService, StartService],
 	imports: [
@@ -56,9 +53,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatMenuModule,
 		MatProgressSpinnerModule,
 		StartMapModule,
-		GetDescriptionDirective,
-		AccessControlDirective,
-		MatSnackBarModule,
 	],
 })
 export class StartModule {}

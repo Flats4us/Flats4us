@@ -21,8 +21,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RentsDetailsModule } from '../rents/components/details/rents-details.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RealEstateDetailsModule } from './components/details/real-estate-details.module';
-import { AccessControlDirective } from '@shared/directives/access-control.directive';
-import { AuthService } from '@shared/services/auth.service';
 
 @NgModule({
 	declarations: [RealEstateComponent],
@@ -47,9 +45,8 @@ import { AuthService } from '@shared/services/auth.service';
 		MatFormFieldModule,
 		MatSnackBarModule,
 		RealEstateDetailsModule,
-		AccessControlDirective,
 	],
 	exports: [RealEstateComponent],
-	providers: [RealEstateService, AuthService],
+	providers: [RealEstateService],
 })
 export class RealEstateModule {}
