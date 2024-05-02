@@ -287,7 +287,7 @@ namespace Flats4us.Services
 
                 var body = new StringBuilder();
 
-                var link = "xxx/" + user.PasswordResetToken;
+                var link = "http://172.21.40.120/auth/reset-password?token=" + user.PasswordResetToken;
 
                 body.AppendLine(EmailHelper.HtmlHTag("Dla twojego konta pojawiło się żądanie zmiany hasła", 1))
                     .AppendLine(EmailHelper.HtmlPTag($"Aby przejść do zmiany hasła naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))

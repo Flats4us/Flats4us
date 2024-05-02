@@ -128,15 +128,15 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("{passwordResetToken}/reset-password")]
+        [HttpPut("reset-password")]
         [SwaggerOperation(
             Summary = "Sets new user password by passwordResetToken"
         )]
-        public async Task<ActionResult> ResetUserPassword([FromBody] PasswordResetDto input, string passwordResetToken)
+        public async Task<ActionResult> ResetUserPassword([FromBody] PasswordResetDto input)
         {
             try
             {
-                await _userService.ResetUserPasswordAsync(input.NewPassword, passwordResetToken);
+                await _userService.ResetUserPasswordAsync(input.NewPassword, input.Token);
                 return Ok(new OutputDto<string>("Password reset completed"));
             }
             catch (Exception ex)
