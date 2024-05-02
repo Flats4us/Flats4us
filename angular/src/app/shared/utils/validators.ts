@@ -17,17 +17,15 @@ export function matchPasswordValidator(
 ): ValidationErrors | null {
 	const password = control.get('password');
 	const confirmPassword = control.get('confirmPassword');
-	if (!(password || confirmPassword)) {
-		return null;
-	} else if (
-		password &&
-		confirmPassword &&
-		password.value !== confirmPassword.value
-	) {
-		return { matchPassword: true };
-	} else {
+	if (!password || !confirmPassword) {
 		return null;
 	}
+
+	if (password.value !== confirmPassword.value) {
+		return { matchPassword: true };
+	}
+
+	return null;
 }
 
 function checkValidityAge(date: Date): boolean {

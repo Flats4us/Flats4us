@@ -11,10 +11,10 @@ import { Subject, takeUntil } from 'rxjs';
 
 @Directive({
 	standalone: true,
-	selector: '[appPermissionIf]',
+	selector: '[appAccessControl]',
 })
 export class AccessControlDirective implements OnDestroy {
-	@Input() public set appPermissionIf(permission: IPermission | undefined) {
+	@Input() public set appAccessControl(permission: IPermission | undefined) {
 		if (permission) {
 			this.allowAccess(permission);
 		} else if (!permission) {
@@ -33,55 +33,34 @@ export class AccessControlDirective implements OnDestroy {
 	) {}
 
 	private allowAccess(permission: IPermission) {
-		if (
-			!permission.allLoggedIn &&
-			!(permission.allLoggedIn ?? false) &&
-			!permission.notLoggedIn &&
-			!(permission.notLoggedIn ?? false)
-		) {
-			this.authService.accessControl$
-				.pipe(takeUntil(this.destroyed))
-				.subscribe(data => {
-					if (
+		this.authService.accessControl$
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(data => {
+				switch (true) {
+					case !permission.allLoggedIn &&
+						!permission.notLoggedIn &&
 						data.user === permission.user &&
 						data.status === permission.status &&
-						!this.hasView
-					) {
+						!this.hasView:
 						this.viewContainer.createEmbeddedView(this.templateRef);
 						this.hasView = true;
-					} else if (
-						!(data.user === permission.user && data.status === permission.status) &&
-						this.hasView
-					) {
-						this.viewContainer.clear();
-						this.hasView = false;
-					}
-				});
-		} else if (permission.allLoggedIn && (permission.allLoggedIn ?? false)) {
-			this.authService.isLoggedIn$
-				.pipe(takeUntil(this.destroyed))
-				.subscribe(data => {
-					if (data && !this.hasView) {
+						break;
+					case permission.allLoggedIn && data.isLoggedIn && !this.hasView:
 						this.viewContainer.createEmbeddedView(this.templateRef);
 						this.hasView = true;
-					} else if (!data && this.hasView) {
-						this.viewContainer.clear();
-						this.hasView = false;
-					}
-				});
-		} else if (permission.notLoggedIn && (permission.notLoggedIn ?? false)) {
-			this.authService.isLoggedIn$
-				.pipe(takeUntil(this.destroyed))
-				.subscribe(data => {
-					if (!data && !this.hasView) {
+						break;
+					case permission.notLoggedIn && !data.isLoggedIn && !this.hasView:
 						this.viewContainer.createEmbeddedView(this.templateRef);
 						this.hasView = true;
-					} else if (data && this.hasView) {
-						this.viewContainer.clear();
-						this.hasView = false;
-					}
-				});
-		}
+						break;
+					default:
+						if (this.hasView) {
+							this.viewContainer.clear();
+							this.hasView = false;
+						}
+						break;
+				}
+			});
 	}
 
 	public ngOnDestroy(): void {
