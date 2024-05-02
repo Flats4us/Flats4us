@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -93,7 +92,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 		this.router.navigate(['profile', 'details', 'student', id]);
 	}
 
-	private handleError(error: HttpErrorResponse) {
+	private handleError() {
 		return throwError(() => {
 			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
 		});
