@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IMeeting, IRent } from '../models/rents.models';
+import { IMeeting, IRent, IRentOpinion } from '../models/rents.models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
@@ -27,9 +27,17 @@ export class RentsService {
 	public getRents(): Observable<IRent[]> {
 		return this.httpClient.get<IRent[]>('./assets/rents.json');
 	}
+
 	public getRent(id: string): Observable<IRent> {
 		return this.httpClient
 			.get<IRent[]>('./assets/rents.json')
 			.pipe(map(results => results.find(result => result.id === id) as IRent));
+	}
+
+	public postOpinion(rentId: number, opinion: IRentOpinion) {
+		return this.httpClient.post(
+			`${this.apiRoute}/offers/${rentId}/rent/opinion`,
+			opinion
+		);
 	}
 }
