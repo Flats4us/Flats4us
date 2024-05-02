@@ -30,7 +30,6 @@ import { PasswordChangeModule } from '../settings/components/password-change/pas
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { AddOpinionComponent } from './add-opinion/add-opinion.component';
 import { CreateProfileModule } from './create/create-profile.module';
-import { DetailsProfileModule } from './details/details-profile.module';
 import { EditProfileModule } from './edit/edit-profile.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
@@ -69,8 +68,8 @@ import { ProfileService } from './services/profile.service';
 		RegisterModule,
 		EditProfileModule,
 		CreateProfileModule,
-		DetailsProfileModule,
 		AddOpinionComponent,
+		MatChipsModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],

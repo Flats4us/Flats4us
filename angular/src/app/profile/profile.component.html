@@ -37,7 +37,7 @@
 			</div>
 			<div class="flex flex-col items-start">
 				<div *ngFor="let link of user.links" class="text-gray-400">
-					<div>
+					<div class="profile-link">
 						<mat-icon>link</mat-icon>
 						<a href="{{ link }}">{{ link }}</a>
 					</div>
@@ -45,7 +45,7 @@
 			</div>
 		</section>
 		<section>
-			<div class="profile-education__wrapper mb-4">
+			<div class="profile-details__wrapper mb-4">
 				<div class="profile-education__header text-2xl flex gap-2 content-center">
 					<mat-icon>school</mat-icon>
 					<span>Uczelnia</span>
@@ -54,7 +54,7 @@
 					{{ user.university }}
 				</div>
 			</div>
-			<div class="profile-interests__wrapper">
+			<div class="profile-details__wrapper mb-4">
 				<div class="profile-interests__header text-2xl flex gap-2 content-center">
 					<mat-icon>travel_explore</mat-icon>
 					<span>Zainteresowania</span>
@@ -65,6 +65,71 @@
 							interest.name
 						}}</mat-chip>
 					</mat-chip-listbox>
+				</div>
+			</div>
+			<div class="profile-details__wrapper">
+				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
+					<mat-icon>rate_review</mat-icon>
+					<span>Opinie</span>
+					<label class="text-sm">średnia: {{ user.avgRating }}</label>
+				</div>
+				<div>
+					<mat-chip-listbox>
+						<mat-chip>
+							<span>Pomocny: {{ user.sumHelpful }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Gotowy do współpracy: {{ user.sumCooperative }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Dba o porządek: {{ user.sumTidy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Przyjazny: {{ user.sumFriendly }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Szanujący prywatność innych: {{ user.sumRespectingPrivacy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Komunikatywny: {{ user.sumCommunicative }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Nieuczciwy: {{ user.sumUnfair }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Brak higieny osobistej: {{ user.sumLackOfHygiene }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Nie dba o porządek: {{ user.sumUntidy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Konfliktowy: {{ user.sumConflicting }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Zbyt głośny: {{ user.sumNoisy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>Nie przestrzega ustaleń:
+								{{ user.sumNotFollowingTheArrangements }}</span
+							>
+						</mat-chip>
+					</mat-chip-listbox>
+					<div class="profile-opinions__comments">
+						<div
+							*ngFor="let opinion of user.userOpinions"
+							class="profile-opinions__comments-comment"
+						>
+							<img
+								src="{{ baseUrl }}/{{ opinion.sourceUserProfilePicture.path }}"
+								[alt]="opinion.sourceUserProfilePicture.name"
+							/>
+							<span class="text-gray-500">
+								{{ opinion.sourceUserName }} {{ opinion.date | date }}:
+							</span>
+							<span>{{ opinion.description }}</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
