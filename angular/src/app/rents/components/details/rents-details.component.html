@@ -270,7 +270,7 @@
 	</div>
 	<div class="button-box-options">
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="onAddMeeting()"
@@ -278,7 +278,7 @@
 			Dodaj spotkanie
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="onRate()"

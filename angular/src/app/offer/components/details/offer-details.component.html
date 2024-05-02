@@ -326,7 +326,7 @@
 			Powrót
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="onAddMeeting(data.offer?.offerId)"
@@ -334,7 +334,7 @@
 			Dodaj spotkanie
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
 			(click)="startRent(data.offer?.offerId)"

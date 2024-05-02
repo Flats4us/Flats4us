@@ -3,9 +3,8 @@
 		<img class="h-full w-auto" src="./assets/logoFlats4Us.svg" alt="" />
 	</a>
 	<div
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
-		mat-menu-item
-		class="flex items-center justify-around w-[750px]"
+		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+		class="flex items-center max-w-max"
 	>
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
@@ -20,7 +19,7 @@
 			<img
 				class="your-photo"
 				alt="Twój profil"
-				src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+				src="{{ baseUrl }}/{{ user.profilePicture?.path }}"
 			/>
 		</button>
 	</div>
@@ -31,7 +30,7 @@
 		</button>
 		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['rents', 'owner']"
 		>
@@ -39,7 +38,7 @@
 		</button>
 		<div>
 			<button
-				*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 				mat-menu-item
 				[routerLink]="['rents', 'student']"
 			>
@@ -47,35 +46,35 @@
 			</button>
 		</div>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['offer', 'owner']"
 		>
 			Moje oferty
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['real-estate', 'owner']"
 		>
 			Moje nieruchomości
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['real-estate', 'add']"
 		>
 			Dodaj nieruchomość
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
 			[routerLink]="['offer', 'add']"
 		>
 			Dodaj ofertę
 		</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-menu-item
 			[routerLink]="['offer', 'watched']"
 		>
@@ -129,7 +128,7 @@
 		Strona główna
 	</button>
 	<button
-		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
 		class="mr-2"
 		mat-button
 		[routerLink]="['auth', 'login']"
@@ -138,7 +137,7 @@
 		Logowanie
 	</button>
 	<button
-		*appPermissionIf="authService.allPermissions.get('notLoggedIn')"
+		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
 		class="mr-2"
 		mat-button
 		[routerLink]="['profile', 'create']"
@@ -147,7 +146,7 @@
 		Rejestracja
 	</button>
 	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
 		mat-button
 		class="mr-2"
 		[routerLink]="['messages']"
@@ -156,7 +155,7 @@
 		Wiadomości
 	</button>
 	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
 		mat-button
 		class="mr-2"
 		[matMenuTriggerFor]="settings"
@@ -171,7 +170,7 @@
 	</mat-menu>
 
 	<button
-		*appPermissionIf="authService.allPermissions.get('allLoggedIn')"
+		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
 		mat-button
 		class="mr-2"
 		[matMenuTriggerFor]="extended"
@@ -183,7 +182,7 @@
 	<mat-menu #extended="matMenu">
 		<button mat-menu-item [routerLink]="['calendar']">Kalendarz</button>
 		<button
-			*appPermissionIf="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-menu-item
 			routerLink="find-roommate"
 		>

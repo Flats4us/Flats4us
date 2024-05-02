@@ -6,7 +6,7 @@ import {
 	OnInit,
 	ViewChild,
 } from '@angular/core';
-import { Map, map, tileLayer, marker, icon as lIcon } from 'leaflet';
+import { Map, map, tileLayer } from 'leaflet';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import * as L from 'leaflet';
@@ -86,34 +86,6 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				this.setMapView([position.coords.latitude, position.coords.longitude])
 			);
 		}
-	}
-
-	public addMarkersFromAddresses(addresses: string[]) {
-		addresses.forEach(address => {
-			const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-				address
-			)}&format=json`;
-
-			this.http
-				.get(url)
-				.pipe(this.untilDestroyed())
-				.subscribe((response: any) => {
-					if (response.length > 0) {
-						const { lat, lon, icon } = response[0];
-						const markerOptions = {
-							clickable: true,
-							draggable: false,
-							icon: L.icon({
-								iconUrl: '../../assets/leafletIconShadowHouse.svg',
-								iconSize: [60, 60],
-								iconAnchor: [25, 16],
-								popupAnchor: [6, -16],
-							}),
-						};
-						marker([+lat, +lon], markerOptions).addTo(this.map as Map);
-					}
-				});
-		});
 	}
 
 	public addMarkersForOffers(filteredOptions: IFilteredMapOffers) {
