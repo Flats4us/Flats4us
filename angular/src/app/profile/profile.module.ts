@@ -69,6 +69,7 @@ import { ProfileService } from './services/profile.service';
 		EditProfileModule,
 		CreateProfileModule,
 		AddOpinionComponent,
+		MatChipsModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],

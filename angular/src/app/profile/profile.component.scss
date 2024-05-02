@@ -71,6 +71,20 @@
 	font-weight: bold;
 }
 
+.profile-opinions__comments {
+	&-comment {
+		display: flex;
+		gap: 4px;
+		align-items: center;
+
+		img {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
+		}
+	}
+}
+
 ul {
 	list-style: none;
 	padding: 0;

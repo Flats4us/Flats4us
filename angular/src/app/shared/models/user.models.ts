@@ -45,8 +45,13 @@ export interface IProfilePicture {
 }
 
 export interface IUserOpinion {
+	userOpinionId: number;
+	date: Date;
 	rating: number;
 	description: string;
+	sourceUserId: number;
+	sourceUserName: string;
+	sourceUserProfilePicture: IDocument;
 }
 
 export interface IDocument {

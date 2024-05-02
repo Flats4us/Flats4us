@@ -71,58 +71,65 @@
 				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
 					<mat-icon>rate_review</mat-icon>
 					<span>Opinie</span>
+					<label class="text-sm">średnia: {{ user.avgRating }}</label>
 				</div>
 				<div>
-					<ul>
-						<li>
-							<span>Pomocny:</span>
-							<span>{{ user.sumHelpful }}</span>
-						</li>
-						<li>
-							<span>Gotowy do współpracy:</span>
-							<span>{{ user.sumCooperative }}</span>
-						</li>
-						<li>
-							<span>Dba o porządek:</span>
-							<span>{{ user.sumTidy }}</span>
-						</li>
-						<li>
-							<span>Przyjazny:</span>
-							<span>{{ user.sumFriendly }}</span>
-						</li>
-						<li>
-							<span>Szanujący prywatność innych:</span>
-							<span>{{ user.sumRespectingPrivacy }}</span>
-						</li>
-						<li>
-							<span>Komunikatywny:</span>
-							<span>{{ user.sumCommunicative }}</span>
-						</li>
-						<li>
-							<span>Nieuczciwy:</span>
-							<span>{{ user.sumUnfair }}</span>
-						</li>
-						<li>
-							<span>Brak higieny osobistej:</span>
-							<span>{{ user.sumLackOfHygiene }}</span>
-						</li>
-						<li>
-							<span>Nie dba o porządek:</span>
-							<span>{{ user.sumUntidy }}</span>
-						</li>
-						<li>
-							<span>Konfliktowy:</span>
-							<span>{{ user.sumConflicting }}</span>
-						</li>
-						<li>
-							<span>Zbyt głośny:</span>
-							<span>{{ user.sumNoisy }}</span>
-						</li>
-						<li>
-							<span>Nie przestrzega ustaleń:</span>
-							<span>{{ user.sumNotFollowingTheArrangements }}</span>
-						</li>
-					</ul>
+					<mat-chip-listbox>
+						<mat-chip>
+							<span>Pomocny: {{ user.sumHelpful }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Gotowy do współpracy: {{ user.sumCooperative }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Dba o porządek: {{ user.sumTidy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Przyjazny: {{ user.sumFriendly }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Szanujący prywatność innych: {{ user.sumRespectingPrivacy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Komunikatywny: {{ user.sumCommunicative }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Nieuczciwy: {{ user.sumUnfair }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Brak higieny osobistej: {{ user.sumLackOfHygiene }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Nie dba o porządek: {{ user.sumUntidy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Konfliktowy: {{ user.sumConflicting }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span>Zbyt głośny: {{ user.sumNoisy }}</span>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>Nie przestrzega ustaleń:
+								{{ user.sumNotFollowingTheArrangements }}</span
+							>
+						</mat-chip>
+					</mat-chip-listbox>
+					<div class="profile-opinions__comments">
+						<div
+							*ngFor="let opinion of user.userOpinions"
+							class="profile-opinions__comments-comment"
+						>
+							<img
+								src="{{ baseUrl }}/{{ opinion.sourceUserProfilePicture.path }}"
+								[alt]="opinion.sourceUserProfilePicture.name"
+							/>
+							<span class="text-gray-500">
+								{{ opinion.sourceUserName }} {{ opinion.date | date }}:
+							</span>
+							<span>{{ opinion.description }}</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
