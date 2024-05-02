@@ -9,6 +9,9 @@ namespace Flats4us.Entities.Dto
         public int OfferId { get; set; }
 
         [Required]
+        public int? RentPropositionToShow { get; set; }
+
+        [Required]
         public DateTime Date { get; set; }
 
         [Required]

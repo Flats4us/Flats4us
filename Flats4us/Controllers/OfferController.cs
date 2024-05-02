@@ -39,7 +39,12 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offer = await _offerService.GetByIdAsync(id);
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var offer = await _offerService.GetByIdAsync(id, requestUserId);
                 return Ok(offer);
             }
             catch (Exception ex)

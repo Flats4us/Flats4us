@@ -53,6 +53,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House));
 
             CreateMap<Offer, OfferDto>()
+                .ForMember(dest => dest.RentPropositionToShow, opt => opt.MapFrom(src => (int?)null))
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner))
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 

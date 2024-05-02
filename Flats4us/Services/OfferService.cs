@@ -25,7 +25,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<OfferDto> GetByIdAsync(int id)
+        public async Task<OfferDto> GetByIdAsync(int id, int requestUserId)
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
@@ -33,11 +33,18 @@ namespace Flats4us.Services
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.Rent)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
 
             var result = _mapper.Map<OfferDto>(offer);
+
+            if ( requestUserId == result.Owner.UserId &&
+                 result.OfferStatus == OfferStatus.Waiting)
+            {
+                result.RentPropositionToShow = offer.Rent.RentId;
+            }
 
             return result;
         }
