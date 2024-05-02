@@ -9,15 +9,12 @@ import {
 	MatDialogRef,
 } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { IUser } from '@shared/models/user.models';
 import { UserService } from '@shared/services/user.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { environment } from 'src/environments/environment.prod';
-import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
