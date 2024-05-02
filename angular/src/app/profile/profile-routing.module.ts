@@ -9,7 +9,7 @@ import { CreateProfileComponent } from './create/create-profile.component';
 import { ProfileComponent } from './profile.component';
 
 const routes: Routes = [
-	{ path: '', pathMatch: 'full', redirectTo: 'my' },
+	{ path: '', pathMatch: 'full', redirectTo: 'details/my' },
 	{
 		path: 'details/:id',
 		component: ProfileComponent,
