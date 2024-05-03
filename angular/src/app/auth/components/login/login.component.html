@@ -32,7 +32,7 @@
 				>Nieprawidłowy email lub hasło</mat-error
 			>
 
-			<a routerLink="/auth/reset-password" id="reset-password"
+			<a routerLink="/auth/forgot-password" id="forgot-password"
 				>Zapomniałeś hasła?</a
 			>
 
@@ -51,7 +51,7 @@
 					color="accent"
 					class="btn-register"
 					type="button"
-					routerLink="/auth/register"
+					[routerLink]="['//profile', 'create']"
 				>
 					Rejestracja
 				</button>
