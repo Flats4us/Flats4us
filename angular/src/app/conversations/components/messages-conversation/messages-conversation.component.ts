@@ -15,7 +15,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { environment } from '../../../../environments/environment.prod';
 
 @Component({
-	selector: 'app-messages-conversation',
+	selector: 'app-conversations-conversation',
 	templateUrl: './messages-conversation.component.html',
 	styleUrls: ['./messages-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,9 +29,9 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 	);
 	protected messages$: Observable<IMessage[]> = this.conversationId$.pipe(
 		switchMap(value => {
-			return value
-				? this.conversationService.getMessages(parseInt(value))
-				: of([]);
+			return value === 'new'
+				? of([])
+				: this.conversationService.getMessages(parseInt(value));
 		})
 	);
 	public currentUser$: Observable<IMyProfile> = this.userService.getMyProfile();

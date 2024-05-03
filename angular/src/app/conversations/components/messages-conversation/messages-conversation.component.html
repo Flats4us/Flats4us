@@ -9,6 +9,14 @@
 		*ngIf="data.currentUser && data.otherUser && data.messagesHistory"
 		class="conversation-list"
 	>
+		<div class="flex flex-col items-center py-5">
+			<img
+				alt="profile photo"
+				class="receiver-avatar"
+				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+			/>
+			<span>{{ data.otherUser.name }}, {{ data.otherUser.age }}</span>
+		</div>
 		<div
 			*ngFor="let message of data.messagesHistory; let index = index"
 			class="flex"

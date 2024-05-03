@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ConversationService } from '@shared/services/conversation.service';
 
 @Component({
-	selector: 'app-messages',
+	selector: 'app-conversations',
 	templateUrl: './conversations.component.html',
 	styleUrls: ['./conversations.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

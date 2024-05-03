@@ -28,7 +28,9 @@ const routes: Routes = [
 	{
 		path: 'messages',
 		loadChildren: () =>
-			import('./messages/conversations.module').then(m => m.ConversationsModule),
+			import('./conversations/conversations.module').then(
+				m => m.ConversationsModule
+			),
 		canActivate: [AuthGuard],
 	},
 	{

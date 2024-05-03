@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { MessagesConversationComponent } from './messages-conversation.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
 	declarations: [MessagesConversationComponent],
@@ -15,6 +16,7 @@ import { MatCardModule } from '@angular/material/card';
 		MatIconModule,
 		ReactiveFormsModule,
 		MatCardModule,
+		MatButtonModule,
 	],
 })
 export class MessagesConversationModule {}

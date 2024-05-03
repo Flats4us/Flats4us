@@ -13,7 +13,17 @@
 				src="{{ baseUrl }}/{{ student.profilePicture.path }}"
 			/>
 			{{ student.name }}, {{ student.age }}
-			<button mat-mini-fab color="primary">
+			<button
+				mat-mini-fab
+				color="primary"
+				[routerLink]="[
+					'//messages',
+					'receiver',
+					student.userId,
+					'conversation',
+					'new'
+				]"
+			>
 				<mat-icon>chat</mat-icon>
 			</button>
 		</mat-card>
