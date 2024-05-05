@@ -18,8 +18,7 @@ export class AccessControlDirective implements OnDestroy {
 		if (permission) {
 			this.allowAccess(permission);
 		} else if (!permission) {
-			this.viewContainer.clear();
-			this.hasView = false;
+			this.hideTemplate();
 		}
 	}
 
@@ -40,27 +39,34 @@ export class AccessControlDirective implements OnDestroy {
 					case !permission.allLoggedIn &&
 						!permission.notLoggedIn &&
 						data.user === permission.user &&
-						data.status === permission.status &&
-						!this.hasView:
-						this.viewContainer.createEmbeddedView(this.templateRef);
-						this.hasView = true;
+						data.status === permission.status:
+						this.showTemplate();
 						break;
-					case permission.allLoggedIn && data.isLoggedIn && !this.hasView:
-						this.viewContainer.createEmbeddedView(this.templateRef);
-						this.hasView = true;
+					case permission.allLoggedIn && data.isLoggedIn:
+						this.showTemplate();
 						break;
-					case permission.notLoggedIn && !data.isLoggedIn && !this.hasView:
-						this.viewContainer.createEmbeddedView(this.templateRef);
-						this.hasView = true;
+					case permission.notLoggedIn && !data.isLoggedIn:
+						this.showTemplate();
 						break;
 					default:
-						if (this.hasView) {
-							this.viewContainer.clear();
-							this.hasView = false;
-						}
+						this.hideTemplate();
 						break;
 				}
 			});
+	}
+
+	private showTemplate() {
+		if (!this.hasView) {
+			this.viewContainer.createEmbeddedView(this.templateRef);
+			this.hasView = true;
+		}
+	}
+
+	private hideTemplate() {
+		if (this.hasView) {
+			this.viewContainer.clear();
+			this.hasView = false;
+		}
 	}
 
 	public ngOnDestroy(): void {

@@ -22,8 +22,6 @@ import { MatCardModule } from '@angular/material/card';
 
 registerLocaleData(localePl);
 import { FindRoommateModule } from './find-roommate/find-roommate.module';
-import { AccessControlDirective } from './shared/directives/access-control.directive';
-import { GetDescriptionDirective } from './start/directives/get-description.directive';
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -42,8 +40,6 @@ import { GetDescriptionDirective } from './start/directives/get-description.dire
 		MatNativeDateModule,
 		MatCardModule,
 		FindRoommateModule,
-		AccessControlDirective,
-		GetDescriptionDirective,
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'pl' },
