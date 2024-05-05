@@ -1,0 +1,39 @@
+<mat-card>
+	<table>
+		<tr>
+			<th>Email</th>
+			<th>Uczelnia</th>
+			<th>Nr albumu</th>
+			<th>Nr dokumentu</th>
+			<th>Imię</th>
+			<th>Nazwisko</th>
+			<th>Data ważności legitymacji</th>
+			<th>Dokument tożsamości</th>
+			<th>Akcje</th>
+		</tr>
+		<tr *ngFor="let user of users$ | async">
+			<td>{{ user.email }}</td>
+			<td>{{ user.university }}</td>
+			<td>{{ user.studentNumber }}</td>
+			<td>{{ user.documentNumber }}</td>
+			<td>{{ user.name }}</td>
+			<td>{{ user.surName }}</td>
+			<td>{{ user.documentExpireDate }}</td>
+			<td>
+				<img
+					class="inline-block h-32"
+					alt="document"
+					src="{{ baseUrl }}/{{ user.document.path }}"
+				/>
+			</td>
+			<td>
+				<button class="mr-2" mat-stroked-button (click)="acceptUser(user.userId)">
+					Zaakceptuj
+				</button>
+				<button class="mr-2" mat-stroked-button (click)="acceptUser(user.userId)">
+					Odrzuć
+				</button>
+			</td>
+		</tr>
+	</table>
+</mat-card>

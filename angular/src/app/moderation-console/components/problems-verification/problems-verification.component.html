@@ -1,0 +1,27 @@
+<mat-card>
+	<table>
+		<tr>
+			<th>Rodzaj</th>
+			<th>Data zgłoszenia</th>
+			<th>Opis zgłoszenia</th>
+			<th>Czy rozwiązany?</th>
+			<th>Id Zgłaszającego</th>
+			<th>Akcje</th>
+		</tr>
+		<tr *ngFor="let problem of technicalProblems$ | async">
+			<td>{{ problem.kind }}</td>
+			<td>{{ problem.date }}</td>
+			<td>{{ problem.description }}</td>
+			<td>{{ problem.solved }}</td>
+			<td>{{ problem.userId }}</td>
+			<td>
+				<button
+					mat-stroked-button
+					(click)="markAsSolved(problem.technicalProblemId)"
+				>
+					Oznacz jako rozwiązane
+				</button>
+			</td>
+		</tr>
+	</table>
+</mat-card>

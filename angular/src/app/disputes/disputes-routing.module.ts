@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DisputesConversationComponent } from './components/messages-conversation/disputes-conversation.component';
+import { DisputesConversationComponent } from '@shared/components/disputes-conversation/disputes-conversation.component';
 import { DisputesComponent } from './disputes.component';
 
 const routes: Routes = [
