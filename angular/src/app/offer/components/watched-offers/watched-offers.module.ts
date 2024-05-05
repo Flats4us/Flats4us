@@ -13,6 +13,7 @@ import { OfferRoutingModule } from '../../offer-routing.module';
 import { OfferService } from '../../services/offer.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [WatchedOffersComponent],
@@ -25,6 +26,7 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 		MatCardModule,
 		OfferRoutingModule,
 		MatTooltipModule,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService, MatPaginatorIntl],
 	exports: [WatchedOffersComponent],

@@ -101,6 +101,11 @@
 			>
 				Rejestracja
 			</button>
+
+			<mat-icon>language</mat-icon>
+			<span>PL</span>
+			<mat-slide-toggle (change)="changeLanguage($event)"> </mat-slide-toggle>
+			<span>EN</span>
 		</div>
 	</ng-template>
 	<button
@@ -157,6 +162,13 @@
 		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
 		Dodatkowe
 	</button>
+
+	<div class="flex items-center justify-center">
+		<mat-icon class="mr-4">language</mat-icon>
+		<span class="mr-4">PL</span>
+		<mat-slide-toggle (change)="changeLanguage($event)"> </mat-slide-toggle>
+		<span class="ml-4">EN</span>
+	</div>
 
 	<mat-menu #extended="matMenu">
 		<button mat-menu-item routerLink="calendar">Kalendarz</button>

@@ -11,6 +11,7 @@ import {
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { IUser } from '@shared/models/user.models';
 import { UserService } from '@shared/services/user.service';
@@ -29,6 +30,7 @@ import { environment } from 'src/environments/environment.prod';
 		MatChipsModule,
 		MatCardModule,
 		MatTooltipModule,
+		TranslateModule,
 	],
 	providers: [OfferService, UserService],
 	templateUrl: './rent-approval-dialog.component.html',

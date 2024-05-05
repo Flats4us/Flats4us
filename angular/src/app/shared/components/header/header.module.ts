@@ -9,10 +9,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+	MatSlideToggle,
+	MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { UserService } from '@shared/services/user.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatSliderModule } from '@angular/material/slider';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -28,6 +34,9 @@ import { UserService } from '@shared/services/user.service';
 		MatSlideToggleModule,
 		MatMenuModule,
 		RouterLink,
+		TranslateModule,
+		MatSlideToggleModule,
+		FormsModule,
 	],
 	providers: [UserService],
 	exports: [HeaderComponent],

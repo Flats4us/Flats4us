@@ -2,7 +2,7 @@
 	<div class="avatar"></div>
 	<span class="conversation__user">Anon Testowy</span>
 </div>
-<h4>ID WYBRANEJ KONWERSACJI {{ conversationId$ | async }}</h4>
+<h4>{{ "Messages.id" | translate }} {{ conversationId$ | async }}</h4>
 <div class="conversation-list">
 	<div
 		*ngFor="let msg of messages; let index = index"

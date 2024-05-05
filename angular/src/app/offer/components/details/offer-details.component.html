@@ -6,13 +6,13 @@
 		<div *ngIf="data.user === uType.OWNER" class="label-box">
 			<mat-label class="label-description">
 				<span class="text-3xl"
-					>Status oferty:
+					>{{ "Offer.offer-status" | translate }}:
 					{{ offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) }}
 					<button
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
-						matTooltip="Oferta najmu czeka na zaakceptowanie!"
+						matTooltip="{{ 'Offer.offer-rental-info' | translate }}!"
 						aria-label="MenuButton"
 						(click)="onRentApproval(data.offer?.offerId)"
 					>
@@ -33,7 +33,7 @@
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
 								><h1 class="text-3xl">
-									Wynajem -
+									{{ "Offer.rent" | translate }} -
 									{{
 										realEstateService.propertyTypes.get(
 											data.offer?.property?.propertyType ?? 0
@@ -43,7 +43,7 @@
 									<mat-icon
 										*ngIf="data.offer?.isPromoted"
 										class="promotion-icon"
-										matTooltip="Promowana oferta"
+										matTooltip="{{ 'Offer.promoted-offer' | translate }}"
 										[inline]="true"
 										>new_releases</mat-icon
 									>
@@ -59,7 +59,7 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="Więcej opcji"
+								matTooltip="{{ 'more-options' | translate }}"
 								aria-label="MenuButton"
 								[matMenuTriggerFor]="menu"
 								[disabled]="
@@ -127,8 +127,10 @@
 		<div class="button-box">
 			<mat-label class="label-price"
 				><span class="text-3xl"
-					>Cena
-					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
+					>{{ "Offer.price" | translate }}
+					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/{{
+						"mth" | translate
+					}}.</span
 				></mat-label
 			>
 		</div>
@@ -137,29 +139,31 @@
 		<div class="label-box">
 			<mat-label class="label-description"
 				><mat-icon class="icon" [inline]="true">description</mat-icon
-				><span class="text-3xl">Opis oferty</span></mat-label
+				><span class="text-3xl">{{
+					"Offer.description" | translate
+				}}</span></mat-label
 			>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">Kaucja:</p>
-				<p class="text-2xl pt-4">Data wystawienia:</p>
-				<p class="text-2xl pt-4">Data zakończenia:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Metraż:</p>
-				<p class="text-2xl pt-4">Liczba pokoi:</p>
-				<p class="text-2xl pt-4">Liczba pięter:</p>
-				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
-				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
-				<p class="text-2xl pt-4">Informacje o umowie:</p>
+				<p class="text-2xl pt-4">{{ "Offer.deposit" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.start-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.end-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.address" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.area" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.room-number" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.floor-number" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.floor" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.max-inhabitants" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.build-year" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.equipment" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Offer.contract-information" | translate }}:</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl"
 				>
-					Współlokatorzy:
+					{{ "Offer.roommates" | translate }}:
 				</p>
 			</div>
 			<div class="column-header-description">
@@ -208,7 +212,7 @@
 	<div *ngIf="data.user === uType.OWNER" class="label-box">
 		<mat-label class="label-description"
 			><mat-icon class="icon" [inline]="true">attach_money</mat-icon
-			><span class="text-3xl">Płatności</span></mat-label
+			><span class="text-3xl">{{ "Header.payments" | translate }}</span></mat-label
 		>
 	</div>
 	<div *ngIf="data.user === uType.OWNER" class="payments">
@@ -229,25 +233,27 @@
 		</table>
 	</div>
 	<div *ngIf="data.user === uType.STUDENT" class="button-box-options">
-		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
+		<button mat-raised-button color="primary">
+			{{ "Offer.add-roommates" | translate }}
+		</button>
 	</div>
 	<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
 		<button mat-raised-button color="primary" (click)="returnStart()">
-			Powrót
+			{{ "return" | translate }}
 		</button>
 		<button
 			mat-raised-button
 			color="primary"
 			(click)="onAddMeeting(data.offer?.offerId)"
 		>
-			Dodaj spotkanie
+			{{ "Offer.add-meeting" | translate }}
 		</button>
 		<button
 			mat-raised-button
 			color="primary"
 			(click)="startRent(data.offer?.offerId)"
 		>
-			Wynajmij
+			{{ "Offer.rent2" | translate }}
 		</button>
 	</div>
 </div>

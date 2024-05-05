@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Dodaj wydarzenie</h1>
+<h1 mat-dialog-title>{{ "Calendar.add-event" | translate }}</h1>
 <div mat-dialog-content>
 	<form class="flex flex-col" [formGroup]="form">
 		<mat-form-field>
-			<mat-label>Data</mat-label>
+			<mat-label>{{ "Calendar.date" | translate }}</mat-label>
 			<input
 				matInput
 				readonly
@@ -18,12 +18,14 @@
 		</mat-form-field>
 
 		<mat-form-field>
-			<mat-label>Nazwa</mat-label>
+			<mat-label>{{ "Calendar.add-event" | translate }}</mat-label>
 			<input matInput formControlName="name" type="text" />
 		</mat-form-field>
 	</form>
 </div>
 <div mat-dialog-actions>
-	<button mat-button (click)="onAdd()">Dodaj</button>
-	<button mat-button mat-dialog-close cdkFocusInitial>Anuluj</button>
+	<button mat-button (click)="onAdd()">{{ "add" | translate }}</button>
+	<button mat-button mat-dialog-close cdkFocusInitial>
+		{{ "cancel" | translate }}
+	</button>
 </div>

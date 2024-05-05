@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RegisterComponent } from './register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RegisterComponent],
@@ -22,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		ReactiveFormsModule,
 		FormsModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	exports: [RegisterComponent],
 })

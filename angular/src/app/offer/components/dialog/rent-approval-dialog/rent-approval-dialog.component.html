@@ -1,9 +1,11 @@
-<h1 class="text-2xl p-4 font-semibold">Propozycja najmu</h1>
+<h1 class="text-2xl p-4 font-semibold">
+	{{ "Offer.rent-proposal" | translate }}
+</h1>
 <div mat-dialog-content>
 	<mat-card>
-		<p class="pt-4 font-semibold">Data rozpoczęcia najmu:</p>
+		<p class="pt-4 font-semibold">{{ "Offer.rent-start-date" | translate }}:</p>
 		<p>22-03-2024</p>
-		<p class="pt-4 font-semibold">Okres najmu:</p>
+		<p class="pt-4 font-semibold">{{ "Offer.rent-period" | translate }}:</p>
 		<p>1 rok</p>
 		<div *ngIf="userProfile$ | async as user" class="profiles-container">
 			<p class="pt-4 font-semibold">Najemcy:</p>
@@ -19,9 +21,11 @@
 					/></mat-card-avatar>
 					<div>
 						<mat-chip-set>
-							<mat-chip>Imię: {{ user.name }}</mat-chip>
-							<mat-chip>Wiek: {{ user.age }}</mat-chip>
-							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
+							<mat-chip>{{ "Profile.name" | translate }}: {{ user.name }}</mat-chip>
+							<mat-chip>{{ "Profile.age" | translate }}: {{ user.age }}</mat-chip>
+							<mat-chip
+								>{{ "Profile.university" | translate }}: {{ user.university }}</mat-chip
+							>
 						</mat-chip-set>
 					</div>
 				</div>
@@ -38,16 +42,18 @@
 					/></mat-card-avatar>
 					<div>
 						<mat-chip-set>
-							<mat-chip>Imię: {{ user.name }}</mat-chip>
-							<mat-chip>Wiek: {{ user.age }}</mat-chip>
-							<mat-chip>Uczelnia: {{ user.university }}</mat-chip>
+							<mat-chip>{{ "Profile.name" | translate }}: {{ user.name }}</mat-chip>
+							<mat-chip>{{ "Profile.age" | translate }}: {{ user.age }}</mat-chip>
+							<mat-chip
+								>{{ "Profile.university" | translate }}: {{ user.university }}</mat-chip
+							>
 						</mat-chip-set>
 					</div>
 				</div>
 			</mat-card>
 		</div>
 	</mat-card>
-	<p class="pt-4">Czy akceptujesz propozycję najmu?</p>
+	<p class="pt-4">{{ "Offer.rent-proposal-info" | translate }}?</p>
 	<div mat-dialog-actions class="button-box">
 		<button
 			mat-button
@@ -56,7 +62,7 @@
 			type="button"
 			(click)="onClose()"
 		>
-			Nie
+			{{ "no" | translate }}
 		</button>
 		<button
 			mat-button
@@ -65,7 +71,7 @@
 			type="submit"
 			(click)="onYesClick()"
 		>
-			Tak
+			{{ "yes" | translate }}
 		</button>
 	</div>
 </div>

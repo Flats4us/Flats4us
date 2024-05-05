@@ -33,6 +33,7 @@ import { ProfileService } from '../services/profile.service';
 import { CreateProfileComponent } from './create-profile.component';
 import { EditProfileModule } from '../edit/edit-profile.module';
 import { SurveyModule } from '@shared/components/survey/survey.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [CreateProfileComponent],
@@ -65,6 +66,7 @@ import { SurveyModule } from '@shared/components/survey/survey.module';
 		OfferModule,
 		EditProfileModule,
 		SurveyModule,
+		TranslateModule,
 	],
 	exports: [CreateProfileComponent],
 	providers: [ProfileService, FormGroupDirective, SurveyService],

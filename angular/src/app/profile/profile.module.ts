@@ -34,6 +34,7 @@ import { EditProfileModule } from './edit/edit-profile.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ProfileService } from './services/profile.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -70,6 +71,7 @@ import { ProfileService } from './services/profile.service';
 		CreateProfileModule,
 		AddOpinionComponent,
 		MatChipsModule,
+		TranslateModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MessagesConversationModule } from './components/messages-conversation/messages-conversation.module';
 import { MessagesRoutingModule } from './messages-routing.module';
 import { MessagesComponent } from './messages.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [MessagesComponent],
@@ -15,6 +16,7 @@ import { MessagesComponent } from './messages.component';
 		MessagesConversationModule,
 		MatIconModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 })
 export class MessagesModule {}

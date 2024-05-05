@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-offer-cancel-dialog',
@@ -17,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 	templateUrl: './offer-cancel-dialog.component.html',

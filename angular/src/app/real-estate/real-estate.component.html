@@ -1,17 +1,19 @@
 <div>
 	<div class="box-title">
-		<div class="text-4xl p-4 font-semibold">Przeglądanie nieruchomości</div>
+		<div class="text-4xl p-4 font-semibold">
+			{{ "Real-estate.browsing-properties" | translate }}
+		</div>
 	</div>
 	<div class="real-estate-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje nieruchomości
+				{{ "Header.my-properties" | translate }}
 				<button
 					mat-icon-button
 					id="add"
 					class="box-icon-add"
 					aria-label="Add"
-					matTooltip="Dodaj nieruchomość"
+					matTooltip="{{ 'Header.add-property' | translate }}"
 					(click)="addRealEstate()"
 				>
 					<mat-icon [inline]="true">add</mat-icon>
@@ -39,8 +41,8 @@
 						>
 					</div>
 					<div class="box-subtitle">
-						{{ realEstate.city }}, ul. {{ realEstate.street }}
-						{{ realEstate.number }}, {{ realEstate.area }} m²
+						{{ realEstate.city }}, {{ "Real-estate.street" | translate }}.
+						{{ realEstate.street }} {{ realEstate.number }}, {{ realEstate.area }} m²
 					</div>
 				</a>
 			</mat-nav-list>

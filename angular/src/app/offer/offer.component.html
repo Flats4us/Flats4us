@@ -1,22 +1,22 @@
 <div *ngIf="user$ | async as user">
 	<div class="box-title">
 		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
-			Przeglądanie ofert
+			{{ "Offer.browsing-offers" | translate }}
 		</div>
 		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-			Widok oferty
+			{{ "Offer.view" | translate }}
 		</div>
 	</div>
 	<div *ngIf="user === uType.OWNER" class="offers-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje oferty
+				{{ "Offer.my-offers" | translate }}
 				<button
 					mat-icon-button
 					id="add"
 					class="box-icon"
 					aria-label="Add"
-					matTooltip="Dodaj ofertę"
+					matTooltip="{{ 'Header.add-offer' | translate }}"
 					(click)="addOffer()"
 				>
 					<mat-icon [inline]="true">add</mat-icon>
@@ -31,7 +31,7 @@
 					routerLink="{{ offer.offerId }}"
 					><div class="box-title">
 						<span class="text-xl font-bold">
-							Wynajem -
+							{{ "Offer.rent1" | translate }} -
 							{{ realEstateService.propertyTypes.get(offer.property.propertyType) }}
 							{{ offer.property.area }} m² {{ offer.property.city }}</span
 						>
@@ -49,7 +49,7 @@
 						matBadgePosition="below after"
 						matBadgeColor="primary"
 					>
-						Data {{ offer.startDate | date }}
+						{{ "Calendar.date" | translate }} {{ offer.startDate | date }}
 					</div>
 				</a>
 			</mat-nav-list>

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { TranslateModule } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { OfferService } from 'src/app/offer/services/offer.service';
 
@@ -27,6 +28,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		MatButtonModule,
 		MatFormFieldModule,
 		MatInputModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 })

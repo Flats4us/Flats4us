@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	EventEmitter,
+	Output,
+} from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
 	selector: 'app-header',
@@ -10,6 +17,7 @@ import { environment } from '../../../../environments/environment.prod';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+	@Output() public input: any;
 	public isUserLoggedInAsStudent = true;
 
 	public showSidenav = false;
@@ -19,6 +27,20 @@ export class HeaderComponent {
 
 	constructor(
 		public authService: AuthService,
-		public userService: UserService
+		public userService: UserService,
+		public translate: TranslateService
 	) {}
+
+	changeLanguage(value: MatSlideToggleChange) {
+		switch (value.checked) {
+			case false: {
+				this.translate.use('pl');
+				break;
+			}
+			case true: {
+				this.translate.use('en');
+				break;
+			}
+		}
+	}
 }

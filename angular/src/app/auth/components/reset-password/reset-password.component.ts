@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
 
@@ -24,6 +25,7 @@ import { UserService } from '@shared/services/user.service';
 		MatFormFieldModule,
 		MatInputModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss'],
