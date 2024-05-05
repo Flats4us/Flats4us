@@ -1,0 +1,31 @@
+<mat-card class="mb-3">
+	<table>
+		<tr>
+			<th>Spór między</th>
+			<th>Stworzył spór</th>
+			<th>Data stworzenia</th>
+			<th>Data dodania moderatora</th>
+			<th>Akcje</th>
+		</tr>
+		<tr *ngFor="let dispute of disputes$ | async">
+			<td>{{ dispute.disputeBetween }}</td>
+			<td>{{ dispute.createdBy }}</td>
+			<td>{{ dispute.creationDate }}</td>
+			<td>{{ dispute.moderatorAdditionDate }}</td>
+			<td>
+				<button
+					class="mr-2"
+					mat-stroked-button
+					mat-flat-button
+					routerLink="{{ dispute.disputeId }}"
+				>
+					Zobacz spór
+				</button>
+				<button class="mr-2" mat-stroked-button>Oznacz jako rozwiązane</button>
+			</td>
+		</tr>
+	</table>
+</mat-card>
+<mat-card>
+	<router-outlet></router-outlet>
+</mat-card>

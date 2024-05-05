@@ -65,6 +65,13 @@ const routes: Routes = [
 			import('./calendar/calendar.component').then(c => c.CalendarComponent),
 	},
 	{
+		path: 'moderation-console',
+		loadChildren: () =>
+			import('./moderation-console/moderation-console.module').then(
+				m => m.ModerationConsoleModule
+			),
+	},
+	{
 		path: 'report-problem',
 		loadComponent: () =>
 			import('./report-problem/report-problem.component').then(

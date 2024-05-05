@@ -1,0 +1,41 @@
+<mat-card>
+	<table>
+		<tr>
+			<th>Właściciel</th>
+			<th>Adres email właściciela</th>
+			<th>Adres nieruchomości</th>
+			<th>Akt własności</th>
+			<th>Akcje</th>
+		</tr>
+		<tr *ngFor="let property of properties$ | async">
+			<td>{{ property.ownerName }}</td>
+			<td>{{ property.ownerEmail }}</td>
+			<td>{{ property.address }}</td>
+			<td>
+				<a
+					mat-button
+					target="_blank"
+					href="{{ baseUrl }}/{{ property.document.path }}"
+				>
+					Wyświetl dokument
+				</a>
+			</td>
+			<td>
+				<button
+					class="mr-2"
+					mat-stroked-button
+					(click)="acceptProperty(property.propertyId)"
+				>
+					Zaakceptuj
+				</button>
+				<button
+					class="mr-2"
+					mat-stroked-button
+					(click)="rejectProperty(property.propertyId)"
+				>
+					Odrzuć
+				</button>
+			</td>
+		</tr>
+	</table>
+</mat-card>
