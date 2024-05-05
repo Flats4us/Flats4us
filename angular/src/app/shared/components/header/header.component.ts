@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
@@ -17,7 +12,6 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	@Output() public input: any;
 	public isUserLoggedInAsStudent = true;
 
 	public showSidenav = false;
