@@ -9,7 +9,6 @@ export enum LoggedUserType {
 	MODERATOR = 'MODERATOR',
 	STUDENT = 'STUDENT',
 	OWNER = 'OWNER',
-	USER = 'USER',
 }
 
 export interface IAuthTokenResponse {

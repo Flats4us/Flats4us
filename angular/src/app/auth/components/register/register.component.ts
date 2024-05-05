@@ -32,10 +32,8 @@ export class RegisterComponent implements OnInit, OnChanges {
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (changes['emailExist'].currentValue) {
-			if (this.emailExist) {
-				this.registerForm.controls['email'].setErrors({ emailExist: true });
-			}
+		if (changes['emailExist'].currentValue && this.emailExist) {
+			this.registerForm.controls['email'].setErrors({ emailExist: true });
 		}
 	}
 }

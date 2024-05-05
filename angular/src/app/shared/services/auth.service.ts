@@ -18,8 +18,11 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 	public allPermissions: Map<string, IPermission> = new Map([
+		['moderator', { user: 'MODERATOR', status: '0' }],
 		['verifiedStudent', { user: 'STUDENT', status: '0' }],
 		['verifiedOwner', { user: 'OWNER', status: '0' }],
+		['unverifiedStudent', { user: 'STUDENT', status: '1' }],
+		['unverifiedOwner', { user: 'OWNER', status: '1' }],
 		['allLoggedIn', { allLoggedIn: true }],
 		['notLoggedIn', { notLoggedIn: true }],
 	]);
@@ -47,7 +50,7 @@ export class AuthService {
 	public accessControl$ = this.accessControl.asObservable();
 
 	constructor(private http: HttpClient, private router: Router) {
-		this.isLoggedIn.next(this.isValidToken());
+		setInterval(() => this.isLoggedIn.next(this.isValidToken()), 1000);
 		this.accessControl.next({
 			user: this.getUserType(),
 			status: this.getUserStatus(),
@@ -89,7 +92,7 @@ export class AuthService {
 		localStorage.setItem('authRole', role.toUpperCase());
 		localStorage.setItem('authStatus', verificationStatus.toString());
 		this.isLoggedIn.next(true);
-		this.setUserType(response.role, response.verificationStatus.toString(), true);
+		this.setUserType(true, response.role, response.verificationStatus.toString());
 	}
 
 	public getAuthToken(): string {
@@ -123,7 +126,7 @@ export class AuthService {
 		localStorage.removeItem('authRole');
 		localStorage.removeItem('authStatus');
 		this.isLoggedIn.next(false);
-		this.setUserType('User', '1', false);
+		this.setUserType(false);
 		this.router.navigate(['/']);
 	}
 
@@ -135,43 +138,14 @@ export class AuthService {
 	}
 
 	private setUserType(
-		userType: string,
-		verificationStatus: string,
-		isLoggedIn: boolean
+		isLoggedIn: boolean,
+		userType?: string,
+		verificationStatus?: string
 	) {
-		switch (userType.toUpperCase()) {
-			case LoggedUserType.MODERATOR: {
-				this.accessControl.next({
-					user: LoggedUserType.MODERATOR,
-					status: verificationStatus,
-					isLoggedIn: isLoggedIn,
-				});
-				break;
-			}
-			case LoggedUserType.STUDENT: {
-				this.accessControl.next({
-					user: LoggedUserType.STUDENT,
-					status: verificationStatus,
-					isLoggedIn: isLoggedIn,
-				});
-				break;
-			}
-			case LoggedUserType.OWNER: {
-				this.accessControl.next({
-					user: LoggedUserType.OWNER,
-					status: verificationStatus,
-					isLoggedIn: isLoggedIn,
-				});
-				break;
-			}
-			default: {
-				this.accessControl.next({
-					user: LoggedUserType.USER,
-					status: '1',
-					isLoggedIn: false,
-				});
-				break;
-			}
-		}
+		this.accessControl.next({
+			isLoggedIn: isLoggedIn,
+			user: userType?.toUpperCase() as LoggedUserType,
+			status: verificationStatus ?? '',
+		});
 	}
 }
