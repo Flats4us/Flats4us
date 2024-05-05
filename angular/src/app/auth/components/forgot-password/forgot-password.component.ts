@@ -39,7 +39,7 @@ export class ForgotPasswordComponent extends BaseComponent {
 	}
 
 	public sendPasswordResetLink() {
-		if (this.form.invalid || !this.form.value.email) {
+		if (this.form.invalid) {
 			return;
 		}
 
