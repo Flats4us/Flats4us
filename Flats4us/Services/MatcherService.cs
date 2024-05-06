@@ -133,6 +133,7 @@ namespace Flats4us.Services
             if (match.IsStudent1Interested == true && match.IsStudent2Interested == true)
             {
                 await _notificationService.SendNotificationAsync("You got a new match!", "Tap to see what's up.", student2Id);
+                await _notificationService.SendNotificationAsync("You got a new match!", "Tap to see what's up.", student1Id);
 
             }
 
