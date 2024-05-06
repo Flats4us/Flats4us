@@ -15,6 +15,7 @@ export class GroupChatComponent {
 
   joinGroupChat(): void {
     this.chatService.joinGroupChat(this.currentGroupChatId);
+    this.chatService.
   }
 
   sendMessage(): void {

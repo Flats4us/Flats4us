@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = sessionStorage.getItem('jwt'); // Assuming the token is stored in sessionStorage
+    const token = localStorage.getItem('jwt'); // Assuming the token is stored in localStorage
 
     if (token) {
       const cloned = req.clone({
