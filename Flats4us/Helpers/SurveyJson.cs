@@ -10,7 +10,6 @@ namespace Helpers
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Content { get; set; }
         public bool Trigger { get; set; }
         public bool Optional { get; set; }
         public string TypeName { get; set; }

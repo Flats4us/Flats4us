@@ -16,19 +16,8 @@ namespace Flats4us.Services
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
-        public async Task<string> MakingSurvey(Type type, string lang)
+        public async Task<string> MakingSurvey(Type type)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-
-            try
-            {
-                xmlDoc.Load($"Lang/{lang}.xml");
-            }
-            catch (Exception)
-            {
-                xmlDoc.Load($"Lang/EN.xml");
-            }
-
             var attributes = type.GetProperties();
 
             int id = 1;
@@ -39,10 +28,6 @@ namespace Flats4us.Services
                 {
                     continue;
                 }
-
-                XmlNode stringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{property.Name}']");
-
-                string content = stringNode != null ? stringNode.InnerText : property.Name;
 
                 bool isSurveyTrigger = property.IsDefined(typeof(SurveyTriggerAttribute));
 
@@ -56,7 +41,6 @@ namespace Flats4us.Services
                     {
                         Id = id++,
                         Name = ToCamelCase(property.Name),
-                        Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
                         TypeName = "SWITCH",
@@ -69,25 +53,14 @@ namespace Flats4us.Services
                 {
                     string[] enumValues = Enum.GetNames(underlyingType);
 
-                    string[] translatedEnumValues = new string[enumValues.Length];
-
-                    for (int i = 0; i < enumValues.Length; i++)
-                    {
-                        string enumKey = $"{underlyingType.Name}_{enumValues[i]}";
-
-                        XmlNode enumStringNode = xmlDoc.SelectSingleNode($"/resources/string[@name='{enumKey}']");
-                        translatedEnumValues[i] = enumStringNode != null ? enumStringNode.InnerText : enumValues[i];
-                    }
-
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
                         Name = ToCamelCase(property.Name),
-                        Content = content,
                         Trigger = isSurveyTrigger,
                         Optional = isNullable,
                         TypeName = "RADIOBUTTON",
-                        Answers = translatedEnumValues,
+                        Answers = enumValues,
                     };
 
                     json.Add(surveyJson);
@@ -103,7 +76,6 @@ namespace Flats4us.Services
                         {
                             Id = id++,
                             Name = ToCamelCase(property.Name),
-                            Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
                             TypeName = "SLIDER",
@@ -116,7 +88,6 @@ namespace Flats4us.Services
                         {
                             Id = id++,
                             Name = ToCamelCase(property.Name),
-                            Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = isNullable,
                             TypeName = "NUMBER",
@@ -137,7 +108,6 @@ namespace Flats4us.Services
                         {
                             Id = id++,
                             Name = ToCamelCase(property.Name),
-                            Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = true,
                             TypeName = "TEXT",
@@ -150,7 +120,6 @@ namespace Flats4us.Services
                         {
                             Id = id++,
                             Name = ToCamelCase(property.Name),
-                            Content = content,
                             Trigger = isSurveyTrigger,
                             Optional = false,
                             TypeName = "TEXT",
