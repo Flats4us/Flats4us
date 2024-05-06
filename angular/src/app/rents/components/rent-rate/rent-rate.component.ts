@@ -46,12 +46,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RentRateComponent extends BaseComponent {
 	public form = new UntypedFormGroup({
-		rating: new FormControl(null, Validators.required),
-		cleanliness: new FormControl(null, Validators.required),
-		service: new FormControl(null, Validators.required),
-		location: new FormControl(null, Validators.required),
-		equipment: new FormControl(null, Validators.required),
-		qualityForMoney: new FormControl(null, Validators.required),
+		rating: new FormControl(1, Validators.required),
+		cleanliness: new FormControl(1, Validators.required),
+		service: new FormControl(1, Validators.required),
+		location: new FormControl(1, Validators.required),
+		equipment: new FormControl(1, Validators.required),
+		qualityForMoney: new FormControl(1, Validators.required),
 		description: new FormControl(null),
 	});
 
