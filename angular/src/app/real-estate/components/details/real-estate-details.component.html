@@ -37,8 +37,8 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="{{ 'more-options' | translate }}"
 								aria-label="MenuButton"
+								matTooltip="{{ 'more-options' | translate }}"
 								[matMenuTriggerFor]="menu"
 							>
 								<mat-icon>more_horiz</mat-icon>
@@ -114,9 +114,13 @@
 				<p class="text-2xl">{{ "Real-estate-details.address" | translate }}:</p>
 				<p class="text-2xl">{{ "Real-estate-details.area" | translate }}:</p>
 				<p class="text-2xl">{{ "Real-estate-details.room-number" | translate }}:</p>
-				<p class="text-2xl">{{ "Real-estate-details.floor-number" | translate }}:</p>
+				<p class="text-2xl">
+					{{ "Real-estate-details.floor-number" | translate }}:
+				</p>
 				<p class="text-2xl">{{ "Real-estate-details.floor" | translate }}:</p>
-				<p class="text-2xl">{{ "Real-estate-details.max-inhabitants" | translate }}:</p>
+				<p class="text-2xl">
+					{{ "Real-estate-details.max-inhabitants" | translate }}:
+				</p>
 				<p class="text-2xl">{{ "Real-estate-details.build-year" | translate }}:</p>
 				<p class="text-2xl">{{ "Real-estate-details.equipment" | translate }}:</p>
 			</div>
@@ -126,7 +130,8 @@
 					{{ actualRealEstate.district === null ? "-" : actualRealEstate.district }}
 				</p>
 				<p class="text-2xl">
-					{{ actualRealEstate.postalCode }} {{ "Real-estate.street" | translate }}. {{ actualRealEstate.street }}
+					{{ actualRealEstate.postalCode }} {{ "Real-estate.street" | translate }}.
+					{{ actualRealEstate.street }}
 					{{ actualRealEstate.number }}
 				</p>
 				<p class="text-2xl">{{ actualRealEstate.area }} m²</p>

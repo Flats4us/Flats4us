@@ -25,7 +25,7 @@ export class HeaderComponent {
 		public translate: TranslateService
 	) {}
 
-	changeLanguage(value: MatSlideToggleChange) {
+	public changeLanguage(value: MatSlideToggleChange) {
 		switch (value.checked) {
 			case false: {
 				this.translate.use('pl');

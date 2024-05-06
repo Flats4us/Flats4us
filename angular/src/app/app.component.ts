@@ -14,7 +14,7 @@ export class AppComponent {
 		translate.setDefaultLang('pl');
 	}
 
-	changeLanguage(lang: 'pl' | 'en') {
+	public changeLanguage(lang: 'pl' | 'en') {
 		this.translate.use(lang);
 	}
 }

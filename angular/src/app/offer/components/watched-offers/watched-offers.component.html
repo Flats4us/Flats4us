@@ -40,7 +40,9 @@
 						<div class="chip">
 							<mat-icon>attach_money</mat-icon>
 							<span
-								>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/{{ "mth" | translate }}</span
+								>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/{{
+									"mth" | translate
+								}}</span
 							>
 						</div>
 					</mat-chip>
@@ -48,8 +50,9 @@
 						<div class="chip">
 							<mat-icon>add</mat-icon
 							><span
-								>{{ "Offer.deposit" | translate }}:
-								{{ watchedOffer.deposit }} zł/{{ "mth" | translate }}</span
+								>{{ "Offer.deposit" | translate }}: {{ watchedOffer.deposit }} zł/{{
+									"mth" | translate
+								}}</span
 							>
 						</div>
 					</mat-chip>
@@ -77,8 +80,8 @@
 							id="deleteOffer"
 							type="button"
 							mat-icon-button
-							matTooltip="{{ 'Offer.delete-watched' | translate }}"
 							aria-label="DeleteOffer"
+							matTooltip="{{ 'Offer.delete-watched' | translate }}"
 							(click)="deleteInterest(watchedOffer.offerId)"
 						>
 							<mat-icon>delete_forever</mat-icon>

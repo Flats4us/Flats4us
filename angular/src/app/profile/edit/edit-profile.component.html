@@ -22,8 +22,8 @@
 					id="menu"
 					mat-mini-fab
 					color="primary"
-					matTooltip="{{ 'more-options' | translate }}"
 					aria-label="MenuButton"
+					matTooltip="{{ 'more-options' | translate }}"
 					[matMenuTriggerFor]="menu"
 				>
 					<mat-icon>more_horiz</mat-icon>
@@ -169,9 +169,9 @@
 							id="studentNumber"
 							formControlName="studentNumber"
 							type="text"
-							placeholder="{{ 'Profile-edit.student-number' | translate }}"
 							aria-label="StudentNumber"
 							matInput
+							placeholder="{{ 'Profile-edit.student-number' | translate }}"
 						/>
 						<mat-error
 							*ngIf="actualForm.controls['studentNumber'].errors?.['required']"
@@ -189,9 +189,9 @@
 							id="university"
 							formControlName="university"
 							type="text"
-							placeholder="{{ 'Profile-edit.university' | translate }}"
 							aria-label="University"
 							matInput
+							placeholder="{{ 'Profile-edit.university' | translate }}"
 						/>
 						<mat-error *ngIf="actualForm.controls['university'].errors?.['required']">
 							{{ "Profile-edit.school-info" | translate }}!
@@ -203,9 +203,9 @@
 							id="address"
 							formControlName="address"
 							type="text"
-							placeholder="{{ 'Profile-edit.address' | translate }}"
 							aria-label="Address"
 							matInput
+							placeholder="{{ 'Profile-edit.address' | translate }}"
 						/>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"

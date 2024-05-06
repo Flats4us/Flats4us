@@ -12,8 +12,8 @@
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
-						matTooltip="{{ 'Offer.offer-rental-info' | translate }}!"
 						aria-label="MenuButton"
+						matTooltip="{{ 'Offer.offer-rental-info' | translate }}!"
 						(click)="onRentApproval(data.offer?.offerId)"
 					>
 						<mat-icon>notifications</mat-icon>
@@ -59,8 +59,8 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="{{ 'more-options' | translate }}"
 								aria-label="MenuButton"
+								matTooltip="{{ 'more-options' | translate }}"
 								[matMenuTriggerFor]="menu"
 								[disabled]="
 									data?.offer?.offerStatus === 1 || data?.offer?.offerStatus === 2
