@@ -90,4 +90,11 @@ export class AuthService {
 			newPassword,
 		});
 	}
+
+	public sendPasswordResetLink(email: string) {
+		return this.http.post(
+			`${this.apiRoute}/${email}/send-password-reset-link`,
+			email
+		);
+	}
 }
