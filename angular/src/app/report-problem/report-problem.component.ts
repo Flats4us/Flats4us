@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ReportProblemService } from './services/report-problem.service';
 
