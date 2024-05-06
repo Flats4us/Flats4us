@@ -1,0 +1,36 @@
+<mat-card>
+	<h1>Zgłoś problem techniczny</h1>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
+		<form [formGroup]="form" (ngSubmit)="reportProblem()">
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Rodzaj</mat-label>
+					<mat-select formControlName="kind" type="number">
+						<mat-option value="1">Obsługa aplikacji</mat-option>
+						<mat-option value="2">Płatność</mat-option>
+						<mat-option value="3">Wydajność konta</mat-option>
+						<mat-option value="4">Inne</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<mat-form-field appearance="outline">
+					<mat-label>Opis</mat-label>
+					<textarea matInput required formControlName="description"> </textarea>
+					<mat-error>Pole jest wymagane</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="buttons">
+				<button
+					mat-flat-button
+					color="primary"
+					class="btn-loginSubmit"
+					type="submit"
+					[disabled]="form.invalid"
+				>
+					Wyślij
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>
