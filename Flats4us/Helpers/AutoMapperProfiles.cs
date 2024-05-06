@@ -19,6 +19,9 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date < src.EndDate))
                 .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
+            CreateMap<Rent, RentPropositionDto>()
+                .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
+
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
@@ -53,6 +56,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House));
 
             CreateMap<Offer, OfferDto>()
+                .ForMember(dest => dest.RentPropositionToShow, opt => opt.MapFrom(src => (int?)null))
                 .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Property.Owner))
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
