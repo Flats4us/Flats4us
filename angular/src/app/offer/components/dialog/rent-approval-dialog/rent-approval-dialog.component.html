@@ -12,7 +12,7 @@
 			<mat-card class="profile-details" (click)="showProfile(user.userId)">
 				<div>
 					<mat-card-avatar
-						matTooltip="Pokaż profil"
+						matTooltip="{{ 'Offer.show-profile' | translate }}"
 						(click)="showProfile(user.userId)"
 					>
 						<img
@@ -33,7 +33,7 @@
 			<mat-card class="profile-details">
 				<div>
 					<mat-card-avatar
-						matTooltip="Pokaż profil"
+						matTooltip="{{ 'Offer.show-profile' | translate }}"
 						(click)="showProfile(user.userId)"
 					>
 						<img

@@ -1,53 +1,53 @@
 <h1 *ngIf="data$ | async as data" mat-dialog-title>
-	Oceń najem {{ data.description }}
+	{{ "Rents-details.rate-rental" | translate }} {{ data.description }}
 </h1>
 <div mat-dialog-content>
 	<form [formGroup]="form">
 		<div>
-			<mat-label>Ocena</mat-label>
+			<mat-label>{{ "Rent-rate.rate" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="rating" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>Czystość</mat-label>
+			<mat-label>{{ "Rent-rate.cleanliness" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="cleanliness" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>Obsługa</mat-label>
+			<mat-label>{{ "Rent-rate.service" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="service" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>Lokalizacja</mat-label>
+			<mat-label>{{ "Rent-rate.location" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="location" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>Wyposażenie</mat-label>
+			<mat-label>{{ "Rent-rate.equipment" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="equipment" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>Stosunek jakości do ceny</mat-label>
+			<mat-label>{{ "Rent-rate.value-for-money" | translate }}</mat-label>
 			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
 				<input matInput matSliderThumb formControlName="qualityForMoney" />
 			</mat-slider>
 		</div>
 		<mat-form-field appearance="fill">
-			<mat-label>Opinia</mat-label>
+			<mat-label>{{ "Rent-rate.opinion" | translate }}</mat-label>
 			<textarea matInput formControlName="description"></textarea>
 		</mat-form-field>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
 	<button mat-button mat-dialog-close cdkFocusInitial type="button">
-		Anuluj
+		{{ "cancel" | translate }}
 	</button>
-	<button mat-raised-button color="primary" (click)="onSubmit()">Oceń</button>
+	<button mat-raised-button color="primary" (click)="onSubmit()">{{ "Rent-rate.rate2" | translate }}</button>
 </div>

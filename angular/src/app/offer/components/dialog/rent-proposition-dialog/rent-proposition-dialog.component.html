@@ -30,7 +30,7 @@
 			<input
 				matInput
 				formControlName="duration"
-				placeholder="Liczba dni najmu"
+				placeholder="{{ 'Rents.days-number-rent' | translate }}"
 				type="number"
 				[min]="1"
 			/>
@@ -59,7 +59,7 @@
 					</button>
 				</mat-chip-row>
 				<input
-					placeholder="Adresy email współlokatorów"
+					placeholder="{{ 'Rents.address-email-roommates' | translate }}"
 					[formControl]="tenantsCtrl"
 					[matChipInputFor]="chipGrid2"
 					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"

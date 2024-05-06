@@ -1,8 +1,8 @@
-<h1 class="text-2xl p-4 font-semibold">Dodawanie spotkania</h1>
+<h1 class="text-2xl p-4 font-semibold">{{ "Meeting-add.meeting-add" | translate }}</h1>
 <div mat-dialog-content>
 	<form class="flex flex-col" [formGroup]="meetingForm" (ngSubmit)="onAdd()">
 		<mat-form-field>
-			<mat-label>Data</mat-label>
+			<mat-label>{{ "Calendar.date" | translate }}</mat-label>
 			<input
 				matInput
 				readonly
@@ -16,30 +16,30 @@
 			></mat-datepicker-toggle>
 			<mat-datepicker #datepicker></mat-datepicker>
 			<mat-error *ngIf="meetingForm.controls['date'].errors?.['required']">
-				Pole jest wymagane!
+				{{ "required-field" | translate }}!
 			</mat-error>
 		</mat-form-field>
 
 		<mat-form-field>
-			<mat-label>Miejsce</mat-label>
+			<mat-label>{{ "Meeting-add.place" | translate }}</mat-label>
 			<input matInput formControlName="place" type="text" />
 			<mat-error *ngIf="meetingForm.controls['place'].errors?.['required']">
-				Pole jest wymagane!
+				{{ "required-field" | translate }}!
 			</mat-error>
 		</mat-form-field>
 
 		<mat-form-field>
-			<mat-label>Temat</mat-label>
+			<mat-label>{{ "Meeting-add.topic" | translate }}</mat-label>
 			<input matInput formControlName="reason" type="text" />
 			<mat-error *ngIf="meetingForm.controls['reason'].errors?.['required']">
-				Pole jest wymagane!
+				{{ "required-field" | translate }}!
 			</mat-error>
 		</mat-form-field>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
-	<button mat-button type="submit" (click)="onAdd()">Dodaj</button>
+	<button mat-button type="submit" (click)="onAdd()">{{ "add" | translate }}</button>
 	<button mat-button mat-dialog-close cdkFocusInitial type="button">
-		Anuluj
+		{{ "cancel" | translate }}
 	</button>
 </div>

@@ -20,7 +20,7 @@
 						<mat-icon
 							*ngIf="watchedOffer.isPromoted"
 							class="promotion-icon"
-							matTooltip="Promowana oferta"
+							matTooltip="{{ 'Offer.promoted-offer' | translate }}"
 							>new_releases</mat-icon
 						>
 					</h2>
@@ -40,7 +40,7 @@
 						<div class="chip">
 							<mat-icon>attach_money</mat-icon>
 							<span
-								>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/mc</span
+								>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/{{ "mth" | translate }}</span
 							>
 						</div>
 					</mat-chip>
@@ -49,7 +49,7 @@
 							<mat-icon>add</mat-icon
 							><span
 								>{{ "Offer.deposit" | translate }}:
-								{{ watchedOffer.deposit }} zł/mc</span
+								{{ watchedOffer.deposit }} zł/{{ "mth" | translate }}</span
 							>
 						</div>
 					</mat-chip>
@@ -77,7 +77,7 @@
 							id="deleteOffer"
 							type="button"
 							mat-icon-button
-							matTooltip="Usuń z obserwowanych"
+							matTooltip="{{ 'Offer.delete-watched' | translate }}"
 							aria-label="DeleteOffer"
 							(click)="deleteInterest(watchedOffer.offerId)"
 						>

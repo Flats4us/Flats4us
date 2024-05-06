@@ -19,6 +19,7 @@ import { OfferService } from '../../services/offer.service';
 import { ISendOffers } from '../../models/offer.models';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-watched-offers',
@@ -44,7 +45,8 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private matPaginatorIntl: MatPaginatorIntl,
 		private cdr: ChangeDetectorRef,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
+		public translate: TranslateService
 	) {
 		super();
 	}
@@ -52,7 +54,7 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public ngOnInit() {
-		this.matPaginatorIntl.firstPageLabel = 'pierwsza strona';
+		this.matPaginatorIntl.firstPageLabel = this.translate.instant('firstPage');
 		this.matPaginatorIntl.itemsPerPageLabel = 'Oferty na stronie';
 		this.matPaginatorIntl.lastPageLabel = 'ostatnia strona';
 		this.matPaginatorIntl.nextPageLabel = 'następna strona';

@@ -25,6 +25,7 @@ import { RentsService } from '../../services/rents.service';
 import { IRentOpinion } from '../../models/rents.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-rate',
@@ -39,6 +40,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
+		TranslateModule
 	],
 	templateUrl: './rent-rate.component.html',
 	styleUrls: ['./rent-rate.component.scss'],

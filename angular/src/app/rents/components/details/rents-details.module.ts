@@ -18,6 +18,7 @@ import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -41,6 +42,7 @@ import { MatChipsModule } from '@angular/material/chips';
 		MatCardModule,
 		CdkTableModule,
 		MatChipsModule,
+		TranslateModule
 	],
 	exports: [RentsDetailsComponent],
 })

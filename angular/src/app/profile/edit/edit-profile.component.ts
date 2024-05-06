@@ -30,6 +30,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { environment } from 'src/environments/environment.prod';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { validityAgeValidator } from '@shared/utils/validators';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -104,7 +105,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private changeDetectorRef: ChangeDetectorRef,
 		public profileService: ProfileService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 		this.filteredHobbies$ = this.hobbyCtrl.valueChanges.pipe(
@@ -153,6 +155,28 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		});
 	}
 	public ngOnInit(): void {
+		this.translate.onLangChange.pipe(this.untilDestroyed()).subscribe((event: LangChangeEvent) => {
+
+			this.menuOptions.forEach( option => { 
+				
+				switch(option.option) { 
+					case 'editEmail': { 
+					   option.description = this.translate.instant('Profile-edit.editEmail');
+					   break; 
+					} 
+					case 'changePassword': { 
+						option.description = this.translate.instant('Profile-edit.changePassword');
+					   break; 
+					} 
+					case 'editSurvey': { 
+						option.description = this.translate.instant('Profile-edit.editSurvey'); 
+					   break; 
+					} 
+				 } 
+
+			})
+		
+		  });
 		this.createAccountForm = this.formDir.form;
 		if (this.modificationType === ModificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(
