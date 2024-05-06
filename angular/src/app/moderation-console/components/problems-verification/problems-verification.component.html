@@ -9,10 +9,20 @@
 			<th>Akcje</th>
 		</tr>
 		<tr *ngFor="let problem of technicalProblems$ | async">
-			<td>{{ problem.kind }}</td>
-			<td>{{ problem.date }}</td>
+			<td>
+				{{
+					problem.kind === 1
+						? "Obsługa aplikacji"
+						: problem.kind === 2
+						? "Płatność"
+						: problem.kind === 3
+						? "Wydajność konta"
+						: "Inne"
+				}}
+			</td>
+			<td>{{ formatDate(problem.date, "dd/MM/yyyy", "pl-PL") }}</td>
 			<td>{{ problem.description }}</td>
-			<td>{{ problem.solved }}</td>
+			<td>{{ problem.solved ? "Tak" : "Nie" }}</td>
 			<td>{{ problem.userId }}</td>
 			<td>
 				<button
