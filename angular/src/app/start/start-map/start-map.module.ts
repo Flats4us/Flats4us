@@ -7,6 +7,7 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 import { StartService } from '../services/start.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OfferService } from 'src/app/offer/services/offer.service';
 
 @NgModule({
 	declarations: [StartMapComponent],
@@ -18,6 +19,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 		MatTooltipModule,
 	],
 	exports: [StartMapComponent],
-	providers: [RealEstateService, StartService, RealEstateService],
+	providers: [RealEstateService, StartService, RealEstateService, OfferService],
 })
 export class StartMapModule {}

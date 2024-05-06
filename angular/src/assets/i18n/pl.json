@@ -2,8 +2,6 @@
 	"zweryfikowany": "zweryfikowany",
 	"niezweryfikowany": "niezweryfikowany",
 
-	"firstPage": "pierwsza strona",
-
 	"polish": "Polski",
 	"english": "Angielski",
 	"cancel": "Anuluj",
@@ -25,6 +23,14 @@
 	"required-days-info1": "Liczba dni jest wymagana",
 	"required-days-info2": "Wprowadzona liczba dni jest nieprawidłowa",
 	"mth": "msc",
+
+	"Paginator": {
+		"first-page": "pierwsza strona",
+		"offers-page": "Oferty na stronie",
+		"last-page": "ostatnia strona",
+		"next-page": "następna strona",
+		"previous-page": "poprzednia strona"
+	},
 
 	"Login": {
 		"log-in": "Zaloguj się",
@@ -404,5 +410,39 @@
 		"password-info2": "Hasło musi mieć od 8 do 50 znaków",
 		"repeat-new-password": "Powtórz nowe hasło",
 		"same-password": "Hasła muszą być takie same"
+	},
+
+	"Start": {
+		"start-title": "Znajdź mieszkanie, pokój lub dom do wynajęcia",
+		"label1": "Województwo",
+		"label1-info": "Nie wybrano województwa",
+		"label2": "Miejscowość",
+		"label2-info": "Nie wybrano miasta",
+		"label3": "Odległość",
+		"label4": "Rodzaj nieruchomości",
+		"label4-info": "Nie wybrano nieruchomości",
+		"label5": "Cena min",
+		"label6": "Cena maks",
+		"label7": "Dzielnica",
+		"label8": "Powierzchnia od",
+		"label9": "Powierzchnia do",
+		"label10": "Lata budowy",
+		"label11": "Min. liczba pokoi",
+		"label12": "Piętro",
+		"label13": "Wyposażenie",
+		"found": "Znaleziono",
+		"nofound": "Nie znaleziono ofert dla podanych parametrów",
+		"promo": "Promowane oferty",
+		"rent": "Wynajem",
+		"price": "Cena",
+		"bail": "Kaucja",
+		"area": "Powierzchnia",
+		"nroom": "Liczba pokoi",
+		"filter": "Pokaż więcej filtrów",
+		"map": "Pokaż mapę ofert",
+		"offer": "Pokaż listę ofert",
+		"search": "Szukaj ofert",
+		"sort": "Sortuj oferty według",
+		"add-to-watch": "Dodaj do obeserwowanych"
 	}
 }

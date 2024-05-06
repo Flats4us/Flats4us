@@ -2,8 +2,6 @@
 	"zweryfikowany": "verified",
 	"niezweryfikowany": "unverified",
 
-	"firstPage": "first page",
-
 	"polish": "Polish",
 	"english": "English",
 	"cancel": "Cancel",
@@ -25,6 +23,14 @@
 	"required-days-info1": "Number of days is required",
 	"required-days-info2": "The number of days is incorrect",
 	"mth": "mth",
+
+	"Paginator": {
+		"first-page": "first page",
+		"offers-page": "Offers on the website",
+		"last-page": "last page",
+		"next-page": "next page",
+		"previous-page": "previous page"
+	},
 
 	"Login": {
 		"log-in": "Log in",
@@ -403,5 +409,38 @@
 		"password-info2": "The password must be between 8 and 50 characters long",
 		"repeat-new-password": "Repeat new password",
 		"same-password": "Passwords must be the same"
+	},
+
+	"Start": {
+		"start-title": "Find an apartment, room or house to rent",
+		"label1": "Voivodeship",
+		"label1-info": "No voivodeship selected",
+		"label2": "Town",
+		"label2-info": "No town selected",
+		"label3": "Distance",
+		"label4": "Property type",
+		"label4-info": "No property selected",
+		"label5": "Min. price",
+		"label6": "Max. price",
+		"label7": "District",
+		"label8": "Area from",
+		"label9": "Area to",
+		"label10": "Years of construction",
+		"label11": "Min. number of rooms",
+		"label12": "Floor",
+		"label13": "Equipment",
+		"found": "Found",
+		"nofound": "No offers found for the given parameters",
+		"promo": "Promoted offers",
+		"rent": "Rent",
+		"price": "Price",
+		"bail": "Bail",
+		"area": "Area",
+		"nroom": "No. of rooms",
+		"filter": "Show more filters",
+		"map": "Show map",
+		"search": "Search for offers",
+		"sort": "Sort offers by",
+		"add-to-watch": "Add to watchlist"
 	}
 }

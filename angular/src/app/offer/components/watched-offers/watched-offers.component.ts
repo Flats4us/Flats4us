@@ -19,7 +19,7 @@ import { OfferService } from '../../services/offer.service';
 import { ISendOffers } from '../../models/offer.models';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-watched-offers',
@@ -54,11 +54,25 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public ngOnInit() {
-		this.matPaginatorIntl.firstPageLabel = this.translate.instant('firstPage');
-		this.matPaginatorIntl.itemsPerPageLabel = 'Oferty na stronie';
-		this.matPaginatorIntl.lastPageLabel = 'ostatnia strona';
-		this.matPaginatorIntl.nextPageLabel = 'następna strona';
-		this.matPaginatorIntl.previousPageLabel = 'poprzednia strona';
+		this.translate.onLangChange
+			.pipe(this.untilDestroyed())
+			.subscribe((event: LangChangeEvent) => {
+				this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+					'Paginator.first-page'
+				);
+				this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+					'Paginator.offers-page'
+				);
+				this.matPaginatorIntl.lastPageLabel = this.translate.instant(
+					'Paginator.last-page'
+				);
+				this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+					'Paginator.next-page'
+				);
+				this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+					'Paginator.previous-page'
+				);
+			});
 		this.matPaginatorIntl.getRangeLabel = (
 			page: number,
 			pageSize: number,
