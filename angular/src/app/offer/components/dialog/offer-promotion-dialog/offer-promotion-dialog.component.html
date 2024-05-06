@@ -5,8 +5,8 @@
 		<input
 			matInput
 			formControlName="promotionDays"
-			placeholder="{{ 'Offer.days-number' | translate }}"
 			type="number"
+			placeholder="{{ 'Offer.days-number' | translate }}"
 			[min]="1"
 		/>
 		<mat-error
@@ -26,9 +26,9 @@
 	</div>
 	<div mat-dialog-actions class="button-box">
 		<button
+			type="button"
 			mat-button
 			mat-dialog-close
-			type="button"
 			cdkFocusInitial
 			(click)="onClose()"
 		>

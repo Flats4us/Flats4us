@@ -155,28 +155,28 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		});
 	}
 	public ngOnInit(): void {
-		this.translate.onLangChange.pipe(this.untilDestroyed()).subscribe((event: LangChangeEvent) => {
-
-			this.menuOptions.forEach( option => { 
-				
-				switch(option.option) { 
-					case 'editEmail': { 
-					   option.description = this.translate.instant('Profile-edit.editEmail');
-					   break; 
-					} 
-					case 'changePassword': { 
-						option.description = this.translate.instant('Profile-edit.changePassword');
-					   break; 
-					} 
-					case 'editSurvey': { 
-						option.description = this.translate.instant('Profile-edit.editSurvey'); 
-					   break; 
-					} 
-				 } 
-
-			})
-		
-		  });
+		this.translate.onLangChange
+			.pipe(this.untilDestroyed())
+			.subscribe((event: LangChangeEvent) => {
+				this.menuOptions.forEach(option => {
+					switch (option.option) {
+						case 'editEmail': {
+							option.description = this.translate.instant('Profile-edit.editEmail');
+							break;
+						}
+						case 'changePassword': {
+							option.description = this.translate.instant(
+								'Profile-edit.changePassword'
+							);
+							break;
+						}
+						case 'editSurvey': {
+							option.description = this.translate.instant('Profile-edit.editSurvey');
+							break;
+						}
+					}
+				});
+			});
 		this.createAccountForm = this.formDir.form;
 		if (this.modificationType === ModificationType.CREATE) {
 			this.dataFormGroupStudent.addControl(

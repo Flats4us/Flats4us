@@ -30,8 +30,8 @@
 			<input
 				matInput
 				formControlName="duration"
-				placeholder="{{ 'Rents.days-number-rent' | translate }}"
 				type="number"
+				placeholder="{{ 'Rents.days-number-rent' | translate }}"
 				[min]="1"
 			/>
 			<mat-error
@@ -77,9 +77,9 @@
 	<p>{{ "Rents.agree-rental" | translate }}?</p>
 	<div class="button-box-yn">
 		<button
+			type="button"
 			mat-button
 			mat-dialog-close
-			type="button"
 			cdkFocusInitial
 			(click)="onClose()"
 		>
