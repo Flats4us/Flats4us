@@ -5,6 +5,7 @@ import { ModerationConsoleService } from '../../services/moderation-console.serv
 import { environment } from '../../../../environments/environment.prod';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { formatDate } from '@angular/common';
 
 @Component({
 	selector: 'app-properties-verification',
@@ -45,4 +46,6 @@ export class UsersVerificationComponent extends BaseComponent {
 				})
 			);
 	}
+
+	protected readonly formatDate = formatDate;
 }

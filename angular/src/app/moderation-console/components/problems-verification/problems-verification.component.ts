@@ -8,6 +8,7 @@ import {
 import { environment } from '../../../../environments/environment.prod';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { formatDate } from '@angular/common';
 
 @Component({
 	selector: 'app-problems-verification',
@@ -37,4 +38,6 @@ export class ProblemsVerificationComponent extends BaseComponent {
 				})
 			);
 	}
+
+	protected readonly formatDate = formatDate;
 }

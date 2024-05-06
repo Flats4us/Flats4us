@@ -18,7 +18,7 @@
 			<td>{{ user.documentNumber }}</td>
 			<td>{{ user.name }}</td>
 			<td>{{ user.surName }}</td>
-			<td>{{ user.documentExpireDate }}</td>
+			<td>{{ formatDate(user.documentExpireDate, "dd/MM/yyyy", "pl-PL") }}</td>
 			<td>
 				<img
 					class="inline-block h-32"
