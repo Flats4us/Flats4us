@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatSlideToggleModule,
 		FormsModule,
 		ReactiveFormsModule,
-		TranslateModule
+		TranslateModule,
 	],
 })
 export class NotificationsModule {}

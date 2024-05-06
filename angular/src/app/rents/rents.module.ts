@@ -45,7 +45,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatCardModule,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [RentsComponent, RentsDetailsComponent],
 	providers: [RentsService, RealEstateService, OfferService],

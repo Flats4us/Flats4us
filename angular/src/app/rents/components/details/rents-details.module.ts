@@ -42,7 +42,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatCardModule,
 		CdkTableModule,
 		MatChipsModule,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [RentsDetailsComponent],
 })

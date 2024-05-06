@@ -40,7 +40,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
-		TranslateModule
+		TranslateModule,
 	],
 	templateUrl: './rent-rate.component.html',
 	styleUrls: ['./rent-rate.component.scss'],

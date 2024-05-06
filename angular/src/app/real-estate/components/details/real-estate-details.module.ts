@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatIconModule,
 		MatMenuModule,
 		RealEstateDialogComponent,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [RealEstateDetailsComponent],
 })

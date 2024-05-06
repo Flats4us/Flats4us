@@ -36,7 +36,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatDialogModule,
 		MatButtonModule,
 		MatSnackBarModule,
-		TranslateModule
+		TranslateModule,
 	],
 	providers: [RentsService],
 	templateUrl: './meeting-add.component.html',

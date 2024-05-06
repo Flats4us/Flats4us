@@ -1,9 +1,13 @@
-<h1 class="text-2xl p-4 font-semibold">{{ "Rents-cancel-dialog.end-rental" | translate }}</h1>
+<h1 class="text-2xl p-4 font-semibold">
+	{{ "Rents-cancel-dialog.end-rental" | translate }}
+</h1>
 <div mat-dialog-content>
 	<p>{{ "Rents-cancel-dialog.info" | translate }}?</p>
 </div>
 <div mat-dialog-actions class="button-box">
-	<button mat-button mat-dialog-close cdkFocusInitial>{{ "no" | translate }}</button>
+	<button mat-button mat-dialog-close cdkFocusInitial>
+		{{ "no" | translate }}
+	</button>
 	<button mat-button mat-dialog-close cdkFocusInitial (click)="onYesClick()">
 		{{ "yes" | translate }}
 	</button>

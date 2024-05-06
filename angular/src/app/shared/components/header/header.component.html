@@ -30,53 +30,57 @@
 		<button mat-menu-item [routerLink]="['profile', 'edit']">
 			{{ "Header.edit-profile" | translate }}
 		</button>
-		<button mat-menu-item [matMenuTriggerFor]="payments">{{ "Header.payments" | translate }}</button>
+		<button mat-menu-item [matMenuTriggerFor]="payments">
+			{{ "Header.payments" | translate }}
+		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['rents', 'owner']"
 		>
-		{{ "Header.my-rentals" | translate }}
+			{{ "Header.my-rentals" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['offer', 'owner']"
 		>
-		{{ "Header.my-offers" | translate }}
+			{{ "Header.my-offers" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['real-estate', 'owner']"
 		>
-		{{ "Header.my-properties" | translate }}
+			{{ "Header.my-properties" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['real-estate', 'add']"
 		>
-		{{ "Header.add-property" | translate }}
+			{{ "Header.add-property" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['offer', 'add']"
 		>
-		{{ "Header.add-offer" | translate }}
+			{{ "Header.add-offer" | translate }}
 		</button>
 		<button
 			*ngIf="isUserLoggedInAsStudent"
 			mat-menu-item
 			[routerLink]="['offer', 'watched']"
 		>
-		{{ "Header.observed-offers" | translate }}
+			{{ "Header.observed-offers" | translate }}
 		</button>
 		<button *ngIf="!isUserLoggedInAsStudent" mat-menu-item>
 			{{ "Header.my-properties" | translate }}
 		</button>
-		<button mat-menu-item (click)="authService.logout()">{{ "Login.log-out" | translate }}</button>
+		<button mat-menu-item (click)="authService.logout()">
+			{{ "Login.log-out" | translate }}
+		</button>
 	</mat-menu>
 
 	<mat-menu #payments="matMenu">
@@ -92,14 +96,14 @@
 				mat-stroked-button
 				[routerLink]="['auth', 'login']"
 			>
-			{{ "Header.log" | translate }}
+				{{ "Header.log" | translate }}
 			</button>
 			<button
 				class="button-sign"
 				mat-stroked-button
 				[routerLink]="['profile', 'create']"
 			>
-			{{ "Login.registration" | translate }}
+				{{ "Login.registration" | translate }}
 			</button>
 
 			<mat-icon>language</mat-icon>
@@ -143,7 +147,9 @@
 		{{ "Header.messages" | translate }}
 	</button>
 	<mat-menu #messages="matMenu">
-		<button mat-menu-item routerLink="messages">{{ "Header.messages-owner" | translate }}</button>
+		<button mat-menu-item routerLink="messages">
+			{{ "Header.messages-owner" | translate }}
+		</button>
 		<button mat-menu-item routerLink="messages">
 			{{ "Header.messages-roommates" | translate }}
 		</button>
@@ -171,7 +177,11 @@
 	</div>
 
 	<mat-menu #extended="matMenu">
-		<button mat-menu-item routerLink="calendar">{{ "Header.calendar" | translate }}</button>
-		<button mat-menu-item routerLink="find-roommate">{{ "Header.find-roommates" | translate }}</button>
+		<button mat-menu-item routerLink="calendar">
+			{{ "Header.calendar" | translate }}
+		</button>
+		<button mat-menu-item routerLink="find-roommate">
+			{{ "Header.find-roommates" | translate }}
+		</button>
 	</mat-menu>
 </ng-template>

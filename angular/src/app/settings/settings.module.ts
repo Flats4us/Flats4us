@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		PasswordChangeModule,
 		HelpCenterModule,
 		MatCardModule,
-		TranslateModule
+		TranslateModule,
 	],
 })
 export class SettingsModule {}

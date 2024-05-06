@@ -109,7 +109,10 @@
 		<div class="button-box">
 			<mat-label class="label-price"
 				><span class="text-3xl"
-					>{{ "Rents-details.price" | translate }} {{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/{{ "mth" | translate }}.</span
+					>{{ "Rents-details.price" | translate }}
+					{{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/{{
+						"mth" | translate
+					}}.</span
 				></mat-label
 			>
 		</div>
@@ -135,15 +138,19 @@
 				<p class="text-2xl pt-4">{{ "Rents-details.nr-room" | translate }}:</p>
 				<p class="text-2xl pt-4">{{ "Rents-details.nr-floor" | translate }}:</p>
 				<p class="text-2xl pt-4">{{ "Rents-details.floor" | translate }}:</p>
-				<p class="text-2xl pt-4">{{ "Rents-details.max-inhabitans" | translate }}:</p>
+				<p class="text-2xl pt-4">
+					{{ "Rents-details.max-inhabitans" | translate }}:
+				</p>
 				<p class="text-2xl pt-4">{{ "Rents-details.build-year" | translate }}:</p>
 				<p class="text-2xl pt-4">{{ "Rents-details.equipment" | translate }}:</p>
-				<p class="text-2xl pt-4">{{ "Rents-details.contract-info" | translate }}:</p>
+				<p class="text-2xl pt-4">
+					{{ "Rents-details.contract-info" | translate }}:
+				</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl"
 				>
-				{{ "Rents-details.roommates" | translate }}:
+					{{ "Rents-details.roommates" | translate }}:
 				</p>
 			</div>
 			<div class="column-header-description">
@@ -153,8 +160,9 @@
 				<p class="text-2xl pt-4">{{ data.rent?.startDate | date }}</p>
 				<p class="text-2xl pt-4">{{ data.rent?.endDate | date }}</p>
 				<p class="text-2xl pt-4">
-					{{ data.rent?.property?.postalCode }} {{ data.rent?.property?.city }}, {{ "Real-estate.street" | translate }}.
-					{{ data.rent?.property?.street }} {{ data.rent?.property?.number }}
+					{{ data.rent?.property?.postalCode }} {{ data.rent?.property?.city }},
+					{{ "Real-estate.street" | translate }}. {{ data.rent?.property?.street }}
+					{{ data.rent?.property?.number }}
 				</p>
 				<p class="text-2xl pt-4">{{ data.rent?.property?.area }} m²</p>
 				<p class="text-2xl pt-4">{{ data.rent?.property?.numberOfRooms }}</p>
@@ -227,7 +235,7 @@
 			color="primary"
 			(click)="onAddMeeting()"
 		>
-		{{ "Rents-details.add-meeting" | translate }}
+			{{ "Rents-details.add-meeting" | translate }}
 		</button>
 		<button mat-raised-button color="primary" (click)="onRate()">
 			{{ "Rents-details.rate-rental" | translate }}

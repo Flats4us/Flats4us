@@ -28,7 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		ReactiveFormsModule,
 		MatSnackBarModule,
 		RouterLink,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [EmailChangeComponent],
 })

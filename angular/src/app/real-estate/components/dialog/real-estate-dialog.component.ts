@@ -21,7 +21,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
-		TranslateModule
+		TranslateModule,
 	],
 	providers: [RealEstateService],
 })

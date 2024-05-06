@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		FormsModule,
 		MatButtonModule,
 		ReactiveFormsModule,
-		TranslateModule
+		TranslateModule,
 	],
 })
 export class StartDisputeDialogComponent {
