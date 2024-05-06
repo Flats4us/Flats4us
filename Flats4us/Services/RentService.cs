@@ -164,7 +164,6 @@ namespace Flats4us.Services
                     .Include(r => r.OtherStudents)
                     .Select(r => _mapper.Map<RentDto>(r))
                     .ToListAsync();
-
             }
             else throw new Exception("Unable to fetch rents for current user");
 
@@ -179,6 +178,24 @@ namespace Flats4us.Services
             var result = new CountedListDto<RentDto>(rents, totalCount);
 
             return result;
+        }
+
+        public async Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId)
+        {
+            var rent = await _context.Rents
+                .Include(r => r.Offer)
+                    .ThenInclude(o => o.Property)
+                .Include(r => r.Student)
+                .Include (r => r.OtherStudents)
+                .SingleOrDefaultAsync(r => r.RentId == rentId);
+
+            if (rent is null) throw new ArgumentException($"Rent with  ID: {rentId} not found.");
+
+            if (rent.Offer.OfferStatus != OfferStatus.Waiting) throw new ArgumentException($"Unable to get proposition for this rent");
+        
+            if (rent.Offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own associated offer");
+
+            return _mapper.Map<RentPropositionDto>(rent);
         }
 
         public async Task AddRentOpinionAsync(RentOpinionDto input, int userId, int rentId)
