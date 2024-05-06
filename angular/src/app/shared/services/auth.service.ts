@@ -148,4 +148,11 @@ export class AuthService {
 			status: verificationStatus ?? '',
 		});
 	}
+
+	public sendPasswordResetLink(email: string) {
+		return this.http.post(
+			`${this.apiRoute}/${email}/send-password-reset-link`,
+			email
+		);
+	}
 }
