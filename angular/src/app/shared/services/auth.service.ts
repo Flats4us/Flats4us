@@ -9,6 +9,7 @@ import {
 } from '../models/auth.models';
 import { environment } from 'src/environments/environment.prod';
 import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
+import { Router } from '@angular/router';
 
 @Injectable({
 	providedIn: 'root',
@@ -21,7 +22,7 @@ export class AuthService {
 	);
 	public isLoggedIn$ = this.isLoggedIn.asObservable();
 
-	constructor(private http: HttpClient) {
+	constructor(private http: HttpClient, private router: Router) {
 		setInterval(() => this.isLoggedIn.next(this.isValidToken()), 1000);
 	}
 
@@ -80,6 +81,7 @@ export class AuthService {
 		localStorage.removeItem('authToken');
 		localStorage.removeItem('authTokenExpirationTime');
 		this.isLoggedIn.next(false);
+		this.router.navigate(['/start']);
 	}
 
 	public changePassword({ oldPassword, newPassword }: IPasswordChangeRequest) {

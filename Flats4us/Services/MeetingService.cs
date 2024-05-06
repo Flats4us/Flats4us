@@ -17,7 +17,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId, int month, int year)
+        public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
             var meetings = new List<MeetingDto>();
@@ -27,7 +27,6 @@ namespace Flats4us.Services
                 meetings = await _context.Students
                     .Where(s =>  s.UserId == userId)
                     .SelectMany(s => s.Meetings)
-                    .Where(m => m.Date.Month == month && m.Date.Year == year)
                     .Select(meeting => _mapper.Map<MeetingDto>(meeting))
                     .ToListAsync();
             }
@@ -38,7 +37,6 @@ namespace Flats4us.Services
                     .SelectMany(o => o.Properties)
                     .SelectMany(p => p.Offers)
                     .SelectMany(o => o.Meetings)
-                    .Where(m => m.Date.Month == month && m.Date.Year == year)
                     .Select(meeting => _mapper.Map<MeetingDto>(meeting))
                     .ToListAsync();
             }

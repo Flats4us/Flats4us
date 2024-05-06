@@ -1,5 +1,4 @@
 ﻿using Flats4us.Entities.Dto;
-using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -121,16 +120,14 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("{email}")]
-        [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
-            Summary = "Checks if student exists by email",
-            Description = "Requires verified student privileges"
+            Summary = "Checks if user exists by email"
         )]
-        public async Task<ActionResult> CheckIfStudentExistsById(string email)
+        public async Task<ActionResult> CheckIfUserExistsById(string email)
         {
             try
             {
-                var result = await _userService.CheckIfStudentExistsByIdAsync(email);
+                var result = await _userService.CheckIfUserExistsByIdAsync(email);
                 return Ok(new OutputDto<bool>(result));
             }
             catch (Exception ex)

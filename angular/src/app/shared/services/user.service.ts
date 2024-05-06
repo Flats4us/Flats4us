@@ -17,11 +17,18 @@ export class UserService {
 		return this.http.get<IMyProfile>(`${this.apiRoute}/my-profile`);
 	}
 
-	public getUserById(id: number) {
+	public getUserById(id: string) {
 		return this.http.get<IUser>(`${this.apiRoute}/${id}/profile`);
 	}
 
 	public checkIfEmailExist(email: string) {
 		return this.http.get<IVerificationResult>(`${this.apiRoute}/${email}`);
+	}
+
+	public resetPassword(token: string, password: string) {
+		return this.http.post(`${this.apiRoute}/reset-password`, {
+			token,
+			password,
+		});
 	}
 }

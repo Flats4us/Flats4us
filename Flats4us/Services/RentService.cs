@@ -131,12 +131,20 @@ namespace Flats4us.Services
                 var mainStudentRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.Rents)
+                        .Include(r => r.Payments)
+                        .Include(r => r.Offer)
+                        .Include(r => r.Student)
+                        .Include(r => r.OtherStudents)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
                 var roommateRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.RoommateInRents)
+                        .Include(r => r.Payments)
+                        .Include(r => r.Offer)
+                        .Include(r => r.Student)
+                        .Include(r => r.OtherStudents)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -149,8 +157,14 @@ namespace Flats4us.Services
                     .Where(o => o.UserId == userId)
                     .SelectMany(o => o.Properties)
                     .SelectMany(p => p.Offers)
-                    .Select(of => _mapper.Map<RentDto>(of.Rent))
+                    .Select(of => of.Rent)
+                    .Include(r => r.Payments)
+                    .Include(r => r.Offer)
+                    .Include(r => r.Student)
+                    .Include(r => r.OtherStudents)
+                    .Select(r => _mapper.Map<RentDto>(r))
                     .ToListAsync();
+
             }
             else throw new Exception("Unable to fetch rents for current user");
 

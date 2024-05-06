@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Helpers.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
@@ -12,5 +13,8 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string Role { get; set; }
+
+        [Required]
+        public VerificationStatus VerificationStatus { get; set; }
     }
 }

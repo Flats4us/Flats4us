@@ -24,7 +24,9 @@
 		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
-		<button mat-menu-item [routerLink]="['profile', 'my']">Mój profil</button>
+		<button mat-menu-item [routerLink]="['profile', 'details', 'my']">
+			Mój profil
+		</button>
 		<button mat-menu-item [routerLink]="['profile', 'edit']">
 			Edytuj profil
 		</button>
@@ -158,6 +160,6 @@
 
 	<mat-menu #extended="matMenu">
 		<button mat-menu-item routerLink="calendar">Kalendarz</button>
-		<button mat-menu-item routerLink="find-roommate">Znajdź wspołlokatora</button>
+		<button mat-menu-item routerLink="find-roommate">Znajdź współlokatora</button>
 	</mat-menu>
 </ng-template>

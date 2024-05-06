@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -16,16 +17,19 @@ namespace Flats4us.Services
     public class UserService : IUserService
     {
         public readonly Flats4usContext _context;
+        private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
 
         public UserService(Flats4usContext context,
+            IEmailService emailService,
             IMapper mapper,
             IConfiguration configuration,
             INotificationService notificationService)
         {
             _context = context;
+            _emailService = emailService;
             _mapper = mapper;
             _configuration = configuration;
             _notificationService = notificationService;
@@ -37,7 +41,6 @@ namespace Flats4us.Services
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash)) throw new AuthenticationException("Invalid email or password.");
 
-            user.ActivityStatus = true;
             user.LastLoginDate = DateTime.Now;
 
             // Save FCM token if provided
@@ -233,6 +236,11 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(owner);
                     break;
+                case Moderator:
+                    var moderator = await _context.Moderators
+                        .FirstOrDefaultAsync(o => o.UserId == userId);
+                    result = _mapper.Map<UserProfileFullDto>(moderator);
+                    break;
                 default:
                     throw new ArgumentException($"Cannot get profile of this user");
             }
@@ -273,18 +281,64 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<bool> CheckIfStudentExistsByIdAsync(string email)
+        public async Task<bool> CheckIfUserExistsByIdAsync(string email)
         {
-            var student = await _context.Students.SingleOrDefaultAsync(x => x.Email == email);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
-            return student != null;
+            return user != null;
+        }
+
+        public async Task SendPasswordResetLinkAsync(string email)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
+
+            if (user != null)
+            {
+                user.PasswordResetToken = Guid.NewGuid().ToString();
+                user.PasswordResetTokenExpireDate = DateTime.Now.AddMinutes(30);
+
+                await _context.SaveChangesAsync();
+
+                var body = new StringBuilder();
+
+                var link = "http://172.21.40.120/auth/reset-password?token=" + user.PasswordResetToken;
+
+                body.AppendLine(EmailHelper.HtmlHTag("Dla twojego konta pojawiło się żądanie zmiany hasła", 1))
+                    .AppendLine(EmailHelper.HtmlPTag($"Aby przejść do zmiany hasła naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                    .AppendLine(EmailHelper.HtmlPTag($"{link}"))
+                    .AppendLine(EmailHelper.HtmlPTag("Jeżeli to nie ty prosiłeś o zmiane hasła wystarczy, że zignorujesz tę wiadomość"));
+
+                await _emailService.SendEmailAsync(user.UserId, "Zmiana hasła w serwisie Flats4us", body.ToString());
+            }
+        }
+
+        public async Task ResetUserPasswordAsync(string newPassword, string passwordResetToken)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.PasswordResetToken == passwordResetToken);
+
+            if (user == null) throw new ArgumentException($"Token not found");
+
+            if (user.PasswordResetTokenExpireDate < DateTime.Now) throw new ArgumentException($"Token expired");
+
+            if (newPassword.Length < 8 || newPassword.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+
+            if (!newPassword.Any(char.IsUpper) || !newPassword.Any(char.IsLower) || !newPassword.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenExpireDate = null;
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)
         {
-            var sourceUser = await _context.Users.FindAsync(requestUserId);
+            var sourceUser = await _context.OwnerStudents.Include(s => s.IssuedUserOpinions)
+                .FirstOrDefaultAsync(x => x.UserId == requestUserId);
 
             if (sourceUser is null) throw new ArgumentException($"User with ID {requestUserId} not found.");
+
+            if (sourceUser.IssuedUserOpinions.Any(op => op.TargetUserId == targetUserId)) throw new Exception($"User {requestUserId} already added opinion for user {targetUserId}");
 
             var targetUser = await _context.Users.FindAsync(targetUserId);
 
@@ -334,8 +388,7 @@ namespace Flats4us.Services
                 new Claim("VerificationStatus", user.VerificationStatus.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                _configuration.GetSection("Jwt:Key").Value!));
+            var key = new SymmetricSecurityKey(Convert.FromBase64String(_configuration.GetSection("Jwt:Key").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -353,7 +406,8 @@ namespace Flats4us.Services
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpiresAt = unixTimestamp,
-                Role = user.GetType().Name
+                Role = user.GetType().Name,
+                VerificationStatus = user.VerificationStatus
             };
 
             return result;

@@ -12,7 +12,12 @@ namespace Flats4us.Helpers
         {
             CreateMap<Equipment, EquipmentDto>();
 
-            CreateMap<Rent, RentDto>();
+            CreateMap<Payment, PaymentDto>();
+
+            CreateMap<Rent, RentDto>()
+                .ForMember(dest => dest.PropertyId, opt => opt.MapFrom(src => src.Offer.PropertyId))
+                .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date < src.EndDate))
+                .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
@@ -54,7 +59,8 @@ namespace Flats4us.Helpers
             CreateMap<Offer, SimpleOfferForMapDto>()
                 .ForMember(dest => dest.IsPromoted, opt => opt.MapFrom(src => src.OfferPromotions.Any(op => op.StartDate <= DateTime.Now && DateTime.Now <= op.EndDate)));
 
-            CreateMap<Owner, OwnerStudentDto>();
+            CreateMap<Owner, OwnerStudentDto>()
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
             CreateMap<User, UserInfoDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
@@ -86,6 +92,9 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Owner))
                 .ForMember(dest => dest.Document, opt => opt.MapFrom<UserDocumentUrlResolver>());
 
+            CreateMap<Moderator, UserProfileFullDto>()
+                .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Moderator));
+
             CreateMap<Student, UserProfilePublicDto>()
                 .MapBaseUserProfile()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
@@ -106,7 +115,6 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.DateForVerificationSorting, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.LastLoginDate, opt => opt.MapFrom(src => (DateTime?)null))
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
-                .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified));
 
             CreateMap<StudentRegisterDto, Student>()
@@ -115,7 +123,6 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.DateForVerificationSorting, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.LastLoginDate, opt => opt.MapFrom(src => (DateTime?)null))
                 .ForMember(dest => dest.ImagesPath, opt => opt.MapFrom(src => Guid.NewGuid().ToString()))
-                .ForMember(dest => dest.ActivityStatus, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.VerificationStatus, opt => opt.MapFrom(src => VerificationStatus.NotVerified))
                 .ForMember(dest => dest.IsTenant, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.Links, opt => opt.MapFrom(src => src.Links != null ? string.Join("|", src.Links) : string.Empty));

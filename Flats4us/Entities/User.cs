@@ -38,8 +38,9 @@ namespace Flats4us.Entities
 
         public DateTime? LastLoginDate { get; set; }
 
-        [Required]
-        public bool ActivityStatus { get; set; }
+        public string? PasswordResetToken { get; set; }
+
+        public DateTime? PasswordResetTokenExpireDate { get; set; }
 
         [Required]
         public VerificationStatus VerificationStatus { get; set; }

@@ -1,6 +1,5 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,10 +19,8 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("reset")]
-        [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
-            Summary = "Resets database. This may take some time.",
-            Description = "Requires moderator privileges."
+            Summary = "Resets database. This may take some time."
         )]
         public IActionResult ResetDatabase()
         {
