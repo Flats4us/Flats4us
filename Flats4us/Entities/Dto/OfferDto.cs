@@ -8,7 +8,6 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int OfferId { get; set; }
 
-        [Required]
         public int? RentPropositionToShow { get; set; }
 
         [Required]
