@@ -53,6 +53,11 @@ namespace Flats4us.Services
                 {
                     string[] enumValues = Enum.GetNames(underlyingType);
 
+                    for (int i = 0; i < enumValues.Length; i++)
+                    {
+                        enumValues[i] = ToCamelCase(enumValues[i]);
+                    }
+
                     SurveyJson surveyJson = new()
                     {
                         Id = id++,
