@@ -61,8 +61,40 @@ public static class DataSeeder
         {
             Name = "Elevator"
         };
+        var equipment13 = new Equipment
+        {
+            Name = "Sink"
+        };
+        var equipment14 = new Equipment
+        {
+            Name = "Shower"
+        };
+        var equipment15 = new Equipment
+        {
+            Name = "Bidet"
+        };
+        var equipment16 = new Equipment
+        {
+            Name = "Ice Crasher"
+        };
+        var equipment17 = new Equipment
+        {
+            Name = "GameStation"
+        };
+        var equipment18 = new Equipment
+        {
+            Name = "Food Processor"
+        };
+        var equipment19 = new Equipment
+        {
+            Name = "Steam Absorber"
+        };
+        var equipment20 = new Equipment
+        {
+            Name = "Induction Cooker"
+        };
 
-        dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11, equipment12);
+        dbContext.Equipment.AddRange(equipment1, equipment2, equipment3, equipment4, equipment5, equipment6, equipment7, equipment8, equipment9, equipment10, equipment11, equipment12, equipment13, equipment14, equipment15, equipment16, equipment17, equipment18, equipment19, equipment20);
 
         #endregion
 
@@ -148,7 +180,6 @@ public static class DataSeeder
         {
             Name = "Modeling"
         };
-
 
         dbContext.Interests.AddRange(interest1, interest2, interest3, interest4, interest5, interest6, interest7, interest8, interest9, interest10, interest11, interest12, interest13, interest14, interest15, interest16, interest17, interest18, interest19, interest20);
 
@@ -300,7 +331,6 @@ public static class DataSeeder
             BankAccount = "44445555666677778888999900",
             DocumentNumber = "DEF 123456"
         };
-
         var owner9 = new Owner
         {
             Name = "Karolina",
@@ -319,7 +349,6 @@ public static class DataSeeder
             BankAccount = "55556666777788889999000011",
             DocumentNumber = "GHI 654321"
         };
-
         var owner10 = new Owner
         {
             Name = "Tomasz",
@@ -338,7 +367,6 @@ public static class DataSeeder
             BankAccount = "66667777888899990000111122",
             DocumentNumber = "JKL 987654"
         };
-
         var owner11 = new Owner
         {
             Name = "Ewa",
@@ -455,7 +483,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
         };
-
         var student2 = new Student
         {
             Name = "Adrian",
@@ -478,7 +505,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
-
         var student3 = new Student
         {
             Name = "Kuba",
@@ -501,7 +527,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
-
         var student4 = new Student
         {
             Name = "Łukasz",
@@ -546,7 +571,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest6, interest3, interest8 }
         };
-
         var student6 = new Student
         {
             Name = "Zenon",
@@ -591,7 +615,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest19, interest17, interest6 }
         };
-
         var student8 = new Student
         {
             Name = "Piotr",
@@ -636,7 +659,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest17, interest4, interest6 }
         };
-
         var student10 = new Student
         {
             Name = "Łukasz",
@@ -659,9 +681,228 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest15, interest13, interest18 }
         };
+        var student11 = new Student
+        {
+            Name = "Anna",
+            Surname = "Kowalska",
+            Address = "ul. Długa 25/8, 00-950 Warszawa",
+            Email = "akowalska@example.com",
+            PhoneNumber = "555444333",
+            AccountCreationDate = new DateTime(2023, 8, 15),
+            DateForVerificationSorting = new DateTime(2023, 8, 15),
+            LastLoginDate = new DateTime(2023, 12, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Akowalska123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2028, 5, 30),
+            BirthDate = new DateTime(1995, 4, 10),  // 29 lat
+            StudentNumber = "s76543",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/anna.kowalska|https://twitter.com/anna_kowalska|https://www.instagram.com/anna_kowalska/",
+            IsTenant = true,
+            Interests = { interest2, interest5, interest9 }
+        };
+        var student12 = new Student
+        {
+            Name = "Jan",
+            Surname = "Nowak",
+            Address = "ul. Mickiewicza 12/7, 30-050 Kraków",
+            Email = "jnowak@example.com",
+            PhoneNumber = "666777888",
+            AccountCreationDate = new DateTime(2023, 9, 20),
+            DateForVerificationSorting = new DateTime(2023, 9, 20),
+            LastLoginDate = new DateTime(2023, 12, 25),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jnowak123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 11, 28),
+            BirthDate = new DateTime(1996, 8, 5),  // 28 lat
+            StudentNumber = "s98765",
+            University = "Uniwersytet Jagielloński",
+            Links = "https://www.facebook.com/jan.nowak|https://twitter.com/jan_nowak|https://www.instagram.com/jan.nowak/",
+            IsTenant = false,
+            Interests = { interest3, interest7, interest12 }
+        };
+        var student13 = new Student
+        {
+            Name = "Karolina",
+            Surname = "Wiśniewska",
+            Address = "ul. Północna 8/15, 80-200 Gdańsk",
+            Email = "kwisniewska@example.com",
+            PhoneNumber = "111222333",
+            AccountCreationDate = new DateTime(2023, 10, 5),
+            DateForVerificationSorting = new DateTime(2023, 10, 5),
+            LastLoginDate = new DateTime(2023, 12, 30),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwisniewska123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 9, 15),
+            BirthDate = new DateTime(1998, 3, 15),  
+            StudentNumber = "s54321",
+            University = "Politechnika Gdańska",
+            Links = "https://www.facebook.com/karolina.wisniewska|https://twitter.com/k_wisniewska|https://www.instagram.com/karolina.wisniewska/",
+            IsTenant = true,
+            Interests = { interest1, interest6, interest10 }
+        };
+        var student14 = new Student
+        {
+            Name = "Piotr",
+            Surname = "Dąbrowski",
+            Address = "ul. Leśna 3, 50-100 Wrocław",
+            Email = "pdabrowski@example.com",
+            PhoneNumber = "777888999",
+            AccountCreationDate = new DateTime(2023, 11, 12),
+            DateForVerificationSorting = new DateTime(2023, 11, 12),
+            LastLoginDate = new DateTime(2024, 1, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pdabrowski123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 10, 20),
+            BirthDate = new DateTime(1997, 7, 8),  
+            StudentNumber = "s43210",
+            University = "Uniwersytet Wrocławski",
+            Links = "https://www.facebook.com/piotr.dabrowski|https://twitter.com/piotr_dabrowski|https://www.instagram.com/piotr.dabrowski/",
+            IsTenant = false,
+            Interests = { interest4, interest8, interest11 }
+        };
+        var student15 = new Student
+        {
+            Name = "Magdalena",
+            Surname = "Kaczmarek",
+            Address = "ul. Wesoła 10/3, 90-001 Łódź",
+            Email = "mkaczmarek@example.com",
+            PhoneNumber = "333222111",
+            AccountCreationDate = new DateTime(2023, 12, 8),
+            DateForVerificationSorting = new DateTime(2023, 12, 8),
+            LastLoginDate = new DateTime(2024, 1, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkaczmarek123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 11, 10),
+            BirthDate = new DateTime(1994, 5, 20),  
+            StudentNumber = "s67891",
+            University = "Uniwersytet Łódzki",
+            Links = "https://www.facebook.com/magda.kaczmarek|https://twitter.com/magda_kaczmarek|https://www.instagram.com/magda.kaczmarek/",
+            IsTenant = true,
+            Interests = { interest1, interest7, interest12 }
+        };
+        var student16 = new Student
+        {
+            Name = "Adam",
+            Surname = "Lis",
+            Address = "ul. Lipowa 7/2, 60-123 Poznań",
+            Email = "alis@example.com",
+            PhoneNumber = "444555666",
+            AccountCreationDate = new DateTime(2024, 1, 20),
+            DateForVerificationSorting = new DateTime(2024, 1, 20),
+            LastLoginDate = new DateTime(2024, 2, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Alis123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 10, 15),
+            BirthDate = new DateTime(1993, 10, 5),  
+            StudentNumber = "s87654",
+            University = "Uniwersytet im. Adama Mickiewicza w Poznaniu",
+            Links = "https://www.facebook.com/adam.lis|https://twitter.com/adam_lis|https://www.instagram.com/adam.lis/",
+            IsTenant = false,
+            Interests = { interest3, interest9, interest11 }
+        };
+        var student17 = new Student
+        {
+            Name = "Alicja",
+            Surname = "Zając",
+            Address = "ul. Krótka 15/4, 70-200 Szczecin",
+            Email = "azajac@example.com",
+            PhoneNumber = "999888777",
+            AccountCreationDate = new DateTime(2024, 2, 10),
+            DateForVerificationSorting = new DateTime(2024, 2, 10),
+            LastLoginDate = new DateTime(2024, 3, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Azajac123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2025, 9, 20),
+            BirthDate = new DateTime(1992, 6, 15), 
+            StudentNumber = "s23456",
+            University = "Uniwersytet Szczeciński",
+            Links = "https://www.facebook.com/alicja.zajac|https://twitter.com/alicja_zajac|https://www.instagram.com/alicja.zajac/",
+            IsTenant = true,
+            Interests = { interest2, interest6, interest10 }
+        };
+        var student18 = new Student
+        {
+            Name = "Marta",
+            Surname = "Adamczyk",
+            Address = "ul. Zielona 20/5, 40-500 Katowice",
+            Email = "madamczyk@example.com",
+            PhoneNumber = "666777888",
+            AccountCreationDate = new DateTime(2024, 3, 15),
+            DateForVerificationSorting = new DateTime(2024, 3, 15),
+            LastLoginDate = new DateTime(2024, 4, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Madamczyk123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 8, 20),
+            BirthDate = new DateTime(1994, 9, 10),  // 29 lat
+            StudentNumber = "s54321",
+            University = "Uniwersytet Śląski",
+            Links = "https://www.facebook.com/marta.adamczyk|https://twitter.com/marta_adamczyk|https://www.instagram.com/marta.adamczyk/",
+            IsTenant = false,
+            Interests = { interest4, interest8, interest12 }
+        };
+        var student19 = new Student
+        {
+            Name = "Tomasz",
+            Surname = "Woźniak",
+            Address = "ul. Ogrodowa 8/2, 90-001 Łódź",
+            Email = "twozniak@example.com",
+            PhoneNumber = "777888999",
+            AccountCreationDate = new DateTime(2024, 4, 20),
+            DateForVerificationSorting = new DateTime(2024, 4, 20),
+            LastLoginDate = new DateTime(2024, 5, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Twozniak123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 7, 15),
+            BirthDate = new DateTime(1993, 11, 25),
+            StudentNumber = "s98765",
+            University = "Uniwersytet Łódzki",
+            Links = "https://www.facebook.com/tomasz.wozniak|https://twitter.com/tomasz_wozniak|https://www.instagram.com/tomasz.wozniak/",
+            IsTenant = true,
+            Interests = { interest1, interest5, interest9 }
+        };
+        var student20 = new Student
+        {
+            Name = "Michał",
+            Surname = "Wojciechowski",
+            Address = "ul. Słoneczna 14/7, 60-300 Poznań",
+            Email = "mwojciechowski@example.com",
+            PhoneNumber = "111222333",
+            AccountCreationDate = new DateTime(2024, 5, 10),
+            DateForVerificationSorting = new DateTime(2024, 5, 10),
+            LastLoginDate = new DateTime(2024, 6, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwojciechowski123"),
+            ImagesPath = Guid.NewGuid().ToString(),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2028, 6, 30),
+            BirthDate = new DateTime(1997, 3, 18),  // 27 lat
+            StudentNumber = "s12345",
+            University = "Uniwersytet im. Adama Mickiewicza w Poznaniu",
+            Links = "https://www.facebook.com/michal.wojciechowski|https://twitter.com/michal_woj|https://www.instagram.com/michal.woj/",
+            IsTenant = false,
+            Interests = { interest2, interest6, interest10 }
+        };
 
-
-        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10);
+        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15, student16, student17, student18, student19, student20);
 
         ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
         ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
@@ -673,6 +914,16 @@ public static class DataSeeder
         ImageUtility.SeedUserImage(student8.ImagesPath, student8.VerificationStatus, student8.DocumentType).Wait();
         ImageUtility.SeedUserImage(student9.ImagesPath, student9.VerificationStatus, student9.DocumentType).Wait();
         ImageUtility.SeedUserImage(student10.ImagesPath, student10.VerificationStatus, student10.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student11.ImagesPath, student11.VerificationStatus, student11.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student12.ImagesPath, student12.VerificationStatus, student12.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student13.ImagesPath, student13.VerificationStatus, student13.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student14.ImagesPath, student14.VerificationStatus, student14.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student15.ImagesPath, student15.VerificationStatus, student15.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student16.ImagesPath, student16.VerificationStatus, student16.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student17.ImagesPath, student17.VerificationStatus, student17.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student18.ImagesPath, student18.VerificationStatus, student18.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student19.ImagesPath, student19.VerificationStatus, student19.DocumentType).Wait();
+        ImageUtility.SeedUserImage(student20.ImagesPath, student20.VerificationStatus, student20.DocumentType).Wait();
 
         #endregion
 
@@ -689,10 +940,62 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 1, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zmoderator123"),
             VerificationStatus = VerificationStatus.Verified,
-            HireDate = new DateTime(2023, 2, 7),
+            HireDate = new DateTime(2023, 1, 10),
+        };
+        var moderator2 = new Moderator
+        {
+            Name = "Mirek",
+            Surname = "Ujazdowski",
+            Address = "Stryjeńskich 16, 02-489 Warszawa",
+            Email = "mujazdowski@gmail.com",
+            PhoneNumber = "168356986",
+            AccountCreationDate = new DateTime(2023, 5, 15),
+            LastLoginDate = new DateTime(2024, 5, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mujazdowski123"),
+            VerificationStatus = VerificationStatus.Verified,
+            HireDate = new DateTime(2023, 5, 14),
+        };
+        var moderator3 = new Moderator
+        {
+            Name = "Aleksandra",
+            Surname = "Nowak",
+            Address = "ul. Dąbrowskiego 8/5, 30-001 Kraków",
+            Email = "anowak@gmail.com",
+            PhoneNumber = "987654321",
+            AccountCreationDate = new DateTime(2023, 6, 20),
+            LastLoginDate = new DateTime(2024, 6, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowak123"),
+            VerificationStatus = VerificationStatus.Verified,
+            HireDate = new DateTime(2023, 6, 19),
+        };
+        var moderator4 = new Moderator
+        {
+            Name = "Kamil",
+            Surname = "Kowalczyk",
+            Address = "ul. Mickiewicza 21/3, 50-100 Wrocław",
+            Email = "kkowalczyk@gmail.com",
+            PhoneNumber = "777666555",
+            AccountCreationDate = new DateTime(2023, 7, 25),
+            LastLoginDate = new DateTime(2024, 7, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkowalczyk123"),
+            VerificationStatus = VerificationStatus.Verified,
+            HireDate = new DateTime(2023, 7, 24),
+        };
+        var moderator5 = new Moderator
+        {
+            Name = "Natalia",
+            Surname = "Lipińska",
+            Address = "ul. Piękna 12/9, 80-001 Gdańsk",
+            Email = "nlipinska@gmail.com",
+            PhoneNumber = "555444333",
+            AccountCreationDate = new DateTime(2023, 8, 30),
+            LastLoginDate = new DateTime(2024, 8, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Nlipinska123"),
+            VerificationStatus = VerificationStatus.Verified,
+            HireDate = new DateTime(2023, 8, 29),
         };
 
-        dbContext.Moderators.AddRange(moderator1);
+        dbContext.Moderators.AddRange(moderator1, moderator2, moderator3, moderator4, moderator5);
 
         #endregion
 
@@ -2002,7 +2305,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student5
         };
-
         var surveyStudent6 = new SurveyStudent
         {
             Party = 2,
@@ -2019,7 +2321,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student6
         };
-
         var surveyStudent7 = new SurveyStudent
         {
             Party = 4,
@@ -2036,7 +2337,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student7
         };
-
         var surveyStudent8 = new SurveyStudent
         {
             Party = 2,
@@ -2069,7 +2369,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student9
         };
-
         var surveyStudent10 = new SurveyStudent
         {
             Party = 1,
@@ -2086,7 +2385,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student10
         };
-
 
         dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10);
 
@@ -2203,6 +2501,37 @@ public static class DataSeeder
 
         #endregion
 
+        #region Payment
+
+        var payment1 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 1, 2),
+            PaymentDate = new DateTime(2023, 1, 3)
+        };
+        var payment2 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 1, 2),
+            PaymentDate = new DateTime(2023, 1, 3)
+        };
+        var payment3 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 1, 2),
+            PaymentDate = new DateTime(2023, 1, 3)
+        };
+
+        dbContext.Payments.AddRange(payment1, payment2, payment3);
+
+        #endregion
+
         #region Rent
 
         var rent1 = new Rent
@@ -2213,9 +2542,8 @@ public static class DataSeeder
             Offer = offer1,
             Student = student1,
             OtherStudents = { student2, student3 },
-            Payments = null
+            Payments = { payment1, payment2, payment3 }
         };
-
         var rent2 = new Rent
         {
             StartDate = new DateTime(2023, 2, 1),
@@ -2226,7 +2554,6 @@ public static class DataSeeder
             OtherStudents = { student5, student6 },
             Payments = null
         };
-
         var rent3 = new Rent
         {
             StartDate = new DateTime(2023, 3, 1),
@@ -2255,7 +2582,6 @@ public static class DataSeeder
             Student = student1,
             Property = flat1
         };
-
         var rentOpinion2 = new RentOpinion
         {
             Rating = 2,
@@ -2267,7 +2593,6 @@ public static class DataSeeder
             Student = student2,
             Property = flat1
         };
-
         var rentOpinion3 = new RentOpinion
         {
             Rating = 3,
@@ -2279,7 +2604,6 @@ public static class DataSeeder
             Student = student3,
             Property = flat1
         };
-
         var rentOpinion4 = new RentOpinion
         {
             Rating = 4,
