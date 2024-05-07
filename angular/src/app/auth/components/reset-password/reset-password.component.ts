@@ -38,7 +38,11 @@ export class ResetPasswordComponent extends BaseComponent {
 		confirmPassword: new FormControl<string>('', [Validators.required]),
 	});
 
-	constructor(private route: ActivatedRoute, private authService: AuthService, private snackBar: MatSnackBar) {
+	constructor(
+		private route: ActivatedRoute,
+		private authService: AuthService,
+		private snackBar: MatSnackBar
+	) {
 		super();
 
 		this.resetPasswordToken = this.route.snapshot.queryParams['token'];
