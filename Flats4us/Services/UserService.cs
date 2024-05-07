@@ -330,6 +330,8 @@ namespace Flats4us.Services
 
             if (targetUser is null) throw new ArgumentException($"User with ID {targetUserId} not found.");
 
+            if (sourceUser is Owner && targetUser is Owner) throw new ArgumentException("As an owner you cannot add opinion about another owner.");
+
             var opinion = new UserOpinion
             {
                 Date = DateTime.Now,
