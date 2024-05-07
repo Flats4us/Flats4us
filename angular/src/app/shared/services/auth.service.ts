@@ -97,4 +97,11 @@ export class AuthService {
 			email
 		);
 	}
+
+	public resetPassword(token: string, password: string) {
+		return this.http.put(`${this.apiRoute}/reset-password`, {
+			token,
+			password,
+		});
+	}
 }
