@@ -124,7 +124,7 @@ namespace Flats4us.Services
         public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int pageSize, int pageNumber)
         {
             var user = await _context.Users.FindAsync(userId);
-            var rents = new List<RentDto>();
+            var rentDtos = new List<RentDto>();
 
             if (user is Student)
             {
@@ -148,34 +148,32 @@ namespace Flats4us.Services
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
-                rents = mainStudentRents;
-                rents.AddRange(roommateRents);
+                rentDtos = mainStudentRents;
+                rentDtos.AddRange(roommateRents);
             }
             else if (user is Owner)
             {
-                rents = await _context.Owners
-                    .Where(o => o.UserId == userId)
-                    .SelectMany(o => o.Properties)
-                    .SelectMany(p => p.Offers)
-                    .Select(of => of.Rent)
+                rentDtos = await _context.Rents
+                    .Where(r => r.Offer.Property.OwnerId == userId &&
+                        r.Offer.OfferStatus != OfferStatus.Waiting)
                     .Include(r => r.Payments)
                     .Include(r => r.Offer)
                     .Include(r => r.Student)
                     .Include(r => r.OtherStudents)
-                    .Select(r => _mapper.Map<RentDto>(r))
+                    .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
             }
             else throw new Exception("Unable to fetch rents for current user");
 
-            var totalCount = rents.Count;
+            var totalCount = rentDtos.Count;
 
-            rents = rents
+            rentDtos = rentDtos
                 //.OrderBy(rent => rent.???)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
 
-            var result = new CountedListDto<RentDto>(rents, totalCount);
+            var result = new CountedListDto<RentDto>(rentDtos, totalCount);
 
             return result;
         }

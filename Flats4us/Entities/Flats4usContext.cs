@@ -189,8 +189,14 @@ namespace Flats4us.Entities
 
             modelBuilder.Entity<RentOpinion>()
                 .HasOne(ro => ro.Student) 
-                .WithMany()  
+                .WithMany(s => s.IssuedRentOpinions)  
                 .HasForeignKey(ro => ro.StudentId)  
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Rent)
+                .WithMany(r => r.Payments)
+                .HasForeignKey(p => p.RentId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

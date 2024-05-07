@@ -6,6 +6,7 @@ namespace Flats4us.Entities
 {
     public class Payment
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentId { get; set; }
 
@@ -23,6 +24,9 @@ namespace Flats4us.Entities
 
         [Required]
         public DateTime PaymentDate { get; set; }
+
+        [Required]
+        public int RentId { get; set; }
 
         public virtual Rent Rent { get; set; }
     }

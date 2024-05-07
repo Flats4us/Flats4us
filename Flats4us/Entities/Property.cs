@@ -68,6 +68,7 @@ namespace Flats4us.Entities
         {
             this.Equipment = new HashSet<Equipment>();
             this.Offers = new HashSet<Offer>();
+            this.RentOpinions = new HashSet<RentOpinion>();
         }
     }
 }
