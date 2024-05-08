@@ -20,7 +20,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<Flats4usContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn"));
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("Flats4usConn"),
+            sqlServerOptionsAction: sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+            });
     }, 
     ServiceLifetime.Scoped
 );
