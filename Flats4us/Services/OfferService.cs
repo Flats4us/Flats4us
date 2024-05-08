@@ -53,8 +53,6 @@ namespace Flats4us.Services
         {
             var allowedSorts = new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
-
             var currentDate = DateTime.Now;
 
             var random = new Random();
@@ -174,8 +172,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
@@ -244,8 +244,6 @@ namespace Flats4us.Services
 
         public async Task<CountedListDto<SimpleOfferForMapDto>> GetFilteredOffersForMapAsync(GetFilteredOffersDto input)
         {
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
-
             var currentDate = DateTime.Now;
 
             var promotedQuery = _context.Offers.AsQueryable();
@@ -354,8 +352,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 

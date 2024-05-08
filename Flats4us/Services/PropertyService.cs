@@ -170,8 +170,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
-                        GeoLat = geoInfo.Latitude,
-                        GeoLon = geoInfo.Longitude,
+                        GeoLat = geoInfo.Lat,
+                        GeoLon = geoInfo.Lon,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
@@ -203,8 +203,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
-                        GeoLat = geoInfo.Latitude,
-                        GeoLon = geoInfo.Longitude,
+                        GeoLat = geoInfo.Lat,
+                        GeoLon = geoInfo.Lon,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
@@ -239,8 +239,8 @@ namespace Flats4us.Services
                         Flat = input.Flat,
                         City = input.City,
                         PostalCode = input.PostalCode,
-                        GeoLat = geoInfo.Latitude,
-                        GeoLon = geoInfo.Longitude,
+                        GeoLat = geoInfo.Lat,
+                        GeoLon = geoInfo.Lon,
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
@@ -365,8 +365,8 @@ namespace Flats4us.Services
                     flat.Flat = input.Flat;
                     flat.City = input.City;
                     flat.PostalCode = input.PostalCode;
-                    flat.GeoLat = geoInfo.Latitude;
-                    flat.GeoLon = geoInfo.Longitude;
+                    flat.GeoLat = geoInfo.Lat;
+                    flat.GeoLon = geoInfo.Lon;
                     flat.Area = input.Area;
                     flat.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     flat.ConstructionYear = input.ConstructionYear;
@@ -396,8 +396,8 @@ namespace Flats4us.Services
                     room.Flat = input.Flat;
                     room.City = input.City;
                     room.PostalCode = input.PostalCode;
-                    room.GeoLat = geoInfo.Latitude;
-                    room.GeoLon = geoInfo.Longitude;
+                    room.GeoLat = geoInfo.Lat;
+                    room.GeoLon = geoInfo.Lon;
                     room.Area = input.Area;
                     room.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     room.ConstructionYear = input.ConstructionYear;
@@ -430,8 +430,8 @@ namespace Flats4us.Services
                     house.Flat = input.Flat;
                     house.City = input.City;
                     house.PostalCode = input.PostalCode;
-                    house.GeoLat = geoInfo.Latitude;
-                    house.GeoLon = geoInfo.Longitude;
+                    house.GeoLat = geoInfo.Lat;
+                    house.GeoLon = geoInfo.Lon;
                     house.Area = input.Area;
                     house.MaxNumberOfInhabitants = input.MaxNumberOfInhabitants;
                     house.ConstructionYear = input.ConstructionYear;
