@@ -31,9 +31,15 @@ public class OpenStreetMapService : IOpenStreetMapService
                 var firstResult = results[0];
                 return (firstResult.Lat, firstResult.Lon);
             }
+            else
+            {
+                throw new Exception("Cannot find geo cords of given address");
+            }
         }
-
-        return (0, 0);
+        else
+        {
+            throw new Exception("Nominatim error");
+        }
     }
 
     public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
