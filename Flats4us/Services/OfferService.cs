@@ -40,7 +40,10 @@ namespace Flats4us.Services
 
             var result = _mapper.Map<OfferDto>(offer);
 
-            result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
+            if (requestUserId != 0)
+            {
+                result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
+            }
 
             if ( requestUserId == result.Owner.UserId &&
                  result.OfferStatus == OfferStatus.Waiting)
@@ -239,14 +242,17 @@ namespace Flats4us.Services
                 joinedOffers.Insert(insertIndex, promoted);
             }
 
-            var userOfferInterestIds = await _context.OfferInterests
+            if (requestUserId != 0)
+            {
+                var userOfferInterestIds = await _context.OfferInterests
                 .Where(oi => oi.StudentId == requestUserId)
                 .Select(oi => oi.OfferId)
                 .ToListAsync();
 
-            foreach (var offerDto in joinedOffers)
-            {
-                offerDto.IsInterest = userOfferInterestIds.Contains(offerDto.OfferId);
+                foreach (var offerDto in joinedOffers)
+                {
+                    offerDto.IsInterest = userOfferInterestIds.Contains(offerDto.OfferId);
+                }
             }
 
             var result = new CountedListDto<OfferDto>(joinedOffers, totalCount);
