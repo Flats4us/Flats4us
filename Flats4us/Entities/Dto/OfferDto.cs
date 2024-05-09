@@ -11,6 +11,9 @@ namespace Flats4us.Entities.Dto
         public int? RentPropositionToShow { get; set; }
 
         [Required]
+        public bool IsInterest { get; set; }
+
+        [Required]
         public DateTime Date { get; set; }
 
         [Required]

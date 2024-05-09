@@ -40,6 +40,8 @@ namespace Flats4us.Services
 
             var result = _mapper.Map<OfferDto>(offer);
 
+            result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
+
             if ( requestUserId == result.Owner.UserId &&
                  result.OfferStatus == OfferStatus.Waiting)
             {
@@ -49,7 +51,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
+        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input, int requestUserId)
         {
             var allowedSorts = new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
 
@@ -235,6 +237,16 @@ namespace Flats4us.Services
             {
                 int insertIndex = random.Next(0, joinedOffers.Count);
                 joinedOffers.Insert(insertIndex, promoted);
+            }
+
+            var userOfferInterestIds = await _context.OfferInterests
+                .Where(oi => oi.StudentId == requestUserId)
+                .Select(oi => oi.OfferId)
+                .ToListAsync();
+
+            foreach (var offerDto in joinedOffers)
+            {
+                offerDto.IsInterest = userOfferInterestIds.Contains(offerDto.OfferId);
             }
 
             var result = new CountedListDto<OfferDto>(joinedOffers, totalCount);
@@ -481,6 +493,11 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
+            foreach (var offer in offers)
+            {
+                offer.IsInterest = true;
+            }
+
             var result = new CountedListDto<OfferDto>(offers, totalCount);
 
             return result;
@@ -506,8 +523,8 @@ namespace Flats4us.Services
             var offerInterest = new OfferInterest
             {
                 Date = DateTime.Now,
-                Student = student,
-                Offer = offer
+                StudentId = student.UserId,
+                OfferId = offer.OfferId
             };
 
             await _context.OfferInterests.AddAsync(offerInterest);

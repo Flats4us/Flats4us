@@ -12,8 +12,14 @@ namespace Flats4us.Entities
         [Required]
         public DateTime Date { get; set; }
 
-        public Student Student { get; set; }
+        [Required]
+        public int StudentId { get; set; }
 
-        public Offer Offer { get; set; }
+        [Required]
+        public int OfferId { get; set; }
+
+        public virtual Student Student { get; set; }
+
+        public virtual Offer Offer { get; set; }
     }
 }
