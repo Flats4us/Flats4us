@@ -1,41 +1,48 @@
-<mat-card>
-	<table>
-		<tr>
-			<th>Właściciel</th>
-			<th>Adres email właściciela</th>
-			<th>Adres nieruchomości</th>
-			<th>Akt własności</th>
-			<th>Akcje</th>
-		</tr>
-		<tr *ngFor="let property of properties$ | async">
-			<td>{{ property.ownerName }}</td>
-			<td>{{ property.ownerEmail }}</td>
-			<td>{{ property.address }}</td>
-			<td>
-				<a
-					mat-button
-					target="_blank"
-					href="{{ baseUrl }}/{{ property.document.path }}"
-				>
-					Wyświetl dokument
-				</a>
-			</td>
-			<td>
-				<button
-					class="mr-2"
-					mat-stroked-button
-					(click)="acceptProperty(property.propertyId)"
-				>
-					Zaakceptuj
-				</button>
-				<button
-					class="mr-2"
-					mat-stroked-button
-					(click)="rejectProperty(property.propertyId)"
-				>
-					Odrzuć
-				</button>
-			</td>
-		</tr>
-	</table>
-</mat-card>
+<table mat-table class="mat-elevation-z8 mb-4" [dataSource]="properties$">
+	<ng-container matColumnDef="ownerName">
+		<th *matHeaderCellDef mat-header-cell>Właściciel</th>
+		<td *matCellDef="let element" mat-cell>{{ element.ownerName }}</td>
+	</ng-container>
+	<ng-container matColumnDef="ownerEmail">
+		<th *matHeaderCellDef mat-header-cell>Adres email właściciela</th>
+		<td *matCellDef="let element" mat-cell>{{ element.ownerEmail }}</td>
+	</ng-container>
+	<ng-container matColumnDef="address">
+		<th *matHeaderCellDef mat-header-cell>Adres nieruchomości</th>
+		<td *matCellDef="let element" mat-cell>{{ element.address }}</td>
+	</ng-container>
+	<ng-container matColumnDef="document">
+		<th *matHeaderCellDef mat-header-cell>Dokument</th>
+		<td *matCellDef="let element" mat-cell>
+			<a
+				mat-button
+				target="_blank"
+				href="{{ baseUrl }}/{{ element.document.path }}"
+			>
+				Wyświetl dokument
+			</a>
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="actions">
+		<th *matHeaderCellDef mat-header-cell>Akcje</th>
+		<td *matCellDef="let element" mat-cell>
+			<button
+				class="mr-2"
+				mat-stroked-button
+				(click)="acceptProperty(element.propertyId)"
+			>
+				Zaakceptuj
+			</button>
+			<button
+				class="mr-2"
+				mat-stroked-button
+				(click)="rejectProperty(element.propertyId)"
+			>
+				Odrzuć
+			</button>
+		</td>
+		>
+	</ng-container>
+	<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+</table>
