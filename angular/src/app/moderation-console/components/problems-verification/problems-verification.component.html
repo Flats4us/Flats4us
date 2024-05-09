@@ -1,37 +1,51 @@
-<mat-card>
-	<table>
-		<tr>
-			<th>Rodzaj</th>
-			<th>Data zgłoszenia</th>
-			<th>Opis zgłoszenia</th>
-			<th>Czy rozwiązany?</th>
-			<th>Id Zgłaszającego</th>
-			<th>Akcje</th>
-		</tr>
-		<tr *ngFor="let problem of technicalProblems$ | async">
-			<td>
-				{{
-					problem.kind === 1
-						? "Obsługa aplikacji"
-						: problem.kind === 2
-						? "Płatność"
-						: problem.kind === 3
-						? "Wydajność konta"
-						: "Inne"
-				}}
-			</td>
-			<td>{{ formatDate(problem.date, "dd/MM/yyyy", "pl-PL") }}</td>
-			<td>{{ problem.description }}</td>
-			<td>{{ problem.solved ? "Tak" : "Nie" }}</td>
-			<td>{{ problem.userId }}</td>
-			<td>
-				<button
-					mat-stroked-button
-					(click)="markAsSolved(problem.technicalProblemId)"
-				>
-					Oznacz jako rozwiązane
-				</button>
-			</td>
-		</tr>
-	</table>
-</mat-card>
+<table
+	mat-table
+	class="mat-elevation-z8 mb-4"
+	[dataSource]="technicalProblems$"
+>
+	<ng-container matColumnDef="kind">
+		<th *matHeaderCellDef mat-header-cell>Rodzaj</th>
+		<td *matCellDef="let element" mat-cell>
+			<span *ngIf="element.kind === 1">Obsługa aplikacji</span>
+			<span *ngIf="element.kind === 2">Płatność</span>
+			<span *ngIf="element.kind === 3">Wydajność konta</span>
+			<span *ngIf="element.kind === 4">Inne</span>
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="date">
+		<th *matHeaderCellDef mat-header-cell>Data zgłoszenia</th>
+		<td *matCellDef="let element" mat-cell>
+			{{ formatDate(element.date, "dd/MM/yyyy", "pl-PL") }}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="description">
+		<th *matHeaderCellDef mat-header-cell>Opis zgłoszenia</th>
+		<td *matCellDef="let element" mat-cell>{{ element.description }}</td>
+	</ng-container>
+	<ng-container matColumnDef="solved">
+		<th *matHeaderCellDef mat-header-cell>Czy rozwiązany?</th>
+		<td *matCellDef="let element" mat-cell>
+			{{ element.solved ? "Tak" : "Nie" }}
+		</td>
+	</ng-container>
+	<ng-container matColumnDef="userId">
+		<th *matHeaderCellDef mat-header-cell>Id Zgłaszającego</th>
+		<td *matCellDef="let element" mat-cell>{{ element.userId }}</td>
+	</ng-container>
+	<ng-container matColumnDef="actions">
+		<th *matHeaderCellDef mat-header-cell>Akcje</th>
+		<td *matCellDef="let element" mat-cell>
+			<button
+				class="mr-2"
+				mat-stroked-button
+				mat-flat-button
+				routerLink="{{ element.disputeId }}"
+			>
+				Zobacz spór
+			</button>
+			<button class="mr-2" mat-stroked-button>Oznacz jako rozwiązane</button>
+		</td>
+	</ng-container>
+	<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+</table>

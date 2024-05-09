@@ -26,7 +26,7 @@ export interface IUser {
 	userId: number;
 	userType: number;
 	name: string;
-	surName: string;
+	surname: string;
 	email: string;
 	profilePicture: IImage;
 	document: IImage;

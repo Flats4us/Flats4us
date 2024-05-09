@@ -11,19 +11,17 @@
 	<div class="spacer"></div>
 
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
-		<ng-container *ngIf="user$ | async as user">
-			<button
-				*ngIf="user.profilePicture?.path"
-				class="your-profile"
-				[matMenuTriggerFor]="myProfile"
-			>
-				<img
-					class="your-photo"
-					alt="Twój profil"
-					src="{{ baseUrl }}/{{ user.profilePicture.path }}"
-				/>
-			</button>
-		</ng-container>
+		<button
+			*ngIf="user$ | async as user"
+			class="your-profile"
+			[matMenuTriggerFor]="myProfile"
+		>
+			<img
+				class="your-photo"
+				alt="Twój profil"
+				src="{{ baseUrl }}/{{ user.profilePicture?.path }}"
+			/>
+		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['profile', 'details', 'my']">

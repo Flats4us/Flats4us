@@ -19,7 +19,14 @@ import { formatDate } from '@angular/common';
 export class ProblemsVerificationComponent extends BaseComponent {
 	public technicalProblems$: Observable<ITechnicalProblem[]> =
 		this.service.getTechnicalProblems();
-	protected baseUrl = environment.apiUrl.replace('/api', '');
+	public displayedColumns: string[] = [
+		'kind',
+		'date',
+		'description',
+		'solved',
+		'userId',
+		'actions',
+	];
 
 	constructor(
 		private service: ModerationConsoleService,

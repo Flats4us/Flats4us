@@ -16,6 +16,14 @@ export class PropertiesVerificationComponent extends BaseComponent {
 	public properties$: Observable<IProperty[]> = this.service.getProperties();
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
+	public displayedColumns: string[] = [
+		'ownerName',
+		'ownerEmail',
+		'address',
+		'document',
+		'actions',
+	];
+
 	constructor(
 		private service: ModerationConsoleService,
 		private snackBar: MatSnackBar

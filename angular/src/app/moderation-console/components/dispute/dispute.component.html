@@ -1,31 +1,35 @@
-<mat-card class="mb-3">
-	<table>
-		<tr>
-			<th>Spór między</th>
-			<th>Stworzył spór</th>
-			<th>Data stworzenia</th>
-			<th>Data dodania moderatora</th>
-			<th>Akcje</th>
-		</tr>
-		<tr *ngFor="let dispute of disputes$ | async">
-			<td>{{ dispute.disputeBetween }}</td>
-			<td>{{ dispute.createdBy }}</td>
-			<td>{{ dispute.creationDate }}</td>
-			<td>{{ dispute.moderatorAdditionDate }}</td>
-			<td>
-				<button
-					class="mr-2"
-					mat-stroked-button
-					mat-flat-button
-					routerLink="{{ dispute.disputeId }}"
-				>
-					Zobacz spór
-				</button>
-				<button class="mr-2" mat-stroked-button>Oznacz jako rozwiązane</button>
-			</td>
-		</tr>
-	</table>
-</mat-card>
+<table mat-table class="mat-elevation-z8 mb-4" [dataSource]="disputes$">
+  <ng-container matColumnDef="disputeBetween">
+    <th *matHeaderCellDef mat-header-cell> Spór między </th>
+    <td *matCellDef="let element" mat-cell> {{element.disputeBetween}} </td>
+  </ng-container>
+  <ng-container matColumnDef="createdBy">
+    <th *matHeaderCellDef mat-header-cell> Stworzył spór </th>
+    <td *matCellDef="let element" mat-cell> {{element.createdBy}} </td>
+  </ng-container>
+  <ng-container matColumnDef="creationDate">
+    <th *matHeaderCellDef mat-header-cell> Data stworzenia </th>
+    <td *matCellDef="let element" mat-cell> {{element.creationDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="moderatorAdditionDate">
+    <th *matHeaderCellDef mat-header-cell> Data dodania moderatora </th>
+    <td *matCellDef="let element" mat-cell> {{element.moderatorAdditionDate}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th *matHeaderCellDef mat-header-cell> Akcje </th>
+    <td *matCellDef="let element" mat-cell> <button
+      class="mr-2"
+      mat-stroked-button
+      mat-flat-button
+      routerLink="{{ element.disputeId }}"
+    >
+      Zobacz spór
+    </button>
+      <button class="mr-2" mat-stroked-button>Oznacz jako rozwiązane</button> </td>
+  </ng-container>
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row ></tr>
+  <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+</table>
 <mat-card>
-	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </mat-card>

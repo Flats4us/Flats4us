@@ -16,6 +16,16 @@ import { formatDate } from '@angular/common';
 export class UsersVerificationComponent extends BaseComponent {
 	public users$: Observable<IUser[]> = this.service.getUsers();
 	protected baseUrl = environment.apiUrl.replace('/api', '');
+	public displayedColumns: string[] = [
+		'email',
+		'university',
+		'studentNumber',
+		'documentNumber',
+		'name',
+		'surname',
+		'document',
+		'actions',
+	];
 
 	constructor(
 		private service: ModerationConsoleService,
