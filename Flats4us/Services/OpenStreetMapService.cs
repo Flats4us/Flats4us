@@ -13,7 +13,7 @@ public class OpenStreetMapService : IOpenStreetMapService
         _httpClient.DefaultRequestHeaders.Add("User-Agent", "Flats4Us-StudentProject");
     }
 
-    public async Task<(double Latitude, double Longitude)> GetCoordinatesAsync(string province, string? district, string? street, string? number, string city, string? postalCode)
+    public async Task<OpenStreetMapResponse> GetCoordinatesAsync(string province, string? district, string? street, string? number, string city, string? postalCode)
     {
 
         string address = $"{number}, {street}, {district}, {city}, {province}, {postalCode}";
@@ -29,11 +29,18 @@ public class OpenStreetMapService : IOpenStreetMapService
             if (results.Length > 0)
             {
                 var firstResult = results[0];
-                return (firstResult.Lat, firstResult.Lon);
+
+                return new OpenStreetMapResponse(firstResult.Lat, firstResult.Lon);
+            }
+            else
+            {
+                throw new Exception("Cannot find geo cords of given address");
             }
         }
-
-        return (0, 0);
+        else
+        {
+            throw new Exception("Nominatim error");
+        }
     }
 
     public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
@@ -65,4 +72,10 @@ public class OpenStreetMapResponse
 {
     public double Lat { get; set; }
     public double Lon { get; set; }
+
+    public OpenStreetMapResponse(double lat, double lon)
+    {
+        Lat = lat;
+        Lon = lon;
+    }
 }

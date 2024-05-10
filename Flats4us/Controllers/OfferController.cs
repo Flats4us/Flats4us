@@ -39,7 +39,14 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offer = await _offerService.GetByIdAsync(id);
+                var requestUserId = 0;
+
+                if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int parsedUserId))
+                {
+                    requestUserId = parsedUserId;
+                }
+
+                var offer = await _offerService.GetByIdAsync(id, requestUserId);
                 return Ok(offer);
             }
             catch (Exception ex)
@@ -81,7 +88,14 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offers = await _offerService.GetFilteredAndSortedOffersAsync(input);
+                var requestUserId = 0;
+
+                if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int parsedUserId))
+                {
+                    requestUserId = parsedUserId;
+                }
+
+                var offers = await _offerService.GetFilteredAndSortedOffersAsync(input, requestUserId);
                 return Ok(offers);
             }
             catch (Exception ex)

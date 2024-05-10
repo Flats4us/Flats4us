@@ -8,6 +8,6 @@ namespace Flats4us.Entities.Dto
         public string Token { get; set; }
 
         [Required]
-        public string NewPassword { get; set; }
+        public string Password { get; set; }
     }
 }

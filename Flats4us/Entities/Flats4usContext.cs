@@ -163,7 +163,7 @@ namespace Flats4us.Entities
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserGroupChat>()
-.HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+                .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
 
             modelBuilder.Entity<UserGroupChat>()
                 .HasOne(ugc => ugc.User)
@@ -189,9 +189,25 @@ namespace Flats4us.Entities
 
             modelBuilder.Entity<RentOpinion>()
                 .HasOne(ro => ro.Student) 
-                .WithMany()  
+                .WithMany(s => s.IssuedRentOpinions)  
                 .HasForeignKey(ro => ro.StudentId)  
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Rent)
+                .WithMany(r => r.Payments)
+                .HasForeignKey(p => p.RentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OfferInterest>()
+                .HasOne(oi => oi.Offer)
+                .WithMany(o => o.OfferInterests)
+                .HasForeignKey(oi => oi.OfferId);
+
+            modelBuilder.Entity<OfferInterest>()
+                .HasOne(oi => oi.Student)
+                .WithMany(o => o.OfferInterests)
+                .HasForeignKey(oi => oi.StudentId);
         }
     }
 }

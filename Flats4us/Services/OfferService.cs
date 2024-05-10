@@ -25,7 +25,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<OfferDto> GetByIdAsync(int id)
+        public async Task<OfferDto> GetByIdAsync(int id, int requestUserId)
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
@@ -33,20 +33,30 @@ namespace Flats4us.Services
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.Rent)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
 
             var result = _mapper.Map<OfferDto>(offer);
 
+            if (requestUserId != 0)
+            {
+                result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
+            }
+
+            if ( requestUserId == result.Owner.UserId &&
+                 result.OfferStatus == OfferStatus.Waiting)
+            {
+                result.RentPropositionToShow = offer.Rent.RentId;
+            }
+
             return result;
         }
 
-        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
+        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input, int requestUserId)
         {
             var allowedSorts = new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
-
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
             var currentDate = DateTime.Now;
 
@@ -167,8 +177,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
@@ -230,6 +242,19 @@ namespace Flats4us.Services
                 joinedOffers.Insert(insertIndex, promoted);
             }
 
+            if (requestUserId != 0)
+            {
+                var userOfferInterestIds = await _context.OfferInterests
+                .Where(oi => oi.StudentId == requestUserId)
+                .Select(oi => oi.OfferId)
+                .ToListAsync();
+
+                foreach (var offerDto in joinedOffers)
+                {
+                    offerDto.IsInterest = userOfferInterestIds.Contains(offerDto.OfferId);
+                }
+            }
+
             var result = new CountedListDto<OfferDto>(joinedOffers, totalCount);
 
             return result;
@@ -237,8 +262,6 @@ namespace Flats4us.Services
 
         public async Task<CountedListDto<SimpleOfferForMapDto>> GetFilteredOffersForMapAsync(GetFilteredOffersDto input)
         {
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
-
             var currentDate = DateTime.Now;
 
             var promotedQuery = _context.Offers.AsQueryable();
@@ -347,8 +370,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
@@ -474,6 +499,11 @@ namespace Flats4us.Services
                 .Take(input.PageSize)
                 .ToList();
 
+            foreach (var offer in offers)
+            {
+                offer.IsInterest = true;
+            }
+
             var result = new CountedListDto<OfferDto>(offers, totalCount);
 
             return result;
@@ -499,8 +529,8 @@ namespace Flats4us.Services
             var offerInterest = new OfferInterest
             {
                 Date = DateTime.Now,
-                Student = student,
-                Offer = offer
+                StudentId = student.UserId,
+                OfferId = offer.OfferId
             };
 
             await _context.OfferInterests.AddAsync(offerInterest);

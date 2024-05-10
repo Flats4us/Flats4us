@@ -10,9 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { UserService } from '@shared/services/user.service';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-reset-password',
@@ -37,7 +38,11 @@ export class ResetPasswordComponent extends BaseComponent {
 		confirmPassword: new FormControl<string>('', [Validators.required]),
 	});
 
-	constructor(private route: ActivatedRoute, private userService: UserService) {
+	constructor(
+		private route: ActivatedRoute,
+		private authService: AuthService,
+		private snackBar: MatSnackBar
+	) {
 		super();
 
 		this.resetPasswordToken = this.route.snapshot.queryParams['token'];
@@ -48,8 +53,18 @@ export class ResetPasswordComponent extends BaseComponent {
 			return;
 		}
 
-		this.userService
+		this.authService
 			.resetPassword(this.resetPasswordToken, this.form.value.password)
-			.subscribe();
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				error: () =>
+					this.snackBar.open('Wystąpił błąd', 'Zamknij', {
+						duration: 2000,
+					}),
+				complete: () =>
+					this.snackBar.open('Pomyślnie zresetowano hasło!', 'Zamknij', {
+						duration: 2000,
+					}),
+			});
 	}
 }

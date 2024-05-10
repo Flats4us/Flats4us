@@ -15,7 +15,6 @@ namespace Flats4us.Entities
         [Required]
         public string University { get; set; }
 
-
         [Required]
         public string Links { get; set; }
 
@@ -33,6 +32,7 @@ namespace Flats4us.Entities
         public virtual ICollection<Rent> Rents { get; set; }
         public virtual ICollection<OfferInterest> OfferInterests { get; set; }
         public virtual ICollection<Chat> Chats { get; set; }
+        public virtual ICollection<RentOpinion> IssuedRentOpinions { get; set; }
 
         public Student()
         {
@@ -43,6 +43,7 @@ namespace Flats4us.Entities
             this.Rents = new HashSet<Rent>();
             this.OfferInterests = new HashSet<OfferInterest>();
             this.Chats = new HashSet<Chat>();
+            this.IssuedRentOpinions = new HashSet<RentOpinion>();
         }
     }
 }

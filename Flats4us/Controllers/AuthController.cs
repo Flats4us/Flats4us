@@ -137,7 +137,7 @@ namespace Flats4us.Controllers
         {
             try
             {
-                await _userService.ResetUserPasswordAsync(input.NewPassword, input.Token);
+                await _userService.ResetUserPasswordAsync(input.Password, input.Token);
                 return Ok(new OutputDto<string>("Password reset completed"));
             }
             catch (Exception ex)
