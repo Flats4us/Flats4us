@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { IEvent } from '../models/calendar.models';
 
@@ -8,15 +9,15 @@ import { IEvent } from '../models/calendar.models';
 	providedIn: 'root',
 })
 export class CalendarService {
-	private readonly path: string = 'events';
+	protected apiRoute = `${environment.apiUrl}/meetings`;
 
 	constructor(private httpClient: HttpClient) {}
 
 	public getEvents(): Observable<IEvent[]> {
-		return this.httpClient.get<IEvent[]>('assets/events.json');
+		return this.httpClient.get<IEvent[]>(this.apiRoute);
 	}
 
 	public addEvent(event: IEvent): Observable<void> {
-		return this.httpClient.post<void>(`${this.path}`, event);
+		return this.httpClient.post<void>(this.apiRoute, event);
 	}
 }
