@@ -425,9 +425,10 @@ namespace Flats4us.Services
         public async Task EditUserGeneral(EditUserGeneral input, int userId)
         {
             var user = await _context.Users.FindAsync(userId);
-            user.Address = input.Address;
-            user.Email = input.Email;
-            user.PhoneNumber = input.PhoneNumber;
+
+            user.Address = input.Address ?? user.Address;
+            user.Email = input.Email ?? user.Email;
+            user.PhoneNumber = input.PhoneNumber ?? user.PhoneNumber;
 
             await _context.SaveChangesAsync();
 
@@ -436,8 +437,8 @@ namespace Flats4us.Services
         public async Task EditUserSensitive(EditUserSensitive input, int userId)
         {
             var user = await _context.Users.FindAsync(userId);
-            user.Name = input.Name;
-            user.Surname = input.Surname;
+            user.Name = input.Name ?? user.Name;
+            user.Surname = input.Surname ?? user.Name;
             user.VerificationStatus = VerificationStatus.NotVerified;
 
             await _context.SaveChangesAsync();
@@ -445,8 +446,8 @@ namespace Flats4us.Services
         public async Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId)
         {
             var user = await _context.Owners.FindAsync(userId);
-            user.DocumentNumber = input.DocumentNumber;
-            user.DocumentExpireDate = (DateTime)input.DocumentExpireDate;
+            user.DocumentNumber = input.DocumentNumber ?? user.DocumentNumber;
+            user.DocumentExpireDate = input.DocumentExpireDate ?? user.DocumentExpireDate;
             user.VerificationStatus = VerificationStatus.NotVerified;
             await _context.SaveChangesAsync();
         }
@@ -460,9 +461,9 @@ namespace Flats4us.Services
                 throw new Exception($"Cannot find student with ID: {userId}");
             }
 
-            student.BirthDate = (DateTime)input.BirthDate;
-            student.StudentNumber = input.StudentNumber;
-            student.University = input.University;
+            student.BirthDate = input.BirthDate ?? student.BirthDate;
+            student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
+            student.University = input.University ?? student.University;
             student.VerificationStatus = VerificationStatus.NotVerified;
 
             await _context.SaveChangesAsync();
