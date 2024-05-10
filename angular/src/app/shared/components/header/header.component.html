@@ -133,13 +133,15 @@
 		<mat-icon class="material-icons-outlined">map</mat-icon>
 		Mapa
 	</a>
-	<button mat-button class="mr-2" [matMenuTriggerFor]="messages">
+	<button mat-button class="mr-2" [matMenuTriggerFor]="conversations">
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		Wiadomości
 	</button>
-	<mat-menu #messages="matMenu">
-		<button mat-menu-item routerLink="messages">Wiadomości z właścicielem</button>
-		<button mat-menu-item routerLink="messages">
+	<mat-menu #conversations="matMenu">
+		<button mat-menu-item routerLink="conversations">
+			Wiadomości z właścicielem
+		</button>
+		<button mat-menu-item routerLink="conversations">
 			Wiadomości z współlokatorami
 		</button>
 	</mat-menu>

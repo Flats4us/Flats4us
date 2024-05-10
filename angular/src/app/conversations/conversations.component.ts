@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IConversations } from '@shared/models/conversation.models';
 import { Observable } from 'rxjs';
-import { ConversationService } from '@shared/services/conversation.service';
+
+import { ConversationService } from './services/conversation.service';
 
 @Component({
 	selector: 'app-conversations',

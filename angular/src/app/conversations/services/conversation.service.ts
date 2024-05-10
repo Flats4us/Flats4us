@@ -68,11 +68,11 @@ export class ConversationService {
 		return this.http.get<IConversations[]>(`${this.apiRoute}/user/chats`);
 	}
 
-	public getMessages(chatId: number) {
+	public getMessages(chatId: string) {
 		return this.http.get<IMessage[]>(`${this.apiRoute}/history/${chatId}`);
 	}
 
-	public getParticipantId(chatId: number) {
+	public getParticipantId(chatId: string) {
 		return this.http.get<string>(`${this.apiRoute}/participant/${chatId}`);
 	}
 }
