@@ -20,7 +20,7 @@ namespace Flats4us.Services
             _groupChatService = groupChatService;
         }
 
-        public async Task<IEnumerable<Argument>> GetArgumentsAsync()
+        public async Task<IEnumerable<Argument>> GetArgumentsAsync()                    //dotyczny moderatora
         {
             var ongoingArguments = await _context.Arguments
                 .Where(x => x.ArgumentStatus == ArgumentStatus.Ongoing)
@@ -31,7 +31,7 @@ namespace Flats4us.Services
             return ongoingArguments;
         }
 
-        public async Task<Argument> GetArgumentById(int id)
+        public async Task<Argument> GetArgumentById(int id)                             //dotyczy moderatora
         {
             var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
             if (argument == null)
@@ -40,7 +40,7 @@ namespace Flats4us.Services
             return argument;
         }
 
-        public async Task AddArgumentAsync(ArgumentDto input, int studentId)
+        public async Task AddArgumentAsync(ArgumentDto input, int studentId)            //może stworzyć student lub owner
         {
             var rent = _context.Rents
                 .FirstOrDefault(x => x.RentId == input.RentId) 
@@ -80,7 +80,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AcceptArgument(int id)
+        public async Task AcceptArgument(int id)                                            //tylko owner
         {
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == id)
@@ -91,7 +91,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AskForIntervention(int id)
+        public async Task AskForIntervention(int id)                                        //student lub owner
         {
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == id)
@@ -103,7 +103,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditStatusArgumentAsync(int id, ArgumentStatus status)
+        public async Task EditStatusArgumentAsync(int id, ArgumentStatus status)            //co dokładnie tutaj zrobić ze statusem
         {
             var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
 
@@ -115,7 +115,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ArgumentIntervention>> GetAllInterventionsAsync()
+        public async Task<List<ArgumentIntervention>> GetAllInterventionsAsync()            
         {
             return await _context.ArgumentInterventions.ToListAsync();
         }
@@ -149,6 +149,8 @@ namespace Flats4us.Services
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);
             await _context.SaveChangesAsync();
         }
+
+
 
 
         //DONE 1. Student może dodać Argument do Rent, który go dotyczy(tworzony jest czat) 
