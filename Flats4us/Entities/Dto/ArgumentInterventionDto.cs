@@ -5,9 +5,6 @@ namespace Flats4us.Entities.Dto
     public class ArgumentInterventionDto
     {
         [Required]
-        public DateTime Date { get; set; }
-
-        [Required]
         public string Justification { get; set; }
 
         [Required]

@@ -9,8 +9,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int RentId { get; set; }
-
-        [Required]
-        public bool InterventionNeed { get; set; }
     }
 }
