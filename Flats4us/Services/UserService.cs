@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Messaging;
 using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
@@ -127,10 +128,16 @@ namespace Flats4us.Services
                 .FirstOrDefaultAsync(x => x.UserId == userId);
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
-
             if (input.Document != null)
             {
-                user.VerificationStatus = VerificationStatus.NotVerified;
+            user.VerificationStatus = VerificationStatus.NotVerified;
+
+            var moderators = await _context.Moderators.ToListAsync();
+                foreach (var moderator in moderators)
+                {
+                    await _emailService.SendEmailAsync(moderator.UserId, "Verify document", "New document awaits verification");
+                    await _notificationService.SendNotificationAsync("Verify document", "New document awaits verification", moderator.UserId);
+                }
 
                 if (user.Document != null)
                 {
@@ -139,6 +146,10 @@ namespace Flats4us.Services
                 
                 user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.Document);
             }
+
+                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+            }
+        }
 
             if (input.ProfilePicture != null)
             {

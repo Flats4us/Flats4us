@@ -11,12 +11,19 @@ namespace Flats4us.Services
     {
         private readonly Flats4usContext _context;
         private readonly ILogger<BackgroundJobService> _logger;
+        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
+
 
         public BackgroundJobService(Flats4usContext context,
-            ILogger<BackgroundJobService> logger)
+            ILogger<BackgroundJobService> logger,
+            IEmailService emailService,
+            INotificationService notificationService)
         {
             _context = context;
             _logger = logger;
+            _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public async Task GeneratePaymentsAsync()
@@ -35,6 +42,7 @@ namespace Flats4us.Services
             {
                 foreach (var rent in rents)
                 {
+                    
                     rent.Payments.Add(new Payment
                     {
                         PaymentPurpose = PaymentPurpose.Rent,
@@ -51,6 +59,21 @@ namespace Flats4us.Services
                     else
                     {
                         rent.NextPaymentGenerationDate = null;
+                    }
+                    var reminderMessage = $"This is a reminder that your rent payment of ${rent.Offer.Price} is due on {DateTime.Now.AddDays(7).Date}. Please make the payment on time.";
+                    await _notificationService.SendNotificationAsync("Rent Payment Reminder", reminderMessage, rent.StudentId);
+                    await _emailService.SendEmailAsync(rent.StudentId, reminderMessage, "Rent Payment Reminder");
+
+                    if (DateTime.Now.Date == rent.StartDate.Date)
+                    {
+                        foreach (var student in rent.OtherStudents)
+                        {
+                            var emailMessage = $"Dear {student.Name}, welcome to your new rental property. Your rental contract has officially started today. If you have any questions or concerns, feel free to contact us.";
+
+                            await _emailService.SendEmailAsync(student.UserId, "Welcome to your new rental property!", emailMessage);
+                            await _notificationService.SendNotificationAsync("Welcome to your new rental property!", emailMessage, rent.StudentId);
+
+                        }
                     }
                 }
 
