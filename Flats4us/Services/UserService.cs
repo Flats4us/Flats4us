@@ -283,7 +283,7 @@ namespace Flats4us.Services
             var notificationTitle = "Password Changed";
             var notificationBody = "Your password has been successfully changed.";
             await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userId);
-
+            await _emailService.SendEmailAsync(userId, notificationTitle, notificationBody);
         }
 
         public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)

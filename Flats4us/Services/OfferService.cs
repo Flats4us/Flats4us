@@ -489,7 +489,7 @@ namespace Flats4us.Services
                     Gender = input.Gender
                 }
             };
-
+            
             await _context.Offers.AddAsync(offer);
             await _context.SaveChangesAsync();
         }

@@ -13,13 +13,19 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
+        private readonly IEmailService _emailService;
 
         public TechnicalProblemService(
             Flats4usContext context,
-            IMapper mapper)
+            IMapper mapper,
+            INotificationService notificationService,
+            IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
+            _notificationService = notificationService;
+            _emailService = emailService;
         }
 
         public async Task<CountedListDto<TechnicalProblemDto>> GetAllAsync(PaginatorDto input)
@@ -47,6 +53,14 @@ namespace Flats4us.Services
                 Solved = false,
                 UserId = id
             };
+            var moderators = await _context.Moderators.ToListAsync();
+            var message = $"A new technical problem has been reported.\n\nKind: {input.Kind}\nDescription: {input.Description}\nDate: {DateTime.Now}";
+
+            foreach (var moderator in moderators)
+            {
+                await _emailService.SendEmailAsync(moderator.UserId, "New technical problem alert", message);
+                await _notificationService.SendNotificationAsync( "New technical problem alert", "Tap to see what's up.", moderator.UserId);
+            }
 
             await _context.TechnicalProblems.AddAsync(problem);
             await _context.SaveChangesAsync();
@@ -60,6 +74,7 @@ namespace Flats4us.Services
 
             problem.Solved = true;
 
+            
             await _context.SaveChangesAsync();
         }
     }
