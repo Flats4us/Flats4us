@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FirebaseAdmin.Messaging;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -118,10 +119,18 @@ namespace Flats4us.Services
             var user = await _context.OwnerStudents.FindAsync(userId);
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
+            if (input.Document != null)
+            {
+                var moderators = await _context.Moderators.ToListAsync();
+                foreach (var moderator in moderators)
+                {
+                    await _emailService.SendEmailAsync(moderator.UserId, "Verify document", "New document awaits verification");
+                    await _notificationService.SendNotificationAsync("Verify document", "New document awaits verification", moderator.UserId);
+                }
 
 
-
-            await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+            }
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
