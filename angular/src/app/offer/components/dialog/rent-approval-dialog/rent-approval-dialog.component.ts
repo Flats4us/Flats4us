@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
+import { RentsService } from 'src/app/rents/services/rents.service';
+import { IRentProposition } from 'src/app/rents/models/rents.models';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -32,7 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
 		MatTooltipModule,
 		MatIconModule,
 	],
-	providers: [OfferService, UserService],
+	providers: [OfferService, UserService, RentsService],
 	templateUrl: './rent-approval-dialog.component.html',
 	styleUrls: ['./rent-approval-dialog.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,16 +42,19 @@ import { MatIconModule } from '@angular/material/icon';
 export class RentApprovalDialogComponent extends BaseComponent {
 	public userProfile$: Observable<IUser> = this.userService.getUserById('6');
 	protected baseUrl = environment.apiUrl.replace('/api', '');
+	public rentProposition$: Observable<IRentProposition>;
 
 	constructor(
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
 		public userService: UserService,
+		public rentsService: RentsService,
 		private snackBar: MatSnackBar,
 		private router: Router,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
+		this.rentProposition$ = this.rentsService.getRentProposition(data);
 	}
 
 	public onYesClick() {

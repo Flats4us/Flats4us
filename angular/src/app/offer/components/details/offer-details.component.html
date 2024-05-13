@@ -9,6 +9,7 @@
 					>Status oferty:
 					{{ offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) }}
 					<button
+					*ngIf="data.offer?.rentPropositionToShow"
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
@@ -18,8 +19,26 @@
 					>
 						<mat-icon>notifications</mat-icon>
 					</button>
+					<button
+						mat-mini-fab
+						class="box-icon"
+						color="primary"
+						matTooltip="Przejdź do widoku najmu"
+						aria-label="MenuButton"
+						[disabled]="data.offer?.offerStatus !== 2"
+						(click)="showRent(data.offer?.rentPropositionToShow)"
+					>
+					<mat-icon class="material-symbols-outlined">
+						handshake</mat-icon>
+					</button>
 				</span></mat-label
 			>
+			<mat-label class="label-right">
+				<mat-icon class="icon" inline="true">visibility</mat-icon>
+				<span class="text-3xl">
+					Liczba obserwujących: {{data.offer?.numberOfInterested}}
+				</span>
+			</mat-label>
 		</div>
 		<div class="gallery">
 			<div class="container slider">
@@ -127,41 +146,78 @@
 		<div class="button-box">
 			<mat-label class="label-survey">
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
+					<mat-chip
+					*ngSwitchCase="false"
+					class="p-4 mr-4"
+					>
+					<div class="text-red-600 flex items-center justify-center">
 					<mat-icon
-						*ngSwitchCase="false"
-						class="icon"
 						matTooltip="Palenie niedozwolone"
-						[inline]="true"
 						>smoke_free
 					</mat-icon>
+					</div>
+					</mat-chip>
+					<mat-chip
+					*ngSwitchCase="true"
+					class="p-4 mr-4"
+					>
+					<div class="flex items-center justify-center">
 					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
 						matTooltip="Palenie dozwolone"
-						[inline]="true"
 						>smoking_rooms
 					</mat-icon>
+				</div>
+				</mat-chip>
 				</span>
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.animalsAllowed">
+				<mat-chip
+				*ngSwitchCase="false"
+				class="p-4 mr-4"
+				>
+				<div class="text-red-600 flex items-center justify-center">
 					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
+					matTooltip="Zwierzęta niedozwolone"
+					>pets</mat-icon
+				>
+				</div>
+				</mat-chip>
+				<mat-chip
+				*ngSwitchCase="true"
+				class="p-4 mr-4"
+				>
+				<div class="flex items-center justify-center">
+					<mat-icon
 						matTooltip="Zwierzęta dozwolone"
-						[inline]="true"
 						>pets</mat-icon
 					>
+				</div>
+				</mat-chip>
 				</span>
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
+					<mat-chip
+					*ngSwitchCase="false"
+					class="p-4 mr-4"
+					>
+					<div class="text-red-600 flex items-center justify-center">
 					<mat-icon
-						*ngSwitchCase="true"
-						class="icon"
+					matTooltip="Imprezy niedozwolone"
+					>cake</mat-icon>
+					</div>
+					</mat-chip>
+					<mat-chip
+					*ngSwitchCase="true"
+					class="p-4 mr-4"
+					>
+					<div class="flex items-center justify-center">
+					<mat-icon
 						matTooltip="Imprezy dozwolone"
-						[inline]="true"
 						>cake</mat-icon
 					>
+					</div>
+					</mat-chip>
 				</span>
 			</mat-label>
-			<mat-label class="label-price"
+			<mat-label class="label-right"
 				><span class="text-3xl"
 					>Cena
 					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
@@ -172,7 +228,7 @@
 	<mat-card>
 		<div class="label-box">
 			<mat-label class="label-description"
-				><mat-icon class="icon" [inline]="true">description</mat-icon
+				><mat-icon class="icon" inline="true">description</mat-icon
 				><span class="text-3xl">Opis oferty</span></mat-label
 			>
 		</div>
@@ -295,29 +351,6 @@
 			</div>
 		</div>
 	</mat-card>
-	<div *ngIf="data.user === uType.OWNER" class="label-box">
-		<mat-label class="label-description"
-			><mat-icon class="icon" [inline]="true">attach_money</mat-icon
-			><span class="text-3xl">Płatności</span></mat-label
-		>
-	</div>
-	<div *ngIf="data.user === uType.OWNER" class="payments">
-		<table mat-table class="mat-elevation-z8" [dataSource]="payments">
-			<ng-container
-				*ngFor="let column of this.displayedColumnsStudent"
-				[matColumnDef]="column"
-			>
-				<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
-				<td *matCellDef="let payment" mat-cell class="text-2xl">
-					{{ payment[column] }}
-				</td>
-			</ng-container>
-			<tr
-				*matRowDef="let paymentRow; columns: this.displayedColumnsStudent"
-				mat-row
-			></tr>
-		</table>
-	</div>
 	<div *ngIf="data.user === uType.STUDENT" class="button-box-options">
 		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
 	</div>
@@ -337,6 +370,7 @@
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
+			[disabled]="data.offer?.offerStatus!==0"
 			(click)="startRent(data.offer?.offerId)"
 		>
 			Wynajmij

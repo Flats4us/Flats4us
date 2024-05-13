@@ -63,8 +63,7 @@
 								<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
 							</div>
 						</mat-chip>
-						<mat-chip>
-							<button
+						<button
 								class="box-icon"
 								id="deleteOffer"
 								type="button"
@@ -73,9 +72,8 @@
 								aria-label="DeleteOffer"
 								(click)="deleteInterest(watchedOffer.offerId)"
 							>
-								<mat-icon>delete_forever</mat-icon>
-							</button>
-						</mat-chip>
+							<mat-icon>delete_forever</mat-icon>
+						</button>
 					</mat-chip-listbox>
 				</mat-card-content>
 			</mat-card>

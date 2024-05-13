@@ -51,3 +51,17 @@ export interface IMenuOptions {
 	option: string;
 	description: string;
 }
+
+export interface ITenant{
+	userId: number;
+	email: string;
+	fullName: string;
+}
+
+export interface IRentProposition{
+  rentId: number;
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+  tenants: ITenant[];
+}

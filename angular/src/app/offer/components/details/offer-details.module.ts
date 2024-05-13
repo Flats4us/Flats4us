@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
 import { OfferService } from '../../services/offer.service';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { RentsService } from 'src/app/rents/services/rents.service';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -41,7 +42,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 		MatCardModule,
 		AccessControlDirective,
 	],
-	providers: [OfferService, RealEstateService],
+	providers: [OfferService, RealEstateService, RentsService],
 	exports: [OfferDetailsComponent],
 })
 export class OfferDetailsModule {}

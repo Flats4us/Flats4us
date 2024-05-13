@@ -1,36 +1,33 @@
 <h1 class="text-2xl p-4 font-semibold">Propozycja najmu</h1>
-<div mat-dialog-content>
+<div *ngIf="rentProposition$ | async as rentProposition" mat-dialog-content>
 	<mat-card>
 		<p class="pt-4 font-semibold">Data rozpoczęcia najmu:</p>
-		<p>22-03-2024</p>
+		<p>{{ rentProposition.startDate }}</p>
+		<p class="pt-4 font-semibold">Data zakończenia najmu:</p>
+		<p>{{ rentProposition.endDate }}</p>
 		<p class="pt-4 font-semibold">Okres najmu:</p>
-		<p>24 miesiące</p>
+		<p>{{ rentProposition.duration }} miesięce/y</p>
 		<div *ngIf="userProfile$ | async as user" class="profiles-container">
 			<p class="pt-4 font-semibold">Najemcy:</p>
-			<mat-card class="mt-4" (click)="showProfile(user.userId)">
+			<mat-card *ngFor="let tenant of rentProposition.tenants" class="mt-4" (click)="showProfile(user.userId)">
 				<div class="profile-details">
 					<mat-card-avatar
 						matTooltip="Pokaż profil"
-						(click)="showProfile(user.userId)"
+						(click)="showProfile(tenant.userId)"
 					>
 						<img
 							class="profile-avatar"
 							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
 					/></mat-card-avatar>
 					<div class="container-features">
-						<mat-chip matTooltip="Imię"
+						<mat-chip matTooltip="Imię i nazwisko"
 							><div class="box-feature">
-								<mat-icon>account_circle</mat-icon><span>{{ user.name }}</span>
+								<mat-icon>account_circle</mat-icon><span>{{ tenant.fullName }}</span>
 							</div></mat-chip
 						>
-						<mat-chip matTooltip="Wiek"
+						<mat-chip matTooltip="Adres email"
 							><div class="box-feature">
-								<mat-icon>calendar_today</mat-icon><span>{{ user.age }}</span>
-							</div></mat-chip
-						>
-						<mat-chip matTooltip="Uczelnia"
-							><div class="box-feature">
-								<mat-icon>school</mat-icon><span>{{ user.university }}</span>
+								<mat-icon>alternate_email</mat-icon><span>{{ tenant.email }}</span>
 							</div></mat-chip
 						>
 					</div>

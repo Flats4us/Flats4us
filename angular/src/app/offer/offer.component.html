@@ -45,6 +45,7 @@
 						>
 					</div>
 					<div
+						*ngIf="offer.offerStatus===1 else dateDescription"
 						class="box-date"
 						matBadge="1"
 						matBadgePosition="below after"
@@ -52,6 +53,13 @@
 					>
 						Data {{ offer.startDate | date }}
 					</div>
+				<ng-template #dateDescription>
+				<div
+					class="box-date"
+				>
+					Data {{ offer.startDate | date }}
+				</div>
+			</ng-template>
 				</a>
 			</mat-nav-list>
 		</div>

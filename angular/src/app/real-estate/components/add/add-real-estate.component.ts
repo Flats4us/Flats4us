@@ -178,10 +178,6 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	public showMap() {
-		this.router.navigate(['start', 'map']);
-	}
-
 	public saveRealEstate() {
 		if (
 			this.addRealEstateFormAddressData.valid &&

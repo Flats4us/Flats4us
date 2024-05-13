@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, map, switchMap, of } from 'rxjs';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from 'src/app/rents/components/meeting-add/meeting-add.component';
-import { IPayment, IMenuOptions } from 'src/app/rents/models/rents.models';
+import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { statusName } from 'src/app/rents/statusName';
 import { environment } from 'src/environments/environment.prod';
 import { IOffer } from '../../models/offer.models';
@@ -17,6 +17,7 @@ import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent
 import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-cancel-dialog.component';
 import { AuthService } from '@shared/services/auth.service';
 import { LoggedUserType } from '@shared/models/auth.models';
+import { RentsService } from 'src/app/rents/services/rents.service';
 
 @Component({
 	selector: 'app-offer-details',
@@ -40,17 +41,13 @@ export class OfferDetailsComponent {
 	public actualOffer$: Observable<IOffer> = this.offerId$.pipe(
 		switchMap(value => this.offerService.getOfferById(parseInt(value)))
 	);
-	public payments: IPayment[] = [
-		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
-	];
+
 	public uType = UserType;
 
 	public loggedInUserType = LoggedUserType;
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
-	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'offerDetails', description: 'Szczegóły oferty' },
 		{ option: 'startDispute', description: 'Rozpocznij spór' },
@@ -61,6 +58,7 @@ export class OfferDetailsComponent {
 	constructor(
 		public realEstateService: RealEstateService,
 		public offerService: OfferService,
+		public rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
@@ -136,6 +134,12 @@ export class OfferDetailsComponent {
 			disableClose: true,
 			data: id ?? 0,
 		});
+	}
+
+	public showRent(id?: number): void{
+		if(id){
+			this.router.navigate(['rents', 'owner', id]);
+		}
 	}
 
 	public setCurrentSlideIndex(index: number) {

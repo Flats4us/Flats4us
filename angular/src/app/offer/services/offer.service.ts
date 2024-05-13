@@ -16,9 +16,9 @@ export class OfferService {
 
 	public offerStatuses = new Map<number, string>([
 		[0, 'aktualna'],
-		[1, 'nieaktualna'],
-		[2, 'zawieszona'],
-		[3, 'wynajęta'],
+		[1, 'oczekująca'],
+		[2, 'wynajęta'],
+		[3, 'nieaktualna'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}
@@ -46,7 +46,7 @@ export class OfferService {
 		);
 	}
 	public addRentApproval(id: number, decision: IDecision) {
-		return this.httpClient.post(
+		return this.httpClient.put(
 			`${this.apiRoute}/offers/${id}/rent/accept`,
 			decision
 		);

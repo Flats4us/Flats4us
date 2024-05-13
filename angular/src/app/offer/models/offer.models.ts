@@ -5,6 +5,8 @@ import {
 
 export interface IOffer {
 	offerId: number;
+	rentPropositionToShow: number,
+	isInterest: boolean,
 	date: Date;
 	offerStatus: number;
 	price: number;
@@ -45,8 +47,7 @@ export interface IOwner {
 	surname: string;
 	email: string;
 	phoneNumber: string;
-	imagesPath: string;
-	activityStatus: boolean;
+	profilePicture: IProfilePicture;
 }
 
 export interface ISurveyOwnerOffer {
@@ -66,4 +67,9 @@ export interface IFlatOffer {
 	url: string;
 	imgSource: string;
 	type: string;
+}
+
+export interface IProfilePicture{
+	name: string;
+	path: string;
 }

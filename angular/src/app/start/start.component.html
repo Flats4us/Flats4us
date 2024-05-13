@@ -443,21 +443,18 @@
 										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
 									</div>
 								</mat-chip>
-								<mat-chip
-									*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-								>
-									<button
-										class="box-icon-watched"
-										id="addToWatched"
-										type="button"
-										mat-icon-button
-										matTooltip="Dodaj do obserwowanych"
-										aria-label="AddToWatched"
-										(click)="addToWatched(flat.offerId)"
-									>
-										<mat-icon>favorite_border</mat-icon>
-									</button>
-								</mat-chip>
+								<button 
+								*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+								mat-mini-fab
+								class="ml-auto"
+								id="addToWatched"
+								type="button"
+								color="primary"										
+								matTooltip="Dodaj do obserwowanych"
+								aria-label="AddToWatched"
+								(click)="addToWatched(flat.offerId)">
+								<mat-icon>favorite_border</mat-icon>
+								</button>
 							</mat-chip-listbox>
 						</mat-card-content>
 					</mat-card>
