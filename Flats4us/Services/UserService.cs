@@ -119,6 +119,8 @@ namespace Flats4us.Services
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
+
+
             await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
         }
 
@@ -228,7 +230,7 @@ namespace Flats4us.Services
             var notificationTitle = "Password Changed";
             var notificationBody = "Your password has been successfully changed.";
             await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userId);
-
+            await _emailService.SendEmailAsync(userId, notificationTitle, notificationBody);
         }
 
         public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)
