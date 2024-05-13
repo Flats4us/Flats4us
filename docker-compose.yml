@@ -38,6 +38,8 @@ services:
       - db-data:/var/opt/mssql
     networks:
       - flats4us-network
+    security_opt:
+      - "apparmor:unconfined"
 
 networks:
   flats4us-network:
