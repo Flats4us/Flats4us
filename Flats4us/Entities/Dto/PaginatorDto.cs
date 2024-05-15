@@ -10,4 +10,11 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int PageSize { get; set; }
     }
+
+    public class OptionalPaginatorDto
+    {
+        public int? PageNumber { get; set; }
+
+        public int? PageSize { get; set; }
+    }
 }

@@ -6,7 +6,7 @@ namespace Flats4us.Services.Interfaces
     {
         Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId);
         Task AcceptRentAsync(bool decision, int requestUserId, int offerId);
-        Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int pageSize, int pageNumber);
+        Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int? pageSize, int? pageNumber);
         Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId);
         Task AddRentOpinionAsync(RentOpinionDto input, int UserId, int RentId);
     }

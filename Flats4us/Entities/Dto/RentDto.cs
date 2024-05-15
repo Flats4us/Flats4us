@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Flats4us.Helpers.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
@@ -24,6 +25,15 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public DateTime EndDate { get; set; }
+
+        [Required]
+        public string PropertyAddress { get; set; }
+
+        [Required]
+        public PropertyType PropertyType { get; set; }
+
+        [Required]
+        public List<FileDto> PropertyImages { get; set; }
 
         [Required]
         public ICollection<UserInfoDto> Tenants { get; set; }
