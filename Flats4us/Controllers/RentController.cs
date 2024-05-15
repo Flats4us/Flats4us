@@ -52,6 +52,35 @@ namespace Flats4us.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Returns rent by id",
+            Description = "Requires verified owner or student privileges"
+        )]
+        public async Task<IActionResult> GetRentById(int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                _logger.LogInformation($"Getting rent id: {id}");
+                var rent = await _rentService.GetRentByIdAsync(id, requestUserId);
+                return Ok(rent);
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
         [HttpGet("{rentId}/proposition")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
