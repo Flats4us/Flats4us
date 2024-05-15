@@ -201,7 +201,7 @@ namespace Flats4us.Services
                 rent.StudentId != requestUserId &&
                 !rent.OtherStudents.Any(os => os.UserId == requestUserId))
             {
-                throw new ForbiddenException($"You do not have permission to view this rent");
+                throw new ForbiddenException($"You do not have permission to view this rent.");
             }
 
             return _mapper.Map<RentDto>(rent);
