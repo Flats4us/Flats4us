@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IMenuOptions, IPayment } from '../../models/rents.models';
+import { IMenuOptions, IRentOffer, IRentPayment } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map, shareReplay, switchMap } from 'rxjs';
@@ -16,6 +16,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 import { RentsService } from '../../services/rents.service';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { AuthService } from '@shared/services/auth.service';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-rents-details',
@@ -24,7 +25,7 @@ import { AuthService } from '@shared/services/auth.service';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentsDetailsComponent {
+export class RentsDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public uType = UserType;
 
@@ -40,14 +41,17 @@ export class RentsDetailsComponent {
 		switchMap(value => this.offerService.getOfferById(parseInt(value))),
 		shareReplay(1)
 	);
-	public payments: IPayment[] = [
-		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
-	];
+
+	public actualOfferRent$: Observable<IRentOffer | undefined> = this.rentId$?.pipe(
+		switchMap(value => this.rentsService.getOfferRents(0,40).pipe(map(rents => rents.result.find(rent => rent.rentId === parseInt(value))))),
+		shareReplay(1)
+	);
+	public payments: IRentPayment[] = [];
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
-	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
+	public displayedColumnsStudent: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
+	public displayedColumnsOwner: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Szczegóły najmu' },
 		{ option: 'startDispute', description: 'Rozpocznij spór' },
@@ -57,12 +61,15 @@ export class RentsDetailsComponent {
 	constructor(
 		public realEstateService: RealEstateService,
 		public offerService: OfferService,
-		private rentsService: RentsService,
+		public rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
 		public authService: AuthService
-	) {}
+	) {
+		super();
+		this.actualOfferRent$.pipe(this.untilDestroyed()).subscribe(rent => this.payments = rent?.payments ?? []);
+	}
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
@@ -79,7 +86,7 @@ export class RentsDetailsComponent {
 		this.router.navigate(['rents', 'details', id]);
 	}
 	public startDispute(id: number) {
-		this.router.navigate([['disputes', id]]);
+		this.router.navigate(['disputes', id]);
 	}
 
 	public onSelect(menuOption: IMenuOptions, id?: number) {

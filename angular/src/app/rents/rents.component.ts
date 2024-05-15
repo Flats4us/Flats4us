@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RentsService } from './services/rents.service';
-import { IRent } from './models/rents.models';
+import { IRent, ISendRent } from './models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { statusName } from './statusName';
@@ -16,6 +16,7 @@ import { AuthService } from '@shared/services/auth.service';
 export class RentsComponent {
 	public uType = UserType;
 	public rentsOptions$: Observable<IRent[]> = this.rentsService.getRents();
+	public rentsOffers$: Observable<ISendRent> = this.rentsService.getOfferRents(0,40);
 	public user$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('user')?.toUpperCase() ?? '')
 	);

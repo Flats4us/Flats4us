@@ -19,6 +19,8 @@ import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -41,6 +43,9 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 		MatCardModule,
 		CdkTableModule,
 		MatChipsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatFormFieldModule,
 		AccessControlDirective,
 	],
 	exports: [RentsDetailsComponent],

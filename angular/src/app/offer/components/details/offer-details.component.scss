@@ -200,11 +200,12 @@
 	margin: 0 40px;
 }
 
-.ico {
-	display: flex;
+.icon {
+	font-size: xx-large;
+	margin-right: 4px;
 }
 
-.icon {
+.icon-hide {
 	font-size: xx-large;
 	margin-right: 4px;
 }
@@ -242,11 +243,6 @@
 	padding: 4px 0;
 }
 
-.payments {
-	width: 100%;
-	padding-bottom: 12px;
-}
-
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
@@ -255,16 +251,24 @@
 		position: relative;
 		background: #ffffff;
 	}
-	.label-price {
-		padding: 4px;
-		min-width: 200px;
-		margin-left: auto;
-	}
 	.label-survey {
 		padding: 4px;
 		min-width: 200px;
 		margin-right: auto;
 		font-size: xx-large;
+	}
+	.column-header-description {
+		width: 50%;
+		padding: 4px;
+	}
+	.label-right {
+		padding: 4px;
+		min-width: 100px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		float: left;
 	}
 }
 
@@ -282,5 +286,8 @@
 		align-items: center;
 		max-width: 150px;
 		overflow: hidden;
+	}
+	.icon-hide {
+		visibility: hidden;
 	}
 }

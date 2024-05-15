@@ -452,6 +452,7 @@
 								color="primary"										
 								matTooltip="Dodaj do obserwowanych"
 								aria-label="AddToWatched"
+								[disabled]="flat.isInterest"
 								(click)="addToWatched(flat.offerId)">
 								<mat-icon>favorite_border</mat-icon>
 								</button>

@@ -200,6 +200,11 @@ export class StartComponent extends BaseComponent implements OnInit {
 					);
 				},
 			});
+		this.flatOptions$ = this.startService.getFilteredOffers(
+			this.startSiteForm.value,
+			this.pageIndex,
+			this.pageSize
+		);	
 	}
 
 	public onSubmit() {

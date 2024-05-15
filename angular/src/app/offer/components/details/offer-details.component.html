@@ -35,7 +35,7 @@
 			>
 			<mat-label class="label-right">
 				<mat-icon class="icon" inline="true">visibility</mat-icon>
-				<span class="text-3xl">
+				<span class="text-2xl">
 					Liczba obserwujących: {{data.offer?.numberOfInterested}}
 				</span>
 			</mat-label>
@@ -92,7 +92,7 @@
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									(click)="onSelect(menuOption, data.offer?.offerId)"
+									(click)="onSelect(menuOption, data?.offer?.offerId, data.offer?.property?.propertyId)"
 								>
 									<span
 										[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
@@ -217,8 +217,11 @@
 					</mat-chip>
 				</span>
 			</mat-label>
-			<mat-label class="label-right"
-				><span class="text-3xl"
+			<mat-label class="label-right">
+				<mat-icon class="icon-hide" inline="true">
+					sell
+				</mat-icon>
+				<span class="text-3xl"
 					>Cena
 					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
 				></mat-label
@@ -238,20 +241,16 @@
 				<p class="text-2xl pt-4">Kaucja:</p>
 				<p class="text-2xl pt-4">Data wystawienia:</p>
 				<p class="text-2xl pt-4">Data zakończenia:</p>
-				<p class="text-2xl pt-4">Adres:</p>
+				<p class="text-2xl pt-4">Miasto:</p>
+				<p class="text-2xl pt-4">Kod pocztowy:</p>
+				<p class="text-2xl pt-4">Ulica:</p>
 				<p class="text-2xl pt-4">Metraż:</p>
 				<p class="text-2xl pt-4">Liczba pokoi:</p>
 				<p class="text-2xl pt-4">Liczba pięter:</p>
 				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. liczba mieszkańców:</p>
+				<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
 				<p class="text-2xl pt-4">Rok budowy:</p>
 				<p class="text-2xl pt-4">Informacje o umowie:</p>
-				<p
-					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-					class="text-2xl pt-4"
-				>
-					Lokatorzy:
-				</p>
 				<p class="text-2xl pt-4">Wyposażenie:</p>
 			</div>
 			<div class="column-header-description">
@@ -260,9 +259,10 @@
 				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.startDate | date }}</p>
 				<p class="text-2xl pt-4">{{ data.offer?.endDate | date }}</p>
+				<p class="text-2xl pt-4">{{ data.offer?.property?.city }}</p>
+				<p class="text-2xl pt-4">{{ data.offer?.property?.postalCode }}</p>
 				<p class="text-2xl pt-4">
-					{{ data.offer?.property?.postalCode }} {{ data.offer?.property?.city }},
-					ul. {{ data.offer?.property?.street }} {{ data.offer?.property?.number }}
+					{{ data.offer?.property?.street }} {{ data.offer?.property?.number }}
 				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
 				<p class="text-2xl pt-4">
@@ -293,12 +293,6 @@
 				</p>
 				<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
 				<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
-				<p
-					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-					class="text-2xl pt-4"
-				>
-					Jan Kowalski, Barbara Nowak
-				</p>
 				<p class="text-2xl pt-4">
 					<span *ngFor="let equipment of data?.offer?.property?.equipment"
 						><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
@@ -351,9 +345,6 @@
 			</div>
 		</div>
 	</mat-card>
-	<div *ngIf="data.user === uType.STUDENT" class="button-box-options">
-		<button mat-raised-button color="primary">Dodaj współlokatorów</button>
-	</div>
 	<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
 		<button mat-raised-button color="primary" (click)="returnStart()">
 			Powrót

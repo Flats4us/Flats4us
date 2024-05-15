@@ -50,8 +50,8 @@ export class OfferDetailsComponent {
 
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'offerDetails', description: 'Szczegóły oferty' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
 		{ option: 'promoteOffer', description: 'Promuj ofertę' },
+		{ option: 'property', description: 'Powiązana nieruchomość' },
 		{ option: 'closeOffer', description: 'Zakończ ofertę' },
 	];
 
@@ -90,29 +90,30 @@ export class OfferDetailsComponent {
 	public navigateToOffer(id: number) {
 		this.router.navigate(['offer', 'details', id]);
 	}
-	public startDispute(id: number) {
-		this.router.navigate(['disputes', id]);
+
+	public navigateToProperty(id: number) {
+		this.router.navigate(['real-estate', 'owner', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id?: number) {
+	public onSelect(menuOption: IMenuOptions, offerId?: number, propertyId?: number) {
 		switch (menuOption.option) {
 			case 'offerDetails': {
-				this.navigateToOffer(id ?? 0);
-				break;
-			}
-			case 'startDispute': {
-				this.startDispute(id ?? 0);
+				this.navigateToOffer(offerId ?? 0);
 				break;
 			}
 			case 'closeOffer': {
-				this.openCancelDialog(id ?? 0);
+				this.openCancelDialog(offerId ?? 0);
 				break;
 			}
 			case 'promoteOffer': {
-				this.openPromotionDialog(id ?? 0);
+				this.openPromotionDialog(offerId ?? 0);
 				break;
 			}
-		}
+			case 'property': {
+				this.navigateToProperty(propertyId ?? 0);
+				break;
+			}
+	}
 	}
 
 	public onAddMeeting(id?: number): void {

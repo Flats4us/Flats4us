@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IMeeting, IRent, IRentOpinion, IRentProposition } from '../models/rents.models';
-import { HttpClient } from '@angular/common/http';
+import { IMeeting, IRent, IRentOpinion, IRentProposition, ISendRent } from '../models/rents.models';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 
@@ -9,6 +9,12 @@ export class RentsService {
 	protected apiRoute = `${environment.apiUrl}`;
 
 	constructor(private httpClient: HttpClient) {}
+
+	public paymentPurposes = new Map<number, string>([
+		[0, 'czynsz'],
+		[1, 'depozyt'],
+		[2, 'naprawy'],
+	]);
 
 	public addMeeting(meeting: IMeeting) {
 		meeting = {
@@ -22,6 +28,19 @@ export class RentsService {
 			),
 		};
 		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);
+	}
+
+	public getOfferRents(index?: number, size?: number): Observable<ISendRent> {
+		let queryParams = new HttpParams();
+		if (index){
+		queryParams = new HttpParams()
+		.append('pageNumber', index + 1);
+		}
+		if(size){
+		queryParams = new HttpParams()
+		.append('pageSize', size);
+		}
+		return this.httpClient.get<ISendRent>(`${this.apiRoute}/rent`, {params: queryParams});
 	}
 
 	public getRents(): Observable<IRent[]> {

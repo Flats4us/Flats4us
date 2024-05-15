@@ -87,6 +87,9 @@ export class RentPropositionDialogComponent extends BaseComponent {
 				.pipe(this.untilDestroyed(), catchError(this.handleError))
 				.subscribe({
 					next: () => {
+						this.snackBar.open('Propozycja najmu została wysłana do Właściciela i czeka na akceptację!', 'Zamknij', {
+							duration: 2000,
+						});
 						this.dialogRef.close();
 					},
 					error: () => {

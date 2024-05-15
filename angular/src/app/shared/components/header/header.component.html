@@ -30,7 +30,6 @@
 		<button mat-menu-item [routerLink]="['profile', 'edit']">
 			Edytuj profil
 		</button>
-		<button mat-menu-item [matMenuTriggerFor]="payments">Płatności</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 			mat-menu-item
@@ -44,7 +43,7 @@
 				mat-menu-item
 				[routerLink]="['rents', 'student']"
 			>
-				Mój najem
+				Moje wynajmy
 			</button>
 		</div>
 		<button
@@ -83,12 +82,6 @@
 			Obserwowane oferty
 		</button>
 		<button mat-menu-item (click)="authService.logout()">Wyloguj się</button>
-	</mat-menu>
-
-	<mat-menu #payments="matMenu">
-		<button mat-menu-item>Historia płatności</button>
-		<button mat-menu-item>Opłaty</button>
-		<button mat-menu-item>Kaucja</button>
 	</mat-menu>
 
 	<ng-template #notLoggedIn>
@@ -160,16 +153,11 @@
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
 		mat-button
 		class="mr-2"
-		[matMenuTriggerFor]="settings"
+		[routerLink]="['settings']"
 	>
 		<mat-icon class="material-icons-outlined">settings</mat-icon>
 		Ustawienia
 	</button>
-	<mat-menu #settings="matMenu">
-		<button mat-menu-item [routerLink]="['settings', 'password-change']">
-			Zmień hasło
-		</button>
-	</mat-menu>
 
 	<button
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"

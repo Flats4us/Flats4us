@@ -37,6 +37,32 @@ export interface IRent {
 	property: IFlatOffer;
 }
 
+export interface ISendRent{
+	totalCount: number;
+	result: IRentOffer[];
+}
+
+export interface IRentPayment{
+	paymentId: number;
+	paymentPurpose: number;
+	amount: number;
+	isPaid: boolean;
+	createdDate: Date;
+	paymentDate: Date;
+}
+
+export interface IRentOffer {
+	rentId: number,
+    propertyId: number,
+    offerId: number,
+    isFinished: boolean,
+    startDate: Date,
+    duration: number,
+    endDate: Date,
+    tenants: ITenant[];
+    payments: IRentPayment[];
+}
+
 export interface IRentOpinion {
 	rating: boolean;
 	cleanliness: boolean;

@@ -1,17 +1,14 @@
 <div *ngIf="user$ | async as user">
 	<div class="box-title">
-		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
-			Przeglądanie wynajmów
-		</div>
-		<div *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
-			Mój najem
+		<div *ngIf="user === uType.OWNER || user === uType.STUDENT" class="text-4xl p-4 font-semibold">
+		Przeglądanie wynajmów
 		</div>
 		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-			Widok najmu
+		Widok najmu
 		</div>
 	</div>
-	<div *ngIf="user === uType.OWNER" class="rents-owner">
-		<mat-card class="container-list">
+	<div *ngIf="user === uType.OWNER || user === uType.STUDENT" class="rents-owner">
+		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
 				Moje wynajmy
 				<button
@@ -29,32 +26,32 @@
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
 				<a
-					*ngFor="let rent of rentsOptions$ | async"
+					*ngFor="let rent of (rentsOffers$ | async)?.result"
 					mat-list-item
 					class="item-list"
-					routerLink="{{ rent.id }}"
+					routerLink="{{ rent.rentId }}"
 					><div class="box-title">
-						<span class="text-xl font-bold">{{ rent.title }}</span>
+						<span class="text-xl font-bold">Najem nr {{ rent.rentId }}</span>
 						<mat-icon
 							class="box-icon-invalid"
 							[ngClass]="
-								rent.status === statusName.SUSPENDED
+							rent.isFinished
 									? 'box-icon-invalid'
 									: 'box-icon-valid'
 							"
 							>check_circle</mat-icon
 						>
 					</div>
-					<div class="box-date">Data {{ rent.publishDate }}</div>
+					<div class="box-date">Data {{ rent.startDate | date }}</div>
 				</a>
 			</mat-nav-list>
-		</mat-card>
+		</div>
 		<div class="container-outlet">
 			<router-outlet></router-outlet>
 		</div>
 	</div>
 	<div
-		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
+		*ngIf="user === uType.DETAILS"
 		class="rents-student"
 	>
 		<router-outlet></router-outlet>

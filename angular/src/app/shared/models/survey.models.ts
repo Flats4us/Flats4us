@@ -12,7 +12,6 @@ export enum TypeName {
 export interface IQuestionsData {
 	id: string;
 	name: string;
-	content: string;
 	trigger: boolean;
 	optional: boolean;
 	typeName: TypeName;

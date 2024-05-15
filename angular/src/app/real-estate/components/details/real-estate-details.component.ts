@@ -73,11 +73,13 @@ export class RealEstateDetailsComponent {
 		return this.currentIndex === index;
 	}
 
-	public prevSlide(length: number) {
-		this.currentIndex = this.currentIndex < length - 1 ? ++this.currentIndex : 0;
+	public prevSlide(length?: number) {
+		this.currentIndex =
+			this.currentIndex < (length ?? 0) - 1 ? ++this.currentIndex : 0;
 	}
 
-	public nextSlide(length: number) {
-		this.currentIndex = this.currentIndex > 0 ? --this.currentIndex : length - 1;
+	public nextSlide(length?: number) {
+		this.currentIndex =
+			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
 	}
 }

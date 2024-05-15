@@ -1,11 +1,5 @@
-<head>
-	<link
-		rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-	/>
-</head>
 <div
-	*ngIf="{ user: user$ | async, rent: actualRent$ | async } as data"
+	*ngIf="{ user: user$ | async, rent: actualRent$ | async, offerRent: actualOfferRent$ | async } as data"
 	class="grid gap-4"
 >
 	<mat-card>
@@ -13,9 +7,8 @@
 			<mat-label class="label-description">
 				<span class="text-3xl"
 					>Status oferty:
-					{{ offerService.offerStatuses.get(data.rent?.offerStatus ?? 0) }}</span
-				></mat-label
-			>
+					{{ offerService.offerStatuses.get(data.rent?.offerStatus ?? 0) }}</span>
+			</mat-label>
 		</div>
 		<div class="gallery">
 			<div class="container slider">
@@ -113,9 +106,13 @@
 			</div>
 		</div>
 		<div class="button-box">
-			<mat-label class="label-price"
-				><span class="text-3xl"
-					>Cena {{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
+			<mat-label class="label-right">
+				<mat-icon class="icon" inline="true">
+					sell
+				</mat-icon>
+				<span class="text-3xl"
+					>Cena
+					{{ data.rent?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
 				></mat-label
 			>
 		</div>
@@ -189,7 +186,9 @@
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl pt-4"
 				>
-					Jan Kowalski, Barbara Nowak
+				<span *ngFor="let tenant of data.offerRent?.tenants">
+					{{tenant.fullName}}
+				</span>
 				</p>
 				<p class="text-2xl pt-4">
 					<span *ngFor="let equipment of data.rent?.property?.equipment"
@@ -243,31 +242,47 @@
 			</div>
 		</div>
 	</mat-card>
+	<mat-card>
 	<div>
-		<mat-card *ngIf="data.user === uType.OWNER" class="w-full">
+		<mat-card *ngIf="data.user === uType.OWNER">
 			<mat-label class="label-description"
-				><mat-icon class="icon" [inline]="true">attach_money</mat-icon
-				><span class="text-3xl">Płatności</span></mat-label
+				><mat-icon class="material-symbols-outlined" [inline]="true"> 
+					payments
+				</mat-icon><span class="text-3xl ml-4">Płatności</span></mat-label
 			>
 		</mat-card>
 		<div *ngIf="data.user === uType.OWNER">
 			<table mat-table class="mat-elevation-z8" [dataSource]="payments">
-				<ng-container
-					*ngFor="let column of this.displayedColumnsStudent"
-					[matColumnDef]="column"
-				>
-					<th *matHeaderCellDef mat-header-cell>{{ column }}</th>
-					<td *matCellDef="let payment" mat-cell class="text-2xl">
-						{{ payment[column] }}
-					</td>
+				<ng-container matColumnDef="paymentId">
+					<th *matHeaderCellDef mat-header-cell> Id </th>
+					<td *matCellDef="let element" mat-cell> {{element.paymentId}} </td>
 				</ng-container>
-				<tr
-					*matRowDef="let paymentRow; columns: this.displayedColumnsStudent"
-					mat-row
-				></tr>
+				<ng-container matColumnDef="paymentPurpose">
+					<th *matHeaderCellDef mat-header-cell> Typ </th>
+					<td *matCellDef="let element" mat-cell> {{this.rentsService.paymentPurposes.get(element.paymentPurpose)}} </td>
+				</ng-container>
+				<ng-container matColumnDef="amount">
+					<th *matHeaderCellDef mat-header-cell> Kwota </th>
+					<td *matCellDef="let element" mat-cell> {{element.amount | currency : "PLN" : true : ".2-2" }} </td>
+				</ng-container>
+				<ng-container matColumnDef="isPaid">
+					<th *matHeaderCellDef mat-header-cell> Opłacono </th>
+					<td *matCellDef="let element" mat-cell> {{element.isPaid ? 'tak' : 'nie'}} </td>
+				</ng-container>
+				<ng-container matColumnDef="createdDate">
+					<th *matHeaderCellDef mat-header-cell> Data wygenerowania </th>
+					<td *matCellDef="let element" mat-cell> {{element.createdDate | date}} </td>
+				</ng-container>
+				<ng-container matColumnDef="paymentDate">
+					<th *matHeaderCellDef mat-header-cell> Termin płatności </th>
+					<td *matCellDef="let element" mat-cell> {{element.paymentDate | date}} </td>
+				</ng-container>
+				<tr *matHeaderRowDef="this.displayedColumnsOwner" mat-header-row ></tr>
+				<tr *matRowDef="let row; columns: this.displayedColumnsOwner;" mat-row></tr>
 			</table>
 		</div>
 	</div>
+	</mat-card>
 	<div class="button-box-options">
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
