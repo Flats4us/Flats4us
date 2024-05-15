@@ -2334,68 +2334,105 @@ public static class DataSeeder
 
         #region Argument
 
-        //var argument1 = new Argument
-        //{
-        //    Description = "sprzeczka pierwsza ",
-        //    StartDate = new DateTime(2023, 1, 12),
-        //    OwnerAcceptanceDate = new DateTime(2023, 1, 12),
-        //    ArgumentStatus = 0,
-        //    InterventionNeed = true,
-        //    MederatorDecisionDate = new DateTime(2023, 1, 14),
-        //    Rent = rent1,
-        //    Student = student1
-        //};
-        //var argument2 = new Argument
-        //{
-        //    Description = "a to jest druga ",
-        //    StartDate = new DateTime(2023, 1, 12),
-        //    OwnerAcceptanceDate = new DateTime(2023, 1, 12),
-        //    ArgumentStatus = 0,
-        //    InterventionNeed = false,
-        //    MederatorDecisionDate = new DateTime(2023, 1, 22),
-        //    Rent = rent2,
-        //    Student = student1
-        //};
-        //var argument3 = new Argument
-        //{
-        //    Description = "a tutaj sobie wpiszę lorem pisum",
-        //    StartDate = new DateTime(2023, 1, 12),
-        //    OwnerAcceptanceDate = new DateTime(2023, 1, 12),
-        //    ArgumentStatus = ArgumentStatus.Resolved,
-        //    InterventionNeed = true,
-        //    MederatorDecisionDate = new DateTime(2023, 1, 25),
-        //    Rent = rent3,
-        //    Student = student1
-        //};
-        //var argument4 = new Argument
-        //{
-        //    Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
-        //    StartDate = new DateTime(2023, 1, 12),
-        //    OwnerAcceptanceDate = new DateTime(2023, 1, 12),
-        //    ArgumentStatus = ArgumentStatus.Resolved,
-        //    InterventionNeed = false,
-        //    MederatorDecisionDate = new DateTime(2023, 2, 10),
-        //    Rent = rent4,
-        //    Student = student1
-        //};
+        var argument1 = new Argument
+        {
+            Description = "sprzeczka pierwsza ",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 2, 13),
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 3, 17),
+            Rent = rent1,
+            Student = student1
+        };
 
+        var argument2 = new Argument
+        {
+            Description = "a to jest druga ",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = 0,
+            InterventionNeed = false,
+            MederatorDecisionDate = new DateTime(2023, 1, 22),
+            Rent = rent2,
+            Student = student1
+        };
 
-        //dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4);
+        var argument3 = new Argument
+        {
+            Description = "a tutaj sobie wpiszę lorem pisum",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 1, 25),
+            Rent = rent3,
+            Student = student1
+        };
+        var argument4 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 2, 10),
+            Rent = rent4,
+            Student = student1
+        };
+
+        var argument5 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xDv2",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 2, 20),
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Rent = rent3,
+            Student = student1
+        };
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4, argument5);
 
         #endregion
 
         #region ArgumentIntervention
 
-        //var argumentIntervention1 = new ArgumentIntervention
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 1, 12),
+            Justification = "string",
+            Argument = argument1,
+            Moderator = moderator1
+        };
+        //var argumentIntervention2 = new ArgumentIntervention
         //{
 
-        //    Date = new DateTime(2023, 1, 12),
-        //    Justification = "string",
+        //    Date = new DateTime(2023, 2, 12),
+        //    Justification = "string1",
         //    Argument = argument1,
         //    Moderator = moderator1
         //};
+        //var argumentIntervention3 = new ArgumentIntervention
+        //{
 
-        //dbContext.ArgumentInterventions.AddRange(argumentIntervention1);
+        //    Date = new DateTime(2023, 1, 12),
+        //    Justification = "string2",
+        //    Argument = argument2,
+        //    Moderator = null
+        //};
+        //var argumentIntervention4 = new ArgumentIntervention
+        //{
+
+        //    Date = new DateTime(2023, 1, 12),
+        //    Justification = "string3",
+        //    Argument = argument3,
+        //    Moderator = null
+        //};
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1/*, argumentIntervention2, argumentIntervention3, argumentIntervention4*/);
 
         #endregion
 

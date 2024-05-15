@@ -20,10 +20,10 @@ namespace Flats4us.Services
             _groupChatService = groupChatService;
         }
 
-        public async Task<IEnumerable<Argument>> GetArgumentsAsync()                    //dotyczny moderatora
+        public async Task<IEnumerable<Argument>> GetArgumentsAsync(ArgumentStatus argument)
         {
             var ongoingArguments = await _context.Arguments
-                .Where(x => x.ArgumentStatus == ArgumentStatus.Ongoing)
+                .Where(x => x.ArgumentStatus == argument)
                 .Where(x => x.InterventionNeed == true)
                 .OrderBy(x => x.InterventionNeedDate)
                 .ToListAsync();
@@ -33,9 +33,9 @@ namespace Flats4us.Services
 
         public async Task<Argument> GetArgumentById(int id)                             //dotyczy moderatora
         {
-            var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
-            if (argument == null)
-                throw new ArgumentException($"Argument with ID: {id} not found");
+            var argument = await _context.Arguments
+                .FirstAsync(x => x.ArgumentId == id)
+                ?? throw new ArgumentException($"Argument with ID: {id} not found");
             
             return argument;
         }
@@ -80,22 +80,22 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AcceptArgument(int id)                                            //tylko owner
+        public async Task AcceptArgument(int argumentId)                                            //tylko owner
         {
             var argument = await _context.Arguments
-                .FirstAsync(x => x.ArgumentId == id)
-                ?? throw new ArgumentException($"Argument with ID: {id} not found");
+                .FirstAsync(x => x.ArgumentId == argumentId)
+                ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
             argument.OwnerAcceptanceDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task AskForIntervention(int id)                                        //student lub owner
+        public async Task AskForIntervention(int argumentId)                                        //student lub owner
         {
             var argument = await _context.Arguments
-                .FirstAsync(x => x.ArgumentId == id)
-                ?? throw new ArgumentException($"Argument with ID: {id} not found");
+                .FirstAsync(x => x.ArgumentId == argumentId)
+                ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
             argument.InterventionNeed = true;
             argument.InterventionNeedDate = DateTime.Now;
@@ -103,12 +103,11 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditStatusArgumentAsync(int id, ArgumentStatus status)            //co dokładnie tutaj zrobić ze statusem
+        public async Task EditStatusArgumentAsync(int argumentId, ArgumentStatus status)            
         {
-            var argument = await _context.Arguments.FirstAsync(x => x.ArgumentId == id);
-
-            if (argument == null)
-                throw new ArgumentException($"Argument with ID: {id} not found");
+            var argument = await _context.Arguments
+                .FirstAsync(x => x.ArgumentId == argumentId)
+                ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
             argument.ArgumentStatus = status;
 
@@ -122,9 +121,9 @@ namespace Flats4us.Services
 
         public async Task<ArgumentIntervention> GetInterventionById(int id)
         {
-            var intervention = await _context.ArgumentInterventions.FirstAsync(x => x.ArgumentInterventionId == id);
-            if (intervention == null) 
-                throw new ArgumentException($"Intervention with ID: {id} not found");
+            var intervention = await _context.ArgumentInterventions
+                .FirstAsync(x => x.ArgumentInterventionId == id)
+                ?? throw new ArgumentException($"Intervention with ID: {id} not found");
 
             return intervention;
         }
@@ -134,6 +133,10 @@ namespace Flats4us.Services
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == input.ArgumentId)
                 ?? throw new ArgumentException($"Argument with id {input.ArgumentId} not found ");
+
+            var moderator = await _context.Users
+                .FirstAsync(x => x.UserId == input.ModeratorId)
+                ?? throw new ArgumentException($"Moderator with id {input.ModeratorId} not found ");
 
             argument.InterventionNeed = false;
             argument.InterventionNeedDate = null;

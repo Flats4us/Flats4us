@@ -116,21 +116,27 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("arguments")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns list of arguments",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> GetArguments()
+        public async Task<IActionResult> GetArguments(ArgumentStatus argument)
         {
-            _logger.LogInformation("Geting Arguments");
-            var arguments = await _argumentService.GetArgumentsAsync();
-
-            return Ok(arguments);
+            try
+            {
+                _logger.LogInformation("Geting Arguments");
+                var arguments = await _argumentService.GetArgumentsAsync(argument);
+                return Ok(arguments);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("argumen/{id}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns argument by id",
@@ -138,10 +144,19 @@ namespace Flats4us.Controllers
         )]
         public async Task<IActionResult> GetArgumentById(int id)
         {
-            _logger.LogInformation("Geting Argument by Id");
-            var argument = await _argumentService.GetArgumentById(id);
+            try
+            {
+                _logger.LogInformation("Geting Argument by Id");
+                var argument = await _argumentService.GetArgumentById(id);
+                return Ok(argument);
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogInformation($"FAILED: Verifying user - id: {id}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
 
-            return Ok(argument);
+            
         }
 
         [HttpGet("interventions")]
@@ -152,10 +167,16 @@ namespace Flats4us.Controllers
         )]
         public async Task<IActionResult> GetInterventions()
         {
-            _logger.LogInformation("Geting Interventions");
-            var interventions = await _argumentService.GetAllInterventionsAsync();
-
-            return Ok(interventions);
+            try
+            {
+                _logger.LogInformation("Geting Interventions");
+                var interventions = await _argumentService.GetAllInterventionsAsync();
+                return Ok(interventions);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
         }
 
         [HttpGet("intervention/{id}")]
@@ -166,17 +187,24 @@ namespace Flats4us.Controllers
         )]
         public async Task<IActionResult> GetInterventionsById(int id)
         {
-            _logger.LogInformation("Geting Interventions by Id");
-            var interventions = await _argumentService.GetInterventionById(id);
-
-            return Ok(interventions);
+            try
+            {
+                _logger.LogInformation("Geting Interventions by Id");
+                var interventions = await _argumentService.GetInterventionById(id);
+                return Ok(interventions);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Verifying user - id: {id}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
         }
 
         [HttpPost("intervention")]
-        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
-            Summary = "Adding a new agrument",
-            Description = "Requires VerifiedOwnerOrStudent privileges"
+            Summary = "Adding a new intervention",
+            Description = "Requires moderator privileges"
         )]
         public async Task<IActionResult> PostIntervention(ArgumentInterventionDto input)
         {
@@ -193,18 +221,18 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("status")]
+        [HttpPut("argument/status")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating argument status",
-            Description = "Requires Moderator privileges"
+            Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> PutArgument(int id, ArgumentStatus status)
+        public async Task<IActionResult> PutArgument(int argumentId, ArgumentStatus status)
         {
             try
             {
                 _logger.LogInformation("Put Argument");
-                await _argumentService.EditStatusArgumentAsync(id, status);
+                await _argumentService.EditStatusArgumentAsync(argumentId, status);
                 return Ok("Argument Updated");
             }
             catch (Exception ex)
