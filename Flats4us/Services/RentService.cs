@@ -185,6 +185,28 @@ namespace Flats4us.Services
             return result;
         }
 
+        public async Task<RentDto> GetRentByIdAsync(int id, int requestUserId)
+        {
+            var rent = await _context.Rents
+                .Include(r => r.Payments)
+                .Include(r => r.Offer)
+                    .ThenInclude(o => o.Property)
+                .Include(r => r.Student)
+                .Include(r => r.OtherStudents)
+            .FirstOrDefaultAsync(o => o.RentId == id);
+
+            if (rent == null) throw new ArgumentException($"Rent with ID {id} not found.");
+
+            if (rent.Offer.Property.OwnerId != requestUserId &&
+                rent.StudentId != requestUserId &&
+                !rent.OtherStudents.Any(os => os.UserId == requestUserId))
+            {
+                throw new ForbiddenException($"You do not have permission to view this rent.");
+            }
+
+            return _mapper.Map<RentDto>(rent);
+        }
+
         public async Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId)
         {
             var rent = await _context.Rents
