@@ -6,6 +6,7 @@ import { Observable, map } from 'rxjs';
 import { statusName } from './statusName';
 import { UserType } from '../profile/models/types';
 import { AuthService } from '@shared/services/auth.service';
+import { RealEstateService } from '../real-estate/services/real-estate.service';
 
 @Component({
 	selector: 'app-rents',
@@ -16,7 +17,7 @@ import { AuthService } from '@shared/services/auth.service';
 export class RentsComponent {
 	public uType = UserType;
 	public rentsOptions$: Observable<IRent[]> = this.rentsService.getRents();
-	public rentsOffers$: Observable<ISendRent> = this.rentsService.getOfferRents(0,40);
+	public rentsOffers$: Observable<ISendRent> = this.rentsService.getOfferRents();
 	public user$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('user')?.toUpperCase() ?? '')
 	);
@@ -25,12 +26,9 @@ export class RentsComponent {
 
 	constructor(
 		public rentsService: RentsService,
+		public realEstateService: RealEstateService,
 		private router: Router,
 		private route: ActivatedRoute,
 		public authService: AuthService
 	) {}
-
-	public addOffer() {
-		this.router.navigate(['offer', 'add']);
-	}
 }

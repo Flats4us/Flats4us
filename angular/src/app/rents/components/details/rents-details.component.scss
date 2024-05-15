@@ -160,6 +160,7 @@
 	column-gap: 4px;
 	padding: 4px;
 	float: right;
+	margin-left: auto;
 }
 
 .close-rent {
@@ -228,6 +229,34 @@
 	padding-bottom: 12px;
 }
 
+.profile-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 4px;
+	padding: 4px 4px;
+}
+
+.profile-avatar {
+	border-radius: 50%;
+	width: 100px;
+}
+
+.box-feature {
+	display: flex;
+	align-items: center;
+}
+
+.container-features {
+	display: grid;
+	grid-auto-flow: dense;
+}
+
+mat-card-avatar:hover {
+	cursor: pointer;
+}
+
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
@@ -246,5 +275,13 @@
 		min-width: 300px;
 		padding: 4px;
 		z-index: 996;
+	}
+	.profile-details {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 4px;
+		padding: 4px 4px;
 	}
 }

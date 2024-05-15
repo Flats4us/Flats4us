@@ -52,12 +52,15 @@ class="grid gap-4"
 									[value]="menuOption.description"
 									(click)="onSelect(menuOption, actualRealEstate.propertyId)"
 								>
+								<div class="flex items-center justify-center">
+									<mat-icon class="material-icons-outlined">close</mat-icon>
 									<span
 										[ngClass]="
 											menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
 										"
 										>{{ menuOption.description }}</span
 									>
+								</div>
 								</button>
 							</mat-menu>
 						</div>

@@ -51,15 +51,15 @@ export class RentApprovalDialogComponent extends BaseComponent {
 		public rentsService: RentsService,
 		private snackBar: MatSnackBar,
 		private router: Router,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		@Inject(MAT_DIALOG_DATA) public data: {rentId: number, offerId: number}
 	) {
 		super();
-		this.rentProposition$ = this.rentsService.getRentProposition(data);
+		this.rentProposition$ = this.rentsService.getRentProposition(data.rentId);
 	}
 
 	public onYesClick() {
 		this.offerService
-			.addRentApproval(this.data, { decision: true })
+			.addRentApproval(this.data.offerId, { decision: true })
 			.pipe(this.untilDestroyed(), catchError(this.handleError))
 			.subscribe({
 				next: () => {
@@ -78,7 +78,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 
 	public onClose() {
 		this.offerService
-			.addRentApproval(this.data, { decision: false })
+			.addRentApproval(this.data.offerId, { decision: false })
 			.pipe(this.untilDestroyed(), catchError(this.handleError))
 			.subscribe({
 				next: () => {

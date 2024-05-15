@@ -50,6 +50,13 @@
 	margin: 0 12px;
 }
 
+.not-found{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 @media screen and (max-width: 700px) {
 	.real-estate-owner {
 		background: white;

@@ -70,6 +70,11 @@ export class MeetingAddComponent extends BaseComponent {
 				.subscribe({
 					next: () => {
 						this.meetingForm.controls['offerId'].setValue(this.data);
+						this.snackBar.open(
+							'Pomyślnie dodano spotkanie.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
 						this.dialogRef.close();
 					},
 					error: () => {

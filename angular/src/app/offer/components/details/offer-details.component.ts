@@ -130,10 +130,10 @@ export class OfferDetailsComponent {
 		});
 	}
 
-	public onRentApproval(id?: number): void {
+	public onRentApproval(rentId?: number, offerId?: number): void {
 		this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
-			data: id ?? 0,
+			data: {rentId: rentId, offerId: offerId} ?? {rentId: 0, offerId: 0},
 		});
 	}
 

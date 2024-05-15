@@ -10,13 +10,6 @@
 	margin-bottom: 16px;
 }
 
-.box-icon {
-	font-size: 40px;
-	width: max-content;
-	height: max-content;
-	margin-left: 16px;
-}
-
 .box-icon-valid {
 	font-size: x-large;
 	color: green;
@@ -42,7 +35,7 @@
 }
 
 .item-list {
-	min-height: 64px;
+	min-height: 92px;
 }
 
 .rents-owner {
@@ -56,7 +49,14 @@
 	margin: 0 12px;
 }
 
-@media screen and (max-width: 700px) {
+.not-found{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+@media screen and (max-width: 992px) {
 	.rents-owner {
 		background: white;
 		display: flex;

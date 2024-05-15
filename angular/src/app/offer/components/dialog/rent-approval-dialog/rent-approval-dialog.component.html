@@ -9,7 +9,7 @@
 		<p>{{ rentProposition.duration }} miesięce/y</p>
 		<div *ngIf="userProfile$ | async as user" class="profiles-container">
 			<p class="pt-4 font-semibold">Najemcy:</p>
-			<mat-card *ngFor="let tenant of rentProposition.tenants" class="mt-4" (click)="showProfile(user.userId)">
+			<mat-card *ngFor="let tenant of rentProposition.tenants" class="mt-4">
 				<div class="profile-details">
 					<mat-card-avatar
 						matTooltip="Pokaż profil"
@@ -17,7 +17,7 @@
 					>
 						<img
 							class="profile-avatar"
-							src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+							src="{{ baseUrl }}/{{ tenant.profilePicture.path }}"
 					/></mat-card-avatar>
 					<div class="container-features">
 						<mat-chip matTooltip="Imię i nazwisko"
@@ -27,7 +27,7 @@
 						>
 						<mat-chip matTooltip="Adres email"
 							><div class="box-feature">
-								<mat-icon>alternate_email</mat-icon><span>{{ tenant.email }}</span>
+								<mat-icon>mail</mat-icon><span>{{ tenant.email }}</span>
 							</div></mat-chip
 						>
 					</div>

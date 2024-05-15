@@ -12,8 +12,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
@@ -35,7 +33,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
-		RentsCancelDialogComponent,
 		MeetingAddComponent,
 		RentRateComponent,
 		MatIconModule,

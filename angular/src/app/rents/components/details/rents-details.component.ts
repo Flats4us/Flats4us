@@ -11,7 +11,6 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { IOffer } from 'src/app/offer/models/offer.models';
 import { UserType } from 'src/app/profile/models/types';
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { RentsService } from '../../services/rents.service';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
@@ -54,8 +53,7 @@ export class RentsDetailsComponent extends BaseComponent {
 	public displayedColumnsOwner: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Szczegóły najmu' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
-		{ option: 'closeRent', description: 'Zakończ najem' },
+		{ option: 'startDispute', description: 'Rozpocznij spór' }
 	];
 
 	constructor(
@@ -75,13 +73,6 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.router.navigate(['offer', 'add']);
 	}
 
-	public openCancelDialog(id: number): void {
-		this.dialog.open(RentsCancelDialogComponent, {
-			disableClose: true,
-			data: id,
-		});
-	}
-
 	public navigateToRent(id: number) {
 		this.router.navigate(['rents', 'details', id]);
 	}
@@ -99,10 +90,6 @@ export class RentsDetailsComponent extends BaseComponent {
 				this.startDispute(id ?? 0);
 				break;
 			}
-			case 'closeRent': {
-				this.openCancelDialog(id ?? 0);
-				break;
-			}
 		}
 	}
 
@@ -118,6 +105,10 @@ export class RentsDetailsComponent extends BaseComponent {
 			disableClose: true,
 			data: this.actualRent$,
 		});
+	}
+
+	public showProfile(id: number) {
+		this.router.navigate(['profile', 'details', 'student', id]);
 	}
 
 	public setCurrentSlideIndex(index: number) {

@@ -19,7 +19,7 @@
 			<img
 				class="your-photo"
 				alt="Twój profil"
-				src="{{ baseUrl }}/{{ user.profilePicture?.path }}"
+				[src]="user.profilePicture?.path ? baseUrl + '/' + user.profilePicture?.path : './assets/avatar.png'"
 			/>
 		</button>
 	</div>

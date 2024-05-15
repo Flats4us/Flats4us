@@ -15,7 +15,7 @@
 						color="primary"
 						matTooltip="Oferta najmu czeka na zaakceptowanie!"
 						aria-label="MenuButton"
-						(click)="onRentApproval(data.offer?.offerId)"
+						(click)="onRentApproval(data.offer?.rentPropositionToShow, data.offer?.offerId)"
 					>
 						<mat-icon>notifications</mat-icon>
 					</button>
@@ -87,17 +87,29 @@
 							>
 								<mat-icon>more_horiz</mat-icon>
 							</button>
-							<mat-menu #menu="matMenu" id="sort">
+							<mat-menu #menu="matMenu" id="options">
 								<button
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
+									[disabled]="
+									data.offer?.isPromoted && menuOption.option === 'promoteOffer'
+										? true
+										: false
+								"
 									(click)="onSelect(menuOption, data?.offer?.offerId, data.offer?.property?.propertyId)"
 								>
-									<span
+									<div
+										class="flex items-center justify-center"
+										[ngSwitch]="menuOption.option"
 										[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
-										>{{ menuOption.description }}</span
-									>
+										>
+										<mat-icon *ngSwitchCase="'offerDetails'" class="material-icons-outlined">info</mat-icon>
+										<mat-icon *ngSwitchCase="'promoteOffer'" class="material-icons-outlined">new_releases</mat-icon>
+										<mat-icon *ngSwitchCase="'property'" class="material-icons-outlined">real_estate_agent</mat-icon>
+										<mat-icon *ngSwitchCase="'closeOffer'" class="material-icons-outlined">close</mat-icon>
+										<span>{{ menuOption.description }}</span>
+									</div>
 								</button>
 							</mat-menu>
 						</div>
@@ -232,8 +244,10 @@
 		<div class="label-box">
 			<mat-label class="label-description"
 				><mat-icon class="icon" inline="true">description</mat-icon
-				><span class="text-3xl">Opis oferty</span></mat-label
-			>
+				><span class="text-3xl">Opis oferty</span></mat-label>
+			<mat-label *ngIf="data.offer?.isPromoted" class="label-right">
+				<mat-icon class="icon-promo" inline="true">new_releases</mat-icon>
+				<span class="text-3xl">Oferta promowana</span></mat-label>	
 		</div>
 		<mat-divider></mat-divider>
 		<div class="container-description">

@@ -205,6 +205,12 @@
 	margin-right: 4px;
 }
 
+.icon-promo {
+	font-size: xx-large;
+	margin-right: 4px;
+	color: #fbbb8b;
+}
+
 .icon-hide {
 	font-size: xx-large;
 	margin-right: 4px;
@@ -261,15 +267,6 @@
 		width: 50%;
 		padding: 4px;
 	}
-	.label-right {
-		padding: 4px;
-		min-width: 100px;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		float: left;
-	}
 }
 
 @media screen and (max-width: 800px) {
@@ -289,5 +286,14 @@
 	}
 	.icon-hide {
 		visibility: hidden;
+	}
+	.label-right {
+		padding: 4px;
+		min-width: 100px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		float: left;
 	}
 }

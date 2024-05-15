@@ -1,5 +1,6 @@
 import { IFlatOffer } from 'src/app/offer/models/offer.models';
 import { statusName } from '../statusName';
+import { IImage } from 'src/app/real-estate/models/real-estate.models';
 
 export interface IGallery {
 	image: string;
@@ -59,6 +60,9 @@ export interface IRentOffer {
     startDate: Date,
     duration: number,
     endDate: Date,
+	propertyAddress: string;
+	propertyType: number;
+	propertyImages: IImage[];
     tenants: ITenant[];
     payments: IRentPayment[];
 }
@@ -82,6 +86,7 @@ export interface ITenant{
 	userId: number;
 	email: string;
 	fullName: string;
+	profilePicture: IImage;
 }
 
 export interface IRentProposition{
