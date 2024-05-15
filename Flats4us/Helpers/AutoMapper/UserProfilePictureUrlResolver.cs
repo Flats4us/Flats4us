@@ -9,7 +9,8 @@ namespace Flats4us.Helpers.AutoMapper
         IValueResolver<Student, StudentForMatcherDto, FileDto>,
         IValueResolver<OwnerStudent, BaseUserProfileDto, FileDto>,
         IValueResolver<UserOpinion, UserOpinionDto, FileDto>,
-        IValueResolver<Owner, OwnerStudentDto, FileDto>
+        IValueResolver<Owner, OwnerStudentDto, FileDto>,
+        IValueResolver<Student, UserInfoDto, FileDto>
     {
         public FileDto Resolve(OwnerStudent source, UserForVerificationDto destination, FileDto destMember, ResolutionContext context)
         {
@@ -32,6 +33,11 @@ namespace Flats4us.Helpers.AutoMapper
         }
 
         public FileDto Resolve(Owner source, OwnerStudentDto destination, FileDto destMember, ResolutionContext context)
+        {
+            return GetProfilePictureUrl(source.ImagesPath);
+        }
+
+        public FileDto Resolve(Student source, UserInfoDto destination, FileDto destMember, ResolutionContext context)
         {
             return GetProfilePictureUrl(source.ImagesPath);
         }

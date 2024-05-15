@@ -4,7 +4,10 @@ using Flats4us.Entities;
 
 namespace Flats4us.Helpers.AutoMapper
 {
-    public class PropertyImagesUrlResolver : IValueResolver<Property, PropertyDto, List<FileDto>>, IValueResolver<Property, PropertyForVerificationDto, List<FileDto>>
+    public class PropertyImagesUrlResolver :
+        IValueResolver<Property, PropertyDto, List<FileDto>>,
+        IValueResolver<Property, PropertyForVerificationDto, List<FileDto>>,
+        IValueResolver<Rent, RentDto, List<FileDto>>
     {
         public List<FileDto> Resolve(Property source, PropertyDto destination, List<FileDto> destMember, ResolutionContext context)
         {
@@ -14,6 +17,11 @@ namespace Flats4us.Helpers.AutoMapper
         public List<FileDto> Resolve(Property source, PropertyForVerificationDto destination, List<FileDto> destMember, ResolutionContext context)
         {
             return GetImageUrls(source.ImagesPath);
+        }
+
+        public List<FileDto> Resolve(Rent source, RentDto destination, List<FileDto> destMember, ResolutionContext context)
+        {
+            return GetImageUrls(source.Offer.Property.ImagesPath);
         }
 
         private List<FileDto> GetImageUrls(string directoryId)

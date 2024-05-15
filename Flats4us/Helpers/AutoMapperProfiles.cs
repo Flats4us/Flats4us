@@ -17,6 +17,12 @@ namespace Flats4us.Helpers
             CreateMap<Rent, RentDto>()
                 .ForMember(dest => dest.PropertyId, opt => opt.MapFrom(src => src.Offer.PropertyId))
                 .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date > src.EndDate))
+                .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src =>
+                    src.Offer.Property is Flat ? PropertyType.Flat :
+                    src.Offer.Property is House ? PropertyType.House :
+                    PropertyType.Room))
+                .ForMember(dest => dest.PropertyAddress, opt => opt.MapFrom(src => $"{src.Offer.Property.Street} {src.Offer.Property.Number}{(src.Offer.Property.Flat != null ? ("/" + src.Offer.Property.Flat) : "")}, {src.Offer.Property.City}"))
+                .ForMember(dest => dest.PropertyImages, opt => opt.MapFrom<PropertyImagesUrlResolver>())
                 .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
             CreateMap<Rent, RentPropositionDto>()
@@ -69,6 +75,10 @@ namespace Flats4us.Helpers
 
             CreateMap<User, UserInfoDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
+
+            CreateMap<Student, UserInfoDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"))
+                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>());
 
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 

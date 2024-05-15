@@ -32,7 +32,7 @@ namespace Flats4us.Controllers
             Summary = "Returns list of rent for current user",
             Description = "Requires verified owner or student privileges"
         )]
-        public async Task<IActionResult> Get([FromQuery] PaginatorDto input)
+        public async Task<IActionResult> Get([FromQuery] OptionalPaginatorDto input)
         {
             try
             {

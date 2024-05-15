@@ -5,7 +5,9 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Linq;
 
 namespace Flats4us.Services
 {
@@ -121,7 +123,7 @@ namespace Flats4us.Services
             }
         }
 
-        public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int pageSize, int pageNumber)
+        public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int? pageSize, int? pageNumber)
         {
             var user = await _context.Users.FindAsync(userId);
             var rentDtos = new List<RentDto>();
@@ -133,6 +135,7 @@ namespace Flats4us.Services
                     .SelectMany(s => s.Rents)
                         .Include(r => r.Payments)
                         .Include(r => r.Offer)
+                            .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
                     .Select(rent => _mapper.Map<RentDto>(rent))
@@ -143,6 +146,7 @@ namespace Flats4us.Services
                     .SelectMany(s => s.RoommateInRents)
                         .Include(r => r.Payments)
                         .Include(r => r.Offer)
+                            .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
                     .Select(rent => _mapper.Map<RentDto>(rent))
@@ -158,6 +162,7 @@ namespace Flats4us.Services
                         r.Offer.OfferStatus != OfferStatus.Waiting)
                     .Include(r => r.Payments)
                     .Include(r => r.Offer)
+                        .ThenInclude(o => o.Property)
                     .Include(r => r.Student)
                     .Include(r => r.OtherStudents)
                     .Select(rent => _mapper.Map<RentDto>(rent))
@@ -167,12 +172,14 @@ namespace Flats4us.Services
 
             var totalCount = rentDtos.Count;
 
-            rentDtos = rentDtos
-                //.OrderBy(rent => rent.???)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
+            if(pageNumber != null && pageSize != null )
+            {
+                rentDtos = rentDtos
+                    .Skip(((int)pageNumber - 1) * (int)pageSize)
+                    .Take((int)pageSize)
+                    .ToList();
+            }
+            
             var result = new CountedListDto<RentDto>(rentDtos, totalCount);
 
             return result;
