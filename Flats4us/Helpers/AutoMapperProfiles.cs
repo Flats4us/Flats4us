@@ -30,14 +30,17 @@ namespace Flats4us.Helpers
 
             CreateMap<Flat, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
+                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()) // Added manualy when needed
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<Room, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
+                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()) // Added manualy when needed
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<House, PropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
+                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()) // Added manualy when needed
                 .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>());
 
             CreateMap<Flat, SimplePropertyDto>()

@@ -36,24 +36,30 @@ namespace Flats4us.Services
             {
                 case Flat:
                     var flat = await _context.Flats
-                        .Include(y => y.RentOpinions)
-                        .Include(x => x.Equipment)
+                        .Include(f => f.Offers)
+                        .Include(f => f.RentOpinions)
+                        .Include(f => f.Equipment)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(flat);
+                    result.OfferIds = flat.Offers.Select(o => o.OfferId).ToList();
                     break;
                 case Room:
                     var room = await _context.Rooms
-                        .Include(y => y.RentOpinions)
-                        .Include(x => x.Equipment)
-                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                        .Include(r => r.Offers)
+                        .Include(r => r.RentOpinions)
+                        .Include(r => r.Equipment)
+                        .FirstOrDefaultAsync(r => r.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(room);
+                    result.OfferIds = room.Offers.Select(o => o.OfferId).ToList();
                     break;
                 case House:
                     var house = await _context.Houses
-                        .Include(y => y.RentOpinions)
-                        .Include(x => x.Equipment)
-                        .FirstOrDefaultAsync(f => f.PropertyId == id);
+                        .Include(h => h.Offers)
+                        .Include(h => h.RentOpinions)
+                        .Include(h => h.Equipment)
+                        .FirstOrDefaultAsync(h => h.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(house);
+                    result.OfferIds = house.Offers.Select(o => o.OfferId).ToList();
                     break;
                 default:
                     throw new ArgumentException($"Cannot get this property");

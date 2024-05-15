@@ -7,6 +7,7 @@ using Flats4us.Helpers.Enums;
 using System.Linq.Dynamic.Core;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
+using System;
 
 namespace Flats4us.Services
 {
@@ -406,13 +407,21 @@ namespace Flats4us.Services
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.Rent)
                 .Where(o => o.Property.OwnerId == ownerId)
-                .Select(offer => _mapper.Map<OfferDto>(offer))
                 .ToListAsync();
 
-            var result = new CountedListDto<OfferDto>(offers);
+            var results = offers.Select(_mapper.Map<OfferDto>).ToList();
 
-            return result;
+            foreach (var result in results)
+            {
+                if (result.OfferStatus == OfferStatus.Waiting)
+                {
+                    result.RentPropositionToShow = offers.Find(o => o.OfferId == result.OfferId).Rent.RentId;
+                }
+            }
+
+            return new CountedListDto<OfferDto>(results);
         }
 
         public async Task AddOfferAsync(AddEditOfferDto input, int ownerId)
@@ -447,6 +456,23 @@ namespace Flats4us.Services
             };
 
             await _context.Offers.AddAsync(offer);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CancelOfferAsync(int id, int requestUserId)
+        {
+            var offer = await _context.Offers
+                .Include(o => o.Property)
+                .FirstOrDefaultAsync(o => o.OfferId == id);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
+
+            if (offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this offer");
+
+            if (offer.OfferStatus != OfferStatus.Current) throw new ArgumentException($"Cannot cancel this offer due to offerStatus");
+
+            offer.OfferStatus = OfferStatus.Old;
+
             await _context.SaveChangesAsync();
         }
 
