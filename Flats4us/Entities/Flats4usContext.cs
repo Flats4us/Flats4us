@@ -11,12 +11,10 @@ namespace Flats4us.Entities
     {
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
-        public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<GroupChat> GroupChats { get; set; }
         public DbSet<UserGroupChat> UserGroupChats { get; set; }
-
         public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<House> Houses { get; set; }

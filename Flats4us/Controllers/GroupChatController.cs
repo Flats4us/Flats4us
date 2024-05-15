@@ -147,15 +147,15 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPost("{groupChatId:int}/users/{newUserId:int}")]
+        [HttpPost("{groupChatId:int}/users")]
         [Authorize(Policy = "Moderator")]
-        public async Task<IActionResult> AddYourselfToGroupChat(int groupChatId, int newUserId)
+        public async Task<IActionResult> AddYourselfToGroupChat(int groupChatId)
         {
             try
             {
                 int adderId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                await _groupChatService.AddYourselfToGroupChatAsync(groupChatId, newUserId);
+                await _groupChatService.AddYourselfToGroupChatAsync(groupChatId, adderId);
                 return Ok();
             }
             catch (Exception ex)

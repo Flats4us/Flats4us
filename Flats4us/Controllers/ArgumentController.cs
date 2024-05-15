@@ -50,7 +50,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("acceptArgument")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Accepting argument on Owner side",
@@ -64,16 +64,16 @@ namespace Flats4us.Controllers
                 await _argumentService.AcceptArgument(id);
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest($"An error occurred: {ex.InnerException.Message}");
             }
         }
 
-        [HttpPut]
+        [HttpPut("askingForIntervention")]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
-            Summary = "Accepting argument on Owner side",
+            Summary = "Asking moderator for intervention",
             Description = "Requires VerifiedOwnerOrStudent privileges"
         )]
         public async Task<IActionResult> AskingForIntervention(int id)

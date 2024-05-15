@@ -16,7 +16,7 @@ namespace Flats4us.Entities
         [Required]
         public DateTime StartDate { get; set; }
 
-        public DateTime OwnerAcceptanceDate { get; set; }
+        public DateTime? OwnerAcceptanceDate { get; set; }
 
         [Required]
         public ArgumentStatus ArgumentStatus { get; set; }
@@ -25,7 +25,7 @@ namespace Flats4us.Entities
 
         public DateTime? InterventionNeedDate { get; set; }
 
-        public DateTime MederatorDecisionDate { get; set; }
+        public DateTime? MederatorDecisionDate { get; set; }
 
         [Required]
         public int RentId { get; set; }
@@ -39,11 +39,8 @@ namespace Flats4us.Entities
 
         public virtual ICollection<ArgumentIntervention> ArgumentInterventions { get; set; }
 
-        public virtual ICollection<ArgumentMessage> ArgumentMessages { get; set; }
-
         public Argument()
         {
-            this.ArgumentMessages= new HashSet<ArgumentMessage>();
             this.ArgumentInterventions = new HashSet<ArgumentIntervention>();
         }
     }
