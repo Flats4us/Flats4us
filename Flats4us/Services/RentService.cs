@@ -175,7 +175,6 @@ namespace Flats4us.Services
             if(pageNumber != null && pageSize != null )
             {
                 rentDtos = rentDtos
-                    //.OrderBy(rent => rent.???)
                     .Skip(((int)pageNumber - 1) * (int)pageSize)
                     .Take((int)pageSize)
                     .ToList();
