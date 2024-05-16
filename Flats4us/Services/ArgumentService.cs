@@ -43,6 +43,8 @@ namespace Flats4us.Services
         public async Task AddArgumentAsync(ArgumentDto input, int studentId)            //może stworzyć student lub owner
         {
             var rent = _context.Rents
+                .Include(r => r.Student)
+                .Include(r => r.OtherStudents)
                 .FirstOrDefault(x => x.RentId == input.RentId) 
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
 
