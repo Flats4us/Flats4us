@@ -40,6 +40,8 @@ services:
       - flats4us-network
     security_opt:
       - "apparmor:unconfined"
+    tmpfs:
+      - /.system
 
 networks:
   flats4us-network:
