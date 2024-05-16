@@ -159,6 +159,10 @@ namespace Flats4us.Helpers
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
 
             CreateMap<RentOpinion, RentOpinionDto>();
+
+            CreateMap<Argument, ArgumentReturnDto>();
+
+            CreateMap<ArgumentIntervention, ArgumentInterventionReturnDto>();
         }
     }
 }
