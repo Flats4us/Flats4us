@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities;
+﻿using AutoMapper;
+using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
@@ -13,28 +14,33 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         public readonly IGroupChatService _groupChatService;
+        private readonly IMapper _mapper;
 
-        public ArgumentService(Flats4usContext context, IGroupChatService groupChatService)
+        public ArgumentService(Flats4usContext context, IGroupChatService groupChatService, IMapper mapper)
         {
             _context = context;
             _groupChatService = groupChatService;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Argument>> GetArgumentsAsync(ArgumentStatus argument)
+        public async Task<IEnumerable<ArgumentReturnDto>> GetArgumentsAsync(ArgumentStatus argumentStatus)
         {
-            var ongoingArguments = await _context.Arguments
-                .Where(x => x.ArgumentStatus == argument)
+            var arguments = await _context.Arguments
+                .Where(x => x.ArgumentStatus == argumentStatus)
                 .Where(x => x.InterventionNeed == true)
                 .OrderBy(x => x.InterventionNeedDate)
+                .Select(e => _mapper.Map<ArgumentReturnDto>(e))
                 .ToListAsync();
 
-            return ongoingArguments;
+            return arguments;
         }
 
-        public async Task<Argument> GetArgumentById(int id)                             //dotyczy moderatora
+        public async Task<ArgumentReturnDto> GetArgumentById(int id)                             //dotyczy moderatora
         {
             var argument = await _context.Arguments
-                .FirstAsync(x => x.ArgumentId == id)
+                .Where(x => x.ArgumentId == id)
+                .Select(e => _mapper.Map<ArgumentReturnDto>(e))
+                .FirstOrDefaultAsync()
                 ?? throw new ArgumentException($"Argument with ID: {id} not found");
             
             return argument;
@@ -116,9 +122,13 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ArgumentIntervention>> GetAllInterventionsAsync()            
+        public async Task<IEnumerable<ArgumentInterventionReturnDto>> GetAllInterventionsAsync()            
         {
-            return await _context.ArgumentInterventions.ToListAsync();
+            var interventions = await _context.ArgumentInterventions
+                .Select(e => _mapper.Map<ArgumentInterventionReturnDto>(e))
+                .ToListAsync();
+
+            return interventions;
         }
 
         public async Task<ArgumentIntervention> GetInterventionById(int id)
