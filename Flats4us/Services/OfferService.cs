@@ -35,6 +35,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.Rent)
+                .Include(o => o.OfferPromotions)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
@@ -408,6 +409,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.Rent)
+                .Include(o => o.OfferPromotions)
                 .Where(o => o.Property.OwnerId == ownerId)
                 .ToListAsync();
 
