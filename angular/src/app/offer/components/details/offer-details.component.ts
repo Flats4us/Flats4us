@@ -18,6 +18,9 @@ import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-
 import { AuthService } from '@shared/services/auth.service';
 import { LoggedUserType } from '@shared/models/auth.models';
 import { RentsService } from 'src/app/rents/services/rents.service';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { StartService } from 'src/app/start/services/start.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-offer-details',
@@ -26,7 +29,7 @@ import { RentsService } from 'src/app/rents/services/rents.service';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferDetailsComponent {
+export class OfferDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public statusName: typeof statusName = statusName;
@@ -59,11 +62,15 @@ export class OfferDetailsComponent {
 		public realEstateService: RealEstateService,
 		public offerService: OfferService,
 		public rentsService: RentsService,
+		public startService: StartService,
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
-		public authService: AuthService
-	) {}
+		public authService: AuthService,
+		private snackBar: MatSnackBar
+	) {
+		super();
+	}
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
@@ -135,6 +142,32 @@ export class OfferDetailsComponent {
 			disableClose: true,
 			data: {rentId: rentId, offerId: offerId} ?? {rentId: 0, offerId: 0},
 		});
+	}
+
+	public addToWatched(id?: number) {
+		if(id){
+		this.startService
+			.addToWatched(id)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () =>
+				{
+					this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					);
+					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
+						duration: 2000,
+					});
+				},	
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+				},
+			});
+		}
 	}
 
 	public showRent(id?: number): void{

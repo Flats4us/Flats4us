@@ -113,6 +113,21 @@
 								</button>
 							</mat-menu>
 						</div>
+						<div *ngIf="data.user === uType.DETAILS" class="menu-title">
+						<button 
+						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						mat-mini-fab
+						class="ml-auto"
+						id="addToWatched"
+						type="button"
+						color="primary"										
+						matTooltip="Dodaj do obserwowanych"
+						aria-label="AddToWatched"
+						[disabled]="data.offer?.isInterest"
+						(click)="addToWatched(data.offer?.offerId)">
+						<mat-icon>favorite_border</mat-icon>
+						</button>
+						</div>
 						<img
 							*ngIf="
 								(data.offer?.property?.images?.length ?? 0) > 0 &&
