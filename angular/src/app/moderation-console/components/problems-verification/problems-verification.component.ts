@@ -1,11 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Observable } from 'rxjs';
-import {
-	IProperty,
-	ITechnicalProblem,
-} from '../../models/moderation-console.models';
-import { environment } from '../../../../environments/environment.prod';
+import { ITechnicalProblem } from '../../models/moderation-console.models';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';

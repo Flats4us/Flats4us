@@ -26,6 +26,7 @@ export class UsersVerificationComponent extends BaseComponent {
 		'document',
 		'actions',
 	];
+	protected readonly formatDate = formatDate;
 
 	constructor(
 		private service: ModerationConsoleService,
@@ -56,6 +57,4 @@ export class UsersVerificationComponent extends BaseComponent {
 				})
 			);
 	}
-
-	protected readonly formatDate = formatDate;
 }
