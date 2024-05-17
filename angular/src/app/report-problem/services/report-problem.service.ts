@@ -11,7 +11,7 @@ export class ReportProblemService {
 
 	public reportProblem(problem: IProblem) {
 		return this.http.post(`${environment.apiUrl}/technical-problems`, {
-			kind: Number(problem.kind),
+			kind: problem.kind,
 			description: problem.description,
 		});
 	}
