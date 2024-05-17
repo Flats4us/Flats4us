@@ -35,6 +35,9 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.Rent)
+                    .ThenInclude(r => r.OtherStudents)
+                .Include(o => o.Rent)
+                    .ThenInclude(r => r.Student)
                 .Include(o => o.OfferPromotions)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
@@ -47,10 +50,17 @@ namespace Flats4us.Services
                 result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
             }
 
-            if ( requestUserId == result.Owner.UserId &&
+            if (result.Owner.UserId == requestUserId &&
                  result.OfferStatus == OfferStatus.Waiting)
             {
                 result.RentPropositionToShow = offer.Rent.RentId;
+            }
+
+            if (offer.Rent != null &&
+                (result.OfferStatus == OfferStatus.Rented || result.OfferStatus == OfferStatus.Old) &&
+                (result.Owner.UserId == requestUserId || offer.Rent.StudentId == requestUserId || offer.Rent.OtherStudents.Any(os => os.UserId == requestUserId)))
+            {
+                result.RentId = offer.Rent.RentId;
             }
 
             return result;

@@ -10,6 +10,8 @@ namespace Flats4us.Entities.Dto
 
         public int? RentPropositionToShow { get; set; }
 
+        public int? RentId { get; set; }
+
         [Required]
         public bool IsInterest { get; set; }
 
