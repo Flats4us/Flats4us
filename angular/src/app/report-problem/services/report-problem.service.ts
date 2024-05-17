@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
-import { UntypedFormGroup } from '@angular/forms';
+import { IProblem } from '../models/report-problem.models';
 
 @Injectable({
 	providedIn: 'root',
@@ -9,10 +9,10 @@ import { UntypedFormGroup } from '@angular/forms';
 export class ReportProblemService {
 	constructor(private http: HttpClient) {}
 
-	public reportProblem(form: UntypedFormGroup) {
+	public reportProblem(problem: IProblem) {
 		return this.http.post(`${environment.apiUrl}/technical-problems`, {
-			kind: Number(form.value.kind),
-			description: form.value.description,
+			kind: Number(problem.kind),
+			description: problem.description,
 		});
 	}
 }

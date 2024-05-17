@@ -49,7 +49,10 @@ export class ReportProblemComponent extends BaseComponent {
 
 	public reportProblem() {
 		this.service
-			.reportProblem(this.form)
+			.reportProblem({
+				kind: this.form.value.kind,
+				description: this.form.value.description,
+			})
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open(
