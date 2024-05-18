@@ -1,5 +1,3 @@
-import { IFlatOffer } from 'src/app/offer/models/offer.models';
-import { statusName } from '../statusName';
 import { IImage } from 'src/app/real-estate/models/real-estate.models';
 
 export interface IGallery {
@@ -22,25 +20,9 @@ export interface IMeeting {
 	offerId: number;
 }
 
-export interface IRent {
-	id: string;
-	title: string;
-	publishDate: string;
-	status: statusName;
-	price: number;
-	description: string;
-	period: number;
-	biddersNumber: number;
-	viewsNumber: number;
-	rules: string;
-	imageArray: IGallery[];
-	payments: IPayment[];
-	property: IFlatOffer;
-}
-
 export interface ISendRent{
 	totalCount: number;
-	result: IRentOffer[];
+	result: IRent[];
 }
 
 export interface IRentPayment{
@@ -52,7 +34,7 @@ export interface IRentPayment{
 	paymentDate: Date;
 }
 
-export interface IRentOffer {
+export interface IRent {
 	rentId: number,
     propertyId: number,
     offerId: number,

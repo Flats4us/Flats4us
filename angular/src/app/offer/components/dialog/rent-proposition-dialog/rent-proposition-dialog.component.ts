@@ -76,7 +76,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	}
 
 	public onClose() {
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
 	}
 
 	public onYesClick() {
@@ -90,12 +90,13 @@ export class RentPropositionDialogComponent extends BaseComponent {
 						this.snackBar.open('Propozycja najmu została wysłana do Właściciela i czeka na akceptację!', 'Zamknij', {
 							duration: 2000,
 						});
-						this.dialogRef.close();
+						this.dialogRef.close(this.data);
 					},
 					error: () => {
 						this.snackBar.open('Nie udało się dodać najmu.', 'Zamknij', {
 							duration: 2000,
 						});
+						this.dialogRef.close(this.data);
 					},
 				});
 		}

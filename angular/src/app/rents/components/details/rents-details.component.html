@@ -1,5 +1,5 @@
 <div
-	*ngIf="{ user: user$ | async, rent: actualOfferRent$ | async } as data"
+	*ngIf="{ user: user$ | async, rent: actualRent$ | async } as data"
 	class="grid gap-4"
 >
 	<mat-card>
@@ -55,14 +55,17 @@
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									(click)="onSelect(menuOption, data.rent?.offerId)"
+									[disabled]="((data.user === uType.STUDENT) && (menuOption.option === 'offerDetails' || menuOption.option === 'propertyDetails')) 
+									? 'true' : 'false'"
+									(click)="onSelect(menuOption, data.rent?.rentId, data.rent?.offerId, data.rent?.propertyId)"
 								>
 								<div
 								class="flex items-center justify-center"
 								[ngSwitch]="menuOption.option"
-								[ngClass]="menuOption.option === 'closeRent' ? 'close-rent' : ''"
 								>
 								<mat-icon *ngSwitchCase="'rentDetails'" class="material-icons-outlined">info</mat-icon>
+								<mat-icon *ngSwitchCase="'offerDetails'" class="material-icons-outlined">campaign</mat-icon>
+								<mat-icon *ngSwitchCase="'propertyDetails'" class="material-icons-outlined">real_estate_agent</mat-icon>
 								<mat-icon *ngSwitchCase="'startDispute'" class="material-icons-outlined">gavel</mat-icon>
 								<span>{{ menuOption.description }}</span>
 							</div>
@@ -183,7 +186,7 @@
 			>
 		</mat-card>
 		<div>
-			<table mat-table class="mat-elevation-z8" [dataSource]="payments">
+			<table mat-table class="mat-elevation-z8" [dataSource]="data.rent?.payments ?? []">
 				<ng-container matColumnDef="paymentId">
 					<th *matHeaderCellDef mat-header-cell> Id </th>
 					<td *matCellDef="let element" mat-cell> {{element.paymentId}} </td>
@@ -214,6 +217,16 @@
 		</div>
 	</div>
 	<div class="button-box-options">
+		<div *ngIf="data.user === uType.DETAILS">
+		<button *appAccessControl="authService.allPermissions.get('verifiedStudent')" 
+		mat-raised-button color="primary" (click)="navigateStudentRents()">
+			Powrót
+		</button>
+		<button *appAccessControl="authService.allPermissions.get('verifiedOwner')" 
+		mat-raised-button color="primary" (click)="navigateOwnerRents()">
+			Powrót
+		</button>
+		</div>
 		<div *ngIf="!data.rent?.isFinished">
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"

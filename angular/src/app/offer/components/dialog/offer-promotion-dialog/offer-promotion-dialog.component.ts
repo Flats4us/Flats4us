@@ -65,19 +65,20 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 							this.snackBar.open('Pomyślnie dodano promowanie oferty.', 'Zamknij', {
 								duration: 2000,
 							});
-							this.dialogRef.close();
+							this.dialogRef.close(this.data);
 						},
 						error: () => {
 							this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
 								duration: 2000,
 							});
+							this.dialogRef.close(this.data);
 						},
 					}
 				);
 		}
 	}
 	public onClose() {
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
 	}
 	private handleError() {
 		return throwError(() => {

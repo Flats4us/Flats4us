@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RealEstateService } from '../../services/real-estate.service';
@@ -31,10 +31,15 @@ export class RealEstateDialogComponent extends BaseComponent {
 	constructor(
 		public realEstateService: RealEstateService,
 		public snackBar: MatSnackBar,
+		private router: Router,
+		public dialogRef: MatDialogRef<number>,
 		@Inject(MAT_DIALOG_DATA) public data: number,
-		private router: Router
 	) {
 		super();
+	}
+
+	public onClose(){
+		this.dialogRef.close();
 	}
 
 	public onYesClick() {
@@ -48,7 +53,10 @@ export class RealEstateDialogComponent extends BaseComponent {
 						'Zamknij',
 						{ duration: 2000 }
 					);
-					this.router.navigate(['real-estate', 'owner']);
+					this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+						this.router.navigate(['real-estate', 'owner']);
+					}); 
+					this.dialogRef.close(this.data);
 				},
 				error: () => {
 					this.snackBar.open(
@@ -56,6 +64,7 @@ export class RealEstateDialogComponent extends BaseComponent {
 						'Zamknij',
 						{ duration: 2000 }
 					);
+					this.dialogRef.close(this.data);
 				},
 			});
 	}

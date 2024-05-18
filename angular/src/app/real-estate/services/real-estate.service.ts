@@ -318,8 +318,8 @@ export class RealEstateService {
 			{ headers }
 		);
 	}
-	public deleteRealEstate(id: number): Observable<void> {
-		return this.httpClient.delete<void>(`${this.apiRoute}/properties/${id}`);
+	public deleteRealEstate(id: number) {
+		return this.httpClient.delete(`${this.apiRoute}/properties/${id}`);
 	}
 	public addRealEstate(property: IAddProperty): Observable<number> {
 		return this.httpClient
@@ -332,6 +332,12 @@ export class RealEstateService {
 		return this.httpClient.get<IProperty[]>(`${this.apiRoute}/properties`, {
 			params: params,
 		});
+	}
+	public getRealEstateById(id: number): Observable<IProperty> {
+		return this.httpClient.get<IProperty>(`${this.apiRoute}/properties/${id}`);
+	}
+	public editRealEstate(realEstate: IAddProperty, id: number) {
+		return this.httpClient.put(`${this.apiRoute}/properties/${id}`, realEstate);
 	}
 	public getEquipment(name: string): Observable<IEquipment[]> {
 		let params = new HttpParams();

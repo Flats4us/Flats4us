@@ -82,7 +82,7 @@
 								aria-label="MenuButton"
 								[matMenuTriggerFor]="menu"
 								[disabled]="
-									data?.offer?.offerStatus === 1 || data?.offer?.offerStatus === 2
+									data?.offer?.offerStatus === 2 || data?.offer?.offerStatus === 3
 								"
 							>
 								<mat-icon>more_horiz</mat-icon>
@@ -93,9 +93,14 @@
 									mat-menu-item
 									[value]="menuOption.description"
 									[disabled]="
-									data.offer?.isPromoted && menuOption.option === 'promoteOffer'
+									(data.offer?.isPromoted && menuOption.option === 'promoteOffer'
 										? true
 										: false
+									) ||
+									(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer'
+										? true
+										: false
+									)
 								"
 									(click)="onSelect(menuOption, data?.offer?.offerId, data.offer?.property?.propertyId)"
 								>

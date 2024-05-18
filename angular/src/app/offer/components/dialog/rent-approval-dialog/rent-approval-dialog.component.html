@@ -2,9 +2,9 @@
 <div *ngIf="rentProposition$ | async as rentProposition" mat-dialog-content>
 	<mat-card>
 		<p class="pt-4 font-semibold">Data rozpoczęcia najmu:</p>
-		<p>{{ rentProposition.startDate }}</p>
+		<p>{{ rentProposition.startDate | date }}</p>
 		<p class="pt-4 font-semibold">Data zakończenia najmu:</p>
-		<p>{{ rentProposition.endDate }}</p>
+		<p>{{ rentProposition.endDate | date }}</p>
 		<p class="pt-4 font-semibold">Okres najmu:</p>
 		<p>{{ rentProposition.duration }} miesięce/y</p>
 		<div *ngIf="userProfile$ | async as user" class="profiles-container">
@@ -47,10 +47,11 @@
 			Nie
 		</button>
 		<button
-			mat-button
+			mat-raised-button
 			mat-dialog-close
 			cdkFocusInitial
 			type="submit"
+			color="primary"
 			(click)="onYesClick()"
 		>
 			Tak

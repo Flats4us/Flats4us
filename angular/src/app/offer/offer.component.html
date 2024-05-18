@@ -24,10 +24,10 @@
 		</button>
 		</h1>
 	</ng-template>
-	<div *ngIf="offers?.totalCount === 0" class="not-found">
+	<div *ngIf="offers.totalCount === 0" class="not-found">
 	<ng-container [ngTemplateOutlet]="notFound"></ng-container>
 	</div>
-	<div *ngIf="(user === uType.OWNER) && ((offers?.totalCount ?? 0) > 0)" class="offers-owner">
+	<div *ngIf="(user === uType.OWNER) && ((offers.totalCount ?? 0) > 0)" class="offers-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
 				Moje oferty
@@ -57,11 +57,17 @@
 							{{ offer.property.area }} m² {{ offer.property.city }}</span
 						>
 						<mat-icon
-							[ngClass]="
-								offer.offerStatus === 0 ? 'box-icon-valid' : 'box-icon-invalid'
+							*ngIf="offer.offerStatus !== 2"
+							[ngClass]=" (offer.offerStatus === 0 || offer.offerStatus === 1)
+								? 'box-icon-valid' : 'box-icon-invalid'
 							"
 							>check_circle</mat-icon
 						>
+						<mat-icon
+						*ngIf="offer.offerStatus === 2"
+						class= "box-icon-invalid"
+						>handshake</mat-icon
+					>
 					</div>
 					<div
 						*ngIf="offer.offerStatus === 1 else dateDescription"

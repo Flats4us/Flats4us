@@ -1,17 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IMenuOptions, IRentOffer, IRentPayment } from '../../models/rents.models';
+import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, shareReplay, switchMap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
-import { IOffer } from 'src/app/offer/models/offer.models';
 import { UserType } from 'src/app/profile/models/types';
-import { OfferService } from 'src/app/offer/services/offer.service';
 import { RentsService } from '../../services/rents.service';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { AuthService } from '@shared/services/auth.service';
@@ -28,7 +25,6 @@ export class RentsDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public uType = UserType;
 
-	public separatorKeysCodes: number[] = [ENTER, COMMA];
 	public statusName: typeof statusName = statusName;
 	public user$ = this.route.parent?.paramMap.pipe(
 		map(params => params.get('user')?.toUpperCase() ?? '')
@@ -36,16 +32,9 @@ export class RentsDetailsComponent extends BaseComponent {
 	private rentId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
 	);
-	public actualRent$: Observable<IOffer> = this.rentId$?.pipe(
-		switchMap(value => this.offerService.getOfferById(parseInt(value))),
-		shareReplay(1)
+	public actualRent$: Observable<IRent> = this.rentId$?.pipe(
+		switchMap(value => this.rentsService.getRentById(parseInt(value)))
 	);
-
-	public actualOfferRent$: Observable<IRentOffer | undefined> = this.rentId$?.pipe(
-		switchMap(value => this.rentsService.getOfferRents(0,40).pipe(map(rents => rents.result.find(rent => rent.rentId === parseInt(value))))),
-		shareReplay(1)
-	);
-	public payments: IRentPayment[] = [];
 
 	public currentIndex = 0;
 
@@ -53,12 +42,13 @@ export class RentsDetailsComponent extends BaseComponent {
 	public displayedColumnsOwner: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Szczegóły najmu' },
+		{ option: 'offerDetails', description: 'Powiązana oferta' },
+		{ option: 'propertyDetails', description: 'Powiązana nieruchomość' },
 		{ option: 'startDispute', description: 'Rozpocznij spór' }
 	];
 
 	constructor(
 		public realEstateService: RealEstateService,
-		public offerService: OfferService,
 		public rentsService: RentsService,
 		private router: Router,
 		private dialog: MatDialog,
@@ -66,7 +56,6 @@ export class RentsDetailsComponent extends BaseComponent {
 		public authService: AuthService
 	) {
 		super();
-		this.actualOfferRent$.pipe(this.untilDestroyed()).subscribe(rent => this.payments = rent?.payments ?? []);
 	}
 
 	public addOffer() {
@@ -76,18 +65,32 @@ export class RentsDetailsComponent extends BaseComponent {
 	public navigateToRent(id: number) {
 		this.router.navigate(['rents', 'details', id]);
 	}
+	public navigateToOffer(id: number) {
+		this.router.navigate(['offer', 'owner', id]);
+	}
+	public navigateToProperty(id: number) {
+		this.router.navigate(['real-estate', 'owner', id]);
+	}
 	public startDispute(id: number) {
 		this.router.navigate(['disputes', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id?: number) {
+	public onSelect(menuOption: IMenuOptions, rentId?: number, offerId?: number, propertyId?: number) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
-				this.navigateToRent(id ?? 0);
+				this.navigateToRent(rentId ?? 0);
+				break;
+			}
+			case 'offerDetails': {
+				this.navigateToOffer(offerId ?? 0);
+				break;
+			}
+			case 'propertyDetails': {
+				this.navigateToProperty(propertyId ?? 0);
 				break;
 			}
 			case 'startDispute': {
-				this.startDispute(id ?? 0);
+				this.startDispute(rentId ?? 0);
 				break;
 			}
 		}
@@ -105,6 +108,14 @@ export class RentsDetailsComponent extends BaseComponent {
 			disableClose: true,
 			data: this.actualRent$,
 		});
+	}
+
+	public navigateStudentRents(){
+		this.router.navigate(['rents','student']);
+	}
+
+	public navigateOwnerRents(){
+		this.router.navigate(['rents','owner']);
 	}
 
 	public showProfile(id: number) {

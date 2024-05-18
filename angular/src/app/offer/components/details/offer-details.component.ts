@@ -81,17 +81,25 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public openCancelDialog(id: number): void {
-		this.dialog.open(OfferCancelDialogComponent, {
+		const cancelDialog = this.dialog.open(OfferCancelDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
+		this.actualOffer$ = cancelDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
+		cancelDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
+			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
+		);
 	}
 
 	public openPromotionDialog(id: number): void {
-		this.dialog.open(OfferPromotionDialogComponent, {
+		const promotionDialog = this.dialog.open(OfferPromotionDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
+		this.actualOffer$ = promotionDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
+		promotionDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
+			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
+		);
 	}
 
 	public navigateToOffer(id: number) {
@@ -131,17 +139,25 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public startRent(id?: number) {
-		this.dialog.open(RentPropositionDialogComponent, {
+		const rentPropositionDialog = this.dialog.open(RentPropositionDialogComponent, {
 			disableClose: true,
 			data: id ?? 0,
 		});
+		this.actualOffer$ = rentPropositionDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentPropositionDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
+			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
+		);
 	}
 
 	public onRentApproval(rentId?: number, offerId?: number): void {
-		this.dialog.open(RentApprovalDialogComponent, {
+		const rentApprovalDialog = this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
 			data: {rentId: rentId, offerId: offerId} ?? {rentId: 0, offerId: 0},
 		});
+		this.actualOffer$ = rentApprovalDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentApprovalDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
+			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
+		);
 	}
 
 	public addToWatched(id?: number) {

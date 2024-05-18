@@ -7,6 +7,7 @@ import {
 	IOffer,
 	IPromotion,
 	IRentProposition,
+	IResult,
 	ISendOffers,
 } from '../models/offer.models';
 
@@ -63,9 +64,14 @@ export class OfferService {
 		);
 	}
 
-	public deleteInterest(id: number): Observable<string> {
-		return this.httpClient.delete<string>(
+	public deleteInterest(id: number): Observable<IResult> {
+		return this.httpClient.delete<IResult>(
 			`${this.apiRoute}/offers/${id}/interest`
 		);
 	}
+
+	public cancelOffer(id: number): Observable<IResult> {
+		return this.httpClient.put<IResult>(`${this.apiRoute}/offers/${id}/cancel`, null);
+	}
+
 }

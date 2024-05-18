@@ -35,6 +35,10 @@ export interface IDecision {
 	decision: boolean;
 }
 
+export interface IResult {
+	result: string;
+}
+
 export interface IRentProposition {
 	roommatesEmails: string[];
 	startDate: Date;

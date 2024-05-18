@@ -83,6 +83,7 @@ export class MeetingAddComponent extends BaseComponent {
 							'Zamknij',
 							{ duration: 2000 }
 						);
+						this.dialogRef.close();
 					},
 				});
 		}
