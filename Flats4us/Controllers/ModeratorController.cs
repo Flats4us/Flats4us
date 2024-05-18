@@ -136,7 +136,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("argumen/{id}")]
+        [HttpGet("argument/{id}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns argument by id",
@@ -206,7 +206,7 @@ namespace Flats4us.Controllers
             Summary = "Adding a new intervention",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> PostIntervention(ArgumentInterventionDto input)
+        public async Task<IActionResult> PostIntervention(AddArgumentInterventionDto input)
         {
             try
             {
