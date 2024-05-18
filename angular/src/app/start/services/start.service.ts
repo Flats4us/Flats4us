@@ -159,7 +159,7 @@ export class StartService {
 			queryParams = queryParams.append('sorting', filteredOptions.sorting.type);
 		}
 		return this.httpClient.get<ISendOffers>(this.apiRoute, {
-			params: queryParams
+			params: queryParams,
 		});
 	}
 

@@ -4,9 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StartMapModule } from './start-map/start-map.module';
 import { StartComponent } from './start.component';
 
-const routes: Routes = [
-	{ path: '', component: StartComponent }
-];
+const routes: Routes = [{ path: '', component: StartComponent }];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes), StartMapModule],

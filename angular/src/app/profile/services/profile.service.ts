@@ -1,11 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import {
-	IInterest,
-	IOpinion,
-	IUserProfile,
-} from '../models/profile.models';
+import { IInterest, IOpinion, IUserProfile } from '../models/profile.models';
 import { environment } from 'src/environments/environment.prod';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
 

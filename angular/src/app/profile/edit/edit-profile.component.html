@@ -33,20 +33,26 @@
 						*ngFor="let menuOption of this.menuOptions"
 						mat-menu-item
 						[value]="menuOption.description"
-						[disabled]="menuOption.option === 'editSurvey'
-								? true
-								: false
-						"
+						[disabled]="menuOption.option === 'editSurvey' ? true : false"
 						(click)="onSelect(menuOption)"
 					>
-					<div
-					class="flex items-center justify-center"
-					[ngSwitch]="menuOption.option">
-					<mat-icon *ngSwitchCase="'editEmail'" class="material-icons-outlined">mail</mat-icon>
-					<mat-icon *ngSwitchCase="'changePassword'" class="material-icons-outlined">key</mat-icon>
-					<mat-icon *ngSwitchCase="'editSurvey'" class="material-icons-outlined">fact_check</mat-icon>
-					<span>{{ menuOption.description }}</span>
-				</div>
+						<div
+							class="flex items-center justify-center"
+							[ngSwitch]="menuOption.option"
+						>
+							<mat-icon *ngSwitchCase="'editEmail'" class="material-icons-outlined"
+								>mail</mat-icon
+							>
+							<mat-icon
+								*ngSwitchCase="'changePassword'"
+								class="material-icons-outlined"
+								>key</mat-icon
+							>
+							<mat-icon *ngSwitchCase="'editSurvey'" class="material-icons-outlined"
+								>fact_check</mat-icon
+							>
+							<span>{{ menuOption.description }}</span>
+						</div>
 					</button>
 				</mat-menu>
 			</div>

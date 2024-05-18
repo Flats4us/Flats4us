@@ -204,7 +204,7 @@ export class StartComponent extends BaseComponent implements OnInit {
 			this.startSiteForm.value,
 			this.pageIndex,
 			this.pageSize
-		);	
+		);
 	}
 
 	public onSubmit() {
