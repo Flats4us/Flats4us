@@ -30,7 +30,8 @@
 	<div *ngIf="(user === uType.OWNER) && ((offers.totalCount ?? 0) > 0)" class="offers-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje oferty
+				<div class="box-title-sub">
+				<span>Moje oferty</span>
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 					mat-icon-button
@@ -42,6 +43,7 @@
 				>
 					<mat-icon [inline]="true">add</mat-icon>
 				</button>
+			</div>
 			</h1>
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
@@ -51,11 +53,10 @@
 					class="item-list"
 					routerLink="{{ offer.offerId }}"
 					><div class="box-title">
-						<span class="text-xl font-bold">
-							Wynajem -
-							{{ realEstateService.propertyTypes.get(offer.property.propertyType) }}
-							{{ offer.property.area }} m² {{ offer.property.city }}</span
-						>
+						<div class="flex-col text-xl font-bold">
+							<div>Wynajem - {{ realEstateService.propertyTypes.get(offer.property.propertyType) }}</div> 
+							<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>
+						</div>
 						<mat-icon
 							*ngIf="offer.offerStatus !== 2"
 							[ngClass]=" (offer.offerStatus === 0 || offer.offerStatus === 1)

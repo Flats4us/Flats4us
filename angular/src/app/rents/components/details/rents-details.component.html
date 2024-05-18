@@ -161,12 +161,12 @@
 						<div class="container-features">
 							<mat-chip matTooltip="Imię i nazwisko"
 								><div class="box-feature">
-									<mat-icon>account_circle</mat-icon><span>{{ tenant.fullName }}</span>
+									<mat-icon class="icon-feature">account_circle</mat-icon><span>{{ tenant.fullName }}</span>
 								</div></mat-chip
 							>
 							<mat-chip matTooltip="Adres email"
 								><div class="box-feature">
-									<mat-icon>mail</mat-icon><span>{{ tenant.email }}</span>
+									<mat-icon class="icon-feature">mail</mat-icon><span>{{ tenant.email }}</span>
 								</div></mat-chip
 							>
 						</div>
@@ -185,35 +185,53 @@
 				</mat-icon><span class="text-3xl ml-4">Płatności</span></mat-label
 			>
 		</mat-card>
-		<div>
-			<table mat-table class="mat-elevation-z8" [dataSource]="data.rent?.payments ?? []">
+		<div class="payments-container mat-elevation-z8">
+			<mat-table [dataSource]="data.rent?.payments ?? []">
 				<ng-container matColumnDef="paymentId">
-					<th *matHeaderCellDef mat-header-cell> Id </th>
-					<td *matCellDef="let element" mat-cell> {{element.paymentId}} </td>
+					<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+					<mat-cell *matCellDef="let element"> 
+					<span class="mobile-view-label">Id:</span>
+						{{element.paymentId}} 
+					</mat-cell>
 				</ng-container>
 				<ng-container matColumnDef="paymentPurpose">
-					<th *matHeaderCellDef mat-header-cell> Typ </th>
-					<td *matCellDef="let element" mat-cell> {{this.rentsService.paymentPurposes.get(element.paymentPurpose)}} </td>
+					<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
+					<mat-cell *matCellDef="let element"> 
+						<span class="mobile-view-label">Typ:</span>
+						{{this.rentsService.paymentPurposes.get(element.paymentPurpose)}} 
+					</mat-cell>
 				</ng-container>
 				<ng-container matColumnDef="amount">
-					<th *matHeaderCellDef mat-header-cell> Kwota </th>
-					<td *matCellDef="let element" mat-cell> {{element.amount | currency : "PLN" : true : ".2-2" }} </td>
+					<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Kwota:</span>
+						{{element.amount | currency : "PLN" : true : ".2-2" }} 
+					</mat-cell>
 				</ng-container>
 				<ng-container matColumnDef="isPaid">
-					<th *matHeaderCellDef mat-header-cell> Opłacono </th>
-					<td *matCellDef="let element" mat-cell> {{element.isPaid ? 'tak' : 'nie'}} </td>
+					<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
+					<mat-cell *matCellDef="let element"> 
+						<span class="mobile-view-label">Opłacono:</span>
+						{{element.isPaid ? 'tak' : 'nie'}} 
+					</mat-cell>
 				</ng-container>
 				<ng-container matColumnDef="createdDate">
-					<th *matHeaderCellDef mat-header-cell> Data wygenerowania </th>
-					<td *matCellDef="let element" mat-cell> {{element.createdDate | date}} </td>
+					<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
+					<mat-cell *matCellDef="let element"> 
+						<span class="mobile-view-label">Data wygenerowania:</span>
+						{{element.createdDate | date}} 
+					</mat-cell>
 				</ng-container>
 				<ng-container matColumnDef="paymentDate">
-					<th *matHeaderCellDef mat-header-cell> Termin płatności </th>
-					<td *matCellDef="let element" mat-cell> {{element.paymentDate | date}} </td>
+					<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
+					<mat-cell *matCellDef="let element"> 
+						<span class="mobile-view-label">Termin płatności:</span>
+						{{element.paymentDate | date}} 
+					</mat-cell>
 				</ng-container>
-				<tr *matHeaderRowDef="this.displayedColumnsOwner" mat-header-row ></tr>
-				<tr *matRowDef="let row; columns: this.displayedColumnsOwner;" mat-row></tr>
-			</table>
+				<mat-header-row *matHeaderRowDef="this.displayedColumnsOwner"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: this.displayedColumnsOwner;"></mat-row>
+			</mat-table>
 		</div>
 	</div>
 	<div class="button-box-options">

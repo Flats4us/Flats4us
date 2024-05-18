@@ -49,7 +49,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		Validators.pattern('^[0-9]+[a-zA-Z]*$'),
 	]),
 	propertyType: new FormControl(null, Validators.required),
-	flat: new FormControl(null,  Validators.min(0))
+	flat: new FormControl(null,  [Validators.required, Validators.min(0)])
 });
 	public addRealEstateFormRemainingData: FormGroup = new FormGroup({
 		area: new FormControl(null, [
@@ -58,6 +58,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			Validators.pattern('^[0-9]*$'),
 		]),
 		plotArea: new FormControl(null, [
+			Validators.required,
 			Validators.min(1),
 			Validators.pattern('^[0-9]*$'),
 		]),
@@ -68,14 +69,17 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		]),
 		equipmentIds: new FormControl([]),
 		numberOfRooms: new FormControl(null, [
+			Validators.required,
 			Validators.min(1),
 			Validators.pattern('^[0-9]*$'),
 		]),
 		floor: new FormControl(null, [
+			Validators.required,
 			Validators.min(0),
 			Validators.pattern('^[0-9]*$'),
 		]),
 		numberOfFloors: new FormControl(null, [
+			Validators.required,
 			Validators.min(0),
 			Validators.pattern('^[0-9]*$'),
 		]),
@@ -86,7 +90,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			Validators.pattern('^[12][0-9]{3}$'),
 		]),
 	});
-	public urls: string[] = [];
+	public photos: {path: string, name: string}[] = [];
 	public addRealEstateFormPhotos: FormGroup = new FormGroup({
 		photos: new FormControl(null, Validators.required),
 	});
@@ -104,6 +108,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	public mType = ModificationType;
 	public actualRealEstate: Observable<IProperty>;
 	public actualId = 0;
+	public actualPhotosNames: string[] = [];
 	private addRealEstateForm: FormGroup = new FormGroup({
 		propertyType: new FormControl(null),
 		province: new FormControl(''),
@@ -170,22 +175,26 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			if (fileType.match(/image\/*/) == null) {
 				return;
 			}
+			if(this.filesArray.length < 11 && 
+				!this.filesArray.find(image => image.name === file.name)){
+				this.filesArray.push(file);
+			}
 			this.fileName = file.name;
-			this.filesArray.push(file);
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = () => {
-				if (this.urls.length > 9) {
+				if (this.photos.length > 9 || 
+					this.photos.find(image => image.name === file.name)) {
 					return;
 				}
-				this.urls.push(<string>reader.result);
-				this.changeDetectorRef.detectChanges();
+				this.photos.push({path: reader.result as string, name: file.name});
+				this.changeDetectorRef.markForCheck();
 			};
 		}
-		this.formData.append('TitleDeed', this.filesArray[0]);
-		for (let i = 0; i < this.filesArray.length; i++) {
-			this.formData.append('Images', this.filesArray[i]);
-		}
+		// this.formData.append('TitleDeed', this.filesArray[0]);
+		// for (let i = 0; i < this.filesArray.length; i++) {
+		// 	this.formData.append('Images', this.filesArray[i]);
+		// }
 	}
 
 	public saveRealEstate() {
@@ -285,13 +294,15 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 					numberOfFloors: property.numberOfFloors,
 					constructionYear: property.constructionYear
 				});
-				this.urls = property.images.map(image => {return this.baseUrl + image.path});
+				this.photos = property.images.map(image => {return {path: this.baseUrl + image.path, name: image.name}});
 				this.fileName = property.images[0].name;
 				this.addRealEstateFormPhotos = new FormGroup({
 					photos: new FormControl(null),
 				});
 				this.actualId = property.propertyId;
+				this.actualPhotosNames = property.images.map(image => {return image.name});
 			});
+			this.addRealEstateFormAddressData.get('propertyType')?.disable();
 		}
 	}
 
@@ -321,7 +332,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	public formReset() {
-		this.urls = [];
+		this.photos = [];
 		this.fileName = '';
 		this.addRealEstateFormAddressData.reset();
 		this.addRealEstateFormRemainingData.reset();
@@ -335,7 +346,47 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['/']);
 	}
 
+	public onPhotoDelete(name: string){
+		this.photos.forEach( (item, index) => {
+			if(item.name === name) {
+				this.photos.splice(index, 1)
+			}
+		});
+		this.filesArray.forEach( (item, index) => {
+			if(item.name === name) {
+				this.filesArray.splice(index, 1)
+			}
+		});
+		this.fileName = this.photos[this.photos.length - 1].name;
+		if(this.modificationType === ModificationType.EDIT && 
+			this.actualPhotosNames.find(value => value === name)){
+		this.realEstateService.deletePhoto(this.actualId, name)
+		.pipe(
+			this.untilDestroyed(),
+			catchError(this.handleError)
+		)
+		.subscribe({
+			next: () => {
+				this.snackBar.open('Zdjęcie zostało pomyślnie usunięte.', 'Zamknij', {
+					duration: 2000,
+				});
+			},
+			error: () => {
+				this.snackBar.open(
+					'Nie udało się usunąć zdjęcia. Spróbuj ponownie.',
+					'Zamknij',
+					{ duration: 2000 }
+				);
+			},
+		});
+	}
+	}
+
 	public onAdd(): void {
+		this.formData.append('TitleDeed', this.filesArray[0]);
+		for (let i = 0; i < this.filesArray.length; i++) {
+			this.formData.append('Images', this.filesArray[i]);
+		}
 		this.addRealEstateForm.patchValue(this.addRealEstateFormAddressData.value);
 		this.addRealEstateForm.patchValue(this.addRealEstateFormRemainingData.value);
 		if(this.modificationType === ModificationType.ADD){
@@ -350,7 +401,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			)
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Nieruchomość została pomyślnie zapisana', 'Zamknij', {
+					this.snackBar.open('Nieruchomość została pomyślnie zapisana.', 'Zamknij', {
 						duration: 2000,
 					});
 					this.router.navigate(['/']);
@@ -394,7 +445,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 	private handleError(error: HttpErrorResponse) {
 		return throwError(
-			() => new Error('Nie udało się dodać nieruchomości. Spróbuj ponownie.')
+			() => new Error('Błąd. Spróbuj ponownie.')
 		);
 	}
 }

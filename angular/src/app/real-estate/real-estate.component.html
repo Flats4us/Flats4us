@@ -24,7 +24,8 @@
 	<div class="real-estate-owner">
 		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje nieruchomości
+				<div class="box-title-sub">
+				<span>Moje nieruchomości</span>
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 					mat-icon-button
@@ -36,6 +37,7 @@
 				>
 					<mat-icon [inline]="true">add</mat-icon>
 				</button>
+				</div>
 			</h1>
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>

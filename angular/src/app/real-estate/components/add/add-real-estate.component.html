@@ -3,7 +3,7 @@
 	<h1 *ngIf="modificationType === mType.EDIT" class="text-4xl p-4 font-semibold">Edycja nieruchomości</h1>
 </div>
 <mat-card class="add-real-estate">
-	<mat-stepper #stepper linear>
+	<mat-stepper #stepper >
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
 				<ng-template matStepLabel
@@ -442,7 +442,20 @@
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-function">
 						<div class="gallery">
-							<img *ngFor="let url of urls" class="img" [src]="url" />
+					<a *ngFor="let url of photos">
+						<button
+						class="delete-icon"
+						id="deletePhoto"
+						type="button"
+						mat-icon-button
+						matTooltip="Usuń zdjęcie"
+						aria-label="DeletePhoto"
+						(click)="onPhotoDelete(url.name)"
+					>
+					<mat-icon>delete_forever</mat-icon>
+				</button>
+				<img class="img" [src]="url.path" />
+					</a>
 						</div>
 						<input
 							#fileUpload
