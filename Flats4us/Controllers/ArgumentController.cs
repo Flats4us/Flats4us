@@ -31,7 +31,7 @@ namespace Flats4us.Controllers
             Summary = "Adding a new agrument",
             Description = "Requires VerifiedOwnerOrStudent privileges"
         )]
-        public async Task<IActionResult> PostArgument(ArgumentDto input)
+        public async Task<IActionResult> PostArgument(AddArgumentDto input)
         {
             try
             {
@@ -47,6 +47,7 @@ namespace Flats4us.Controllers
             {
                 _logger.LogInformation($"FAILED: Adding argument - body: {input}");
                 return BadRequest($"An error occurred: {ex.InnerException.Message}");
+
             }
         }
 
@@ -60,8 +61,12 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
                 _logger.LogInformation("Accepting argument on Owner side");
-                await _argumentService.AcceptArgument(id);
+                await _argumentService.AcceptArgument(id, requestUserId);
                 return Ok();
             }
             catch (Exception ex)
@@ -70,7 +75,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("askingForIntervention")]
+        [HttpPut("askingForIntervention/{id}")]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Asking moderator for intervention",
@@ -80,8 +85,12 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
                 _logger.LogInformation("Accepting argument on Owner side");
-                await _argumentService.AskForIntervention(id);
+                await _argumentService.AskForIntervention(id, requestUserId);
                 return Ok();
             }
             catch (Exception ex)

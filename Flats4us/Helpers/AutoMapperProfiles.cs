@@ -160,9 +160,9 @@ namespace Flats4us.Helpers
 
             CreateMap<RentOpinion, RentOpinionDto>();
 
-            CreateMap<Argument, ArgumentReturnDto>();
+            CreateMap<Argument, ArgumentDto>();
 
-            CreateMap<ArgumentIntervention, ArgumentInterventionReturnDto>();
+            CreateMap<ArgumentIntervention, ArgumentInterventionDto>();
         }
     }
 }
