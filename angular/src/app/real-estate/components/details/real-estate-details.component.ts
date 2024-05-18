@@ -17,7 +17,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RealEstateDetailsComponent extends BaseComponent{
+export class RealEstateDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	private realEstateId$: Observable<string> = this.route.paramMap.pipe(
@@ -30,7 +30,7 @@ export class RealEstateDetailsComponent extends BaseComponent{
 
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'editRealEstate', description: 'Edytuj nieruchomość' },
-		{ option: 'deleteRealEstate', description: 'Usuń nieruchomość' }
+		{ option: 'deleteRealEstate', description: 'Usuń nieruchomość' },
 	];
 
 	constructor(
@@ -56,10 +56,21 @@ export class RealEstateDetailsComponent extends BaseComponent{
 	}
 
 	public openDialog(id: number): void {
-		const deleteDialog = this.dialog.open(RealEstateDialogComponent, { disableClose: true, data: id });
-		deleteDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
-			this.actualRealEstate$ = this.realEstateId$.pipe(switchMap(value => this.realEstateService.getRealEstateById(parseInt(value))))
-		);
+		const deleteDialog = this.dialog.open(RealEstateDialogComponent, {
+			disableClose: true,
+			data: id,
+		});
+		deleteDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualRealEstate$ = this.realEstateId$.pipe(
+						switchMap(value =>
+							this.realEstateService.getRealEstateById(parseInt(value))
+						)
+					))
+			);
 	}
 
 	public addRent() {

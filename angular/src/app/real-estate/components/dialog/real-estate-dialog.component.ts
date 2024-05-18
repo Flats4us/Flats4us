@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+	MAT_DIALOG_DATA,
+	MatDialogModule,
+	MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RealEstateService } from '../../services/real-estate.service';
@@ -23,7 +27,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
-		MatSnackBarModule
+		MatSnackBarModule,
 	],
 	providers: [RealEstateService],
 })
@@ -33,12 +37,12 @@ export class RealEstateDialogComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		private router: Router,
 		public dialogRef: MatDialogRef<number>,
-		@Inject(MAT_DIALOG_DATA) public data: number,
+		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
 	}
 
-	public onClose(){
+	public onClose() {
 		this.dialogRef.close();
 	}
 
@@ -48,29 +52,23 @@ export class RealEstateDialogComponent extends BaseComponent {
 			.pipe(this.untilDestroyed(), catchError(this.handleError))
 			.subscribe({
 				next: () => {
-					this.snackBar.open(
-						'Nieruchomość została pomyślnie usunięta.',
-						'Zamknij',
-						{ duration: 2000 }
-					);
+					this.snackBar.open('Nieruchomość została pomyślnie usunięta.', 'Zamknij', {
+						duration: 2000,
+					});
 					this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
 						this.router.navigate(['real-estate', 'owner']);
-					}); 
+					});
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
-					this.snackBar.open(
-						'Nie udało się usunąć nieruchomości.',
-						'Zamknij',
-						{ duration: 2000 }
-					);
+					this.snackBar.open('Nie udało się usunąć nieruchomości.', 'Zamknij', {
+						duration: 2000,
+					});
 					this.dialogRef.close(this.data);
 				},
 			});
 	}
 	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się usunąć nieruchomości')
-		);
+		return throwError(() => new Error('Nie udało się usunąć nieruchomości'));
 	}
 }

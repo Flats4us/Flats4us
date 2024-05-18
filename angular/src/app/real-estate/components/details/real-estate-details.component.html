@@ -1,7 +1,5 @@
-<div *ngIf="actualRealEstate$ | async as actualRealEstate"
-class="grid gap-4"
->
-		<mat-card>
+<div *ngIf="actualRealEstate$ | async as actualRealEstate" class="grid gap-4">
+	<mat-card>
 		<div class="label-box">
 			<mat-label class="label-description">
 				<span class="text-3xl"
@@ -50,31 +48,42 @@ class="grid gap-4"
 									*ngFor="let menuOption of this.menuOptions"
 									mat-menu-item
 									[value]="menuOption.description"
-									[disabled]="(actualRealEstate?.offerIds?.length ?? 0) > 0 
-									&&  menuOption.option === 'deleteRealEstate'
-										? true
-										: false
+									[disabled]="
+										(actualRealEstate?.offerIds?.length ?? 0) > 0 &&
+										menuOption.option === 'deleteRealEstate'
+											? true
+											: false
 									"
 									(click)="onSelect(menuOption, actualRealEstate.propertyId)"
 								>
-								<div 
-								class="flex items-center justify-center"
-								[ngSwitch]="menuOption.option"
-								>
-									<mat-icon *ngSwitchCase="'deleteRealEstate'" class="material-icons-outlined">close</mat-icon>
-									<mat-icon *ngSwitchCase="'editRealEstate'" class="material-icons-outlined">edit</mat-icon>
-									<span
-										[ngClass]="
-											menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
-										"
-										>{{ menuOption.description }}</span
+									<div
+										class="flex items-center justify-center"
+										[ngSwitch]="menuOption.option"
 									>
-								</div>
+										<mat-icon
+											*ngSwitchCase="'deleteRealEstate'"
+											class="material-icons-outlined"
+											>close</mat-icon
+										>
+										<mat-icon
+											*ngSwitchCase="'editRealEstate'"
+											class="material-icons-outlined"
+											>edit</mat-icon
+										>
+										<span
+											[ngClass]="
+												menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
+											"
+											>{{ menuOption.description }}</span
+										>
+									</div>
 								</button>
 							</mat-menu>
 						</div>
 						<img
-							*ngIf="(actualRealEstate?.images?.length ?? 0) > 0 && isCurrentSlideIndex(i)"
+							*ngIf="
+								(actualRealEstate?.images?.length ?? 0) > 0 && isCurrentSlideIndex(i)
+							"
 							class="slide slide-animation non-draggable-image"
 							src="{{ baseUrl }}/{{ slide.path }}"
 							(swiperight)="nextSlide(actualRealEstate?.images?.length)"

@@ -85,10 +85,18 @@ export class OfferDetailsComponent extends BaseComponent {
 			disableClose: true,
 			data: id,
 		});
-		this.actualOffer$ = cancelDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
-		cancelDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
-			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
-		);
+		this.actualOffer$ = cancelDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		cancelDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public openPromotionDialog(id: number): void {
@@ -96,10 +104,18 @@ export class OfferDetailsComponent extends BaseComponent {
 			disableClose: true,
 			data: id,
 		});
-		this.actualOffer$ = promotionDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
-		promotionDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
-			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
-		);
+		this.actualOffer$ = promotionDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		promotionDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public navigateToOffer(id: number) {
@@ -110,7 +126,11 @@ export class OfferDetailsComponent extends BaseComponent {
 		this.router.navigate(['real-estate', 'owner', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, offerId?: number, propertyId?: number) {
+	public onSelect(
+		menuOption: IMenuOptions,
+		offerId?: number,
+		propertyId?: number
+	) {
 		switch (menuOption.option) {
 			case 'offerDetails': {
 				this.navigateToOffer(offerId ?? 0);
@@ -128,7 +148,7 @@ export class OfferDetailsComponent extends BaseComponent {
 				this.navigateToProperty(propertyId ?? 0);
 				break;
 			}
-	}
+		}
 	}
 
 	public onAddMeeting(id?: number): void {
@@ -139,55 +159,73 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public startRent(id?: number) {
-		const rentPropositionDialog = this.dialog.open(RentPropositionDialogComponent, {
-			disableClose: true,
-			data: id ?? 0,
-		});
-		this.actualOffer$ = rentPropositionDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
-		rentPropositionDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
-			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
+		const rentPropositionDialog = this.dialog.open(
+			RentPropositionDialogComponent,
+			{
+				disableClose: true,
+				data: id ?? 0,
+			}
 		);
+		this.actualOffer$ = rentPropositionDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentPropositionDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public onRentApproval(rentId?: number, offerId?: number): void {
 		const rentApprovalDialog = this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
-			data: {rentId: rentId, offerId: offerId} ?? {rentId: 0, offerId: 0},
+			data: { rentId: rentId, offerId: offerId } ?? { rentId: 0, offerId: 0 },
 		});
-		this.actualOffer$ = rentApprovalDialog.afterClosed().pipe(switchMap(value => this.offerService.getOfferById(value)));
-		rentApprovalDialog.afterClosed().pipe(this.untilDestroyed()).subscribe(() => 
-			this.actualOffer$ = this.offerId$.pipe(switchMap(value => this.offerService.getOfferById(parseInt(value))))
-		);
+		this.actualOffer$ = rentApprovalDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentApprovalDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public addToWatched(id?: number) {
-		if(id){
-		this.startService
-			.addToWatched(id)
-			.pipe(this.untilDestroyed())
-			.subscribe({
-				next: () =>
-				{
-					this.actualOffer$ = this.offerId$.pipe(
-						switchMap(value => this.offerService.getOfferById(parseInt(value)))
-					);
-					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
-						duration: 2000,
-					});
-				},	
-				error: () => {
-					this.snackBar.open(
-						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
-						'Zamknij',
-						{ duration: 2000 }
-					);
-				},
-			});
+		if (id) {
+			this.startService
+				.addToWatched(id)
+				.pipe(this.untilDestroyed())
+				.subscribe({
+					next: () => {
+						this.actualOffer$ = this.offerId$.pipe(
+							switchMap(value => this.offerService.getOfferById(parseInt(value)))
+						);
+						this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
+							duration: 2000,
+						});
+					},
+					error: () => {
+						this.snackBar.open(
+							'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
+					},
+				});
 		}
 	}
 
-	public showRent(id?: number): void{
-		if(id){
+	public showRent(id?: number): void {
+		if (id) {
 			this.router.navigate(['rents', 'owner', id]);
 		}
 	}

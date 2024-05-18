@@ -19,7 +19,11 @@
 			<img
 				class="your-photo"
 				alt="Twój profil"
-				[src]="user.profilePicture?.path ? baseUrl + '/' + user.profilePicture?.path : './assets/avatar.png'"
+				[src]="
+					user.profilePicture?.path
+						? baseUrl + '/' + user.profilePicture?.path
+						: './assets/avatar.png'
+				"
 			/>
 		</button>
 	</div>
@@ -37,7 +41,7 @@
 			mat-menu-item
 			[routerLink]="['rents', 'owner']"
 		>
-		<mat-icon class="material-symbols-outlined">handshake</mat-icon>
+			<mat-icon class="material-symbols-outlined">handshake</mat-icon>
 			Moje wynajmy
 		</button>
 		<button
@@ -45,7 +49,7 @@
 			mat-menu-item
 			[routerLink]="['rents', 'student']"
 		>
-		<mat-icon class="material-symbols-outlined">handshake</mat-icon>
+			<mat-icon class="material-symbols-outlined">handshake</mat-icon>
 			Moje wynajmy
 		</button>
 		<button
@@ -53,7 +57,7 @@
 			mat-menu-item
 			[routerLink]="['offer', 'owner']"
 		>
-		<mat-icon class="material-symbols-outlined">campaign</mat-icon>
+			<mat-icon class="material-symbols-outlined">campaign</mat-icon>
 			Moje oferty
 		</button>
 		<button
@@ -61,7 +65,7 @@
 			mat-menu-item
 			[routerLink]="['real-estate', 'owner']"
 		>
-		<mat-icon class="material-symbols-outlined">real_estate_agent</mat-icon>
+			<mat-icon class="material-symbols-outlined">real_estate_agent</mat-icon>
 			Moje nieruchomości
 		</button>
 		<button
@@ -69,7 +73,7 @@
 			mat-menu-item
 			[routerLink]="['real-estate', 'add']"
 		>
-		<mat-icon class="material-symbols-outlined">apartment</mat-icon>
+			<mat-icon class="material-symbols-outlined">apartment</mat-icon>
 			Dodaj nieruchomość
 		</button>
 		<button
@@ -77,7 +81,7 @@
 			mat-menu-item
 			[routerLink]="['offer', 'add']"
 		>
-		<mat-icon class="material-symbols-outlined">home_pin</mat-icon>
+			<mat-icon class="material-symbols-outlined">home_pin</mat-icon>
 			Dodaj ofertę
 		</button>
 		<button
@@ -85,12 +89,13 @@
 			mat-menu-item
 			[routerLink]="['offer', 'watched']"
 		>
-		<mat-icon class="material-symbols-outlined">favorite</mat-icon>
+			<mat-icon class="material-symbols-outlined">favorite</mat-icon>
 			Obserwowane oferty
 		</button>
 		<button mat-menu-item (click)="authService.logout()">
-		<mat-icon class="material-symbols-outlined">logout</mat-icon>
-			Wyloguj się</button>
+			<mat-icon class="material-symbols-outlined">logout</mat-icon>
+			Wyloguj się
+		</button>
 	</mat-menu>
 
 	<ng-template #notLoggedIn>
@@ -100,7 +105,7 @@
 				mat-stroked-button
 				[routerLink]="['auth', 'login']"
 			>
-			<mat-icon class="material-symbols-outlined">login</mat-icon>
+				<mat-icon class="material-symbols-outlined">login</mat-icon>
 				Logowanie
 			</button>
 			<button
@@ -108,7 +113,7 @@
 				mat-stroked-button
 				[routerLink]="['profile', 'create']"
 			>
-			<mat-icon class="material-symbols-outlined">passkey</mat-icon>
+				<mat-icon class="material-symbols-outlined">passkey</mat-icon>
 				Rejestracja
 			</button>
 		</div>
@@ -182,8 +187,9 @@
 
 	<mat-menu #extended="matMenu">
 		<button mat-menu-item [routerLink]="['calendar']">
-		<mat-icon class="material-symbols-outlined">calendar_month</mat-icon>
-			Kalendarz</button>
+			<mat-icon class="material-symbols-outlined">calendar_month</mat-icon>
+			Kalendarz
+		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-menu-item

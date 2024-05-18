@@ -71,7 +71,9 @@ export class OfferService {
 	}
 
 	public cancelOffer(id: number): Observable<IResult> {
-		return this.httpClient.put<IResult>(`${this.apiRoute}/offers/${id}/cancel`, null);
+		return this.httpClient.put<IResult>(
+			`${this.apiRoute}/offers/${id}/cancel`,
+			null
+		);
 	}
-
 }

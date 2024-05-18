@@ -13,7 +13,7 @@ import { AuthService } from '@shared/services/auth.service';
 	styleUrls: ['./offer.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferComponent{
+export class OfferComponent {
 	public offersOptions$: Observable<ISendOffers> = this.offerService.getOffers();
 
 	public uType = UserType;

@@ -20,12 +20,12 @@ export interface IMeeting {
 	offerId: number;
 }
 
-export interface ISendRent{
+export interface ISendRent {
 	totalCount: number;
 	result: IRent[];
 }
 
-export interface IRentPayment{
+export interface IRentPayment {
 	paymentId: number;
 	paymentPurpose: number;
 	amount: number;
@@ -35,18 +35,18 @@ export interface IRentPayment{
 }
 
 export interface IRent {
-	rentId: number,
-    propertyId: number,
-    offerId: number,
-    isFinished: boolean,
-    startDate: Date,
-    duration: number,
-    endDate: Date,
+	rentId: number;
+	propertyId: number;
+	offerId: number;
+	isFinished: boolean;
+	startDate: Date;
+	duration: number;
+	endDate: Date;
 	propertyAddress: string;
 	propertyType: number;
 	propertyImages: IImage[];
-    tenants: ITenant[];
-    payments: IRentPayment[];
+	tenants: ITenant[];
+	payments: IRentPayment[];
 }
 
 export interface IRentOpinion {
@@ -64,17 +64,17 @@ export interface IMenuOptions {
 	description: string;
 }
 
-export interface ITenant{
+export interface ITenant {
 	userId: number;
 	email: string;
 	fullName: string;
 	profilePicture: IImage;
 }
 
-export interface IRentProposition{
-  rentId: number;
-  startDate: Date;
-  endDate: Date;
-  duration: number;
-  tenants: ITenant[];
+export interface IRentProposition {
+	rentId: number;
+	startDate: Date;
+	endDate: Date;
+	duration: number;
+	tenants: ITenant[];
 }

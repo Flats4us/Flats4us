@@ -33,7 +33,7 @@ import { MatCardModule } from '@angular/material/card';
 		MatMenuModule,
 		RealEstateDialogComponent,
 		MatChipsModule,
-		MatCardModule
+		MatCardModule,
 	],
 	exports: [RealEstateDetailsComponent],
 })

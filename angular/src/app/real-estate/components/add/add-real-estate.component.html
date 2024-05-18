@@ -1,9 +1,13 @@
 <div class="container-title">
-	<h1 *ngIf="modificationType === mType.ADD" class="text-4xl p-4 font-semibold">Kreator nieruchomości</h1>
-	<h1 *ngIf="modificationType === mType.EDIT" class="text-4xl p-4 font-semibold">Edycja nieruchomości</h1>
+	<h1 *ngIf="modificationType === mType.ADD" class="text-4xl p-4 font-semibold">
+		Kreator nieruchomości
+	</h1>
+	<h1 *ngIf="modificationType === mType.EDIT" class="text-4xl p-4 font-semibold">
+		Edycja nieruchomości
+	</h1>
 </div>
 <mat-card class="add-real-estate">
-	<mat-stepper #stepper >
+	<mat-stepper #stepper>
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
 				<ng-template matStepLabel
@@ -30,9 +34,7 @@
 							Nie wybrano rodzaju nieruchomości!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle-map">
-						Dane adresowe:
-					</div>
+					<div class="subtitle-map">Dane adresowe:</div>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Województwo</mat-label>
@@ -442,20 +444,20 @@
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-function">
 						<div class="gallery">
-					<a *ngFor="let url of photos">
-						<button
-						class="delete-icon"
-						id="deletePhoto"
-						type="button"
-						mat-icon-button
-						matTooltip="Usuń zdjęcie"
-						aria-label="DeletePhoto"
-						(click)="onPhotoDelete(url.name)"
-					>
-					<mat-icon>delete_forever</mat-icon>
-				</button>
-				<img class="img" [src]="url.path" />
-					</a>
+							<a *ngFor="let url of photos">
+								<button
+									class="delete-icon"
+									id="deletePhoto"
+									type="button"
+									mat-icon-button
+									matTooltip="Usuń zdjęcie"
+									aria-label="DeletePhoto"
+									(click)="onPhotoDelete(url.name)"
+								>
+									<mat-icon>delete_forever</mat-icon>
+								</button>
+								<img class="img" [src]="url.path" />
+							</a>
 						</div>
 						<input
 							#fileUpload
@@ -468,7 +470,12 @@
 							aria-label="File"
 							(change)="onFileSelected($event)"
 						/>
-						<div *ngIf="modificationType === mType.ADD && addRealEstateFormPhotos.get('photos')?.hasError('required')">
+						<div
+							*ngIf="
+								modificationType === mType.ADD &&
+								addRealEstateFormPhotos.get('photos')?.hasError('required')
+							"
+						>
 							Zdjęcie jest wymagane.
 						</div>
 						<div class="batch">
@@ -521,8 +528,13 @@
 						<mat-icon class="success-icon" [inline]="true"> insert_emoticon</mat-icon>
 						<h2>Formularz został pomyślnie wypełniony!</h2>
 						<h2>
-							Klikająć na przycisk {{ modificationType === mType.ADD ? '"Zapisz nieruchomość"' : '"Zapisz zmiany"' }} potwierdzasz prawdziwość
-							wprowadzonych danych.
+							Klikająć na przycisk
+							{{
+								modificationType === mType.ADD
+									? '"Zapisz nieruchomość"'
+									: '"Zapisz zmiany"'
+							}}
+							potwierdzasz prawdziwość wprowadzonych danych.
 						</h2>
 					</div>
 					<div class="button-box">
@@ -556,7 +568,9 @@
 							aria-label="AddRealEstate"
 							(click)="saveRealEstate()"
 						>
-							{{ modificationType === mType.ADD ? 'Zapisz nieruchomość' : 'Zapisz zmiany' }}
+							{{
+								modificationType === mType.ADD ? "Zapisz nieruchomość" : "Zapisz zmiany"
+							}}
 						</button>
 						<div class="btn-spacer"></div>
 						<button

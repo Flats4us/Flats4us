@@ -319,7 +319,9 @@ export class RealEstateService {
 		);
 	}
 	public deletePhoto(propertyId: number, fileId: string) {
-		return this.httpClient.delete(`${this.apiRoute}/properties/${propertyId}/files/${fileId}`);
+		return this.httpClient.delete(
+			`${this.apiRoute}/properties/${propertyId}/files/${fileId}`
+		);
 	}
 	public deleteRealEstate(id: number) {
 		return this.httpClient.delete(`${this.apiRoute}/properties/${id}`);

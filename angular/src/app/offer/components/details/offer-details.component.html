@@ -9,13 +9,15 @@
 					>Status oferty:
 					{{ offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) }}
 					<button
-					*ngIf="data.offer?.rentPropositionToShow"
+						*ngIf="data.offer?.rentPropositionToShow"
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
 						matTooltip="Oferta najmu czeka na zaakceptowanie!"
 						aria-label="MenuButton"
-						(click)="onRentApproval(data.offer?.rentPropositionToShow, data.offer?.offerId)"
+						(click)="
+							onRentApproval(data.offer?.rentPropositionToShow, data.offer?.offerId)
+						"
 					>
 						<mat-icon>notifications</mat-icon>
 					</button>
@@ -28,15 +30,14 @@
 						[disabled]="data.offer?.offerStatus !== 2"
 						(click)="showRent(data.offer?.rentPropositionToShow)"
 					>
-					<mat-icon class="material-symbols-outlined">
-						handshake</mat-icon>
+						<mat-icon class="material-symbols-outlined"> handshake</mat-icon>
 					</button>
 				</span></mat-label
 			>
 			<mat-label class="label-right">
 				<mat-icon class="icon" inline="true">visibility</mat-icon>
 				<span class="text-2xl">
-					Liczba obserwujących: {{data.offer?.numberOfInterested}}
+					Liczba obserwujących: {{ data.offer?.numberOfInterested }}
 				</span>
 			</mat-label>
 		</div>
@@ -93,45 +94,62 @@
 									mat-menu-item
 									[value]="menuOption.description"
 									[disabled]="
-									(data.offer?.isPromoted && menuOption.option === 'promoteOffer'
-										? true
-										: false
-									) ||
-									(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer'
-										? true
-										: false
-									)
-								"
-									(click)="onSelect(menuOption, data?.offer?.offerId, data.offer?.property?.propertyId)"
+										(data.offer?.isPromoted && menuOption.option === 'promoteOffer'
+											? true
+											: false) ||
+										(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer'
+											? true
+											: false)
+									"
+									(click)="
+										onSelect(
+											menuOption,
+											data?.offer?.offerId,
+											data.offer?.property?.propertyId
+										)
+									"
 								>
 									<div
 										class="flex items-center justify-center"
 										[ngSwitch]="menuOption.option"
 										[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
+									>
+										<mat-icon
+											*ngSwitchCase="'offerDetails'"
+											class="material-icons-outlined"
+											>info</mat-icon
 										>
-										<mat-icon *ngSwitchCase="'offerDetails'" class="material-icons-outlined">info</mat-icon>
-										<mat-icon *ngSwitchCase="'promoteOffer'" class="material-icons-outlined">new_releases</mat-icon>
-										<mat-icon *ngSwitchCase="'property'" class="material-icons-outlined">real_estate_agent</mat-icon>
-										<mat-icon *ngSwitchCase="'closeOffer'" class="material-icons-outlined">close</mat-icon>
+										<mat-icon
+											*ngSwitchCase="'promoteOffer'"
+											class="material-icons-outlined"
+											>new_releases</mat-icon
+										>
+										<mat-icon *ngSwitchCase="'property'" class="material-icons-outlined"
+											>real_estate_agent</mat-icon
+										>
+										<mat-icon *ngSwitchCase="'closeOffer'" class="material-icons-outlined"
+											>close</mat-icon
+										>
 										<span>{{ menuOption.description }}</span>
 									</div>
 								</button>
 							</mat-menu>
 						</div>
 						<div *ngIf="data.user === uType.DETAILS" class="menu-title">
-						<button 
-						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-						mat-mini-fab
-						class="ml-auto"
-						id="addToWatched"
-						type="button"
-						color="primary"										
-						matTooltip="Dodaj do obserwowanych"
-						aria-label="AddToWatched"
-						[disabled]="data.offer?.isInterest"
-						(click)="addToWatched(data.offer?.offerId)">
-						<mat-icon>favorite_border</mat-icon>
-						</button>
+							<button
+								*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+								mat-mini-fab
+								class="ml-auto"
+								id="addToWatched"
+								type="button"
+								color="primary"
+								matTooltip="Dodaj do obserwowanych"
+								aria-label="AddToWatched"
+								[disabled]="data.offer?.isInterest"
+								(click)="addToWatched(data.offer?.offerId)"
+							>
+								<mat-icon>favorite_border</mat-icon>
+							</button>
 						</div>
 						<img
 							*ngIf="
@@ -178,81 +196,44 @@
 		<div class="button-box">
 			<mat-label class="label-survey">
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
-					<mat-chip
-					*ngSwitchCase="false"
-					class="p-4 mr-4"
-					>
-					<div class="text-red-600 flex items-center justify-center">
-					<mat-icon
-						matTooltip="Palenie niedozwolone"
-						>smoke_free
-					</mat-icon>
-					</div>
+					<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+						<div class="text-red-600 flex items-center justify-center">
+							<mat-icon matTooltip="Palenie niedozwolone">smoke_free </mat-icon>
+						</div>
 					</mat-chip>
-					<mat-chip
-					*ngSwitchCase="true"
-					class="p-4 mr-4"
-					>
-					<div class="flex items-center justify-center">
-					<mat-icon
-						matTooltip="Palenie dozwolone"
-						>smoking_rooms
-					</mat-icon>
-				</div>
-				</mat-chip>
+					<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+						<div class="flex items-center justify-center">
+							<mat-icon matTooltip="Palenie dozwolone">smoking_rooms </mat-icon>
+						</div>
+					</mat-chip>
 				</span>
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.animalsAllowed">
-				<mat-chip
-				*ngSwitchCase="false"
-				class="p-4 mr-4"
-				>
-				<div class="text-red-600 flex items-center justify-center">
-					<mat-icon
-					matTooltip="Zwierzęta niedozwolone"
-					>pets</mat-icon
-				>
-				</div>
-				</mat-chip>
-				<mat-chip
-				*ngSwitchCase="true"
-				class="p-4 mr-4"
-				>
-				<div class="flex items-center justify-center">
-					<mat-icon
-						matTooltip="Zwierzęta dozwolone"
-						>pets</mat-icon
-					>
-				</div>
-				</mat-chip>
+					<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+						<div class="text-red-600 flex items-center justify-center">
+							<mat-icon matTooltip="Zwierzęta niedozwolone">pets</mat-icon>
+						</div>
+					</mat-chip>
+					<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+						<div class="flex items-center justify-center">
+							<mat-icon matTooltip="Zwierzęta dozwolone">pets</mat-icon>
+						</div>
+					</mat-chip>
 				</span>
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
-					<mat-chip
-					*ngSwitchCase="false"
-					class="p-4 mr-4"
-					>
-					<div class="text-red-600 flex items-center justify-center">
-					<mat-icon
-					matTooltip="Imprezy niedozwolone"
-					>cake</mat-icon>
-					</div>
+					<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+						<div class="text-red-600 flex items-center justify-center">
+							<mat-icon matTooltip="Imprezy niedozwolone">cake</mat-icon>
+						</div>
 					</mat-chip>
-					<mat-chip
-					*ngSwitchCase="true"
-					class="p-4 mr-4"
-					>
-					<div class="flex items-center justify-center">
-					<mat-icon
-						matTooltip="Imprezy dozwolone"
-						>cake</mat-icon
-					>
-					</div>
+					<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+						<div class="flex items-center justify-center">
+							<mat-icon matTooltip="Imprezy dozwolone">cake</mat-icon>
+						</div>
 					</mat-chip>
 				</span>
 			</mat-label>
 			<mat-label class="label-right">
-				<mat-icon class="icon-hide" inline="true">
-					sell
-				</mat-icon>
+				<mat-icon class="icon-hide" inline="true"> sell </mat-icon>
 				<span class="text-3xl"
 					>Cena
 					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/mies.</span
@@ -264,10 +245,12 @@
 		<div class="label-box">
 			<mat-label class="label-description"
 				><mat-icon class="icon" inline="true">description</mat-icon
-				><span class="text-3xl">Opis oferty</span></mat-label>
+				><span class="text-3xl">Opis oferty</span></mat-label
+			>
 			<mat-label *ngIf="data.offer?.isPromoted" class="label-right">
 				<mat-icon class="icon-promo" inline="true">new_releases</mat-icon>
-				<span class="text-3xl">Oferta promowana</span></mat-label>	
+				<span class="text-3xl">Oferta promowana</span></mat-label
+			>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="container-description">
@@ -395,7 +378,7 @@
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 			mat-raised-button
 			color="primary"
-			[disabled]="data.offer?.offerStatus!==0"
+			[disabled]="data.offer?.offerStatus !== 0"
 			(click)="startRent(data.offer?.offerId)"
 		>
 			Wynajmij

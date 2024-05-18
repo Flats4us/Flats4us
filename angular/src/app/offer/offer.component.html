@@ -3,35 +3,17 @@
 		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
 			Przeglądanie ofert
 		</div>
-		<div *ngIf="user === uType.DETAILS || user === uType.STUDENT" class="text-4xl p-4 font-semibold">
+		<div
+			*ngIf="user === uType.DETAILS || user === uType.STUDENT"
+			class="text-4xl p-4 font-semibold"
+		>
 			Widok oferty
 		</div>
 	</div>
-<div *ngIf="(user === uType.OWNER) && (offersOptions$ | async) as offers">
-	<ng-template #notFound>
-		<h1 class="text-3xl p-4">
-			Nie dodano jeszcze żadnej oferty
-			<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-			mat-icon-button
-			id="add"
-			class="box-icon"
-			aria-label="Add"
-			matTooltip="Dodaj ofertę"
-			(click)="addOffer()"
-		>
-			<mat-icon [inline]="true">add</mat-icon>
-		</button>
-		</h1>
-	</ng-template>
-	<div *ngIf="offers.totalCount === 0" class="not-found">
-	<ng-container [ngTemplateOutlet]="notFound"></ng-container>
-	</div>
-	<div *ngIf="(user === uType.OWNER) && ((offers.totalCount ?? 0) > 0)" class="offers-owner">
-		<div class="container-list">
-			<h1 class="text-3xl pl-4 font-semibold">
-				<div class="box-title-sub">
-				<span>Moje oferty</span>
+	<div *ngIf="user === uType.OWNER && (offersOptions$ | async) as offers">
+		<ng-template #notFound>
+			<h1 class="text-3xl p-4">
+				Nie dodano jeszcze żadnej oferty
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 					mat-icon-button
@@ -43,61 +25,84 @@
 				>
 					<mat-icon [inline]="true">add</mat-icon>
 				</button>
-			</div>
 			</h1>
-			<mat-divider class="divider"></mat-divider>
-			<mat-nav-list>
-				<a
-					*ngFor="let offer of offers.result"
-					mat-list-item
-					class="item-list"
-					routerLink="{{ offer.offerId }}"
-					><div class="box-title">
-						<div class="flex-col text-xl font-bold">
-							<div>Wynajem - {{ realEstateService.propertyTypes.get(offer.property.propertyType) }}</div> 
-							<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>
-						</div>
-						<mat-icon
-							*ngIf="offer.offerStatus !== 2"
-							[ngClass]=" (offer.offerStatus === 0 || offer.offerStatus === 1)
-								? 'box-icon-valid' : 'box-icon-invalid'
-							"
-							>check_circle</mat-icon
-						>
-						<mat-icon
-						*ngIf="offer.offerStatus === 2"
-						class= "box-icon-invalid"
-						>handshake</mat-icon
-					>
-					</div>
-					<div
-						*ngIf="offer.offerStatus === 1 else dateDescription"
-						class="box-date"
-						matBadge="1"
-						matBadgePosition="below after"
-						matBadgeColor="primary"
-					>
-						Data {{ offer.startDate | date }}
-					</div>
-				<ng-template #dateDescription>
-				<div
-					class="box-date"
-				>
-					Data {{ offer.startDate | date }}
-				</div>
-			</ng-template>
-				</a>
-			</mat-nav-list>
+		</ng-template>
+		<div *ngIf="offers.totalCount === 0" class="not-found">
+			<ng-container [ngTemplateOutlet]="notFound"></ng-container>
 		</div>
-		<div class="container-outlet">
-			<router-outlet></router-outlet>
+		<div
+			*ngIf="user === uType.OWNER && (offers.totalCount ?? 0) > 0"
+			class="offers-owner"
+		>
+			<div class="container-list">
+				<h1 class="text-3xl pl-4 font-semibold">
+					<div class="box-title-sub">
+						<span>Moje oferty</span>
+						<button
+							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+							mat-icon-button
+							id="add"
+							class="box-icon"
+							aria-label="Add"
+							matTooltip="Dodaj ofertę"
+							(click)="addOffer()"
+						>
+							<mat-icon [inline]="true">add</mat-icon>
+						</button>
+					</div>
+				</h1>
+				<mat-divider class="divider"></mat-divider>
+				<mat-nav-list>
+					<a
+						*ngFor="let offer of offers.result"
+						mat-list-item
+						class="item-list"
+						routerLink="{{ offer.offerId }}"
+						><div class="box-title">
+							<div class="flex-col text-xl font-bold">
+								<div>
+									Wynajem -
+									{{ realEstateService.propertyTypes.get(offer.property.propertyType) }}
+								</div>
+								<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>
+							</div>
+							<mat-icon
+								*ngIf="offer.offerStatus !== 2"
+								[ngClass]="
+									offer.offerStatus === 0 || offer.offerStatus === 1
+										? 'box-icon-valid'
+										: 'box-icon-invalid'
+								"
+								>check_circle</mat-icon
+							>
+							<mat-icon *ngIf="offer.offerStatus === 2" class="box-icon-invalid"
+								>handshake</mat-icon
+							>
+						</div>
+						<div
+							*ngIf="offer.offerStatus === 1; else dateDescription"
+							class="box-date"
+							matBadge="1"
+							matBadgePosition="below after"
+							matBadgeColor="primary"
+						>
+							Data {{ offer.startDate | date }}
+						</div>
+						<ng-template #dateDescription>
+							<div class="box-date">Data {{ offer.startDate | date }}</div>
+						</ng-template>
+					</a>
+				</mat-nav-list>
+			</div>
+			<div class="container-outlet">
+				<router-outlet></router-outlet>
+			</div>
 		</div>
 	</div>
-</div>
-<div
-*ngIf="user === uType.STUDENT || user === uType.DETAILS"
-class="offers-student"
->
-<router-outlet></router-outlet>
-</div>
+	<div
+		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
+		class="offers-student"
+	>
+		<router-outlet></router-outlet>
+	</div>
 </div>

@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IMeeting, IRent, IRentOpinion, IRentProposition, ISendRent } from '../models/rents.models';
+import {
+	IMeeting,
+	IRent,
+	IRentOpinion,
+	IRentProposition,
+	ISendRent,
+} from '../models/rents.models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
@@ -32,23 +38,25 @@ export class RentsService {
 
 	public getRents(index?: number, size?: number): Observable<ISendRent> {
 		let queryParams = new HttpParams();
-		if (index){
-		queryParams = new HttpParams()
-		.append('pageNumber', index + 1);
+		if (index) {
+			queryParams = new HttpParams().append('pageNumber', index + 1);
 		}
-		if(size){
-		queryParams = new HttpParams()
-		.append('pageSize', size);
+		if (size) {
+			queryParams = new HttpParams().append('pageSize', size);
 		}
-		return this.httpClient.get<ISendRent>(`${this.apiRoute}/rent`, {params: queryParams});
+		return this.httpClient.get<ISendRent>(`${this.apiRoute}/rent`, {
+			params: queryParams,
+		});
 	}
 
 	public getRentById(id: number): Observable<IRent> {
 		return this.httpClient.get<IRent>(`${this.apiRoute}/rent/${id}`);
 	}
 
-	public getRentProposition(id: number){
-		return this.httpClient.get<IRentProposition>(`${this.apiRoute}/rent/${id}/proposition`);
+	public getRentProposition(id: number) {
+		return this.httpClient.get<IRentProposition>(
+			`${this.apiRoute}/rent/${id}/proposition`
+		);
 	}
 
 	public postOpinion(rentId: number, opinion: IRentOpinion) {

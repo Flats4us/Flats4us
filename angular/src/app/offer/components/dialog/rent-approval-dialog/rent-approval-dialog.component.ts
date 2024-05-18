@@ -51,7 +51,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 		public rentsService: RentsService,
 		private snackBar: MatSnackBar,
 		private router: Router,
-		@Inject(MAT_DIALOG_DATA) public data: {rentId: number, offerId: number}
+		@Inject(MAT_DIALOG_DATA) public data: { rentId: number; offerId: number }
 	) {
 		super();
 		this.rentProposition$ = this.rentsService.getRentProposition(data.rentId);

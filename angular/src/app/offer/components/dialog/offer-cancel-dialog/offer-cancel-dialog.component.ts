@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+	MAT_DIALOG_DATA,
+	MatDialogModule,
+	MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -21,14 +25,14 @@ import { Router } from '@angular/router';
 		MatInputModule,
 		FormsModule,
 		MatButtonModule,
-		MatSnackBarModule
+		MatSnackBarModule,
 	],
 	providers: [OfferService],
 	templateUrl: './offer-cancel-dialog.component.html',
 	styleUrls: ['./offer-cancel-dialog.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferCancelDialogComponent extends BaseComponent{
+export class OfferCancelDialogComponent extends BaseComponent {
 	constructor(
 		public offerService: OfferService,
 		private snackBar: MatSnackBar,
@@ -41,19 +45,21 @@ export class OfferCancelDialogComponent extends BaseComponent{
 
 	public onYesClick() {
 		this.offerService
-		.cancelOffer(this.data)
-		.pipe(this.untilDestroyed(), catchError(this.handleError))
-		.subscribe(
-			{
+			.cancelOffer(this.data)
+			.pipe(this.untilDestroyed(), catchError(this.handleError))
+			.subscribe({
 				next: () => {
 					this.snackBar.open('Oferta została zakończona.', 'Zamknij', {
 						duration: 2000,
 					});
-					this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-						this.router.navigate(['offer', 'owner']);
-					}).then(() => {
-						this.router.navigate(['offer', 'owner', this.data]);
-					}); 
+					this.router
+						.navigateByUrl('/', { skipLocationChange: true })
+						.then(() => {
+							this.router.navigate(['offer', 'owner']);
+						})
+						.then(() => {
+							this.router.navigate(['offer', 'owner', this.data]);
+						});
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
@@ -62,8 +68,7 @@ export class OfferCancelDialogComponent extends BaseComponent{
 					});
 					this.dialogRef.close(this.data);
 				},
-			}
-		);
+			});
 	}
 	public onClose() {
 		this.dialogRef.close(this.data);

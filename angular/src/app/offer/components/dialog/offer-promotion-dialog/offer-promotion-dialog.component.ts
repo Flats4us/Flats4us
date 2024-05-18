@@ -29,7 +29,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		MatButtonModule,
 		MatFormFieldModule,
 		MatInputModule,
-		MatSnackBarModule
+		MatSnackBarModule,
 	],
 	providers: [OfferService],
 })
@@ -59,22 +59,20 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 					duration: this.promotionForm.get('promotionDays')?.value,
 				})
 				.pipe(this.untilDestroyed(), catchError(this.handleError))
-				.subscribe(
-					{
-						next: () => {
-							this.snackBar.open('Pomyślnie dodano promowanie oferty.', 'Zamknij', {
-								duration: 2000,
-							});
-							this.dialogRef.close(this.data);
-						},
-						error: () => {
-							this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-								duration: 2000,
-							});
-							this.dialogRef.close(this.data);
-						},
-					}
-				);
+				.subscribe({
+					next: () => {
+						this.snackBar.open('Pomyślnie dodano promowanie oferty.', 'Zamknij', {
+							duration: 2000,
+						});
+						this.dialogRef.close(this.data);
+					},
+					error: () => {
+						this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
+							duration: 2000,
+						});
+						this.dialogRef.close(this.data);
+					},
+				});
 		}
 	}
 	public onClose() {

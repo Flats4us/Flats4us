@@ -38,13 +38,27 @@ export class RentsDetailsComponent extends BaseComponent {
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
-	public displayedColumnsOwner: string[] = ['paymentId', 'paymentPurpose', 'amount', 'isPaid','createdDate', 'paymentDate'];
+	public displayedColumnsStudent: string[] = [
+		'paymentId',
+		'paymentPurpose',
+		'amount',
+		'isPaid',
+		'createdDate',
+		'paymentDate',
+	];
+	public displayedColumnsOwner: string[] = [
+		'paymentId',
+		'paymentPurpose',
+		'amount',
+		'isPaid',
+		'createdDate',
+		'paymentDate',
+	];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Szczegóły najmu' },
 		{ option: 'offerDetails', description: 'Powiązana oferta' },
 		{ option: 'propertyDetails', description: 'Powiązana nieruchomość' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' }
+		{ option: 'startDispute', description: 'Rozpocznij spór' },
 	];
 
 	constructor(
@@ -75,7 +89,12 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.router.navigate(['disputes', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, rentId?: number, offerId?: number, propertyId?: number) {
+	public onSelect(
+		menuOption: IMenuOptions,
+		rentId?: number,
+		offerId?: number,
+		propertyId?: number
+	) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
 				this.navigateToRent(rentId ?? 0);
@@ -110,12 +129,12 @@ export class RentsDetailsComponent extends BaseComponent {
 		});
 	}
 
-	public navigateStudentRents(){
-		this.router.navigate(['rents','student']);
+	public navigateStudentRents() {
+		this.router.navigate(['rents', 'student']);
 	}
 
-	public navigateOwnerRents(){
-		this.router.navigate(['rents','owner']);
+	public navigateOwnerRents() {
+		this.router.navigate(['rents', 'owner']);
 	}
 
 	public showProfile(id: number) {

@@ -1,25 +1,36 @@
 <div *ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data">
 	<div class="box-title">
-		<div *ngIf="data.user === uType.OWNER || data.user === uType.STUDENT" class="text-4xl p-4 font-semibold">
-		Przeglądanie wynajmów
+		<div
+			*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+			class="text-4xl p-4 font-semibold"
+		>
+			Przeglądanie wynajmów
 		</div>
 		<div *ngIf="data.user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-		Widok najmu
+			Widok najmu
 		</div>
 	</div>
 	<ng-template #notFound>
-		<h1 class="text-3xl p-4">
-			Nie dodano jeszcze żadnego najmu
-		</h1>
+		<h1 class="text-3xl p-4">Nie dodano jeszcze żadnego najmu</h1>
 	</ng-template>
-	<div *ngIf="(data.user === uType.OWNER || data.user === uType.STUDENT) && (data.rents?.totalCount === 0)" class="not-found">
-	<ng-container [ngTemplateOutlet]="notFound"></ng-container>
+	<div
+		*ngIf="
+			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
+			data.rents?.totalCount === 0
+		"
+		class="not-found"
+	>
+		<ng-container [ngTemplateOutlet]="notFound"></ng-container>
 	</div>
-	<div *ngIf="(data.user === uType.OWNER || data.user === uType.STUDENT) && ((data.rents?.totalCount ?? 0) > 0)" class="rents-owner">
+	<div
+		*ngIf="
+			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
+			(data.rents?.totalCount ?? 0) > 0
+		"
+		class="rents-owner"
+	>
 		<div class="container-list">
-			<h1 class="text-3xl pl-4 font-semibold">
-				Moje wynajmy
-			</h1>
+			<h1 class="text-3xl pl-4 font-semibold">Moje wynajmy</h1>
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
 				<a
@@ -28,16 +39,14 @@
 					class="item-list"
 					routerLink="{{ rent.rentId }}"
 					><div class="box-title">
-					<div class="flex-col text-xl font-bold">
-						<div>Najem - {{ realEstateService.propertyTypes.get(rent.propertyType) }}</div> 
-						<div>{{ rent.propertyAddress }}</div>
-					</div>
+						<div class="flex-col text-xl font-bold">
+							<div>
+								Najem - {{ realEstateService.propertyTypes.get(rent.propertyType) }}
+							</div>
+							<div>{{ rent.propertyAddress }}</div>
+						</div>
 						<mat-icon
-							[ngClass]="
-							rent.isFinished
-									? 'box-icon-invalid'
-									: 'box-icon-valid'
-							"
+							[ngClass]="rent.isFinished ? 'box-icon-invalid' : 'box-icon-valid'"
 							>check_circle</mat-icon
 						>
 					</div>
@@ -49,10 +58,7 @@
 			<router-outlet></router-outlet>
 		</div>
 	</div>
-	<div
-		*ngIf="data.user === uType.DETAILS"
-		class="rents-student"
-	>
+	<div *ngIf="data.user === uType.DETAILS" class="rents-student">
 		<router-outlet></router-outlet>
 	</div>
 </div>

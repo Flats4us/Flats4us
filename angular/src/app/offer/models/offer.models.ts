@@ -5,8 +5,8 @@ import {
 
 export interface IOffer {
 	offerId: number;
-	rentPropositionToShow: number,
-	isInterest: boolean,
+	rentPropositionToShow: number;
+	isInterest: boolean;
 	date: Date;
 	offerStatus: number;
 	price: number;
@@ -73,7 +73,7 @@ export interface IFlatOffer {
 	type: string;
 }
 
-export interface IProfilePicture{
+export interface IProfilePicture {
 	name: string;
 	path: string;
 }

@@ -43,7 +43,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatFormFieldModule,
 		MatCardModule,
 		AccessControlDirective,
-		MatSnackBarModule
+		MatSnackBarModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, StartService],
 	exports: [OfferDetailsComponent],
