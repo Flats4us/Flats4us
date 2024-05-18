@@ -6,6 +6,7 @@ using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,19 +21,22 @@ namespace Flats4us.Services
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
         public UserService(Flats4usContext context,
             IEmailService emailService,
             IMapper mapper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            INotificationService notificationService)
         {
             _context = context;
             _emailService = emailService;
             _mapper = mapper;
             _configuration = configuration;
+            _notificationService = notificationService;
         }
 
-        public async Task<TokenDto> AuthenticateAsync(string email, string password)
+        public async Task<TokenDto> AuthenticateAsync(string email, string password, string fcmToken = null)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
 
@@ -40,6 +44,11 @@ namespace Flats4us.Services
 
             user.LastLoginDate = DateTime.Now;
 
+            // Save FCM token if provided
+            if (!string.IsNullOrEmpty(fcmToken))
+            {
+                user.FcmToken = fcmToken;
+            }
             await _context.SaveChangesAsync();
 
             var token = CreateToken(user);
@@ -105,7 +114,13 @@ namespace Flats4us.Services
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-            await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+
+            if (input.Document != null)
+            {
+                user.VerificationStatus = VerificationStatus.NotVerified;
+                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
@@ -194,6 +209,12 @@ namespace Flats4us.Services
             user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
 
             await _context.SaveChangesAsync();
+
+            // Notify the user of password change
+            var notificationTitle = "Password Changed";
+            var notificationBody = "Your password has been successfully changed.";
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, userId);
+
         }
 
         public async Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId)
@@ -400,5 +421,118 @@ namespace Flats4us.Services
 
             return result;
         }
+
+        public async Task EditUserGeneral(EditUserGeneral input, int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            user.Address = input.Address ?? user.Address;
+            user.Email = input.Email ?? user.Email;
+            user.PhoneNumber = input.PhoneNumber ?? user.PhoneNumber;
+
+            await _context.SaveChangesAsync();
+
+        }
+
+        public async Task EditUserSensitive(EditUserSensitive input, int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            user.Name = input.Name ?? user.Name;
+            user.Surname = input.Surname ?? user.Name;
+            user.VerificationStatus = VerificationStatus.NotVerified;
+
+            await _context.SaveChangesAsync();
+        }
+        public async Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId)
+        {
+            var user = await _context.Owners.FindAsync(userId);
+            user.DocumentNumber = input.DocumentNumber ?? user.DocumentNumber;
+            user.DocumentExpireDate = input.DocumentExpireDate ?? user.DocumentExpireDate;
+            user.VerificationStatus = VerificationStatus.NotVerified;
+            await _context.SaveChangesAsync();
+        }
+        public async Task EditStudentSensitive(EditStudentSensitiveDto input, int userId)
+        {
+
+            var student = await _context.Students.FindAsync(userId);
+
+            if (student == null)
+            {
+                throw new Exception($"Cannot find student with ID: {userId}");
+            }
+
+            student.BirthDate = input.BirthDate ?? student.BirthDate;
+            student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
+            student.University = input.University ?? student.University;
+            student.VerificationStatus = VerificationStatus.NotVerified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task EditUser(EditUserDto input, int userId)
+        {
+            bool isSensitiveDataUpdated = false;
+
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new Exception($"User with ID {userId} not found.");
+            }
+
+            // Update general user data
+            user.Address = input.Address ?? user.Address;
+            user.Email = input.Email ?? user.Email;
+            user.PhoneNumber = input.PhoneNumber ?? user.PhoneNumber;
+
+            // Update sensitive user data
+            if (input.Name != null || input.Surname != null)
+            {
+                isSensitiveDataUpdated = true;
+                user.Name = input.Name ?? user.Name;
+                user.Surname = input.Surname ?? user.Surname;
+            }
+
+            // Update Student-specific data
+            if (user is Student student)
+            {
+
+                if (input.Links != null)
+                {
+                    student.Links = string.Join("|", input.Links);
+                }
+
+                if (input.BirthDate != null || input.StudentNumber != null || input.University != null)
+                {
+                    isSensitiveDataUpdated = true;
+                    student.BirthDate = input.BirthDate ?? student.BirthDate;
+                    student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
+                    student.University = input.University ?? student.University;
+                }
+            }
+            // Update Owner-specific data
+            else if (user is Owner owner)
+            {
+                owner.BankAccount = input.BankAccount ?? owner.BankAccount;
+
+                if (input.DocumentNumber != null)
+                {
+                    isSensitiveDataUpdated = true;
+                    owner.DocumentNumber = input.DocumentNumber;
+                }
+                // Additional fields for Owner can be updated here
+            }
+
+            // Set verification status if sensitive data is updated
+            if (isSensitiveDataUpdated)
+            {
+                user.VerificationStatus = VerificationStatus.NotVerified;
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+
+
+
     }
 }

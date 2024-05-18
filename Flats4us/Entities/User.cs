@@ -47,5 +47,6 @@ namespace Flats4us.Entities
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
 
         public virtual ICollection<TechnicalProblem> TechnicalProblems { get; set; }
+        public string? FcmToken { get; set; }
     }
 }
