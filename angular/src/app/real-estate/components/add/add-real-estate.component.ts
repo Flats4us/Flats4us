@@ -49,7 +49,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		Validators.pattern('^[0-9]+[a-zA-Z]*$'),
 	]),
 	propertyType: new FormControl(null, Validators.required),
-	flat: new FormControl(null,  [Validators.required, Validators.min(0)])
+	flat: new FormControl(null, Validators.min(0))
 });
 	public addRealEstateFormRemainingData: FormGroup = new FormGroup({
 		area: new FormControl(null, [
@@ -191,10 +191,6 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				this.changeDetectorRef.markForCheck();
 			};
 		}
-		// this.formData.append('TitleDeed', this.filesArray[0]);
-		// for (let i = 0; i < this.filesArray.length; i++) {
-		// 	this.formData.append('Images', this.filesArray[i]);
-		// }
 	}
 
 	public saveRealEstate() {
@@ -262,14 +258,35 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.get('propertyType')
 			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(propertyType => {
+				if (propertyType === 0){
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.disable();
+				}
 				if (propertyType === 0 || propertyType === 2) {
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.enable();
 					this.addRealEstateFormAddressData.get('flat')?.enable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.disable();
 					this.addRealEstateFormRemainingData.get('floor')?.enable();
+					this.addRealEstateFormRemainingData.get('numberOfFloors')?.disable();
 				} else {
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.enable();
 					this.addRealEstateFormAddressData.get('flat')?.disable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.enable();
 					this.addRealEstateFormRemainingData.get('floor')?.disable();
+					this.addRealEstateFormRemainingData.get('numberOfFloors')?.enable();
+				}
+			});
+			this.addRealEstateFormAddressData.get('postalCode')?.valueChanges.pipe(this.untilDestroyed())
+			.subscribe((value) => {
+				if(value === this.addRealEstateFormAddressData.get('postalCode')) {
+					return;
+				}
+				if(value.length === 0 || value.includes('-')) {
+					return;
+				}
+				if(value.length === 5){
+					const firstPart = value.slice(0, 2);
+					const lastPart = value.slice(value.length - 3, value.length);
+					this.addRealEstateFormAddressData.get('postalCode')?.setValue(firstPart + '-' + lastPart);
 				}
 			});
 		if(this.modificationType === ModificationType.EDIT){
