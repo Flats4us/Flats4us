@@ -169,7 +169,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BankAccount = "12341234123412341234123412",
             DocumentNumber = "XXX 000000"
@@ -446,7 +446,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
@@ -2238,7 +2238,18 @@ public static class DataSeeder
             Payments = null
         };
 
-        dbContext.Rents.AddRange(rent1, rent2, rent3);
+        var rent4 = new Rent
+        {
+            StartDate = new DateTime(2023, 3, 1),
+            Duration = 8,
+            EndDate = new DateTime(2023, 11, 1),
+            Offer = offer3,
+            Student = student10,
+            OtherStudents = {},
+            Payments = null
+        };
+
+        dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
 
         #endregion
 
@@ -2295,6 +2306,111 @@ public static class DataSeeder
         dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
 
         #endregion
+
+        #region Argument
+
+        var argument1 = new Argument
+        {
+            Description = "sprzeczka pierwsza ",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 2, 13),
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 3, 17),
+            Rent = rent1,
+            Student = student1
+        };
+
+        var argument2 = new Argument
+        {
+            Description = "a to jest druga ",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = 0,
+            InterventionNeed = false,
+            MederatorDecisionDate = new DateTime(2023, 1, 22),
+            Rent = rent2,
+            Student = student1
+        };
+
+        var argument3 = new Argument
+        {
+            Description = "a tutaj sobie wpiszę lorem pisum",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 1, 25),
+            Rent = rent3,
+            Student = student1
+        };
+        var argument4 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = true,
+            MederatorDecisionDate = new DateTime(2023, 2, 10),
+            Rent = rent4,
+            Student = student1
+        };
+
+        var argument5 = new Argument
+        {
+            Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xDv2",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 2, 20),
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            MederatorDecisionDate = null,
+            Rent = rent3,
+            Student = student1
+        };
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4, argument5);
+
+        #endregion
+
+        #region ArgumentIntervention
+
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 1, 12),
+            Justification = "string",
+            Argument = argument1,
+            Moderator = moderator1
+        };
+        //var argumentIntervention2 = new ArgumentIntervention
+        //{
+
+        //    Date = new DateTime(2023, 2, 12),
+        //    Justification = "string1",
+        //    Argument = argument1,
+        //    Moderator = moderator1
+        //};
+        //var argumentIntervention3 = new ArgumentIntervention
+        //{
+
+        //    Date = new DateTime(2023, 1, 12),
+        //    Justification = "string2",
+        //    Argument = argument2,
+        //    Moderator = null
+        //};
+        //var argumentIntervention4 = new ArgumentIntervention
+        //{
+
+        //    Date = new DateTime(2023, 1, 12),
+        //    Justification = "string3",
+        //    Argument = argument3,
+        //    Moderator = null
+        //};
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1/*, argumentIntervention2, argumentIntervention3, argumentIntervention4*/);
+
+        #endregion
+
 
         dbContext.SaveChanges();
     }

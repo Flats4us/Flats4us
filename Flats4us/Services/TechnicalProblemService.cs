@@ -25,7 +25,7 @@ namespace Flats4us.Services
         public async Task<CountedListDto<TechnicalProblemDto>> GetAllAsync(PaginatorDto input)
         {
             var problems = await _context.TechnicalProblems
-                    .OrderBy(x => x.Solved)  
+                    .OrderBy(x => x.Solved)
                     .ThenBy(x => x.Date)
                     .Skip((input.PageNumber - 1) * input.PageSize)
                     .Take(input.PageSize)

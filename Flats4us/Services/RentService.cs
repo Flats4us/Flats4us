@@ -138,6 +138,8 @@ namespace Flats4us.Services
                             .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
+                        .Include(x => x.Arguments)
+                            .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -149,6 +151,8 @@ namespace Flats4us.Services
                             .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
+                        .Include(x => x.Arguments)
+                            .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -165,6 +169,8 @@ namespace Flats4us.Services
                         .ThenInclude(o => o.Property)
                     .Include(r => r.Student)
                     .Include(r => r.OtherStudents)
+                    .Include(x => x.Arguments)
+                        .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
             }
@@ -193,6 +199,8 @@ namespace Flats4us.Services
                     .ThenInclude(o => o.Property)
                 .Include(r => r.Student)
                 .Include(r => r.OtherStudents)
+                .Include(x=>x.Arguments)
+                    .ThenInclude(x=>x.ArgumentInterventions)
             .FirstOrDefaultAsync(o => o.RentId == id);
 
             if (rent == null) throw new ArgumentException($"Rent with ID {id} not found.");

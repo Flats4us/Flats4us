@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Flats4us.Helpers.Enums;
 using System.ComponentModel.DataAnnotations;
-using Flats4us.Helpers.Enums;
 
-namespace Flats4us.Entities
+namespace Flats4us.Entities.Dto
 {
-    public class Argument
+    public class ArgumentDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ArgumentId { get; set; }
-
         [Required]
         public string Description { get; set; }
 
@@ -33,15 +28,6 @@ namespace Flats4us.Entities
         [Required]
         public int StudentId { get; set; }
 
-        public virtual Rent Rent { get; set; }
-
-        public virtual Student Student { get; set; }
-
-        public virtual ICollection<ArgumentIntervention> ArgumentInterventions { get; set; }
-
-        public Argument()
-        {
-            this.ArgumentInterventions = new HashSet<ArgumentIntervention>();
-        }
+        public virtual ICollection<ArgumentInterventionDto> ArgumentInterventions { get; set; }
     }
 }

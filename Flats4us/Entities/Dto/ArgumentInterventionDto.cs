@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Flats4us.Entities
+namespace Flats4us.Entities.Dto
 {
-    public class ArgumentIntervention
+    public class ArgumentInterventionDto
     {
-        [ForeignKey("Argument")]
-        public int ArgumentInterventionId { get; set; }
-
         [Required]
         public DateTime Date { get; set; }
 
@@ -19,8 +15,5 @@ namespace Flats4us.Entities
 
         [Required]
         public int ModeratorId { get; set; }
-
-        public virtual Argument Argument { get; set; }
-        public virtual Moderator Moderator { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace Flats4us.Services.Interfaces
         Task<GroupChatDto> GetGroupChatAsync(int userId, int groupChatId);
         Task<IEnumerable<ChatMessageDto>> GetGroupChatMessagesAsync(int userId, int groupChatId);
         Task<List<GroupChatDto>> GetGroupChats(int userId);
+        Task AddYourselfToGroupChatAsync(int groupChatId, int newUserId);
         // Additional methods as needed (e.g., remove users, send message, etc.)
     }
 
