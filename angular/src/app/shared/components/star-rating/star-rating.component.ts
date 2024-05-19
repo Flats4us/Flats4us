@@ -11,6 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StarRatingComponent {
-	@Input() avgRating = 0;
+	@Input() public avgRating = 0;
 	public starsScale: number[] = [1, 2, 3, 4, 5];
 }
