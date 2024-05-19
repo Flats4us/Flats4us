@@ -138,7 +138,7 @@ namespace Flats4us.Services
                             .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
-                        //.Include(x => x.Arguments)
+                        .Include(x => x.Arguments)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -150,7 +150,7 @@ namespace Flats4us.Services
                             .ThenInclude(o => o.Property)
                         .Include(r => r.Student)
                         .Include(r => r.OtherStudents)
-                        //.Include(x => x.Arguments)
+                        .Include(x => x.Arguments)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -167,7 +167,7 @@ namespace Flats4us.Services
                         .ThenInclude(o => o.Property)
                     .Include(r => r.Student)
                     .Include(r => r.OtherStudents)
-                    //.Include(x => x.Arguments)
+                    .Include(x => x.Arguments)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
             }

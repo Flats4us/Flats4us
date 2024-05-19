@@ -42,6 +42,6 @@ namespace Flats4us.Entities.Dto
         public ICollection<PaymentDto> Payments { get; set; }
 
         [Required]
-        public virtual ICollection<Argument> Arguments { get; set; }
+        public virtual ICollection<ArgumentDto> Arguments { get; set; }
     }
 }
