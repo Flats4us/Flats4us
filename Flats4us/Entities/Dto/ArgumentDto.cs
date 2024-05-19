@@ -27,5 +27,7 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int StudentId { get; set; }
+
+        public virtual ICollection<ArgumentInterventionDto> ArgumentInterventions { get; set; }
     }
 }
