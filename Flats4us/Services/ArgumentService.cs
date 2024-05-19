@@ -89,10 +89,15 @@ namespace Flats4us.Services
                 StudentId = userId
             };
 
+            var StudentsIds = rent.OtherStudents.Select(s => s.UserId).ToList();
+            StudentsIds.Add(rent.Student.UserId);
+            StudentsIds.Add(property.OwnerId);
+            int[] usersIds = StudentsIds.ToArray();
+
             await _groupChatService.CreateGroupChatAsync(
-                "Argument pomiędzy: student " + userId + 
-                ", oraz właściciel: " + property.OwnerId, 
-                new int[] {userId, property.OwnerId });
+                "Argument pomiędzy: student " + rent.Student.UserId + 
+                ", oraz właściciel: " + property.OwnerId,
+                usersIds);
 
             await _context.Arguments.AddAsync(argument);
             await _context.SaveChangesAsync();
