@@ -24,4 +24,10 @@ export class UserService {
 	public checkIfEmailExist(email: string) {
 		return this.http.get<IVerificationResult>(`${this.apiRoute}/${email}`);
 	}
+
+  public changeEmail(newEmail: string) {
+    return this.http.put(`${this.apiRoute}/general`, {
+      email: newEmail
+    });
+  }
 }
