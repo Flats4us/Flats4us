@@ -170,7 +170,7 @@ namespace Flats4us.Controllers
             Summary = "Updates existing property",
             Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> UpdateProperty(int id, [FromForm] AddEditPropertyDto input)
+        public async Task<IActionResult> UpdateProperty(int id, [FromBody] AddEditPropertyDto input)
         {
             try
             {
