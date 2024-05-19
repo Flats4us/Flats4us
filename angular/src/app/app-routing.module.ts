@@ -64,6 +64,14 @@ const routes: Routes = [
 		loadComponent: () =>
 			import('./calendar/calendar.component').then(c => c.CalendarComponent),
 	},
+	{
+		path: 'report-problem',
+		loadComponent: () =>
+			import('./report-problem/report-problem.component').then(
+				c => c.ReportProblemComponent
+			),
+		canActivate: [AuthGuard],
+	},
 	{ path: '**', component: NotFoundComponent },
 ];
 
