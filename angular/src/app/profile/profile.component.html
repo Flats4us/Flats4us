@@ -71,7 +71,10 @@
 				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
 					<mat-icon>rate_review</mat-icon>
 					<span>Opinie</span>
-					<label class="text-sm">średnia: {{ user.avgRating }}</label>
+				</div>
+				<div class="flex flex-col my-4">
+					<app-star-rating [avgRating]="user.avgRating"></app-star-rating>
+					<label>Średnia ocena: {{ user.avgRating }}</label>
 				</div>
 				<div>
 					<mat-chip-listbox>
