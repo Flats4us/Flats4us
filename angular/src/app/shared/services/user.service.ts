@@ -25,9 +25,9 @@ export class UserService {
 		return this.http.get<IVerificationResult>(`${this.apiRoute}/${email}`);
 	}
 
-  public changeEmail(newEmail: string) {
-    return this.http.put(`${this.apiRoute}/general`, {
-      email: newEmail
-    });
-  }
+	public changeEmail(newEmail: string) {
+		return this.http.put(`${this.apiRoute}/general`, {
+			email: newEmail,
+		});
+	}
 }
