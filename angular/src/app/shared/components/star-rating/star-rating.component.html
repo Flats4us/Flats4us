@@ -1,0 +1,12 @@
+<span class="profile-rating__stars">
+	<mat-icon *ngFor="let star of starsScale; let i = index"
+		>{{
+			i + 1 <= avgRating
+				? "star"
+				: i + 1 < avgRating + 1
+				? "star_half"
+				: "star_outline"
+		}}
+		class="filled"
+	</mat-icon>
+</span>

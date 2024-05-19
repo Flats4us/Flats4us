@@ -21,6 +21,7 @@ import { map, switchMap } from 'rxjs';
 
 import { environment } from '../../../environments/environment.prod';
 import { ProfileService } from '../services/profile.service';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 
 @Component({
 	selector: 'app-add-opinion',
@@ -38,6 +39,7 @@ import { ProfileService } from '../services/profile.service';
 		MatListModule,
 		ReactiveFormsModule,
 		MatSnackBarModule,
+		StarRatingComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
