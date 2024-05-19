@@ -12,6 +12,10 @@ const routes: Routes = [
 		component: AddRealEstateComponent,
 	},
 	{
+		path: 'edit/:id',
+		component: AddRealEstateComponent,
+	},
+	{
 		path: 'owner',
 		component: RealEstateComponent,
 		children: [{ path: ':id', component: RealEstateDetailsComponent }],

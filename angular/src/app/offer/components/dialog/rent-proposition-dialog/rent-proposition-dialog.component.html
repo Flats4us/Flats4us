@@ -30,17 +30,17 @@
 			<input
 				matInput
 				formControlName="duration"
-				placeholder="Liczba dni najmu"
+				placeholder="Liczba miesięcy najmu"
 				type="number"
 				[min]="1"
 			/>
 			<mat-error
 				*ngIf="rentPropositionForm.controls['duration'].errors?.['required']"
 			>
-				Liczba dni jest wymagana!
+				Liczba miesięcy jest wymagana!
 			</mat-error>
 			<mat-error *ngIf="rentPropositionForm.controls['duration'].errors?.['min']">
-				Wprowadzona liczba dni jest nieprawidłowa!
+				Wprowadzona liczba miesięcy jest nieprawidłowa!
 			</mat-error>
 		</mat-form-field>
 		<mat-form-field class="example-chip-list">
@@ -85,6 +85,13 @@
 		>
 			Nie
 		</button>
-		<button mat-button type="submit" (click)="onYesClick()">Tak</button>
+		<button
+			mat-raised-button
+			type="submit"
+			color="primary"
+			(click)="onYesClick()"
+		>
+			Tak
+		</button>
 	</div>
 </div>

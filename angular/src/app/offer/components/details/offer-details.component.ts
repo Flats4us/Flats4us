@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, map, switchMap, of } from 'rxjs';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from 'src/app/rents/components/meeting-add/meeting-add.component';
-import { IPayment, IMenuOptions } from 'src/app/rents/models/rents.models';
+import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { statusName } from 'src/app/rents/statusName';
 import { environment } from 'src/environments/environment.prod';
 import { IOffer } from '../../models/offer.models';
@@ -15,6 +15,12 @@ import { OfferService } from '../../services/offer.service';
 import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialog/rent-proposition-dialog.component';
 import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent-approval-dialog.component';
 import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-cancel-dialog.component';
+import { AuthService } from '@shared/services/auth.service';
+import { LoggedUserType } from '@shared/models/auth.models';
+import { RentsService } from 'src/app/rents/services/rents.service';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { StartService } from 'src/app/start/services/start.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-offer-details',
@@ -23,7 +29,7 @@ import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-
 	animations: [slideAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferDetailsComponent {
+export class OfferDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public statusName: typeof statusName = statusName;
@@ -38,29 +44,33 @@ export class OfferDetailsComponent {
 	public actualOffer$: Observable<IOffer> = this.offerId$.pipe(
 		switchMap(value => this.offerService.getOfferById(parseInt(value)))
 	);
-	public payments: IPayment[] = [
-		{ sum: 1000, date: '20.12.2020', kind: 'CZYNSZ' },
-	];
+
 	public uType = UserType;
+
+	public loggedInUserType = LoggedUserType;
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = ['sum', 'date', 'kind'];
-	public displayedColumnsOwner: string[] = ['sum', 'date', 'kind', 'who'];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'offerDetails', description: 'Szczegóły oferty' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
 		{ option: 'promoteOffer', description: 'Promuj ofertę' },
+		{ option: 'property', description: 'Powiązana nieruchomość' },
 		{ option: 'closeOffer', description: 'Zakończ ofertę' },
 	];
 
 	constructor(
 		public realEstateService: RealEstateService,
 		public offerService: OfferService,
+		public rentsService: RentsService,
+		public startService: StartService,
 		private router: Router,
 		private dialog: MatDialog,
-		private route: ActivatedRoute
-	) {}
+		private route: ActivatedRoute,
+		public authService: AuthService,
+		private snackBar: MatSnackBar
+	) {
+		super();
+	}
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
@@ -71,42 +81,71 @@ export class OfferDetailsComponent {
 	}
 
 	public openCancelDialog(id: number): void {
-		this.dialog.open(OfferCancelDialogComponent, {
+		const cancelDialog = this.dialog.open(OfferCancelDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
+		this.actualOffer$ = cancelDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		cancelDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public openPromotionDialog(id: number): void {
-		this.dialog.open(OfferPromotionDialogComponent, {
+		const promotionDialog = this.dialog.open(OfferPromotionDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
+		this.actualOffer$ = promotionDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		promotionDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
 	public navigateToOffer(id: number) {
 		this.router.navigate(['offer', 'details', id]);
 	}
-	public startDispute(id: number) {
-		this.router.navigate(['disputes', id]);
+
+	public navigateToProperty(id: number) {
+		this.router.navigate(['real-estate', 'owner', id]);
 	}
 
-	public onSelect(menuOption: IMenuOptions, id?: number) {
+	public onSelect(
+		menuOption: IMenuOptions,
+		offerId?: number,
+		propertyId?: number
+	) {
 		switch (menuOption.option) {
 			case 'offerDetails': {
-				this.navigateToOffer(id ?? 0);
-				break;
-			}
-			case 'startDispute': {
-				this.startDispute(id ?? 0);
+				this.navigateToOffer(offerId ?? 0);
 				break;
 			}
 			case 'closeOffer': {
-				this.openCancelDialog(id ?? 0);
+				this.openCancelDialog(offerId ?? 0);
 				break;
 			}
 			case 'promoteOffer': {
-				this.openPromotionDialog(id ?? 0);
+				this.openPromotionDialog(offerId ?? 0);
+				break;
+			}
+			case 'property': {
+				this.navigateToProperty(propertyId ?? 0);
 				break;
 			}
 		}
@@ -120,17 +159,75 @@ export class OfferDetailsComponent {
 	}
 
 	public startRent(id?: number) {
-		this.dialog.open(RentPropositionDialogComponent, {
-			disableClose: true,
-			data: id ?? 0,
-		});
+		const rentPropositionDialog = this.dialog.open(
+			RentPropositionDialogComponent,
+			{
+				disableClose: true,
+				data: id ?? 0,
+			}
+		);
+		this.actualOffer$ = rentPropositionDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentPropositionDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
 	}
 
-	public onRentApproval(id?: number): void {
-		this.dialog.open(RentApprovalDialogComponent, {
+	public onRentApproval(rentId?: number, offerId?: number): void {
+		const rentApprovalDialog = this.dialog.open(RentApprovalDialogComponent, {
 			disableClose: true,
-			data: id ?? 0,
+			data: { rentId: rentId, offerId: offerId } ?? { rentId: 0, offerId: 0 },
 		});
+		this.actualOffer$ = rentApprovalDialog
+			.afterClosed()
+			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+		rentApprovalDialog
+			.afterClosed()
+			.pipe(this.untilDestroyed())
+			.subscribe(
+				() =>
+					(this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					))
+			);
+	}
+
+	public addToWatched(id?: number) {
+		if (id) {
+			this.startService
+				.addToWatched(id)
+				.pipe(this.untilDestroyed())
+				.subscribe({
+					next: () => {
+						this.actualOffer$ = this.offerId$.pipe(
+							switchMap(value => this.offerService.getOfferById(parseInt(value)))
+						);
+						this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
+							duration: 2000,
+						});
+					},
+					error: () => {
+						this.snackBar.open(
+							'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
+					},
+				});
+		}
+	}
+
+	public showRent(id?: number): void {
+		if (id) {
+			this.router.navigate(['rents', 'owner', id]);
+		}
 	}
 
 	public setCurrentSlideIndex(index: number) {

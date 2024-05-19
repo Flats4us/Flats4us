@@ -19,7 +19,7 @@ export class AddOfferComponent extends BaseComponent {
 		description: ['', Validators.required],
 		startDate: ['', Validators.required],
 		endDate: ['', Validators.required],
-		regulations: [''],
+		regulations: ['', Validators.required],
 	});
 
 	public properties$ = this.realEstateService.getRealEstates(true);

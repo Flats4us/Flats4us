@@ -89,7 +89,7 @@ export interface IAddStudent {
 	roommateGender: number;
 	minRoommateAge: number;
 	maxRoommateAge: number;
-	interests: IInterest[];
+	interestIds: number[];
 }
 
 export interface IInterest {

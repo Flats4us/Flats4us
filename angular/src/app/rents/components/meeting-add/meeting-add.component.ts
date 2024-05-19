@@ -16,11 +16,11 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, take } from 'rxjs';
-
 import { RentsService } from '../../services/rents.service';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -54,42 +54,42 @@ export class MeetingAddComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private rentsService: RentsService,
-		@Inject(MAT_DIALOG_DATA) public data: Observable<number>
+		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
-
-		data
-			.pipe(take(1))
-			.subscribe(offerId =>
-				this.meetingForm.controls['offerId'].setValue(offerId)
-			);
+		this.meetingForm.controls['offerId'].setValue(data);
 		this.minDate.setDate(this.minDate.getDate() + 1);
 	}
 
 	public onAdd(): void {
 		this.meetingForm.markAllAsTouched();
-
-		if (this.meetingForm.invalid) {
-			return;
+		if (this.meetingForm.valid) {
+			this.rentsService
+				.addMeeting(this.meetingForm.value)
+				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.subscribe({
+					next: () => {
+						this.meetingForm.controls['offerId'].setValue(this.data);
+						this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
+							duration: 2000,
+						});
+						this.dialogRef.close();
+					},
+					error: () => {
+						this.snackBar.open(
+							'Nie udało się dodać spotkania. Spróbuj ponownie.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
+						this.dialogRef.close();
+					},
+				});
 		}
+	}
 
-		this.rentsService
-			.addMeeting(this.meetingForm.value)
-			.pipe(this.untilDestroyed())
-			.subscribe({
-				next: () => {
-					this.snackBar.open('Spotkanie zostało dodane.', 'Zamknij', {
-						duration: 2000,
-					});
-					this.dialogRef.close();
-				},
-				error: () => {
-					this.snackBar.open(
-						'Nie udało się dodać spotkania. Spróbuj ponownie.',
-						'Zamknij',
-						{ duration: 2000 }
-					);
-				},
-			});
+	private handleError(error: HttpErrorResponse) {
+		return throwError(
+			() => new Error('Nie udało się dodać spotkania. Spróbuj później')
+		);
 	}
 }

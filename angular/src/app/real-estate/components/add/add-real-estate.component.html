@@ -1,8 +1,13 @@
 <div class="container-title">
-	<h1 class="text-4xl p-4 font-semibold">Kreator nieruchomości</h1>
+	<h1 *ngIf="modificationType === mType.ADD" class="text-4xl p-4 font-semibold">
+		Kreator nieruchomości
+	</h1>
+	<h1 *ngIf="modificationType === mType.EDIT" class="text-4xl p-4 font-semibold">
+		Edycja nieruchomości
+	</h1>
 </div>
 <mat-card class="add-real-estate">
-	<mat-stepper #stepper linear>
+	<mat-stepper #stepper>
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
 				<ng-template matStepLabel
@@ -19,6 +24,7 @@
 							<mat-option
 								*ngFor="let property of this.realEstateService.properties"
 								[value]="property.value"
+								[disabled]="true"
 							>
 								{{ property.viewValue }}
 							</mat-option>
@@ -29,20 +35,7 @@
 							Nie wybrano rodzaju nieruchomości!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle-map">
-						Dane adresowe:
-						<button
-							id="showMap"
-							class="batch"
-							type="button"
-							mat-icon-button
-							matTooltip="Pokaż mapę"
-							aria-label="ShowMap"
-							(click)="showMap()"
-						>
-							<mat-icon>map</mat-icon>
-						</button>
-					</div>
+					<div class="subtitle-map">Dane adresowe:</div>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
 						<mat-label>Województwo</mat-label>
@@ -130,7 +123,7 @@
 							id="postalCode"
 							formControlName="postalCode"
 							type="text"
-							placeholder="Kod pocztowy w formacie XX-XXX"
+							placeholder="Kod pocztowy"
 							aria-label="PostalCode"
 							matInput
 						/>
@@ -167,7 +160,7 @@
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Numer ulicy</mat-label>
+						<mat-label>Numer budynku</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -175,14 +168,19 @@
 							id="streetNumber"
 							formControlName="number"
 							type="text"
-							placeholder="Numer ulicy"
+							placeholder="Numer budynku"
 							aria-label="StreetNumber"
 							matInput
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['required']"
 						>
-							Nie podano numeru ulicy!
+							Nie podano numeru budynku!
+						</mat-error>
+						<mat-error
+							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['pattern']"
+						>
+							Nieprawidłowy numer ulicy!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
@@ -413,10 +411,10 @@
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>category</mat-icon></div>
 						</span>
-						<mat-select id="equipment" formControlName="equipment" multiple>
+						<mat-select id="equipment" formControlName="equipmentIds" multiple>
 							<mat-option
 								*ngFor="let equipment of this.realEstateService.equipment"
-								[value]="equipment"
+								[value]="equipment.equipmentId"
 							>
 								{{ equipment.name }}
 							</mat-option>
@@ -447,7 +445,20 @@
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-function">
 						<div class="gallery">
-							<img *ngFor="let url of urls" class="img" [src]="url" />
+							<a *ngFor="let url of photos">
+								<button
+									class="delete-icon"
+									id="deletePhoto"
+									type="button"
+									mat-icon-button
+									matTooltip="Usuń zdjęcie"
+									aria-label="DeletePhoto"
+									(click)="onPhotoDelete(url.name)"
+								>
+									<mat-icon>delete_forever</mat-icon>
+								</button>
+								<img class="img" [src]="url.path" />
+							</a>
 						</div>
 						<input
 							#fileUpload
@@ -460,7 +471,12 @@
 							aria-label="File"
 							(change)="onFileSelected($event)"
 						/>
-						<div *ngIf="addRealEstateFormPhotos.get('photos')?.hasError('required')">
+						<div
+							*ngIf="
+								modificationType === mType.ADD &&
+								addRealEstateFormPhotos.get('photos')?.hasError('required')
+							"
+						>
 							Zdjęcie jest wymagane.
 						</div>
 						<div class="batch">
@@ -513,8 +529,13 @@
 						<mat-icon class="success-icon" [inline]="true"> insert_emoticon</mat-icon>
 						<h2>Formularz został pomyślnie wypełniony!</h2>
 						<h2>
-							Klikająć na przycisk "Zapisz nieruchomość" potwierdzasz prawdziwość
-							wprowadzonych danych.
+							Klikająć na przycisk
+							{{
+								modificationType === mType.ADD
+									? '"Zapisz nieruchomość"'
+									: '"Zapisz zmiany"'
+							}}
+							potwierdzasz prawdziwość wprowadzonych danych.
 						</h2>
 					</div>
 					<div class="button-box">
@@ -548,7 +569,9 @@
 							aria-label="AddRealEstate"
 							(click)="saveRealEstate()"
 						>
-							Zapisz nieruchomość
+							{{
+								modificationType === mType.ADD ? "Zapisz nieruchomość" : "Zapisz zmiany"
+							}}
 						</button>
 						<div class="btn-spacer"></div>
 						<button
@@ -558,23 +581,6 @@
 							(click)="formReset()"
 						>
 							Reset
-						</button>
-					</div>
-					<h2 *ngIf="completed" class="subtitle-desc">
-						<p>Nieruchomość została zapisana!</p>
-						<p>Czy chcesz dodać ofertę dla zapisanej nieruchomości?</p>
-					</h2>
-					<div class="button-box">
-						<button
-							*ngIf="completed"
-							id="addOffer"
-							type="button"
-							mat-raised-button
-							color="primary"
-							aria-label="AddOffer"
-							(click)="addOffer()"
-						>
-							Dodaj ofertę
 						</button>
 					</div>
 				</div>
