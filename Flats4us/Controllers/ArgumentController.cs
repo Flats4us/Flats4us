@@ -46,7 +46,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding argument - body: {input}");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
 
             }
         }
