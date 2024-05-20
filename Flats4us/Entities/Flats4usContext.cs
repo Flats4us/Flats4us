@@ -11,7 +11,6 @@ namespace Flats4us.Entities
     {
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
-        public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<GroupChat> GroupChats { get; set; }
@@ -208,6 +207,18 @@ namespace Flats4us.Entities
                 .HasOne(oi => oi.Student)
                 .WithMany(o => o.OfferInterests)
                 .HasForeignKey(oi => oi.StudentId);
+
+            modelBuilder.Entity<ArgumentIntervention>()
+               .HasOne(x => x.Argument)
+               .WithMany(x => x.ArgumentInterventions)
+               .HasForeignKey(x => x.ArgumentId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ArgumentIntervention>()
+                .HasOne(x => x.Moderator)
+                .WithMany(x => x.ArgumentInterventions)
+                .HasForeignKey(x => x.ModeratorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
