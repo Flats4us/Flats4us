@@ -274,16 +274,16 @@
 						"
 					>
 						<mat-label>Zainteresowania</mat-label>
-						<mat-select multiple [formControl]="hobbyCtrl">
+						<mat-select
+							multiple
+							formControlName="interestIds"
+							[compareWith]="hobbyComparisonFunction"
+							[(ngModel)]="selectedHobbies"
+						>
 							<mat-select-trigger>
 								<mat-chip-set>
-									<mat-chip
-										*ngFor="let myHobby of hobbyCtrl.value"
-										[removable]="true"
-										(removed)="removeHobby(myHobby)"
-									>
+									<mat-chip *ngFor="let myHobby of selectedHobbies">
 										{{ myHobby.name }}
-										<mat-icon matChipRemove>cancel</mat-icon>
 									</mat-chip>
 								</mat-chip-set>
 							</mat-select-trigger>

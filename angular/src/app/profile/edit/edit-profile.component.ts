@@ -61,7 +61,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	protected baseUrl = environment.apiUrl.replace('/api', '/');
 
 	public separatorKeysCodes: number[] = [ENTER, COMMA];
-	public hobbyCtrl = new FormControl([] as IInterest[]);
+	public selectedHobbies: IInterest[] = [];
 	public socialMediaCtrl = new FormControl('');
 	public filteredHobbies$: Observable<IInterest[]> =
 		this.profileService.getInterests();
@@ -116,7 +116,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			interestIds: this.hobbyCtrl,
+			interestIds: new FormControl([]),
 			links: new FormControl(this.socialMedias),
 			documentType: new FormControl(''),
 			documentExpireDate: new FormControl(null, [
@@ -160,7 +160,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					this.urlPhoto = this.baseUrl + user.profilePicture.path;
 					this.urlScan = this.baseUrl + user.document.path;
 					if (user.userType === 1) {
-						this.hobbyCtrl.setValue(user.interests);
+						this.selectedHobbies = user.interests;
 						this.socialMedias = user.links;
 						this.dataFormGroupStudent.patchValue(user);
 					} else {
@@ -205,12 +205,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (index >= 0) {
 			items.splice(index, 1);
 		}
-	}
-
-	public removeHobby(hobby: IInterest) {
-		const hobbies = this.hobbyCtrl.value as IInterest[];
-		this.removeFirst(hobbies, hobby);
-		this.hobbyCtrl.setValue(hobbies);
 	}
 
 	private removeFirst<T>(array: T[], toRemove: T): void {
@@ -334,9 +328,20 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 				this.urlNewScan = <string>reader.result;
 				this.newScanEvent.emit(file);
 			}
-			this.changeDetectorRef.detectChanges();
+			this.changeDetectorRef.markForCheck();
 		};
 	}
+
+	public hobbyComparisonFunction = function (
+		option: IInterest,
+		value: IInterest
+	): boolean {
+		if (value.interestId === option.interestId) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	public validityTillValidator(): ValidatorFn {
 		return (control: AbstractControl): ValidationErrors | null => {
