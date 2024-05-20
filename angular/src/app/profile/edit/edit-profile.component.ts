@@ -156,16 +156,15 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.EDIT) {
 			this.actualUser$ = this.profileService.getActualProfile();
 			this.actualUser$.pipe(this.untilDestroyed()).subscribe(user => {
-				if (this.modificationType === ModificationType.EDIT) {
-					this.urlPhoto = this.baseUrl + user.profilePicture.path;
-					this.urlScan = this.baseUrl + user.document.path;
-					if (user.userType === 1) {
-						this.selectedHobbies = user.interests;
-						this.socialMedias = user.links;
-						this.dataFormGroupStudent.patchValue(user);
-					} else {
-						this.dataFormGroupOwner.patchValue(user);
-					}
+				this.urlPhoto = this.baseUrl + user.profilePicture.path;
+				this.urlScan = this.baseUrl + user.document.path;
+				if (user.userType === 1) {
+					this.selectedHobbies = user.interests;
+					this.socialMedias = user.links;
+					this.dataFormGroupStudent.patchValue(user);
+				} else {
+					this.dataFormGroupOwner.patchValue(user);
+					this.dataFormGroupOwner.get('documentExpireDate')?.disable();
 				}
 			});
 		}
@@ -238,7 +237,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	public getTooltipScan(): string {
-		return !this.urlNewScan ? 'Wczytaj skan dokumentu' : 'Zmień skan dokumentu';
+		if (!this.urlNewScan && this.modificationType === ModificationType.CREATE) {
+			return 'Wczytaj skan dokumentu';
+		}
+		if (this.urlNewScan || this.modificationType === ModificationType.EDIT) {
+			return 'Zmień skan dokumentu';
+		} else {
+			return 'Wczytaj skan dokumentu';
+		}
 	}
 
 	public onSelect(menuOption: IMenuOptions) {

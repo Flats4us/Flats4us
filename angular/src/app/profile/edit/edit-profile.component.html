@@ -333,11 +333,21 @@
 					<span
 						*ngIf="
 							modificationType === mType.CREATE ||
-							(actualUser && !checkValidityTill(actualUser.documentExpireDate))
+							(modificationType === mType.EDIT && actualUser.userType === 1)
 						"
 						class="btn-upload-box"
 					>
-						<a *ngIf="!urlNewScan">Wczytaj skan aktualnego dokumentu!</a>
+						<span
+							*ngIf="!urlNewScan && modificationType === mType.CREATE"
+							class="scan-url-box"
+							>Wczytaj skan aktualnego dokumentu!</span
+						>
+						<span
+							*ngIf="urlNewScan || modificationType === mType.EDIT"
+							class="scan-url-box"
+						>
+							Kliknij, żeby zmienić skan dokumentu</span
+						>
 						<button
 							mat-icon-button
 							type="button"
@@ -357,7 +367,9 @@
 							aria-label="File"
 							(change)="onFileSelected($event, regexScan)"
 						/>
-						<mat-error *ngIf="!urlNewScan">Nie wczytano skanu dokumentu!</mat-error>
+						<mat-error *ngIf="!urlNewScan && modificationType === mType.CREATE"
+							>Nie wczytano skanu dokumentu!</mat-error
+						>
 					</span>
 					<mat-form-field
 						*ngIf="
