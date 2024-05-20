@@ -169,7 +169,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BankAccount = "12341234123412341234123412",
             DocumentNumber = "XXX 000000"

@@ -58,14 +58,6 @@ namespace Flats4us.Services
                 .FirstOrDefault(x => x.RentId == input.RentId)
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
 
-            //var offer = await _context.Offers
-            //    .FindAsync(rent.OfferId)
-            //    ?? throw new ArgumentException($"Offer associated with Rent ID {input.RentId} not found.");
-
-            //var property = await _context.Properties
-            //    .FindAsync(offer.PropertyId)
-            //    ?? throw new ArgumentException($"Property associated with Rent ID {input.RentId} not found.");
-
             var property = rent.Offer?.Property
                 ?? throw new ArgumentException($"Property associated with Rent ID {input.RentId} not found.");
 
@@ -116,22 +108,6 @@ namespace Flats4us.Services
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
-            //var rent = await _context.Rents
-            //    .FindAsync(argument.RentId)
-            //    ?? throw new ArgumentException($"Rent with ID: {argument.RentId} not found");
-
-            //var offer = await _context.Offers
-            //    .FindAsync(rent.OfferId)
-            //    ?? throw new ArgumentException($"Offer with ID: {rent.OfferId} not found");
-
-            //var property = await _context.Properties
-            //    .FindAsync(offer.PropertyId)
-            //    ?? throw new ArgumentException($"Property with ID: {offer.PropertyId} not found");
-
-            //var owner = await _context.Owners
-            //    .FindAsync(property.OwnerId)
-            //    ?? throw new ArgumentException($"Owner with ID: {property.OwnerId} not found");
-
             var owner = argument.Rent?.Offer?.Property?.Owner
                 ?? throw new ArgumentException($"Owner with this Id not found");
 
@@ -152,22 +128,6 @@ namespace Flats4us.Services
                 .ThenInclude(ow => ow.Owner)
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
-
-            //var rent = await _context.Rents
-            //    .FindAsync(argument.RentId)
-            //    ?? throw new ArgumentException($"Rent with ID: {argument.RentId} not found");
-
-            //var offer = await _context.Offers
-            //    .FindAsync(rent.OfferId)
-            //    ?? throw new ArgumentException($"Offer with ID: {rent.OfferId} not found");
-
-            //var property = await _context.Properties
-            //    .FindAsync(offer.PropertyId)
-            //    ?? throw new ArgumentException($"Property with ID: {offer.PropertyId} not found");
-
-            //var owner = await _context.Owners
-            //    .FindAsync(property.OwnerId)
-            //    ?? throw new ArgumentException($"Owner with ID: {property.OwnerId} not found");
 
             var owner = argument.Rent?.Offer?.Property?.Owner
                 ?? throw new ArgumentException($"Owner with this ID not found");
@@ -238,17 +198,5 @@ namespace Flats4us.Services
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);
             await _context.SaveChangesAsync();
         }
-
-
-
-
-        //DONE 1. Student może dodać Argument do Rent, który go dotyczy(tworzony jest czat) 
-        //DONE 2. Właściciel może zaakceptować
-        //DONE 3. Student i wlaściciel może poprosić o interwencje
-
-        //DONE4. Moderator wyświetla liste sporów z potrzebą interwencji(pofiltrowane od najstarszych)
-        //5. Moderator może dołączyć do czatu
-        //DONE 6. Moderator może podjać decyzje
-
     }
 }

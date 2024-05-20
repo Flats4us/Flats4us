@@ -89,7 +89,7 @@ namespace Flats4us.Controllers
                 {
                     return BadRequest("Server error: Failed to get user id from request");
                 }
-                _logger.LogInformation("Accepting argument on Owner side");
+                _logger.LogInformation("Asked moderator for intervention");
                 await _argumentService.AskForIntervention(id, requestUserId);
                 return Ok();
             }
