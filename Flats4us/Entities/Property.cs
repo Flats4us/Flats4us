@@ -44,9 +44,6 @@ namespace Flats4us.Entities
         public int ConstructionYear { get; set; }
 
         [Required]
-        public string ImagesPath { get; set; }
-
-        [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
@@ -58,17 +55,22 @@ namespace Flats4us.Entities
         [Required]
         public int OwnerId { get; set; }
 
+        public File? TitleDeed { get; set; }
+
         public virtual Owner Owner { get; set; }
 
         public virtual ICollection<Equipment> Equipment { get; set; }
         public virtual ICollection<Offer> Offers { get; set; }
         public virtual ICollection<RentOpinion> RentOpinions { get; set; }
 
+        public ICollection<File> Images { get; set; }
+
         public Property()
         {
             this.Equipment = new HashSet<Equipment>();
             this.Offers = new HashSet<Offer>();
             this.RentOpinions = new HashSet<RentOpinion>();
+            this.Images = new HashSet<File>();
         }
     }
 }

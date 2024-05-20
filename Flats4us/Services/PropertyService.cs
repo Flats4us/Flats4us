@@ -109,18 +109,24 @@ namespace Flats4us.Services
         public async Task<CountedListDto<PropertyForVerificationDto>> GetNotVerifiedPropertiesAsync(PaginatorDto input)
         {
             var flats = await _context.Flats
-                .Include(x => x.Owner)
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Include(f => f.Owner)
+                .Include(f => f.TitleDeed)
+                .Include(f => f.Images)
+                .Where(f => f.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var houses = await _context.Houses
-                .Include(x => x.Owner)
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Include(h => h.Owner)
+                .Include(h => h.TitleDeed)
+                .Include(h => h.Images)
+                .Where(h => h.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var rooms = await _context.Rooms
-                .Include(x => x.Owner)
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
+                .Include(r => r.Owner)
+                .Include(r => r.TitleDeed)
+                .Include(r => r.Images)
+                .Where(r => r.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var flatDtos = _mapper.Map<List<PropertyForVerificationDto>>(flats);
@@ -148,8 +154,6 @@ namespace Flats4us.Services
 
         public async Task<OutputDto<int>> AddPropertyAsync(AddEditPropertyDto input, int ownerId)
         {
-            var imageDirectory = Guid.NewGuid().ToString();
-
             var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, input.Street, input.Number, input.City, input.PostalCode);
 
             var equipmentList = await _context.Equipment
@@ -181,7 +185,6 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
@@ -214,7 +217,6 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
@@ -250,7 +252,6 @@ namespace Flats4us.Services
                         Area = input.Area,
                         MaxNumberOfInhabitants = input.MaxNumberOfInhabitants,
                         ConstructionYear = input.ConstructionYear,
-                        ImagesPath = imageDirectory,
                         VerificationStatus = VerificationStatus.NotVerified,
                         CreationDate = DateTime.Now,
                         DateForVerificationSorting = DateTime.Now,
@@ -288,8 +289,9 @@ namespace Flats4us.Services
                 if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
                 
                 if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
-                
-                await ImageUtility.DeletePropertyFileAsync(property.ImagesPath, fileId);
+
+                // TODO: Images refactor
+                //await ImageUtility.DeletePropertyFileAsync(property.ImagesPath, fileId);
             }
             catch (IOException ex)
             {
@@ -305,27 +307,17 @@ namespace Flats4us.Services
 
             if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
 
-            var directoryPath = Path.Combine("Images/Properties", property.ImagesPath);
-
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
-                await ImageUtility.ProcessAndSaveImage(input.TitleDeed, Path.Combine(directoryPath, "TitleDeed"));
-            }
-            else
-            {
-                throw new Exception("Title deed saving failure");
+                property.TitleDeed = new Entities.File(input.TitleDeed);
             }
 
             if (input.Images != null && input.Images.Count > 0)
             {
                 foreach (var image in input.Images)
                 {
-                    await ImageUtility.ProcessAndSaveImage(image, Path.Combine(directoryPath, "Images"));
+                    property.Images.Add(new Entities.File(image));
                 }
-            }
-            else
-            {
-                throw new Exception("Images saving failure");
             }
 
             await _context.SaveChangesAsync();
@@ -347,8 +339,6 @@ namespace Flats4us.Services
                 )
                 .ToListAsync();
 
-            string imageDirectoryPath = string.Empty;
-
             switch (input.PropertyType)
             {
                 case PropertyType.Flat:
@@ -361,8 +351,6 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
 
                     if (flat is null) throw new ArgumentException($"Flat with ID {id} not found.");
-
-                    imageDirectoryPath = Path.Combine("Images/Properties", flat.ImagesPath);
 
                     flat.Province = input.Province;
                     flat.District = input.District;
@@ -392,8 +380,6 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
 
                     if (room is null) throw new ArgumentException($"Room with ID {id} not found.");
-
-                    imageDirectoryPath = Path.Combine("Images/Properties", room.ImagesPath);
 
                     room.Province = input.Province;
                     room.District = input.District;
@@ -426,8 +412,6 @@ namespace Flats4us.Services
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
 
                     if (house is null) throw new ArgumentException($"House with ID {id} not found.");
-
-                    imageDirectoryPath = Path.Combine("Images/Properties", house.ImagesPath);
 
                     house.Province = input.Province;
                     house.District = input.District;
@@ -474,9 +458,9 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
 
             // TODO: Images refactor
-            string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
+            //string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
 
-            await ImageUtility.DeleteDirectory(imageDirectoryPath);
+            //await ImageUtility.DeleteDirectory(imageDirectoryPath);
         }
 
         public async Task VerifyPropertyAsync(int id, bool decision)
@@ -491,9 +475,10 @@ namespace Flats4us.Services
             {
                 property.VerificationStatus = VerificationStatus.Verified;
 
-                var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
+                // TODO: Images refactor
+                //var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
 
-                await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
+                //await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
             }
             else
             {
