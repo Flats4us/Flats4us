@@ -1,20 +1,17 @@
-﻿using Azure.Core;
-using Flats4us.Entities;
+﻿using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
-using System;
-using System.Linq;
 
 public static class DataSeeder
 {
     public static void SeedData(Flats4usContext dbContext)
     {
-        ImageUtility.DeleteDirectory("Images/Properties").Wait();
-        ImageUtility.DeleteDirectory("Images/Users").Wait();
+        ImageUtility.DeleteDirectory("Images/Files").Wait();
 
         #region Equipment
 
-        var equipment1 = new Equipment { 
+        var equipment1 = new Equipment
+        {
             Name = "Dishwasher"
         };
         var equipment2 = new Equipment
@@ -167,7 +164,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -185,7 +181,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 3, 23),
             LastLoginDate = new DateTime(2023, 10, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bnowak123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
@@ -203,7 +198,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rpawlak123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
@@ -221,7 +215,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kklik123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
@@ -239,7 +232,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2022, 5, 20),
             LastLoginDate = new DateTime(2023, 5, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowakowska123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 11, 15),
@@ -257,7 +249,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 3, 10),
             LastLoginDate = new DateTime(2023, 8, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pdabrowski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 10, 22),
@@ -275,7 +266,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 6, 15),
             LastLoginDate = new DateTime(2023, 11, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jwisniewski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 8, 17),
@@ -293,7 +283,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2022, 8, 25),
             LastLoginDate = new DateTime(2023, 2, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mlewandowska123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 30),
@@ -312,7 +301,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 4, 8),
             LastLoginDate = new DateTime(2023, 9, 8),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkaczmarek123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 7, 10),
@@ -331,7 +319,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2022, 10, 3),
             LastLoginDate = new DateTime(2023, 3, 3),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Tzajac123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 8, 20),
@@ -350,7 +337,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 7, 18),
             LastLoginDate = new DateTime(2023, 12, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ewojcik123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 5, 5),
@@ -368,7 +354,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 4, 18),
             LastLoginDate = new DateTime(2023, 9, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwojcik123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 10, 25),
@@ -386,7 +371,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 7, 8),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ajankowski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 11, 20),
@@ -404,7 +388,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 7, 21),
             LastLoginDate = new DateTime(2023, 12, 21),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bkaminska123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 1, 5),
@@ -414,20 +397,20 @@ public static class DataSeeder
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14);
 
-        ImageUtility.SeedUserImage(owner1.ImagesPath, owner1.VerificationStatus, owner1.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner2.ImagesPath, owner2.VerificationStatus, owner2.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner3.ImagesPath, owner3.VerificationStatus, owner3.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner4.ImagesPath, owner4.VerificationStatus, owner4.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner5.ImagesPath, owner5.VerificationStatus, owner5.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner6.ImagesPath, owner6.VerificationStatus, owner6.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner7.ImagesPath, owner7.VerificationStatus, owner7.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner8.ImagesPath, owner8.VerificationStatus, owner8.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner9.ImagesPath, owner9.VerificationStatus, owner9.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner10.ImagesPath, owner10.VerificationStatus, owner10.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner11.ImagesPath, owner11.VerificationStatus, owner11.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner12.ImagesPath, owner12.VerificationStatus, owner12.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner13.ImagesPath, owner13.VerificationStatus, owner13.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner14.ImagesPath, owner14.VerificationStatus, owner14.DocumentType).Wait();
+        SeedUserFiles(owner1).Wait();
+        SeedUserFiles(owner2).Wait();
+        SeedUserFiles(owner3).Wait();
+        SeedUserFiles(owner4).Wait();
+        SeedUserFiles(owner5).Wait();
+        SeedUserFiles(owner6).Wait();
+        SeedUserFiles(owner7).Wait();
+        SeedUserFiles(owner8).Wait();
+        SeedUserFiles(owner9).Wait();
+        SeedUserFiles(owner10).Wait();
+        SeedUserFiles(owner11).Wait();
+        SeedUserFiles(owner12).Wait();
+        SeedUserFiles(owner13).Wait();
+        SeedUserFiles(owner14).Wait();
 
         #endregion
 
@@ -444,7 +427,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -467,7 +449,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Aklocek123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -490,7 +471,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kfilipek123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -513,7 +493,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lguziewicz123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
@@ -535,7 +514,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 2, 5),
             LastLoginDate = new DateTime(2023, 11, 5),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowak123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 6, 15),
@@ -558,7 +536,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 3, 20),
             LastLoginDate = new DateTime(2023, 12, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zkowalski123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 4, 30),
@@ -580,7 +557,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 4, 10),
             LastLoginDate = new DateTime(2024, 1, 1),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwisniewska123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2028, 8, 22),
@@ -603,7 +579,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 5, 15),
             LastLoginDate = new DateTime(2023, 12, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pzawadzki123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2026, 5, 10),
@@ -625,7 +600,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 6, 25),
             LastLoginDate = new DateTime(2023, 12, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kdabrowska123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 9, 5),
@@ -648,7 +622,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 7, 10),
             LastLoginDate = new DateTime(2023, 12, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lnowicki123"),
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 12, 18),
@@ -663,16 +636,16 @@ public static class DataSeeder
 
         dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10);
 
-        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student3.ImagesPath, student3.VerificationStatus, student3.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student4.ImagesPath, student4.VerificationStatus, student4.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student5.ImagesPath, student5.VerificationStatus, student5.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student6.ImagesPath, student6.VerificationStatus, student6.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student7.ImagesPath, student7.VerificationStatus, student7.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student8.ImagesPath, student8.VerificationStatus, student8.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student9.ImagesPath, student9.VerificationStatus, student9.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student10.ImagesPath, student10.VerificationStatus, student10.DocumentType).Wait();
+        SeedUserFiles(student1).Wait();
+        SeedUserFiles(student2).Wait();
+        SeedUserFiles(student3).Wait();
+        SeedUserFiles(student4).Wait();
+        SeedUserFiles(student5).Wait();
+        SeedUserFiles(student6).Wait();
+        SeedUserFiles(student7).Wait();
+        SeedUserFiles(student8).Wait();
+        SeedUserFiles(student9).Wait();
+        SeedUserFiles(student10).Wait();
 
         #endregion
 
@@ -712,7 +685,6 @@ public static class DataSeeder
             Area = 40,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2000,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 1),
             DateForVerificationSorting = new DateTime(2023, 10, 1),
@@ -735,7 +707,6 @@ public static class DataSeeder
             Area = 64,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1980,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 9),
             DateForVerificationSorting = new DateTime(2023, 10, 9),
@@ -758,7 +729,6 @@ public static class DataSeeder
             Area = 50,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1980,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 11, 1),
             DateForVerificationSorting = new DateTime(2023, 11, 1),
@@ -781,7 +751,6 @@ public static class DataSeeder
             Area = 70,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1993,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 1),
             DateForVerificationSorting = new DateTime(2023, 7, 1),
@@ -804,7 +773,6 @@ public static class DataSeeder
             Area = 45,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2001,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 5, 6),
             DateForVerificationSorting = new DateTime(2023, 5, 6),
@@ -827,7 +795,6 @@ public static class DataSeeder
             Area = 50,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 3),
             DateForVerificationSorting = new DateTime(2023, 7, 3),
@@ -850,7 +817,6 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2003,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 11, 14),
             DateForVerificationSorting = new DateTime(2023, 11, 14),
@@ -873,7 +839,6 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 1987,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 4),
             DateForVerificationSorting = new DateTime(2023, 9, 4),
@@ -896,7 +861,6 @@ public static class DataSeeder
             Area = 45,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2019,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 18),
             DateForVerificationSorting = new DateTime(2023, 8, 18),
@@ -919,7 +883,6 @@ public static class DataSeeder
             Area = 80,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 2015,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 4, 6),
             DateForVerificationSorting = new DateTime(2023, 4, 6),
@@ -942,7 +905,6 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1960,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 7, 15),
             DateForVerificationSorting = new DateTime(2023, 7, 15),
@@ -965,7 +927,6 @@ public static class DataSeeder
             Area = 70,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 20),
             DateForVerificationSorting = new DateTime(2023, 5, 20),
@@ -988,7 +949,6 @@ public static class DataSeeder
             Area = 90,
             MaxNumberOfInhabitants = 5,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 9, 28),
             DateForVerificationSorting = new DateTime(2023, 9, 28),
@@ -1011,7 +971,6 @@ public static class DataSeeder
             Area = 65,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 12, 10),
             DateForVerificationSorting = new DateTime(2023, 12, 10),
@@ -1023,20 +982,20 @@ public static class DataSeeder
 
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14);
 
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
-        ImageUtility.SeedPropertyImage(flat2.ImagesPath, flat2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat3.ImagesPath, flat3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat4.ImagesPath, flat4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat5.ImagesPath, flat5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat6.ImagesPath, flat6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat7.ImagesPath, flat7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat8.ImagesPath, flat8.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat9.ImagesPath, flat9.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat10.ImagesPath, flat10.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat11.ImagesPath, flat11.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat12.ImagesPath, flat12.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat13.ImagesPath, flat13.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat14.ImagesPath, flat14.VerificationStatus);
+        SeedPropertyFiles(flat1);
+        SeedPropertyFiles(flat2);
+        SeedPropertyFiles(flat3);
+        SeedPropertyFiles(flat4);
+        SeedPropertyFiles(flat5);
+        SeedPropertyFiles(flat6);
+        SeedPropertyFiles(flat7);
+        SeedPropertyFiles(flat8);
+        SeedPropertyFiles(flat9);
+        SeedPropertyFiles(flat10);
+        SeedPropertyFiles(flat11);
+        SeedPropertyFiles(flat12);
+        SeedPropertyFiles(flat13);
+        SeedPropertyFiles(flat14);
 
         #endregion
 
@@ -1056,7 +1015,6 @@ public static class DataSeeder
             Area = 20,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1970,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 6, 23),
             DateForVerificationSorting = new DateTime(2023, 6, 23),
@@ -1078,7 +1036,6 @@ public static class DataSeeder
             Area = 15,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1969,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 22),
             DateForVerificationSorting = new DateTime(2023, 7, 22),
@@ -1100,7 +1057,6 @@ public static class DataSeeder
             Area = 25,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2023,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 10, 3),
             DateForVerificationSorting = new DateTime(2023, 10, 3),
@@ -1122,7 +1078,6 @@ public static class DataSeeder
             Area = 20,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 8, 30),
             DateForVerificationSorting = new DateTime(2023, 8, 30),
@@ -1144,7 +1099,6 @@ public static class DataSeeder
             Area = 22,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2000,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 3, 17),
             DateForVerificationSorting = new DateTime(2023, 3, 17),
@@ -1166,7 +1120,6 @@ public static class DataSeeder
             Area = 25,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1950,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 8, 10),
             DateForVerificationSorting = new DateTime(2023, 8, 10),
@@ -1188,7 +1141,6 @@ public static class DataSeeder
             Area = 18,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
             DateForVerificationSorting = new DateTime(2023, 9, 5),
@@ -1210,7 +1162,6 @@ public static class DataSeeder
             Area = 22,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1965,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 10, 20),
             DateForVerificationSorting = new DateTime(2023, 10, 20),
@@ -1222,14 +1173,14 @@ public static class DataSeeder
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8);
 
-        ImageUtility.SeedPropertyImage(room1.ImagesPath, room1.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room2.ImagesPath, room2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room3.ImagesPath, room3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room4.ImagesPath, room4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room5.ImagesPath, room5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room6.ImagesPath, room6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room7.ImagesPath, room7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room8.ImagesPath, room8.VerificationStatus);
+        SeedPropertyFiles(room1);
+        SeedPropertyFiles(room2);
+        SeedPropertyFiles(room3);
+        SeedPropertyFiles(room4);
+        SeedPropertyFiles(room5);
+        SeedPropertyFiles(room6);
+        SeedPropertyFiles(room7);
+        SeedPropertyFiles(room8);
 
         #endregion
 
@@ -1248,14 +1199,13 @@ public static class DataSeeder
             Area = 150,
             MaxNumberOfInhabitants = 6,
             ConstructionYear = 2001,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 14),
             DateForVerificationSorting = new DateTime(2023, 7, 14),
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
-            PlotArea= 200,
+            PlotArea = 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
         var house2 = new House
@@ -1271,7 +1221,6 @@ public static class DataSeeder
             Area = 110,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1989,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 9),
             DateForVerificationSorting = new DateTime(2023, 8, 9),
@@ -1280,7 +1229,7 @@ public static class DataSeeder
             NumberOfFloors = 2,
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
-        };        
+        };
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -1294,7 +1243,6 @@ public static class DataSeeder
             Area = 180,
             MaxNumberOfInhabitants = 6,
             ConstructionYear = 1999,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 14),
             DateForVerificationSorting = new DateTime(2023, 8, 14),
@@ -1303,7 +1251,7 @@ public static class DataSeeder
             NumberOfFloors = 4,
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
-        };        
+        };
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -1317,7 +1265,6 @@ public static class DataSeeder
             Area = 120,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1997,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 4, 5),
             DateForVerificationSorting = new DateTime(2023, 4, 5),
@@ -1340,7 +1287,6 @@ public static class DataSeeder
             Area = 130,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 12),
             DateForVerificationSorting = new DateTime(2023, 7, 12),
@@ -1363,7 +1309,6 @@ public static class DataSeeder
             Area = 180,
             MaxNumberOfInhabitants = 8,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 28),
             DateForVerificationSorting = new DateTime(2023, 5, 28),
@@ -1386,7 +1331,6 @@ public static class DataSeeder
             Area = 130,
             MaxNumberOfInhabitants = 5,
             ConstructionYear = 1998,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 10),
             DateForVerificationSorting = new DateTime(2023, 8, 10),
@@ -1409,7 +1353,6 @@ public static class DataSeeder
             Area = 200,
             MaxNumberOfInhabitants = 7,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
             DateForVerificationSorting = new DateTime(2023, 9, 5),
@@ -1422,14 +1365,14 @@ public static class DataSeeder
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8);
 
-        ImageUtility.SeedPropertyImage(house1.ImagesPath, house1.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house2.ImagesPath, house2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house3.ImagesPath, house3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house4.ImagesPath, house4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house5.ImagesPath, house5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house6.ImagesPath, house6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house7.ImagesPath, house7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house8.ImagesPath, house8.VerificationStatus);
+        SeedPropertyFiles(house1);
+        SeedPropertyFiles(house2);
+        SeedPropertyFiles(house3);
+        SeedPropertyFiles(house4);
+        SeedPropertyFiles(house5);
+        SeedPropertyFiles(house6);
+        SeedPropertyFiles(house7);
+        SeedPropertyFiles(house8);
 
         #endregion
 
@@ -1764,7 +1707,7 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25);
 
         #endregion
-        
+
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion
@@ -2422,5 +2365,82 @@ public static class DataSeeder
         #endregion
 
         dbContext.SaveChanges();
+    }
+
+    private static void SeedPropertyFiles(Property property)
+    {
+        if (property.VerificationStatus == VerificationStatus.NotVerified)
+        {
+            var titleDeedPath = Path.Combine("Images", "PropertiesSeed", "TitleDeed", "TitleDeed.pdf");
+
+            if (!System.IO.File.Exists(titleDeedPath))
+            {
+                throw new FileNotFoundException($"The file {titleDeedPath} does not exist.");
+            }
+
+            property.TitleDeed = new Flats4us.Entities.File(titleDeedPath);
+        }
+
+        var imagesPath = Path.Combine("Images", "PropertiesSeed", "Images");
+
+        var random = new Random();
+        var files = Directory.GetFiles(imagesPath);
+        var selectedFiles = files.OrderBy(f => random.Next()).Take(4);
+
+        foreach (var file in selectedFiles)
+        {
+            property.Images.Add(new Flats4us.Entities.File(file));
+        }
+    }
+
+    private static async Task SeedUserFiles(OwnerStudent user)
+    {
+        if (user.VerificationStatus == VerificationStatus.NotVerified)
+        {
+            var documentPath = string.Empty;
+
+            switch (user.DocumentType)
+            {
+                case DocumentType.StudentCard:
+                    documentPath = Path.Combine("Images", "UsersSeed", "StudentCard", "StudentCard.jpg");
+                    break;
+                case DocumentType.ID:
+                    documentPath = Path.Combine("Images", "UsersSeed", "ID", "ID.jpg");
+                    break;
+                case DocumentType.Passport:
+                    documentPath = Path.Combine("Images", "UsersSeed", "Passport", "Passport.jpg");
+                    break;
+            }
+
+            if (!System.IO.File.Exists(documentPath))
+            {
+                throw new FileNotFoundException($"The file {documentPath} does not exist.");
+            }
+
+            user.Document = new Flats4us.Entities.File(documentPath);
+        }
+
+        try
+        {
+            var profilePicturePath = await ImageUtility.GetRandomProfilePicturePath();
+
+            user.ProfilePicture = new Flats4us.Entities.File(profilePicturePath);
+
+            if (System.IO.File.Exists(profilePicturePath))
+            {
+                System.IO.File.Delete(profilePicturePath);
+            }
+        }
+        catch (Exception)
+        {
+            var backupImagePath = Path.Combine("Images", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
+
+            if (System.IO.File.Exists(backupImagePath))
+            {
+                user.ProfilePicture = new Flats4us.Entities.File(backupImagePath);
+            }
+        }
+
+        await Task.Delay(1000);
     }
 }

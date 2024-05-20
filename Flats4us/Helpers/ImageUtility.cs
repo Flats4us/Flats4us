@@ -259,6 +259,22 @@ namespace Flats4us.Helpers
             }
         }
 
+        public static async Task<string> GetRandomProfilePicturePath()
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var imageUrl = await GetRandomProfilePictureUrl(httpClient);
+
+                var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+                var fileName = $"{Guid.NewGuid()}.jpg";
+                var filePath = Path.Combine(Path.GetTempPath(), fileName);
+
+                System.IO.File.WriteAllBytes(filePath, imageBytes);
+
+                return filePath;
+            }
+        }
+
         static async Task<string> GetRandomProfilePictureUrl(HttpClient httpClient)
         {
             var apiUrl = "https://randomuser.me/api/";

@@ -118,7 +118,9 @@ namespace Flats4us.Services
             if (input.Document != null)
             {
                 user.VerificationStatus = VerificationStatus.NotVerified;
-                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
+
+                // TODO: Images refactor
+                //await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
                 await _context.SaveChangesAsync();
             }
         }
@@ -131,7 +133,8 @@ namespace Flats4us.Services
 
                 if (ownerStudent is null) throw new Exception($"Cannot find user ID: {userId}");
 
-                await ImageUtility.DeleteUserFileAsync(ownerStudent.ImagesPath, fileId);
+                // TODO: Images refactor
+                //await ImageUtility.DeleteUserFileAsync(ownerStudent.ImagesPath, fileId);
             }
             catch (IOException ex)
             {
@@ -182,9 +185,10 @@ namespace Flats4us.Services
             {
                 user.VerificationStatus = VerificationStatus.Verified;
 
-                var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
+                // TODO: Images refactor
+                //var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
 
-                await ImageUtility.DeleteDirectory(documentDirectoryPath);
+                //await ImageUtility.DeleteDirectory(documentDirectoryPath);
             }
             else
             {
