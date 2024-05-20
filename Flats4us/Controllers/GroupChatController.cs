@@ -146,6 +146,24 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("{groupChatId:int}/users")]
+        [Authorize(Policy = "Moderator")]
+        public async Task<IActionResult> AddModeratorToGroupChat(int groupChatId)
+        {
+            try
+            {
+                int adderId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                await _groupChatService.AddModeratorToGroupChatAsync(groupChatId, adderId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions (e.g., group chat or user not found)
+                return BadRequest(ex.Message);
+            }
+        }
     }
 
     
