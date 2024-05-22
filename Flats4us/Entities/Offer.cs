@@ -47,14 +47,12 @@ namespace Flats4us.Entities
         public virtual ICollection<Meeting> Meetings { get; set; }
         public virtual ICollection<OfferInterest> OfferInterests { get; set; }
         public virtual ICollection<OfferPromotion> OfferPromotions { get; set; }
-        public virtual ICollection<Argument> Arguments { get; set; }
 
         public Offer()
         {
             this.Meetings = new HashSet<Meeting>();
             this.OfferInterests = new HashSet<OfferInterest>();
             this.OfferPromotions = new HashSet<OfferPromotion>();
-            this.Arguments = new HashSet<Argument>();
         }
     }
 }
