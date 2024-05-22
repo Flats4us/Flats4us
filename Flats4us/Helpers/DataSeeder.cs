@@ -446,7 +446,7 @@ public static class DataSeeder
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
             ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
@@ -2314,6 +2314,7 @@ public static class DataSeeder
             Description = "sprzeczka pierwsza ",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 2, 13),
+            StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             MederatorDecisionDate = new DateTime(2023, 3, 17),
@@ -2326,6 +2327,7 @@ public static class DataSeeder
             Description = "a to jest druga ",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            StudentAccceptanceDate = null,
             ArgumentStatus = 0,
             InterventionNeed = false,
             MederatorDecisionDate = new DateTime(2023, 1, 22),
@@ -2338,17 +2340,20 @@ public static class DataSeeder
             Description = "a tutaj sobie wpiszę lorem pisum",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = true,
             MederatorDecisionDate = new DateTime(2023, 1, 25),
             Rent = rent3,
             Student = student1
         };
+
         var argument4 = new Argument
         {
             Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xD",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 1, 12),
+            StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = true,
             MederatorDecisionDate = new DateTime(2023, 2, 10),
@@ -2361,6 +2366,7 @@ public static class DataSeeder
             Description = "tutaj byłoby śmiesznie wrzucić pastę o drwalu xDv2",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 2, 20),
+            StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             MederatorDecisionDate = null,

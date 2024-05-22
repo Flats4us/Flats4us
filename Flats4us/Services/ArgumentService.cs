@@ -40,6 +40,7 @@ namespace Flats4us.Services
         {
             var argument = await _context.Arguments
                 .Where(x => x.ArgumentId == id)
+                .Include(x => x.ArgumentInterventions)
                 .Select(e => _mapper.Map<ArgumentDto>(e))
                 .FirstOrDefaultAsync()
                 ?? throw new ArgumentException($"Argument with ID: {id} not found");
@@ -98,7 +99,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AcceptArgument(int argumentId, int ownerId)                                            //tylko owner
+        public async Task OwnerAcceptArgument(int argumentId, int ownerId)                                            //tylko owner
         {
             var argument = await _context.Arguments
                 .Include(r => r.Rent)
@@ -118,6 +119,20 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task StudentAcceptArgument(int argumentId, int studentId)
+        {
+            var argument = await _context.Arguments
+                .FirstAsync(x => x.ArgumentId == argumentId)
+                ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
+
+            if (argument.StudentId != studentId)
+                throw new ArgumentException($"You are not the part of this Argument");
+
+            argument.StudentAccceptanceDate = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+        }   
 
         public async Task AskForIntervention(int argumentId, int userId)                                        //student lub owner
         {
