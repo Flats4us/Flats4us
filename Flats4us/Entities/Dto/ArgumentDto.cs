@@ -13,6 +13,9 @@ namespace Flats4us.Entities.Dto
 
         public DateTime? OwnerAcceptanceDate { get; set; }
 
+        public DateTime? StudentAccceptanceDate { get; set; }
+
+
         [Required]
         public ArgumentStatus ArgumentStatus { get; set; }
 

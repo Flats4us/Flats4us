@@ -51,7 +51,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("acceptArgument")]
+        [HttpPut("ownerAcceptArgument")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Accepting argument on Owner side",
@@ -66,8 +66,32 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
                 _logger.LogInformation("Accepting argument on Owner side");
-                await _argumentService.AcceptArgument(id, requestUserId);
-                return Ok();
+                await _argumentService.OwnerAcceptArgument(id, requestUserId);
+                return Ok("Argument accepted from Owner side");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+            }
+        }
+
+        [HttpPut("studentAcceptArgument")]
+        [Authorize(Policy = "VerifiedStudent")]
+        [SwaggerOperation(
+            Summary = "Accepting argument on Student side",
+            Description = "Requires VerifiedStudent privileges"
+        )]
+        public async Task<IActionResult> AcceptingArgumentByStudent(int argumentId)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+                _logger.LogInformation("Accepting argument on Student side");
+                await _argumentService.StudentAcceptArgument(argumentId, requestUserId);
+                return Ok("Argument accepted from Student side");
             }
             catch (Exception ex)
             {
@@ -91,7 +115,7 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Asked moderator for intervention");
                 await _argumentService.AskForIntervention(id, requestUserId);
-                return Ok();
+                return Ok("Asked Moderator for intervention");
             }
             catch (Exception ex)
             {
