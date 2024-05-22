@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RentsService } from '../../services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -40,7 +41,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingAddComponent extends BaseComponent {
-	public minDate: Date = new Date();
+	public currentDate: Date = new Date();
+	public minDate = new Date(
+		this.currentDate.setDate(this.currentDate.getDate() + 1)
+	);
+	public setLocalDate = setLocalDate;
 
 	public meetingForm: FormGroup = new FormGroup({
 		date: new FormControl(null, Validators.required),
@@ -56,7 +61,6 @@ export class MeetingAddComponent extends BaseComponent {
 	) {
 		super();
 		this.meetingForm.controls['offerId'].setValue(data);
-		this.minDate.setDate(this.minDate.getDate() + 1);
 	}
 
 	public onAdd(): void {

@@ -4,6 +4,7 @@ import { OfferService } from '../../services/offer.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-add-offer',
@@ -12,6 +13,8 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddOfferComponent extends BaseComponent {
+	public setLocalDate = setLocalDate;
+
 	public offerForm: FormGroup = this.fb.group({
 		propertyId: ['', Validators.required],
 		price: ['', Validators.required],

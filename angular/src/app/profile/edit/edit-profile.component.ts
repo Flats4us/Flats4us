@@ -29,6 +29,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { environment } from 'src/environments/environment.prod';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { validityAgeValidator } from '@shared/utils/validators';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -90,6 +91,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public addOnBlur = true;
 
 	public startDate = new Date().getDate();
+
+	public setLocalDate = setLocalDate;
 
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'editEmail', description: 'Edytuj email' },

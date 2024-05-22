@@ -23,16 +23,6 @@ export class RentsService {
 	]);
 
 	public addMeeting(meeting: IMeeting) {
-		meeting = {
-			...meeting,
-			date: new Date(
-				Date.UTC(
-					meeting.date.getFullYear(),
-					meeting.date.getMonth(),
-					meeting.date.getDate()
-				)
-			),
-		};
 		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);
 	}
 

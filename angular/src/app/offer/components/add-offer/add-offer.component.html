@@ -19,8 +19,18 @@
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Okres wynajmu: </mat-label>
 					<mat-date-range-input [rangePicker]="picker">
-						<input matStartDate formControlName="startDate" placeholder="Początek" />
-						<input matEndDate formControlName="endDate" placeholder="Koniec" />
+						<input
+							matStartDate
+							formControlName="startDate"
+							placeholder="Początek"
+							(dateChange)="setLocalDate($event, offerForm, 'startDate')"
+						/>
+						<input
+							matEndDate
+							formControlName="endDate"
+							placeholder="Koniec"
+							(dateChange)="setLocalDate($event, offerForm, 'endDate')"
+						/>
 					</mat-date-range-input>
 					<mat-datepicker-toggle
 						matIconSuffix

@@ -165,7 +165,12 @@
 						*ngIf="userType === uType.STUDENT && modificationType === mType.CREATE"
 					>
 						<mat-label>Data urodzenia</mat-label>
-						<input matInput formControlName="birthDate" [matDatepicker]="picker" />
+						<input
+							matInput
+							formControlName="birthDate"
+							[matDatepicker]="picker"
+							(dateChange)="setLocalDate($event, actualForm, 'birthDate')"
+						/>
 						<mat-datepicker-toggle
 							matIconSuffix
 							[for]="picker"
@@ -404,6 +409,7 @@
 							matInput
 							formControlName="documentExpireDate"
 							[matDatepicker]="picker"
+							(dateChange)="setLocalDate($event, actualForm, 'documentExpireDate')"
 						/>
 						<mat-datepicker-toggle
 							matIconSuffix

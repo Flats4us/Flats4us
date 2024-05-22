@@ -28,6 +28,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { Observable, map, of } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -57,6 +58,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
 	public invalidEmail$: Observable<boolean> = of(false);
+	public setLocalDate = setLocalDate;
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),

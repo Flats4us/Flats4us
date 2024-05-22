@@ -9,6 +9,7 @@
 				formControlName="date"
 				[min]="minDate"
 				[matDatepicker]="datepicker"
+				(dateChange)="setLocalDate($event, meetingForm, 'date')"
 			/>
 			<mat-datepicker-toggle
 				matIconSuffix
