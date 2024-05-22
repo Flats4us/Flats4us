@@ -11,7 +11,7 @@
 		<div class="container">
 			<mat-card
 				*ngFor="let watchedOffer of watchedOffers.result"
-				[ngClass]="watchedOffer.isPromoted === true ? 'promoted-card' : 'card'"
+				[ngClass]="watchedOffer.isPromoted ? 'promoted-card' : 'card'"
 			>
 				<div class="offer-title-outer">
 					<span class="offer-title-inner"
@@ -34,7 +34,7 @@
 					mat-card-image
 					class="imgs"
 					alt="Mieszkanie"
-					src="{{ baseUrl }}/{{ watchedOffer.property.images[0]?.path }}"
+					src="{{ baseUrl }}/{{ watchedOffer.property.images[0].path }}"
 					(click)="navigateToFlat(watchedOffer.offerId)"
 				/>
 				<mat-card-content matSort class="mcc-description">

@@ -67,7 +67,7 @@
 				</mat-nav-list>
 			</div>
 			<div class="container-outlet">
-				<router-outlet></router-outlet>
+				<router-outlet (deactivate)="onDeactivate()"></router-outlet>
 			</div>
 		</div>
 	</div>

@@ -382,11 +382,11 @@
 			<div>
 				<div class="container-info">
 					<div class="container-title">
-						<h1 *ngIf="flatOptions.totalCount !== 0">
+						<h1 *ngIf="flatOptions.totalCount">
 							Znaleziono
 							<span [appGetDescription]="flatOptions.totalCount"></span>
 						</h1>
-						<h1 *ngIf="flatOptions.totalCount === 0">
+						<h1 *ngIf="!flatOptions.totalCount">
 							Nie znaleziono ofert dla podanych parametrów
 						</h1>
 					</div>
@@ -394,7 +394,7 @@
 				<ng-template #flats let-flats="flats">
 					<mat-card
 						*ngFor="let flat of flats"
-						[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
+						[ngClass]="flat.isPromoted ? 'promoted-card' : 'card'"
 					>
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"

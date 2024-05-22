@@ -33,7 +33,7 @@
 						*ngFor="let menuOption of this.menuOptions"
 						mat-menu-item
 						[value]="menuOption.description"
-						[disabled]="menuOption.option === 'editSurvey' ? true : false"
+						[disabled]="menuOption.option === 'editSurvey'"
 						(click)="onSelect(menuOption)"
 					>
 						<div
@@ -298,7 +298,6 @@
 						*ngIf="
 							userType === uType.STUDENT || (actualUser && actualUser.userType === 1)
 						"
-						class="example-chip-list"
 					>
 						<mat-label>Linki do social media</mat-label>
 						<mat-chip-grid #chipGrid2 aria-label="Links">
@@ -337,6 +336,15 @@
 						"
 						class="btn-upload-box"
 					>
+						<button
+							mat-icon-button
+							type="button"
+							aria-label="Upload"
+							matTooltip="{{ getTooltipScan() }}"
+							(click)="scanUpload.click()"
+						>
+							<mat-icon class="material-symbols-outlined">attach_file</mat-icon>
+						</button>
 						<span
 							*ngIf="!urlNewScan && modificationType === mType.CREATE"
 							class="scan-url-box"
@@ -348,16 +356,9 @@
 						>
 							Kliknij, żeby zmienić skan dokumentu</span
 						>
-						<button
-							mat-icon-button
-							type="button"
-							aria-label="Upload"
-							matTooltip="{{ getTooltipScan() }}"
-							(click)="scanUpload.click()"
+						<span *ngIf="urlNewScan" class="scan-url-box ml-4"
+							>| {{ fileScanName }}</span
 						>
-							<mat-icon>attachment</mat-icon>
-						</button>
-						<span *ngIf="urlNewScan" class="scan-url-box">{{ fileScanName }}</span>
 						<input
 							#scanUpload
 							id="documentScan"
@@ -386,8 +387,6 @@
 									(userType === uType.OWNER ||
 										(actualUser && actualUser.userType === 0)) &&
 									document.value === 1
-										? true
-										: false
 								"
 							>
 								{{ document.viewValue }}

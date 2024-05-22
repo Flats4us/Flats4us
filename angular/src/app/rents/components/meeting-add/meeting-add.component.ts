@@ -18,8 +18,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RentsService } from '../../services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
@@ -66,7 +64,7 @@ export class MeetingAddComponent extends BaseComponent {
 		if (this.meetingForm.valid) {
 			this.rentsService
 				.addMeeting(this.meetingForm.value)
-				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
 						this.meetingForm.controls['offerId'].setValue(this.data);
@@ -85,11 +83,5 @@ export class MeetingAddComponent extends BaseComponent {
 					},
 				});
 		}
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się dodać spotkania. Spróbuj później')
-		);
 	}
 }

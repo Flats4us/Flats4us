@@ -27,4 +27,8 @@ export class RealEstateComponent {
 	public addRealEstate() {
 		this.router.navigate(['real-estate', 'add']);
 	}
+
+	public onDeactivate() {
+		this.realEstateOptions$ = this.realEstateService.getRealEstates(false);
+	}
 }

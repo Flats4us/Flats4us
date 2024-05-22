@@ -94,12 +94,8 @@
 									mat-menu-item
 									[value]="menuOption.description"
 									[disabled]="
-										(data.offer?.isPromoted && menuOption.option === 'promoteOffer'
-											? true
-											: false) ||
-										(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer'
-											? true
-											: false)
+										(data.offer?.isPromoted && menuOption.option === 'promoteOffer') ||
+										(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer')
 									"
 									(click)="
 										onSelect(

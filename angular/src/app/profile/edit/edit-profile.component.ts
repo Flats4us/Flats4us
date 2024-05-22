@@ -162,9 +162,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					this.selectedHobbies = user.interests;
 					this.socialMedias = user.links;
 					this.dataFormGroupStudent.patchValue(user);
+					this.dataFormGroupStudent.get('studentNumber')?.disable();
 				} else {
 					this.dataFormGroupOwner.patchValue(user);
 					this.dataFormGroupOwner.get('documentExpireDate')?.disable();
+					this.dataFormGroupOwner.get('bankAccount')?.disable();
 				}
 			});
 		}
@@ -342,11 +344,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		option: IInterest,
 		value: IInterest
 	): boolean {
-		if (value.interestId === option.interestId) {
-			return true;
-		} else {
-			return false;
-		}
+		return value.interestId === option.interestId;
 	};
 
 	public validityTillValidator(): ValidatorFn {

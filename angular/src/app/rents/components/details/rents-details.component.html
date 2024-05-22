@@ -288,7 +288,7 @@
 					Dodaj spotkanie
 				</button>
 			</div>
-			<div>
+			<div *ngIf="data.rent?.isFinished">
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 					mat-raised-button

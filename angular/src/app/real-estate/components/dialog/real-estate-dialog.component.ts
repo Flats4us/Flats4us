@@ -11,8 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 import { RealEstateService } from '../../services/real-estate.service';
 import { Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
@@ -49,15 +47,13 @@ export class RealEstateDialogComponent extends BaseComponent {
 	public onYesClick() {
 		this.realEstateService
 			.deleteRealEstate(this.data)
-			.pipe(this.untilDestroyed(), catchError(this.handleError))
+			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Nieruchomość została pomyślnie usunięta.', 'Zamknij', {
 						duration: 2000,
 					});
-					this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-						this.router.navigate(['real-estate', 'owner']);
-					});
+					this.router.navigate(['real-estate', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
@@ -67,8 +63,5 @@ export class RealEstateDialogComponent extends BaseComponent {
 					this.dialogRef.close(this.data);
 				},
 			});
-	}
-	private handleError(error: HttpErrorResponse) {
-		return throwError(() => new Error('Nie udało się usunąć nieruchomości'));
 	}
 }

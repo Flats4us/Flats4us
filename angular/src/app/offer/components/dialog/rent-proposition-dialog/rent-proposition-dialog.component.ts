@@ -25,8 +25,7 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, of } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
 
@@ -84,7 +83,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (this.rentPropositionForm.valid) {
 			this.offerService
 				.addRentProposition(this.rentPropositionForm.value, this.data)
-				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
 						this.snackBar.open(
@@ -141,11 +140,5 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (index >= 0) {
 			this.tenants[index] = value;
 		}
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		return throwError(() => {
-			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
-		});
 	}
 }

@@ -16,7 +16,7 @@
 	<div
 		*ngIf="
 			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
-			data.rents?.totalCount === 0
+			!data.rents?.totalCount
 		"
 		class="not-found"
 	>
@@ -25,7 +25,7 @@
 	<div
 		*ngIf="
 			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
-			(data.rents?.totalCount ?? 0) > 0
+			data.rents?.totalCount
 		"
 		class="rents-owner"
 	>

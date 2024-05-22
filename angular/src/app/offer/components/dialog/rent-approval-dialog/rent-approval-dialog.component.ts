@@ -12,7 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { IUser } from '@shared/models/user.models';
 import { UserService } from '@shared/services/user.service';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { environment } from 'src/environments/environment.prod';
 import { Router } from '@angular/router';
@@ -60,7 +60,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 	public onYesClick() {
 		this.offerService
 			.addRentApproval(this.data.offerId, { decision: true })
-			.pipe(this.untilDestroyed(), catchError(this.handleError))
+			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została zaakceptowana', 'Zamknij', {
@@ -81,7 +81,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 	public onClose() {
 		this.offerService
 			.addRentApproval(this.data.offerId, { decision: false })
-			.pipe(this.untilDestroyed(), catchError(this.handleError))
+			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została odrzucona', 'Zamknij', {
@@ -101,11 +101,5 @@ export class RentApprovalDialogComponent extends BaseComponent {
 	public showProfile(id: number) {
 		this.router.navigate(['profile', 'details', 'student', id]);
 		this.dialogRef.close();
-	}
-
-	private handleError() {
-		return throwError(() => {
-			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
-		});
 	}
 }

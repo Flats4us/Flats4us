@@ -33,4 +33,8 @@ export class OfferComponent {
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
 	}
+
+	public onDeactivate() {
+		this.offersOptions$ = this.offerService.getOffers();
+	}
 }

@@ -20,8 +20,8 @@
 				class="your-photo"
 				alt="Twój profil"
 				[src]="
-					user.profilePicture?.path
-						? baseUrl + '/' + user.profilePicture?.path
+					user.profilePicture.path
+						? baseUrl + '/' + user.profilePicture.path
 						: './assets/avatar.png'
 				"
 			/>

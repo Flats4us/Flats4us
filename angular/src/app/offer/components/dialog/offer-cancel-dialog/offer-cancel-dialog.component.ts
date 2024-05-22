@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -46,20 +45,13 @@ export class OfferCancelDialogComponent extends BaseComponent {
 	public onYesClick() {
 		this.offerService
 			.cancelOffer(this.data)
-			.pipe(this.untilDestroyed(), catchError(this.handleError))
+			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Oferta została zakończona.', 'Zamknij', {
 						duration: 2000,
 					});
-					this.router
-						.navigateByUrl('/', { skipLocationChange: true })
-						.then(() => {
-							this.router.navigate(['offer', 'owner']);
-						})
-						.then(() => {
-							this.router.navigate(['offer', 'owner', this.data]);
-						});
+					this.router.navigate(['offer', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
@@ -72,10 +64,5 @@ export class OfferCancelDialogComponent extends BaseComponent {
 	}
 	public onClose() {
 		this.dialogRef.close(this.data);
-	}
-	private handleError() {
-		return throwError(() => {
-			new Error('Nie udało się zakończyć oferty. Spróbuj ponownie');
-		});
 	}
 }

@@ -13,21 +13,12 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-	Observable,
-	catchError,
-	concatMap,
-	map,
-	of,
-	switchMap,
-	throwError,
-} from 'rxjs';
+import { Observable, concatMap, map, of, switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
 import { IAddOwner, IAddStudent, IInterest } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { matchPasswordValidator } from '@shared/utils/validators';
 import { UserService } from '@shared/services/user.service';
 
@@ -138,12 +129,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		this.modificationType$
 			.pipe(this.untilDestroyed())
 			.subscribe(type => (this.modificationType = type));
-		this.emailExist$ =
-			this.registerForm
-				.get('email')
-				?.valueChanges.pipe(
-					switchMap(value => this.checkIfEmailExist(value ?? ''))
-				) ?? of(false);
+		this.emailExist$ = !this.registerForm.get('email')?.hasError('email')
+			? this.registerForm
+					.get('email')
+					?.valueChanges.pipe(
+						switchMap(value => this.checkIfEmailExist(value ?? ''))
+					) ?? of(false)
+			: of(false);
 	}
 
 	public onAdd() {
@@ -206,7 +198,6 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.addProfileStudent(this.studentFormGroup.value)
 						.pipe(
 							this.untilDestroyed(),
-							catchError(this.handleError),
 							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
@@ -229,7 +220,6 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.addProfileOwner(this.ownerFormGroup.value)
 						.pipe(
 							this.untilDestroyed(),
-							catchError(this.handleError),
 							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
@@ -253,10 +243,5 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 				}
 			}
 		}
-	}
-	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się utworzyć konta. Spróbuj ponownie.')
-		);
 	}
 }

@@ -49,10 +49,8 @@
 									mat-menu-item
 									[value]="menuOption.description"
 									[disabled]="
-										(actualRealEstate?.offerIds?.length ?? 0) > 0 &&
+										actualRealEstate?.offerIds?.length &&
 										menuOption.option === 'deleteRealEstate'
-											? true
-											: false
 									"
 									(click)="onSelect(menuOption, actualRealEstate.propertyId)"
 								>
@@ -81,9 +79,7 @@
 							</mat-menu>
 						</div>
 						<img
-							*ngIf="
-								(actualRealEstate?.images?.length ?? 0) > 0 && isCurrentSlideIndex(i)
-							"
+							*ngIf="actualRealEstate?.images?.length && isCurrentSlideIndex(i)"
 							class="slide slide-animation non-draggable-image"
 							src="{{ baseUrl }}/{{ slide.path }}"
 							(swiperight)="nextSlide(actualRealEstate?.images?.length)"
