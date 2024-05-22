@@ -42,6 +42,7 @@ namespace Flats4us.Services
                         .Include(f => f.Offers)
                         .Include(f => f.RentOpinions)
                         .Include(f => f.Equipment)
+                        .Include(f => f.Images)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(flat);
                     result.OfferIds = flat.Offers.Select(o => o.OfferId).ToList();
@@ -51,6 +52,7 @@ namespace Flats4us.Services
                         .Include(r => r.Offers)
                         .Include(r => r.RentOpinions)
                         .Include(r => r.Equipment)
+                        .Include(r => r.Images)
                         .FirstOrDefaultAsync(r => r.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(room);
                     result.OfferIds = room.Offers.Select(o => o.OfferId).ToList();
@@ -60,6 +62,7 @@ namespace Flats4us.Services
                         .Include(h => h.Offers)
                         .Include(h => h.RentOpinions)
                         .Include(h => h.Equipment)
+                        .Include(h => h.Images)
                         .FirstOrDefaultAsync(h => h.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(house);
                     result.OfferIds = house.Offers.Select(o => o.OfferId).ToList();
@@ -75,14 +78,17 @@ namespace Flats4us.Services
         {
             IQueryable<Flat> flatQuery = _context.Flats
                 .Include(x => x.Equipment)
+                .Include(x => x.Images)
                 .Where(p => p.OwnerId == ownerId);
 
             IQueryable<House> houseQuery = _context.Houses
                 .Include(x => x.Equipment)
+                .Include(x => x.Images)
                 .Where(p => p.OwnerId == ownerId);
 
             IQueryable<Room> roomQuery = _context.Rooms
                 .Include(x => x.Equipment)
+                .Include(x => x.Images)
                 .Where(p => p.OwnerId == ownerId);
 
             if (showOnlyVerified)
