@@ -31,8 +31,11 @@ namespace Flats4us.Services
             var offer = await _context.Offers
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.Rent)
                     .ThenInclude(r => r.OtherStudents)
@@ -92,8 +95,11 @@ namespace Flats4us.Services
             var promotedOffers = await promotedQuery
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .ToListAsync();
@@ -175,8 +181,11 @@ namespace Flats4us.Services
             var notPromotedOffers = await query
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .Select(o => _mapper.Map<OfferDto>(o))
@@ -257,9 +266,9 @@ namespace Flats4us.Services
             if (requestUserId != 0)
             {
                 var userOfferInterestIds = await _context.OfferInterests
-                .Where(oi => oi.StudentId == requestUserId)
-                .Select(oi => oi.OfferId)
-                .ToListAsync();
+                    .Where(oi => oi.StudentId == requestUserId)
+                    .Select(oi => oi.OfferId)
+                    .ToListAsync();
 
                 foreach (var offerDto in joinedOffers)
                 {
@@ -415,8 +424,11 @@ namespace Flats4us.Services
             var offers = await _context.Offers
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.Rent)
                 .Include(o => o.OfferPromotions)
@@ -521,9 +533,13 @@ namespace Flats4us.Services
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.Property)
                         .ThenInclude(p => p.Owner)
+                            .ThenInclude(ow => ow.ProfilePicture)
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.Property)
                         .ThenInclude(p => p.Equipment)
+                .Include(oi => oi.Offer)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(p => p.Images)
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.SurveyOwnerOffer)
                 .Select(oi => oi.Offer)
