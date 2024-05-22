@@ -40,6 +40,7 @@ namespace Flats4us.Services
         {
             var argument = await _context.Arguments
                 .Where(x => x.ArgumentId == id)
+                .Include(x => x.ArgumentInterventions)
                 .Select(e => _mapper.Map<ArgumentDto>(e))
                 .FirstOrDefaultAsync()
                 ?? throw new ArgumentException($"Argument with ID: {id} not found");
