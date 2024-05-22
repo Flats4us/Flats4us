@@ -13,14 +13,17 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IOpenStreetMapService _openStreetMapService;
+        private readonly IFileUploadService _fileUploadService;
         private readonly IMapper _mapper;
 
         public PropertyService(Flats4usContext context,
             IOpenStreetMapService openStreetMapService,
+            IFileUploadService fileUploadService,
             IMapper mapper)
         {
             _context = context;
             _openStreetMapService = openStreetMapService;
+            _fileUploadService = fileUploadService;
             _mapper = mapper;
         }
 
@@ -309,14 +312,14 @@ namespace Flats4us.Services
 
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
-                property.TitleDeed = new Entities.File(input.TitleDeed);
+                property.TitleDeed = await _fileUploadService.CreateFileFromIFormFileAsync(input.TitleDeed);
             }
 
             if (input.Images != null && input.Images.Count > 0)
             {
                 foreach (var image in input.Images)
                 {
-                    property.Images.Add(new Entities.File(image));
+                    property.Images.Add(await _fileUploadService.CreateFileFromIFormFileAsync(image));
                 }
             }
 

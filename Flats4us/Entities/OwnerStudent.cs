@@ -5,9 +5,9 @@ namespace Flats4us.Entities
 {
     public abstract class OwnerStudent : User
     {
-        public File? ProfilePicture { get; set; }
+        public FileUpload? ProfilePicture { get; set; }
 
-        public File? Document { get; set; }
+        public FileUpload? Document { get; set; }
 
         [Required]
         public DocumentType DocumentType { get; set; }

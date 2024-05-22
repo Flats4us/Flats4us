@@ -3,7 +3,6 @@ using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers.AutoMapper;
 using Flats4us.Helpers.Enums;
-using File = Flats4us.Entities.File;
 
 namespace Flats4us.Helpers
 {
@@ -11,7 +10,7 @@ namespace Flats4us.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<File, FileDto>();
+            CreateMap<FileUpload, FileDto>();
 
             CreateMap<Equipment, EquipmentDto>();
 

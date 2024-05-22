@@ -24,6 +24,8 @@ services:
       - "5166:80"
     depends_on:
       - db
+    volumes:
+      - uploads:/app/uploads
     networks:
       - flats4us-network
   db:
@@ -51,3 +53,4 @@ networks:
 
 volumes:
   db-data:
+  uploads:
