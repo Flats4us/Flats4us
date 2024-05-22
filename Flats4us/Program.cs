@@ -57,6 +57,7 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 
 builder.Services.AddSingleton(new AppInfo { 
     CommitHash = Environment.GetEnvironmentVariable("COMMIT_HASH") ?? "notFound", 
@@ -231,10 +232,11 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var dbContext = services.GetRequiredService<Flats4usContext>();
+    var configuration = services.GetRequiredService<IConfiguration>();
 
     if (dbContext.Database.EnsureCreated())
     {
-        DataSeeder.SeedData(dbContext);
+        await DataSeeder.SeedDataAsync(dbContext, configuration);
     }
 }
 

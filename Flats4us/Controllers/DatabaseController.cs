@@ -22,17 +22,19 @@ namespace Flats4us.Controllers
         [SwaggerOperation(
             Summary = "Resets database. This may take some time."
         )]
-        public IActionResult ResetDatabase()
+        public async Task<IActionResult> ResetDatabase()
         {
             using (var scope = _serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<Flats4usContext>();
+                var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+
 
                 dbContext.Database.EnsureDeleted();
 
                 if (dbContext.Database.EnsureCreated())
                 {
-                    DataSeeder.SeedData(dbContext);
+                    await DataSeeder.SeedDataAsync(dbContext, configuration);
                     return Ok(new OutputDto<string>("Database reset successfully"));
                 }
                 else

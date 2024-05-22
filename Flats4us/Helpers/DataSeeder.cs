@@ -1,11 +1,18 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
+using Flats4us.Services;
+using Flats4us.Services.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
 
 public static class DataSeeder
 {
-    public static void SeedData(Flats4usContext dbContext)
+    private static FileUploadService _fileUploadService;
+
+    public static async Task SeedDataAsync(Flats4usContext dbContext, IConfiguration configuration)
     {
+        _fileUploadService = new FileUploadService(configuration);
+
         ImageUtility.DeleteDirectory("Images/Files").Wait();
 
         #region Equipment
@@ -982,20 +989,20 @@ public static class DataSeeder
 
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14);
 
-        SeedPropertyFiles(flat1);
-        SeedPropertyFiles(flat2);
-        SeedPropertyFiles(flat3);
-        SeedPropertyFiles(flat4);
-        SeedPropertyFiles(flat5);
-        SeedPropertyFiles(flat6);
-        SeedPropertyFiles(flat7);
-        SeedPropertyFiles(flat8);
-        SeedPropertyFiles(flat9);
-        SeedPropertyFiles(flat10);
-        SeedPropertyFiles(flat11);
-        SeedPropertyFiles(flat12);
-        SeedPropertyFiles(flat13);
-        SeedPropertyFiles(flat14);
+        await SeedPropertyFiles(flat1);
+        await SeedPropertyFiles(flat2);
+        await SeedPropertyFiles(flat3);
+        await SeedPropertyFiles(flat4);
+        await SeedPropertyFiles(flat5);
+        await SeedPropertyFiles(flat6);
+        await SeedPropertyFiles(flat7);
+        await SeedPropertyFiles(flat8);
+        await SeedPropertyFiles(flat9);
+        await SeedPropertyFiles(flat10);
+        await SeedPropertyFiles(flat11);
+        await SeedPropertyFiles(flat12);
+        await SeedPropertyFiles(flat13);
+        await SeedPropertyFiles(flat14);
 
         #endregion
 
@@ -1173,14 +1180,14 @@ public static class DataSeeder
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8);
 
-        SeedPropertyFiles(room1);
-        SeedPropertyFiles(room2);
-        SeedPropertyFiles(room3);
-        SeedPropertyFiles(room4);
-        SeedPropertyFiles(room5);
-        SeedPropertyFiles(room6);
-        SeedPropertyFiles(room7);
-        SeedPropertyFiles(room8);
+        await SeedPropertyFiles(room1);
+        await SeedPropertyFiles(room2);
+        await SeedPropertyFiles(room3);
+        await SeedPropertyFiles(room4);
+        await SeedPropertyFiles(room5);
+        await SeedPropertyFiles(room6);
+        await SeedPropertyFiles(room7);
+        await SeedPropertyFiles(room8);
 
         #endregion
 
@@ -1365,14 +1372,14 @@ public static class DataSeeder
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8);
 
-        SeedPropertyFiles(house1);
-        SeedPropertyFiles(house2);
-        SeedPropertyFiles(house3);
-        SeedPropertyFiles(house4);
-        SeedPropertyFiles(house5);
-        SeedPropertyFiles(house6);
-        SeedPropertyFiles(house7);
-        SeedPropertyFiles(house8);
+        await SeedPropertyFiles(house1);
+        await SeedPropertyFiles(house2);
+        await SeedPropertyFiles(house3);
+        await SeedPropertyFiles(house4);
+        await SeedPropertyFiles(house5);
+        await SeedPropertyFiles(house6);
+        await SeedPropertyFiles(house7);
+        await SeedPropertyFiles(house8);
 
         #endregion
 
@@ -2239,21 +2246,21 @@ public static class DataSeeder
 
         #endregion
 
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
     }
 
-    private static void SeedPropertyFiles(Property property)
+    private static async Task SeedPropertyFiles(Property property)
     {
         if (property.VerificationStatus == VerificationStatus.NotVerified)
         {
             var titleDeedPath = Path.Combine("Images", "PropertiesSeed", "TitleDeed", "TitleDeed.pdf");
 
-            if (!System.IO.File.Exists(titleDeedPath))
+            if (!File.Exists(titleDeedPath))
             {
                 throw new FileNotFoundException($"The file {titleDeedPath} does not exist.");
             }
 
-            property.TitleDeed = new Flats4us.Entities.File(titleDeedPath);
+            property.TitleDeed = await _fileUploadService.CreateFileFromSourceFilePathAsync(titleDeedPath);
         }
 
         var imagesPath = Path.Combine("Images", "PropertiesSeed", "Images");
@@ -2264,7 +2271,7 @@ public static class DataSeeder
 
         foreach (var file in selectedFiles)
         {
-            property.Images.Add(new Flats4us.Entities.File(file));
+            property.Images.Add(await _fileUploadService.CreateFileFromSourceFilePathAsync(file));
         }
     }
 
@@ -2287,32 +2294,32 @@ public static class DataSeeder
                     break;
             }
 
-            if (!System.IO.File.Exists(documentPath))
+            if (!File.Exists(documentPath))
             {
                 throw new FileNotFoundException($"The file {documentPath} does not exist.");
             }
 
-            user.Document = new Flats4us.Entities.File(documentPath);
+            user.Document = await _fileUploadService.CreateFileFromSourceFilePathAsync(documentPath);
         }
 
         try
         {
             var profilePicturePath = await ImageUtility.GetRandomProfilePicturePath();
 
-            user.ProfilePicture = new Flats4us.Entities.File(profilePicturePath);
+            user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(profilePicturePath);
 
-            if (System.IO.File.Exists(profilePicturePath))
+            if (File.Exists(profilePicturePath))
             {
-                System.IO.File.Delete(profilePicturePath);
+                File.Delete(profilePicturePath);
             }
         }
         catch (Exception)
         {
             var backupImagePath = Path.Combine("Images", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
 
-            if (System.IO.File.Exists(backupImagePath))
+            if (File.Exists(backupImagePath))
             {
-                user.ProfilePicture = new Flats4us.Entities.File(backupImagePath);
+                user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(backupImagePath);
             }
         }
 
