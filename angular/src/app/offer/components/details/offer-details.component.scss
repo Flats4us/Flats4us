@@ -211,11 +211,6 @@
 	color: #fbbb8b;
 }
 
-.icon-hide {
-	font-size: xx-large;
-	margin-right: 4px;
-}
-
 .label-right {
 	padding: 4px;
 	min-width: 300px;
@@ -288,9 +283,6 @@
 		max-width: 150px;
 		overflow: hidden;
 	}
-	.icon-hide {
-		visibility: hidden;
-	}
 	.label-right {
 		padding: 4px;
 		min-width: 100px;
@@ -299,5 +291,6 @@
 		justify-content: center;
 		align-items: center;
 		float: left;
+		margin-right: auto;
 	}
 }

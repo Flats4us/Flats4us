@@ -132,6 +132,10 @@ mat-form-field {
 	mat-form-field {
 		min-width: 100px;
 	}
+	mat-chip-row {
+		max-width: 200px;
+		overflow: hidden;
+	}
 	.form-btn {
 		width: 60%;
 	}

@@ -170,6 +170,7 @@ input[matinput]::-webkit-inner-spin-button {
 /* Firefox */
 input[matinput][type="number"] {
 	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
 @media screen and (max-width: 992px) {

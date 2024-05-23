@@ -200,34 +200,36 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public addToWatched(id?: number) {
-		if (id) {
-			this.startService
-				.addToWatched(id)
-				.pipe(this.untilDestroyed())
-				.subscribe({
-					next: () => {
-						this.actualOffer$ = this.offerId$.pipe(
-							switchMap(value => this.offerService.getOfferById(parseInt(value)))
-						);
-						this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
-							duration: 2000,
-						});
-					},
-					error: () => {
-						this.snackBar.open(
-							'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
-							'Zamknij',
-							{ duration: 2000 }
-						);
-					},
-				});
+		if (!id) {
+			return;
 		}
+		this.startService
+			.addToWatched(id)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () => {
+					this.actualOffer$ = this.offerId$.pipe(
+						switchMap(value => this.offerService.getOfferById(parseInt(value)))
+					);
+					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
+						duration: 2000,
+					});
+				},
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+				},
+			});
 	}
 
 	public showRent(id?: number): void {
-		if (id) {
-			this.router.navigate(['rents', 'owner', id]);
+		if (!id) {
+			return;
 		}
+		this.router.navigate(['rents', 'owner', id]);
 	}
 
 	public setCurrentSlideIndex(index: number) {

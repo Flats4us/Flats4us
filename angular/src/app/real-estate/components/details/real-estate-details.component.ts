@@ -73,7 +73,7 @@ export class RealEstateDetailsComponent extends BaseComponent {
 			);
 	}
 
-	public addRent() {
+	public addOffer() {
 		this.router.navigate(['offer', 'add']);
 	}
 

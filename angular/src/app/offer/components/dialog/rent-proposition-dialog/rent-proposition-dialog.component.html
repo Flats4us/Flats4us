@@ -13,7 +13,7 @@
 				formControlName="startDate"
 				[min]="minDate"
 				[matDatepicker]="datepicker"
-				(dateChange)="setLocalDate($event, rentPropositionForm, 'startDate')"
+				(dateChange)="setLocalDate($event, rentPropositionForm.get('startDate'))"
 			/>
 			<mat-datepicker-toggle
 				matIconSuffix

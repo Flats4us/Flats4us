@@ -83,7 +83,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Cena min.</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
+						</div>
 					</span>
 					<input
 						id="minPrice"
@@ -109,7 +111,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Cena maks.</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
+						</div>
 					</span>
 					<input
 						id="maxPrice"
@@ -290,7 +294,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Lata budowy</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>history</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> date_range </mat-icon>
+						</div>
 					</span>
 					<mat-select id="year" formControlName="year" multiple>
 						<mat-option
@@ -355,7 +361,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Wyposażenie</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>category</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> construction </mat-icon>
+						</div>
 					</span>
 					<mat-select id="equipment" formControlName="equipment" multiple>
 						<mat-option
@@ -422,7 +430,7 @@
 							<mat-chip-listbox>
 								<mat-chip>
 									<div class="chip">
-										<mat-icon>attach_money</mat-icon>
+										<mat-icon class="material-symbols-outlined"> sell </mat-icon>
 										<span>Cena: {{ flat.price }} zł/mc</span>
 									</div>
 								</mat-chip>
@@ -469,20 +477,18 @@
 					</ng-container>
 				</div>
 			</div>
-			<div class="paginator-box">
-				<mat-paginator
-					#paginator
-					id="paginator2"
-					showFirstLastButtons
-					aria-label="Paginator"
-					[length]="flatOptions.totalCount"
-					[pageSize]="pageSize"
-					[pageIndex]="pageIndex"
-					[pageSizeOptions]="[6, 12, 18, 48]"
-					(page)="changePage($event)"
-				>
-				</mat-paginator>
-			</div>
+			<mat-paginator
+				#paginator
+				id="paginator2"
+				showFirstLastButtons
+				aria-label="Paginator"
+				[length]="flatOptions.totalCount"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				[pageSizeOptions]="[6, 12, 18, 48]"
+				(page)="changePage($event)"
+			>
+			</mat-paginator>
 		</div>
 	</ng-template>
 	<ng-container

@@ -24,7 +24,7 @@
 							<mat-option
 								*ngFor="let property of this.realEstateService.properties"
 								[value]="property.value"
-								[disabled]="true"
+								[disabled]="modificationType === mType.EDIT"
 							>
 								{{ property.viewValue }}
 							</mat-option>
@@ -307,7 +307,9 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Rok budowy</mat-label>
 						<span matPrefix>
-							<div class="box-icon"><mat-icon>history</mat-icon></div>
+							<div class="box-icon">
+								<mat-icon class="material-symbols-outlined"> date_range </mat-icon>
+							</div>
 						</span>
 						<input
 							id="constructionYear"
@@ -409,7 +411,9 @@
 					<mat-form-field appearance="fill">
 						<mat-label>Wyposażenie</mat-label>
 						<span matPrefix>
-							<div class="box-icon"><mat-icon>category</mat-icon></div>
+							<div class="box-icon">
+								<mat-icon class="material-symbols-outlined"> construction </mat-icon>
+							</div>
 						</span>
 						<mat-select id="equipment" formControlName="equipmentIds" multiple>
 							<mat-option

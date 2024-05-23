@@ -65,27 +65,28 @@ export class MeetingAddComponent extends BaseComponent {
 
 	public onAdd(): void {
 		this.meetingForm.markAllAsTouched();
-		if (this.meetingForm.valid) {
-			this.rentsService
-				.addMeeting(this.meetingForm.value)
-				.pipe(this.untilDestroyed())
-				.subscribe({
-					next: () => {
-						this.meetingForm.controls['offerId'].setValue(this.data);
-						this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
-							duration: 2000,
-						});
-						this.dialogRef.close();
-					},
-					error: () => {
-						this.snackBar.open(
-							'Nie udało się dodać spotkania. Spróbuj ponownie.',
-							'Zamknij',
-							{ duration: 2000 }
-						);
-						this.dialogRef.close();
-					},
-				});
+		if (!this.meetingForm.valid) {
+			return;
 		}
+		this.rentsService
+			.addMeeting(this.meetingForm.value)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () => {
+					this.meetingForm.controls['offerId'].setValue(this.data);
+					this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
+						duration: 2000,
+					});
+					this.dialogRef.close();
+				},
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się dodać spotkania. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+					this.dialogRef.close();
+				},
+			});
 	}
 }

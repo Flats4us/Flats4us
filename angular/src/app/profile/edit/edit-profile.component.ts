@@ -100,6 +100,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		{ option: 'editSurvey', description: 'Edytuj ankietę' },
 	];
 
+	public descriptionsMap: Map<string, string> = new Map([
+		['read', 'Wczytaj skan dokumentu'],
+		['change', 'Zmień skan dokumentu'],
+	]);
+
 	constructor(
 		private formDir: FormGroupDirective,
 		private formBuilder: FormBuilder,
@@ -211,13 +216,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	private removeFirst<T>(array: T[], toRemove: T): void {
-		const index = array.indexOf(toRemove);
-		if (index !== -1) {
-			array.splice(index, 1);
-		}
-	}
-
 	public editSocialMedia(socialMedia: string, event: MatChipEditedEvent) {
 		const value = event.value.trim();
 		if (!value) {
@@ -241,16 +239,16 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['profile', 'survey', 'student']);
 	}
 
-	public getTooltipScan(): string {
-		if (!this.urlNewScan && this.modificationType === ModificationType.CREATE) {
-			return 'Wczytaj skan dokumentu';
-		}
-		if (this.urlNewScan || this.modificationType === ModificationType.EDIT) {
-			return 'Zmień skan dokumentu';
-		} else {
-			return 'Wczytaj skan dokumentu';
-		}
-	}
+	// public getTooltipScan(): string {
+	// 	if (!this.urlNewScan || this.modificationType === ModificationType.CREATE) {
+	// 		return 'Wczytaj skan dokumentu';
+	// 	}
+	// 	if (this.urlNewScan || this.modificationType === ModificationType.EDIT) {
+	// 		return 'Zmień skan dokumentu';
+	// 	} else {
+	// 		return 'Wczytaj skan dokumentu';
+	// 	}
+	// }
 
 	public onSelect(menuOption: IMenuOptions) {
 		switch (menuOption.option) {

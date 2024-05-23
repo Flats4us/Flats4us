@@ -16,12 +16,6 @@
 	overflow: hidden;
 }
 
-.paginator-box {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 .card {
 	height: auto;
 	min-width: 200px;
@@ -140,6 +134,13 @@ mat-card-content {
 	justify-content: center;
 }
 
+mat-paginator {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 4px;
+}
+
 .batch {
 	display: flex;
 	justify-content: center;
@@ -249,6 +250,7 @@ input[matinput]::-webkit-inner-spin-button {
 /* Firefox */
 input[matinput][type="number"] {
 	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
 @media screen and (max-width: 992px) {

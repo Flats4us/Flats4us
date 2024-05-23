@@ -169,7 +169,7 @@
 							matInput
 							formControlName="birthDate"
 							[matDatepicker]="picker"
-							(dateChange)="setLocalDate($event, actualForm, 'birthDate')"
+							(dateChange)="setLocalDate($event, actualForm.get('birthDate'))"
 						/>
 						<mat-datepicker-toggle
 							matIconSuffix
@@ -313,14 +313,16 @@
 								(removed)="removeSocialMedia(socialMedia, socialMedias)"
 								(edited)="editSocialMedia(socialMedia, $event)"
 							>
-								{{ socialMedia }}
-								<button
-									matChipRemove
-									type="button"
-									[attr.aria-label]="'remove ' + socialMedia"
-								>
-									<mat-icon>cancel</mat-icon>
-								</button>
+								<span class="flex items-center pr-4">
+									<button
+										matChipRemove
+										type="button"
+										[attr.aria-label]="'remove ' + socialMedia"
+									>
+										<mat-icon>cancel</mat-icon>
+									</button>
+									<span>{{ socialMedia }}</span>
+								</span>
 							</mat-chip-row>
 							<input
 								placeholder="Wpisz link do social media"
@@ -345,7 +347,11 @@
 							mat-icon-button
 							type="button"
 							aria-label="Upload"
-							matTooltip="{{ getTooltipScan() }}"
+							matTooltip="{{
+								!this.urlNewScan || this.modificationType === mType.EDIT
+									? descriptionsMap.get('read')
+									: descriptionsMap.get('edit')
+							}}"
 							(click)="scanUpload.click()"
 						>
 							<mat-icon class="material-symbols-outlined">attach_file</mat-icon>
@@ -409,7 +415,7 @@
 							matInput
 							formControlName="documentExpireDate"
 							[matDatepicker]="picker"
-							(dateChange)="setLocalDate($event, actualForm, 'documentExpireDate')"
+							(dateChange)="setLocalDate($event, actualForm.get('documentExpireDate'))"
 						/>
 						<mat-datepicker-toggle
 							matIconSuffix

@@ -194,12 +194,12 @@
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
 					<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
 						<div class="text-red-600 flex items-center justify-center">
-							<mat-icon matTooltip="Palenie niedozwolone">smoke_free </mat-icon>
+							<mat-icon matTooltip="Palenie niedozwolone">smoke_free</mat-icon>
 						</div>
 					</mat-chip>
 					<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
 						<div class="flex items-center justify-center">
-							<mat-icon matTooltip="Palenie dozwolone">smoking_rooms </mat-icon>
+							<mat-icon matTooltip="Palenie dozwolone">smoking_rooms</mat-icon>
 						</div>
 					</mat-chip>
 				</span>
@@ -218,18 +218,18 @@
 				<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
 					<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
 						<div class="text-red-600 flex items-center justify-center">
-							<mat-icon matTooltip="Imprezy niedozwolone">cake</mat-icon>
+							<mat-icon matTooltip="Imprezy niedozwolone">celebration</mat-icon>
 						</div>
 					</mat-chip>
 					<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
 						<div class="flex items-center justify-center">
-							<mat-icon matTooltip="Imprezy dozwolone">cake</mat-icon>
+							<mat-icon matTooltip="Imprezy dozwolone">celebration</mat-icon>
 						</div>
 					</mat-chip>
 				</span>
 			</mat-label>
 			<mat-label class="label-right">
-				<mat-icon class="icon-hide" inline="true"> sell </mat-icon>
+				<mat-icon class="icon" inline="true"> sell </mat-icon>
 				<span class="text-3xl"
 					>Cena
 					{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/mies.</span

@@ -8,28 +8,37 @@
 			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Cena: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>sell</mat-icon>
+					</span>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
+					<span matPrefix class="px-4">
+						<mat-icon>add</mat-icon>
+					</span>
 					<mat-label>Kaucja: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Okres wynajmu: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>date_range</mat-icon>
+					</span>
 					<mat-date-range-input [rangePicker]="picker">
 						<input
 							matStartDate
 							formControlName="startDate"
 							placeholder="Początek"
-							(dateChange)="setLocalDate($event, offerForm, 'startDate')"
+							(dateChange)="setLocalDate($event, offerForm.get('startDate'))"
 						/>
 						<input
 							matEndDate
 							formControlName="endDate"
 							placeholder="Koniec"
-							(dateChange)="setLocalDate($event, offerForm, 'endDate')"
+							(dateChange)="setLocalDate($event, offerForm.get('endDate'))"
 						/>
 					</mat-date-range-input>
 					<mat-datepicker-toggle
@@ -41,6 +50,9 @@
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Wybierz nieruchomość: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>real_estate_agent</mat-icon>
+					</span>
 					<mat-select formControlName="propertyId">
 						<mat-option
 							*ngFor="let property of properties$ | async"
@@ -54,11 +66,17 @@
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Opis: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>description</mat-icon>
+					</span>
 					<textarea matInput formControlName="description"></textarea>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Regulamin: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>rule</mat-icon>
+					</span>
 					<textarea matInput formControlName="regulations"></textarea>
 				</mat-form-field>
 

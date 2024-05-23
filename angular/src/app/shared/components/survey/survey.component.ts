@@ -111,6 +111,22 @@ export class SurveyComponent extends BaseComponent implements OnInit {
 					this.offerForm.addControl(question.name, this.maxAgeControl);
 					this.formToAdd.addControl(question.name, this.maxAgeControl);
 					break;
+				case 'smokingAllowed':
+					this.offerForm.addControl(question.name, new FormControl(false));
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'partiesAllowed':
+					this.offerForm.addControl(question.name, new FormControl(false));
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'animalsAllowed':
+					this.offerForm.addControl(question.name, new FormControl(false));
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'gender':
+					this.offerForm.addControl(question.name, new FormControl(2));
+					this.formToAdd.addControl(question.name, new FormControl(2));
+					break;
 				default:
 					this.offerForm.addControl(question.name, new FormControl(null));
 					this.formToAdd.addControl(question.name, new FormControl(null));

@@ -186,7 +186,11 @@
 	</button>
 
 	<mat-menu #extended="matMenu">
-		<button mat-menu-item [routerLink]="['calendar']">
+		<button
+			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			mat-menu-item
+			[routerLink]="['calendar']"
+		>
 			<mat-icon class="material-symbols-outlined">calendar_month</mat-icon>
 			Kalendarz
 		</button>

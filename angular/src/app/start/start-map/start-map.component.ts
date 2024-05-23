@@ -108,36 +108,11 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						[+offer.property.geoLat, +offer.property.geoLon],
 						markerOptions
 					);
-					let mapOffer$: Observable<IOffer> = this.offerService.getOfferById(0);
 					const popupContent = document.createElement('div');
 					popupContent.setAttribute('id', 'popup');
 					marker
 						.addEventListener('mouseover', () => {
-							mapOffer$ = this.offerService.getOfferById(offer.offerId);
-							mapOffer$.pipe(this.untilDestroyed()).subscribe(mapOffer => {
-								let description = '';
-								description =
-									'<style>' +
-									'.inner-element:hover {' +
-									'cursor: pointer;' +
-									'}</style>' +
-									'<b>' +
-									this.realEstateService.propertyTypes.get(offer.property.propertyType) +
-									'</b>' +
-									' ' +
-									mapOffer.property.area +
-									' m², ' +
-									mapOffer.property.city +
-									', ulica ' +
-									mapOffer.property.street +
-									' ' +
-									mapOffer.property.number +
-									', cena: ' +
-									mapOffer.price +
-									' zł' +
-									`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element"></img>`;
-								popupContent.innerHTML = description;
-							});
+							this.getOfferDescription(offer.offerId, popupContent);
 						})
 						.setIcon(this.getPropertyIcon(offer.property.propertyType, false))
 						.bindPopup(popupContent, {
@@ -157,6 +132,38 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				});
 				this.markerCluster.addLayers(this.markersList);
 			});
+	}
+
+	public getOfferDescription(
+		offerId: number,
+		popup: HTMLDivElement
+	): Observable<IOffer> {
+		const mapOffer$ = this.offerService.getOfferById(offerId);
+		mapOffer$.pipe(this.untilDestroyed()).subscribe(mapOffer => {
+			let description = '';
+			description =
+				'<style>' +
+				'.inner-element:hover {' +
+				'cursor: pointer;' +
+				'}</style>' +
+				'<b>' +
+				this.realEstateService.propertyTypes.get(mapOffer.property.propertyType) +
+				'</b>' +
+				' ' +
+				mapOffer.property.area +
+				' m², ' +
+				mapOffer.property.city +
+				', ulica ' +
+				mapOffer.property.street +
+				' ' +
+				mapOffer.property.number +
+				', cena: ' +
+				mapOffer.price +
+				' zł' +
+				`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element"></img>`;
+			popup.innerHTML = description;
+		});
+		return mapOffer$;
 	}
 
 	public navigateToFlat(id: number) {

@@ -1,11 +1,13 @@
-import { FormGroup } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 export function setLocalDate(
 	event: MatDatepickerInputEvent<Date>,
-	form: FormGroup,
-	control: string
+	control?: AbstractControl | null
 ): void {
+	if (!control) {
+		return;
+	}
 	const selectedDate = event.value;
 	if (selectedDate) {
 		const date = new Date(selectedDate);
@@ -16,6 +18,6 @@ export function setLocalDate(
 			date.getHours(),
 			date.getMinutes() - date.getTimezoneOffset()
 		);
-		form.get(control)?.setValue(changedDate, { onlyself: true });
+		control?.setValue(changedDate);
 	}
 }

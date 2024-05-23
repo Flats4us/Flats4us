@@ -26,10 +26,69 @@
 					></mat-slide-toggle>
 				</div>
 
-				<mat-label *ngIf="i < 7">{{ question.name }} </mat-label>
+				<mat-label *ngIf="i < 7" [ngSwitch]="question.name">
+					<span *ngSwitchCase="'party'" class="flex justify-center items-center">
+						<mat-icon class="mr-4">celebration</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchCase="'tidiness'" class="flex justify-center items-center">
+						<mat-icon class="mr-4">clean_hands</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<div *ngSwitchCase="'smoking'" class="flex-col justify-center">
+						<div><mat-icon>smoking_rooms</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</div>
+					<span *ngSwitchCase="'sociability'" class="flex-col justify-center">
+						<div><mat-icon>groups</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'animals'" class="flex-col justify-center">
+						<div><mat-icon>pets</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<div *ngSwitchCase="'vegan'" class="flex-col justify-center">
+						<div>
+							<mat-icon class="material-symbols-outlined">psychiatry</mat-icon>
+						</div>
+						<div>{{ question.name }}</div>
+					</div>
+					<div
+						*ngSwitchCase="'lookingForRoommate'"
+						class="flex-col justify-center mt-4"
+					>
+						<div><mat-icon>person_search</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</div>
+					<div *ngSwitchCase="'smokingAllowed'" class="flex-col justify-center">
+						<div><mat-icon>smoking_rooms</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</div>
+					<span *ngSwitchCase="'partiesAllowed'" class="flex-col justify-center">
+						<div><mat-icon>celebration</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'animalsAllowed'" class="flex-col justify-center">
+						<div><mat-icon>pets</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'gender'" class="flex-col justify-center">
+						<div><mat-icon>male</mat-icon><mat-icon>female</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchDefault>
+						{{ question.name }}
+					</span>
+				</mat-label>
 
-				<mat-label *ngIf="i >= 7 && showMoreQuestions"
-					>{{ question.name }}
+				<mat-label *ngIf="i >= 7 && showMoreQuestions" [ngSwitch]="question.name">
+					<span *ngSwitchCase="'roommateGender'" class="flex-col justify-center">
+						<div><mat-icon>male</mat-icon><mat-icon>female</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchDefault>
+						{{ question.name }}
+					</span>
 				</mat-label>
 
 				<div class="pt-4">
@@ -63,6 +122,11 @@
 					"
 					class="h-min"
 				>
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined"> home_pin </mat-icon></span
+						>
+					</span>
 					<input
 						matInput
 						type="text"
@@ -89,6 +153,11 @@
 					"
 					class="h-min"
 				>
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined"> groups_2 </mat-icon></span
+						>
+					</span>
 					<input matInput type="number" min="1" [formControlName]="question.name" />
 					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
 						Podano nieprawidłową wartość!
@@ -103,6 +172,13 @@
 					"
 					class="h-min"
 				>
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined">
+								arrow_circle_up
+							</mat-icon></span
+						>
+					</span>
 					<input
 						matInput
 						type="number"
@@ -110,7 +186,7 @@
 						max="150"
 						[formControlName]="question.name"
 					/>
-					<mat-error> Podano nieprawidłowy wiek! </mat-error>
+					<mat-error> Podano nieprawidłowy wiek!</mat-error>
 				</mat-form-field>
 
 				<mat-form-field
@@ -121,6 +197,13 @@
 					"
 					class="h-min"
 				>
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined">
+								arrow_circle_down
+							</mat-icon></span
+						>
+					</span>
 					<input
 						matInput
 						type="number"
