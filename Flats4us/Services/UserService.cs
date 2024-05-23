@@ -162,6 +162,8 @@ namespace Flats4us.Services
             {
                 throw new Exception("Cannot delete or find file");
             }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input)
