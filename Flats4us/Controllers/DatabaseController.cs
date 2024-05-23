@@ -1,7 +1,10 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
+using Hangfire;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
@@ -29,12 +32,21 @@ namespace Flats4us.Controllers
                 var dbContext = scope.ServiceProvider.GetRequiredService<Flats4usContext>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
-
                 dbContext.Database.EnsureDeleted();
 
                 if (dbContext.Database.EnsureCreated())
                 {
+                    GlobalConfiguration.Configuration
+                        .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseRecommendedSerializerSettings()
+                        .UseSqlServerStorage(configuration.GetConnectionString("Flats4usConn"));
+
+                    var scopeFactory = scope.ServiceProvider.GetRequiredService<IServiceScopeFactory>();
+                    HangfireSetup.ConfigureJobs(scopeFactory);
+
                     await DataSeeder.SeedDataAsync(dbContext, configuration);
+
                     return Ok(new OutputDto<string>("Database reset successfully"));
                 }
                 else
