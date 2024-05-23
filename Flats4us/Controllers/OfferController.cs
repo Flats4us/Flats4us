@@ -368,7 +368,6 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                //return BadRequest($"An error occurred: {ex.Message}");
                 return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
