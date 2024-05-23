@@ -13,7 +13,7 @@ public static class DataSeeder
     {
         _fileUploadService = new FileUploadService(configuration);
 
-        ImageUtility.DeleteDirectory("Images/Files").Wait();
+        ImageUtility.DeleteDirectory(configuration["FileUploadSettings:UploadPath"]).Wait();
 
         #region Equipment
 
