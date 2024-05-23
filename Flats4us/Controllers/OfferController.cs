@@ -313,14 +313,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/offers/{offerId}/rent
+        // POST: api/offers/{offerId}/rent/accept
         [HttpPut("{offerId}/rent/accept")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Adds rent proposition to an offer",
-            Description = "Requires verified student privileges"
+            Summary = "Accepts or denies rent proposition",
+            Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> ProposeRent(int offerId, [FromBody] AcceptDto input)
+        public async Task<IActionResult> AcceptRentProposition(int offerId, [FromBody] AcceptDto input)
         {
             try
             {
@@ -330,8 +330,8 @@ namespace Flats4us.Controllers
                 }
 
                 await _rentService.AcceptRentAsync(input.Decision, requestUserId, offerId);
-                _logger.LogInformation($"Accepting rent proposition for offer ID: {offerId}");
-                return Ok(new OutputDto<string>("Rent accepted"));
+                _logger.LogInformation($"Accepting or denying rent proposition for offer ID: {offerId}");
+                return Ok(new OutputDto<string>("Rent accepted or denied"));
             }
             catch (ForbiddenException ex)
             {
