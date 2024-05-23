@@ -67,5 +67,22 @@ namespace Flats4us.Services
                 await sourceStream.CopyToAsync(destinationStream);
             }
         }
+
+        public async Task DeleteFileByNameAsync(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName)) throw new ArgumentNullException(nameof(fileName));
+
+            var filePath = Path.Combine(DefaultUploadFolderPath, fileName);
+
+            if (File.Exists(filePath))
+            {
+                await Task.Run(() => File.Delete(filePath));
+            }
+            else
+            {
+                throw new FileNotFoundException("File not found.", filePath);
+            }
+        }
+
     }
 }
