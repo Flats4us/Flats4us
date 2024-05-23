@@ -251,11 +251,27 @@ namespace Flats4us.Helpers
             }
         }
 
-        public static async Task DeleteDirectory(string directoryPath)
+        public static async Task ClearDirectoryAsync(string directoryPath)
         {
             if (Directory.Exists(directoryPath))
             {
-                await Task.Run(() => Directory.Delete(directoryPath, true));
+                await Task.Run(() =>
+                {
+                    var files = Directory.GetFiles(directoryPath);
+                    var directories = Directory.GetDirectories(directoryPath);
+
+                    foreach (var file in files)
+                    {
+                        File.SetAttributes(file, FileAttributes.Normal);
+                        File.Delete(file);
+                    }
+
+                    foreach (var directory in directories)
+                    {
+                        ClearDirectoryAsync(directory).Wait();
+                        Directory.Delete(directory);
+                    }
+                });
             }
         }
 
