@@ -60,6 +60,12 @@
 						<div><mat-icon>person_search</mat-icon></div>
 						<div>{{ question.name }}</div>
 					</div>
+					<mat-divider
+						*ngIf="
+							question.typeName === typeName.SWITCH &&
+							question.name === 'lookingForRoommate'
+						"
+					></mat-divider>
 					<div *ngSwitchCase="'smokingAllowed'" class="flex-col justify-center">
 						<div><mat-icon>smoking_rooms</mat-icon></div>
 						<div>{{ question.name }}</div>
@@ -102,6 +108,12 @@
 						<input matSliderThumb [formControlName]="question.name" />
 					</mat-slider>
 				</div>
+
+				<mat-divider
+					*ngIf="
+						question.typeName === typeName.SLIDER && question.name === 'tidiness'
+					"
+				></mat-divider>
 
 				<mat-form-field
 					*ngIf="
