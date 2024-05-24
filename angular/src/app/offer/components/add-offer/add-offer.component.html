@@ -13,6 +13,9 @@
 					</span>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['price'].errors?.['required']">
+						Nie podano ceny!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
 					<span matPrefix class="px-4">
@@ -21,6 +24,9 @@
 					<mat-label>Kaucja: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['deposit'].errors?.['required']">
+						Nie podano wartości kaucji!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Okres wynajmu: </mat-label>
@@ -46,6 +52,12 @@
 						[for]="picker"
 					></mat-datepicker-toggle>
 					<mat-date-range-picker #picker></mat-date-range-picker>
+					<mat-error
+						*ngIf="offerForm.controls['startDate'].errors?.['required'] || 
+					offerForm.controls['endDate'].errors?.['required']"
+					>
+						Nie podano okresu obowiązywania oferty!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
@@ -62,6 +74,9 @@
 							}}</mat-option
 						>
 					</mat-select>
+					<mat-error *ngIf="offerForm.controls['propertyId'].errors?.['required']">
+						Nie wybrano nieruchomości dla oferty!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
@@ -70,6 +85,9 @@
 						<mat-icon>description</mat-icon>
 					</span>
 					<textarea matInput formControlName="description"></textarea>
+					<mat-error *ngIf="offerForm.controls['description'].errors?.['required']">
+						Nie dodano opisu!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
@@ -78,6 +96,9 @@
 						<mat-icon>rule</mat-icon>
 					</span>
 					<textarea matInput formControlName="regulations"></textarea>
+					<mat-error *ngIf="offerForm.controls['regulations'].errors?.['required']">
+						Nie określono regulaminu!
+					</mat-error>
 				</mat-form-field>
 
 				<app-survey [offerForm]="offerForm"></app-survey>

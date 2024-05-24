@@ -63,7 +63,8 @@
 					<mat-divider
 						*ngIf="
 							question.typeName === typeName.SWITCH &&
-							question.name === 'lookingForRoommate'
+							question.name === 'lookingForRoommate' &&
+							showMoreQuestions
 						"
 					></mat-divider>
 					<div *ngSwitchCase="'smokingAllowed'" class="flex-col justify-center">
