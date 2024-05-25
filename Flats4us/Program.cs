@@ -247,8 +247,8 @@ app.MapHub<ChatHub>("/chatHub");
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Images")),
-    RequestPath = "/Images"
+        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
 });
 
 app.UseSwagger();

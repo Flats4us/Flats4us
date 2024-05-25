@@ -24,6 +24,6 @@ WORKDIR /app
 COPY --from=publish /publish/out .
 
 # Copy additional folders
-COPY Images/ Images/
+COPY FileSeed/ FileSeed/
 
 ENTRYPOINT ["dotnet", "Flats4us.dll"]

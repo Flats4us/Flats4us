@@ -2376,7 +2376,7 @@ public static class DataSeeder
     {
         if (property.VerificationStatus == VerificationStatus.NotVerified)
         {
-            var titleDeedPath = Path.Combine("Images", "PropertiesSeed", "TitleDeed", "TitleDeed.pdf");
+            var titleDeedPath = Path.Combine("FileSeed", "PropertiesSeed", "TitleDeed", "TitleDeed.pdf");
 
             if (!File.Exists(titleDeedPath))
             {
@@ -2386,7 +2386,7 @@ public static class DataSeeder
             property.TitleDeed = await _fileUploadService.CreateFileFromSourceFilePathAsync(titleDeedPath);
         }
 
-        var imagesPath = Path.Combine("Images", "PropertiesSeed", "Images");
+        var imagesPath = Path.Combine("FileSeed", "PropertiesSeed", "Images");
 
         var random = new Random();
         var files = Directory.GetFiles(imagesPath);
@@ -2407,13 +2407,13 @@ public static class DataSeeder
             switch (user.DocumentType)
             {
                 case DocumentType.StudentCard:
-                    documentPath = Path.Combine("Images", "UsersSeed", "StudentCard", "StudentCard.jpg");
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "StudentCard", "StudentCard.jpg");
                     break;
                 case DocumentType.ID:
-                    documentPath = Path.Combine("Images", "UsersSeed", "ID", "ID.jpg");
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "ID", "ID.jpg");
                     break;
                 case DocumentType.Passport:
-                    documentPath = Path.Combine("Images", "UsersSeed", "Passport", "Passport.jpg");
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "Passport", "Passport.jpg");
                     break;
             }
 
@@ -2438,7 +2438,7 @@ public static class DataSeeder
         }
         catch (Exception)
         {
-            var backupImagePath = Path.Combine("Images", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
+            var backupImagePath = Path.Combine("FileSeed", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
 
             if (File.Exists(backupImagePath))
             {
