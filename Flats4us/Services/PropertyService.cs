@@ -291,21 +291,35 @@ namespace Flats4us.Services
 
         public async Task DeletePropertyFileAsync(int propertyId, string fileId, int requestUserId)
         {
-            try
-            {
-                var property = await _context.Properties.FindAsync(propertyId);
+            var property = await _context.Properties
+                .Include(u => u.Images)
+                .Include(u => u.TitleDeed)
+                .FirstOrDefaultAsync(x => x.PropertyId == propertyId);
 
-                if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
+            if (property is null) throw new Exception($"Cannot find property ID: {propertyId}");
                 
-                if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
+            if (property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this property");
 
-                // TODO: Images refactor
-                //await ImageUtility.DeletePropertyFileAsync(property.ImagesPath, fileId);
-            }
-            catch (IOException ex)
+            if (fileId == property.TitleDeed?.Name)
             {
-                throw new IOException($"File operation failed: {ex.Message}");
+                await _fileUploadService.DeleteFileByNameAsync(fileId);
+                property.TitleDeed = null;
             }
+            else if (property.Images.Any(x => x.Name == fileId))
+            {
+                var imageToDelete = property.Images.FirstOrDefault(x => x.Name == fileId);
+                if (imageToDelete != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(fileId);
+                    property.Images.Remove(imageToDelete);
+                }
+            }
+            else
+            {
+                throw new Exception("Cannot delete or find file.");
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddPropertyFilesAsync(PropertyFilesDto input, int propertyId, int requestUserId)
@@ -318,6 +332,11 @@ namespace Flats4us.Services
 
             if (input.TitleDeed != null && input.TitleDeed.Length > 0)
             {
+                if (property.TitleDeed != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(property.TitleDeed.Name);
+                }
+
                 property.TitleDeed = await _fileUploadService.CreateFileFromIFormFileAsync(input.TitleDeed);
             }
 
@@ -452,6 +471,8 @@ namespace Flats4us.Services
         {
             var propertyToDelete = await _context.Properties
                 .Include(p => p.Offers)
+                .Include(p => p.Images)
+                .Include(p => p.TitleDeed)
                 .FirstOrDefaultAsync(p => p.PropertyId == id);
 
             if (propertyToDelete is null) throw new ArgumentException($"Property with ID {id} not found.");
@@ -463,18 +484,25 @@ namespace Flats4us.Services
                 throw new InvalidOperationException($"Property with ID {id} cannot be deleted because it has associated offers.");
             }
 
+            foreach (var image in propertyToDelete.Images)
+            {
+                await _fileUploadService.DeleteFileByNameAsync(image.Name);
+            }
+
+            if (propertyToDelete.TitleDeed != null)
+            {
+                await _fileUploadService.DeleteFileByNameAsync(propertyToDelete.TitleDeed.Name);
+            }
+
             _context.Properties.Remove(propertyToDelete);
             await _context.SaveChangesAsync();
-
-            // TODO: Images refactor
-            //string imageDirectoryPath = Path.Combine("Images/Properties", propertyToDelete.ImagesPath);
-
-            //await ImageUtility.DeleteDirectory(imageDirectoryPath);
         }
 
         public async Task VerifyPropertyAsync(int id, bool decision)
         {
-            var property = await _context.Properties.FindAsync(id);
+            var property = await _context.Properties
+                .Include(p => p.TitleDeed)
+                .FirstOrDefaultAsync(p => p.PropertyId == id);
 
             if (property is null) throw new ArgumentException($"Property with ID {id} not found.");
 
@@ -484,10 +512,9 @@ namespace Flats4us.Services
             {
                 property.VerificationStatus = VerificationStatus.Verified;
 
-                // TODO: Images refactor
-                //var titleDeedDirectoryPath = Path.Combine("Images/Properties", property.ImagesPath, "TitleDeed");
+                await _fileUploadService.DeleteFileByNameAsync(property.TitleDeed.Name);
 
-                //await ImageUtility.DeleteDirectory(titleDeedDirectoryPath);
+                property.TitleDeed = null;
             }
             else
             {

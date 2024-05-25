@@ -124,14 +124,22 @@ namespace Flats4us.Services
             {
                 user.VerificationStatus = VerificationStatus.NotVerified;
 
-                await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
+                if (user.Document != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
+                }
+                
 
                 user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.Document);
             }
 
             if (input.ProfilePicture != null)
             {
-                await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
+                if (user.ProfilePicture != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
+                }
+                
 
                 user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.ProfilePicture);
             }
@@ -148,7 +156,7 @@ namespace Flats4us.Services
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-            if(fileId == user.ProfilePicture?.Name)
+            if (fileId == user.ProfilePicture?.Name)
             {
                 await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
                 user.ProfilePicture = null;
