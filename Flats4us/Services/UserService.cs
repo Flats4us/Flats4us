@@ -22,18 +22,21 @@ namespace Flats4us.Services
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
+        private readonly IFileUploadService _fileUploadService;
 
         public UserService(Flats4usContext context,
             IEmailService emailService,
             IMapper mapper,
             IConfiguration configuration,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IFileUploadService fileUploadService)
         {
             _context = context;
             _emailService = emailService;
             _mapper = mapper;
             _configuration = configuration;
             _notificationService = notificationService;
+            _fileUploadService = fileUploadService;
         }
 
         public async Task<TokenDto> AuthenticateAsync(string email, string password, string fcmToken = null)
@@ -110,42 +113,78 @@ namespace Flats4us.Services
 
         public async Task AddUserFilesAsync(UserFilesDto input, int userId)
         {
-            var user = await _context.OwnerStudents.FindAsync(userId);
+            var user = await _context.OwnerStudents
+                .Include(u => u.ProfilePicture)
+                .Include(u => u.Document)
+                .FirstOrDefaultAsync(x => x.UserId == userId);
 
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
-
 
             if (input.Document != null)
             {
                 user.VerificationStatus = VerificationStatus.NotVerified;
-                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
-                await _context.SaveChangesAsync();
+
+                if (user.Document != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
+                }
+                
+
+                user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.Document);
             }
+
+            if (input.ProfilePicture != null)
+            {
+                if (user.ProfilePicture != null)
+                {
+                    await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
+                }
+                
+
+                user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.ProfilePicture);
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
         {
-            try
-            {
-                var ownerStudent = await _context.OwnerStudents.FindAsync(userId);
+            var user = await _context.OwnerStudents
+                .Include(u => u.ProfilePicture)
+                .Include(u => u.Document)
+                .FirstOrDefaultAsync(x => x.UserId == userId);
 
-                if (ownerStudent is null) throw new Exception($"Cannot find user ID: {userId}");
+            if (user is null) throw new Exception($"Cannot find user ID: {userId}");
 
-                await ImageUtility.DeleteUserFileAsync(ownerStudent.ImagesPath, fileId);
-            }
-            catch (IOException ex)
+            if (fileId == user.ProfilePicture?.Name)
             {
-                throw new IOException($"File operation failed: {ex.Message}");
+                await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
+                user.ProfilePicture = null;
             }
+            else if (fileId == user.Document?.Name)
+            {
+                await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
+                user.Document = null;
+            }
+            else
+            {
+                throw new Exception("Cannot delete or find file");
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<CountedListDto<UserForVerificationDto>> GetNotVerifiedUsersAsync(PaginatorDto input)
         {
             var students = await _context.Students
+                .Include(s => s.ProfilePicture)
+                .Include(s => s.Document)
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var owners = await _context.Owners
+                .Include(s => s.ProfilePicture)
+                .Include(s => s.Document)
                 .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
@@ -172,7 +211,9 @@ namespace Flats4us.Services
 
         public async Task VerifyUserAsync(int id, bool decision)
         {
-            var user = await _context.OwnerStudents.FindAsync(id);
+            var user = await _context.OwnerStudents
+                .Include(u => u.Document)
+                .FirstOrDefaultAsync(x => x.UserId == id);
 
             if (user is null) throw new ArgumentException($"User with ID {id} not found.");
 
@@ -182,9 +223,8 @@ namespace Flats4us.Services
             {
                 user.VerificationStatus = VerificationStatus.Verified;
 
-                var documentDirectoryPath = Path.Combine("Images/Users", user.ImagesPath, "Documents");
-
-                await ImageUtility.DeleteDirectory(documentDirectoryPath);
+                await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
+                user.Document = null;
             }
             else
             {
@@ -229,6 +269,8 @@ namespace Flats4us.Services
             {
                 case Student:
                     var student = await _context.Students
+                        .Include(s => s.ProfilePicture)
+                        .Include(s => s.Document)
                         .Include(s => s.SurveyStudent)
                         .Include(s => s.Interests)
                         .Include(s => s.ReceivedUserOpinions)
@@ -238,6 +280,8 @@ namespace Flats4us.Services
                     break;
                 case Owner:
                     var owner = await _context.Owners
+                        .Include(s => s.ProfilePicture)
+                        .Include(s => s.Document)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
@@ -267,6 +311,7 @@ namespace Flats4us.Services
             {
                 case Student:
                     var student = await _context.Students
+                        .Include(s => s.ProfilePicture)
                         .Include(s => s.SurveyStudent)
                         .Include(s => s.Interests)
                         .Include(s => s.ReceivedUserOpinions)
@@ -276,6 +321,7 @@ namespace Flats4us.Services
                     break;
                 case Owner:
                     var owner = await _context.Owners
+                        .Include(s => s.ProfilePicture)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
@@ -530,9 +576,5 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
-
-
-
-
     }
 }
