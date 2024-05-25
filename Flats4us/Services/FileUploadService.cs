@@ -1,16 +1,20 @@
 ﻿using Flats4us.Entities;
 using Flats4us.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flats4us.Services
 {
     public class FileUploadService : IFileUploadService
     {
+        public readonly Flats4usContext _context;
         private readonly IConfiguration _configuration;
 
         private string DefaultUploadFolderPath => _configuration["FileUploadSettings:UploadPath"];
 
-        public FileUploadService(IConfiguration configuration)
+        public FileUploadService(Flats4usContext context,
+            IConfiguration configuration)
         {
+            _context = context;
             _configuration = configuration;
         }
 
@@ -77,10 +81,42 @@ namespace Flats4us.Services
             if (File.Exists(filePath))
             {
                 await Task.Run(() => File.Delete(filePath));
+
+                var fileUpload = await _context.FileUploads.FirstOrDefaultAsync(f => f.Name == fileName);
+
+                if (fileUpload != null)
+                {
+                    _context.FileUploads.Remove(fileUpload);
+                    await _context.SaveChangesAsync();
+                }
             }
             else
             {
                 throw new FileNotFoundException("File not found.", filePath);
+            }
+        }
+
+        public async Task ClearDirectoryAsync(string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                await Task.Run(() =>
+                {
+                    var files = Directory.GetFiles(directoryPath);
+                    var directories = Directory.GetDirectories(directoryPath);
+
+                    foreach (var file in files)
+                    {
+                        File.SetAttributes(file, FileAttributes.Normal);
+                        File.Delete(file);
+                    }
+
+                    foreach (var directory in directories)
+                    {
+                        ClearDirectoryAsync(directory).Wait();
+                        Directory.Delete(directory);
+                    }
+                });
             }
         }
 

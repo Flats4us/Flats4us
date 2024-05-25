@@ -2,8 +2,6 @@
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
-using Flats4us.Services.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
 
 public static class DataSeeder
 {
@@ -11,9 +9,9 @@ public static class DataSeeder
 
     public static async Task SeedDataAsync(Flats4usContext dbContext, IConfiguration configuration)
     {
-        _fileUploadService = new FileUploadService(configuration);
+        _fileUploadService = new FileUploadService(dbContext, configuration);
 
-        await ImageUtility.ClearDirectoryAsync(configuration["FileUploadSettings:UploadPath"]);
+        await _fileUploadService.ClearDirectoryAsync(configuration["FileUploadSettings:UploadPath"]);
 
         #region Equipment
 
@@ -2304,7 +2302,7 @@ public static class DataSeeder
 
         try
         {
-            var profilePicturePath = await ImageUtility.GetRandomProfilePicturePath();
+            var profilePicturePath = await ProfilePictureSeeder.GetRandomProfilePicturePath();
 
             user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(profilePicturePath);
 

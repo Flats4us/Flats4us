@@ -7,5 +7,6 @@ namespace Flats4us.Services.Interfaces
         Task<FileUpload> CreateFileFromIFormFileAsync(IFormFile file);
         Task<FileUpload> CreateFileFromSourceFilePathAsync(string sourceFilePath);
         Task DeleteFileByNameAsync(string fileName);
+        Task ClearDirectoryAsync(string directoryPath);
     }
 }
