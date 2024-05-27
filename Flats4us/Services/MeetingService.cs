@@ -3,6 +3,7 @@ using Flats4us.Entities.Dto;
 using Microsoft.EntityFrameworkCore;
 using Flats4us.Services.Interfaces;
 using AutoMapper;
+using Flats4us.Helpers.Enums;
 
 namespace Flats4us.Services
 {
@@ -45,26 +46,65 @@ namespace Flats4us.Services
             return meetings;
         }
 
-        public async Task AddMeetingAsync(AddMeetingDto input, int studentId)
+        public async Task AddMeetingAsync(AddMeetingDto input, int userId)
         {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
             var offer = await _context.Offers
                 .Include(o => o.Property)
+                .Include(o => o.Rent)
+                    .ThenInclude(r => r.OtherStudents)
                 .FirstOrDefaultAsync(o => o.OfferId == input.OfferId);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {input.OfferId} not found.");
 
-            var student = await _context.Students.FindAsync(studentId);
+            Meeting meeting;
 
-            if (student is null) throw new ArgumentException($"Student with ID {studentId} not found.");
-
-            var meeting = new Meeting
+            switch (user)
             {
-                Date = input.Date,
-                Place = input.Place,
-                Reason = input.Reason,
-                OfferId = input.OfferId,
-                StudentId = student.UserId
-            };
+                case Student:
+
+                    if (offer.OfferStatus == OfferStatus.Old ) throw new ArgumentException($"Cannot add meeting to old offer");
+
+                    if (offer.OfferStatus == OfferStatus.Rented &&
+                        (offer.Rent.StudentId != userId ||
+                        !offer.Rent.OtherStudents.Any(os => os.UserId == userId))) throw new ArgumentException($"You cannot add meeting to this offer");
+
+                    meeting = new Meeting
+                    {
+                        Date = input.Date,
+                        Place = input.Place,
+                        Reason = input.Reason,
+                        StudentAcceptDate = DateTime.Now,
+                        OwnerAcceptDate = null,
+                        OfferId = input.OfferId,
+                        StudentId = userId
+                    };
+
+                    break;
+                case Owner:
+
+                    if (offer.OfferStatus != OfferStatus.Rented) throw new ArgumentException($"You cannot add meeting to this offer");
+
+                    if (offer.OfferStatus == OfferStatus.Rented && offer.Property.OwnerId != userId) throw new ArgumentException($"You cannot add meeting to this offer");
+
+                    meeting = new Meeting
+                    {
+                        Date = input.Date,
+                        Place = input.Place,
+                        Reason = input.Reason,
+                        StudentAcceptDate = null,
+                        OwnerAcceptDate = DateTime.Now,
+                        OfferId = input.OfferId,
+                        StudentId = offer.Rent.StudentId
+                    };
+
+                    break;
+                default:
+                    throw new ArgumentException($"Wrong user type");
+            }
 
             await _context.Meetings.AddAsync(meeting);
             await _context.SaveChangesAsync();

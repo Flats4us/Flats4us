@@ -5,6 +5,6 @@ namespace Flats4us.Services.Interfaces
     public interface IMeetingService
     {
         Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId);
-        Task AddMeetingAsync(AddMeetingDto input, int studentId);
+        Task AddMeetingAsync(AddMeetingDto input, int userId);
     }
 }

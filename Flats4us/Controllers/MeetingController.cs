@@ -56,10 +56,10 @@ namespace Flats4us.Controllers
 
         // POST: api/meetings
         [HttpPost]
-        [Authorize(Policy = "VerifiedStudent")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Adds a new meeting",
-            Description = "Requires verified student privileges"
+            Description = "Requires verified owner or student privileges"
         )]
         public async Task<IActionResult> AddMeeting([FromBody] AddMeetingDto input)
         {
