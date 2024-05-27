@@ -109,5 +109,10 @@ namespace Flats4us.Services
             await _context.Meetings.AddAsync(meeting);
             await _context.SaveChangesAsync();
         }
+
+        public async Task ConfirmMeetingAsync(AcceptDto input, int userId, int offerId)
+        {
+
+        }
     }
 }

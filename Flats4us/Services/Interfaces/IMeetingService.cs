@@ -6,5 +6,6 @@ namespace Flats4us.Services.Interfaces
     {
         Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId);
         Task AddMeetingAsync(AddMeetingDto input, int userId);
+        Task ConfirmMeetingAsync(AcceptDto input, int userId, int offerId);
     }
 }
