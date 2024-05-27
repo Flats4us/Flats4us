@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-offer-cancel-dialog',
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
 		FormsModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 	templateUrl: './offer-cancel-dialog.component.html',

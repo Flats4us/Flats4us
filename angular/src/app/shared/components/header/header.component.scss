@@ -61,6 +61,13 @@
 	display: none;
 }
 
+.language {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
 @media screen and (max-width: 1000px) {
 	.custom-toolbar a:not(.logo) {
 		display: none;

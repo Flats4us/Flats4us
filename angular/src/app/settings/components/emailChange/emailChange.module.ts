@@ -12,6 +12,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
 	declarations: [EmailChangeComponent],
 	imports: [
@@ -27,6 +28,7 @@ import { RouterLink } from '@angular/router';
 		ReactiveFormsModule,
 		MatSnackBarModule,
 		RouterLink,
+		TranslateModule,
 	],
 	exports: [EmailChangeComponent],
 })

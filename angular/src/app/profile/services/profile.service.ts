@@ -12,9 +12,9 @@ export class ProfileService {
 	public interests: IInterest[] = [];
 
 	public documentTypes: INumeric[] = [
-		{ value: 0, viewValue: 'Dowód osobisty' },
-		{ value: 1, viewValue: 'Legitymacja studencka' },
-		{ value: 2, viewValue: 'Paszport' },
+		{ value: 0, viewValue: 'Profile.document-type0' },
+		{ value: 1, viewValue: 'Profile.document-type1' },
+		{ value: 2, viewValue: 'Profile.document-type2' },
 	];
 
 	constructor(private httpClient: HttpClient) {}

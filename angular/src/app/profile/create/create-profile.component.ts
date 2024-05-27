@@ -21,6 +21,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { matchPasswordValidator } from '@shared/utils/validators';
 import { UserService } from '@shared/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-profile-create',
@@ -116,7 +117,8 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		private profileService: ProfileService,
 		private authService: AuthService,
 		private formBuilder: FormBuilder,
-		private userService: UserService
+		private userService: UserService,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -202,13 +204,17 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						)
 						.subscribe({
 							next: () =>
-								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
-									duration: 2000,
-								}),
+								this.snackBar.open(
+									this.translate.instant('Profile-create.info1'),
+									this.translate.instant('Profile-create.close'),
+									{
+										duration: 2000,
+									}
+								),
 							error: () => {
 								this.snackBar.open(
-									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
-									'Zamknij',
+									this.translate.instant('Profile-create.info2'),
+									this.translate.instant('Profile-create.close'),
 									{ duration: 2000 }
 								);
 							},
@@ -225,16 +231,16 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.subscribe({
 							next: () =>
 								this.snackBar.open(
-									'Pomyślnie utworzono konto Właściciela!',
-									'Zamknij',
+									this.translate.instant('Profile-create.info3'),
+									this.translate.instant('Profile-create.close'),
 									{
 										duration: 2000,
 									}
 								),
 							error: () => {
 								this.snackBar.open(
-									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
-									'Zamknij',
+									this.translate.instant('Profile-create.info4'),
+									this.translate.instant('Profile-create.close'),
 									{ duration: 2000 }
 								);
 							},

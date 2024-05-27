@@ -21,6 +21,7 @@ import { map, switchMap } from 'rxjs';
 
 import { environment } from '../../../environments/environment.prod';
 import { ProfileService } from '../services/profile.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-opinion',
@@ -38,6 +39,7 @@ import { ProfileService } from '../services/profile.service';
 		MatListModule,
 		ReactiveFormsModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -57,7 +59,8 @@ export class AddOpinionComponent extends BaseComponent {
 		private snackBar: MatSnackBar,
 		private profileService: ProfileService,
 		private userService: UserService,
-		public route: ActivatedRoute
+		public route: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super();
 		this.opinionForm = this.fb.group({
@@ -87,9 +90,13 @@ export class AddOpinionComponent extends BaseComponent {
 			.addOpinion(profileId, this.opinionForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
-				this.snackBar.open('Pomyślnie dodano opinię!', 'Zamknij', {
-					duration: 10000,
-				})
+				this.snackBar.open(
+					this.translate.instant('Profile-add-opinion.info1'),
+					this.translate.instant('Profile-add-opinion.close'),
+					{
+						duration: 10000,
+					}
+				)
 			);
 	}
 }

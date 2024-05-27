@@ -27,9 +27,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StartMapModule } from './start-map/start-map.module';
-import { GetDescriptionDirective } from './directives/get-description.directive';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
+import { GetDescriptionDirectiveModule } from './directives/get-description-directive-module.module';
+
 
 @NgModule({
 	declarations: [StartComponent],
@@ -56,9 +58,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatMenuModule,
 		MatProgressSpinnerModule,
 		StartMapModule,
-		GetDescriptionDirective,
 		AccessControlDirective,
 		MatSnackBarModule,
+		TranslateModule,
+		GetDescriptionDirectiveModule
 	],
 })
 export class StartModule {}

@@ -6,7 +6,7 @@
 		<div class="label-box">
 			<mat-label class="label-description">
 				<span class="text-3xl"
-					>Status najmu:
+					>{{ "Rents-details.rent-status" | translate }}:
 					{{ data.rent?.isFinished ? "zakończony" : "trwający" }}</span
 				>
 			</mat-label>
@@ -23,7 +23,7 @@
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
 								><h1 class="text-3xl">
-									Najem -
+									{{ "Rents.rent" | translate }} -
 									{{ realEstateService.propertyTypes.get(data.rent?.propertyType ?? 0) }}
 									{{ data.rent?.propertyAddress }}
 								</h1></span
@@ -38,8 +38,8 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="Więcej opcji"
 								aria-label="MenuButton"
+								matTooltip="{{ 'more-options' | translate }}"
 								[matMenuTriggerFor]="menu"
 								[disabled]="data.rent?.isFinished"
 							>
@@ -88,7 +88,7 @@
 											class="material-icons-outlined"
 											>gavel</mat-icon
 										>
-										<span>{{ menuOption.description }}</span>
+										<span>{{ menuOption.description | translate }}</span>
 									</div>
 								</button>
 							</mat-menu>
@@ -140,21 +140,23 @@
 		<div class="label-box">
 			<mat-label class="label-description"
 				><mat-icon class="icon" [inline]="true">description</mat-icon
-				><span class="text-3xl">Opis najmu</span></mat-label
+				><span class="text-3xl">{{
+					"Rents-details.rent-description" | translate
+				}}</span></mat-label
 			>
 		</div>
 		<mat-divider></mat-divider>
 		<div class="container-description">
 			<div class="column-header-description">
-				<p class="text-2xl pt-4">Data wystawienia:</p>
-				<p class="text-2xl pt-4">Data zakończenia:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Czas trwania</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.start-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.end-date" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.address" | translate }}:</p>
+				<p class="text-2xl pt-4">{{ "Rents-details.time" | translate }}</p>
 				<p
 					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 					class="text-2xl pt-4"
 				>
-					Lokatorzy:
+					{{ "Rents-details.tenants" | translate }}:
 				</p>
 			</div>
 			<div class="column-header-description">
@@ -168,7 +170,7 @@
 					<mat-card *ngFor="let tenant of data.rent?.tenants" class="mt-4">
 						<div class="profile-details">
 							<mat-card-avatar
-								matTooltip="Pokaż profil"
+								matTooltip="{{ 'Real-estate.show-profile' | translate }}"
 								(click)="showProfile(tenant.userId)"
 							>
 								<img
@@ -176,13 +178,13 @@
 									src="{{ baseUrl }}/{{ tenant.profilePicture.path }}"
 							/></mat-card-avatar>
 							<div class="container-features">
-								<mat-chip matTooltip="Imię i nazwisko"
+								<mat-chip matTooltip="{{ 'Real-estate.name-surname' | translate }}"
 									><div class="box-feature">
 										<mat-icon class="icon-feature">account_circle</mat-icon
 										><span>{{ tenant.fullName }}</span>
 									</div></mat-chip
 								>
-								<mat-chip matTooltip="Adres email"
+								<mat-chip matTooltip="{{ 'Real-estate.email-address' | translate }}"
 									><div class="box-feature">
 										<mat-icon class="icon-feature">mail</mat-icon
 										><span>{{ tenant.email }}</span>
@@ -201,7 +203,9 @@
 				<mat-label class="label-description"
 					><mat-icon class="material-symbols-outlined" [inline]="true">
 						payments </mat-icon
-					><span class="text-3xl ml-4">Płatności</span></mat-label
+					><span class="text-3xl ml-4">{{
+						"Header.payments" | translate
+					}}</span></mat-label
 				>
 			</mat-card>
 			<div class="payments-container mat-elevation-z8">
@@ -214,37 +218,57 @@
 						</mat-cell>
 					</ng-container>
 					<ng-container matColumnDef="paymentPurpose">
-						<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
+						<mat-header-cell *matHeaderCellDef>
+							{{ "Rents-details.type" | translate }}
+						</mat-header-cell>
 						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Typ:</span>
+							<span class="mobile-view-label"
+								>{{ "Rents-details.type" | translate }}:</span
+							>
 							{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
 						</mat-cell>
 					</ng-container>
 					<ng-container matColumnDef="amount">
-						<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
+						<mat-header-cell *matHeaderCellDef>
+							{{ "Rents-details.price2" | translate }}
+						</mat-header-cell>
 						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Kwota:</span>
+							<span class="mobile-view-label"
+								>{{ "Rents-details.price2" | translate }}:</span
+							>
 							{{ element.amount | currency : "PLN" : true : ".2-2" }}
 						</mat-cell>
 					</ng-container>
 					<ng-container matColumnDef="isPaid">
-						<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
+						<mat-header-cell *matHeaderCellDef>
+							{{ "Rents-details.pay" | translate }}
+						</mat-header-cell>
 						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Opłacono:</span>
+							<span class="mobile-view-label"
+								>{{ "Rents-details.pay" | translate }}:</span
+							>
 							{{ element.isPaid ? "tak" : "nie" }}
 						</mat-cell>
 					</ng-container>
 					<ng-container matColumnDef="createdDate">
-						<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
+						<mat-header-cell *matHeaderCellDef>
+							{{ "Rents-details.date" | translate }}
+						</mat-header-cell>
 						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Data wygenerowania:</span>
+							<span class="mobile-view-label"
+								>{{ "Rents-details.date" | translate }}:</span
+							>
 							{{ element.createdDate | date }}
 						</mat-cell>
 					</ng-container>
 					<ng-container matColumnDef="paymentDate">
-						<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
+						<mat-header-cell *matHeaderCellDef>
+							{{ "Rents-details.term" | translate }}
+						</mat-header-cell>
 						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Termin płatności:</span>
+							<span class="mobile-view-label"
+								>{{ "Rents-details.term" | translate }}:</span
+							>
 							{{ element.paymentDate | date }}
 						</mat-cell>
 					</ng-container>
@@ -265,7 +289,7 @@
 					color="primary"
 					(click)="navigateStudentRents()"
 				>
-					Powrót
+					{{ "return" | translate }}
 				</button>
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -273,7 +297,7 @@
 					color="primary"
 					(click)="navigateOwnerRents()"
 				>
-					Powrót
+					{{ "return" | translate }}
 				</button>
 			</div>
 			<div *ngIf="!data.rent?.isFinished">
@@ -283,7 +307,7 @@
 					color="primary"
 					(click)="onAddMeeting()"
 				>
-					Dodaj spotkanie
+					{{ "Rents-details.add-meeting" | translate }}
 				</button>
 			</div>
 			<div *ngIf="data.rent?.isFinished">
@@ -293,7 +317,7 @@
 					color="primary"
 					(click)="onRate()"
 				>
-					Oceń najem
+					{{ "Rents-details.rate-rental" | translate }}
 				</button>
 			</div>
 		</div>

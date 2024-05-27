@@ -3,7 +3,9 @@
 	<mat-card *ngIf="user$ | async as user">
 		<mat-card-header class="justify-center">
 			<mat-card-title>
-				<h1 class="font-medium my-6">TWOJA OPINIA O UŻYTKOWNIKU</h1>
+				<h1 class="font-medium my-6">
+					{{ "Profile-add-opinion.your-opinion" | translate }}
+				</h1>
 			</mat-card-title>
 		</mat-card-header>
 		<mat-divider></mat-divider>
@@ -33,69 +35,92 @@
 						</div>
 					</div>
 
-					<div class="text-center">Średnia ocena: {{ user.avgRating }}</div>
-					<div class="text-center">Opinie ({{ user.userOpinions.length }})</div>
+					<div class="text-center">
+						{{ "Profile-add-opinion.average-grade" | translate }}:
+						{{ user.avgRating }}
+					</div>
+					<div class="text-center">
+						{{ "Profile-add-opinion.opinions" | translate }} ({{
+							user.userOpinions.length
+						}})
+					</div>
 				</div>
 				<div class="flex-[2_2_500px] p-5">
 					<h2 class="flex justify-center font-medium drop-shadow-md mb-4">
-						NOWA OPINIA
+						{{ "Profile-add-opinion.new-opinion" | translate }}
 					</h2>
 					<fieldset class="tags mb-8">
-						<legend class="mb-4">Cechy użytkownika:</legend>
+						<legend class="mb-4">
+							{{ "Profile-add-opinion.user-features" | translate }}:
+						</legend>
 						<ul class="good-tags">
 							<li>
-								<mat-checkbox formControlName="helpful">Pomocny</mat-checkbox>
+								<mat-checkbox formControlName="helpful">{{
+									"Profile-add-opinion.helpful" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="cooperative"
-									>Gotowy do współpracy</mat-checkbox
-								>
+								<mat-checkbox formControlName="cooperative">{{
+									"Profile-add-opinion.ready-cooperate" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="tidy">Dba o porządek</mat-checkbox>
+								<mat-checkbox formControlName="tidy">{{
+									"Profile-add-opinion.keeps-things-tidy" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="friendly">Przyjazny</mat-checkbox>
+								<mat-checkbox formControlName="friendly">{{
+									"Profile-add-opinion.fiendly" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="respectingPrivacy"
-									>Szanujący prywatność innych</mat-checkbox
-								>
+								<mat-checkbox formControlName="respectingPrivacy">{{
+									"Profile-add-opinion.respecting-privacy-others" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="communicative"
-									>Komunikatywny</mat-checkbox
-								>
+								<mat-checkbox formControlName="communicative">{{
+									"Profile-add-opinion.communicatative" | translate
+								}}</mat-checkbox>
 							</li>
 						</ul>
 
 						<ul class="bad-tags">
 							<li>
-								<mat-checkbox formControlName="unfair">Nieuczciwy</mat-checkbox>
+								<mat-checkbox formControlName="unfair">{{
+									"Profile-add-opinion.dishonest" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="lackOfHygiene"
-									>Brak higieny osobistej</mat-checkbox
-								>
+								<mat-checkbox formControlName="lackOfHygiene">{{
+									"Profile-add-opinion.lack-hygiene" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="untidy">Nie dba o porządek</mat-checkbox>
+								<mat-checkbox formControlName="untidy">{{
+									"Profile-add-opinion.care-tidiness" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="conflicting">Konfliktowy</mat-checkbox>
+								<mat-checkbox formControlName="conflicting">{{
+									"Profile-add-opinion.confilicting" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="noisy">Zbyt głośny</mat-checkbox>
+								<mat-checkbox formControlName="noisy">{{
+									"Profile-add-opinion.too-noisy" | translate
+								}}</mat-checkbox>
 							</li>
 							<li>
-								<mat-checkbox formControlName="notFollowingTheArrangements"
-									>Nie przestrzega ustaleń</mat-checkbox
-								>
+								<mat-checkbox formControlName="notFollowingTheArrangements">{{
+									"Profile-add-opinion.not-follow-arrangements" | translate
+								}}</mat-checkbox>
 							</li>
 						</ul>
 					</fieldset>
 					<div class="flex justify-between mb-4">
-						<label>Twoja ocena: </label>
+						<label>{{ "Profile-add-opinion.your-rate" | translate }}: </label>
 						<div class="star-rating">
 							<mat-icon
 								*ngFor="let star of starsScale"
@@ -109,16 +134,18 @@
 						</div>
 					</div>
 					<mat-form-field class="w-full">
-						<mat-label>Tutaj wpisz uwagi...</mat-label>
+						<mat-label
+							>{{ "Profile-add-opinion.enter-comments" | translate }}...</mat-label
+						>
 						<textarea matInput formControlName="description"></textarea>
 					</mat-form-field>
 				</div>
 			</mat-card-content>
 			<mat-card-actions class="gap-2 justify-center">
 				<button mat-raised-button type="submit" [disabled]="!opinionForm.valid">
-					Dodaj opinię
+					{{ "Profile-add-opinion.add-opinion2" | translate }}
 				</button>
-				<button mat-raised-button>Wyczyść</button>
+				<button mat-raised-button>{{ "clear" | translate }}</button>
 			</mat-card-actions>
 		</form>
 	</mat-card>

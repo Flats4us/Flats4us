@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
 import { map } from 'rxjs';
@@ -28,7 +29,8 @@ export class LoginComponent extends BaseComponent {
 		private snackBar: MatSnackBar,
 		private service: AuthService,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -39,9 +41,13 @@ export class LoginComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Zalogowano pomyślnie!', 'Zamknij', {
-						duration: 2000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Login.success-message'!),
+						this.translate.instant('Login.close-message'),
+						{
+							duration: 2000,
+						}
+					);
 					this.router.navigateByUrl(
 						this.route.snapshot.queryParamMap.get('returnUrl') || '/'
 					);

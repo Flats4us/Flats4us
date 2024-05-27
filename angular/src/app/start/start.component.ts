@@ -6,6 +6,7 @@ import {
 	ChangeDetectorRef,
 	Output,
 	EventEmitter,
+	AfterViewInit,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -23,6 +24,7 @@ import { ISendOffers } from '../offer/models/offer.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '@shared/services/auth.service';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start',
@@ -30,7 +32,10 @@ import { AuthService } from '@shared/services/auth.service';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent extends BaseComponent implements OnInit {
+export class StartComponent
+	extends BaseComponent
+	implements OnInit, AfterViewInit
+{
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public showMoreFilters = false;
@@ -51,8 +56,13 @@ export class StartComponent extends BaseComponent implements OnInit {
 	private sortState: ISortOption = {
 		type: 'Price ASC',
 		direction: 'asc',
-		description: 'ceny: od najniższej',
+		description: 'Start.sort-option1',
 	};
+
+	private paginatorDescriptionA = 'z';
+	private paginatorDescriptionB = 'ofert';
+
+	public languageChange: string = this.translate.currentLang;
 
 	@ViewChild(MatPaginator, { static: true })
 	private paginator: MatPaginator = new MatPaginator(
@@ -71,7 +81,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 		private changeDetectorRef: ChangeDetectorRef,
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
-		public authService: AuthService
+		public authService: AuthService,
+		public translate: TranslateService
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
@@ -103,6 +114,65 @@ export class StartComponent extends BaseComponent implements OnInit {
 			this.pageIndex,
 			this.pageSize
 		);
+	}
+	public ngAfterViewInit(): void {
+		this.paginatorDescriptionA = this.translate.instant('Paginator.of');
+		this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
+		this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+			'Paginator.first-page'
+		);
+		this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+			'Paginator.offers-page'
+		);
+		this.matPaginatorIntl.lastPageLabel = this.matPaginatorIntl.lastPageLabel =
+			this.translate.instant('Paginator.last-page');
+		this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+			'Paginator.next-page'
+		);
+		this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+			'Paginator.previous-page'
+		);
+		this.translate.onLangChange
+			.pipe(this.untilDestroyed())
+			.subscribe((event: LangChangeEvent) => {
+				this.languageChange = event.lang;
+				this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+					'Paginator.first-page'
+				);
+				this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+					'Paginator.offers-page'
+				);
+				this.matPaginatorIntl.lastPageLabel = this.translate.instant(
+					'Paginator.last-page'
+				);
+				this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+					'Paginator.next-page'
+				);
+				this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+					'Paginator.previous-page'
+				);
+				this.paginatorDescriptionA = this.translate.instant('Paginator.of');
+				this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
+				this.matPaginatorIntl.changes.next();
+			});
+		this.matPaginatorIntl.getRangeLabel = (
+			page: number,
+			pageSize: number,
+			length: number
+		) => {
+			if (length == 0 || pageSize == 0) {
+				return `0 ${this.paginatorDescriptionA} ${length} ${this.paginatorDescriptionB}`;
+			}
+			length = Math.max(length, 0);
+			const startIndex = page * pageSize;
+			const endIndex =
+				startIndex < length
+					? Math.min(startIndex + pageSize, length)
+					: startIndex + pageSize;
+			return `${startIndex + 1} - ${endIndex} ${
+				this.paginatorDescriptionA
+			} ${length} ${this.paginatorDescriptionB}`;
+		};
 	}
 
 	public ngOnInit() {
@@ -189,13 +259,17 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () =>
-					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
-						duration: 2000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Start.info1'),
+						this.translate.instant('Start.close'),
+						{
+							duration: 2000,
+						}
+					),
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Start.info2'),
+						this.translate.instant('Start.close'),
 						{ duration: 2000 }
 					);
 				},

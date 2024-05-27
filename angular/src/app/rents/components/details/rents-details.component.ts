@@ -55,10 +55,10 @@ export class RentsDetailsComponent extends BaseComponent {
 		'paymentDate',
 	];
 	public menuOptions: IMenuOptions[] = [
-		{ option: 'rentDetails', description: 'Szczegóły najmu' },
-		{ option: 'offerDetails', description: 'Powiązana oferta' },
-		{ option: 'propertyDetails', description: 'Powiązana nieruchomość' },
-		{ option: 'startDispute', description: 'Rozpocznij spór' },
+		{ option: 'rentDetails', description: 'Rents-details.option-details' },
+		{ option: 'offerDetails', description: 'Rents-details.option-offer' },
+		{ option: 'propertyDetails', description: 'Rents-details.option-property' },
+		{ option: 'startDispute', description: 'Rents-details.option-dispute' },
 	];
 
 	constructor(

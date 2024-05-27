@@ -12,6 +12,7 @@ import { RealEstateService } from '../../services/real-estate.service';
 import { Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-real-estate-dialog',
@@ -26,6 +27,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 		FormsModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [RealEstateService],
 })

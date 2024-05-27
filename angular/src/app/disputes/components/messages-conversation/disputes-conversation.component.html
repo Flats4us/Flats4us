@@ -6,16 +6,16 @@
 	<mat-menu #menu="matMenu">
 		<button mat-menu-item>
 			<mat-icon>close</mat-icon>
-			<span>Zakończ spór</span>
+			<span>{{ "Disputes.end-dispute" | translate }}</span>
 		</button>
 		<button mat-menu-item>
 			<mat-icon>add</mat-icon>
-			<span>Dodaj moderatora do sporu</span>
+			<span>{{ "Disputes.add-moderate" | translate }}</span>
 		</button>
 	</mat-menu>
 </div>
 <div>
-	<h4>ID WYBRANEGO SPORU {{ conversationId$ | async }}</h4>
+	<h4>{{ "Disputes.id" | translate }} {{ conversationId$ | async }}</h4>
 </div>
 <div class="conversation-list">
 	<div
@@ -33,7 +33,7 @@
 	<input
 		matInput
 		type="text"
-		placeholder="Wiadomość..."
+		placeholder="{{ 'Disputes.message' | translate }}..."
 		[formControl]="messageControl"
 		(keydown.enter)="onSend()"
 	/>

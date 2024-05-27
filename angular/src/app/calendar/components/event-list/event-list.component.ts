@@ -4,11 +4,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { IEvent } from '../../models/calendar.models';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-event-list',
 	standalone: true,
-	imports: [CommonModule, MatDialogModule, MatButtonModule],
+	imports: [CommonModule, MatDialogModule, MatButtonModule, TranslateModule],
 	templateUrl: './event-list.component.html',
 	styleUrls: ['./event-list.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,

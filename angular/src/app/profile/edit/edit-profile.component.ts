@@ -30,6 +30,7 @@ import { environment } from 'src/environments/environment.prod';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { validityAgeValidator } from '@shared/utils/validators';
 import { setLocalDate } from '@shared/utils/functions';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -95,9 +96,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public setLocalDate = setLocalDate;
 
 	public menuOptions: IMenuOptions[] = [
-		{ option: 'editEmail', description: 'Edytuj email' },
-		{ option: 'changePassword', description: 'Zmień hasło' },
-		{ option: 'editSurvey', description: 'Edytuj ankietę' },
+		{ option: 'editEmail', description: 'Profile-edit.options-email' },
+		{ option: 'changePassword', description: 'Profile-edit.change-password' },
+		{ option: 'editSurvey', description: 'Profile-edit.edit-survey' },
 	];
 
 	public descriptionsMap: Map<string, string> = new Map([
@@ -111,7 +112,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private changeDetectorRef: ChangeDetectorRef,
 		public profileService: ProfileService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 		this.dataFormGroupStudent = this.formBuilder.group({
@@ -275,9 +277,13 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 				!this.isValidDocument
 			) {
 				this.snackBar
-					.open('Pomyślnie zmieniono dane!', 'Zamknij', {
-						duration: 2000,
-					})
+					.open(
+						this.translate.instant('Profile-edit.info1'),
+						this.translate.instant('Profile-edit.close'),
+						{
+							duration: 2000,
+						}
+					)
 					.afterDismissed()
 					.pipe(this.untilDestroyed())
 					.subscribe(() => {

@@ -1,4 +1,6 @@
-<h1 class="text-4xl p-4 font-semibold">Mój profil</h1>
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Profile.my-profile" | translate }}
+</h1>
 <mat-card *ngIf="user$ | async as user">
 	<mat-card-content>
 		<section class="flex flex-col items-center">
@@ -15,17 +17,20 @@
 				<mat-chip-listbox *ngIf="user.userType === 1">
 					<mat-chip *ngIf="!user.surveyStudent.smoking">
 						<div class="chip">
-							<mat-icon>smoke_free</mat-icon> <span>Nie pali</span>
+							<mat-icon>smoke_free</mat-icon>
+							<span>{{ "Profile.smoking" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.sociability">
 						<div class="chip">
-							<mat-icon>group</mat-icon> <span>Lubi towarzystwo</span>
+							<mat-icon>group</mat-icon>
+							<span>{{ "Profile.sociable" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.animals">
 						<div class="chip">
-							<mat-icon>pets</mat-icon> <span>Ma zwierzęta</span>
+							<mat-icon>pets</mat-icon>
+							<span>{{ "Profile.has-animals" | translate }}</span>
 						</div>
 					</mat-chip>
 					<mat-chip *ngIf="user.surveyStudent.vegan">
@@ -48,7 +53,7 @@
 			<div class="profile-details__wrapper mb-4">
 				<div class="profile-education__header text-2xl flex gap-2 content-center">
 					<mat-icon>school</mat-icon>
-					<span>Uczelnia</span>
+					<span>{{ "Profile.university" | translate }}</span>
 				</div>
 				<div class="text-gray-400">
 					{{ user.university }}
@@ -57,12 +62,12 @@
 			<div class="profile-details__wrapper mb-4">
 				<div class="profile-interests__header text-2xl flex gap-2 content-center">
 					<mat-icon>travel_explore</mat-icon>
-					<span>Zainteresowania</span>
+					<span>{{ "Profile.interest" | translate }}</span>
 				</div>
 				<div>
 					<mat-chip-listbox>
 						<mat-chip *ngFor="let interest of user.interests">{{
-							interest.name
+							interest.name | translate
 						}}</mat-chip>
 					</mat-chip-listbox>
 				</div>
@@ -70,47 +75,83 @@
 			<div class="profile-details__wrapper">
 				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
 					<mat-icon>rate_review</mat-icon>
-					<span>Opinie</span>
-					<label class="text-sm">średnia: {{ user.avgRating }}</label>
+					<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+					<label class="text-sm"
+						>{{ "Profile-add-opinion.average" | translate }}:
+						{{ user.avgRating }}</label
+					>
 				</div>
 				<div>
 					<mat-chip-listbox>
 						<mat-chip>
-							<span>Pomocny: {{ user.sumHelpful }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Gotowy do współpracy: {{ user.sumCooperative }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Dba o porządek: {{ user.sumTidy }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Przyjazny: {{ user.sumFriendly }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Szanujący prywatność innych: {{ user.sumRespectingPrivacy }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Komunikatywny: {{ user.sumCommunicative }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Nieuczciwy: {{ user.sumUnfair }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Brak higieny osobistej: {{ user.sumLackOfHygiene }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Nie dba o porządek: {{ user.sumUntidy }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Konfliktowy: {{ user.sumConflicting }}</span>
-						</mat-chip>
-						<mat-chip>
-							<span>Zbyt głośny: {{ user.sumNoisy }}</span>
+							<span
+								>{{ "Profile-add-opinion.helpful" | translate }}:
+								{{ user.sumHelpful }}</span
+							>
 						</mat-chip>
 						<mat-chip>
 							<span
-								>Nie przestrzega ustaleń:
+								>{{ "Profile-add-opinion.ready-cooperate" | translate }}:
+								{{ user.sumCooperative }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.keeps-things-tidy" | translate }}:
+								{{ user.sumTidy }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.friendly" | translate }}:
+								{{ user.sumFriendly }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.respecting-privacy-others" | translate }}:
+								{{ user.sumRespectingPrivacy }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.communicative" | translate }}:
+								{{ user.sumCommunicative }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.dishonest" | translate }}:
+								{{ user.sumUnfair }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.lack-hygiene" | translate }}:
+								{{ user.sumLackOfHygiene }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.care-tidiness" | translate }}:
+								{{ user.sumUntidy }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.conflicting" | translate }}:
+								{{ user.sumConflicting }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.too-noisy" | translate }}:
+								{{ user.sumNoisy }}</span
+							>
+						</mat-chip>
+						<mat-chip>
+							<span
+								>{{ "Profile-add-opinion.not-follow-arrangements" | translate }}:
 								{{ user.sumNotFollowingTheArrangements }}</span
 							>
 						</mat-chip>

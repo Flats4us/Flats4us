@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { setLocalDate } from '@shared/utils/functions';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-offer',
@@ -32,7 +33,8 @@ export class AddOfferComponent extends BaseComponent {
 		private offerService: OfferService,
 		private realEstateService: RealEstateService,
 		private snackBar: MatSnackBar,
-		private router: Router
+		private router: Router,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -43,15 +45,19 @@ export class AddOfferComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {
-						duration: 2000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Offer.offer-info'),
+						this.translate.instant('Offer.close'),
+						{
+							duration: 2000,
+						}
+					);
 					this.router.navigate(['offer', 'owner']);
 				},
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się dodać oferty. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Offer.offer-info2'),
+						this.translate.instant('Offer.close'),
 						{ duration: 2000 }
 					);
 				},

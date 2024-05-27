@@ -1,9 +1,9 @@
 <div class="container-title">
 	<h1 *ngIf="modificationType === mType.ADD" class="text-4xl p-4 font-semibold">
-		Kreator nieruchomości
+		{{ "Real-estate-add.property-creator" | translate }}
 	</h1>
 	<h1 *ngIf="modificationType === mType.EDIT" class="text-4xl p-4 font-semibold">
-		Edycja nieruchomości
+		{{ "Real-estate-details.edit-property" | translate }}
 	</h1>
 </div>
 <mat-card class="add-real-estate">
@@ -11,12 +11,14 @@
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormAddressData">
 				<ng-template matStepLabel
-					><span class="step-label">Dane adresowe</span></ng-template
+					><span class="step-label">{{
+						"Real-estate-add.address-data" | translate
+					}}</span></ng-template
 				>
 				<form class="container-form" [formGroup]="addRealEstateFormAddressData">
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Rodzaj nieruchomości</mat-label>
+						<mat-label>{{ "Real-estate-add.property-type" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>home</mat-icon></div>
 						</span>
@@ -26,19 +28,21 @@
 								[value]="property.value"
 								[disabled]="modificationType === mType.EDIT"
 							>
-								{{ property.viewValue }}
+								{{ property.viewValue | translate }}
 							</mat-option>
 						</mat-select>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['propertyType'].errors?.['required']"
 						>
-							Nie wybrano rodzaju nieruchomości!
+							{{ "Real-estate-add.no-type-property" | translate }}!
 						</mat-error>
 					</mat-form-field>
-					<div class="subtitle-map">Dane adresowe:</div>
+					<div class="subtitle-map">
+						{{ "Real-estate-add.address-data" | translate }}:
+					</div>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Województwo</mat-label>
+						<mat-label>{{ "Real-estate-add.voivodeship" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -53,19 +57,19 @@
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['province'].errors?.['required']"
 						>
-							Nie wybrano województwa!
+							{{ "Real-estate-add.no-voivodeship-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Miejscowość</mat-label>
+						<mat-label>{{ "Real-estate-add.town" | translate }}</mat-label>
 						<input
 							id="city"
 							type="text"
-							placeholder="Miejscowość"
 							aria-label="City"
 							matInput
 							formControlName="city"
+							placeholder="{{ 'Real-estate-add.town' | translate }}"
 							[matAutocomplete]="autoCity"
 						/>
 						<span matPrefix>
@@ -84,19 +88,19 @@
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['city'].errors?.['required']"
 						>
-							Nie wybrano miejscowości!
+							{{ "Real-estate-add.no-town-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Dzielnica</mat-label>
+						<mat-label>{{ "Real-estate-add.district" | translate }}</mat-label>
 						<input
 							id="district"
 							type="text"
-							placeholder="Dzielnica"
 							aria-label="District"
 							matInput
 							formControlName="district"
+							placeholder="{{ 'Real-estate-add.district' | translate }}"
 							[matAutocomplete]="autoDistrict"
 						/>
 						<span matPrefix>
@@ -115,7 +119,7 @@
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Kod pocztowy</mat-label>
+						<mat-label>{{ "Real-estate-add.post-code" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -123,24 +127,24 @@
 							id="postalCode"
 							formControlName="postalCode"
 							type="text"
-							placeholder="Kod pocztowy"
 							aria-label="PostalCode"
 							matInput
+							placeholder="{{ 'Real-estate-add.post-code2' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['postalCode'].errors?.['required']"
 						>
-							Nie podano kodu pocztowego!
+							{{ "Real-estate-add.no-post-code-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['postalCode'].errors?.['pattern']"
 						>
-							Nieprawidłowy format kodu pocztowego!
+							{{ "Real-estate-add.no-post-code-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Ulica</mat-label>
+						<mat-label>{{ "Real-estate-add.street" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -148,19 +152,19 @@
 							id="street"
 							formControlName="street"
 							type="text"
-							placeholder="Ulica"
 							aria-label="Street"
 							matInput
+							placeholder="{{ 'Real-estate-add.street' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['street'].errors?.['required']"
 						>
-							Nie podano nazwy ulicy!
+							{{ "Real-estate-add.no-street-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Numer budynku</mat-label>
+						<mat-label>{{ "Real-estate-add.building-number" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -168,24 +172,26 @@
 							id="streetNumber"
 							formControlName="number"
 							type="text"
-							placeholder="Numer budynku"
 							aria-label="StreetNumber"
 							matInput
+							placeholder="{{ 'Real-estate-add.building-number' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['required']"
 						>
-							Nie podano numeru budynku!
+							{{ "Real-estate-add.building-number-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['number'].errors?.['pattern']"
 						>
-							Nieprawidłowy numer ulicy!
+							{{ "Real-estate-add.building-street-number-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Numer mieszkania</mat-label>
+						<mat-label>{{
+							"Real-estate-add.apartment-number" | translate
+						}}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 						</span>
@@ -193,19 +199,19 @@
 							id="flatNumber"
 							formControlName="flat"
 							type="text"
-							placeholder="Numer mieszkania"
 							aria-label="FlatNumber"
 							matInput
+							placeholder="{{ 'Real-estate-add.apartment-number' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['required']"
 						>
-							Nie podano numeru mieszkania!
+							{{ "Real-estate-add.no-apartment-number-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormAddressData.controls['flat'].errors?.['pattern']"
 						>
-							Nieprawidłowy numer mieszkania!
+							{{ "Real-estate-add.no-apartment-number-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="button-box">
@@ -215,7 +221,8 @@
 							color="primary"
 							[disabled]="!addRealEstateFormAddressData.valid"
 						>
-							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+							{{ "next" | translate }}
+							<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
 					</div>
 				</form>
@@ -224,12 +231,14 @@
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormRemainingData">
 				<ng-template matStepLabel
-					><span class="step-label">Pozostałe dane</span></ng-template
+					><span class="step-label">{{
+						"Real-estate-add.other-data" | translate
+					}}</span></ng-template
 				>
 				<form class="container-form" [formGroup]="addRealEstateFormRemainingData">
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Powierzchnia</mat-label>
+						<mat-label>{{ "Real-estate-add.area" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 						</span>
@@ -237,25 +246,25 @@
 							id="area"
 							formControlName="area"
 							type="number"
-							placeholder="Powierzchnia"
 							aria-label="area"
 							matInput
+							placeholder="{{ 'Real-estate-add.area' | translate }}"
 						/>
 						<span matSuffix class="suffix">m²</span>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['required']"
 						>
-							Nie podano powierzchni!
+							{{ "Real-estate-add.no-area-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['area'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Powierzchnia działki</mat-label>
+						<mat-label>{{ "Real-estate-add.land-area" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 						</span>
@@ -263,25 +272,25 @@
 							id="plotArea"
 							formControlName="plotArea"
 							type="number"
-							placeholder="Powierzchnia działki"
 							aria-label="plotArea"
 							matInput
+							placeholder="{{ 'Real-estate-add.land-area' | translate }}"
 						/>
 						<span matSuffix class="suffix">m²</span>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['plotArea'].errors?.['required']"
 						>
-							Nie podano powierzchni działki!
+							{{ "Real-estate-add.no-land-area-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['plotArea'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Maks. l. mieszkańców</mat-label>
+						<mat-label>{{ "Real-estate-add.max-inhabitants" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>supervisor_account</mat-icon></div>
 						</span>
@@ -289,23 +298,23 @@
 							id="maxNumberOfInhabitants"
 							formControlName="maxNumberOfInhabitants"
 							type="number"
-							placeholder="Maks. l. mieszkańców"
 							aria-label="MaxNumberOfInhabitants"
 							matInput
+							placeholder="{{ 'Real-estate-add.max-inhabitants' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['required']"
 						>
-							Nie podano maks. l. mieszkańców!
+							{{ "Real-estate-add.no-max-inhabitants-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['maxNumberOfInhabitants'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field appearance="fill">
-						<mat-label>Rok budowy</mat-label>
+						<mat-label>{{ "Real-estate-add.build-year" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon">
 								<mat-icon class="material-symbols-outlined"> date_range </mat-icon>
@@ -315,26 +324,26 @@
 							id="constructionYear"
 							formControlName="constructionYear"
 							type="number"
-							placeholder="Rok budowy"
 							aria-label="ConstructionYear"
 							matInput
+							placeholder="{{ 'Real-estate-add.build-year' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['required']"
 						>
-							Nie podano roku budowy!
+							{{ "Real-estate-add.no-build-year-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['constructionYear'].errors?.['pattern'] ||
 							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['min'] ||
 							addRealEstateFormRemainingData.controls['constructionYear'].errors?.['max']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Liczba pokoi</mat-label>
+						<mat-label>{{ "Real-estate-add.room-numbers" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>meeting_room</mat-icon></div>
 						</span>
@@ -342,24 +351,24 @@
 							id="numberOfRooms"
 							formControlName="numberOfRooms"
 							type="number"
-							placeholder="Liczba pokoi"
 							aria-label="NumberOfRooms"
 							matInput
+							placeholder="{{ 'Real-estate-add.room-numbers' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['required']"
 						>
-							Nie podano liczby pokoi!
+							{{ "Real-estate-add.no-room-numbers-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfRooms'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Piętro</mat-label>
+						<mat-label>{{ "Real-estate-add.floor" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 						</span>
@@ -367,24 +376,24 @@
 							id="floor"
 							formControlName="floor"
 							type="number"
-							placeholder="Piętro"
 							aria-label="Floor"
 							matInput
+							placeholder="{{ 'Real-estate-add.floor' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['floor'].errors?.['required']"
 						>
-							Nie podano piętra!
+							{{ "Real-estate-add.no-floor-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['floor'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Liczba pięter</mat-label>
+						<mat-label>{{ "Real-estate-add.floor-number" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 						</span>
@@ -392,24 +401,24 @@
 							id="numberOfFloors"
 							formControlName="numberOfFloors"
 							type="number"
-							placeholder="Liczba pięter"
 							aria-label="NumberOfFloors"
 							matInput
+							placeholder="{{ 'Real-estate-add.floor-number' | translate }}"
 						/>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['required']"
 						>
-							Nie podano liczby pięter!
+							{{ "Real-estate-add.no-floor-number-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="addRealEstateFormRemainingData.controls['numberOfFloors'].errors?.['min']"
 						>
-							Nieprawidłowa wartość!
+							{{ "wrong-value" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<div class="subtitle"></div>
 					<mat-form-field appearance="fill">
-						<mat-label>Wyposażenie</mat-label>
+						<mat-label>{{ "Real-estate-add.equipment" | translate }}</mat-label>
 						<span matPrefix>
 							<div class="box-icon">
 								<mat-icon class="material-symbols-outlined"> construction </mat-icon>
@@ -420,13 +429,13 @@
 								*ngFor="let equipment of this.realEstateService.equipment"
 								[value]="equipment.equipmentId"
 							>
-								{{ equipment.name }}
+								{{ equipment.name | translate }}
 							</mat-option>
 						</mat-select>
 					</mat-form-field>
 					<div class="button-box">
 						<button mat-raised-button matStepperPrevious color="primary">
-							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+							{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<div class="btn-spacer"></div>
 						<button
@@ -435,7 +444,8 @@
 							color="primary"
 							[disabled]="!addRealEstateFormRemainingData.valid"
 						>
-							Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+							{{ "next" | translate }}
+							<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 						</button>
 					</div>
 				</form>
@@ -444,7 +454,9 @@
 		<div class="box">
 			<mat-step [stepControl]="addRealEstateFormPhotos">
 				<ng-template matStepLabel
-					><span class="step-label">Zdjęcia</span></ng-template
+					><span class="step-label">{{
+						"Real-estate-add.photo" | translate
+					}}</span></ng-template
 				>
 				<form [formGroup]="addRealEstateFormPhotos">
 					<div class="button-box-function">
@@ -455,8 +467,8 @@
 									id="deletePhoto"
 									type="button"
 									mat-icon-button
-									matTooltip="Usuń zdjęcie"
 									aria-label="DeletePhoto"
+									matTooltip="{{ 'Real-estate-add.delete-photo' | translate }}"
 									(click)="onPhotoDelete(url.name)"
 								>
 									<mat-icon>delete_forever</mat-icon>
@@ -481,11 +493,11 @@
 								addRealEstateFormPhotos.get('photos')?.hasError('required')
 							"
 						>
-							Zdjęcie jest wymagane.
+							{{ "Real-estate-add.no-photo-info" | translate }}.
 						</div>
 						<div class="batch">
 							<div class="desctext">
-								{{ fileName || "Dodaj zdjęcia (max 10)" }}
+								{{ fileName || "{{ 'Real-estate-add.add-photo' | translate }}" }}
 							</div>
 
 							<button
@@ -500,7 +512,7 @@
 						</div>
 						<div class="button-box">
 							<button mat-raised-button color="primary" matStepperPrevious>
-								Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+								{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 							</button>
 							<div class="btn-spacer"></div>
 							<button
@@ -509,7 +521,8 @@
 								matStepperNext
 								[disabled]="!addRealEstateFormPhotos.valid"
 							>
-								Następny <mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
+								{{ "next" | translate }}
+								<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>
 							</button>
 						</div>
 					</div>
@@ -519,7 +532,9 @@
 		<div class="box">
 			<mat-step [completed]="completed">
 				<ng-template *ngIf="completed" matStepLabel
-					><span class="step-label">Gotowe</span></ng-template
+					><span class="step-label">{{
+						"Real-estate-add.ready" | translate
+					}}</span></ng-template
 				>
 				<div class="button-box-function">
 					<div
@@ -531,7 +546,7 @@
 						class="button-box-function"
 					>
 						<mat-icon class="success-icon" [inline]="true"> insert_emoticon</mat-icon>
-						<h2>Formularz został pomyślnie wypełniony!</h2>
+						<h2>{{ "Real-estate-add.form" | translate }}!</h2>
 						<h2>
 							Klikająć na przycisk
 							{{
@@ -549,7 +564,7 @@
 							color="primary"
 							matStepperPrevious
 						>
-							Poprzedni <mat-icon>arrow_back_ios</mat-icon>
+							{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<button
 							*ngIf="completed"
@@ -557,7 +572,7 @@
 							color="primary"
 							(click)="onReturn()"
 						>
-							Powrót <mat-icon>arrow_back_ios</mat-icon>
+							{{ "return" | translate }} <mat-icon>arrow_back_ios</mat-icon>
 						</button>
 						<div class="btn-spacer"></div>
 						<button
