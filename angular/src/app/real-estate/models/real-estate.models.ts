@@ -1,3 +1,4 @@
+import { IRentOpinion } from 'src/app/rents/models/rents.models';
 import { IEquipment } from 'src/app/start/models/start-site.models';
 
 export interface IGroup {
@@ -45,7 +46,7 @@ export interface IAddProperty {
 	numberOfFloors: number;
 	plotArea: number;
 	floor: number;
-	equipment: IEquipment[];
+	equipmentIds: number[];
 }
 
 export interface IProperty {
@@ -63,12 +64,13 @@ export interface IProperty {
 	area: number;
 	maxNumberOfInhabitants: number;
 	constructionYear: number;
-	elevator: boolean;
 	images: IImage[];
 	verificationStatus: number;
 	numberOfRooms: number;
 	numberOfFloors: number;
 	plotArea: number;
 	floor: number;
+	offerIds: number[];
 	equipment: IEquipment[];
+	rentOpinions: IRentOpinion[];
 }

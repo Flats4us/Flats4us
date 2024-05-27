@@ -13,6 +13,7 @@
 				formControlName="startDate"
 				[min]="minDate"
 				[matDatepicker]="datepicker"
+				(dateChange)="setLocalDate($event, rentPropositionForm.get('startDate'))"
 			/>
 			<mat-datepicker-toggle
 				matIconSuffix
@@ -26,21 +27,21 @@
 			</mat-error>
 		</mat-form-field>
 		<mat-form-field>
-			<mat-label>Okres najmu</mat-label>
+			<mat-label>Okres najmu (w miesiącach)</mat-label>
 			<input
 				matInput
 				formControlName="duration"
-				placeholder="Liczba dni najmu"
+				placeholder="Liczba miesięcy najmu"
 				type="number"
 				[min]="1"
 			/>
 			<mat-error
 				*ngIf="rentPropositionForm.controls['duration'].errors?.['required']"
 			>
-				Liczba dni jest wymagana!
+				Liczba miesięcy jest wymagana!
 			</mat-error>
 			<mat-error *ngIf="rentPropositionForm.controls['duration'].errors?.['min']">
-				Wprowadzona liczba dni jest nieprawidłowa!
+				Wprowadzona liczba miesięcy jest nieprawidłowa!
 			</mat-error>
 		</mat-form-field>
 		<mat-form-field class="example-chip-list">
@@ -85,6 +86,13 @@
 		>
 			Nie
 		</button>
-		<button mat-button type="submit" (click)="onYesClick()">Tak</button>
+		<button
+			mat-raised-button
+			type="submit"
+			color="primary"
+			(click)="onYesClick()"
+		>
+			Tak
+		</button>
 	</div>
 </div>

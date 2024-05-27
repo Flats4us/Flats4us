@@ -139,6 +139,11 @@
 	background-color: transparent;
 }
 
+.box-equipment {
+	display: flex;
+	align-items: center;
+}
+
 .box-icon {
 	font-size: large;
 	margin: 4px;
@@ -146,7 +151,6 @@
 
 .button-box {
 	display: flex;
-	padding: 8px;
 	flex-direction: row;
 }
 
@@ -156,10 +160,7 @@
 	column-gap: 4px;
 	padding: 4px;
 	float: right;
-}
-
-.close-rent {
-	color: red;
+	margin-left: auto;
 }
 
 .column-header-description {
@@ -187,22 +188,30 @@
 
 .icon {
 	font-size: xx-large;
-	width: 32px;
-	height: 38px;
+	margin-right: 4px;
 }
 
-.label-price {
-	display: inline-flex;
-	justify-content: right;
+.label-right {
 	padding: 4px;
 	min-width: 300px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	float: right;
 	margin-left: auto;
 }
 
 .label-description {
+	font-size: xx-large;
 	padding: 4px;
 	min-width: 160px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	float: left;
+	margin-right: auto;
 }
 
 .label-box {
@@ -216,6 +225,54 @@
 	padding-bottom: 12px;
 }
 
+.profile-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 4px;
+	padding: 4px 4px;
+}
+
+.profile-avatar {
+	border-radius: 50%;
+	width: 100px;
+}
+
+.box-feature {
+	display: flex;
+	align-items: center;
+}
+
+.container-features {
+	display: grid;
+	grid-auto-flow: dense;
+}
+
+mat-card-avatar:hover {
+	cursor: pointer;
+}
+
+.payments-container {
+	display: flex;
+	flex-direction: column;
+	max-height: 500px;
+	min-width: 300px;
+}
+
+mat-table {
+	overflow: auto;
+	max-height: 500px;
+}
+
+mat-header-cell {
+	font-weight: bold;
+}
+
+.mobile-view-label {
+	display: none;
+}
+
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
@@ -223,15 +280,36 @@
 		overflow: hidden;
 		position: relative;
 		background: #ffffff;
-		border: 4px #00000012;
-		border-style: solid;
 	}
-	.label-price {
-		display: inline-flex;
-		justify-content: right;
-		padding: 4px;
-		min-width: 200px;
-		margin-left: auto;
+	.mobile-view-label {
+		width: 80px;
+		display: inline-block;
+		font-weight: bold;
+	}
+
+	.box-feature {
+		display: flex;
+		align-items: center;
+		max-width: 140px;
+		overflow: hidden;
+	}
+
+	.icon-feature {
+		display: none;
+	}
+
+	mat-header-row {
+		display: none;
+	}
+
+	mat-row {
+		flex-direction: column;
+		align-items: start;
+		padding: 8px 24px;
+	}
+
+	mat-cell {
+		border-bottom-style: none;
 	}
 }
 
@@ -243,5 +321,13 @@
 		min-width: 300px;
 		padding: 4px;
 		z-index: 996;
+	}
+	.profile-details {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 4px;
+		padding: 4px 4px;
 	}
 }

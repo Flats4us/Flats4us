@@ -11,14 +11,20 @@ import {
 	FormGroup,
 	Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IGroup, IRegionCity } from '../../models/real-estate.models';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+	IGroup,
+	IProperty,
+	IRegionCity,
+} from '../../models/real-estate.models';
+import { HttpClient } from '@angular/common/http';
+import { Observable, concatMap, filter, map, switchMap } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { ModificationType } from '../../models/types';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
 	selector: 'app-add-real-estate',
@@ -30,9 +36,66 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	@ViewChild('stepper')
 	public stepper: MatStepper | undefined;
 
-	public addRealEstateFormAddressData;
-	public addRealEstateFormRemainingData;
-	public addRealEstateFormPhotos;
+	protected baseUrl = environment.apiUrl.replace('/api', '/');
+
+	public addRealEstateFormAddressData: FormGroup = new FormGroup({
+		province: new FormControl('', Validators.required),
+		city: new FormControl('', Validators.required),
+		district: new FormControl(''),
+		postalCode: new FormControl('', [
+			Validators.required,
+			Validators.pattern('^[0-9]{2}-[0-9]{3}$'),
+		]),
+		street: new FormControl('', Validators.required),
+		number: new FormControl('', [
+			Validators.required,
+			Validators.pattern('^[0-9]+[a-zA-Z]*$'),
+		]),
+		propertyType: new FormControl(null, Validators.required),
+		flat: new FormControl(null, Validators.min(0)),
+	});
+	public addRealEstateFormRemainingData: FormGroup = new FormGroup({
+		area: new FormControl(null, [
+			Validators.required,
+			Validators.min(1),
+			Validators.pattern('^[0-9]*$'),
+		]),
+		plotArea: new FormControl(null, [
+			Validators.required,
+			Validators.min(1),
+			Validators.pattern('^[0-9]*$'),
+		]),
+		maxNumberOfInhabitants: new FormControl(null, [
+			Validators.required,
+			Validators.min(1),
+			Validators.pattern('^[0-9]*$'),
+		]),
+		equipmentIds: new FormControl([]),
+		numberOfRooms: new FormControl(null, [
+			Validators.required,
+			Validators.min(1),
+			Validators.pattern('^[0-9]*$'),
+		]),
+		floor: new FormControl(null, [
+			Validators.required,
+			Validators.pattern('^[0-9]*$'),
+		]),
+		numberOfFloors: new FormControl(null, [
+			Validators.required,
+			Validators.min(0),
+			Validators.pattern('^[0-9]*$'),
+		]),
+		constructionYear: new FormControl(null, [
+			Validators.required,
+			Validators.min(0),
+			Validators.max(new Date().getFullYear()),
+			Validators.pattern('^[12][0-9]{3}$'),
+		]),
+	});
+	public photos: { path: string; name: string }[] = [];
+	public addRealEstateFormPhotos: FormGroup = new FormGroup({
+		photos: new FormControl(null, Validators.required),
+	});
 
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
@@ -41,9 +104,13 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 	public completed = false;
 	public fileName = '';
-	public urls: string[] = [];
 	private filesArray: File[] = [];
 	private formData = new FormData();
+	public modificationType: ModificationType;
+	public mType = ModificationType;
+	public actualRealEstate: Observable<IProperty>;
+	public actualId = 0;
+	public actualPhotosNames: string[] = [];
 	private addRealEstateForm: FormGroup = new FormGroup({
 		propertyType: new FormControl(null),
 		province: new FormControl(''),
@@ -60,7 +127,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		floor: new FormControl(null),
 		numberOfFloors: new FormControl(null),
 		plotArea: new FormControl(null),
-		equipment: new FormControl([]),
+		equipmentIds: new FormControl([]),
 	});
 
 	constructor(
@@ -69,65 +136,10 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		private http: HttpClient,
 		public realEstateService: RealEstateService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private activatedRoute: ActivatedRoute
 	) {
 		super();
-		this.addRealEstateFormAddressData = formBuilder.group({
-			province: new FormControl('', Validators.required),
-			city: new FormControl('', Validators.required),
-			district: new FormControl(''),
-			postalCode: new FormControl('', [
-				Validators.required,
-				Validators.pattern('^[0-9]{2}-[0-9]{3}$'),
-			]),
-			street: new FormControl('', Validators.required),
-			number: new FormControl('', Validators.required),
-			propertyType: new FormControl(null, Validators.required),
-			flat: new FormControl(null, [Validators.required, Validators.min(0)]),
-		});
-
-		this.addRealEstateFormRemainingData = formBuilder.group({
-			area: new FormControl(null, [
-				Validators.required,
-				Validators.min(1),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			plotArea: new FormControl(null, [
-				Validators.min(1),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			maxNumberOfInhabitants: new FormControl(null, [
-				Validators.required,
-				Validators.min(1),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			equipment: new FormControl([]),
-			numberOfRooms: new FormControl(null, [
-				Validators.required,
-				Validators.min(1),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			floor: new FormControl(null, [
-				Validators.required,
-				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			numberOfFloors: new FormControl(null, [
-				Validators.required,
-				Validators.min(0),
-				Validators.pattern('^[0-9]*$'),
-			]),
-			constructionYear: new FormControl(null, [
-				Validators.required,
-				Validators.min(0),
-				Validators.max(new Date().getFullYear()),
-				Validators.pattern('^[12][0-9]{3}$'),
-			]),
-		});
-
-		this.addRealEstateFormPhotos = formBuilder.group({
-			photos: new FormControl(null, Validators.required),
-		});
 
 		this.realEstateService
 			.readCitiesForRegions(
@@ -136,6 +148,16 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe();
+
+		this.modificationType =
+			this.activatedRoute.snapshot.url[0].path.toUpperCase() as ModificationType;
+		this.actualRealEstate = this.activatedRoute.paramMap.pipe(
+			map(params => params.get('id')),
+			filter(Boolean),
+			switchMap(id => {
+				return this.realEstateService.getRealEstateById(parseInt(id) ?? 0);
+			})
+		);
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -157,26 +179,26 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			if (fileType.match(/image\/*/) == null) {
 				return;
 			}
+			if (
+				this.filesArray.length < 11 &&
+				!this.filesArray.find(image => image.name === file.name)
+			) {
+				this.filesArray.push(file);
+			}
 			this.fileName = file.name;
-			this.filesArray.push(file);
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = () => {
-				if (this.urls.length > 9) {
+				if (
+					this.photos.length > 9 ||
+					this.photos.find(image => image.name === file.name)
+				) {
 					return;
 				}
-				this.urls.push(<string>reader.result);
-				this.changeDetectorRef.detectChanges();
+				this.photos.push({ path: reader.result as string, name: file.name });
+				this.changeDetectorRef.markForCheck();
 			};
 		}
-		this.formData.append('TitleDeed', this.filesArray[0]);
-		for (let i = 0; i < this.filesArray.length; i++) {
-			this.formData.append('Images', this.filesArray[i]);
-		}
-	}
-
-	public showMap() {
-		this.router.navigate(['start', 'map']);
 	}
 
 	public saveRealEstate() {
@@ -197,10 +219,6 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 					this.router.navigate(['offer', 'add']);
 				});
 		}
-	}
-
-	public addOffer() {
-		this.router.navigate(['offer', 'add']);
 	}
 
 	public ngOnInit() {
@@ -244,20 +262,96 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				this.addRealEstateFormAddressData.get('city')?.reset();
 			});
 
+		this.changeFormOnPropertyType();
+
+		this.formatInputOnPostalCode();
+
+		if (this.modificationType === ModificationType.EDIT) {
+			this.changeFormOnEdit();
+		}
+	}
+
+	private changeFormOnPropertyType() {
 		this.addRealEstateFormAddressData
 			.get('propertyType')
 			?.valueChanges.pipe(this.untilDestroyed())
 			.subscribe(propertyType => {
+				if (propertyType === 0) {
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.disable();
+				}
 				if (propertyType === 0 || propertyType === 2) {
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.enable();
 					this.addRealEstateFormAddressData.get('flat')?.enable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.disable();
 					this.addRealEstateFormRemainingData.get('floor')?.enable();
+					this.addRealEstateFormRemainingData.get('numberOfFloors')?.disable();
 				} else {
+					this.addRealEstateFormRemainingData.get('numberOfRooms')?.enable();
 					this.addRealEstateFormAddressData.get('flat')?.disable();
 					this.addRealEstateFormRemainingData.get('plotArea')?.enable();
 					this.addRealEstateFormRemainingData.get('floor')?.disable();
+					this.addRealEstateFormRemainingData.get('numberOfFloors')?.enable();
 				}
 			});
+	}
+
+	private formatInputOnPostalCode() {
+		this.addRealEstateFormAddressData
+			.get('postalCode')
+			?.valueChanges.pipe(this.untilDestroyed())
+			.subscribe(value => {
+				if (value === this.addRealEstateFormAddressData.get('postalCode')) {
+					return;
+				}
+				if (value.length === 0 || value.includes('-')) {
+					return;
+				}
+				if (value.length === 5) {
+					const firstPart = value.slice(0, 2);
+					const lastPart = value.slice(value.length - 3, value.length);
+					this.addRealEstateFormAddressData
+						.get('postalCode')
+						?.setValue(firstPart + '-' + lastPart);
+				}
+			});
+	}
+
+	private changeFormOnEdit() {
+		this.actualRealEstate.pipe(this.untilDestroyed()).subscribe(property => {
+			this.addRealEstateFormAddressData.patchValue({
+				province: property.province.toLowerCase(),
+				city: property.city,
+				district: property.district,
+				postalCode: property.postalCode,
+				street: property.street,
+				number: property.number,
+				propertyType: property.propertyType,
+				flat: property.flat,
+			});
+			this.addRealEstateFormRemainingData.patchValue({
+				area: property.area,
+				plotArea: property.plotArea,
+				maxNumberOfInhabitants: property.maxNumberOfInhabitants,
+				equipmentIds: property.equipment.map(equipment => {
+					return equipment.equipmentId;
+				}),
+				numberOfRooms: property.numberOfRooms,
+				floor: property.floor,
+				numberOfFloors: property.numberOfFloors,
+				constructionYear: property.constructionYear,
+			});
+			this.photos = property.images.map(image => {
+				return { path: this.baseUrl + image.path, name: image.name };
+			});
+			this.fileName = property.images[0].name;
+			this.addRealEstateFormPhotos = new FormGroup({
+				photos: new FormControl(null),
+			});
+			this.actualId = property.propertyId;
+			this.actualPhotosNames = property.images.map(image => {
+				return image.name;
+			});
+		});
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -286,7 +380,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	public formReset() {
-		this.urls = [];
+		this.photos = [];
 		this.fileName = '';
 		this.addRealEstateFormAddressData.reset();
 		this.addRealEstateFormRemainingData.reset();
@@ -300,19 +394,56 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['/']);
 	}
 
-	public onAdd(): void {
-		this.addRealEstateForm.patchValue(this.addRealEstateFormAddressData.value);
-		this.addRealEstateForm.patchValue(this.addRealEstateFormRemainingData.value);
+	public onPhotoDelete(name: string) {
+		this.photos.splice(
+			this.filesArray.findIndex(item => item.name === name),
+			1
+		);
+		this.filesArray.splice(
+			this.filesArray.findIndex(item => item.name === name),
+			1
+		);
+		this.fileName = this.photos[this.photos.length - 1]?.name;
+		if (
+			this.modificationType === ModificationType.EDIT &&
+			this.actualPhotosNames.find(value => value === name)
+		) {
+			this.realEstateService
+				.deletePhoto(this.actualId, name)
+				.pipe(this.untilDestroyed())
+				.subscribe({
+					next: () => {
+						this.snackBar.open('Zdjęcie zostało pomyślnie usunięte.', 'Zamknij', {
+							duration: 2000,
+						});
+					},
+					error: () => {
+						this.snackBar.open(
+							'Nie udało się usunąć zdjęcia. Spróbuj ponownie.',
+							'Zamknij',
+							{ duration: 2000 }
+						);
+					},
+				});
+		}
+	}
+
+	private saveOnAdd() {
 		this.realEstateService
 			.addRealEstate(this.addRealEstateForm.value)
 			.pipe(
 				this.untilDestroyed(),
-				catchError(this.handleError),
 				concatMap(id =>
 					this.realEstateService.addRealEstateFiles(id, this.formData)
 				)
 			)
 			.subscribe({
+				next: () => {
+					this.snackBar.open('Nieruchomość została pomyślnie zapisana.', 'Zamknij', {
+						duration: 2000,
+					});
+					this.router.navigate(['/']);
+				},
 				error: () => {
 					this.snackBar.open(
 						'Nie udało się dodać nieruchomości. Spróbuj ponownie.',
@@ -322,10 +453,44 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				},
 			});
 	}
+	private saveOnEdit() {
+		this.realEstateService
+			.editRealEstate(this.addRealEstateForm.value, this.actualId)
+			.pipe(
+				this.untilDestroyed(),
+				concatMap(() =>
+					this.realEstateService.addRealEstateFiles(this.actualId, this.formData)
+				)
+			)
+			.subscribe({
+				next: () => {
+					this.snackBar.open('Zmiany zostały pomyślnie zapisane', 'Zamknij', {
+						duration: 2000,
+					});
+					this.router.navigate(['/']);
+				},
+				error: () => {
+					this.snackBar.open(
+						'Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.',
+						'Zamknij',
+						{ duration: 2000 }
+					);
+				},
+			});
+	}
 
-	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się dodać nieruchomości. Spróbuj ponownie.')
-		);
+	public onAdd(): void {
+		this.formData.append('TitleDeed', this.filesArray[0]);
+		for (let i = 0; i < this.filesArray.length; i++) {
+			this.formData.append('Images', this.filesArray[i]);
+		}
+		this.addRealEstateForm.patchValue(this.addRealEstateFormAddressData.value);
+		this.addRealEstateForm.patchValue(this.addRealEstateFormRemainingData.value);
+		if (this.modificationType === ModificationType.ADD) {
+			this.saveOnAdd();
+		}
+		if (this.modificationType === ModificationType.EDIT) {
+			this.saveOnEdit();
+		}
 	}
 }

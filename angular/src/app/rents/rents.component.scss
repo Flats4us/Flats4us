@@ -6,13 +6,8 @@
 .box-date {
 	display: flex;
 	justify-content: left;
+	width: fit-content;
 	margin-bottom: 16px;
-}
-
-.box-icon {
-	font-size: 40px;
-	width: max-content;
-	height: max-content;
 }
 
 .box-icon-valid {
@@ -27,6 +22,7 @@
 
 .container-list {
 	text-align: left;
+	box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.24);
 	margin-left: 12px;
 	min-height: 100%;
 	min-width: max-content;
@@ -34,15 +30,16 @@
 }
 
 .container-outlet {
-	width: 80%;
+	width: 100%;
 	margin: 0 8px;
 }
 
 .item-list {
-	min-height: 64px;
+	min-height: 92px;
 }
 
 .rents-owner {
+	background: white;
 	display: flex;
 	flex-direction: row;
 	margin: 0 12px;
@@ -52,8 +49,16 @@
 	margin: 0 12px;
 }
 
-@media screen and (max-width: 700px) {
+.not-found {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+@media screen and (max-width: 992px) {
 	.rents-owner {
+		background: white;
 		display: flex;
 		flex-direction: column;
 		margin: 0 12px;
@@ -62,5 +67,10 @@
 		width: 100%;
 		margin-left: 4px;
 		padding: 4px;
+	}
+	.box-title {
+		display: flex;
+		justify-content: space-between;
+		max-width: 100%;
 	}
 }

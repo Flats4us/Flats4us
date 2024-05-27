@@ -8,29 +8,63 @@
 			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Cena: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>sell</mat-icon>
+					</span>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['price'].errors?.['required']">
+						Nie podano ceny!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
+					<span matPrefix class="px-4">
+						<mat-icon>add</mat-icon>
+					</span>
 					<mat-label>Kaucja: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['deposit'].errors?.['required']">
+						Nie podano wartości kaucji!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Okres wynajmu: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>date_range</mat-icon>
+					</span>
 					<mat-date-range-input [rangePicker]="picker">
-						<input matStartDate formControlName="startDate" placeholder="Początek" />
-						<input matEndDate formControlName="endDate" placeholder="Koniec" />
+						<input
+							matStartDate
+							formControlName="startDate"
+							placeholder="Początek"
+							(dateChange)="setLocalDate($event, offerForm.get('startDate'))"
+						/>
+						<input
+							matEndDate
+							formControlName="endDate"
+							placeholder="Koniec"
+							(dateChange)="setLocalDate($event, offerForm.get('endDate'))"
+						/>
 					</mat-date-range-input>
 					<mat-datepicker-toggle
 						matIconSuffix
 						[for]="picker"
 					></mat-datepicker-toggle>
 					<mat-date-range-picker #picker></mat-date-range-picker>
+					<mat-error
+						*ngIf="offerForm.controls['startDate'].errors?.['required'] || 
+					offerForm.controls['endDate'].errors?.['required']"
+					>
+						Nie podano okresu obowiązywania oferty!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Wybierz nieruchomość: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>real_estate_agent</mat-icon>
+					</span>
 					<mat-select formControlName="propertyId">
 						<mat-option
 							*ngFor="let property of properties$ | async"
@@ -40,21 +74,39 @@
 							}}</mat-option
 						>
 					</mat-select>
+					<mat-error *ngIf="offerForm.controls['propertyId'].errors?.['required']">
+						Nie wybrano nieruchomości dla oferty!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Opis: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>description</mat-icon>
+					</span>
 					<textarea matInput formControlName="description"></textarea>
+					<mat-error *ngIf="offerForm.controls['description'].errors?.['required']">
+						Nie dodano opisu!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
 					<mat-label>Regulamin: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>rule</mat-icon>
+					</span>
 					<textarea matInput formControlName="regulations"></textarea>
+					<mat-error *ngIf="offerForm.controls['regulations'].errors?.['required']">
+						Nie określono regulaminu!
+					</mat-error>
 				</mat-form-field>
 
 				<app-survey [offerForm]="offerForm"></app-survey>
 
 				<div class="flex justify-between">
+					<button mat-flat-button color="accent" type="button" routerLink="/start">
+						Anuluj
+					</button>
 					<button
 						mat-flat-button
 						color="primary"
@@ -62,9 +114,6 @@
 						[disabled]="!offerForm.valid"
 					>
 						Zapisz
-					</button>
-					<button mat-flat-button color="accent" type="button" routerLink="/start">
-						Anuluj
 					</button>
 				</div>
 			</form>

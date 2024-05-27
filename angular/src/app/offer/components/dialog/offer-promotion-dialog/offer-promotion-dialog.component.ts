@@ -11,7 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { catchError, throwError } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
 
 @Component({
@@ -27,6 +29,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		MatButtonModule,
 		MatFormFieldModule,
 		MatInputModule,
+		MatSnackBarModule,
 	],
 	providers: [OfferService],
 })
@@ -41,6 +44,7 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 	constructor(
 		private offerService: OfferService,
 		private formBuilder: FormBuilder,
+		private snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
@@ -54,11 +58,29 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 				.addOfferPromotion(this.data, {
 					duration: this.promotionForm.get('promotionDays')?.value,
 				})
-				.pipe(this.untilDestroyed())
-				.subscribe(() => this.dialogRef.close());
+				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.subscribe({
+					next: () => {
+						this.snackBar.open('Pomyślnie dodano promowanie oferty.', 'Zamknij', {
+							duration: 2000,
+						});
+						this.dialogRef.close(this.data);
+					},
+					error: () => {
+						this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
+							duration: 2000,
+						});
+						this.dialogRef.close(this.data);
+					},
+				});
 		}
 	}
 	public onClose() {
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
+	}
+	private handleError() {
+		return throwError(() => {
+			new Error('Nie udało się dodać promowania. Spróbuj ponownie');
+		});
 	}
 }

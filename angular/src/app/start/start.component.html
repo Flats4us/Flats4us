@@ -22,11 +22,6 @@
 							{{ region }}
 						</mat-option>
 					</mat-select>
-					<mat-error
-						*ngIf="startSiteForm.controls['regionsGroup'].errors?.['required']"
-					>
-						Nie wybrano województwa!
-					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -53,11 +48,6 @@
 							</mat-option>
 						</mat-optgroup>
 					</mat-autocomplete>
-					<mat-error
-						*ngIf="startSiteForm.controls['citiesGroup'].errors?.['required']"
-					>
-						Nie wybrano miasta!
-					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
@@ -88,15 +78,14 @@
 							{{ property.viewValue }}
 						</mat-option>
 					</mat-select>
-					<mat-error *ngIf="startSiteForm.controls['property'].errors?.['required']">
-						Nie wybrano nieruchomości!
-					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
 					<mat-label>Cena min.</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
+						</div>
 					</span>
 					<input
 						id="minPrice"
@@ -122,7 +111,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Cena maks.</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>attach_money</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
+						</div>
 					</span>
 					<input
 						id="maxPrice"
@@ -202,6 +193,7 @@
 						matTooltip="Sortuj oferty według"
 						aria-label="SortButton"
 						[matMenuTriggerFor]="menu"
+						[disabled]="isMapMode"
 					>
 						<mat-icon class="ico" [inline]="true">sort</mat-icon>
 					</button>
@@ -302,7 +294,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Lata budowy</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>history</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> date_range </mat-icon>
+						</div>
 					</span>
 					<mat-select id="year" formControlName="year" multiple>
 						<mat-option
@@ -367,7 +361,9 @@
 				<mat-form-field appearance="fill">
 					<mat-label>Wyposażenie</mat-label>
 					<span matPrefix>
-						<div class="box-icon"><mat-icon>category</mat-icon></div>
+						<div class="box-icon">
+							<mat-icon class="material-symbols-outlined"> construction </mat-icon>
+						</div>
 					</span>
 					<mat-select id="equipment" formControlName="equipment" multiple>
 						<mat-option
@@ -393,23 +389,20 @@
 		<div *ngIf="!isLoading && flatOptions">
 			<div>
 				<div class="container-info">
-					<div *ngIf="isSubmitted" class="container-title">
-						<h1 *ngIf="flatOptions.totalCount !== 0">
+					<div class="container-title">
+						<h1 *ngIf="flatOptions.totalCount">
 							Znaleziono
 							<span [appGetDescription]="flatOptions.totalCount"></span>
 						</h1>
-						<h1 *ngIf="flatOptions.totalCount === 0">
+						<h1 *ngIf="!flatOptions.totalCount">
 							Nie znaleziono ofert dla podanych parametrów
 						</h1>
-					</div>
-					<div *ngIf="!isSubmitted" class="container-title">
-						<h1>Promowane oferty</h1>
 					</div>
 				</div>
 				<ng-template #flats let-flats="flats">
 					<mat-card
 						*ngFor="let flat of flats"
-						[ngClass]="flat.isPromoted === true ? 'promoted-card' : 'card'"
+						[ngClass]="flat.isPromoted ? 'promoted-card' : 'card'"
 					>
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
@@ -437,7 +430,7 @@
 							<mat-chip-listbox>
 								<mat-chip>
 									<div class="chip">
-										<mat-icon>attach_money</mat-icon>
+										<mat-icon class="material-symbols-outlined"> sell </mat-icon>
 										<span>Cena: {{ flat.price }} zł/mc</span>
 									</div>
 								</mat-chip>
@@ -458,61 +451,44 @@
 										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
 									</div>
 								</mat-chip>
-								<mat-chip>
-									<button
-										class="box-icon-watched"
-										id="addToWatched"
-										type="button"
-										mat-icon-button
-										matTooltip="Dodaj do obserwowanych"
-										aria-label="AddToWatched"
-										(click)="addToWatched(flat.offerId)"
-									>
-										<mat-icon>favorite_border</mat-icon>
-									</button>
-								</mat-chip>
+								<button
+									*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+									mat-mini-fab
+									class="ml-auto"
+									id="addToWatched"
+									type="button"
+									color="primary"
+									matTooltip="Dodaj do obserwowanych"
+									aria-label="AddToWatched"
+									[disabled]="flat.isInterest"
+									(click)="addToWatched(flat.offerId)"
+								>
+									<mat-icon>favorite_border</mat-icon>
+								</button>
 							</mat-chip-listbox>
 						</mat-card-content>
 					</mat-card>
 				</ng-template>
-				<div *ngIf="isSubmitted" class="container-offers">
+				<div class="container-offers">
 					<ng-container
 						[ngTemplateOutlet]="flats"
 						[ngTemplateOutletContext]="{ flats: flatOptions.result }"
 					>
 					</ng-container>
 				</div>
-				<fieldset
-					*ngIf="flatOptions.totalCount !== 0 && !isSubmitted"
-					class="container-offers"
-				>
-					<ng-container
-						class="container-offers"
-						[ngTemplateOutlet]="flats"
-						[ngTemplateOutletContext]="{
-							flats: (flatOptionsPromoted$ | async)?.result
-						}"
-					></ng-container>
-				</fieldset>
 			</div>
-			<div class="paginator-box">
-				<mat-paginator
-					#paginator
-					id="paginator2"
-					showFirstLastButtons
-					aria-label="Paginator"
-					[length]="
-						isSubmitted
-							? flatOptions.totalCount
-							: (flatOptionsPromoted$ | async)?.totalCount
-					"
-					[pageSize]="pageSize"
-					[pageIndex]="pageIndex"
-					[pageSizeOptions]="[6, 12, 18, 48]"
-					(page)="changePage($event)"
-				>
-				</mat-paginator>
-			</div>
+			<mat-paginator
+				#paginator
+				id="paginator2"
+				showFirstLastButtons
+				aria-label="Paginator"
+				[length]="flatOptions.totalCount"
+				[pageSize]="pageSize"
+				[pageIndex]="pageIndex"
+				[pageSizeOptions]="[6, 12, 18, 48]"
+				(page)="changePage($event)"
+			>
+			</mat-paginator>
 		</div>
 	</ng-template>
 	<ng-container

@@ -17,7 +17,9 @@
 }
 
 .desctext {
-	padding-right: 10px;
+	margin-right: 8px;
+	max-width: 400px;
+	overflow: hidden;
 }
 
 .container-form {
@@ -26,7 +28,7 @@
 	align-items: center;
 	width: 100%;
 	height: fit-content;
-	padding-bottom: 20px;
+	padding-bottom: 16px;
 }
 
 mat-form-field {
@@ -43,6 +45,15 @@ mat-form-field {
 .box-icon {
 	padding-left: 4px;
 	padding-right: 4px;
+}
+
+.delete-icon {
+	color: red;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-left: auto;
+	position: absolute;
 }
 
 .suffix {
@@ -159,6 +170,7 @@ input[matinput]::-webkit-inner-spin-button {
 /* Firefox */
 input[matinput][type="number"] {
 	-moz-appearance: textfield;
+	appearance: textfield;
 }
 
 @media screen and (max-width: 992px) {
@@ -168,6 +180,11 @@ input[matinput][type="number"] {
 }
 
 @media screen and (max-width: 740px) {
+	.desctext {
+		margin-right: 8px;
+		max-width: 200px;
+		overflow: hidden;
+	}
 	.step-label {
 		display: none;
 	}

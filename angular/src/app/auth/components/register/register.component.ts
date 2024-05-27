@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 
 @Component({
@@ -7,7 +14,12 @@ import { FormGroup, FormGroupDirective } from '@angular/forms';
 	styleUrls: ['./register.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnChanges {
+	@Input()
+	public createProfileMode = false;
+	@Input()
+	public emailExist = false;
+
 	public hidePassword = true;
 	public hideConfirmPasword = true;
 
@@ -17,5 +29,11 @@ export class RegisterComponent implements OnInit {
 
 	public ngOnInit() {
 		this.registerForm = this.formDir.form;
+	}
+
+	public ngOnChanges(changes: SimpleChanges): void {
+		if (changes['emailExist'].currentValue) {
+			this.registerForm.controls['email'].setErrors({ emailExist: true });
+		}
 	}
 }

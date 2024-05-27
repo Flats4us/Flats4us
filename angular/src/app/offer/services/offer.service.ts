@@ -7,6 +7,7 @@ import {
 	IOffer,
 	IPromotion,
 	IRentProposition,
+	IResult,
 	ISendOffers,
 } from '../models/offer.models';
 
@@ -16,9 +17,9 @@ export class OfferService {
 
 	public offerStatuses = new Map<number, string>([
 		[0, 'aktualna'],
-		[1, 'nieaktualna'],
-		[2, 'zawieszona'],
-		[3, 'wynajęta'],
+		[1, 'oczekująca'],
+		[2, 'wynajęta'],
+		[3, 'nieaktualna'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}
@@ -46,7 +47,7 @@ export class OfferService {
 		);
 	}
 	public addRentApproval(id: number, decision: IDecision) {
-		return this.httpClient.post(
+		return this.httpClient.put(
 			`${this.apiRoute}/offers/${id}/rent/accept`,
 			decision
 		);
@@ -63,9 +64,16 @@ export class OfferService {
 		);
 	}
 
-	public deleteInterest(id: number): Observable<string> {
-		return this.httpClient.delete<string>(
+	public deleteInterest(id: number): Observable<IResult> {
+		return this.httpClient.delete<IResult>(
 			`${this.apiRoute}/offers/${id}/interest`
+		);
+	}
+
+	public cancelOffer(id: number): Observable<IResult> {
+		return this.httpClient.put<IResult>(
+			`${this.apiRoute}/offers/${id}/cancel`,
+			null
 		);
 	}
 }

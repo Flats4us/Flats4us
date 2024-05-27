@@ -27,6 +27,8 @@
 
 .imgs {
 	object-fit: cover;
+	height: 400px;
+	overflow: hidden;
 }
 
 .container {
@@ -38,16 +40,22 @@
 	justify-content: center;
 }
 
-.box-icon {
-	font-size: medium;
+.delete-icon {
+	color: red;
 	display: flex;
 	align-content: center;
 	justify-content: center;
-	cursor: pointer;
+	margin-left: auto;
 }
 
 .mcc-description {
 	margin-top: auto;
+}
+
+mat-paginator {
+	display: flex;
+	justify-content: center;
+	margin: 4px;
 }
 
 mat-chip {

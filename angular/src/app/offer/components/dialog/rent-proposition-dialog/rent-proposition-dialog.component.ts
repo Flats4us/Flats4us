@@ -25,10 +25,10 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, of } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -58,6 +58,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
 	public invalidEmail$: Observable<boolean> = of(false);
+	public setLocalDate = setLocalDate;
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),
@@ -76,7 +77,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	}
 
 	public onClose() {
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
 	}
 
 	public onYesClick() {
@@ -84,15 +85,23 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (this.rentPropositionForm.valid) {
 			this.offerService
 				.addRentProposition(this.rentPropositionForm.value, this.data)
-				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
-						this.dialogRef.close();
+						this.snackBar.open(
+							'Propozycja najmu została wysłana do Właściciela i czeka na akceptację!',
+							'Zamknij',
+							{
+								duration: 2000,
+							}
+						);
+						this.dialogRef.close(this.data);
 					},
 					error: () => {
 						this.snackBar.open('Nie udało się dodać najmu.', 'Zamknij', {
 							duration: 2000,
 						});
+						this.dialogRef.close(this.data);
 					},
 				});
 		}
@@ -133,11 +142,5 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (index >= 0) {
 			this.tenants[index] = value;
 		}
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		return throwError(() => {
-			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
-		});
 	}
 }

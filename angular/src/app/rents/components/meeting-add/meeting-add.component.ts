@@ -16,11 +16,10 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, take } from 'rxjs';
-
 import { RentsService } from '../../services/rents.service';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { setLocalDate } from '@shared/utils/functions';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -42,7 +41,11 @@ import { RentsService } from '../../services/rents.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingAddComponent extends BaseComponent {
-	public minDate: Date = new Date();
+	public currentDate: Date = new Date();
+	public minDate = new Date(
+		this.currentDate.setDate(this.currentDate.getDate() + 1)
+	);
+	public setLocalDate = setLocalDate;
 
 	public meetingForm: FormGroup = new FormGroup({
 		date: new FormControl(null, Validators.required),
@@ -54,31 +57,24 @@ export class MeetingAddComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private rentsService: RentsService,
-		@Inject(MAT_DIALOG_DATA) public data: Observable<number>
+		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
-
-		data
-			.pipe(take(1))
-			.subscribe(offerId =>
-				this.meetingForm.controls['offerId'].setValue(offerId)
-			);
-		this.minDate.setDate(this.minDate.getDate() + 1);
+		this.meetingForm.controls['offerId'].setValue(data);
 	}
 
 	public onAdd(): void {
 		this.meetingForm.markAllAsTouched();
-
-		if (this.meetingForm.invalid) {
+		if (!this.meetingForm.valid) {
 			return;
 		}
-
 		this.rentsService
 			.addMeeting(this.meetingForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Spotkanie zostało dodane.', 'Zamknij', {
+					this.meetingForm.controls['offerId'].setValue(this.data);
+					this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
 						duration: 2000,
 					});
 					this.dialogRef.close();
@@ -89,6 +85,7 @@ export class MeetingAddComponent extends BaseComponent {
 						'Zamknij',
 						{ duration: 2000 }
 					);
+					this.dialogRef.close();
 				},
 			});
 	}
