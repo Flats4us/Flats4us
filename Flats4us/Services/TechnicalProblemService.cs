@@ -51,10 +51,10 @@ namespace Flats4us.Services
                 UserId = id
             };
 
-            var userId = _context.Users
+            var userId = await _context.Users
                 .Where(x=>x.UserId == id)
                 .Select(x => x.UserId)
-                .ToArray();
+                .ToArrayAsync();
 
             await _groupChatService.CreateGroupChatAsync(
                 "Chat pomiędzy: użytkownikiem " + id +
