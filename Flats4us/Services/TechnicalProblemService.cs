@@ -13,12 +13,15 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        public readonly IGroupChatService _groupChatService;
 
         public TechnicalProblemService(
             Flats4usContext context,
+            IGroupChatService groupChatService,
             IMapper mapper)
         {
             _context = context;
+            _groupChatService = groupChatService;
             _mapper = mapper;
         }
 
@@ -47,6 +50,16 @@ namespace Flats4us.Services
                 Solved = false,
                 UserId = id
             };
+
+            var userId = _context.Users
+                .Where(x=>x.UserId == id)
+                .Select(x => x.UserId)
+                .ToArray();
+
+            await _groupChatService.CreateGroupChatAsync(
+                "Chat pomiędzy: użytkownikiem " + id +
+                ", oraz Moderatorem",
+                userId);
 
             await _context.TechnicalProblems.AddAsync(problem);
             await _context.SaveChangesAsync();
