@@ -1,6 +1,8 @@
 <div>
 	<div class="box-title">
-		<div class="text-4xl p-4 font-semibold">{{ "Real-estate.browsing-properties" | translate }}</div>
+		<div class="text-4xl p-4 font-semibold">
+			{{ "Real-estate.browsing-properties" | translate }}
+		</div>
 	</div>
 	<ng-template #notFound>
 		<div class="not-found">
@@ -60,8 +62,8 @@
 							>
 						</div>
 						<div class="box-subtitle">
-							{{ realEstate.city }}, {{ "Real-estate.st" | translate }}. {{ realEstate.street }}
-							{{ realEstate.number }}, {{ realEstate.area }} m²
+							{{ realEstate.city }}, {{ "Real-estate.st" | translate }}.
+							{{ realEstate.street }} {{ realEstate.number }}, {{ realEstate.area }} m²
 						</div>
 					</a>
 				</mat-nav-list>

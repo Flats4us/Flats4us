@@ -32,7 +32,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateModule } from '@ngx-translate/core';
 import { GetDescriptionDirectiveModule } from './directives/get-description-directive-module.module';
 
-
 @NgModule({
 	declarations: [StartComponent],
 	exports: [StartComponent],
@@ -61,7 +60,7 @@ import { GetDescriptionDirectiveModule } from './directives/get-description-dire
 		AccessControlDirective,
 		MatSnackBarModule,
 		TranslateModule,
-		GetDescriptionDirectiveModule
+		GetDescriptionDirectiveModule,
 	],
 })
 export class StartModule {}

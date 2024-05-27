@@ -392,7 +392,12 @@
 					<div class="container-title">
 						<h1 *ngIf="flatOptions.totalCount">
 							{{ "Start.found" | translate }}
-							<span [appGetDescription]="{count: flatOptions.totalCount, language: languageChange}"></span>
+							<span
+								[appGetDescription]="{
+									count: flatOptions.totalCount,
+									language: languageChange
+								}"
+							></span>
 						</h1>
 						<h1 *ngIf="!flatOptions.totalCount">
 							{{ "Start.nofound" | translate }}
