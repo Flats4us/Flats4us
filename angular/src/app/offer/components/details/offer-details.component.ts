@@ -73,7 +73,7 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public addOffer() {
-		this.router.navigate(['offer', 'add']);
+		this.router.navigate(['/offer', 'add']);
 	}
 
 	public returnStart() {
