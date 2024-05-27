@@ -31,14 +31,17 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
             CreateMap<Flat, PropertyDto>()
+                .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
                 .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
 
             CreateMap<Room, PropertyDto>()
+                .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
                 .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
 
             CreateMap<House, PropertyDto>()
+                .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
                 .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
 
@@ -144,7 +147,9 @@ namespace Flats4us.Helpers
 
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
 
-            CreateMap<RentOpinion, RentOpinionDto>();
+            CreateMap<RentOpinion, RentOpinionDto>()
+                .ForMember(dest => dest.SourceUserName, opt => opt.MapFrom(src => src.Student.Name))
+                .ForMember(dest => dest.SourceUserProfilePicture, opt => opt.MapFrom(src => src.Student.ProfilePicture));
 
             CreateMap<Argument, ArgumentDto>();
 

@@ -9,6 +9,6 @@ namespace Flats4us.Services.Interfaces
         Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int? pageSize, int? pageNumber);
         Task<RentDto> GetRentByIdAsync(int id, int requestUserId);
         Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId);
-        Task AddRentOpinionAsync(RentOpinionDto input, int userId, int rentId);
+        Task AddRentOpinionAsync(AddRentOpinionDto input, int userId, int rentId);
     }
 }

@@ -41,6 +41,8 @@ namespace Flats4us.Services
                     var flat = await _context.Flats
                         .Include(f => f.Offers)
                         .Include(f => f.RentOpinions)
+                            .ThenInclude(ro => ro.Student)
+                                .ThenInclude(s => s.ProfilePicture)
                         .Include(f => f.Equipment)
                         .Include(f => f.Images)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
@@ -51,6 +53,8 @@ namespace Flats4us.Services
                     var room = await _context.Rooms
                         .Include(r => r.Offers)
                         .Include(r => r.RentOpinions)
+                            .ThenInclude(ro => ro.Student)
+                                .ThenInclude(s => s.ProfilePicture)
                         .Include(r => r.Equipment)
                         .Include(r => r.Images)
                         .FirstOrDefaultAsync(r => r.PropertyId == id);
@@ -61,6 +65,8 @@ namespace Flats4us.Services
                     var house = await _context.Houses
                         .Include(h => h.Offers)
                         .Include(h => h.RentOpinions)
+                            .ThenInclude(ro => ro.Student)
+                                .ThenInclude(s => s.ProfilePicture)
                         .Include(h => h.Equipment)
                         .Include(h => h.Images)
                         .FirstOrDefaultAsync(h => h.PropertyId == id);
@@ -79,16 +85,25 @@ namespace Flats4us.Services
             IQueryable<Flat> flatQuery = _context.Flats
                 .Include(x => x.Equipment)
                 .Include(x => x.Images)
+                .Include(x => x.RentOpinions)
+                    .ThenInclude(ro => ro.Student)
+                        .ThenInclude(s => s.ProfilePicture)
                 .Where(p => p.OwnerId == ownerId);
 
             IQueryable<House> houseQuery = _context.Houses
                 .Include(x => x.Equipment)
                 .Include(x => x.Images)
+                .Include(x => x.RentOpinions)
+                    .ThenInclude(ro => ro.Student)
+                        .ThenInclude(s => s.ProfilePicture)
                 .Where(p => p.OwnerId == ownerId);
 
             IQueryable<Room> roomQuery = _context.Rooms
                 .Include(x => x.Equipment)
                 .Include(x => x.Images)
+                .Include(x => x.RentOpinions)
+                    .ThenInclude(ro => ro.Student)
+                        .ThenInclude(s => s.ProfilePicture)
                 .Where(p => p.OwnerId == ownerId);
 
             if (showOnlyVerified)

@@ -5,26 +5,21 @@ namespace Flats4us.Entities.Dto
     public class RentOpinionDto
     {
         [Required]
+        public int RentOpinionId { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
         [Range(1, 10)]
         public int Rating { get; set; }
 
-        [Required]
-        [Range(1, 10)]
-        public int Service { get; set; }
+        public string? Description { get; set; }
 
         [Required]
-        [Range(1, 10)]
-        public int Location { get; set; }
+        public string SourceUserName { get; set; }
 
         [Required]
-        [Range(1, 10)]
-        public int Equipment { get; set; }
-
-        [Required]
-        [Range(1, 10)]
-        public int QualityForMoney { get; set; }
-
-        [Required]
-        public string Description { get; set; }
+        public FileDto SourceUserProfilePicture { get; set; }
     }
 }

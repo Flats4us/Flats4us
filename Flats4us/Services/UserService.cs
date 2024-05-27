@@ -275,6 +275,7 @@ namespace Flats4us.Services
                         .Include(s => s.Interests)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
+                                .ThenInclude(su => su.ProfilePicture)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(student);
                     break;
@@ -284,6 +285,7 @@ namespace Flats4us.Services
                         .Include(s => s.Document)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
+                                .ThenInclude(su => su.ProfilePicture)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(owner);
                     break;
@@ -316,6 +318,7 @@ namespace Flats4us.Services
                         .Include(s => s.Interests)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
+                                .ThenInclude(su => su.ProfilePicture)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfilePublicDto>(student);
                     break;
@@ -324,6 +327,7 @@ namespace Flats4us.Services
                         .Include(s => s.ProfilePicture)
                         .Include(s => s.ReceivedUserOpinions)
                             .ThenInclude(ruo => ruo.SourceUser)
+                                .ThenInclude(su => su.ProfilePicture)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfilePublicDto>(owner);
                     break;

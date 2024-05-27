@@ -237,7 +237,7 @@ namespace Flats4us.Services
             return _mapper.Map<RentPropositionDto>(rent);
         }
 
-        public async Task AddRentOpinionAsync(RentOpinionDto input, int userId, int rentId)
+        public async Task AddRentOpinionAsync(AddRentOpinionDto input, int userId, int rentId)
         {
             var sourceUser = await _context.Users.
                 FindAsync(userId);
@@ -267,6 +267,7 @@ namespace Flats4us.Services
             var opinion = new RentOpinion
             {
                 Rating = input.Rating,
+                Date = DateTime.Now,
                 Service = input.Service,
                 Location = input.Location,
                 Equipment = input.Equipment,
