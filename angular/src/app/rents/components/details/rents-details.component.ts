@@ -77,7 +77,7 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public navigateToRent(id: number) {
-		this.router.navigate(['rents', 'details', id]);
+		this.router.navigate(['/rents', 'details', id]);
 	}
 	public navigateToOffer(id: number) {
 		this.router.navigate(['offer', 'owner', id]);
@@ -130,11 +130,11 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public navigateStudentRents() {
-		this.router.navigate(['rents', 'student']);
+		this.router.navigate(['/rents', 'student']);
 	}
 
 	public navigateOwnerRents() {
-		this.router.navigate(['rents', 'owner']);
+		this.router.navigate(['/rents', 'owner']);
 	}
 
 	public showProfile(id: number) {

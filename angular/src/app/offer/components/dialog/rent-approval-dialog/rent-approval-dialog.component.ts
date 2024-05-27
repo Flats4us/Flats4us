@@ -67,7 +67,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 						duration: 2000,
 					});
 					this.dialogRef.close(this.data.offerId);
-					this.router.navigate(['rents', 'owner', this.data.rentId]);
+					this.router.navigate(['/rents', 'owner', this.data.rentId]);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {

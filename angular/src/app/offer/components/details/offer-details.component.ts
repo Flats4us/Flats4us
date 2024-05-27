@@ -119,7 +119,7 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public navigateToOffer(id: number) {
-		this.router.navigate(['offer', 'details', id]);
+		this.router.navigate(['/offer', 'details', id]);
 	}
 
 	public navigateToProperty(id: number) {
