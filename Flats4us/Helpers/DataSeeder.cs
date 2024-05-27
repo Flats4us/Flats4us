@@ -2151,6 +2151,84 @@ public static class DataSeeder
 
         #endregion
 
+        #region Payment
+
+        var payment1 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 1, 1),
+            PaymentDate = new DateTime(2023, 1, 8)
+        };
+
+        var payment2 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 1, 1),
+            PaymentDate = new DateTime(2023, 1, 8)
+        };
+
+        var payment3 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 2, 1),
+            PaymentDate = new DateTime(2023, 2, 8)
+        };
+
+        var payment4 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 2, 1),
+            PaymentDate = new DateTime(2023, 2, 8)
+        };
+
+        var payment5 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = false,
+            CreatedDate = new DateTime(2023, 3, 1),
+            PaymentDate = new DateTime(2023, 3, 8)
+        };
+
+        var payment6 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2555,
+            IsPaid = false,
+            CreatedDate = new DateTime(2023, 3, 1),
+            PaymentDate = new DateTime(2023, 3, 8)
+        };
+
+        var payment7 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1700,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 3, 1),
+            PaymentDate = new DateTime(2023, 3, 8)
+        };
+
+        var payment8 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2137,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 3, 1),
+            PaymentDate = new DateTime(2023, 3, 8)
+        };
+
+        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8);
+
+        #endregion
+
         #region Rent
 
         var rent1 = new Rent
@@ -2161,7 +2239,7 @@ public static class DataSeeder
             Offer = offer1,
             Student = student1,
             OtherStudents = { student2, student3 },
-            Payments = null
+            Payments = {payment1, payment2}
         };
 
         var rent2 = new Rent
@@ -2172,7 +2250,7 @@ public static class DataSeeder
             Offer = offer2,
             Student = student4,
             OtherStudents = { student5, student6 },
-            Payments = null
+            Payments = { payment3, payment4 }
         };
 
         var rent3 = new Rent
@@ -2183,7 +2261,7 @@ public static class DataSeeder
             Offer = offer3,
             Student = student7,
             OtherStudents = { student8, student9 },
-            Payments = null
+            Payments = { payment5, payment6 }
         };
 
         var rent4 = new Rent
@@ -2194,7 +2272,7 @@ public static class DataSeeder
             Offer = offer4,
             Student = student10,
             OtherStudents = { },
-            Payments = null
+            Payments = { payment7, payment8 }
         };
 
         dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
@@ -2329,7 +2407,7 @@ public static class DataSeeder
 
         var argument6 = new Argument
         {
-            Description = "sprzeczka pierwsza",
+            Description = "sprzeczka szósta",
             StartDate = new DateTime(2024, 2, 22),
             OwnerAcceptanceDate = null,
             StudentAccceptanceDate = null,
