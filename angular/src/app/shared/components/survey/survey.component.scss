@@ -7,12 +7,28 @@
 	text-align: center;
 }
 
-.survey-form {
-	display: block;
+.survey-form-profile {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 40px;
+	padding: 0 40px 40px 40px;
 	justify-content: center;
-	align-items: center;
-	flex-direction: column;
 }
+
+.survey-form-offer {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 40px;
+	padding: 0 40px 40px 40px;
+	justify-content: center;
+}
+
+// .survey-form {
+// 	display: block;
+// 	justify-content: center;
+// 	align-items: center;
+// 	flex-direction: row;
+// }
 
 /* Chrome, Safari, Edge, Opera */
 input[matinput]::-webkit-outer-spin-button,
@@ -25,4 +41,19 @@ input[matinput]::-webkit-inner-spin-button {
 input[matinput][type="number"] {
 	-moz-appearance: textfield;
 	appearance: textfield;
+}
+
+@media screen and (max-width: 992px) {
+	.survey-form-profile {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.survey-form-profile {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.survey-form-offer {
+		grid-template-columns: repeat(1, 1fr);
+	}
 }

@@ -164,8 +164,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.EDIT) {
 			this.actualUser$ = this.profileService.getActualProfile();
 			this.actualUser$.pipe(this.untilDestroyed()).subscribe(user => {
-				this.urlPhoto = this.baseUrl + user.profilePicture.path;
-				this.urlScan = this.baseUrl + user.document.path;
+				this.urlPhoto = this.baseUrl + user.profilePicture?.path;
+				this.urlScan = this.baseUrl + user.document?.path;
 				if (user.userType === 1) {
 					this.selectedHobbies = user.interests;
 					this.socialMedias = user.links;
@@ -238,17 +238,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public changeSurvey() {
 		this.router.navigate(['profile', 'survey', 'student']);
 	}
-
-	// public getTooltipScan(): string {
-	// 	if (!this.urlNewScan || this.modificationType === ModificationType.CREATE) {
-	// 		return 'Wczytaj skan dokumentu';
-	// 	}
-	// 	if (this.urlNewScan || this.modificationType === ModificationType.EDIT) {
-	// 		return 'Zmień skan dokumentu';
-	// 	} else {
-	// 		return 'Wczytaj skan dokumentu';
-	// 	}
-	// }
 
 	public onSelect(menuOption: IMenuOptions) {
 		switch (menuOption.option) {
