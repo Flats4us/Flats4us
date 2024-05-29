@@ -86,6 +86,37 @@ namespace Flats4us.Controllers
             }
         }
 
+        // PUT: api/meetings/{id}/accept
+        [HttpPut("{id}/accept")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Accept or denies meeting",
+            Description = "Requires verified owner or student privileges"
+        )]
+        public async Task<IActionResult> AcceptMeeting([FromBody] AcceptDto input, int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _meetingService.ConfirmMeetingAsync(input.Decision, requestUserId, id);
+                _logger.LogInformation($"Trying to accept meeting ID: {id}");
+
+                return Ok(new OutputDto<string>("Meeting accepted or denied successfully"));
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
 
     }
 }

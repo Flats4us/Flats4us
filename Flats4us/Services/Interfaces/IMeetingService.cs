@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services.Interfaces
 {
@@ -6,6 +7,6 @@ namespace Flats4us.Services.Interfaces
     {
         Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId);
         Task AddMeetingAsync(AddMeetingDto input, int userId);
-        Task ConfirmMeetingAsync(AcceptDto input, int userId, int offerId);
+        Task ConfirmMeetingAsync(bool decision, int userId, int meetingId);
     }
 }
