@@ -7,8 +7,12 @@ import { ConversationsComponent } from './conversations.component';
 const routes: Routes = [
 	{
 		path: '',
-		component: ConversationsComponent,
 		children: [
+			{
+				path: '',
+				pathMatch: 'full',
+				component: ConversationsComponent,
+			},
 			{
 				path: 'receiver/:receiverId/conversation/:conversationId',
 				component: MessagesConversationComponent,
