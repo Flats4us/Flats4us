@@ -44,7 +44,7 @@ export class AddOfferComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.router.navigate(['offer', 'owner']);
 				},
@@ -52,7 +52,7 @@ export class AddOfferComponent extends BaseComponent {
 					this.snackBar.open(
 						'Nie udało się dodać oferty. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 10000 }
 					);
 				},
 			});

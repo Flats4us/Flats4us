@@ -40,7 +40,7 @@ export class LoginComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Zalogowano pomyślnie!', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.router.navigateByUrl(
 						this.route.snapshot.queryParamMap.get('returnUrl') || '/'

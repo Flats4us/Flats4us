@@ -64,14 +64,14 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została zaakceptowana', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close(this.data.offerId);
 					this.router.navigate(['rents', 'owner', this.data.rentId]);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close(this.data.offerId);
 				},
@@ -85,13 +85,13 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została odrzucona', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close(this.data.offerId);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close(this.data.offerId);
 				},

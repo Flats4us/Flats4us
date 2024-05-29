@@ -190,13 +190,13 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.subscribe({
 				next: () =>
 					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					}),
 				error: () => {
 					this.snackBar.open(
 						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 10000 }
 					);
 				},
 			});

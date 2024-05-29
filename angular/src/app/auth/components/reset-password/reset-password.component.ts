@@ -59,11 +59,11 @@ export class ResetPasswordComponent extends BaseComponent {
 			.subscribe({
 				error: () =>
 					this.snackBar.open('Wystąpił błąd', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					}),
 				complete: () =>
 					this.snackBar.open('Pomyślnie zresetowano hasło!', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					}),
 			});
 	}

@@ -203,13 +203,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.subscribe({
 							next: () =>
 								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
-									duration: 2000,
+									duration: 10000,
 								}),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 2000 }
+									{ duration: 10000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -228,14 +228,14 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 									'Pomyślnie utworzono konto Właściciela!',
 									'Zamknij',
 									{
-										duration: 2000,
+										duration: 10000,
 									}
 								),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 2000 }
+									{ duration: 10000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),

@@ -75,7 +75,7 @@ export class MeetingAddComponent extends BaseComponent {
 				next: () => {
 					this.meetingForm.controls['offerId'].setValue(this.data);
 					this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close();
 				},
@@ -83,7 +83,7 @@ export class MeetingAddComponent extends BaseComponent {
 					this.snackBar.open(
 						'Nie udało się dodać spotkania. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 10000 }
 					);
 					this.dialogRef.close();
 				},
