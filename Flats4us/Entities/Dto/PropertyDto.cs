@@ -50,6 +50,21 @@ namespace Flats4us.Entities.Dto
         public List<FileDto> Images { get; set; }
 
         [Required]
+        public decimal AvgRating { get; set; }
+
+        [Required]
+        public decimal AvgServiceRating { get; set; }
+
+        [Required]
+        public decimal AvgLocationRating { get; set; }
+
+        [Required]
+        public decimal AvgEquipmentRating { get; set; }
+
+        [Required]
+        public decimal AvgQualityForMoneyRating { get; set; }
+
+        [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
         public int? NumberOfRooms { get; set; }

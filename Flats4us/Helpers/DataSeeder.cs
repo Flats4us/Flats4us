@@ -2205,6 +2205,7 @@ public static class DataSeeder
 
         var rentOpinion1 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 1,
             Service = 1,
             Location = 1,
@@ -2217,6 +2218,7 @@ public static class DataSeeder
 
         var rentOpinion2 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 2,
             Service = 2,
             Location = 2,
@@ -2229,6 +2231,7 @@ public static class DataSeeder
 
         var rentOpinion3 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 3,
             Service = 3,
             Location = 3,
@@ -2241,6 +2244,7 @@ public static class DataSeeder
 
         var rentOpinion4 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 4,
             Service = 4,
             Location = 4,

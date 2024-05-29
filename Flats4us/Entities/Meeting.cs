@@ -17,6 +17,10 @@ namespace Flats4us.Entities
         [Required]
         public string Reason { get; set; }
 
+        public DateTime? OwnerAcceptDate { get; set; }
+
+        public DateTime? StudentAcceptDate { get; set; }
+
         [Required]
         public int OfferId { get; set; }
 

@@ -10,6 +10,9 @@ namespace Flats4us.Entities
         public int RentOpinionId { get; set; }
 
         [Required]
+        public DateTime Date { get; set; }
+
+        [Required]
         [Range(1, 10)]
         public int Rating { get; set; }
 
@@ -29,8 +32,7 @@ namespace Flats4us.Entities
         [Range(1, 10)]
         public int QualityForMoney { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         public int StudentId { get; set; }

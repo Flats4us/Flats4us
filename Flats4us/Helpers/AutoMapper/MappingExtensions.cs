@@ -39,5 +39,16 @@ namespace Flats4us.Helpers.AutoMapper
                     $"{src.Street} {src.Number}/{src.Flat}, {src.PostalCode} {src.City}" :
                     $"{src.Street} {src.Number}, {src.PostalCode} {src.City}"));
         }
+
+        public static IMappingExpression<TSrc, PropertyDto> MapBaseProperty<TSrc>(this IMappingExpression<TSrc, PropertyDto> mapping)
+            where TSrc : Property
+        {
+            return mapping
+                .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgServiceRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Service).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgLocationRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Location).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgEquipmentRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Equipment).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgQualityForMoneyRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.QualityForMoney).DefaultIfEmpty().Average()));
+        }
     }
 }

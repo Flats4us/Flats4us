@@ -349,7 +349,7 @@ namespace Flats4us.Controllers
             Summary = "Adds rent opinion",
             Description = "Requires verified student privileges"
         )]
-        public async Task<IActionResult> AddRentOpinion(int rentId, RentOpinionDto input)
+        public async Task<IActionResult> AddRentOpinion(int rentId, AddRentOpinionDto input)
         {
             try
             {

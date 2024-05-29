@@ -25,5 +25,4 @@ namespace Flats4us.Entities
             this.UserGroupChats = new HashSet<UserGroupChat>();
         }
     }
-
 }
