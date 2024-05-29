@@ -21,6 +21,8 @@ import { RentsService } from 'src/app/rents/services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { StartService } from 'src/app/start/services/start.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IProperty } from 'src/app/real-estate/models/real-estate.models';
+import { PropertyRatingComponent } from '../property-rating/property-rating.component';
 
 @Component({
 	selector: 'app-offer-details',
@@ -230,6 +232,17 @@ export class OfferDetailsComponent extends BaseComponent {
 			return;
 		}
 		this.router.navigate(['rents', 'owner', id]);
+	}
+
+	public showRating(property?: IProperty) {
+		if (!property || !property.avgRating) {
+			return;
+		}
+		this.dialog.open(PropertyRatingComponent, {
+			disableClose: false,
+			closeOnNavigation: true,
+			data: property,
+		});
 	}
 
 	public setCurrentSlideIndex(index: number) {

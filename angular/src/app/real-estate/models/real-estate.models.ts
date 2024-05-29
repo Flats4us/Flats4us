@@ -65,6 +65,11 @@ export interface IProperty {
 	maxNumberOfInhabitants: number;
 	constructionYear: number;
 	images: IImage[];
+	avgRating: number;
+	avgServiceRating: number;
+	avgLocationRating: number;
+	avgEquipmentRating: number;
+	avgQualityForMoneyRating: number;
 	verificationStatus: number;
 	numberOfRooms: number;
 	numberOfFloors: number;

@@ -15,7 +15,11 @@ import { ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
-import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
+import {
+	IGroup,
+	IProperty,
+	IRegionCity,
+} from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
@@ -23,6 +27,8 @@ import { ISendOffers } from '../offer/models/offer.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '@shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PropertyRatingComponent } from '../offer/components/property-rating/property-rating.component';
 
 @Component({
 	selector: 'app-start',
@@ -71,7 +77,8 @@ export class StartComponent extends BaseComponent implements OnInit {
 		private changeDetectorRef: ChangeDetectorRef,
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
-		public authService: AuthService
+		public authService: AuthService,
+		public dialog: MatDialog
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
@@ -267,5 +274,16 @@ export class StartComponent extends BaseComponent implements OnInit {
 				this.isLoading$ = of(false);
 				this.changeDetectorRef.markForCheck();
 			});
+	}
+
+	public showRating(property: IProperty) {
+		if (!property.avgRating) {
+			return;
+		}
+		this.dialog.open(PropertyRatingComponent, {
+			disableClose: false,
+			closeOnNavigation: true,
+			data: property,
+		});
 	}
 }

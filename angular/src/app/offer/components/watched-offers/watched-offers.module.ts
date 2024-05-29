@@ -13,6 +13,8 @@ import { OfferRoutingModule } from '../../offer-routing.module';
 import { OfferService } from '../../services/offer.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [WatchedOffersComponent],
@@ -25,6 +27,8 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 		MatCardModule,
 		OfferRoutingModule,
 		MatTooltipModule,
+		MatDialogModule,
+		StarRatingComponent,
 	],
 	providers: [OfferService, RealEstateService, MatPaginatorIntl],
 	exports: [WatchedOffersComponent],

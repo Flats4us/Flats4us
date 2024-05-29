@@ -60,15 +60,18 @@
 										)
 									}}
 									{{ data.offer?.property?.area }} m² {{ data.offer?.property?.city }}
-									<mat-icon
-										*ngIf="data.offer?.isPromoted"
-										class="promotion-icon"
-										matTooltip="Promowana oferta"
-										[inline]="true"
-										>new_releases</mat-icon
+									<span
+										matTooltip="{{
+											data.offer?.property?.avgRating
+												? 'Zobacz szczegółową ocenę'
+												: 'Nieruchomość nie została jeszcze oceniona'
+										}}"
+										(click)="showRating(data.offer?.property)"
 									>
-								</h1></span
-							>
+										<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
+										</app-star-rating>
+									</span></h1
+							></span>
 						</div>
 						<div
 							*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"

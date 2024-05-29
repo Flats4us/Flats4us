@@ -406,14 +406,26 @@
 					>
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
-								><h2 class="text-m">
+								><h2 class="text-m flex items-center">
 									Wynajem -
 									{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
 									{{ flat.property.area }} m² {{ flat.property.city }}
+									<span
+										matTooltip="{{
+											flat.property.avgRating
+												? 'Zobacz szczegółową ocenę'
+												: 'Nieruchomość nie została jeszcze oceniona'
+										}}"
+										(click)="showRating(flat.property)"
+									>
+										<app-star-rating [avgRating]="flat.property.avgRating">
+										</app-star-rating>
+									</span>
 									<mat-icon
 										*ngIf="flat.isPromoted"
 										class="promotion-icon"
 										matTooltip="Promowana oferta"
+										[inline]="true"
 										>new_releases</mat-icon
 									>
 								</h2>
