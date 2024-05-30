@@ -99,7 +99,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 	}
 
 	public showProfile(id: number) {
-		this.router.navigate(['profile', 'details', 'student', id]);
+		this.router.navigate(['profile', 'details', id]);
 		this.dialogRef.close();
 	}
 }
