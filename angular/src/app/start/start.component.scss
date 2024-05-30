@@ -172,8 +172,6 @@ mat-paginator {
 .promotion-icon {
 	font-size: x-large;
 	color: #fbbb8b;
-	float: right;
-	margin-left: 4px;
 	padding-bottom: 4px;
 }
 
@@ -257,6 +255,9 @@ input[matinput][type="number"] {
 @media screen and (max-width: 992px) {
 	.container-offers {
 		grid-template-columns: repeat(2, 1fr);
+	}
+	.promotion-icon {
+		display: none;
 	}
 }
 

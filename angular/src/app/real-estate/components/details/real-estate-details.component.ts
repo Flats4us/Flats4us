@@ -26,6 +26,20 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	public actualRealEstate$: Observable<IProperty> = this.realEstateId$?.pipe(
 		switchMap(id => this.realEstateService.getRealEstateById(parseInt(id)))
 	);
+	public showRealEstate$: Observable<boolean> = this.realEstateId$?.pipe(
+		switchMap(value =>
+			this.realEstateService
+				.getRealEstates(false)
+				.pipe(
+					map(properties =>
+						properties.find(property => property.propertyId === parseInt(value))
+							? true
+							: false
+					)
+				)
+		)
+	);
+
 	public currentIndex = 0;
 
 	public menuOptions: IMenuOptions[] = [
@@ -42,14 +56,14 @@ export class RealEstateDetailsComponent extends BaseComponent {
 		super();
 	}
 
-	public onSelect(menuOption: IMenuOptions, id: number) {
+	public onSelect(menuOption: IMenuOptions, id?: number) {
 		switch (menuOption.option) {
 			case 'deleteRealEstate': {
-				this.openDialog(id);
+				this.openDialog(id ?? 0);
 				break;
 			}
 			case 'editRealEstate': {
-				this.editRealEstate(id);
+				this.editRealEstate(id ?? 0);
 				break;
 			}
 		}

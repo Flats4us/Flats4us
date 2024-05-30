@@ -1,301 +1,308 @@
 <div
-	*ngIf="{ user: user$ | async, rent: actualRent$ | async } as data"
-	class="grid gap-4"
+	*ngIf="{
+		user: user$ | async,
+		rent: actualRent$ | async,
+		show: showRent$ | async
+	} as data"
 >
-	<mat-card>
-		<div class="label-box">
-			<mat-label class="label-description">
-				<span class="text-3xl"
-					>Status najmu:
-					{{ data.rent?.isFinished ? "zakończony" : "trwający" }}</span
-				>
-			</mat-label>
-		</div>
-		<div class="gallery">
-			<div class="container slider">
-				<div [@slideAnimation]="currentIndex">
-					<ng-template
-						ngFor
-						[ngForOf]="data.rent?.propertyImages"
-						let-slide
-						let-i="index"
+	<div *ngIf="data.show" class="grid gap-4">
+		<mat-card>
+			<div class="label-box">
+				<mat-label class="label-description">
+					<span class="text-3xl"
+						>Status najmu:
+						{{ data.rent?.isFinished ? "zakończony" : "trwający" }}</span
 					>
-						<div class="offer-title-outer">
-							<span class="offer-title-inner"
-								><h1 class="text-3xl">
-									Najem -
-									{{ realEstateService.propertyTypes.get(data.rent?.propertyType ?? 0) }}
-									{{ data.rent?.propertyAddress }}
-								</h1></span
-							>
-						</div>
-						<div
-							*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-							class="menu-title"
+				</mat-label>
+			</div>
+			<div class="gallery">
+				<div class="container slider">
+					<div [@slideAnimation]="currentIndex">
+						<ng-template
+							ngFor
+							[ngForOf]="data.rent?.propertyImages"
+							let-slide
+							let-i="index"
 						>
-							<button
-								class="box-icon"
-								id="menu"
-								mat-mini-fab
-								color="primary"
-								matTooltip="Więcej opcji"
-								aria-label="MenuButton"
-								[matMenuTriggerFor]="menu"
-								[disabled]="data.rent?.isFinished"
-							>
-								<mat-icon>more_horiz</mat-icon>
-							</button>
-							<mat-menu #menu="matMenu" id="options">
-								<button
-									*ngFor="let menuOption of this.menuOptions"
-									mat-menu-item
-									[value]="menuOption.description"
-									[disabled]="
-										data.user === uType.STUDENT &&
-										(menuOption.option === 'offerDetails' ||
-											menuOption.option === 'propertyDetails')
-									"
-									(click)="
-										onSelect(
-											menuOption,
-											data.rent?.rentId,
-											data.rent?.offerId,
-											data.rent?.propertyId
-										)
-									"
-								>
-									<div
-										class="flex items-center justify-center"
-										[ngSwitch]="menuOption.option"
-									>
-										<mat-icon
-											*ngSwitchCase="'rentDetails'"
-											class="material-icons-outlined"
-											>info</mat-icon
-										>
-										<mat-icon
-											*ngSwitchCase="'offerDetails'"
-											class="material-icons-outlined"
-											>campaign</mat-icon
-										>
-										<mat-icon
-											*ngSwitchCase="'propertyDetails'"
-											class="material-icons-outlined"
-											>real_estate_agent</mat-icon
-										>
-										<mat-icon
-											*ngSwitchCase="'startDispute'"
-											class="material-icons-outlined"
-											>gavel</mat-icon
-										>
-										<span>{{ menuOption.description }}</span>
-									</div>
-								</button>
-							</mat-menu>
-						</div>
-						<img
-							*ngIf="
-								(data.rent?.propertyImages?.length ?? 0) > 0 && isCurrentSlideIndex(i)
-							"
-							class="slide slide-animation non-draggable-image"
-							src="{{ baseUrl }}/{{ slide.path }}"
-							(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
-							(swipeleft)="prevSlide(data.rent?.propertyImages?.length)"
-						/>
-					</ng-template>
-				</div>
-
-				<button
-					class="arrow prev"
-					(click)="nextSlide(data.rent?.propertyImages?.length)"
-				>
-					<mat-icon>arrow_back_ios</mat-icon>
-				</button>
-				<button
-					class="arrow next"
-					(click)="prevSlide(data.rent?.propertyImages?.length)"
-				>
-					<mat-icon>arrow_forward_ios</mat-icon>
-				</button>
-				<nav class="nav">
-					<div class="wrapper">
-						<ul class="dots">
-							<li
-								*ngFor="let slide of data.rent?.propertyImages; let i = index"
-								class="dot"
-							>
-								<span
-									[ngClass]="{ active: isCurrentSlideIndex(i) }"
-									(click)="setCurrentSlideIndex(i)"
-								></span>
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</mat-card>
-
-	<mat-card>
-		<div class="label-box">
-			<mat-label class="label-description"
-				><mat-icon class="icon" [inline]="true">description</mat-icon
-				><span class="text-3xl">Opis najmu</span></mat-label
-			>
-		</div>
-		<mat-divider></mat-divider>
-		<div class="container-description">
-			<div class="column-header-description">
-				<p class="text-2xl pt-4">Data wystawienia:</p>
-				<p class="text-2xl pt-4">Data zakończenia:</p>
-				<p class="text-2xl pt-4">Adres:</p>
-				<p class="text-2xl pt-4">Czas trwania</p>
-				<p
-					*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-					class="text-2xl pt-4"
-				>
-					Lokatorzy:
-				</p>
-			</div>
-			<div class="column-header-description">
-				<p class="text-2xl pt-4">{{ data.rent?.startDate | date }}</p>
-				<p class="text-2xl pt-4">{{ data.rent?.endDate | date }}</p>
-				<p class="text-2xl pt-4">
-					{{ data.rent?.propertyAddress }}
-				</p>
-				<p class="text-2xl pt-4">{{ data.rent?.duration }} msc.</p>
-				<p class="text-2xl pt-4">
-					<mat-card *ngFor="let tenant of data.rent?.tenants" class="mt-4">
-						<div class="profile-details">
-							<mat-card-avatar
-								matTooltip="Pokaż profil"
-								(click)="showProfile(tenant.userId)"
-							>
-								<img
-									class="profile-avatar"
-									src="{{ baseUrl }}/{{ tenant.profilePicture?.path }}"
-							/></mat-card-avatar>
-							<div class="container-features">
-								<mat-chip matTooltip="Imię i nazwisko"
-									><div class="box-feature">
-										<mat-icon class="icon-feature">account_circle</mat-icon
-										><span>{{ tenant.fullName }}</span>
-									</div></mat-chip
-								>
-								<mat-chip matTooltip="Adres email"
-									><div class="box-feature">
-										<mat-icon class="icon-feature">mail</mat-icon
-										><span>{{ tenant.email }}</span>
-									</div></mat-chip
+							<div class="offer-title-outer">
+								<span class="offer-title-inner"
+									><h1 class="text-3xl">
+										Najem -
+										{{
+											realEstateService.propertyTypes.get(data.rent?.propertyType ?? 0)
+										}}
+										{{ data.rent?.propertyAddress }}
+									</h1></span
 								>
 							</div>
+							<div
+								*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+								class="menu-title"
+							>
+								<button
+									class="box-icon"
+									id="menu"
+									mat-mini-fab
+									color="primary"
+									matTooltip="Więcej opcji"
+									aria-label="MenuButton"
+									[matMenuTriggerFor]="menu"
+									[disabled]="data.rent?.isFinished"
+								>
+									<mat-icon>more_horiz</mat-icon>
+								</button>
+								<mat-menu #menu="matMenu" id="options">
+									<button
+										*ngFor="let menuOption of this.menuOptions"
+										mat-menu-item
+										[value]="menuOption.description"
+										[disabled]="
+											data.user === uType.STUDENT &&
+											(menuOption.option === 'offerDetails' ||
+												menuOption.option === 'propertyDetails')
+										"
+										(click)="
+											onSelect(
+												menuOption,
+												data.rent?.rentId,
+												data.rent?.offerId,
+												data.rent?.propertyId
+											)
+										"
+									>
+										<div
+											class="flex items-center justify-center"
+											[ngSwitch]="menuOption.option"
+										>
+											<mat-icon
+												*ngSwitchCase="'rentDetails'"
+												class="material-icons-outlined"
+												>info</mat-icon
+											>
+											<mat-icon
+												*ngSwitchCase="'offerDetails'"
+												class="material-icons-outlined"
+												>campaign</mat-icon
+											>
+											<mat-icon
+												*ngSwitchCase="'propertyDetails'"
+												class="material-icons-outlined"
+												>real_estate_agent</mat-icon
+											>
+											<mat-icon
+												*ngSwitchCase="'startDispute'"
+												class="material-icons-outlined"
+												>gavel</mat-icon
+											>
+											<span>{{ menuOption.description }}</span>
+										</div>
+									</button>
+								</mat-menu>
+							</div>
+							<img
+								*ngIf="
+									(data.rent?.propertyImages?.length ?? 0) > 0 && isCurrentSlideIndex(i)
+								"
+								class="slide slide-animation non-draggable-image"
+								src="{{ baseUrl }}/{{ slide.path }}"
+								(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
+								(swipeleft)="prevSlide(data.rent?.propertyImages?.length)"
+							/>
+						</ng-template>
+					</div>
+
+					<button
+						class="arrow prev"
+						(click)="nextSlide(data.rent?.propertyImages?.length)"
+					>
+						<mat-icon>arrow_back_ios</mat-icon>
+					</button>
+					<button
+						class="arrow next"
+						(click)="prevSlide(data.rent?.propertyImages?.length)"
+					>
+						<mat-icon>arrow_forward_ios</mat-icon>
+					</button>
+					<nav class="nav">
+						<div class="wrapper">
+							<ul class="dots">
+								<li
+									*ngFor="let slide of data.rent?.propertyImages; let i = index"
+									class="dot"
+								>
+									<span
+										[ngClass]="{ active: isCurrentSlideIndex(i) }"
+										(click)="setCurrentSlideIndex(i)"
+									></span>
+								</li>
+							</ul>
 						</div>
-					</mat-card>
-				</p>
+					</nav>
+				</div>
 			</div>
-		</div>
-	</mat-card>
-	<mat-card>
-		<div>
-			<mat-card>
+		</mat-card>
+
+		<mat-card>
+			<div class="label-box">
 				<mat-label class="label-description"
-					><mat-icon class="material-symbols-outlined" [inline]="true">
-						payments </mat-icon
-					><span class="text-3xl ml-4">Płatności</span></mat-label
+					><mat-icon class="icon" [inline]="true">description</mat-icon
+					><span class="text-3xl">Opis najmu</span></mat-label
 				>
-			</mat-card>
-			<div class="payments-container mat-elevation-z8">
-				<mat-table [dataSource]="data.rent?.payments ?? []">
-					<ng-container matColumnDef="paymentId">
-						<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Id:</span>
-							{{ element.paymentId }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="paymentPurpose">
-						<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Typ:</span>
-							{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="amount">
-						<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Kwota:</span>
-							{{ element.amount | currency : "PLN" : true : ".2-2" }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="isPaid">
-						<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Opłacono:</span>
-							{{ element.isPaid ? "tak" : "nie" }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="createdDate">
-						<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Data wygenerowania:</span>
-							{{ element.createdDate | date }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="paymentDate">
-						<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Termin płatności:</span>
-							{{ element.paymentDate | date }}
-						</mat-cell>
-					</ng-container>
-					<mat-header-row
-						*matHeaderRowDef="this.displayedColumnsOwner"
-					></mat-header-row>
-					<mat-row
-						*matRowDef="let row; columns: this.displayedColumnsOwner"
-					></mat-row>
-				</mat-table>
 			</div>
-		</div>
-		<div class="button-box-options">
-			<div *ngIf="data.user === uType.DETAILS">
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-					mat-raised-button
-					color="primary"
-					(click)="navigateStudentRents()"
-				>
-					Powrót
-				</button>
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-					mat-raised-button
-					color="primary"
-					(click)="navigateOwnerRents()"
-				>
-					Powrót
-				</button>
+			<mat-divider></mat-divider>
+			<div class="container-description">
+				<div class="column-header-description">
+					<p class="text-2xl pt-4">Data wystawienia:</p>
+					<p class="text-2xl pt-4">Data zakończenia:</p>
+					<p class="text-2xl pt-4">Adres:</p>
+					<p class="text-2xl pt-4">Czas trwania</p>
+					<p
+						*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+						class="text-2xl pt-4"
+					>
+						Lokatorzy:
+					</p>
+				</div>
+				<div class="column-header-description">
+					<p class="text-2xl pt-4">{{ data.rent?.startDate | date }}</p>
+					<p class="text-2xl pt-4">{{ data.rent?.endDate | date }}</p>
+					<p class="text-2xl pt-4">
+						{{ data.rent?.propertyAddress }}
+					</p>
+					<p class="text-2xl pt-4">{{ data.rent?.duration }} msc.</p>
+					<p class="text-2xl pt-4">
+						<mat-card *ngFor="let tenant of data.rent?.tenants" class="mt-4">
+							<div class="profile-details">
+								<mat-card-avatar
+									matTooltip="Pokaż profil"
+									(click)="showProfile(tenant.userId)"
+								>
+									<img
+										class="profile-avatar"
+										src="{{ baseUrl }}/{{ tenant.profilePicture?.path }}"
+								/></mat-card-avatar>
+								<div class="container-features">
+									<mat-chip matTooltip="Imię i nazwisko"
+										><div class="box-feature">
+											<mat-icon class="icon-feature">account_circle</mat-icon
+											><span>{{ tenant.fullName }}</span>
+										</div></mat-chip
+									>
+									<mat-chip matTooltip="Adres email"
+										><div class="box-feature">
+											<mat-icon class="icon-feature">mail</mat-icon
+											><span>{{ tenant.email }}</span>
+										</div></mat-chip
+									>
+								</div>
+							</div>
+						</mat-card>
+					</p>
+				</div>
 			</div>
-			<div *ngIf="!data.rent?.isFinished">
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-					mat-raised-button
-					color="primary"
-					(click)="onAddMeeting()"
-				>
-					Dodaj spotkanie
-				</button>
+		</mat-card>
+		<mat-card>
+			<div>
+				<mat-card>
+					<mat-label class="label-description"
+						><mat-icon class="material-symbols-outlined" [inline]="true">
+							payments </mat-icon
+						><span class="text-3xl ml-4">Płatności</span></mat-label
+					>
+				</mat-card>
+				<div class="payments-container mat-elevation-z8">
+					<mat-table [dataSource]="data.rent?.payments ?? []">
+						<ng-container matColumnDef="paymentId">
+							<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Id:</span>
+								{{ element.paymentId }}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="paymentPurpose">
+							<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Typ:</span>
+								{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="amount">
+							<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Kwota:</span>
+								{{ element.amount | currency : "PLN" : true : ".2-2" }}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="isPaid">
+							<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Opłacono:</span>
+								{{ element.isPaid ? "tak" : "nie" }}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="createdDate">
+							<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Data wygenerowania:</span>
+								{{ element.createdDate | date }}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="paymentDate">
+							<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label">Termin płatności:</span>
+								{{ element.paymentDate | date }}
+							</mat-cell>
+						</ng-container>
+						<mat-header-row
+							*matHeaderRowDef="this.displayedColumnsOwner"
+						></mat-header-row>
+						<mat-row
+							*matRowDef="let row; columns: this.displayedColumnsOwner"
+						></mat-row>
+					</mat-table>
+				</div>
 			</div>
-			<div *ngIf="data.rent?.isFinished">
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-					mat-raised-button
-					color="primary"
-					(click)="onRate()"
-				>
-					Oceń najem
-				</button>
+			<div class="button-box-options">
+				<div *ngIf="data.user === uType.DETAILS">
+					<button
+						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						mat-raised-button
+						color="primary"
+						(click)="navigateStudentRents()"
+					>
+						Powrót
+					</button>
+					<button
+						*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+						mat-raised-button
+						color="primary"
+						(click)="navigateOwnerRents()"
+					>
+						Powrót
+					</button>
+				</div>
+				<div *ngIf="!data.rent?.isFinished">
+					<button
+						*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+						mat-raised-button
+						color="primary"
+						(click)="onAddMeeting()"
+					>
+						Dodaj spotkanie
+					</button>
+				</div>
+				<div *ngIf="data.rent?.isFinished">
+					<button
+						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						mat-raised-button
+						color="primary"
+						(click)="onRate()"
+					>
+						Oceń najem
+					</button>
+				</div>
 			</div>
-		</div>
-	</mat-card>
+		</mat-card>
+	</div>
 </div>

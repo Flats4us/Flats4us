@@ -35,6 +35,17 @@ export class RentsDetailsComponent extends BaseComponent {
 	public actualRent$: Observable<IRent> = this.rentId$?.pipe(
 		switchMap(value => this.rentsService.getRentById(parseInt(value)))
 	);
+	public showRent$: Observable<boolean> = this.rentId$?.pipe(
+		switchMap(value =>
+			this.rentsService
+				.getRents()
+				.pipe(
+					map(rents =>
+						rents.result.find(rent => rent.rentId === parseInt(value)) ? true : false
+					)
+				)
+		)
+	);
 
 	public currentIndex = 0;
 

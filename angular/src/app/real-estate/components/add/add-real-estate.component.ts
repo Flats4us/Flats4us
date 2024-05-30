@@ -100,6 +100,8 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
 
+	public hideRealEstate$: Observable<boolean>;
+
 	private regionCityArray: IRegionCity[] = [];
 
 	public completed = false;
@@ -157,6 +159,19 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			switchMap(id => {
 				return this.realEstateService.getRealEstateById(parseInt(id) ?? 0);
 			})
+		);
+		this.hideRealEstate$ = this.actualRealEstate?.pipe(
+			switchMap(value =>
+				this.realEstateService
+					.getRealEstates(false)
+					.pipe(
+						map(properties =>
+							properties.find(property => property.propertyId === value.propertyId)
+								? false
+								: true
+						)
+					)
+			)
 		);
 	}
 

@@ -1,237 +1,257 @@
-<div *ngIf="actualRealEstate$ | async as actualRealEstate" class="grid gap-4">
-	<mat-card>
-		<div class="label-box">
-			<mat-label class="label-description">
-				<span class="text-3xl"
-					>Status nieruchomości:
-					{{
-						realEstateService.propertyStatuses.get(
-							actualRealEstate.verificationStatus
-						)
-					}}</span
-				>
-			</mat-label>
-		</div>
-		<div class="gallery">
-			<div class="container slider">
-				<div [@slideAnimation]="currentIndex">
-					<ng-template
-						ngFor
-						[ngForOf]="actualRealEstate?.images"
-						let-slide
-						let-i="index"
+<div
+	*ngIf="{
+		actualRealEstate: actualRealEstate$ | async,
+		show: showRealEstate$ | async
+	} as data"
+>
+	<div *ngIf="data.show" class="grid gap-4">
+		<mat-card>
+			<div class="label-box">
+				<mat-label class="label-description">
+					<span class="text-3xl"
+						>Status nieruchomości:
+						{{
+							realEstateService.propertyStatuses.get(
+								data.actualRealEstate?.verificationStatus ?? 0
+							)
+						}}</span
 					>
-						<div class="offer-title-outer">
-							<span class="offer-title-inner"
-								><h1 class="text-3xl">
-									{{
-										realEstateService.propertyTypes.get(actualRealEstate.propertyType)
-									}}
-									{{ actualRealEstate.area }} m² {{ actualRealEstate.city }}
-								</h1></span
-							>
-						</div>
-						<div class="menu-title">
-							<button
-								class="box-icon"
-								id="menu"
-								mat-mini-fab
-								color="primary"
-								matTooltip="Więcej opcji"
-								aria-label="MenuButton"
-								[matMenuTriggerFor]="menu"
-							>
-								<mat-icon>more_horiz</mat-icon>
-							</button>
-							<mat-menu #menu="matMenu" id="options">
-								<button
-									*ngFor="let menuOption of this.menuOptions"
-									mat-menu-item
-									[value]="menuOption.description"
-									[disabled]="
-										actualRealEstate?.offerIds?.length &&
-										menuOption.option === 'deleteRealEstate'
-									"
-									(click)="onSelect(menuOption, actualRealEstate.propertyId)"
+				</mat-label>
+			</div>
+			<div class="gallery">
+				<div class="container slider">
+					<div [@slideAnimation]="currentIndex">
+						<ng-template
+							ngFor
+							[ngForOf]="data.actualRealEstate?.images"
+							let-slide
+							let-i="index"
+						>
+							<div class="offer-title-outer">
+								<span class="offer-title-inner"
+									><h1 class="text-3xl">
+										{{
+											realEstateService.propertyTypes.get(
+												data.actualRealEstate?.propertyType ?? 0
+											)
+										}}
+										{{ data.actualRealEstate?.area }} m² {{ data.actualRealEstate?.city }}
+									</h1></span
 								>
-									<div
-										class="flex items-center justify-center"
-										[ngSwitch]="menuOption.option"
-									>
-										<mat-icon
-											*ngSwitchCase="'deleteRealEstate'"
-											class="material-icons-outlined"
-											>close</mat-icon
-										>
-										<mat-icon
-											*ngSwitchCase="'editRealEstate'"
-											class="material-icons-outlined"
-											>edit</mat-icon
-										>
-										<span
-											[ngClass]="
-												menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
-											"
-											>{{ menuOption.description }}</span
-										>
-									</div>
+							</div>
+							<div class="menu-title">
+								<button
+									class="box-icon"
+									id="menu"
+									mat-mini-fab
+									color="primary"
+									matTooltip="Więcej opcji"
+									aria-label="MenuButton"
+									[matMenuTriggerFor]="menu"
+								>
+									<mat-icon>more_horiz</mat-icon>
 								</button>
-							</mat-menu>
-						</div>
-						<img
-							*ngIf="actualRealEstate?.images?.length && isCurrentSlideIndex(i)"
-							class="slide slide-animation non-draggable-image"
-							src="{{ baseUrl }}/{{ slide.path }}"
-							(swiperight)="nextSlide(actualRealEstate?.images?.length)"
-							(swipeleft)="prevSlide(actualRealEstate?.images?.length)"
-						/>
-					</ng-template>
-				</div>
-
-				<button
-					class="arrow prev"
-					(click)="nextSlide(actualRealEstate?.images?.length)"
-				>
-					<mat-icon>arrow_back_ios</mat-icon>
-				</button>
-				<button
-					class="arrow next"
-					(click)="prevSlide(actualRealEstate?.images?.length)"
-				>
-					<mat-icon>arrow_forward_ios</mat-icon>
-				</button>
-				<nav class="nav">
-					<div class="wrapper">
-						<ul class="dots">
-							<li
-								*ngFor="let slide of actualRealEstate?.images; let i = index"
-								class="dot"
-							>
-								<span
-									[ngClass]="{ active: isCurrentSlideIndex(i) }"
-									(click)="setCurrentSlideIndex(i)"
-								></span>
-							</li>
-						</ul>
+								<mat-menu #menu="matMenu" id="options">
+									<button
+										*ngFor="let menuOption of this.menuOptions"
+										mat-menu-item
+										[value]="menuOption.description"
+										[disabled]="
+											data.actualRealEstate?.offerIds?.length &&
+											menuOption.option === 'deleteRealEstate'
+										"
+										(click)="onSelect(menuOption, data.actualRealEstate?.propertyId)"
+									>
+										<div
+											class="flex items-center justify-center"
+											[ngSwitch]="menuOption.option"
+										>
+											<mat-icon
+												*ngSwitchCase="'deleteRealEstate'"
+												class="material-icons-outlined"
+												>close</mat-icon
+											>
+											<mat-icon
+												*ngSwitchCase="'editRealEstate'"
+												class="material-icons-outlined"
+												>edit</mat-icon
+											>
+											<span
+												[ngClass]="
+													menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
+												"
+												>{{ menuOption.description }}</span
+											>
+										</div>
+									</button>
+								</mat-menu>
+							</div>
+							<img
+								*ngIf="data.actualRealEstate?.images?.length && isCurrentSlideIndex(i)"
+								class="slide slide-animation non-draggable-image"
+								src="{{ baseUrl }}/{{ slide.path }}"
+								(swiperight)="nextSlide(data.actualRealEstate?.images?.length)"
+								(swipeleft)="prevSlide(data.actualRealEstate?.images?.length)"
+							/>
+						</ng-template>
 					</div>
-				</nav>
+
+					<button
+						class="arrow prev"
+						(click)="nextSlide(data.actualRealEstate?.images?.length)"
+					>
+						<mat-icon>arrow_back_ios</mat-icon>
+					</button>
+					<button
+						class="arrow next"
+						(click)="prevSlide(data.actualRealEstate?.images?.length)"
+					>
+						<mat-icon>arrow_forward_ios</mat-icon>
+					</button>
+					<nav class="nav">
+						<div class="wrapper">
+							<ul class="dots">
+								<li
+									*ngFor="let slide of data.actualRealEstate?.images; let i = index"
+									class="dot"
+								>
+									<span
+										[ngClass]="{ active: isCurrentSlideIndex(i) }"
+										(click)="setCurrentSlideIndex(i)"
+									></span>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
 			</div>
-		</div>
-	</mat-card>
-	<mat-card>
-		<div class="label-box">
-			<mat-label class="label-description"
-				><mat-icon class="icon" inline="true">description</mat-icon
-				><span class="text-3xl">Opis nieruchomości</span></mat-label
+		</mat-card>
+		<mat-card>
+			<div class="label-box">
+				<mat-label class="label-description"
+					><mat-icon class="icon" inline="true">description</mat-icon
+					><span class="text-3xl">Opis nieruchomości</span></mat-label
+				>
+			</div>
+			<mat-divider></mat-divider>
+			<div class="container-description">
+				<div class="column-header-description">
+					<p class="text-2xl pt-4">Miasto:</p>
+					<p class="text-2xl pt-4">Dzielnica:</p>
+					<p class="text-2xl pt-4">Kod pocztowy:</p>
+					<p class="text-2xl pt-4">Ulica:</p>
+					<p class="text-2xl pt-4">Metraż:</p>
+					<p class="text-2xl pt-4">Liczba pokoi:</p>
+					<p class="text-2xl pt-4">Liczba pięter:</p>
+					<p class="text-2xl pt-4">Piętro:</p>
+					<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
+					<p class="text-2xl pt-4">Rok budowy:</p>
+					<p class="text-2xl pt-4">Wyposażenie:</p>
+				</div>
+				<div class="column-header-description">
+					<p class="text-2xl pt-4">{{ data.actualRealEstate?.city }}</p>
+					<p class="text-2xl pt-4">
+						{{
+							data.actualRealEstate?.district === null
+								? "-"
+								: data.actualRealEstate?.district
+						}}
+					</p>
+					<p class="text-2xl pt-4">
+						{{ data.actualRealEstate?.postalCode }}
+					</p>
+					<p class="text-2xl pt-4">
+						{{ data.actualRealEstate?.street }} {{ data.actualRealEstate?.number }}
+					</p>
+					<p class="text-2xl pt-4">{{ data.actualRealEstate?.area }} m²</p>
+					<p class="text-2xl pt-4">
+						{{
+							data.actualRealEstate?.numberOfRooms === null
+								? "-"
+								: data.actualRealEstate?.numberOfRooms
+						}}
+					</p>
+					<p class="text-2xl pt-4">
+						{{
+							data.actualRealEstate?.numberOfFloors === null
+								? "-"
+								: data.actualRealEstate?.numberOfFloors
+						}}
+					</p>
+					<p class="text-2xl pt-4">
+						{{
+							data.actualRealEstate?.floor === null
+								? "-"
+								: data.actualRealEstate?.floor
+						}}
+					</p>
+					<p class="text-2xl pt-4">
+						{{
+							data.actualRealEstate?.maxNumberOfInhabitants === null
+								? "-"
+								: data.actualRealEstate?.maxNumberOfInhabitants
+						}}
+					</p>
+					<p class="text-2xl pt-4">{{ data.actualRealEstate?.constructionYear }}</p>
+					<p class="text-2xl pt-4">
+						<span *ngFor="let equipment of data.actualRealEstate?.equipment"
+							><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
+								<div *ngSwitchCase="1" class="box-equipment">
+									<span class="material-symbols-outlined">dishwasher</span
+									><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="2" class="box-equipment">
+									<mat-icon>local_laundry_service</mat-icon
+									><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="3" class="box-equipment">
+									<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="4" class="box-equipment">
+									<span class="material-symbols-outlined">kettle</span
+									><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="5" class="box-equipment">
+									<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="6" class="box-equipment">
+									<mat-icon>ac_unit</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="7" class="box-equipment">
+									<mat-icon>balcony</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="8" class="box-equipment">
+									<mat-icon>tv</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="9" class="box-equipment">
+									<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="10" class="box-equipment">
+									<span class="material-symbols-outlined">oven</span
+									><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="11" class="box-equipment">
+									<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchCase="12" class="box-equipment">
+									<mat-icon>elevator</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+								<div *ngSwitchDefault class="box-equipment">
+									<mat-icon>devices</mat-icon><span>{{ equipment.name }}</span>
+								</div>
+							</mat-chip>
+						</span>
+					</p>
+				</div>
+			</div>
+			<div
+				*ngIf="data.actualRealEstate?.verificationStatus === 0"
+				class="button-box"
 			>
-		</div>
-		<mat-divider></mat-divider>
-		<div class="container-description">
-			<div class="column-header-description">
-				<p class="text-2xl pt-4">Miasto:</p>
-				<p class="text-2xl pt-4">Dzielnica:</p>
-				<p class="text-2xl pt-4">Kod pocztowy:</p>
-				<p class="text-2xl pt-4">Ulica:</p>
-				<p class="text-2xl pt-4">Metraż:</p>
-				<p class="text-2xl pt-4">Liczba pokoi:</p>
-				<p class="text-2xl pt-4">Liczba pięter:</p>
-				<p class="text-2xl pt-4">Piętro:</p>
-				<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
-				<p class="text-2xl pt-4">Rok budowy:</p>
-				<p class="text-2xl pt-4">Wyposażenie:</p>
+				<button mat-raised-button color="primary" (click)="addOffer()">
+					Dodaj ofertę
+				</button>
 			</div>
-			<div class="column-header-description">
-				<p class="text-2xl pt-4">{{ actualRealEstate.city }}</p>
-				<p class="text-2xl pt-4">
-					{{ actualRealEstate.district === null ? "-" : actualRealEstate.district }}
-				</p>
-				<p class="text-2xl pt-4">
-					{{ actualRealEstate.postalCode }}
-				</p>
-				<p class="text-2xl pt-4">
-					{{ actualRealEstate.street }} {{ actualRealEstate.number }}
-				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.area }} m²</p>
-				<p class="text-2xl pt-4">
-					{{
-						actualRealEstate.numberOfRooms === null
-							? "-"
-							: actualRealEstate.numberOfRooms
-					}}
-				</p>
-				<p class="text-2xl pt-4">
-					{{
-						actualRealEstate.numberOfFloors === null
-							? "-"
-							: actualRealEstate.numberOfFloors
-					}}
-				</p>
-				<p class="text-2xl pt-4">
-					{{ actualRealEstate.floor === null ? "-" : actualRealEstate.floor }}
-				</p>
-				<p class="text-2xl pt-4">
-					{{
-						actualRealEstate.maxNumberOfInhabitants === null
-							? "-"
-							: actualRealEstate.maxNumberOfInhabitants
-					}}
-				</p>
-				<p class="text-2xl pt-4">{{ actualRealEstate.constructionYear }}</p>
-				<p class="text-2xl pt-4">
-					<span *ngFor="let equipment of actualRealEstate?.equipment"
-						><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
-							<div *ngSwitchCase="1" class="box-equipment">
-								<span class="material-symbols-outlined">dishwasher</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="2" class="box-equipment">
-								<mat-icon>local_laundry_service</mat-icon
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="3" class="box-equipment">
-								<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="4" class="box-equipment">
-								<span class="material-symbols-outlined">kettle</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="5" class="box-equipment">
-								<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="6" class="box-equipment">
-								<mat-icon>ac_unit</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="7" class="box-equipment">
-								<mat-icon>balcony</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="8" class="box-equipment">
-								<mat-icon>tv</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="9" class="box-equipment">
-								<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="10" class="box-equipment">
-								<span class="material-symbols-outlined">oven</span
-								><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="11" class="box-equipment">
-								<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchCase="12" class="box-equipment">
-								<mat-icon>elevator</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-							<div *ngSwitchDefault class="box-equipment">
-								<mat-icon>devices</mat-icon><span>{{ equipment.name }}</span>
-							</div>
-						</mat-chip>
-					</span>
-				</p>
-			</div>
-		</div>
-		<div *ngIf="actualRealEstate.verificationStatus === 0" class="button-box">
-			<button mat-raised-button color="primary" (click)="addOffer()">
-				Dodaj ofertę
-			</button>
-		</div>
-	</mat-card>
+		</mat-card>
+	</div>
 </div>

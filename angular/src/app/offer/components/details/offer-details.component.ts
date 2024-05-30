@@ -47,6 +47,20 @@ export class OfferDetailsComponent extends BaseComponent {
 		switchMap(value => this.offerService.getOfferById(parseInt(value)))
 	);
 
+	public showOffer$: Observable<boolean> = this.offerId$?.pipe(
+		switchMap(value =>
+			this.offerService
+				.getOffers()
+				.pipe(
+					map(offers =>
+						offers.result.find(offer => offer.offerId === parseInt(value))
+							? true
+							: false
+					)
+				)
+		)
+	);
+
 	public uType = UserType;
 
 	public loggedInUserType = LoggedUserType;
