@@ -104,31 +104,42 @@ export class SurveyComponent extends BaseComponent implements OnInit {
 		questions.forEach(question => {
 			switch (question.name) {
 				case 'minRoommateAge':
-					this.offerForm.addControl(question.name, this.minAgeControl);
 					this.formToAdd.addControl(question.name, this.minAgeControl);
 					break;
 				case 'maxRoommateAge':
-					this.offerForm.addControl(question.name, this.maxAgeControl);
 					this.formToAdd.addControl(question.name, this.maxAgeControl);
 					break;
 				case 'smokingAllowed':
 					this.offerForm.addControl(question.name, new FormControl(false));
-					this.formToAdd.addControl(question.name, new FormControl(false));
 					break;
 				case 'partiesAllowed':
 					this.offerForm.addControl(question.name, new FormControl(false));
-					this.formToAdd.addControl(question.name, new FormControl(false));
 					break;
 				case 'animalsAllowed':
 					this.offerForm.addControl(question.name, new FormControl(false));
-					this.formToAdd.addControl(question.name, new FormControl(false));
 					break;
 				case 'gender':
 					this.offerForm.addControl(question.name, new FormControl(2));
-					this.formToAdd.addControl(question.name, new FormControl(2));
+					break;
+				case 'party':
+					this.formToAdd.addControl(question.name, new FormControl(1));
+					break;
+				case 'tidiness':
+					this.formToAdd.addControl(question.name, new FormControl(1));
+					break;
+				case 'smoking':
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'sociability':
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'animals':
+					this.formToAdd.addControl(question.name, new FormControl(false));
+					break;
+				case 'vegan':
+					this.formToAdd.addControl(question.name, new FormControl(false));
 					break;
 				default:
-					this.offerForm.addControl(question.name, new FormControl(null));
 					this.formToAdd.addControl(question.name, new FormControl(null));
 					break;
 			}
