@@ -28,6 +28,7 @@
 		"@microsoft/signalr": "^8.0.0",
 		"@ngx-translate/core": "^14.0.0",
 		"@ngx-translate/http-loader": "^7.0.0",
+		"flag-icons": "^7.2.3",
 		"leaflet": "^1.9.3",
 		"leaflet.markercluster": "^1.5.3",
 		"rxjs": "~7.5.0",

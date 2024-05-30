@@ -148,18 +148,16 @@
 		</button>
 		<mat-menu #changeLanguage="matMenu">
 			<button
-				*ngFor="let lang of languages"
-				class="flex-col"
-				mat-
-				menu-item
-				(click)="changeLanguageOnClick(lang)"
-			>
-				<h1 [ngSwitch]="lang">
-					{{ lang }}
-					<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
-					<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
-				</h1>
-			</button>
+					*ngFor="let lang of languages"
+					mat-menu-item
+					(click)="changeLanguageOnClick(lang)"
+				>
+					<h1 [ngSwitch]="lang">
+						{{ lang }}
+						<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
+						<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
+					</h1>
+				</button>
 		</mat-menu>
 	</ng-template>
 	<button

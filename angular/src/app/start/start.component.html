@@ -413,7 +413,7 @@
 							<span class="offer-title-inner"
 								><h2 class="text-m">
 									{{ "Start.rent" | translate }} -
-									{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
+									{{ realEstateService.propertyTypes.get(flat.property.propertyType)??'' | translate }}
 									{{ flat.property.area }} m² {{ flat.property.city }}
 									<mat-icon
 										*ngIf="flat.isPromoted"
