@@ -7,7 +7,7 @@
 >
 	<div
 		*ngIf="
-			(!(data.user === uType.DETAILS) && data.show) || data.user === uType.DETAILS
+			(data.user !== uType.DETAILS && data.show) || data.user === uType.DETAILS
 		"
 		class="grid gap-4"
 	>
@@ -69,18 +69,8 @@
 											)
 										}}
 										{{ data.offer?.property?.area }} m² {{ data.offer?.property?.city }}
-										<span
-											matTooltip="{{
-												data.offer?.property?.avgRating
-													? 'Zobacz szczegółową ocenę'
-													: 'Nieruchomość nie została jeszcze oceniona'
-											}}"
-											(click)="showRating(data.offer?.property)"
-										>
-											<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
-											</app-star-rating>
-										</span></h1
-								></span>
+									</h1>
+								</span>
 							</div>
 							<div
 								*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
@@ -205,6 +195,22 @@
 			</div>
 			<div class="button-box">
 				<mat-label class="label-survey">
+					<span>
+						<mat-chip
+							class="p-4 mr-4"
+							matTooltip="{{
+								data.offer?.property?.avgRating
+									? 'Zobacz szczegółową ocenę'
+									: 'Nieruchomość nie została jeszcze oceniona'
+							}}"
+							(click)="showRating(data.offer?.property)"
+						>
+							<div class="flex items-center">
+								<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
+								</app-star-rating>
+							</div>
+						</mat-chip>
+					</span>
 					<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
 						<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
 							<div class="text-red-600 flex items-center justify-center">

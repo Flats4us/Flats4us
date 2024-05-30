@@ -21,17 +21,6 @@
 								realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
 							}}
 							{{ watchedOffer.property.area }} m² {{ watchedOffer.property.city }}
-							<span
-								matTooltip="{{
-									watchedOffer.property.avgRating
-										? 'Zobacz szczegółową ocenę'
-										: 'Nieruchomość nie została jeszcze oceniona'
-								}}"
-								(click)="showRating(watchedOffer.property)"
-							>
-								<app-star-rating [avgRating]="watchedOffer.property.avgRating">
-								</app-star-rating>
-							</span>
 							<mat-icon
 								*ngIf="watchedOffer.isPromoted"
 								class="promotion-icon"
@@ -74,6 +63,19 @@
 								<mat-icon>meeting_room</mat-icon>
 								<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
 							</div>
+						</mat-chip>
+						<mat-chip
+							matTooltip="{{
+								watchedOffer.property.avgRating
+									? 'Zobacz szczegółową ocenę'
+									: 'Nieruchomość nie została jeszcze oceniona'
+							}}"
+							(click)="showRating(watchedOffer.property)"
+						>
+							<span class="flex items-center pt-1">
+								<app-star-rating [avgRating]="watchedOffer.property.avgRating">
+								</app-star-rating>
+							</span>
 						</mat-chip>
 						<button
 							class="delete-icon"

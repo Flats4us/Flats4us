@@ -47,19 +47,7 @@ export class OfferDetailsComponent extends BaseComponent {
 		switchMap(value => this.offerService.getOfferById(parseInt(value)))
 	);
 
-	public showOffer$: Observable<boolean> = this.offerId$?.pipe(
-		switchMap(value =>
-			this.offerService
-				.getOffers()
-				.pipe(
-					map(offers =>
-						offers.result.find(offer => offer.offerId === parseInt(value))
-							? true
-							: false
-					)
-				)
-		)
-	);
+	public showOffer$: Observable<boolean> = of(false);
 
 	public uType = UserType;
 
@@ -86,6 +74,24 @@ export class OfferDetailsComponent extends BaseComponent {
 		private snackBar: MatSnackBar
 	) {
 		super();
+		this.user$.pipe(this.untilDestroyed()).subscribe(user => {
+			if (user === UserType.DETAILS) {
+				return;
+			}
+			this.showOffer$ = this.offerId$?.pipe(
+				switchMap(value =>
+					this.offerService
+						.getOffers()
+						.pipe(
+							map(offers =>
+								offers.result.find(offer => offer.offerId === parseInt(value))
+									? true
+									: false
+							)
+						)
+				)
+			);
+		});
 	}
 
 	public addOffer() {
