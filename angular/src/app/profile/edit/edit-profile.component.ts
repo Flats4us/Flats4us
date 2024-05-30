@@ -290,11 +290,18 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
 	public checkValidityTill(date: Date): boolean {
 		const endDate = new Date(date);
-		const actualDate = new Date();
+		const today = new Date();
+		const actualDate = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate(),
+			today.getHours(),
+			today.getMinutes() - today.getTimezoneOffset()
+		);
 		const days = Math.floor(
 			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24
 		);
-		this.isValidDocument = days > 0 ? true : false;
+		this.isValidDocument = days >= 0 ? true : false;
 		return this.isValidDocument;
 	}
 

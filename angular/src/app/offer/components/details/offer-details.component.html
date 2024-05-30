@@ -284,6 +284,7 @@
 					<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
 					<p class="text-2xl pt-4">Rok budowy:</p>
 					<p class="text-2xl pt-4">Informacje o umowie:</p>
+					<p class="text-2xl pt-4">Regulamin:</p>
 					<p class="text-2xl pt-4">Wyposażenie:</p>
 				</div>
 				<div class="column-header-description">
@@ -325,6 +326,7 @@
 						}}
 					</p>
 					<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
+					<p class="text-2xl pt-4">{{ data.offer?.description }}</p>
 					<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
 					<p class="text-2xl pt-4">
 						<span *ngFor="let equipment of data?.offer?.property?.equipment"
