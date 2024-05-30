@@ -104,6 +104,8 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Images)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .ToListAsync();
@@ -190,6 +192,8 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Images)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .Select(o => _mapper.Map<OfferDto>(o))
