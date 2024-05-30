@@ -3,21 +3,16 @@ using Flats4us.Entities;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Flats4us.Services
 {
     public class PaymentService : IPaymentService
     {
         public readonly Flats4usContext _context;
-        private readonly IMapper _mapper;
 
-        public PaymentService(
-            Flats4usContext context,
-            IMapper mapper)
+        public PaymentService(Flats4usContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task PayPaymentAsync(int paymentId, int requestUserId)

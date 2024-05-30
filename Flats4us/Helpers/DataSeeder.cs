@@ -438,7 +438,7 @@ public static class DataSeeder
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
             University = "Warszawski Uniwersytet Medyczny",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/kkajetanski|https://www.instagram.com/kkajetanski/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
         };
@@ -460,7 +460,7 @@ public static class DataSeeder
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s2137",
             University = "Collegium Civitas w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -482,7 +482,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1978, 12, 1), //45 lat
             StudentNumber = "s2137",
             University = "Wojskowa Akademia Techniczna w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -504,7 +504,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1998, 12, 1), //25 lat
             StudentNumber = "s12345",
             University = "Szkoła Główna Gospodarstwa Wiejskiego w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -525,7 +525,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1995, 5, 18),  //29 lat
             StudentNumber = "s19876",
             University = "Polsko-Japońska Akademia Technik Komputerowych w Warszawie",
-            Links = "https://www.facebook.com/anna.nowak|https://twitter.com/annanowak|https://www.instagram.com/annanowak/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest6, interest3, interest8 }
         };
@@ -547,7 +547,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1990, 8, 7),  //33 lata
             StudentNumber = "s12345",
             University = "Uniwersytet Warszawski",
-            Links = "https://www.facebook.com/mateusz.kowalski|https://twitter.com/mateuszkowal|https://www.instagram.com/mateuszkowalski/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest1, interest3, interest9 }
         };
@@ -568,7 +568,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1993, 7, 14),  //28 lat
             StudentNumber = "s33456",
             University = "Politechnika Warszawska",
-            Links = "https://www.facebook.com/marta.wisniewska|https://twitter.com/martawisniewska|https://www.instagram.com/martawisniewska/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest19, interest17, interest6 }
         };
@@ -590,7 +590,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1994, 11, 28),  //27 lat
             StudentNumber = "s44567",
             University = "Akademia Leona Kożmińskiego w Warszawie",
-            Links = "https://www.facebook.com/piotr.zawadzki|https://twitter.com/piotrzawadzki|https://www.instagram.com/piotrzawadzki/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest4, interest15, interest8 }
         };
@@ -611,7 +611,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1991, 3, 8),  //32 lata
             StudentNumber = "s56789",
             University = "Collegium Humanum w Warszawie",
-            Links = "https://www.facebook.com/karolina.dabrowska|https://twitter.com/karolinadab|https://www.instagram.com/karolinadabrowska/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest17, interest4, interest6 }
         };
@@ -633,7 +633,7 @@ public static class DataSeeder
             BirthDate = new DateTime(1992, 9, 22),  //29 lat
             StudentNumber = "s67890",
             University = "Uczelnia Łazarskiego w Warszawie",
-            Links = "https://www.facebook.com/lukasz.nowicki|https://twitter.com/lukasznowicki|https://www.instagram.com/lukasznowicki/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest15, interest13, interest18 }
         };
