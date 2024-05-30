@@ -10,31 +10,53 @@
 	</div>
 	<div class="spacer"></div>
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
-		<button
-			*ngIf="user$ | async as user"
-			class="your-profile"
-			[matMenuTriggerFor]="myProfile"
-			(click)="showSidenav ? (showSidenav = false) : showSidenav"
-		>
-			<img
-				class="your-photo"
-				alt="Twój profil"
-				[src]="
-					user.profilePicture.path
-						? baseUrl + '/' + user.profilePicture.path
-						: './assets/avatar.png'
-				"
-			/>
-		</button>
+		<div class="language">
+			<button
+				mat-icon-button
+				matTooltip="Zmień język"
+				[matMenuTriggerFor]="changeLanguage"
+			>
+				<mat-icon>language</mat-icon>
+			</button>
+			<mat-menu #changeLanguage="matMenu">
+				<button
+					*ngFor="let lang of languages"
+					mat-menu-item
+					(click)="changeLanguageOnClick(lang)"
+				>
+					<h1 [ngSwitch]="lang">
+						{{ lang }}
+						<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
+						<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
+					</h1>
+				</button>
+			</mat-menu>
+			<button
+				*ngIf="user$ | async as user"
+				class="your-profile"
+				[matMenuTriggerFor]="myProfile"
+				(click)="showSidenav ? (showSidenav = false) : showSidenav"
+			>
+				<img
+					class="your-photo"
+					alt="Twój profil"
+					[src]="
+						user.profilePicture.path
+							? baseUrl + '/' + user.profilePicture.path
+							: './assets/avatar.png'
+					"
+				/>
+			</button>
+		</div>
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['profile', 'details', 'my']">
 			<mat-icon class="material-symbols-outlined">person</mat-icon>
-			Mój profil
+			{{ "Header.my-profile" | translate }}
 		</button>
 		<button mat-menu-item [routerLink]="['profile', 'edit']">
 			<mat-icon class="material-symbols-outlined">edit</mat-icon>
-			Edytuj profil
+			{{ "Header.edit-profile" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -42,7 +64,7 @@
 			[routerLink]="['rents', 'owner']"
 		>
 			<mat-icon class="material-symbols-outlined">handshake</mat-icon>
-			Moje wynajmy
+			{{ "Header.my-rentals" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
@@ -50,7 +72,7 @@
 			[routerLink]="['rents', 'student']"
 		>
 			<mat-icon class="material-symbols-outlined">handshake</mat-icon>
-			Moje wynajmy
+			{{ "Header.my-rentals" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -58,7 +80,7 @@
 			[routerLink]="['offer', 'owner']"
 		>
 			<mat-icon class="material-symbols-outlined">campaign</mat-icon>
-			Moje oferty
+			{{ "Header.my-offers" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -66,7 +88,7 @@
 			[routerLink]="['real-estate', 'owner']"
 		>
 			<mat-icon class="material-symbols-outlined">real_estate_agent</mat-icon>
-			Moje nieruchomości
+			{{ "Header.my-properties" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -74,7 +96,7 @@
 			[routerLink]="['real-estate', 'add']"
 		>
 			<mat-icon class="material-symbols-outlined">apartment</mat-icon>
-			Dodaj nieruchomość
+			{{ "Header.add-property" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
@@ -82,7 +104,7 @@
 			[routerLink]="['offer', 'add']"
 		>
 			<mat-icon class="material-symbols-outlined">home_pin</mat-icon>
-			Dodaj ofertę
+			{{ "Header.add-offer" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
@@ -90,11 +112,11 @@
 			[routerLink]="['offer', 'watched']"
 		>
 			<mat-icon class="material-symbols-outlined">favorite</mat-icon>
-			Obserwowane oferty
+			{{ "Header.observed-offers" | translate }}
 		</button>
 		<button mat-menu-item (click)="authService.logout()">
 			<mat-icon class="material-symbols-outlined">logout</mat-icon>
-			Wyloguj się
+			{{ "Login.log-out" | translate }}
 		</button>
 	</mat-menu>
 
@@ -106,7 +128,7 @@
 				[routerLink]="['auth', 'login']"
 			>
 				<mat-icon class="material-symbols-outlined">login</mat-icon>
-				Logowanie
+				{{ "Header.log" | translate }}
 			</button>
 			<button
 				class="button-sign"
@@ -114,9 +136,30 @@
 				[routerLink]="['profile', 'create']"
 			>
 				<mat-icon class="material-symbols-outlined">passkey</mat-icon>
-				Rejestracja
+				{{ "Login.registration" | translate }}
 			</button>
 		</div>
+		<button
+			class="language-btn"
+			mat-icon-button
+			matTooltip="Zmień język"
+			[matMenuTriggerFor]="changeLanguage"
+		>
+			<mat-icon>language</mat-icon>
+		</button>
+		<mat-menu #changeLanguage="matMenu">
+			<button
+				*ngFor="let lang of languages"
+				mat-menu-item
+				(click)="changeLanguageOnClick(lang)"
+			>
+				<h1 [ngSwitch]="lang">
+					{{ lang }}
+					<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
+					<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
+				</h1>
+			</button>
+		</mat-menu>
 	</ng-template>
 	<button
 		mat-icon-button
@@ -136,7 +179,7 @@
 <ng-template #buttons>
 	<button mat-button class="mr-2" [routerLink]="['/']">
 		<mat-icon class="material-symbols-outlined">home</mat-icon>
-		Strona główna
+		{{ "Header.home-page" | translate }}
 	</button>
 	<button
 		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
@@ -145,7 +188,7 @@
 		[routerLink]="['auth', 'login']"
 	>
 		<mat-icon class="material-symbols-outlined">login</mat-icon>
-		Logowanie
+		{{ "Header.log" | translate }}
 	</button>
 	<button
 		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
@@ -154,7 +197,7 @@
 		[routerLink]="['profile', 'create']"
 	>
 		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
-		Rejestracja
+		{{ "Login.registration" | translate }}
 	</button>
 	<button
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
@@ -163,7 +206,7 @@
 		[routerLink]="['conversations']"
 	>
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
-		Wiadomości
+		{{ "Header.messages" | translate }}
 	</button>
 	<button
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
@@ -172,7 +215,7 @@
 		[routerLink]="['settings']"
 	>
 		<mat-icon class="material-icons-outlined">settings</mat-icon>
-		Ustawienia
+		{{ "Header.settings" | translate }}
 	</button>
 
 	<button
@@ -182,7 +225,7 @@
 		[matMenuTriggerFor]="extended"
 	>
 		<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
-		Dodatkowe
+		{{ "Header.additional" | translate }}
 	</button>
 
 	<mat-menu #extended="matMenu">
@@ -192,7 +235,7 @@
 			[routerLink]="['calendar']"
 		>
 			<mat-icon class="material-symbols-outlined">calendar_month</mat-icon>
-			Kalendarz
+			{{ "Header.calendar" | translate }}
 		</button>
 		<button
 			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
@@ -200,7 +243,7 @@
 			[routerLink]="['find-roommate']"
 		>
 			<mat-icon class="material-symbols-outlined">person_search</mat-icon>
-			Znajdź wspołlokatora
+			{{ "Header.find-roommates" | translate }}
 		</button>
 	</mat-menu>
 </ng-template>

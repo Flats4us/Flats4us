@@ -14,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink } from '@angular/router';
 import { UserService } from '@shared/services/user.service';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -30,6 +31,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 		MatMenuModule,
 		RouterLink,
 		AccessControlDirective,
+		TranslateModule,
 	],
 	providers: [UserService],
 	exports: [HeaderComponent],

@@ -4,6 +4,7 @@ import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { BaseComponent } from '../base/base.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-header',
@@ -19,10 +20,13 @@ export class HeaderComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	protected user$ = this.userService.getMyProfile();
 
+	public languages = ['PL', 'EN'];
+
 	constructor(
 		public authService: AuthService,
 		public userService: UserService,
-		private breakpointObserver: BreakpointObserver
+		private breakpointObserver: BreakpointObserver,
+		private translate: TranslateService
 	) {
 		super();
 		this.breakpointObserver
@@ -33,5 +37,9 @@ export class HeaderComponent extends BaseComponent {
 					this.showSidenav = false;
 				}
 			});
+	}
+
+	public changeLanguageOnClick(value: string) {
+		this.translate.use(value.toLowerCase());
 	}
 }
