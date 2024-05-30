@@ -164,9 +164,9 @@ namespace Flats4us.Controllers
         [HttpPut("general")]
         [Authorize(Policy = "RegisteredUser")]
         [SwaggerOperation(
-Summary = "Edit general user information",
-Description = "Requires registered user privileges"
-)]
+            Summary = "Edit general user information",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<ActionResult> EditUserGeneralInfo([FromBody] EditUserGeneral input)
         {
             try
@@ -212,7 +212,8 @@ Description = "Requires registered user privileges"
         [HttpPut("owner/sensitive")]
         [Authorize(Policy = "Owner")]
         [SwaggerOperation(
-            Summary = "Edit sensitive owner information"
+            Summary = "Edit sensitive owner information",
+            Description = "Requires owner privileges"
         )]
         public async Task<ActionResult> EditOwnerSensitiveInfo([FromBody] EditOwnerSensitiveDto input)
         {
@@ -234,9 +235,9 @@ Description = "Requires registered user privileges"
         [HttpPut("student/sensitive")]
         [Authorize(Policy = "RegisteredUser")]
         [SwaggerOperation(
-    Summary = "Edit sensitive student information",
-    Description = "Requires registered user privileges"
-)]
+            Summary = "Edit sensitive student information",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<ActionResult> EditStudentSensitiveInfo([FromBody] EditStudentSensitiveDto input)
         {
             try
@@ -279,12 +280,4 @@ Description = "Requires registered user privileges"
             }
         }
     }
-        
-
-
-        
-
-
-
-    
 }

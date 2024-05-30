@@ -18,6 +18,9 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int Duration { get; set; }
 
+        [Required]
+        public int MainTenantId { get; set; }
+
         public ICollection<UserInfoDto> Tenants { get; set; }
     }
 }

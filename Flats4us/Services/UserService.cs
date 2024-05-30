@@ -129,7 +129,6 @@ namespace Flats4us.Services
                     await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
                 }
                 
-
                 user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.Document);
             }
 
@@ -140,8 +139,7 @@ namespace Flats4us.Services
                     await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
                 }
                 
-
-                user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.ProfilePicture);
+                user.ProfilePicture = await _fileUploadService.CreateFileFromIFormFileAsync(input.ProfilePicture);
             }
 
             await _context.SaveChangesAsync();
