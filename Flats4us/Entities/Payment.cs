@@ -25,6 +25,8 @@ namespace Flats4us.Entities
         [Required]
         public DateTime PaymentDate { get; set; }
 
+        public DateTime? PaidAtDate { get; set; }
+
         [Required]
         public int RentId { get; set; }
 

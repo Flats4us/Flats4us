@@ -23,5 +23,7 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public DateTime PaymentDate { get; set; }
+
+        public DateTime? PaidAtDate { get; set; }
     }
 }

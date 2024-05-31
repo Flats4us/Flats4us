@@ -29,7 +29,9 @@ namespace Flats4us.Entities.Dto
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
-        [Required]
-        public DateTime DateForVerificationSorting { get; set; }
+        public DateTime? DateForVerificationSorting { get; set; }
+
+        public DateTime? VerificationOrRejectionDate { get; set; }
+
     }
 }

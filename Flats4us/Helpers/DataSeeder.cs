@@ -166,7 +166,7 @@ public static class DataSeeder
             Email = "mkowalski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
             DocumentType = DocumentType.ID,
@@ -200,7 +200,7 @@ public static class DataSeeder
             Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
-            DateForVerificationSorting = new DateTime(2023, 7, 13),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rpawlak123"),
             DocumentType = DocumentType.ID,
@@ -217,7 +217,7 @@ public static class DataSeeder
             Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
-            DateForVerificationSorting = new DateTime(2023, 2, 8),
+            VerificationOrRejectionDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kklik123"),
             DocumentType = DocumentType.ID,
@@ -234,7 +234,7 @@ public static class DataSeeder
             Email = "anowakowska@gmail.com",
             PhoneNumber = "987654321",
             AccountCreationDate = new DateTime(2022, 5, 20),
-            DateForVerificationSorting = new DateTime(2022, 5, 20),
+            VerificationOrRejectionDate = new DateTime(2022, 5, 20),
             LastLoginDate = new DateTime(2023, 5, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowakowska123"),
             DocumentType = DocumentType.ID,
@@ -251,7 +251,7 @@ public static class DataSeeder
             Email = "pdabrowski@gmail.com",
             PhoneNumber = "555444333",
             AccountCreationDate = new DateTime(2023, 3, 10),
-            DateForVerificationSorting = new DateTime(2023, 3, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 10),
             LastLoginDate = new DateTime(2023, 8, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pdabrowski123"),
             DocumentType = DocumentType.ID,
@@ -268,7 +268,7 @@ public static class DataSeeder
             Email = "jwisniewski@gmail.com",
             PhoneNumber = "111222333",
             AccountCreationDate = new DateTime(2023, 6, 15),
-            DateForVerificationSorting = new DateTime(2023, 6, 15),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 15),
             LastLoginDate = new DateTime(2023, 11, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jwisniewski123"),
             DocumentType = DocumentType.ID,
@@ -303,7 +303,7 @@ public static class DataSeeder
             Email = "kkaczmarek@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 4, 8),
-            DateForVerificationSorting = new DateTime(2023, 4, 8),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 8),
             LastLoginDate = new DateTime(2023, 9, 8),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkaczmarek123"),
             DocumentType = DocumentType.ID,
@@ -339,7 +339,7 @@ public static class DataSeeder
             Email = "ewojcik@gmail.com",
             PhoneNumber = "333222111",
             AccountCreationDate = new DateTime(2023, 7, 18),
-            DateForVerificationSorting = new DateTime(2023, 7, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 18),
             LastLoginDate = new DateTime(2023, 12, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ewojcik123"),
             DocumentType = DocumentType.ID,
@@ -356,7 +356,7 @@ public static class DataSeeder
             Email = "kwojcik@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 4, 18),
-            DateForVerificationSorting = new DateTime(2023, 4, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 18),
             LastLoginDate = new DateTime(2023, 9, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwojcik123"),
             DocumentType = DocumentType.ID,
@@ -390,7 +390,7 @@ public static class DataSeeder
             Email = "bkaminska@gmail.com",
             PhoneNumber = "444555666",
             AccountCreationDate = new DateTime(2023, 7, 21),
-            DateForVerificationSorting = new DateTime(2023, 7, 21),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 21),
             LastLoginDate = new DateTime(2023, 12, 21),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bkaminska123"),
             DocumentType = DocumentType.ID,
@@ -429,7 +429,7 @@ public static class DataSeeder
             Email = "kkajetanski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
             DocumentType = DocumentType.StudentCard,
@@ -451,7 +451,7 @@ public static class DataSeeder
             Email = "aklocek@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Aklocek123"),
             DocumentType = DocumentType.StudentCard,
@@ -473,7 +473,7 @@ public static class DataSeeder
             Email = "kfilipek@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kfilipek123"),
             DocumentType = DocumentType.StudentCard,
@@ -495,7 +495,7 @@ public static class DataSeeder
             Email = "lguziewicz@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lguziewicz123"),
             DocumentType = DocumentType.StudentCard,
@@ -516,7 +516,7 @@ public static class DataSeeder
             Email = "anowak@gmail.com",
             PhoneNumber = "987654321",
             AccountCreationDate = new DateTime(2023, 2, 5),
-            DateForVerificationSorting = new DateTime(2023, 2, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 2, 5),
             LastLoginDate = new DateTime(2023, 11, 5),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowak123"),
             DocumentType = DocumentType.StudentCard,
@@ -538,7 +538,7 @@ public static class DataSeeder
             Email = "zkowalski@gmail.com",
             PhoneNumber = "555666777",
             AccountCreationDate = new DateTime(2023, 3, 20),
-            DateForVerificationSorting = new DateTime(2023, 3, 20),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 20),
             LastLoginDate = new DateTime(2023, 12, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zkowalski123"),
             DocumentType = DocumentType.StudentCard,
@@ -559,7 +559,7 @@ public static class DataSeeder
             Email = "mwisniewska@gmail.com",
             PhoneNumber = "789012345",
             AccountCreationDate = new DateTime(2023, 4, 10),
-            DateForVerificationSorting = new DateTime(2023, 4, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 10),
             LastLoginDate = new DateTime(2024, 1, 1),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwisniewska123"),
             DocumentType = DocumentType.StudentCard,
@@ -602,7 +602,7 @@ public static class DataSeeder
             Email = "kdabrowska@gmail.com",
             PhoneNumber = "876543210",
             AccountCreationDate = new DateTime(2023, 6, 25),
-            DateForVerificationSorting = new DateTime(2023, 6, 25),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 25),
             LastLoginDate = new DateTime(2023, 12, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kdabrowska123"),
             DocumentType = DocumentType.StudentCard,
@@ -624,7 +624,7 @@ public static class DataSeeder
             Email = "lnowicki@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 7, 10),
-            DateForVerificationSorting = new DateTime(2023, 7, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 10),
             LastLoginDate = new DateTime(2023, 12, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lnowicki123"),
             DocumentType = DocumentType.StudentCard,
@@ -692,7 +692,7 @@ public static class DataSeeder
             ConstructionYear = 2000,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 1),
-            DateForVerificationSorting = new DateTime(2023, 10, 1),
+            VerificationOrRejectionDate = new DateTime(2023, 10, 1),
             Owner = owner1,
             NumberOfRooms = 2,
             Floor = 2,
@@ -714,7 +714,7 @@ public static class DataSeeder
             ConstructionYear = 1980,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 9),
-            DateForVerificationSorting = new DateTime(2023, 10, 9),
+            VerificationOrRejectionDate = new DateTime(2023, 10, 9),
             Owner = owner1,
             NumberOfRooms = 3,
             Floor = 2,
@@ -758,7 +758,7 @@ public static class DataSeeder
             ConstructionYear = 1993,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 1),
-            DateForVerificationSorting = new DateTime(2023, 7, 1),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 1),
             Owner = owner2,
             NumberOfRooms = 3,
             Floor = 2,
@@ -802,7 +802,7 @@ public static class DataSeeder
             ConstructionYear = 2010,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 3),
-            DateForVerificationSorting = new DateTime(2023, 7, 3),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 3),
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 3,
@@ -824,7 +824,7 @@ public static class DataSeeder
             ConstructionYear = 2003,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 11, 14),
-            DateForVerificationSorting = new DateTime(2023, 11, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 11, 14),
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 9,
@@ -846,7 +846,7 @@ public static class DataSeeder
             ConstructionYear = 1987,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 4),
-            DateForVerificationSorting = new DateTime(2023, 9, 4),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 4),
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 10,
@@ -868,7 +868,7 @@ public static class DataSeeder
             ConstructionYear = 2019,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 18),
-            DateForVerificationSorting = new DateTime(2023, 8, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 18),
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 4,
@@ -890,7 +890,7 @@ public static class DataSeeder
             ConstructionYear = 2015,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 4, 6),
-            DateForVerificationSorting = new DateTime(2023, 4, 6),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 6),
             Owner = owner4,
             NumberOfRooms = 4,
             Floor = 2,
@@ -934,7 +934,7 @@ public static class DataSeeder
             ConstructionYear = 1985,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 20),
-            DateForVerificationSorting = new DateTime(2023, 5, 20),
+            VerificationOrRejectionDate = new DateTime(2023, 5, 20),
             Owner = owner7,
             NumberOfRooms = 4,
             Floor = 3,
@@ -978,7 +978,7 @@ public static class DataSeeder
             ConstructionYear = 2005,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 12, 10),
-            DateForVerificationSorting = new DateTime(2023, 12, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 12, 10),
             Owner = owner9,
             NumberOfRooms = 3,
             Floor = 3,
@@ -1022,7 +1022,7 @@ public static class DataSeeder
             ConstructionYear = 1970,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 6, 23),
-            DateForVerificationSorting = new DateTime(2023, 6, 23),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 23),
             Owner = owner1,
             Floor = 4,
             Equipment = { equipment4, equipment5, equipment7, equipment9, equipment11 }
@@ -1043,7 +1043,7 @@ public static class DataSeeder
             ConstructionYear = 1969,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 22),
-            DateForVerificationSorting = new DateTime(2023, 7, 22),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 22),
             Owner = owner1,
             Floor = 3,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment7, equipment10 }
@@ -1106,7 +1106,7 @@ public static class DataSeeder
             ConstructionYear = 2000,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 3, 17),
-            DateForVerificationSorting = new DateTime(2023, 3, 17),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 17),
             Owner = owner4,
             Floor = 3,
             Equipment = { equipment3, equipment7, equipment9, equipment10 }
@@ -1148,7 +1148,7 @@ public static class DataSeeder
             ConstructionYear = 1985,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
-            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 5),
             Owner = owner6,
             Floor = 3,
             Equipment = { equipment2, equipment4, equipment7, equipment9, equipment11 }
@@ -1206,7 +1206,7 @@ public static class DataSeeder
             ConstructionYear = 2001,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 14),
-            DateForVerificationSorting = new DateTime(2023, 7, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 14),
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
@@ -1228,7 +1228,7 @@ public static class DataSeeder
             ConstructionYear = 1989,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 9),
-            DateForVerificationSorting = new DateTime(2023, 8, 9),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 9),
             Owner = owner2,
             NumberOfRooms = 4,
             NumberOfFloors = 2,
@@ -1250,7 +1250,7 @@ public static class DataSeeder
             ConstructionYear = 1999,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 14),
-            DateForVerificationSorting = new DateTime(2023, 8, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 14),
             Owner = owner2,
             NumberOfRooms = 7,
             NumberOfFloors = 4,
@@ -1294,7 +1294,7 @@ public static class DataSeeder
             ConstructionYear = 2010,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 12),
-            DateForVerificationSorting = new DateTime(2023, 7, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 12),
             Owner = owner4,
             NumberOfRooms = 3,
             NumberOfFloors = 1,
@@ -1316,7 +1316,7 @@ public static class DataSeeder
             ConstructionYear = 1985,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 28),
-            DateForVerificationSorting = new DateTime(2023, 5, 28),
+            VerificationOrRejectionDate = new DateTime(2023, 5, 28),
             Owner = owner5,
             NumberOfRooms = 6,
             NumberOfFloors = 2,
@@ -1338,7 +1338,7 @@ public static class DataSeeder
             ConstructionYear = 1998,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 10),
-            DateForVerificationSorting = new DateTime(2023, 8, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 10),
             Owner = owner6,
             NumberOfRooms = 4,
             NumberOfFloors = 2,
@@ -1360,7 +1360,7 @@ public static class DataSeeder
             ConstructionYear = 2005,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
-            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 5),
             Owner = owner8,
             NumberOfRooms = 7,
             NumberOfFloors = 3,
@@ -1386,7 +1386,7 @@ public static class DataSeeder
         var offer1 = new Offer
         {
             Date = new DateTime(2023, 10, 10),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2000,
             Deposit = 1500,
             Description = "placeholder",
@@ -1399,7 +1399,7 @@ public static class DataSeeder
         var offer2 = new Offer
         {
             Date = new DateTime(2023, 10, 5),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2200,
             Deposit = 1500,
             Description = "placeholder",
@@ -1412,7 +1412,7 @@ public static class DataSeeder
         var offer3 = new Offer
         {
             Date = new DateTime(2023, 9, 25),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 1800,
             Deposit = 1500,
             Description = "placeholder",
@@ -1425,12 +1425,12 @@ public static class DataSeeder
         var offer4 = new Offer
         {
             Date = new DateTime(2023, 9, 20),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2100,
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
-            EndDate = new DateTime(2024, 4, 1),
+            EndDate = new DateTime(2024, 8, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = flat6
@@ -1720,21 +1720,21 @@ public static class DataSeeder
             StartDate = new DateTime(2023, 11, 26),
             EndDate = new DateTime(2024, 11, 30),
             Price = 50,
-            Offer = offer1
+            Offer = offer5
         };
         var offerPromotion2 = new OfferPromotion
         {
             StartDate = new DateTime(2023, 11, 26),
             EndDate = new DateTime(2024, 11, 30),
             Price = 50,
-            Offer = offer2
+            Offer = offer6
         };
         var offerPromotion3 = new OfferPromotion
         {
             StartDate = new DateTime(2022, 11, 26),
             EndDate = new DateTime(2023, 11, 30),
             Price = 50,
-            Offer = offer3
+            Offer = offer7
         };
 
         dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2, offerPromotion3);
@@ -2155,49 +2155,341 @@ public static class DataSeeder
 
         var rent1 = new Rent
         {
-            StartDate = new DateTime(2023, 1, 1),
-            Duration = 10,
-            EndDate = new DateTime(2023, 11, 1),
+            StartDate = new DateTime(2024, 1, 1),
+            Duration = 12,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer1,
             Student = student1,
-            OtherStudents = { student2, student3 },
-            Payments = null
+            OtherStudents = { student2, student3 }
         };
 
         var rent2 = new Rent
         {
-            StartDate = new DateTime(2023, 2, 1),
-            Duration = 10,
-            EndDate = new DateTime(2023, 12, 1),
+            StartDate = new DateTime(2024, 2, 1),
+            Duration = 11,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer2,
             Student = student4,
-            OtherStudents = { student5, student6 },
-            Payments = null
+            OtherStudents = { student5, student6 }
         };
 
         var rent3 = new Rent
         {
-            StartDate = new DateTime(2023, 3, 1),
-            Duration = 8,
-            EndDate = new DateTime(2023, 11, 1),
+            StartDate = new DateTime(2024, 3, 1),
+            Duration = 10,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer3,
             Student = student7,
-            OtherStudents = { student8, student9 },
-            Payments = null
+            OtherStudents = { student8, student9 }
         };
 
         var rent4 = new Rent
         {
-            StartDate = new DateTime(2023, 3, 1),
-            Duration = 8,
-            EndDate = new DateTime(2023, 11, 1),
+            StartDate = new DateTime(2023, 4, 1),
+            Duration = 9,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer4,
             Student = student10,
-            OtherStudents = { },
-            Payments = null
+            OtherStudents = { }
         };
 
         dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
+
+        #endregion
+
+        #region Payments
+
+        // Rent1
+
+        var payment1 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 8),
+            PaidAtDate = new DateTime(2024, 1, 4),
+            Rent = rent1
+        };
+
+        var payment2 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 8),
+            PaidAtDate = new DateTime(2024, 1, 4),
+            Rent = rent1
+        };
+
+        var payment3 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent1
+        };
+
+        var payment4 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent1
+        };
+
+        var payment5 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent1
+        };
+
+        var payment6 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent1
+        };
+
+        var payment7 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent1
+        };
+
+        var payment8 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent1
+        };
+
+        // Rent2
+
+        var payment9 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent2
+        };
+
+        var payment10 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent2
+        };
+
+        var payment11 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent2
+        };
+
+        var payment12 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent2
+        };
+
+        var payment13 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent2
+        };
+
+        var payment14 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent2
+        };
+
+        var payment15 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent2
+        };
+
+        // Rent3
+
+        var payment16 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent3
+        };
+
+        var payment17 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent3
+        };
+
+        var payment18 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent3
+        };
+
+        var payment19 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent3
+        };
+
+        var payment20 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent3
+        };
+
+        var payment21 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent3
+        };
+
+        // Rent4
+
+        var payment22 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent4
+        };
+
+        var payment23 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent4
+        };
+
+        var payment24 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent4
+        };
+
+        var payment25 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent4
+        };
+
+        var payment26 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent4
+        };
+
+        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26);
 
         #endregion
 

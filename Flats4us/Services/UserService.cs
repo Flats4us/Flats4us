@@ -177,13 +177,11 @@ namespace Flats4us.Services
             var students = await _context.Students
                 .Include(s => s.ProfilePicture)
                 .Include(s => s.Document)
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var owners = await _context.Owners
                 .Include(s => s.ProfilePicture)
                 .Include(s => s.Document)
-                .Where(p => p.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var studentDtos = _mapper.Map<List<UserForVerificationDto>>(students);
@@ -197,7 +195,13 @@ namespace Flats4us.Services
             var totalCount = users.Count();
 
             users = users
-                .OrderBy(user => user.DateForVerificationSorting)
+                .OrderBy(user =>
+                     user.VerificationStatus == VerificationStatus.NotVerified ? 0 :
+                     user.VerificationStatus == VerificationStatus.Rejected ? 1 :
+                     user.VerificationStatus == VerificationStatus.Verified ? 2 : 3)
+                .ThenBy(user =>
+                    user.VerificationStatus == VerificationStatus.NotVerified ? user.DateForVerificationSorting :
+                    user.VerificationOrRejectionDate)
                 .Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
@@ -220,6 +224,8 @@ namespace Flats4us.Services
             if (decision)
             {
                 user.VerificationStatus = VerificationStatus.Verified;
+                user.VerificationOrRejectionDate = DateTime.Now;
+                user.DateForVerificationSorting = null;
 
                 await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
                 user.Document = null;
@@ -227,6 +233,8 @@ namespace Flats4us.Services
             else
             {
                 user.VerificationStatus = VerificationStatus.Rejected;
+                user.VerificationOrRejectionDate = DateTime.Now;
+                user.DateForVerificationSorting = null;
             }
             
             await _context.SaveChangesAsync();
