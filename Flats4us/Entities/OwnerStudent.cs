@@ -15,8 +15,9 @@ namespace Flats4us.Entities
         [Required]
         public DateTime DocumentExpireDate { get; set; }
 
-        [Required]
-        public DateTime DateForVerificationSorting { get; set; }
+        public DateTime? DateForVerificationSorting { get; set; }
+
+        public DateTime? VerificationOrRejectionDate { get; set; }
 
         public virtual ICollection<UserOpinion> IssuedUserOpinions { get; set; }
         public virtual ICollection<UserOpinion> ReceivedUserOpinions { get; set; }

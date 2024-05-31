@@ -136,21 +136,18 @@ namespace Flats4us.Services
                 .Include(f => f.Owner)
                 .Include(f => f.TitleDeed)
                 .Include(f => f.Images)
-                .Where(f => f.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var houses = await _context.Houses
                 .Include(h => h.Owner)
                 .Include(h => h.TitleDeed)
                 .Include(h => h.Images)
-                .Where(h => h.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var rooms = await _context.Rooms
                 .Include(r => r.Owner)
                 .Include(r => r.TitleDeed)
                 .Include(r => r.Images)
-                .Where(r => r.VerificationStatus == VerificationStatus.NotVerified)
                 .ToListAsync();
 
             var flatDtos = _mapper.Map<List<PropertyForVerificationDto>>(flats);
@@ -166,7 +163,13 @@ namespace Flats4us.Services
             var totalCount = properties.Count();
 
             properties = properties
-                .OrderBy(property => property.DateForVerificationSorting)
+                .OrderBy(property =>
+                     property.VerificationStatus == VerificationStatus.NotVerified ? 0 :
+                     property.VerificationStatus == VerificationStatus.Rejected ? 1 :
+                     property.VerificationStatus == VerificationStatus.Verified ? 2 : 3)
+                .ThenBy(property =>
+                    property.VerificationStatus == VerificationStatus.NotVerified ? property.DateForVerificationSorting :
+                    property.VerificationOrRejectionDate)
                 .Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
@@ -217,6 +220,7 @@ namespace Flats4us.Services
                         OwnerId = ownerId,
                         Equipment = equipmentList
                     };
+
                     await _context.Flats.AddAsync(flat);
 
                     await _context.SaveChangesAsync();
@@ -248,6 +252,7 @@ namespace Flats4us.Services
                         OwnerId = ownerId,
                         Equipment = equipmentList
                     };
+
                     await _context.Rooms.AddAsync(room);
 
                     await _context.SaveChangesAsync();
@@ -285,6 +290,7 @@ namespace Flats4us.Services
                         OwnerId = ownerId,
                         Equipment = equipmentList
                     };
+
                     await _context.Houses.AddAsync(house);
 
                     await _context.SaveChangesAsync();
@@ -410,9 +416,13 @@ namespace Flats4us.Services
                     flat.NumberOfRooms = (int)input.NumberOfRooms;
                     flat.Floor = (int)input.Floor;
                     flat.Equipment = equipmentList;
-                    flat.DateForVerificationSorting = DateTime.Now;
-
-                    if (flat.VerificationStatus == VerificationStatus.Rejected) flat.VerificationStatus = VerificationStatus.NotVerified;
+                    
+                    if (flat.VerificationStatus == VerificationStatus.Rejected)
+                    {
+                        flat.VerificationStatus = VerificationStatus.NotVerified;
+                        flat.VerificationOrRejectionDate = null;
+                        flat.DateForVerificationSorting = DateTime.Now;
+                    }
 
                     break;
                 case PropertyType.Room:
@@ -440,7 +450,12 @@ namespace Flats4us.Services
                     room.Equipment = equipmentList;
                     room.DateForVerificationSorting = DateTime.Now;
 
-                    if (room.VerificationStatus == VerificationStatus.Rejected) room.VerificationStatus = VerificationStatus.NotVerified;
+                    if (room.VerificationStatus == VerificationStatus.Rejected)
+                    {
+                        room.VerificationStatus = VerificationStatus.NotVerified;
+                        room.VerificationOrRejectionDate = null;
+                        room.DateForVerificationSorting = DateTime.Now;
+                    }
 
                     break;
                 case PropertyType.House:
@@ -474,7 +489,12 @@ namespace Flats4us.Services
                     house.Equipment = equipmentList;
                     house.DateForVerificationSorting = DateTime.Now;
 
-                    if (house.VerificationStatus == VerificationStatus.Rejected) house.VerificationStatus = VerificationStatus.NotVerified;
+                    if (house.VerificationStatus == VerificationStatus.Rejected)
+                    {
+                        house.VerificationStatus = VerificationStatus.NotVerified;
+                        house.VerificationOrRejectionDate = null;
+                        house.DateForVerificationSorting = DateTime.Now;
+                    }
 
                     break;
             }
@@ -526,6 +546,8 @@ namespace Flats4us.Services
             if (decision)
             {
                 property.VerificationStatus = VerificationStatus.Verified;
+                property.VerificationOrRejectionDate = DateTime.Now;
+                property.DateForVerificationSorting = null;
 
                 await _fileUploadService.DeleteFileByNameAsync(property.TitleDeed.Name);
 
@@ -534,6 +556,8 @@ namespace Flats4us.Services
             else
             {
                 property.VerificationStatus = VerificationStatus.Rejected;
+                property.VerificationOrRejectionDate = DateTime.Now;
+                property.DateForVerificationSorting = null;
             }
 
             await _context.SaveChangesAsync();

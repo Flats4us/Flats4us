@@ -49,8 +49,9 @@ namespace Flats4us.Entities
         [Required]
         public DateTime CreationDate { get; set; }
 
-        [Required]
-        public DateTime DateForVerificationSorting { get; set; }
+        public DateTime? DateForVerificationSorting { get; set; }
+
+        public DateTime? VerificationOrRejectionDate { get; set; }
 
         [Required]
         public int OwnerId { get; set; }
