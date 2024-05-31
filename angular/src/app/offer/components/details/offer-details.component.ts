@@ -265,6 +265,10 @@ export class OfferDetailsComponent extends BaseComponent {
 		});
 	}
 
+	public showProfile(id?: number) {
+		this.router.navigate(['profile', 'details', id]);
+	}
+
 	public setCurrentSlideIndex(index: number) {
 		this.currentIndex = index;
 	}

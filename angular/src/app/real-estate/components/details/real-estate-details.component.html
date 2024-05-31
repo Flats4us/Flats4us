@@ -134,22 +134,25 @@
 				>
 			</div>
 			<mat-divider></mat-divider>
-			<div class="container-description">
-				<div class="column-header-description">
-					<p class="text-2xl pt-4">Miasto:</p>
-					<p class="text-2xl pt-4">Dzielnica:</p>
-					<p class="text-2xl pt-4">Kod pocztowy:</p>
-					<p class="text-2xl pt-4">Ulica:</p>
-					<p class="text-2xl pt-4">Metraż:</p>
-					<p class="text-2xl pt-4">Liczba pokoi:</p>
-					<p class="text-2xl pt-4">Liczba pięter:</p>
-					<p class="text-2xl pt-4">Piętro:</p>
-					<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
-					<p class="text-2xl pt-4">Rok budowy:</p>
-					<p class="text-2xl pt-4">Wyposażenie:</p>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Województwo:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.actualRealEstate?.province | lowercase }}
+					</p>
 				</div>
-				<div class="column-header-description">
-					<p class="text-2xl pt-4">{{ data.actualRealEstate?.city }}</p>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Miasto:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.actualRealEstate?.city }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Dzielnica:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.actualRealEstate?.district === null
@@ -157,13 +160,33 @@
 								: data.actualRealEstate?.district
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Kod pocztowy:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.postalCode }}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Ulica:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.street }} {{ data.actualRealEstate?.number }}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Metraż:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.actualRealEstate?.area }} m²</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Liczba pokoi:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.actualRealEstate?.numberOfRooms === null
@@ -171,6 +194,11 @@
 								: data.actualRealEstate?.numberOfRooms
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Liczba pięter:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.actualRealEstate?.numberOfFloors === null
@@ -178,6 +206,11 @@
 								: data.actualRealEstate?.numberOfFloors
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Piętro:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.actualRealEstate?.floor === null
@@ -185,6 +218,13 @@
 								: data.actualRealEstate?.floor
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<p class="text-2xl pt-4">Maks. liczba lokatorów:</p>
+				</div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.actualRealEstate?.maxNumberOfInhabitants === null
@@ -192,13 +232,23 @@
 								: data.actualRealEstate?.maxNumberOfInhabitants
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Rok budowy:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.actualRealEstate?.constructionYear }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Wyposażenie:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						<span *ngFor="let equipment of data.actualRealEstate?.equipment"
 							><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
 								<div *ngSwitchCase="1" class="box-equipment">
-									<span class="material-symbols-outlined">dishwasher</span
-									><span>{{ equipment.name }}</span>
+									<span class="material-symbols-outlined">dishwasher</span>
+									<span>{{ equipment.name }}</span>
 								</div>
 								<div *ngSwitchCase="2" class="box-equipment">
 									<mat-icon>local_laundry_service</mat-icon
@@ -208,8 +258,8 @@
 									<mat-icon>iron</mat-icon><span>{{ equipment.name }}</span>
 								</div>
 								<div *ngSwitchCase="4" class="box-equipment">
-									<span class="material-symbols-outlined">kettle</span
-									><span>{{ equipment.name }}</span>
+									<span class="material-symbols-outlined">kettle</span>
+									<span>{{ equipment.name }}</span>
 								</div>
 								<div *ngSwitchCase="5" class="box-equipment">
 									<mat-icon>coffee_maker</mat-icon><span>{{ equipment.name }}</span>
@@ -227,8 +277,8 @@
 									<mat-icon>bathtub</mat-icon><span>{{ equipment.name }}</span>
 								</div>
 								<div *ngSwitchCase="10" class="box-equipment">
-									<span class="material-symbols-outlined">oven</span
-									><span>{{ equipment.name }}</span>
+									<span class="material-symbols-outlined">oven</span>
+									<span>{{ equipment.name }}</span>
 								</div>
 								<div *ngSwitchCase="11" class="box-equipment">
 									<mat-icon>microwave</mat-icon><span>{{ equipment.name }}</span>
@@ -244,10 +294,9 @@
 					</p>
 				</div>
 			</div>
-			<div
-				*ngIf="data.actualRealEstate?.verificationStatus === 0"
-				class="button-box"
-			>
+		</mat-card>
+		<mat-card *ngIf="data.actualRealEstate?.verificationStatus === 0">
+			<div class="button-box">
 				<button mat-raised-button color="primary" (click)="addOffer()">
 					Dodaj ofertę
 				</button>

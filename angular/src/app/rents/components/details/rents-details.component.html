@@ -150,28 +150,46 @@
 				>
 			</div>
 			<mat-divider></mat-divider>
-			<div class="container-description">
-				<div class="column-header-description">
-					<p class="text-2xl pt-4">Data wystawienia:</p>
-					<p class="text-2xl pt-4">Data zakończenia:</p>
-					<p class="text-2xl pt-4">Adres:</p>
-					<p class="text-2xl pt-4">Czas trwania</p>
-					<p
-						*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-						class="text-2xl pt-4"
-					>
-						Lokatorzy:
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Data wystawienia:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.rent?.startDate | date }}
 					</p>
 				</div>
-				<div class="column-header-description">
-					<p class="text-2xl pt-4">{{ data.rent?.startDate | date }}</p>
-					<p class="text-2xl pt-4">{{ data.rent?.endDate | date }}</p>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Data zakończenia:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.rent?.endDate | date }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Adres:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.rent?.propertyAddress }}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Czas trwania:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.rent?.duration }} msc.</p>
-					<p class="text-2xl pt-4">
-						<mat-card *ngFor="let tenant of data.rent?.tenants" class="mt-4">
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<p class="text-2xl pt-4">Lokatorzy:</p>
+				</div>
+				<div class="column">
+					<p class="text-2xl pt-4 grid gap-4">
+						<mat-card
+							*ngFor="let tenant of data.rent?.tenants"
+							class="profile-card mat-elevation-z0"
+						>
 							<div class="profile-details">
 								<mat-card-avatar
 									matTooltip="Pokaż profil"
@@ -179,7 +197,7 @@
 								>
 									<img
 										class="profile-avatar"
-										src="{{ baseUrl }}/{{ tenant.profilePicture?.path }}"
+										src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
 								/></mat-card-avatar>
 								<div class="container-features">
 									<mat-chip matTooltip="Imię i nazwisko"
@@ -210,7 +228,7 @@
 						><span class="text-3xl ml-4">Płatności</span></mat-label
 					>
 				</mat-card>
-				<div class="payments-container mat-elevation-z8">
+				<div class="payments-container">
 					<mat-table [dataSource]="data.rent?.payments ?? []">
 						<ng-container matColumnDef="paymentId">
 							<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
@@ -263,6 +281,8 @@
 					</mat-table>
 				</div>
 			</div>
+		</mat-card>
+		<mat-card>
 			<div class="button-box-options">
 				<div *ngIf="data.user === uType.DETAILS">
 					<button

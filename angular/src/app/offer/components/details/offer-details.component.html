@@ -269,36 +269,71 @@
 				>
 			</div>
 			<mat-divider></mat-divider>
-			<div class="container-description">
-				<div class="column-header-description">
-					<p class="text-2xl pt-4">Kaucja:</p>
-					<p class="text-2xl pt-4">Data wystawienia:</p>
-					<p class="text-2xl pt-4">Data zakończenia:</p>
-					<p class="text-2xl pt-4">Miasto:</p>
-					<p class="text-2xl pt-4">Kod pocztowy:</p>
-					<p class="text-2xl pt-4">Ulica:</p>
-					<p class="text-2xl pt-4">Metraż:</p>
-					<p class="text-2xl pt-4">Liczba pokoi:</p>
-					<p class="text-2xl pt-4">Liczba pięter:</p>
-					<p class="text-2xl pt-4">Piętro:</p>
-					<p class="text-2xl pt-4">Maks. l. lokatorów:</p>
-					<p class="text-2xl pt-4">Rok budowy:</p>
-					<p class="text-2xl pt-4">Informacje o umowie:</p>
-					<p class="text-2xl pt-4">Regulamin:</p>
-					<p class="text-2xl pt-4">Wyposażenie:</p>
-				</div>
-				<div class="column-header-description">
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Kaucja:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.offer?.deposit | currency : "PLN" : true : ".2-2" }}
 					</p>
-					<p class="text-2xl pt-4">{{ data.offer?.startDate | date }}</p>
-					<p class="text-2xl pt-4">{{ data.offer?.endDate | date }}</p>
-					<p class="text-2xl pt-4">{{ data.offer?.property?.city }}</p>
-					<p class="text-2xl pt-4">{{ data.offer?.property?.postalCode }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Data wystawienia:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
-						{{ data.offer?.property?.street }} {{ data.offer?.property?.number }}
+						{{ data.offer?.startDate | date }}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Data zakończenia:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.offer?.endDate | date }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Województwo:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.offer?.property?.province | lowercase }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Miasto:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.offer?.property?.city }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Kod pocztowy:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.offer?.property?.postalCode }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Ulica:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ data.offer?.property?.street }}
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Metraż:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Liczba pokoi:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.offer?.property?.numberOfRooms === null
@@ -306,6 +341,11 @@
 								: data.offer?.property?.numberOfRooms
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Liczba pięter:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.offer?.property?.numberOfFloors === null
@@ -313,11 +353,23 @@
 								: data.offer?.property?.numberOfFloors
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Piętro:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.offer?.property?.floor === null ? "-" : data.offer?.property?.floor
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<p class="text-2xl pt-4">Maks. liczba lokatorów:</p>
+				</div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
 							data.offer?.property?.maxNumberOfInhabitants === null
@@ -325,9 +377,23 @@
 								: data.offer?.property?.maxNumberOfInhabitants
 						}}
 					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Rok budowy:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Informacje o umowie:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">{{ data.offer?.description }}</p>
-					<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Wyposażenie:</p></div>
+				<div class="column">
 					<p class="text-2xl pt-4">
 						<span *ngFor="let equipment of data?.offer?.property?.equipment"
 							><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
@@ -379,28 +445,83 @@
 					</p>
 				</div>
 			</div>
+			<div class="row">
+				<div class="column"><p class="text-2xl pt-4">Regulamin:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
+				</div>
+			</div>
+			<div
+				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+				class="row"
+			>
+				<div class="column">
+					<p class="text-2xl pt-4">Właściciel:</p>
+				</div>
+				<div class="column">
+					<p class="text-2xl pt-4 grid gap-4">
+						<mat-card class="profile-card mat-elevation-z0">
+							<div class="profile-details">
+								<mat-card-avatar
+									matTooltip="Pokaż profil"
+									(click)="showProfile(data.offer?.owner?.userId)"
+								>
+									<img
+										class="profile-avatar"
+										src="{{ baseUrl }}/{{ data.offer?.owner?.profilePicture }}"
+								/></mat-card-avatar>
+								<div class="container-features">
+									<mat-chip matTooltip="Imię i nazwisko"
+										><div class="box-feature">
+											<mat-icon class="icon-feature">account_circle</mat-icon
+											><span
+												>{{ data.offer?.owner?.name }}
+												{{ data.offer?.owner?.surname }}</span
+											>
+										</div></mat-chip
+									>
+									<mat-chip matTooltip="Adres email"
+										><div class="box-feature">
+											<mat-icon class="icon-feature">mail</mat-icon
+											><span>{{ data.offer?.owner?.email }}</span>
+										</div></mat-chip
+									>
+									<mat-chip matTooltip="Numer telefonu">
+										<div class="box-feature">
+											<mat-icon class="icon-feature">phone_iphone</mat-icon
+											><span>{{ data.offer?.owner?.phoneNumber }}</span>
+										</div></mat-chip
+									>
+								</div>
+							</div>
+						</mat-card>
+					</p>
+				</div>
+			</div>
 		</mat-card>
-		<div *ngIf="data.user === uType.DETAILS" class="button-box-options">
-			<button mat-raised-button color="primary" (click)="returnStart()">
-				Powrót
-			</button>
-			<button
-				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-				mat-raised-button
-				color="primary"
-				(click)="onAddMeeting(data.offer?.offerId)"
-			>
-				Dodaj spotkanie
-			</button>
-			<button
-				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-				mat-raised-button
-				color="primary"
-				[disabled]="data.offer?.offerStatus !== 0"
-				(click)="startRent(data.offer?.offerId)"
-			>
-				Wynajmij
-			</button>
-		</div>
+		<mat-card *ngIf="data.user === uType.DETAILS">
+			<div class="button-box-options">
+				<button mat-raised-button color="primary" (click)="returnStart()">
+					Powrót
+				</button>
+				<button
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					mat-raised-button
+					color="primary"
+					(click)="onAddMeeting(data.offer?.offerId)"
+				>
+					Dodaj spotkanie
+				</button>
+				<button
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					mat-raised-button
+					color="primary"
+					[disabled]="data.offer?.offerStatus !== 0"
+					(click)="startRent(data.offer?.offerId)"
+				>
+					Wynajmij
+				</button>
+			</div>
+		</mat-card>
 	</div>
 </div>
