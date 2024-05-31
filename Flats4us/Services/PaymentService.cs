@@ -28,6 +28,7 @@ namespace Flats4us.Services
             if (payment.IsPaid) throw new ArgumentException($"Payment ID: {paymentId} is already paid");
 
             payment.IsPaid = true;
+            payment.PaidAtDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }
