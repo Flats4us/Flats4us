@@ -77,5 +77,6 @@ export interface IRentProposition {
 	startDate: Date;
 	endDate: Date;
 	duration: number;
+	mainTenantId: number;
 	tenants: ITenant[];
 }
