@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap, zip } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { slideAnimation } from 'src/app/rents/slide.animation';
@@ -28,15 +28,12 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	);
 	public showRealEstate$: Observable<boolean> = this.realEstateId$?.pipe(
 		switchMap(value =>
-			this.realEstateService
-				.getRealEstates(false)
-				.pipe(
-					map(properties =>
-						properties.find(property => property.propertyId === parseInt(value))
-							? true
-							: false
-					)
-				)
+			zip(of(value), this.realEstateService.getRealEstates(false))
+		),
+		switchMap(([index, properties]) =>
+			properties.find(property => property.propertyId === parseInt(index))
+				? of(true)
+				: of(false)
 		)
 	);
 

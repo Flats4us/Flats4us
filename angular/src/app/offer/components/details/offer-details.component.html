@@ -110,7 +110,7 @@
 										<div
 											class="flex items-center justify-center"
 											[ngSwitch]="menuOption.option"
-											[ngClass]="menuOption.option === 'closeOffer' ? 'close-offer' : ''"
+											[class.close-offer]="menuOption.option === 'closeOffer'"
 										>
 											<mat-icon
 												*ngSwitchCase="'offerDetails'"
@@ -157,7 +157,7 @@
 									isCurrentSlideIndex(i)
 								"
 								class="slide slide-animation non-draggable-image"
-								src="{{ baseUrl }}/{{ slide.path }}"
+								src="{{ baseUrl }}/{{ slide?.path }}"
 								(swiperight)="nextSlide(data.offer?.property?.images?.length)"
 								(swipeleft)="prevSlide(data.offer?.property?.images?.length)"
 							/>
@@ -468,7 +468,7 @@
 								>
 									<img
 										class="profile-avatar"
-										src="{{ baseUrl }}/{{ data.offer?.owner?.profilePicture }}"
+										src="{{ baseUrl }}/{{ data.offer?.owner?.profilePicture?.path }}"
 								/></mat-card-avatar>
 								<div class="container-features">
 									<mat-chip matTooltip="Imię i nazwisko"

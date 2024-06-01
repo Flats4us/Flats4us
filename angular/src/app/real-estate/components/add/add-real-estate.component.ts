@@ -18,7 +18,7 @@ import {
 	IRegionCity,
 } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, concatMap, filter, map, switchMap } from 'rxjs';
+import { Observable, concatMap, filter, map, of, switchMap, zip } from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -162,15 +162,12 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		);
 		this.hideRealEstate$ = this.actualRealEstate?.pipe(
 			switchMap(value =>
-				this.realEstateService
-					.getRealEstates(false)
-					.pipe(
-						map(properties =>
-							properties.find(property => property.propertyId === value.propertyId)
-								? false
-								: true
-						)
-					)
+				zip(of(value), this.realEstateService.getRealEstates(false))
+			),
+			switchMap(([value, properties]) =>
+				properties.find(property => property.propertyId === value.propertyId)
+					? of(false)
+					: of(true)
 			)
 		);
 	}

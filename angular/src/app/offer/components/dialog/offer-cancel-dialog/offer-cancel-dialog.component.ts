@@ -51,7 +51,7 @@ export class OfferCancelDialogComponent extends BaseComponent {
 					this.snackBar.open('Oferta została zakończona.', 'Zamknij', {
 						duration: 2000,
 					});
-					this.router.navigate(['/offer', 'owner']);
+					this.router.navigate(['offer', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {

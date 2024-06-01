@@ -77,9 +77,7 @@
 												>edit</mat-icon
 											>
 											<span
-												[ngClass]="
-													menuOption.option === 'deleteRealEstate' ? 'delete-property' : ''
-												"
+												[class.delete-property]="menuOption.option === 'deleteRealEstate'"
 												>{{ menuOption.description }}</span
 											>
 										</div>
@@ -89,7 +87,7 @@
 							<img
 								*ngIf="data.actualRealEstate?.images?.length && isCurrentSlideIndex(i)"
 								class="slide slide-animation non-draggable-image"
-								src="{{ baseUrl }}/{{ slide.path }}"
+								src="{{ baseUrl }}/{{ slide?.path }}"
 								(swiperight)="nextSlide(data.actualRealEstate?.images?.length)"
 								(swipeleft)="prevSlide(data.actualRealEstate?.images?.length)"
 							/>

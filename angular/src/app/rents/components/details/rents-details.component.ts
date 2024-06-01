@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap, zip } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { environment } from 'src/environments/environment.prod';
@@ -36,14 +36,11 @@ export class RentsDetailsComponent extends BaseComponent {
 		switchMap(value => this.rentsService.getRentById(parseInt(value)))
 	);
 	public showRent$: Observable<boolean> = this.rentId$?.pipe(
-		switchMap(value =>
-			this.rentsService
-				.getRents()
-				.pipe(
-					map(rents =>
-						rents.result.find(rent => rent.rentId === parseInt(value)) ? true : false
-					)
-				)
+		switchMap(value => zip(of(value), this.rentsService.getRents())),
+		switchMap(([index, rents]) =>
+			rents.result.find(rent => rent.rentId === parseInt(index))
+				? of(true)
+				: of(false)
 		)
 	);
 
@@ -88,7 +85,7 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public navigateToRent(id: number) {
-		this.router.navigate(['/rents', 'details', id]);
+		this.router.navigate(['rents', 'details', id]);
 	}
 	public navigateToOffer(id: number) {
 		this.router.navigate(['offer', 'owner', id]);
@@ -141,11 +138,11 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public navigateStudentRents() {
-		this.router.navigate(['/rents', 'student']);
+		this.router.navigate(['rents', 'student']);
 	}
 
 	public navigateOwnerRents() {
-		this.router.navigate(['/rents', 'owner']);
+		this.router.navigate(['rents', 'owner']);
 	}
 
 	public showProfile(id: number) {

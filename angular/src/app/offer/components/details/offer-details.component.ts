@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, map, switchMap, of } from 'rxjs';
+import { Observable, map, switchMap, of, zip } from 'rxjs';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from 'src/app/rents/components/meeting-add/meeting-add.component';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
@@ -79,23 +79,18 @@ export class OfferDetailsComponent extends BaseComponent {
 				return;
 			}
 			this.showOffer$ = this.offerId$?.pipe(
-				switchMap(value =>
-					this.offerService
-						.getOffers()
-						.pipe(
-							map(offers =>
-								offers.result.find(offer => offer.offerId === parseInt(value))
-									? true
-									: false
-							)
-						)
+				switchMap(value => zip(of(value), this.offerService.getOffers())),
+				switchMap(([index, offers]) =>
+					offers.result.find(offer => offer.offerId === parseInt(index))
+						? of(true)
+						: of(false)
 				)
 			);
 		});
 	}
 
 	public addOffer() {
-		this.router.navigate(['/offer', 'add']);
+		this.router.navigate(['offer', 'add']);
 	}
 
 	public returnStart() {
@@ -141,7 +136,7 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public navigateToOffer(id: number) {
-		this.router.navigate(['/offer', 'details', id]);
+		this.router.navigate(['offer', 'details', id]);
 	}
 
 	public navigateToProperty(id: number) {

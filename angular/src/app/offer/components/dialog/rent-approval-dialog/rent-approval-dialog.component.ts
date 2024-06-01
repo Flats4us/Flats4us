@@ -63,7 +63,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 					this.snackBar.open('Propozycja najmu została zaakceptowana', 'Zamknij', {
 						duration: 2000,
 					});
-					this.router.navigate(['/rents', 'owner', this.data.rentId]);
+					this.router.navigate(['rents', 'owner', this.data.rentId]);
 					this.dialogRef.close(this.data.offerId);
 				},
 				error: () => {

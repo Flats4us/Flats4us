@@ -104,7 +104,7 @@
 									(data.rent?.propertyImages?.length ?? 0) > 0 && isCurrentSlideIndex(i)
 								"
 								class="slide slide-animation non-draggable-image"
-								src="{{ baseUrl }}/{{ slide.path }}"
+								src="{{ baseUrl }}/{{ slide?.path }}"
 								(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
 								(swipeleft)="prevSlide(data.rent?.propertyImages?.length)"
 							/>
