@@ -75,7 +75,7 @@ namespace Flats4us.Entities.Dto
 
         public int? Floor { get; set; }
 
-        public List<int> OfferIds { get; set; }
+        public List<SimpleOfferForPropertyDetailsDto> Offers { get; set; }
 
         public ICollection<EquipmentDto> Equipment { get; set; }
         public ICollection<RentOpinionDto> RentOpinions { get; set; }

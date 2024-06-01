@@ -47,7 +47,7 @@ namespace Flats4us.Services
                         .Include(f => f.Images)
                         .FirstOrDefaultAsync(f => f.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(flat);
-                    result.OfferIds = flat.Offers.Select(o => o.OfferId).ToList();
+                    result.Offers = _mapper.Map<List<SimpleOfferForPropertyDetailsDto>>(flat.Offers);
                     break;
                 case Room:
                     var room = await _context.Rooms
@@ -59,7 +59,7 @@ namespace Flats4us.Services
                         .Include(r => r.Images)
                         .FirstOrDefaultAsync(r => r.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(room);
-                    result.OfferIds = room.Offers.Select(o => o.OfferId).ToList();
+                    result.Offers = _mapper.Map<List<SimpleOfferForPropertyDetailsDto>>(room.Offers);
                     break;
                 case House:
                     var house = await _context.Houses
@@ -71,7 +71,7 @@ namespace Flats4us.Services
                         .Include(h => h.Images)
                         .FirstOrDefaultAsync(h => h.PropertyId == id);
                     result = _mapper.Map<PropertyDto>(house);
-                    result.OfferIds = house.Offers.Select(o => o.OfferId).ToList();
+                    result.Offers = _mapper.Map<List<SimpleOfferForPropertyDetailsDto>>(house.Offers);
                     break;
                 default:
                     throw new ArgumentException($"Cannot get this property");

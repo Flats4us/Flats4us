@@ -12,6 +12,8 @@ namespace Flats4us.Helpers
         {
             CreateMap<FileUpload, FileDto>();
 
+            CreateMap<Offer, SimpleOfferForPropertyDetailsDto>();
+
             CreateMap<Equipment, EquipmentDto>();
 
             CreateMap<Payment, PaymentDto>();
@@ -35,17 +37,17 @@ namespace Flats4us.Helpers
             CreateMap<Flat, PropertyDto>()
                 .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat))
-                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
+                .ForMember(dest => dest.Offers, opt => opt.Ignore()); // Added manualy when needed
 
             CreateMap<Room, PropertyDto>()
                 .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Room))
-                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
+                .ForMember(dest => dest.Offers, opt => opt.Ignore()); // Added manualy when needed
 
             CreateMap<House, PropertyDto>()
                 .MapBaseProperty()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.House))
-                .ForMember(dest => dest.OfferIds, opt => opt.Ignore()); // Added manualy when needed
+                .ForMember(dest => dest.Offers, opt => opt.Ignore()); // Added manualy when needed
 
             CreateMap<Flat, SimplePropertyDto>()
                 .ForMember(dest => dest.PropertyType, opt => opt.MapFrom(src => PropertyType.Flat));
