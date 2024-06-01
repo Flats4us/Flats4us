@@ -57,7 +57,7 @@
 										mat-menu-item
 										[value]="menuOption.description"
 										[disabled]="
-											data.actualRealEstate?.offerIds?.length &&
+											(data.actualRealEstate?.offers?.length ?? 0) > 0 &&
 											menuOption.option === 'deleteRealEstate'
 										"
 										(click)="onSelect(menuOption, data.actualRealEstate?.propertyId)"
@@ -289,6 +289,70 @@
 								</div>
 							</mat-chip>
 						</span>
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="column">
+					<p class="text-2xl pt-4">Powiązane oferty:</p>
+				</div>
+				<div class="column">
+					<p
+						*ngIf="data.actualRealEstate?.offers?.length"
+						class="text-2xl pt-4 grid gap-4"
+					>
+						<mat-card
+							*ngFor="let offer of data.actualRealEstate?.offers"
+							class="profile-card mat-elevation-z0"
+						>
+							<div class="profile-details">
+								<mat-card-avatar
+									matTooltip="Pokaż ofertę"
+									(click)="showOffer(offer.offerId)"
+								>
+									<img
+										class="profile-avatar"
+										src="{{ baseUrl }}/{{ data?.actualRealEstate?.images?.at(0)?.path }}"
+								/></mat-card-avatar>
+								<div class="container-features">
+									<mat-chip matTooltip="Data wystawienia"
+										><div class="box-feature">
+											<mat-icon class="icon-feature">start</mat-icon
+											><span>Oferta z {{ offer.startDate | date }}</span>
+										</div></mat-chip
+									>
+									<mat-chip matTooltip="Status oferty">
+										<div class="box-feature" [ngSwitch]="offer.offerStatus">
+											<mat-icon
+												*ngSwitchCase="0"
+												class="icon-feature material-symbols-outlined"
+												>check_circle</mat-icon
+											>
+											<mat-icon
+												*ngSwitchCase="2"
+												class="icon-feature material-symbols-outlined"
+												>handshake</mat-icon
+											>
+											<mat-icon
+												*ngSwitchDefault
+												class="icon-feature material-symbols-outlined"
+												>cancel</mat-icon
+											>
+											<span
+												>Status:
+												{{ offerService.offerStatuses.get(offer.offerStatus) }}</span
+											>
+										</div></mat-chip
+									>
+								</div>
+							</div>
+						</mat-card>
+					</p>
+					<p
+						*ngIf="!data.actualRealEstate?.offers?.length"
+						class="text-2xl pt-4 grid gap-4"
+					>
+						Nieruchomość nie posiada powiązanych ofert.
 					</p>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, map, switchMap, of, zip } from 'rxjs';
+import { Observable, map, switchMap, of, zip, BehaviorSubject } from 'rxjs';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from 'src/app/rents/components/meeting-add/meeting-add.component';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
@@ -16,7 +16,6 @@ import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialo
 import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent-approval-dialog.component';
 import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-cancel-dialog.component';
 import { AuthService } from '@shared/services/auth.service';
-import { LoggedUserType } from '@shared/models/auth.models';
 import { RentsService } from 'src/app/rents/services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { StartService } from 'src/app/start/services/start.service';
@@ -35,6 +34,9 @@ export class OfferDetailsComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public statusName: typeof statusName = statusName;
+	private user: BehaviorSubject<UserType> = new BehaviorSubject<UserType>(
+		UserType.DETAILS
+	);
 	public user$: Observable<string | undefined> =
 		this.route.parent?.paramMap.pipe(
 			map(params => params.get('user')?.toUpperCase())
@@ -43,15 +45,18 @@ export class OfferDetailsComponent extends BaseComponent {
 	private offerId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('id') ?? '')
 	);
+
 	public actualOffer$: Observable<IOffer> = this.offerId$.pipe(
 		switchMap(value => this.offerService.getOfferById(parseInt(value)))
 	);
 
-	public showOffer$: Observable<boolean> = of(false);
+	private showOffer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false
+	);
+
+	public showOffer$: Observable<boolean> = this.showOffer.asObservable();
 
 	public uType = UserType;
-
-	public loggedInUserType = LoggedUserType;
 
 	public currentIndex = 0;
 
@@ -74,19 +79,20 @@ export class OfferDetailsComponent extends BaseComponent {
 		private snackBar: MatSnackBar
 	) {
 		super();
-		this.user$.pipe(this.untilDestroyed()).subscribe(user => {
-			if (user === UserType.DETAILS) {
-				return;
-			}
-			this.showOffer$ = this.offerId$?.pipe(
-				switchMap(value => zip(of(value), this.offerService.getOffers())),
-				switchMap(([index, offers]) =>
-					offers.result.find(offer => offer.offerId === parseInt(index))
-						? of(true)
-						: of(false)
-				)
-			);
-		});
+
+		this.user$
+			.pipe(this.untilDestroyed())
+			.subscribe(user => this.user.next(user as UserType));
+
+		if (this.user.value !== UserType.DETAILS) {
+			zip(this.offerId$, this.offerService.getOffers())
+				.pipe(this.untilDestroyed())
+				.subscribe(([id, offers]) => {
+					offers.result.find(offer => offer.offerId === parseInt(id))
+						? this.showOffer.next(true)
+						: this.showOffer.next(false);
+				});
+		}
 	}
 
 	public addOffer() {
@@ -175,17 +181,17 @@ export class OfferDetailsComponent extends BaseComponent {
 		});
 	}
 
-	public startRent(id?: number) {
+	public startRent(id?: number, maxNumberOfInhabitants?: number) {
 		const rentPropositionDialog = this.dialog.open(
 			RentPropositionDialogComponent,
 			{
 				disableClose: true,
-				data: id ?? 0,
+				data: { id: id ?? 0, maxNumberOfInhabitants: maxNumberOfInhabitants ?? 0 },
 			}
 		);
 		this.actualOffer$ = rentPropositionDialog
 			.afterClosed()
-			.pipe(switchMap(value => this.offerService.getOfferById(value)));
+			.pipe(switchMap(value => this.offerService.getOfferById(value.id)));
 		rentPropositionDialog
 			.afterClosed()
 			.pipe(this.untilDestroyed())

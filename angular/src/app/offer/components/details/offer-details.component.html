@@ -467,8 +467,9 @@
 									(click)="showProfile(data.offer?.owner?.userId)"
 								>
 									<img
+										*ngIf="data.offer?.owner?.profilePicture?.path as path"
 										class="profile-avatar"
-										src="{{ baseUrl }}/{{ data.offer?.owner?.profilePicture?.path }}"
+										src="{{ baseUrl }}/{{ path }}"
 								/></mat-card-avatar>
 								<div class="container-features">
 									<mat-chip matTooltip="Imię i nazwisko"
@@ -517,7 +518,12 @@
 					mat-raised-button
 					color="primary"
 					[disabled]="data.offer?.offerStatus !== 0"
-					(click)="startRent(data.offer?.offerId)"
+					(click)="
+						startRent(
+							data.offer?.offerId,
+							data.offer?.property?.maxNumberOfInhabitants
+						)
+					"
 				>
 					Wynajmij
 				</button>

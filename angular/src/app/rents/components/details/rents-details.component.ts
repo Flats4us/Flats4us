@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, of, switchMap, zip } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { environment } from 'src/environments/environment.prod';
@@ -35,26 +35,14 @@ export class RentsDetailsComponent extends BaseComponent {
 	public actualRent$: Observable<IRent> = this.rentId$?.pipe(
 		switchMap(value => this.rentsService.getRentById(parseInt(value)))
 	);
-	public showRent$: Observable<boolean> = this.rentId$?.pipe(
-		switchMap(value => zip(of(value), this.rentsService.getRents())),
-		switchMap(([index, rents]) =>
-			rents.result.find(rent => rent.rentId === parseInt(index))
-				? of(true)
-				: of(false)
-		)
+	private showRent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false
 	);
+	public showRent$: Observable<boolean> = this.showRent.asObservable();
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = [
-		'paymentId',
-		'paymentPurpose',
-		'amount',
-		'isPaid',
-		'createdDate',
-		'paymentDate',
-	];
-	public displayedColumnsOwner: string[] = [
+	public displayedColumnsPayments: string[] = [
 		'paymentId',
 		'paymentPurpose',
 		'amount',
@@ -78,6 +66,13 @@ export class RentsDetailsComponent extends BaseComponent {
 		public authService: AuthService
 	) {
 		super();
+		zip(this.rentId$, this.rentsService.getRents())
+			.pipe(this.untilDestroyed())
+			.subscribe(([id, rents]) =>
+				rents.result.find(rents => rents.rentId === parseInt(id))
+					? this.showRent.next(true)
+					: this.showRent.next(false)
+			);
 	}
 
 	public addOffer() {

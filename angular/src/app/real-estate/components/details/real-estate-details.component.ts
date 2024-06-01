@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, of, switchMap, zip } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { slideAnimation } from 'src/app/rents/slide.animation';
@@ -9,6 +9,7 @@ import { RealEstateDialogComponent } from '../dialog/real-estate-dialog.componen
 import { MatDialog } from '@angular/material/dialog';
 import { IProperty } from '../../models/real-estate.models';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { OfferService } from 'src/app/offer/services/offer.service';
 
 @Component({
 	selector: 'app-real-estate-details',
@@ -26,16 +27,9 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	public actualRealEstate$: Observable<IProperty> = this.realEstateId$?.pipe(
 		switchMap(id => this.realEstateService.getRealEstateById(parseInt(id)))
 	);
-	public showRealEstate$: Observable<boolean> = this.realEstateId$?.pipe(
-		switchMap(value =>
-			zip(of(value), this.realEstateService.getRealEstates(false))
-		),
-		switchMap(([index, properties]) =>
-			properties.find(property => property.propertyId === parseInt(index))
-				? of(true)
-				: of(false)
-		)
-	);
+	private showRealEstate: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
+	public showRealEstate$ = this.showRealEstate.asObservable();
 
 	public currentIndex = 0;
 
@@ -46,11 +40,19 @@ export class RealEstateDetailsComponent extends BaseComponent {
 
 	constructor(
 		public realEstateService: RealEstateService,
+		public offerService: OfferService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private dialog: MatDialog
 	) {
 		super();
+		zip(this.realEstateId$, this.realEstateService.getRealEstates(false))
+			.pipe(this.untilDestroyed())
+			.subscribe(([id, properties]) =>
+				properties.find(property => property.propertyId === parseInt(id))
+					? this.showRealEstate.next(true)
+					: this.showRealEstate.next(false)
+			);
 	}
 
 	public onSelect(menuOption: IMenuOptions, id?: number) {
@@ -86,6 +88,10 @@ export class RealEstateDetailsComponent extends BaseComponent {
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
+	}
+
+	public showOffer(id: number) {
+		this.router.navigate(['offer', 'owner', id]);
 	}
 
 	public editRealEstate(id: number) {

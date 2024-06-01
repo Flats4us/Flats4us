@@ -84,6 +84,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 					this.snackBar.open('Propozycja najmu została odrzucona', 'Zamknij', {
 						duration: 2000,
 					});
+					this.router.navigate(['/offer', 'owner']);
 					this.dialogRef.close(this.data.offerId);
 				},
 				error: () => {

@@ -174,7 +174,6 @@
 	max-width: 800px;
 }
 
-/* Clear floats after the columns */
 .row:after {
 	content: "";
 	display: table;
@@ -237,6 +236,7 @@
 
 .profile-avatar {
 	border-radius: 50%;
+	height: 100px;
 	width: 100px;
 	margin-right: 4px;
 }
@@ -347,6 +347,7 @@ mat-header-cell {
 	}
 	.profile-avatar {
 		border-radius: 50%;
+		height: 100px;
 		width: 100px;
 		margin-bottom: 4px;
 	}

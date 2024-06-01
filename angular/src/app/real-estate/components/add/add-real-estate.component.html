@@ -7,9 +7,15 @@
 	</h1>
 </div>
 <div
-	*ngIf="{ modification: mType.EDIT, hide: hideRealEstate$ | async } as guard"
+	*ngIf="{
+		modification: modificationType,
+		hide: hideRealEstate$ | async
+	} as guard"
 >
-	<mat-card *ngIf="!(guard.modification && guard.hide)" class="add-real-estate">
+	<mat-card
+		*ngIf="!(guard.modification === mType.EDIT && guard.hide)"
+		class="add-real-estate"
+	>
 		<mat-stepper #stepper linear>
 			<div class="box">
 				<mat-step [stepControl]="addRealEstateFormAddressData">
