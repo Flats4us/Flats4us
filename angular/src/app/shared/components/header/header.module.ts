@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 import { UserService } from '@shared/services/user.service';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
 	declarations: [HeaderComponent],
@@ -32,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		RouterLink,
 		AccessControlDirective,
 		TranslateModule,
+		MatTooltipModule,
 	],
 	providers: [UserService],
 	exports: [HeaderComponent],

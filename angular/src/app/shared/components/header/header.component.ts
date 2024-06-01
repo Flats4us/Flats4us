@@ -39,7 +39,13 @@ export class HeaderComponent extends BaseComponent {
 			});
 	}
 
-	public changeLanguageOnClick(value: string) {
+	public changeLanguage(value: string) {
 		this.translate.use(value.toLowerCase());
+	}
+
+	public hideSidenav(): void {
+		if (this.showSidenav) {
+			this.showSidenav = false;
+		}
 	}
 }

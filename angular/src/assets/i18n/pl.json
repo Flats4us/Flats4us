@@ -114,7 +114,8 @@
 		"change-password": "Zmień hasło",
 		"additional": "Dodatkowe",
 		"calendar": "Kalendarz",
-		"find-roommates": "Znajdź wspólokatora"
+		"find-roommates": "Znajdź wspólokatora",
+		"change-language-tooltip": "Zmień język"
 	},
 	"Calendar": {
 		"add-event": "Dodaj wydarzenie",

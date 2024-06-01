@@ -9,37 +9,46 @@
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
+	<button
+		mat-icon-button
+		class="responsive-menu"
+		(click)="showSidenav = !showSidenav"
+	>
+		<mat-icon class="material-icons-outlined">menu</mat-icon>
+	</button>
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
 		<div class="language">
 			<button
 				mat-icon-button
-				matTooltip="Zmień język"
-				[matMenuTriggerFor]="changeLanguage"
+				class="responsive-menu-lang"
+				[matTooltip]="'Header.change-language-tooltip' | translate"
+				[matMenuTriggerFor]="languageChange"
 			>
 				<mat-icon>language</mat-icon>
 			</button>
-			<mat-menu #changeLanguage="matMenu">
+			<mat-menu #languageChange="matMenu">
 				<button
 					*ngFor="let lang of languages"
 					mat-menu-item
-					(click)="changeLanguageOnClick(lang)"
+					class="flex-row justify-center items-center"
+					(click)="changeLanguage(lang)"
 				>
-					<h1 [ngSwitch]="lang">
-						{{ lang }}
+					<span> {{ lang }} </span>
+
+					<ng-container [ngSwitch]="lang">
 						<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
 						<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
-					</h1>
+					</ng-container>
 				</button>
 			</mat-menu>
 			<button
 				*ngIf="user$ | async as user"
 				class="your-profile"
 				[matMenuTriggerFor]="myProfile"
-				(click)="showSidenav ? (showSidenav = false) : showSidenav"
+				(click)="hideSidenav()"
 			>
 				<img
 					class="your-photo"
-					alt="Twój profil"
 					[src]="
 						user.profilePicture.path
 							? baseUrl + '/' + user.profilePicture.path
@@ -121,7 +130,7 @@
 	</mat-menu>
 
 	<ng-template #notLoggedIn>
-		<div class="start-navbar-button spacer">
+		<div class="start-navbar-button">
 			<button
 				class="button-log"
 				mat-stroked-button
@@ -140,39 +149,31 @@
 			</button>
 		</div>
 		<button
-			class="language-btn"
 			mat-icon-button
-			matTooltip="Zmień język"
-			[matMenuTriggerFor]="changeLanguage"
+			class="responsive-menu-lang"
+			[matTooltip]="'Header.change-language-tooltip' | translate"
+			[matMenuTriggerFor]="languageChange"
 		>
 			<mat-icon>language</mat-icon>
 		</button>
-		<mat-menu #changeLanguage="matMenu">
+		<mat-menu #languageChange="matMenu">
 			<button
 				*ngFor="let lang of languages"
 				mat-menu-item
-				(click)="changeLanguageOnClick(lang)"
+				class="flex-row justify-center items-center"
+				(click)="changeLanguage(lang)"
 			>
-				<h1 [ngSwitch]="lang">
-					{{ lang }}
+				<span> {{ lang }} </span>
+
+				<ng-container [ngSwitch]="lang">
 					<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
 					<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
-				</h1>
+				</ng-container>
 			</button>
 		</mat-menu>
 	</ng-template>
-	<button
-		mat-icon-button
-		class="responsive-menu"
-		(click)="showSidenav = !showSidenav"
-	>
-		<mat-icon class="material-icons-outlined">menu</mat-icon>
-	</button>
 </mat-toolbar>
-<div
-	*ngIf="showSidenav"
-	class="sidenav flex flex-col w-[180px] min-h-max bg-white"
->
+<div *ngIf="showSidenav" class="sidenav flex flex-col min-h-max bg-white">
 	<ng-container *ngTemplateOutlet="buttons"></ng-container>
 </div>
 

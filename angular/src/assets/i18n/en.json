@@ -115,7 +115,8 @@
 		"change-password": "Change password",
 		"additional": "Additional",
 		"calendar": "Calendar",
-		"find-roommates": "Find Roommates"
+		"find-roommates": "Find Roommates",
+		"change-language-tooltip": "Change language"
 	},
 	"Calendar": {
 		"add-event": "Add event",
