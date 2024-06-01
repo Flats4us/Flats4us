@@ -212,6 +212,12 @@
 											><span>{{ tenant.email }}</span>
 										</div></mat-chip
 									>
+									<mat-chip *ngIf="tenant.userId === data.rent?.mainTenantId">
+										<div class="box-feature">
+											<mat-icon class="icon-feature">priority_high</mat-icon
+											><span>Główny lokator</span>
+										</div></mat-chip
+									>
 								</div>
 							</div>
 						</mat-card>

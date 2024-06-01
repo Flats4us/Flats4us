@@ -44,6 +44,7 @@ export interface IRent {
 	endDate: Date;
 	propertyAddress: string;
 	propertyType: number;
+	mainTenantId: number;
 	propertyImages: IImage[];
 	tenants: ITenant[];
 	payments: IRentPayment[];
