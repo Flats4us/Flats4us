@@ -117,10 +117,10 @@ export class RentsDetailsComponent extends BaseComponent {
 		}
 	}
 
-	public onAddMeeting(): void {
+	public onAddMeeting(offerId?: number): void {
 		this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
-			data: this.rentId$,
+			data: offerId?.toString(),
 		});
 	}
 
