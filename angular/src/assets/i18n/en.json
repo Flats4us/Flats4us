@@ -242,7 +242,9 @@
 		"offer-status0": "current",
 		"offer-status1": "outdated",
 		"offer-status2": "suspended",
-		"offer-status3": "rented"
+		"offer-status3": "rented",
+		"cancel-dialog1": "The offer has ended.",
+		"cancel-dialog2": "Mistake. Try again!"
 	},
 
 	"Profile": {
@@ -442,7 +444,7 @@
 		"rent-info0": "No rentals have been added yet",
 		"rent": "Renting",
 		"start-rent": "Rent start date",
-		"rental-period": "Rental period",
+		"rental-period": "Rental period (months)",
 		"name-surname": "Name and Surname",
 		"email-address": "E-mail adress",
 		"roommates-email": "Roommates address E-mail",

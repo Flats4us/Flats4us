@@ -29,6 +29,7 @@ import { OfferRoutingModule } from '../../offer-routing.module';
 import { OfferService } from '../../services/offer.service';
 import { SurveyService } from '@shared/services/survey.service';
 import { SurveyModule } from '@shared/components/survey/survey.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [AddOfferComponent],
@@ -60,6 +61,7 @@ import { SurveyModule } from '@shared/components/survey/survey.module';
 		MatCheckboxModule,
 		MatRadioModule,
 		SurveyModule,
+		TranslateModule,
 	],
 	exports: [AddOfferComponent],
 	providers: [OfferService, SurveyService],

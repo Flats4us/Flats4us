@@ -29,6 +29,7 @@ import { Observable, map, of } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
 import { setLocalDate } from '@shared/utils/functions';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -48,6 +49,7 @@ import { setLocalDate } from '@shared/utils/functions';
 		CommonModule,
 		MatDatepickerModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 })
@@ -71,6 +73,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
 		public userService: UserService,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -89,8 +92,8 @@ export class RentPropositionDialogComponent extends BaseComponent {
 				.subscribe({
 					next: () => {
 						this.snackBar.open(
-							'Propozycja najmu została wysłana do Właściciela i czeka na akceptację!',
-							'Zamknij',
+							this.translate.instant('Rents.rent-info3'),
+							this.translate.instant('close'),
 							{
 								duration: 10000,
 							}
@@ -98,9 +101,13 @@ export class RentPropositionDialogComponent extends BaseComponent {
 						this.dialogRef.close(this.data);
 					},
 					error: () => {
-						this.snackBar.open('Nie udało się dodać najmu.', 'Zamknij', {
-							duration: 10000,
-						});
+						this.snackBar.open(
+							this.translate.instant('Rents.error2'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
 						this.dialogRef.close(this.data);
 					},
 				});

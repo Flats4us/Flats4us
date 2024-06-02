@@ -1,4 +1,4 @@
-<h1 class="text-2xl p-4 font-semibold">Dodawanie najmu</h1>
+<h1 class="text-2xl p-4 font-semibold">{{ "Rents.add-rent" | translate }}</h1>
 <div mat-dialog-content>
 	<form
 		class="flex flex-col"
@@ -6,7 +6,7 @@
 		(ngSubmit)="onYesClick()"
 	>
 		<mat-form-field>
-			<mat-label>Data rozpoczęcia najmu</mat-label>
+			<mat-label>{{ "Rents.start-rent" | translate }}</mat-label>
 			<input
 				matInput
 				readonly
@@ -23,29 +23,29 @@
 			<mat-error
 				*ngIf="rentPropositionForm.controls['startDate'].errors?.['required']"
 			>
-				Pole jest wymagane!
+				{{ "required-field" | translate }}!
 			</mat-error>
 		</mat-form-field>
 		<mat-form-field>
-			<mat-label>Okres najmu (w miesiącach)</mat-label>
+			<mat-label>{{ "Rents.rental-period" | translate }}</mat-label>
 			<input
 				matInput
 				formControlName="duration"
-				placeholder="Liczba miesięcy najmu"
+				placeholder="{{ 'Rents.days-number-rent' | translate }}"
 				type="number"
 				[min]="1"
 			/>
 			<mat-error
 				*ngIf="rentPropositionForm.controls['duration'].errors?.['required']"
 			>
-				Liczba miesięcy jest wymagana!
+				{{ "required-days-info1" | translate }}!
 			</mat-error>
 			<mat-error *ngIf="rentPropositionForm.controls['duration'].errors?.['min']">
-				Wprowadzona liczba miesięcy jest nieprawidłowa!
+				{{ "required-days-info2" | translate }}!
 			</mat-error>
 		</mat-form-field>
 		<mat-form-field class="example-chip-list">
-			<mat-label>Adresy email współlokatorów</mat-label>
+			<mat-label>{{ "Rents.roommates-email" | translate }}</mat-label>
 			<mat-chip-grid #chipGrid2 aria-label="Emails">
 				<mat-chip-row
 					*ngFor="let tenant of tenants"
@@ -60,7 +60,7 @@
 					</button>
 				</mat-chip-row>
 				<input
-					placeholder="Adresy email współlokatorów"
+					placeholder="{{ 'Rents.address-email-roommates' | translate }}"
 					[formControl]="tenantsCtrl"
 					[matChipInputFor]="chipGrid2"
 					[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -70,12 +70,12 @@
 			</mat-chip-grid>
 		</mat-form-field>
 		<mat-error *ngIf="invalidEmail$ | async">
-			Wpisany/e adres/y email nie istnieje/ą w systemie!
+			{{ "Rents.email-fail" | translate }}!
 		</mat-error>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
-	<p>Czy potwierdzasz chęć zawarcie umowy najmu?</p>
+	<p>{{ "Rents.agree-rental" | translate }}?</p>
 	<div class="button-box-yn">
 		<button
 			mat-button
@@ -84,7 +84,7 @@
 			type="button"
 			(click)="onClose()"
 		>
-			Nie
+			{{ "no" | translate }}
 		</button>
 		<button
 			mat-raised-button
@@ -92,7 +92,7 @@
 			color="primary"
 			(click)="onYesClick()"
 		>
-			Tak
+			{{ "yes" | translate }}
 		</button>
 	</div>
 </div>

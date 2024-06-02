@@ -1,10 +1,10 @@
-<h1 class="text-2xl p-4 font-semibold">Kończenie oferty</h1>
+<h1 class="text-2xl p-4 font-semibold">{{ "Offer.end-offer" | translate }}</h1>
 <div mat-dialog-content>
-	<p>Czy potwierdzasz zakończenie oferty?</p>
+	<p>{{ "Offer.end-offer-info" | translate }}?</p>
 </div>
 <div mat-dialog-actions class="button-box">
 	<button mat-button mat-dialog-close cdkFocusInitial (click)="onClose()">
-		Nie
+		{{ "no" | translate }}
 	</button>
 	<button
 		mat-raised-button
@@ -13,6 +13,6 @@
 		color="primary"
 		(click)="onYesClick()"
 	>
-		Tak
+		{{ "yes" | translate }}
 	</button>
 </div>

@@ -16,10 +16,10 @@ export class OfferService {
 	protected apiRoute = `${environment.apiUrl}`;
 
 	public offerStatuses = new Map<number, string>([
-		[0, 'aktualna'],
-		[1, 'oczekująca'],
-		[2, 'wynajęta'],
-		[3, 'nieaktualna'],
+		[0, 'Offer.offer-status0'],
+		[1, 'Offer.offer-status1'],
+		[2, 'Offer.offer-status2'],
+		[3, 'Offer.offer-status3'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}

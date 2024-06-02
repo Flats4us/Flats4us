@@ -21,6 +21,7 @@ import { RentsService } from 'src/app/rents/services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { StartService } from 'src/app/start/services/start.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-offer-details',
@@ -52,10 +53,10 @@ export class OfferDetailsComponent extends BaseComponent {
 	public currentIndex = 0;
 
 	public menuOptions: IMenuOptions[] = [
-		{ option: 'offerDetails', description: 'Szczegóły oferty' },
-		{ option: 'promoteOffer', description: 'Promuj ofertę' },
-		{ option: 'property', description: 'Powiązana nieruchomość' },
-		{ option: 'closeOffer', description: 'Zakończ ofertę' },
+		{ option: 'offerDetails', description: 'Offer.offer-details' },
+		{ option: 'promoteOffer', description: 'Offer.promote-offer' },
+		{ option: 'property', description: 'Offer.related-property' },
+		{ option: 'closeOffer', description: 'Offer.close-offer' },
 	];
 
 	constructor(
@@ -67,7 +68,8 @@ export class OfferDetailsComponent extends BaseComponent {
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
 		public authService: AuthService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -211,14 +213,18 @@ export class OfferDetailsComponent extends BaseComponent {
 					this.actualOffer$ = this.offerId$.pipe(
 						switchMap(value => this.offerService.getOfferById(parseInt(value)))
 					);
-					this.snackBar.open('Oferta została dodana do obserwowanych!', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Offer.offer-info3'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 				},
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Offer.offer-info4'),
+						this.translate.instant('close'),
 						{ duration: 10000 }
 					);
 				},

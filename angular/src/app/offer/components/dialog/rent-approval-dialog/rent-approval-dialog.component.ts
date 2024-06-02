@@ -20,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { RentsService } from 'src/app/rents/services/rents.service';
 import { IRentProposition } from 'src/app/rents/models/rents.models';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-approval-dialog',
@@ -33,6 +34,7 @@ import { IRentProposition } from 'src/app/rents/models/rents.models';
 		MatCardModule,
 		MatTooltipModule,
 		MatIconModule,
+		TranslateModule,
 	],
 	providers: [OfferService, UserService, RentsService],
 	templateUrl: './rent-approval-dialog.component.html',
@@ -51,6 +53,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 		public rentsService: RentsService,
 		private snackBar: MatSnackBar,
 		private router: Router,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: { rentId: number; offerId: number }
 	) {
 		super();
@@ -63,16 +66,24 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Propozycja najmu została zaakceptowana', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Rents.rents-info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data.offerId);
 					this.router.navigate(['rents', 'owner', this.data.rentId]);
 				},
 				error: () => {
-					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Rents.error1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data.offerId);
 				},
 			});
@@ -84,15 +95,23 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Propozycja najmu została odrzucona', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Rents.rents-info2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data.offerId);
 				},
 				error: () => {
-					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Rents.error1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data.offerId);
 				},
 			});
