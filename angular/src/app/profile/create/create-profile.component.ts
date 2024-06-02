@@ -57,8 +57,8 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		studentNumber: new FormControl(''),
 		university: new FormControl(''),
 		links: new FormControl([]),
-		party: new FormControl(null),
-		tidiness: new FormControl(null),
+		party: new FormControl(1),
+		tidiness: new FormControl(1),
 		smoking: new FormControl(false),
 		sociability: new FormControl(false),
 		animals: new FormControl(false),
@@ -203,13 +203,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.subscribe({
 							next: () =>
 								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
-									duration: 10000,
+									duration: 2000,
 								}),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 10000 }
+									{ duration: 2000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -228,14 +228,14 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 									'Pomyślnie utworzono konto Właściciela!',
 									'Zamknij',
 									{
-										duration: 10000,
+										duration: 2000,
 									}
 								),
 							error: () => {
 								this.snackBar.open(
 									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
 									'Zamknij',
-									{ duration: 10000 }
+									{ duration: 2000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),

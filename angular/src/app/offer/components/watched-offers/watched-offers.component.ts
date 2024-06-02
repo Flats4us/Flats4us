@@ -19,6 +19,9 @@ import { OfferService } from '../../services/offer.service';
 import { ISendOffers } from '../../models/offer.models';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { IProperty } from 'src/app/real-estate/models/real-estate.models';
+import { PropertyRatingComponent } from '../property-rating/property-rating.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-watched-offers',
@@ -44,7 +47,8 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private matPaginatorIntl: MatPaginatorIntl,
 		private cdr: ChangeDetectorRef,
-		public realEstateService: RealEstateService
+		public realEstateService: RealEstateService,
+		private dialog: MatDialog
 	) {
 		super();
 	}
@@ -99,5 +103,15 @@ export class WatchedOffersComponent extends BaseComponent implements OnInit {
 			this.pageSize
 		);
 		this.cdr.detectChanges();
+	}
+	public showRating(property: IProperty) {
+		if (!property.avgRating) {
+			return;
+		}
+		this.dialog.open(PropertyRatingComponent, {
+			disableClose: false,
+			closeOnNavigation: true,
+			data: property,
+		});
 	}
 }

@@ -10,7 +10,6 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { IUser } from '@shared/models/user.models';
 import { UserService } from '@shared/services/user.service';
 import { Observable } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
@@ -40,14 +39,12 @@ import { IRentProposition } from 'src/app/rents/models/rents.models';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RentApprovalDialogComponent extends BaseComponent {
-	public userProfile$: Observable<IUser> = this.userService.getUserById('6');
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public rentProposition$: Observable<IRentProposition>;
 
 	constructor(
 		public dialogRef: MatDialogRef<number>,
 		public offerService: OfferService,
-		public userService: UserService,
 		public rentsService: RentsService,
 		private snackBar: MatSnackBar,
 		private router: Router,
@@ -64,14 +61,14 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została zaakceptowana', 'Zamknij', {
-						duration: 10000,
+						duration: 2000,
 					});
+					this.router.navigate(['/rents', 'owner', this.data.rentId]);
 					this.dialogRef.close(this.data.offerId);
-					this.router.navigate(['rents', 'owner', this.data.rentId]);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 10000,
+						duration: 2000,
 					});
 					this.dialogRef.close(this.data.offerId);
 				},
@@ -85,13 +82,14 @@ export class RentApprovalDialogComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Propozycja najmu została odrzucona', 'Zamknij', {
-						duration: 10000,
+						duration: 2000,
 					});
+					this.router.navigate(['/offer', 'owner']);
 					this.dialogRef.close(this.data.offerId);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 10000,
+						duration: 2000,
 					});
 					this.dialogRef.close(this.data.offerId);
 				},
@@ -99,7 +97,7 @@ export class RentApprovalDialogComponent extends BaseComponent {
 	}
 
 	public showProfile(id: number) {
-		this.router.navigate(['profile', 'details', 'student', id]);
+		this.router.navigate(['profile', 'details', id]);
 		this.dialogRef.close();
 	}
 }

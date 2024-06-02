@@ -7,9 +7,12 @@
 		<p>{{ rentProposition.endDate | date }}</p>
 		<p class="pt-4 font-semibold">Okres najmu:</p>
 		<p>{{ rentProposition.duration }} miesięce/y</p>
-		<div *ngIf="userProfile$ | async as user" class="profiles-container">
+		<div class="profiles-container">
 			<p class="pt-4 font-semibold">Najemcy:</p>
-			<mat-card *ngFor="let tenant of rentProposition.tenants" class="mt-4">
+			<mat-card
+				*ngFor="let tenant of rentProposition.tenants"
+				class="profile-card mt-4 mat-elevation-z0"
+			>
 				<div class="profile-details">
 					<mat-card-avatar
 						matTooltip="Pokaż profil"
@@ -17,7 +20,7 @@
 					>
 						<img
 							class="profile-avatar"
-							src="{{ baseUrl }}/{{ tenant.profilePicture.path }}"
+							src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
 					/></mat-card-avatar>
 					<div class="container-features">
 						<mat-chip matTooltip="Imię i nazwisko"
@@ -30,12 +33,18 @@
 								<mat-icon>mail</mat-icon><span>{{ tenant.email }}</span>
 							</div></mat-chip
 						>
+						<mat-chip *ngIf="tenant.userId === rentProposition.mainTenantId">
+							<div class="box-feature">
+								<mat-icon class="icon-feature">priority_high</mat-icon
+								><span>Główny lokator</span>
+							</div></mat-chip
+						>
 					</div>
 				</div>
 			</mat-card>
 		</div>
 	</mat-card>
-	<p class="pt-4">Czy akceptujesz propozycję najmu?</p>
+	<p class="pt-4 text-center">Czy akceptujesz propozycję najmu?</p>
 	<div mat-dialog-actions class="button-box">
 		<button
 			mat-button

@@ -164,8 +164,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.EDIT) {
 			this.actualUser$ = this.profileService.getActualProfile();
 			this.actualUser$.pipe(this.untilDestroyed()).subscribe(user => {
-				this.urlPhoto = this.baseUrl + user.profilePicture.path;
-				this.urlScan = this.baseUrl + user.document.path;
+				this.urlPhoto = this.baseUrl + user.profilePicture?.path;
+				this.urlScan = this.baseUrl + user.document?.path;
 				if (user.userType === 1) {
 					this.selectedHobbies = user.interests;
 					this.socialMedias = user.links;
@@ -239,17 +239,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['profile', 'survey', 'student']);
 	}
 
-	// public getTooltipScan(): string {
-	// 	if (!this.urlNewScan || this.modificationType === ModificationType.CREATE) {
-	// 		return 'Wczytaj skan dokumentu';
-	// 	}
-	// 	if (this.urlNewScan || this.modificationType === ModificationType.EDIT) {
-	// 		return 'Zmień skan dokumentu';
-	// 	} else {
-	// 		return 'Wczytaj skan dokumentu';
-	// 	}
-	// }
-
 	public onSelect(menuOption: IMenuOptions) {
 		switch (menuOption.option) {
 			case 'editEmail': {
@@ -301,11 +290,18 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
 	public checkValidityTill(date: Date): boolean {
 		const endDate = new Date(date);
-		const actualDate = new Date();
+		const today = new Date();
+		const actualDate = new Date(
+			today.getFullYear(),
+			today.getMonth(),
+			today.getDate(),
+			today.getHours(),
+			today.getMinutes() - today.getTimezoneOffset()
+		);
 		const days = Math.floor(
 			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24
 		);
-		this.isValidDocument = days > 0 ? true : false;
+		this.isValidDocument = days >= 0;
 		return this.isValidDocument;
 	}
 

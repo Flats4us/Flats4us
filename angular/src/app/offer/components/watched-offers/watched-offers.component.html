@@ -15,7 +15,7 @@
 			>
 				<div class="offer-title-outer">
 					<span class="offer-title-inner"
-						><h2 class="text-m">
+						><h2 class="text-m flex items-center">
 							Wynajem -
 							{{
 								realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
@@ -25,6 +25,7 @@
 								*ngIf="watchedOffer.isPromoted"
 								class="promotion-icon"
 								matTooltip="Promowana oferta"
+								[inline]="true"
 								>new_releases</mat-icon
 							>
 						</h2>
@@ -62,6 +63,19 @@
 								<mat-icon>meeting_room</mat-icon>
 								<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
 							</div>
+						</mat-chip>
+						<mat-chip
+							matTooltip="{{
+								watchedOffer.property.avgRating
+									? 'Zobacz szczegółową ocenę'
+									: 'Nieruchomość nie została jeszcze oceniona'
+							}}"
+							(click)="showRating(watchedOffer.property)"
+						>
+							<span class="flex items-center pt-1">
+								<app-star-rating [avgRating]="watchedOffer.property.avgRating">
+								</app-star-rating>
+							</span>
 						</mat-chip>
 						<button
 							class="delete-icon"
