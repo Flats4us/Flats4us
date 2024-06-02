@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { BaseComponent } from '../base/base.component';
 import { TranslateService } from '@ngx-translate/core';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
 	selector: 'app-header',
@@ -12,7 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends BaseComponent {
-	public isUserLoggedInAsStudent = true;
+	
+	@ViewChild('menuTrigger') 
+	public menuTrigger: MatMenuTrigger | undefined;
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	protected user$ = this.userService.getMyProfile();
@@ -22,9 +26,18 @@ export class HeaderComponent extends BaseComponent {
 	constructor(
 		public authService: AuthService,
 		public userService: UserService,
+		private breakpointObserver: BreakpointObserver,
 		private translate: TranslateService
 	) {
 		super();
+		this.breakpointObserver
+		.observe(['(max-width: 1000px)'])
+		.pipe(this.untilDestroyed())
+		.subscribe((result: BreakpointState) => {
+			if (!result.matches) {
+				this.menuTrigger?.closeMenu();
+			}
+		});
 	}
 
 	public changeLanguage(value: string) {
