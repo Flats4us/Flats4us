@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { FindRoommateService } from './services/find-roommate.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [
@@ -29,6 +30,7 @@ import { FindRoommateService } from './services/find-roommate.service';
 		MatButtonModule,
 		MatTooltipModule,
 		MatInputModule,
+		TranslateModule,
 	],
 	providers: [FindRoommateService],
 	exports: [FindRoommateComponent],
