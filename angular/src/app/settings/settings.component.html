@@ -1,19 +1,27 @@
-<h1 class="text-4xl p-4 font-semibold">Ustawienia</h1>
+<h1 class="text-4xl p-4 font-semibold">{{ "Header.settings" | translate }}</h1>
 <div class="settings">
 	<mat-card>
 		<nav>
 			<ul>
 				<li>
-					<a routerLink="notifications" routerLinkActive="active">Powiadomienia</a>
+					<a routerLink="notifications" routerLinkActive="active">{{
+						"Notifications.notification" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="password-change" routerLinkActive="active">Zmień hasło</a>
+					<a routerLink="password-change" routerLinkActive="active">{{
+						"Password-change.password-change" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="email-change" routerLinkActive="active">Zmień email</a>
+					<a routerLink="email-change" routerLinkActive="active">{{
+						"Email-change.email-change" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="help-center" routerLinkActive="active">Centrum pomocy</a>
+					<a routerLink="help-center" routerLinkActive="active">{{
+						"Help-center.help-center" | translate
+					}}</a>
 				</li>
 			</ul>
 		</nav>

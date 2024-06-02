@@ -527,6 +527,7 @@
 	},
 
 	"Email-change": {
+		"error": "Wystąpił błąd!",
 		"email-change": "Zmiana adresu email",
 		"email-info1": "Pomyślnie zmieniono adres mailowy!",
 		"close": "Zamknij"
@@ -554,6 +555,11 @@
 		"info1": "Wystąpił błąd",
 		"info2": "Pomyślnie zmieniono hasło!",
 		"close": "Zamknij"
+	},
+
+	"Survey": {
+		"info1": "Podano nieprawidłową wartość",
+		"info2": "Podano nieprawidłowy wiek"
 	},
 
 	"Start": {

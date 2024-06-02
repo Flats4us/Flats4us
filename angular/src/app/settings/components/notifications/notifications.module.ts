@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { NotificationsComponent } from './notifications.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [NotificationsComponent],
@@ -14,6 +15,7 @@ import { NotificationsComponent } from './notifications.component';
 		MatSlideToggleModule,
 		FormsModule,
 		ReactiveFormsModule,
+		TranslateModule,
 	],
 })
 export class NotificationsModule {}

@@ -173,7 +173,7 @@
 					</span>
 					<input matInput type="number" min="1" [formControlName]="question.name" />
 					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
-						Podano nieprawidłową wartość!
+						{{ "Survey.info1" | translate }}!
 					</mat-error>
 				</mat-form-field>
 
@@ -199,7 +199,7 @@
 						max="150"
 						[formControlName]="question.name"
 					/>
-					<mat-error> Podano nieprawidłowy wiek!</mat-error>
+					<mat-error> {{ "Survey.info2" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field
@@ -224,7 +224,7 @@
 						max="150"
 						[formControlName]="question.name"
 					/>
-					<mat-error> Podano nieprawidłowy wiek! </mat-error>
+					<mat-error> {{ "Survey.info2" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<section

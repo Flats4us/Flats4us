@@ -527,6 +527,7 @@
 		"close": "Close"
 	},
 	"Email-change": {
+		"error": "An error occured!",
 		"email-change": "Change email address",
 		"email-info1": "Your email address has been successfully changed!",
 		"close": "Close"
@@ -555,6 +556,12 @@
 		"info2": "Password changed successfully!",
 		"close": "Close"
 	},
+
+	"Survey": {
+		"info1": "An invalid value was provided",
+		"info2": "Incorrect age entered"
+	},
+
 
 	"Start": {
 		"start-title": "Find an apartment, room or house to rent",

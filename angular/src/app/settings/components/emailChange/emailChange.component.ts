@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
 
@@ -17,7 +18,8 @@ export class EmailChangeComponent extends BaseComponent {
 	constructor(
 		private fb: FormBuilder,
 		private snackBar: MatSnackBar,
-		private service: UserService
+		private service: UserService,
+		private translate: TranslateService
 	) {
 		super();
 		this.emailChangeForm = this.fb.group({
@@ -31,13 +33,21 @@ export class EmailChangeComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				error: () =>
-					this.snackBar.open('Wystąpił błąd', 'Zamknij', {
-						duration: 10000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Email-change.error'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 				complete: () =>
-					this.snackBar.open('Pomyślnie zmieniono adres mailowy!', 'Zamknij', {
-						duration: 10000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Email-change.email-info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 			});
 	}
 }
