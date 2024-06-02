@@ -48,11 +48,12 @@ export class RealEstateDetailsComponent extends BaseComponent {
 		super();
 		zip(this.realEstateId$, this.realEstateService.getRealEstates(false))
 			.pipe(this.untilDestroyed())
-			.subscribe(([id, properties]) =>
-				properties.find(property => property.propertyId === parseInt(id))
-					? this.showRealEstate.next(true)
-					: this.showRealEstate.next(false)
-			);
+			.subscribe(([id, properties]) => {
+				const result = properties.find(
+					property => property.propertyId === parseInt(id)
+				);
+				this.showRealEstate.next(!!result);
+			});
 	}
 
 	public onSelect(menuOption: IMenuOptions, id?: number) {

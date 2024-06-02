@@ -68,11 +68,10 @@ export class RentsDetailsComponent extends BaseComponent {
 		super();
 		zip(this.rentId$, this.rentsService.getRents())
 			.pipe(this.untilDestroyed())
-			.subscribe(([id, rents]) =>
-				rents.result.find(rents => rents.rentId === parseInt(id))
-					? this.showRent.next(true)
-					: this.showRent.next(false)
-			);
+			.subscribe(([id, rents]) => {
+				const result = rents.result.find(rents => rents.rentId === parseInt(id));
+				this.showRent.next(!!result);
+			});
 	}
 
 	public addOffer() {

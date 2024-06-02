@@ -301,7 +301,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		const days = Math.floor(
 			(endDate.getTime() - actualDate.getTime()) / 1000 / 60 / 60 / 24
 		);
-		this.isValidDocument = days >= 0 ? true : false;
+		this.isValidDocument = days >= 0;
 		return this.isValidDocument;
 	}
 

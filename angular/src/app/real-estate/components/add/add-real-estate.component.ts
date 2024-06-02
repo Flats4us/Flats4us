@@ -173,13 +173,12 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		);
 		zip(this.actualRealEstate$, this.realEstateService.getRealEstates(false))
 			.pipe(this.untilDestroyed())
-			.subscribe(([actualProperty, properties]) =>
-				properties.find(
+			.subscribe(([actualProperty, properties]) => {
+				const result = !properties.find(
 					property => property.propertyId === actualProperty.propertyId
-				)
-					? this.hideRealEstate.next(false)
-					: this.hideRealEstate.next(true)
-			);
+				);
+				this.hideRealEstate.next(!!result);
+			});
 	}
 
 	public filter = (opt: string[], value: string): string[] => {

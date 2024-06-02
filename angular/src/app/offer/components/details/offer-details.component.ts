@@ -88,9 +88,8 @@ export class OfferDetailsComponent extends BaseComponent {
 			zip(this.offerId$, this.offerService.getOffers())
 				.pipe(this.untilDestroyed())
 				.subscribe(([id, offers]) => {
-					offers.result.find(offer => offer.offerId === parseInt(id))
-						? this.showOffer.next(true)
-						: this.showOffer.next(false);
+					const result = offers.result.find(offer => offer.offerId === parseInt(id));
+					this.showOffer.next(!!result);
 				});
 		}
 	}
