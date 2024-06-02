@@ -14,8 +14,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends BaseComponent {
-	
-	@ViewChild('menuTrigger') 
+	@ViewChild('menuTrigger')
 	public menuTrigger: MatMenuTrigger | undefined;
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
@@ -31,13 +30,13 @@ export class HeaderComponent extends BaseComponent {
 	) {
 		super();
 		this.breakpointObserver
-		.observe(['(max-width: 1000px)'])
-		.pipe(this.untilDestroyed())
-		.subscribe((result: BreakpointState) => {
-			if (!result.matches) {
-				this.menuTrigger?.closeMenu();
-			}
-		});
+			.observe(['(max-width: 1000px)'])
+			.pipe(this.untilDestroyed())
+			.subscribe((result: BreakpointState) => {
+				if (!result.matches) {
+					this.menuTrigger?.closeMenu();
+				}
+			});
 	}
 
 	public changeLanguage(value: string) {
