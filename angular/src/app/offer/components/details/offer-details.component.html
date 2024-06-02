@@ -13,8 +13,8 @@
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
-						matTooltip="{{ 'Offer.offer-rental-info' | translate }}!"
 						aria-label="MenuButton"
+						matTooltip="{{ 'Offer.offer-rental-info' | translate }}!"
 						(click)="
 							onRentApproval(data.offer?.rentPropositionToShow, data.offer?.offerId)
 						"
@@ -25,8 +25,8 @@
 						mat-mini-fab
 						class="box-icon"
 						color="primary"
-						matTooltip="{{ 'Offer.go-rent' | translate }}"
 						aria-label="MenuButton"
+						matTooltip="{{ 'Offer.go-rent' | translate }}"
 						[disabled]="data.offer?.offerStatus !== 2"
 						(click)="showRent(data.offer?.rentId)"
 					>
@@ -79,8 +79,8 @@
 								id="menu"
 								mat-mini-fab
 								color="primary"
-								matTooltip="{{ 'more-options' | translate }}"
 								aria-label="MenuButton"
+								matTooltip="{{ 'more-options' | translate }}"
 								[matMenuTriggerFor]="menu"
 								[disabled]="
 									data?.offer?.offerStatus === 2 || data?.offer?.offerStatus === 3
@@ -139,8 +139,8 @@
 								id="addToWatched"
 								type="button"
 								color="primary"
-								matTooltip="{{ 'Offer.add-to-watch' | translate }}"
 								aria-label="AddToWatched"
+								matTooltip="{{ 'Offer.add-to-watch' | translate }}"
 								[disabled]="data.offer?.isInterest"
 								(click)="addToWatched(data.offer?.offerId)"
 							>

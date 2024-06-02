@@ -57,7 +57,7 @@ export class WatchedOffersComponent
 	) {
 		super();
 	}
-	ngAfterViewInit(): void {
+	public ngAfterViewInit(): void {
 		this.paginatorDescriptionA = this.translate.instant('Paginator.of');
 		this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
 		this.matPaginatorIntl.firstPageLabel = this.translate.instant(
