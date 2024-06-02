@@ -9,13 +9,81 @@
 		<ng-container *ngTemplateOutlet="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
+	<div>
 	<button
 		mat-icon-button
 		class="responsive-menu"
-		(click)="showSidenav = !showSidenav"
+		[matMenuTriggerFor]="options"
 	>
 		<mat-icon class="material-icons-outlined">menu</mat-icon>
 	</button>
+	<mat-menu #options="matMenu">
+		<button mat-menu-item [routerLink]="['/']">
+			<mat-icon class="material-symbols-outlined">home</mat-icon>
+			{{ "Header.home-page" | translate }}
+		</button>
+		<button
+			*appAccessControl="authService.allPermissions.get('notLoggedIn')"
+			mat-menu-item
+			[routerLink]="['auth', 'login']"
+		>
+			<mat-icon class="material-symbols-outlined">login</mat-icon>
+			{{ "Header.log" | translate }}
+		</button>
+		<button
+			*appAccessControl="authService.allPermissions.get('notLoggedIn')"
+			mat-menu-item
+			[routerLink]="['profile', 'create']"
+		>
+			<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
+			{{ "Login.registration" | translate }}
+		</button>
+		<button
+			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			mat-menu-item
+			[routerLink]="['conversations']"
+		>
+			<mat-icon class="material-icons-outlined">chat</mat-icon>
+			{{ "Header.messages" | translate }}
+		</button>
+		<button
+			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			mat-menu-item
+			[routerLink]="['settings']"
+		>
+			<mat-icon class="material-icons-outlined">settings</mat-icon>
+			{{ "Header.settings" | translate }}
+		</button>
+	
+		<button
+			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			mat-menu-item
+			[matMenuTriggerFor]="extended"
+		>
+			<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
+			{{ "Header.additional" | translate }}
+		</button>
+	
+		<mat-menu #extended="matMenu">
+			<button
+				*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+				mat-menu-item
+				[routerLink]="['calendar']"
+			>
+				<mat-icon class="material-symbols-outlined">calendar_month</mat-icon>
+				{{ "Header.calendar" | translate }}
+			</button>
+			<button
+				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+				mat-menu-item
+				[routerLink]="['find-roommate']"
+			>
+				<mat-icon class="material-symbols-outlined">person_search</mat-icon>
+				{{ "Header.find-roommates" | translate }}
+			</button>
+		</mat-menu>
+	</mat-menu>
+	</div>
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
 		<div class="language">
 			<button
@@ -45,7 +113,6 @@
 				*ngIf="user$ | async as user"
 				class="your-profile"
 				[matMenuTriggerFor]="myProfile"
-				(click)="hideSidenav()"
 			>
 				<img
 					class="your-photo"
@@ -173,9 +240,6 @@
 		</mat-menu>
 	</ng-template>
 </mat-toolbar>
-<div *ngIf="showSidenav" class="sidenav flex flex-col min-h-max bg-white">
-	<ng-container *ngTemplateOutlet="buttons"></ng-container>
-</div>
 
 <ng-template #buttons>
 	<button mat-button class="mr-2" [routerLink]="['/']">
