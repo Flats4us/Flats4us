@@ -42,10 +42,6 @@
 	margin-right: 20px;
 }
 
-.button-sign {
-	margin-right: 50px;
-}
-
 .your-photo {
 	border-radius: 100%;
 	width: 44px;
@@ -54,10 +50,22 @@
 
 .your-profile {
 	min-width: 35px;
+	float: right;
 }
 
 .custom-toolbar .responsive-menu {
 	display: none;
+}
+
+.custom-toolbar .responsive-menu-lang {
+	display: block;
+}
+
+.language {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 @media screen and (max-width: 1000px) {
@@ -66,12 +74,14 @@
 	}
 	.custom-toolbar
 		button:not(.your-profile):not(.responsive-menu):not(.dark-theme):not(
-			.languages
+			.responsive-menu-lang
 		) {
 		display: none;
 	}
 	.custom-toolbar .responsive-menu {
-		float: right;
+		display: block;
+	}
+	.custom-toolbar .responsive-menu-lang {
 		display: block;
 	}
 	.sidenav {
