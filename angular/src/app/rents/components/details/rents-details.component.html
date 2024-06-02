@@ -331,6 +331,23 @@
 								{{ element.paidAtDate | date }}
 							</mat-cell>
 						</ng-container>
+            <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <button
+                  *ngIf="
+								(student$ | async)?.userId === data.rent?.mainTenantId &&
+								!element.isPaid
+							"
+                  mat-mini-fab
+                  color="primary"
+                  matTooltip="Dokonaj płatności"
+                  (click)="makePayment(element.paymentId)"
+                >
+                  <mat-icon>payments</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
 						<mat-header-row
 							*matHeaderRowDef="this.displayedColumnsPayments"
 						></mat-header-row>

@@ -72,19 +72,26 @@
 					</mat-chip-listbox>
 				</div>
 			</div>
-			<div class="profile-details__wrapper">
-				<div class="profile-opinions__header text-2xl flex gap-2 content-center">
-					<mat-icon>rate_review</mat-icon>
-					<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+			<div class="profile-details__wrapper grid gap-4">
+				<div
+					class="profile-opinions__header text-2xl flex justify-between gap-2 content-center"
+				>
+					<div><mat-icon>rate_review</mat-icon> <span>{{ "Profile-add-opinion.opinions" | translate }}</span></div>
+					<button
+						mat-mini-fab
+						color="primary"
+						[routerLink]="['../../' + user.userId, 'opinion', 'add']"
+					>
+						<mat-icon>add</mat-icon>
+					</button>
 				</div>
-				<div class="flex flex-col my-4">
+				<div class="flex flex-col">
 					<app-star-rating [avgRating]="user.avgRating"></app-star-rating>
 					<label
 						>{{ "Profile-add-opinion.average" | translate }}:
 						{{ user.avgRating }}</label
 					>
 				</div>
-				<div>
 					<mat-chip-listbox>
 						<mat-chip>
 							<span
@@ -160,8 +167,9 @@
 						</mat-chip>
 					</mat-chip-listbox>
 					<div class="profile-opinions__comments">
+            <ng-container *ngFor="let opinion of user.userOpinions">
 						<div
-							*ngFor="let opinion of user.userOpinions"
+							*ngIf="opinion.description !== ''"
 							class="profile-opinions__comments-comment"
 						>
 							<img
@@ -173,7 +181,7 @@
 							</span>
 							<span>{{ opinion.description }}</span>
 						</div>
-					</div>
+					</ng-container>
 				</div>
 			</div>
 		</section>

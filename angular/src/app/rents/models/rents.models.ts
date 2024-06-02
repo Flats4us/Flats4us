@@ -48,6 +48,7 @@ export interface IRent {
 	mainTenantId: number;
 	propertyImages: IImage[];
 	tenants: ITenant[];
+	mainTenantId: number;
 	payments: IRentPayment[];
 }
 

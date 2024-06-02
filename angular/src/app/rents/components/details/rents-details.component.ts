@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+} from '@angular/core';
 import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +17,8 @@ import { RentsService } from '../../services/rents.service';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '@shared/services/user.service';
 
 @Component({
 	selector: 'app-rents-details',
@@ -39,6 +45,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		false
 	);
 	public showRent$: Observable<boolean> = this.showRent.asObservable();
+	public student$ = this.userService.getMyProfile();
 
 	public currentIndex = 0;
 
@@ -50,7 +57,9 @@ export class RentsDetailsComponent extends BaseComponent {
 		'createdDate',
 		'paymentDate',
 		'paidAtDate',
+		'actions',
 	];
+
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Rents-details.option-details' },
 		{ option: 'offerDetails', description: 'Rents-details.option-offer' },
@@ -64,7 +73,10 @@ export class RentsDetailsComponent extends BaseComponent {
 		private router: Router,
 		private dialog: MatDialog,
 		private route: ActivatedRoute,
-		public authService: AuthService
+		public authService: AuthService,
+		private snackBar: MatSnackBar,
+		private cdr: ChangeDetectorRef,
+		private userService: UserService
 	) {
 		super();
 		zip(this.rentId$, this.rentsService.getRents())
@@ -160,5 +172,20 @@ export class RentsDetailsComponent extends BaseComponent {
 	public nextSlide(length?: number) {
 		this.currentIndex =
 			this.currentIndex > 0 ? --this.currentIndex : (length ?? 0) - 1;
+	}
+
+	public makePayment(paymentId: number) {
+		this.rentsService
+			.makePayment(paymentId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() => {
+				this.snackBar.open('Płatność została pomyślnie opłacona!', 'Zamknij', {
+					duration: 10000,
+				});
+				this.actualRent$ = this.rentId$?.pipe(
+					switchMap(value => this.rentsService.getRentById(parseInt(value)))
+				);
+				this.cdr.detectChanges();
+			});
 	}
 }
