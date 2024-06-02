@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		ReactiveFormsModule,
 		FormsModule,
 		MatSnackBarModule,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [RegisterComponent],
 	providers: [UserService],

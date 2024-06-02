@@ -41,9 +41,13 @@ export class LoginComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open(this.translate.instant('Login.success-message'!), this.translate.instant('close'), {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Login.success-message'!),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.router.navigateByUrl(
 						this.route.snapshot.queryParamMap.get('returnUrl') || '/'
 					);

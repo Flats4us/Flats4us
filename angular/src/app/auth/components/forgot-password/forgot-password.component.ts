@@ -25,7 +25,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 		MatFormFieldModule,
 		MatInputModule,
 		ReactiveFormsModule,
-		TranslateModule
+		TranslateModule,
 	],
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss'],
@@ -36,7 +36,11 @@ export class ForgotPasswordComponent extends BaseComponent {
 		email: new FormControl<string>('', [Validators.required, Validators.email]),
 	});
 
-	constructor(private authService: AuthService, private snackBar: MatSnackBar, private translate: TranslateService) {
+	constructor(
+		private authService: AuthService,
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
+	) {
 		super();
 	}
 

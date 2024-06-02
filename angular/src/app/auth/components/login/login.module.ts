@@ -25,7 +25,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatCardModule,
 		RouterLink,
 		MatSnackBarModule,
-		TranslateModule
+		TranslateModule,
 	],
 	exports: [LoginComponent],
 })

@@ -26,7 +26,7 @@ import { AuthService } from '@shared/services/auth.service';
 		MatFormFieldModule,
 		MatInputModule,
 		MatButtonModule,
-		TranslateModule
+		TranslateModule,
 	],
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss'],
@@ -61,13 +61,21 @@ export class ResetPasswordComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				error: () =>
-					this.snackBar.open(this.translate.instant('Reset-password.error'), this.translate.instant('close'), {
-						duration: 10000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Reset-password.error'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 				complete: () =>
-					this.snackBar.open(this.translate.instant('Reset-password.reset-password-info1'), this.translate.instant('close'), {
-						duration: 10000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Reset-password.reset-password-info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 			});
 	}
 }
