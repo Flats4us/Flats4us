@@ -137,14 +137,13 @@
 	</mat-card>
 
 	<mat-card>
-		<div class="label-box">
+		<mat-card-header>
 			<mat-label class="label-description"
 				><mat-icon class="icon" [inline]="true">description</mat-icon
 				><span class="text-3xl">Opis najmu</span></mat-label
 			>
-		</div>
-		<mat-divider></mat-divider>
-		<div class="container-description">
+		</mat-card-header>
+		<mat-card-content class="container-description">
 			<div class="column-header-description">
 				<p class="text-2xl pt-4">Data wystawienia:</p>
 				<p class="text-2xl pt-4">Data zakończenia:</p>
@@ -193,69 +192,80 @@
 					</mat-card>
 				</p>
 			</div>
-		</div>
+		</mat-card-content>
 	</mat-card>
 	<mat-card>
-		<div>
-			<mat-card>
-				<mat-label class="label-description"
-					><mat-icon class="material-symbols-outlined" [inline]="true">
-						payments </mat-icon
-					><span class="text-3xl ml-4">Płatności</span></mat-label
-				>
-			</mat-card>
-			<div class="payments-container mat-elevation-z8">
-				<mat-table [dataSource]="data.rent?.payments ?? []">
-					<ng-container matColumnDef="paymentId">
-						<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Id:</span>
-							{{ element.paymentId }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="paymentPurpose">
-						<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Typ:</span>
-							{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="amount">
-						<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Kwota:</span>
-							{{ element.amount | currency : "PLN" : true : ".2-2" }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="isPaid">
-						<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Opłacono:</span>
-							{{ element.isPaid ? "tak" : "nie" }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="createdDate">
-						<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Data wygenerowania:</span>
-							{{ element.createdDate | date }}
-						</mat-cell>
-					</ng-container>
-					<ng-container matColumnDef="paymentDate">
-						<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
-						<mat-cell *matCellDef="let element">
-							<span class="mobile-view-label">Termin płatności:</span>
-							{{ element.paymentDate | date }}
-						</mat-cell>
-					</ng-container>
-					<mat-header-row
-						*matHeaderRowDef="this.displayedColumnsOwner"
-					></mat-header-row>
-					<mat-row
-						*matRowDef="let row; columns: this.displayedColumnsOwner"
-					></mat-row>
-				</mat-table>
-			</div>
+		<mat-card-header>
+			<mat-label class="label-description"
+				><mat-icon class="material-symbols-outlined" [inline]="true">
+					payments </mat-icon
+				><span class="text-3xl ml-4">Płatności</span></mat-label
+			>
+		</mat-card-header>
+		<div class="payments-container">
+			<mat-table [dataSource]="data.rent?.payments ?? []">
+				<ng-container matColumnDef="paymentId">
+					<mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Id:</span>
+						{{ element.paymentId }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="paymentPurpose">
+					<mat-header-cell *matHeaderCellDef> Typ </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Typ:</span>
+						{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="amount">
+					<mat-header-cell *matHeaderCellDef> Kwota </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Kwota:</span>
+						{{ element.amount | currency : "PLN" : true : ".2-2" }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="isPaid">
+					<mat-header-cell *matHeaderCellDef> Opłacono </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Opłacono:</span>
+						{{ element.isPaid ? "tak" : "nie" }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="createdDate">
+					<mat-header-cell *matHeaderCellDef> Data wygenerowania </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Data wygenerowania:</span>
+						{{ element.createdDate | date }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="paymentDate">
+					<mat-header-cell *matHeaderCellDef> Termin płatności </mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<span class="mobile-view-label">Termin płatności:</span>
+						{{ element.paymentDate | date }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef></mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<button
+							*ngIf="
+								(student$ | async)?.userId === data.rent?.mainTenantId &&
+								!element.isPaid
+							"
+							mat-mini-fab
+							color="primary"
+							matTooltip="Dokonaj płatności"
+							(click)="makePayment(element.paymentId)"
+						>
+							<mat-icon>payments</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<mat-header-row *matHeaderRowDef="this.displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: this.displayedColumns"></mat-row>
+			</mat-table>
 		</div>
 		<div class="button-box-options">
 			<div *ngIf="data.user === uType.DETAILS">

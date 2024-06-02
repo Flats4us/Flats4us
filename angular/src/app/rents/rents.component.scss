@@ -22,7 +22,6 @@
 
 .container-list {
 	text-align: left;
-	box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.24);
 	margin-left: 12px;
 	min-height: 100%;
 	min-width: max-content;
@@ -39,7 +38,6 @@
 }
 
 .rents-owner {
-	background: white;
 	display: flex;
 	flex-direction: row;
 	margin: 0 12px;
@@ -58,7 +56,6 @@
 
 @media screen and (max-width: 992px) {
 	.rents-owner {
-		background: white;
 		display: flex;
 		flex-direction: column;
 		margin: 0 12px;
