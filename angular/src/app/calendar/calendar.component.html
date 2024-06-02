@@ -1,5 +1,7 @@
 <div class="flex items-center">
-	<h1 class="text-4xl p-4 font-semibold flex-1">Kalendarz</h1>
+	<h1 class="text-4xl p-4 font-semibold flex-1">
+		{{ "Calendar.calendar" | translate }}
+	</h1>
 </div>
 <div *ngIf="calendar$ | async as calendar" class="calendar-wrapper">
 	<mat-calendar

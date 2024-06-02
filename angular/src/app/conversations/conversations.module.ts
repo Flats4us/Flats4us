@@ -9,6 +9,7 @@ import { MessagesConversationModule } from './components/messages-conversation/m
 import { ConversationsRoutingModule } from './conversations-routing.module';
 import { ConversationsComponent } from './conversations.component';
 import { ConversationService } from './services/conversation.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [ConversationsComponent],
@@ -20,6 +21,7 @@ import { ConversationService } from './services/conversation.service';
 		MatButtonModule,
 		MatCardModule,
 		MatListModule,
+		TranslateModule,
 	],
 	providers: [ConversationService],
 })
