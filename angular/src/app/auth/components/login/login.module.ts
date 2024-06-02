@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [LoginComponent],
@@ -24,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatCardModule,
 		RouterLink,
 		MatSnackBarModule,
+		TranslateModule
 	],
 	exports: [LoginComponent],
 })

@@ -1,15 +1,15 @@
 <mat-card>
-	<h1>Zaloguj się</h1>
+	<h1>{{ "Login.log-in" | translate }}</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
 		<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 			<mat-form-field appearance="outline">
 				<mat-label>Email</mat-label>
 				<input matInput formControlName="email" type="email" />
-				<mat-error>Pole jest wymagane</mat-error>
+				<mat-error>{{ "required-field" | translate }}!</mat-error>
 			</mat-form-field>
 
 			<mat-form-field appearance="outline">
-				<mat-label>Hasło</mat-label>
+				<mat-label>{{ "Login.password" | translate }}</mat-label>
 				<input
 					formControlName="password"
 					matInput
@@ -25,15 +25,15 @@
 				>
 					<mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
 				</button>
-				<mat-error>Pole jest wymagane</mat-error>
+				<mat-error>{{ "required-field" | translate }}!</mat-error>
 			</mat-form-field>
 
 			<mat-error *ngIf="invalidCredentials$ | async"
-				>Nieprawidłowy email lub hasło</mat-error
+				>{{ "Login.password-info1" | translate }}!</mat-error
 			>
 
 			<a routerLink="/auth/forgot-password" id="forgot-password"
-				>Zapomniałeś hasła?</a
+				>{{ "Login.password-info2" | translate }}?</a
 			>
 
 			<div class="buttons">
@@ -44,7 +44,7 @@
 					type="submit"
 					[disabled]="!loginForm.valid"
 				>
-					Login
+					{{ "Login.log" | translate }}
 				</button>
 				<button
 					mat-flat-button
@@ -53,7 +53,7 @@
 					type="button"
 					[routerLink]="['../../profile', 'create']"
 				>
-					Rejestracja
+					{{ "Login.registration" | translate }}
 				</button>
 			</div>
 		</form>

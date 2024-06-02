@@ -44,6 +44,14 @@
 		"offer-info": "ofert"
 	},
 
+	"Forgot-password": {
+		"forgot-password": "Nie pamiętam hasła",
+		"info1": "Podaj swój adres e-mail, a my wyślemy Ci link resetujący, dzięki któremu utworzysz nowe hasło",
+		"email-address": "Adres email",
+		"info2": "Wpisz prawidłowy adres e-mail",
+		"info3": "Jeżeli podany adres e-mail jest u nas zarejestrowany, otrzymasz na niego wiadomość."
+	},
+
 	"Login": {
 		"log-in": "Zaloguj się",
 		"log-out": "Wyloguj się",
@@ -58,8 +66,7 @@
 		"password-info7": "Hasła różnią się od siebie",
 		"repeat-password": "Powtórz hasło",
 		"registration": "Rejestracja",
-		"success-message": "Zalogowano pomyślnie",
-		"close-message": "Zamknij"
+		"success-message": "Zalogowano pomyślnie!"
 	},
 
 	"Registration": {
@@ -77,7 +84,9 @@
 		"reset-password": "Resetuj hasło",
 		"new-password": "Nowe hasło",
 		"new-password-info1": "Potwierdź nowe hasło",
-		"new-password-info2": "Hasła się nie zgadzają"
+		"new-password-info2": "Hasła się nie zgadzają",
+		"error": "Wystąpił błąd",
+		"reset-password-info1": "Pomyślnie zresetowano hasło!"
 	},
 
 	"Footer": {

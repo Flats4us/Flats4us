@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
 
@@ -25,6 +26,7 @@ import { AuthService } from '@shared/services/auth.service';
 		MatFormFieldModule,
 		MatInputModule,
 		MatButtonModule,
+		TranslateModule
 	],
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss'],
@@ -41,7 +43,8 @@ export class ResetPasswordComponent extends BaseComponent {
 	constructor(
 		private route: ActivatedRoute,
 		private authService: AuthService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 
@@ -58,11 +61,11 @@ export class ResetPasswordComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				error: () =>
-					this.snackBar.open('Wystąpił błąd', 'Zamknij', {
+					this.snackBar.open(this.translate.instant('Reset-password.error'), this.translate.instant('close'), {
 						duration: 10000,
 					}),
 				complete: () =>
-					this.snackBar.open('Pomyślnie zresetowano hasło!', 'Zamknij', {
+					this.snackBar.open(this.translate.instant('Reset-password.reset-password-info1'), this.translate.instant('close'), {
 						duration: 10000,
 					}),
 			});

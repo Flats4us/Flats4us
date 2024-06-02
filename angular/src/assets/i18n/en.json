@@ -44,6 +44,14 @@
 		"offer-info": "offer"
 	},
 
+	"Forgot-password": {
+		"forgot-password": "I forgot my password",
+		"info1": "Enter your email address and we will send you a reset link to create a new password",
+		"email-address": "E-mail adress",
+		"info2": "Please enter a valid email address",
+		"info3": "If the e-mail address provided is registered with us, you will receive a message to it."
+	},
+
 	"Login": {
 		"log-in": "Log in",
 		"log-out": "Log out",
@@ -58,8 +66,7 @@
 		"password-info7": "Passwords are different",
 		"repeat-password": "Repeat password",
 		"registration": "Registration",
-		"success-message": "Logged successfully",
-		"close-message": "Close"
+		"success-message": "Logged successfully!"
 	},
 
 	"Registration": {
@@ -77,7 +84,9 @@
 		"reset-password": "Reset password",
 		"new-password": "New password",
 		"new-password-info1": "Confirm your new password",
-		"new-password-info2": "The passwords don't match"
+		"new-password-info2": "The passwords don't match",
+		"error": "An error occured",
+		"reset-password-info1": "Password reset successfully!"
 	},
 
 	"Footer": {

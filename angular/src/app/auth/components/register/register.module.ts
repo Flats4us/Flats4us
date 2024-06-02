@@ -10,6 +10,7 @@ import { RegisterComponent } from './register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RegisterComponent],
@@ -23,6 +24,7 @@ import { UserService } from '@shared/services/user.service';
 		ReactiveFormsModule,
 		FormsModule,
 		MatSnackBarModule,
+		TranslateModule
 	],
 	exports: [RegisterComponent],
 	providers: [UserService],
