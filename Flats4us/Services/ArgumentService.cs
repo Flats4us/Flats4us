@@ -72,16 +72,6 @@ namespace Flats4us.Services
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
 
-            var argument = new Argument
-            {
-                StartDate = DateTime.Now,
-                ArgumentStatus = ArgumentStatus.Ongoing,
-                Description = input.Description,
-                RentId = input.RentId,
-                InterventionNeed = false,
-                StudentId = userId
-            };
-
             var StudentsIds = rent.OtherStudents
                 .Select(s => s.UserId)
                 .ToList();
@@ -91,9 +81,26 @@ namespace Flats4us.Services
             int[] usersIds = StudentsIds.ToArray();
 
             await _groupChatService.CreateGroupChatAsync(
-                "Argument pomiędzy: student " + rent.Student.UserId +
-                ", oraz właściciel: " + property.OwnerId,
+                "Argument pomiędzy: student " + rent.Student.Name +
+                ", oraz właściciel: " + owner.Name,
                 usersIds);
+
+            var chatId = _context.GroupChats
+                .Where(x => x.Name.Equals("Argument pomiędzy: student " + rent.Student.Name +
+                ", oraz właściciel: " + owner.Name))
+                .Select(x=>x.GroupChatId)
+                .FirstOrDefault();
+
+            var argument = new Argument
+            {
+                StartDate = DateTime.Now,
+                ArgumentStatus = ArgumentStatus.Ongoing,
+                Description = input.Description,
+                RentId = input.RentId,
+                InterventionNeed = false,
+                StudentId = userId,
+                GroupChatId = chatId
+            };
 
             await _context.Arguments.AddAsync(argument);
             await _context.SaveChangesAsync();
@@ -189,7 +196,7 @@ namespace Flats4us.Services
             return intervention;
         }
 
-        public async Task AddInterventionAsync(AddArgumentInterventionDto input)
+        public async Task AddInterventionAsync(AddArgumentInterventionDto input, int moderatorId)
         {
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == input.ArgumentId)
@@ -207,7 +214,7 @@ namespace Flats4us.Services
                 Date = DateTime.Now,
                 Justification = input.Justification,
                 ArgumentId = input.ArgumentId,
-                ModeratorId = input.ModeratorId
+                ModeratorId = moderatorId
             };
 
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);

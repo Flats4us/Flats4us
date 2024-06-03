@@ -219,6 +219,12 @@ namespace Flats4us.Entities
                 .WithMany(x => x.ArgumentInterventions)
                 .HasForeignKey(x => x.ModeratorId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Argument>()
+            .HasOne(a => a.GroupChat)
+            .WithOne(g => g.Argument)
+            .HasForeignKey<Argument>(a => a.GroupChatId)
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

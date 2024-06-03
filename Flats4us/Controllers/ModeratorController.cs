@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Claims;
 
 namespace Flats4us.Controllers
 {
@@ -209,8 +210,12 @@ namespace Flats4us.Controllers
         {
             try
             {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
                 _logger.LogInformation("Posting Intervention");
-                await _argumentService.AddInterventionAsync(input);
+                await _argumentService.AddInterventionAsync(input, requestUserId);
                 return Ok("Intervention Added");
             }
             catch (Exception ex)

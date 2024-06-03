@@ -2551,6 +2551,18 @@ public static class DataSeeder
 
         #endregion
 
+        #region GroupChat
+
+        var groupChat1 = new GroupChat
+        {
+            Name = "groupChat do argument 1",
+            UserGroupChats = { student1, owner1 }
+        };
+
+        dbContext.GroupChats.AddRange(groupChat1);
+
+        #endregion
+
         #region Argument
 
         var argument1 = new Argument
@@ -2564,7 +2576,8 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = null,
             Rent = rent1,
-            Student = student1
+            Student = student1,
+            GroupChat = groupChat1
         };
 
         var argument2 = new Argument

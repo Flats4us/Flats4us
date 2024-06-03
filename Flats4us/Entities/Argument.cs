@@ -35,9 +35,13 @@ namespace Flats4us.Entities
         [Required]
         public int StudentId { get; set; }
 
+        [Required]
+        public int GroupChatId { get; set; }
+
         public virtual Rent Rent { get; set; }
 
         public virtual Student Student { get; set; }
+        public virtual GroupChat GroupChat { get; set; }
 
         public virtual ICollection<ArgumentIntervention> ArgumentInterventions { get; set; }
 

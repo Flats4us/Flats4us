@@ -5,6 +5,8 @@ namespace Flats4us.Entities.Dto
 {
     public class ArgumentDto
     {
+        public int ArgumentId { get; set; }
+
         [Required]
         public string Description { get; set; }
 
