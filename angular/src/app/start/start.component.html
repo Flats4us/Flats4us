@@ -406,7 +406,7 @@
 					>
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
-								><h2 class="text-m">
+								><h2 class="text-m flex items-center">
 									Wynajem -
 									{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
 									{{ flat.property.area }} m² {{ flat.property.city }}
@@ -414,6 +414,7 @@
 										*ngIf="flat.isPromoted"
 										class="promotion-icon"
 										matTooltip="Promowana oferta"
+										[inline]="true"
 										>new_releases</mat-icon
 									>
 								</h2>
@@ -450,6 +451,19 @@
 										<mat-icon>meeting_room</mat-icon>
 										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
 									</div>
+								</mat-chip>
+								<mat-chip
+									matTooltip="{{
+										flat.property.avgRating
+											? 'Zobacz szczegółową ocenę'
+											: 'Nieruchomość nie została jeszcze oceniona'
+									}}"
+									(click)="showRating(flat.property)"
+								>
+									<span class="flex items-center pt-1">
+										<app-star-rating [avgRating]="flat.property.avgRating">
+										</app-star-rating>
+									</span>
 								</mat-chip>
 								<button
 									*appAccessControl="authService.allPermissions.get('verifiedStudent')"

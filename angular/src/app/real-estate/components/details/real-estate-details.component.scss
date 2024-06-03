@@ -3,12 +3,15 @@
 	min-height: 600px;
 	overflow: hidden;
 	position: relative;
-	background: #ffffff;
+	background: radial-gradient(
+		circle,
+		rgba(0, 212, 255, 0) 14%,
+		rgba(251, 188, 139, 0.61) 97%
+	);
 }
 
 .slide {
 	position: absolute;
-	top: 4px;
 	left: 50%;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
@@ -167,16 +170,18 @@
 	color: red;
 }
 
-.column-header-description {
-	width: 50%;
+.column {
 	padding: 4px;
+	float: left;
+	width: 50%;
+	overflow-wrap: break-word;
+	max-width: 800px;
 }
 
-.container-description {
-	display: flex;
-	flex-wrap: wrap;
-	min-height: 300px;
-	width: 100%;
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .gallery {
@@ -202,6 +207,42 @@
 	padding: 4px 0;
 }
 
+.profile-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 4px;
+	padding: 4px 4px;
+}
+
+.profile-avatar {
+	border-radius: 50%;
+	height: 100px;
+	width: 100px;
+	margin-right: 4px;
+}
+
+.profile-card {
+	width: fit-content;
+	box-shadow: none;
+}
+
+.box-feature {
+	display: flex;
+	align-items: center;
+}
+
+.container-features {
+	display: grid;
+	grid-gap: 4px;
+	grid-auto-flow: dense;
+}
+
+mat-card-avatar:hover {
+	cursor: pointer;
+}
+
 @media screen and (max-width: 700px) {
 	.slider {
 		width: 100%;
@@ -210,9 +251,22 @@
 		position: relative;
 		background: #ffffff;
 	}
-	.column-header-description {
-		width: 50%;
+	.column {
 		padding: 4px;
+		float: left;
+		width: 50%;
+		overflow-wrap: break-word;
+		max-width: 200px;
+	}
+	.box-feature {
+		display: flex;
+		align-items: center;
+		max-width: 140px;
+		overflow: hidden;
+	}
+
+	.icon-feature {
+		display: none;
 	}
 }
 
@@ -230,5 +284,26 @@
 		align-items: center;
 		max-width: 150px;
 		overflow: hidden;
+	}
+	.column {
+		padding: 4px;
+		float: left;
+		width: 50%;
+		overflow-wrap: break-word;
+		max-width: 300px;
+	}
+	.profile-details {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 4px;
+		padding: 4px 4px;
+	}
+	.profile-avatar {
+		border-radius: 50%;
+		height: 100px;
+		width: 100px;
+		margin-bottom: 4px;
 	}
 }

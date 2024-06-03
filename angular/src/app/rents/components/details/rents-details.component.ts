@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IMenuOptions, IRent } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
 import { environment } from 'src/environments/environment.prod';
@@ -35,18 +35,14 @@ export class RentsDetailsComponent extends BaseComponent {
 	public actualRent$: Observable<IRent> = this.rentId$?.pipe(
 		switchMap(value => this.rentsService.getRentById(parseInt(value)))
 	);
+	private showRent: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false
+	);
+	public showRent$: Observable<boolean> = this.showRent.asObservable();
 
 	public currentIndex = 0;
 
-	public displayedColumnsStudent: string[] = [
-		'paymentId',
-		'paymentPurpose',
-		'amount',
-		'isPaid',
-		'createdDate',
-		'paymentDate',
-	];
-	public displayedColumnsOwner: string[] = [
+	public displayedColumnsPayments: string[] = [
 		'paymentId',
 		'paymentPurpose',
 		'amount',
@@ -70,6 +66,12 @@ export class RentsDetailsComponent extends BaseComponent {
 		public authService: AuthService
 	) {
 		super();
+		zip(this.rentId$, this.rentsService.getRents())
+			.pipe(this.untilDestroyed())
+			.subscribe(([id, rents]) => {
+				const result = rents.result.find(rents => rents.rentId === parseInt(id));
+				this.showRent.next(!!result);
+			});
 	}
 
 	public addOffer() {
@@ -115,10 +117,10 @@ export class RentsDetailsComponent extends BaseComponent {
 		}
 	}
 
-	public onAddMeeting(): void {
+	public onAddMeeting(offerId?: number): void {
 		this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
-			data: this.rentId$,
+			data: offerId?.toString(),
 		});
 	}
 
@@ -138,7 +140,7 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public showProfile(id: number) {
-		this.router.navigate(['profile', 'details', 'student', id]);
+		this.router.navigate(['profile', 'details', id]);
 	}
 
 	public setCurrentSlideIndex(index: number) {

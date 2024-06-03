@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
 import { setLocalDate } from '@shared/utils/functions';
@@ -58,6 +58,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
 	public invalidEmail$: Observable<boolean> = of(false);
+	public tooManyTenants$: Observable<boolean> = of(false);
 	public setLocalDate = setLocalDate;
 
 	public rentPropositionForm: FormGroup = new FormGroup({
@@ -68,10 +69,14 @@ export class RentPropositionDialogComponent extends BaseComponent {
 
 	constructor(
 		private snackBar: MatSnackBar,
-		public dialogRef: MatDialogRef<number>,
+		public dialogRef: MatDialogRef<{
+			id: number;
+			maxNumberOfInhabitants: number;
+		}>,
 		public offerService: OfferService,
 		public userService: UserService,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		@Inject(MAT_DIALOG_DATA)
+		public data: { id: number; maxNumberOfInhabitants: number }
 	) {
 		super();
 	}
@@ -84,7 +89,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		this.rentPropositionForm.markAllAsTouched();
 		if (this.rentPropositionForm.valid) {
 			this.offerService
-				.addRentProposition(this.rentPropositionForm.value, this.data)
+				.addRentProposition(this.rentPropositionForm.value, this.data.id)
 				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
@@ -112,12 +117,18 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		formControl: FormControl
 	): void {
 		this.invalidEmail$ = of(false);
+		this.tooManyTenants$ = of(false);
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
 			items.push(value);
 			this.invalidEmail$ = this.userService
 				.checkIfEmailExist(value)
 				.pipe(map(result => !result.result));
+			this.tooManyTenants$ = this.tooManyTenants$.pipe(
+				switchMap(() =>
+					items.length > this.data.maxNumberOfInhabitants - 1 ? of(true) : of(false)
+				)
+			);
 		}
 		event.chipInput.clear();
 

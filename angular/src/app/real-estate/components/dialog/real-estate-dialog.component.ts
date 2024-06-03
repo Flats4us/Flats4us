@@ -53,7 +53,7 @@ export class RealEstateDialogComponent extends BaseComponent {
 					this.snackBar.open('Nieruchomość została pomyślnie usunięta.', 'Zamknij', {
 						duration: 10000,
 					});
-					this.router.navigate(['real-estate', 'owner']);
+					this.router.navigate(['/real-estate', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {

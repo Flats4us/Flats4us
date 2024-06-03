@@ -69,13 +69,24 @@
 				/>
 			</mat-chip-grid>
 		</mat-form-field>
-		<mat-error *ngIf="invalidEmail$ | async">
-			Wpisany/e adres/y email nie istnieje/ą w systemie!
-		</mat-error>
+		<div
+			*ngIf="{
+				emailError: invalidEmail$ | async,
+				tenantsError: tooManyTenants$ | async
+			} as errors"
+		>
+			<mat-error *ngIf="errors.emailError">
+				Wpisany/e adres/y email nie istnieje/ą w systemie!
+			</mat-error>
+			<mat-error *ngIf="errors.tenantsError">
+				Liczba współlokatorów przekracza maksymalną dla danej oferty -
+				{{ data.maxNumberOfInhabitants - 1 }}!
+			</mat-error>
+		</div>
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
-	<p>Czy potwierdzasz chęć zawarcie umowy najmu?</p>
+	<p class="mb-4">Czy potwierdzasz chęć zawarcie umowy najmu?</p>
 	<div class="button-box-yn">
 		<button
 			mat-button

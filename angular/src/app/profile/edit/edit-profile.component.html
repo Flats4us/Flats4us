@@ -385,7 +385,8 @@
 					</span>
 					<mat-form-field
 						*ngIf="
-							(actualUser && !checkValidityTill(actualUser.documentExpireDate)) ||
+							(actualUser === uType.STUDENT &&
+								!checkValidityTill(actualUser.documentExpireDate)) ||
 							modificationType === mType.CREATE
 						"
 					>

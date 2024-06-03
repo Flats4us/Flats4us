@@ -49,6 +49,12 @@ export interface IAddProperty {
 	equipmentIds: number[];
 }
 
+export interface IOfferMiniatures {
+	offerId: number;
+	startDate: Date;
+	offerStatus: number;
+}
+
 export interface IProperty {
 	propertyId: number;
 	propertyType: number;
@@ -65,12 +71,17 @@ export interface IProperty {
 	maxNumberOfInhabitants: number;
 	constructionYear: number;
 	images: IImage[];
+	avgRating: number;
+	avgServiceRating: number;
+	avgLocationRating: number;
+	avgEquipmentRating: number;
+	avgQualityForMoneyRating: number;
 	verificationStatus: number;
 	numberOfRooms: number;
 	numberOfFloors: number;
 	plotArea: number;
 	floor: number;
-	offerIds: number[];
+	offers: IOfferMiniatures[];
 	equipment: IEquipment[];
 	rentOpinions: IRentOpinion[];
 }

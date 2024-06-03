@@ -15,6 +15,7 @@ export interface IOwner extends IUser {
 
 export interface IUserProfile {
 	userType: number;
+	avgRating: number;
 	userId: number;
 	name: string;
 	surname: string;
@@ -28,12 +29,25 @@ export interface IUserProfile {
 	documentExpireDate: Date;
 	birthDate: Date;
 	studentNumber: number;
+	sumCommunicative: number;
+	sumConflicting: number;
+	sumCooperative: number;
+	sumFriendly: number;
+	sumHelpful: number;
+	sumLackOfHygiene: number;
+	sumNoisy: number;
+	sumNotFollowingTheArrangements: number;
+	sumRespectingPrivacy: number;
+	sumTidy: number;
+	sumUnfair: number;
+	sumUntidy: number;
 	university: string;
 	links: string[];
 	surveyStudent: IStudentSurvey;
 	interests: IInterest[];
 	bankAccount: string;
 	documentNumber: string;
+	userOpinions: IOpinion[];
 }
 
 export interface IStudentSurvey {

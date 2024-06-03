@@ -30,6 +30,8 @@ import { StartMapModule } from './start-map/start-map.module';
 import { GetDescriptionDirective } from './directives/get-description.directive';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
 	declarations: [StartComponent],
@@ -59,6 +61,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		GetDescriptionDirective,
 		AccessControlDirective,
 		MatSnackBarModule,
+		StarRatingComponent,
+		MatDialogModule,
 	],
 })
 export class StartModule {}

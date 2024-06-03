@@ -18,7 +18,15 @@ import {
 	IRegionCity,
 } from '../../models/real-estate.models';
 import { HttpClient } from '@angular/common/http';
-import { Observable, concatMap, filter, map, switchMap } from 'rxjs';
+import {
+	BehaviorSubject,
+	Observable,
+	concatMap,
+	filter,
+	map,
+	switchMap,
+	zip,
+} from 'rxjs';
 import { RealEstateService } from '../../services/real-estate.service';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -100,6 +108,11 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	public citiesGroupOptions$?: Observable<IGroup[]>;
 	public districtGroupOptions$?: Observable<IGroup[]>;
 
+	private hideRealEstate: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
+	public hideRealEstate$: Observable<boolean> =
+		this.hideRealEstate.asObservable();
+
 	private regionCityArray: IRegionCity[] = [];
 
 	public completed = false;
@@ -108,7 +121,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	private formData = new FormData();
 	public modificationType: ModificationType;
 	public mType = ModificationType;
-	public actualRealEstate: Observable<IProperty>;
+	public actualRealEstate$: Observable<IProperty>;
 	public actualId = 0;
 	public actualPhotosNames: string[] = [];
 	private addRealEstateForm: FormGroup = new FormGroup({
@@ -151,13 +164,21 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 		this.modificationType =
 			this.activatedRoute.snapshot.url[0].path.toUpperCase() as ModificationType;
-		this.actualRealEstate = this.activatedRoute.paramMap.pipe(
+		this.actualRealEstate$ = this.activatedRoute.paramMap.pipe(
 			map(params => params.get('id')),
 			filter(Boolean),
 			switchMap(id => {
 				return this.realEstateService.getRealEstateById(parseInt(id) ?? 0);
 			})
 		);
+		zip(this.actualRealEstate$, this.realEstateService.getRealEstates(false))
+			.pipe(this.untilDestroyed())
+			.subscribe(([actualProperty, properties]) => {
+				const result = !properties.find(
+					property => property.propertyId === actualProperty.propertyId
+				);
+				this.hideRealEstate.next(!!result);
+			});
 	}
 
 	public filter = (opt: string[], value: string): string[] => {
@@ -211,7 +232,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			this.onAdd();
 			this.snackBar
 				.open('Pomyślnie dodano nieruchomość!', 'Dodaj ofertę', {
-					duration: 4000,
+					duration: 10000,
 				})
 				.onAction()
 				.pipe(this.untilDestroyed())
@@ -317,7 +338,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	private changeFormOnEdit() {
-		this.actualRealEstate.pipe(this.untilDestroyed()).subscribe(property => {
+		this.actualRealEstate$.pipe(this.untilDestroyed()).subscribe(property => {
 			this.addRealEstateFormAddressData.patchValue({
 				province: property.province.toLowerCase(),
 				city: property.city,

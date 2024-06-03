@@ -21,6 +21,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 import { RentsService } from 'src/app/rents/services/rents.service';
 import { StartService } from 'src/app/start/services/start.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -44,6 +45,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 		MatCardModule,
 		AccessControlDirective,
 		MatSnackBarModule,
+		StarRatingComponent,
 	],
 	providers: [OfferService, RealEstateService, RentsService, StartService],
 	exports: [OfferDetailsComponent],
