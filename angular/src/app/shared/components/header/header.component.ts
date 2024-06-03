@@ -4,8 +4,9 @@ import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { BaseComponent } from '../base/base.component';
-import { TranslateService } from '@ngx-translate/core';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { LocaleService } from '@shared/services/locale.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-header',
@@ -26,7 +27,8 @@ export class HeaderComponent extends BaseComponent {
 		public authService: AuthService,
 		public userService: UserService,
 		private breakpointObserver: BreakpointObserver,
-		private translate: TranslateService
+		private localeService: LocaleService,
+		private router: Router
 	) {
 		super();
 		this.breakpointObserver
@@ -40,6 +42,10 @@ export class HeaderComponent extends BaseComponent {
 	}
 
 	public changeLanguage(value: string) {
-		this.translate.use(value.toLowerCase());
+		this.localeService.setLocale(value.toLowerCase());
+		const url = this.router.url;
+		this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+			this.router.navigate([url]);
+		});
 	}
 }
