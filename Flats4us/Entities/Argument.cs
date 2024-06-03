@@ -39,7 +39,6 @@ namespace Flats4us.Entities
         public int GroupChatId { get; set; }
 
         public virtual Rent Rent { get; set; }
-
         public virtual Student Student { get; set; }
         public virtual GroupChat GroupChat { get; set; }
 

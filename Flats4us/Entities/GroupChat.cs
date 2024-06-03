@@ -19,7 +19,8 @@ namespace Flats4us.Entities
 
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
 
-        public virtual Argument Argument { get; set; }
+        //public int? ArgumentId { get; set; }
+        //public virtual Argument Argument { get; set; }
 
         public GroupChat()
         {

@@ -31,7 +31,8 @@ namespace Flats4us.Entities.Dto
         public int RentId { get; set; }
 
         [Required]
-        public int StudentId { get; set; }
+        public UserInfoDto Student { get; set; }
+        public UserInfoDto Owner { get; set; }
 
         public virtual ICollection<ArgumentInterventionDto> ArgumentInterventions { get; set; }
     }

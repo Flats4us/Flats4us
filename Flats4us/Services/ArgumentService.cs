@@ -27,6 +27,13 @@ namespace Flats4us.Services
         public async Task<IEnumerable<ArgumentDto>> GetArgumentsAsync(ArgumentStatus argumentStatus)
         {
             var arguments = await _context.Arguments
+                .Include(a=>a.Rent)
+                    .ThenInclude(r=>r.Offer)
+                        .ThenInclude(o=>o.Property)
+                            .ThenInclude(p=>p.Owner)
+                                .ThenInclude(x => x.ProfilePicture)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.ProfilePicture)
                 .Where(x => x.ArgumentStatus == argumentStatus)
                 .Where(x => x.InterventionNeed == true)
                 .OrderBy(x => x.InterventionNeedDate)

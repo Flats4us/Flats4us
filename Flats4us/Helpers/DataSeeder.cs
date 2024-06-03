@@ -2,6 +2,7 @@
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 public static class DataSeeder
 {
@@ -2555,11 +2556,53 @@ public static class DataSeeder
 
         var groupChat1 = new GroupChat
         {
-            Name = "groupChat do argument 1",
-            UserGroupChats = { student1, owner1 }
+            Name = "groupChat do argument 1"
         };
 
-        dbContext.GroupChats.AddRange(groupChat1);
+        var groupChat2 = new GroupChat
+        {
+            Name = "groupChat do argument 2"
+        };
+
+        var groupChat3 = new GroupChat
+        {
+            Name = "groupChat do argument 3"
+        };
+
+        var groupChat4 = new GroupChat
+        {
+            Name = "groupChat do argument 4"
+        };
+
+        var groupChat5 = new GroupChat
+        {
+            Name = "groupChat do argument 5"
+        };
+
+        var groupChat6 = new GroupChat
+        {
+            Name = "groupChat do argument 6"
+        };
+
+        dbContext.GroupChats.AddRange(groupChat1, groupChat2, groupChat3, groupChat4, groupChat5, groupChat6);
+
+        #endregion
+
+        #region UserGroupChat
+
+        var userGroupChat1 = new UserGroupChat
+        {
+            User = student1,
+            GroupChat = groupChat1
+        };
+
+        var userGroupChat2 = new UserGroupChat
+        {
+            User = owner1,
+            GroupChat = groupChat1
+        };
+
+        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2);
 
         #endregion
 
@@ -2591,90 +2634,91 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = null,
             Rent = rent2,
-            Student = student4
+            Student = student4,
+            GroupChat = groupChat2
         };
 
-        var argument3 = new Argument
-        {
-            Description = "to jest sprzeczka trzecia",
-            StartDate = new DateTime(2024, 1, 12),
-            OwnerAcceptanceDate = null,
-            StudentAccceptanceDate = null,
-            ArgumentStatus = ArgumentStatus.Ongoing,
-            InterventionNeed = true,
-            InterventionNeedDate = new DateTime(2024, 1, 13),
-            MederatorDecisionDate = null,
-            Rent = rent3,
-            Student = student7
-        };
+        //var argument3 = new Argument
+        //{
+        //    Description = "to jest sprzeczka trzecia",
+        //    StartDate = new DateTime(2024, 1, 12),
+        //    OwnerAcceptanceDate = null,
+        //    StudentAccceptanceDate = null,
+        //    ArgumentStatus = ArgumentStatus.Ongoing,
+        //    InterventionNeed = true,
+        //    InterventionNeedDate = new DateTime(2024, 1, 13),
+        //    MederatorDecisionDate = null,
+        //    Rent = rent3,
+        //    Student = student7
+        //};
 
-        var argument4 = new Argument
-        {
-            Description = "to jest sprzeczka czwarta",
-            StartDate = new DateTime(2023, 6, 24),
-            OwnerAcceptanceDate = null,
-            StudentAccceptanceDate = null,
-            ArgumentStatus = ArgumentStatus.Ongoing,
-            InterventionNeed = false,
-            InterventionNeedDate = null,
-            MederatorDecisionDate = new DateTime(2023, 7, 10),
-            Rent = rent4,
-            Student = student10
-        };
+        //var argument4 = new Argument
+        //{
+        //    Description = "to jest sprzeczka czwarta",
+        //    StartDate = new DateTime(2023, 6, 24),
+        //    OwnerAcceptanceDate = null,
+        //    StudentAccceptanceDate = null,
+        //    ArgumentStatus = ArgumentStatus.Ongoing,
+        //    InterventionNeed = false,
+        //    InterventionNeedDate = null,
+        //    MederatorDecisionDate = new DateTime(2023, 7, 10),
+        //    Rent = rent4,
+        //    Student = student10
+        //};
 
-        var argument5 = new Argument
-        {
-            Description = "to jest sprzeczka piąta",
-            StartDate = new DateTime(2024, 4, 12),
-            OwnerAcceptanceDate = new DateTime(2024, 4, 15),
-            StudentAccceptanceDate = new DateTime(2024, 4, 15),
-            ArgumentStatus = ArgumentStatus.Resolved,
-            InterventionNeed = false,
-            InterventionNeedDate = null,
-            MederatorDecisionDate = new DateTime(2024, 4, 14),
-            Rent = rent3,
-            Student = student8
-        };
+        //var argument5 = new Argument
+        //{
+        //    Description = "to jest sprzeczka piąta",
+        //    StartDate = new DateTime(2024, 4, 12),
+        //    OwnerAcceptanceDate = new DateTime(2024, 4, 15),
+        //    StudentAccceptanceDate = new DateTime(2024, 4, 15),
+        //    ArgumentStatus = ArgumentStatus.Resolved,
+        //    InterventionNeed = false,
+        //    InterventionNeedDate = null,
+        //    MederatorDecisionDate = new DateTime(2024, 4, 14),
+        //    Rent = rent3,
+        //    Student = student8
+        //};
 
-        var argument6 = new Argument
-        {
-            Description = "sprzeczka pierwsza",
-            StartDate = new DateTime(2024, 2, 22),
-            OwnerAcceptanceDate = null,
-            StudentAccceptanceDate = null,
-            ArgumentStatus = ArgumentStatus.Ongoing,
-            InterventionNeed = true,
-            InterventionNeedDate = new DateTime(2024, 2, 23),
-            MederatorDecisionDate = null,
-            Rent = rent1,
-            Student = student3
-        };
+        //var argument6 = new Argument
+        //{
+        //    Description = "sprzeczka pierwsza",
+        //    StartDate = new DateTime(2024, 2, 22),
+        //    OwnerAcceptanceDate = null,
+        //    StudentAccceptanceDate = null,
+        //    ArgumentStatus = ArgumentStatus.Ongoing,
+        //    InterventionNeed = true,
+        //    InterventionNeedDate = new DateTime(2024, 2, 23),
+        //    MederatorDecisionDate = null,
+        //    Rent = rent1,
+        //    Student = student3
+        //};
 
-        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4, argument5, argument6);
+        dbContext.Arguments.AddRange(argument1/*, argument2, argument3, argument4, argument5, argument6*/);
 
         #endregion
 
         #region ArgumentIntervention
 
-        var argumentIntervention1 = new ArgumentIntervention
-        {
+        //var argumentIntervention1 = new ArgumentIntervention
+        //{
 
-            Date = new DateTime(2023, 7, 9),
-            Justification = "interwencja do argumenttu 4tego",
-            Argument = argument4,
-            Moderator = moderator1
-        };
+        //    Date = new DateTime(2023, 7, 9),
+        //    Justification = "interwencja do argumenttu 4tego",
+        //    Argument = argument4,
+        //    Moderator = moderator1
+        //};
 
-        var argumentIntervention2 = new ArgumentIntervention
-        {
+        //var argumentIntervention2 = new ArgumentIntervention
+        //{
 
-            Date = new DateTime(2024, 4, 13),
-            Justification = "interwencja do argumenttu 5tego",
-            Argument = argument5,
-            Moderator = moderator1
-        };
+        //    Date = new DateTime(2024, 4, 13),
+        //    Justification = "interwencja do argumenttu 5tego",
+        //    Argument = argument5,
+        //    Moderator = moderator1
+        //};
 
-        dbContext.ArgumentInterventions.AddRange(argumentIntervention1, argumentIntervention2);
+        //dbContext.ArgumentInterventions.AddRange(argumentIntervention1, argumentIntervention2);
 
         #endregion
 
