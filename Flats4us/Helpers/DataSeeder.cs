@@ -1873,7 +1873,6 @@ public static class DataSeeder
         var surveyStudent1 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1889,7 +1888,6 @@ public static class DataSeeder
         var surveyStudent2 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1905,7 +1903,6 @@ public static class DataSeeder
         var surveyStudent3 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1921,7 +1918,6 @@ public static class DataSeeder
         var surveyStudent4 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1937,7 +1933,6 @@ public static class DataSeeder
         var surveyStudent5 = new SurveyStudent
         {
             Party = 3,
-            Tidiness = 2,
             Smoking = false,
             Sociability = true,
             Animals = false,
@@ -1954,7 +1949,6 @@ public static class DataSeeder
         var surveyStudent6 = new SurveyStudent
         {
             Party = 2,
-            Tidiness = 3,
             Smoking = false,
             Sociability = true,
             Animals = true,
@@ -1971,7 +1965,6 @@ public static class DataSeeder
         var surveyStudent7 = new SurveyStudent
         {
             Party = 4,
-            Tidiness = 1,
             Smoking = true,
             Sociability = false,
             Animals = true,
@@ -1988,7 +1981,6 @@ public static class DataSeeder
         var surveyStudent8 = new SurveyStudent
         {
             Party = 2,
-            Tidiness = 2,
             Smoking = false,
             Sociability = true,
             Animals = false,
@@ -2004,7 +1996,6 @@ public static class DataSeeder
         var surveyStudent9 = new SurveyStudent
         {
             Party = 3,
-            Tidiness = 3,
             Smoking = false,
             Sociability = true,
             Animals = true,
@@ -2021,7 +2012,6 @@ public static class DataSeeder
         var surveyStudent10 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 2,
             Smoking = true,
             Sociability = true,
             Animals = false,

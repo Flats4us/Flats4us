@@ -63,11 +63,6 @@ namespace Flats4us.Services
 
                     //  Party
 
-                    (potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) && 
-                    (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) &&
-
-                    //  Tidiness
-
                     potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking &&
 
                     //  Smoking
@@ -119,9 +114,6 @@ namespace Flats4us.Services
                     ConditionsMet = (
                         (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party - 2)) &&
                         (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) ? 1 : 0) +
-
-                        ((potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) &&
-                        (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) ? 1 : 0) +
 
                         (potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking ? 1 : 0) +
 

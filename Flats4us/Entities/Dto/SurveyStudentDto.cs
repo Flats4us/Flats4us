@@ -10,9 +10,6 @@ namespace Flats4us.Entities.Dto
         public int Party { get; set; }
 
         [Required]
-        public int Tidiness { get; set; }
-
-        [Required]
         public bool Smoking { get; set; }
 
         [Required]

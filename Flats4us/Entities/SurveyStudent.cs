@@ -16,11 +16,6 @@ namespace Flats4us.Entities
         [SurveySlider(1, 10)]
         public int Party { get; set; }
 
-        // Scale 1-10
-        [Required]
-        [SurveySlider(1, 10)]
-        public int Tidiness { get; set; }
-
         // Yes/No
         [Required]
         public bool Smoking { get; set; } 
