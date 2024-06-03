@@ -187,10 +187,12 @@ namespace Flats4us.Services
             return interventions;
         }
 
-        public async Task<ArgumentIntervention> GetInterventionById(int id)
+        public async Task<ArgumentInterventionDto> GetInterventionById(int id)
         {
             var intervention = await _context.ArgumentInterventions
-                .FirstAsync(x => x.ArgumentInterventionId == id)
+                .Where(x => x.ArgumentInterventionId == id)
+                .Select(e => _mapper.Map<ArgumentInterventionDto>(e))
+                .FirstOrDefaultAsync()
                 ?? throw new ArgumentException($"Intervention with ID: {id} not found");
 
             return intervention;
