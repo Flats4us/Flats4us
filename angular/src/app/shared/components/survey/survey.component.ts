@@ -124,9 +124,6 @@ export class SurveyComponent extends BaseComponent implements OnInit {
 				case 'party':
 					this.formToAdd.addControl(question.name, new FormControl(1));
 					break;
-				case 'tidiness':
-					this.formToAdd.addControl(question.name, new FormControl(1));
-					break;
 				case 'smoking':
 					this.formToAdd.addControl(question.name, new FormControl(false));
 					break;

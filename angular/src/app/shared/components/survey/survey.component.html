@@ -26,13 +26,9 @@
 					></mat-slide-toggle>
 				</div>
 
-				<mat-label *ngIf="i < 7" [ngSwitch]="question.name">
+				<mat-label *ngIf="i < 6" [ngSwitch]="question.name">
 					<span *ngSwitchCase="'party'" class="flex justify-center items-center">
 						<mat-icon class="mr-4">celebration</mat-icon>
-						<span>{{ question.name }}</span>
-					</span>
-					<span *ngSwitchCase="'tidiness'" class="flex justify-center items-center">
-						<mat-icon class="mr-4">clean_hands</mat-icon>
 						<span>{{ question.name }}</span>
 					</span>
 					<span *ngSwitchCase="'smoking'" class="flex justify-center items-center">
@@ -94,7 +90,7 @@
 					</mat-slider>
 				</div>
 
-				<mat-label *ngIf="i >= 7 && showMoreQuestions" [ngSwitch]="question.name">
+				<mat-label *ngIf="i >= 6 && showMoreQuestions" [ngSwitch]="question.name">
 					<span
 						*ngSwitchCase="'roommateGender'"
 						class="flex justify-center items-center"
@@ -233,7 +229,7 @@
 				<mat-radio-group
 					*ngIf="
 						(question.typeName === typeName.RADIOBUTTON && showMoreQuestions) ||
-						(i < 7 &&
+						(i < 6 &&
 							question.typeName === typeName.RADIOBUTTON &&
 							!createProfileMode)
 					"
