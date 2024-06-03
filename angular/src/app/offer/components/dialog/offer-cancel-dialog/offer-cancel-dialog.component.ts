@@ -49,14 +49,14 @@ export class OfferCancelDialogComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Oferta została zakończona.', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.router.navigate(['/offer', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
 					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.dialogRef.close(this.data);
 				},

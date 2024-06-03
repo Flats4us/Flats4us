@@ -265,7 +265,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			) {
 				this.snackBar
 					.open('Pomyślnie zmieniono dane!', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					})
 					.afterDismissed()
 					.pipe(this.untilDestroyed())

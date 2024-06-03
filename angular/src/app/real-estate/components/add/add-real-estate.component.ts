@@ -232,7 +232,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			this.onAdd();
 			this.snackBar
 				.open('Pomyślnie dodano nieruchomość!', 'Dodaj ofertę', {
-					duration: 4000,
+					duration: 10000,
 				})
 				.onAction()
 				.pipe(this.untilDestroyed())
@@ -435,14 +435,14 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				.subscribe({
 					next: () => {
 						this.snackBar.open('Zdjęcie zostało pomyślnie usunięte.', 'Zamknij', {
-							duration: 2000,
+							duration: 10000,
 						});
 					},
 					error: () => {
 						this.snackBar.open(
 							'Nie udało się usunąć zdjęcia. Spróbuj ponownie.',
 							'Zamknij',
-							{ duration: 2000 }
+							{ duration: 10000 }
 						);
 					},
 				});
@@ -461,7 +461,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Nieruchomość została pomyślnie zapisana.', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.router.navigate(['/']);
 				},
@@ -469,7 +469,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 					this.snackBar.open(
 						'Nie udało się dodać nieruchomości. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 10000 }
 					);
 				},
 			});
@@ -486,7 +486,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.subscribe({
 				next: () => {
 					this.snackBar.open('Zmiany zostały pomyślnie zapisane', 'Zamknij', {
-						duration: 2000,
+						duration: 10000,
 					});
 					this.router.navigate(['/']);
 				},
@@ -494,7 +494,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 					this.snackBar.open(
 						'Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.',
 						'Zamknij',
-						{ duration: 2000 }
+						{ duration: 10000 }
 					);
 				},
 			});
