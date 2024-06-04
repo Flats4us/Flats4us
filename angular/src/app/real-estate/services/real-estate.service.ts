@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { IResult } from 'src/app/offer/models/offer.models';
 import {
 	IAddProperty,
 	IAddResult,
@@ -341,8 +342,14 @@ export class RealEstateService {
 	public getRealEstateById(id: number): Observable<IProperty> {
 		return this.httpClient.get<IProperty>(`${this.apiRoute}/properties/${id}`);
 	}
-	public editRealEstate(realEstate: IAddProperty, id: number) {
-		return this.httpClient.put(`${this.apiRoute}/properties/${id}`, realEstate);
+	public editRealEstate(
+		realEstate: IAddProperty,
+		id: number
+	): Observable<IResult> {
+		return this.httpClient.put<IResult>(
+			`${this.apiRoute}/properties/${id}`,
+			realEstate
+		);
 	}
 	public getEquipment(name: string): Observable<IEquipment[]> {
 		let params = new HttpParams();
