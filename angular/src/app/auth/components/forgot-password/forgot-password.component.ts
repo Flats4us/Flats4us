@@ -13,6 +13,7 @@ import {
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-forgot-password',
@@ -24,6 +25,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 		MatFormFieldModule,
 		MatInputModule,
 		ReactiveFormsModule,
+		TranslateModule,
 	],
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss'],
@@ -34,7 +36,11 @@ export class ForgotPasswordComponent extends BaseComponent {
 		email: new FormControl<string>('', [Validators.required, Validators.email]),
 	});
 
-	constructor(private authService: AuthService, private snackBar: MatSnackBar) {
+	constructor(
+		private authService: AuthService,
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
+	) {
 		super();
 	}
 
@@ -48,8 +54,8 @@ export class ForgotPasswordComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open(
-					'Jeżeli podany adres e-mail jest u nas zarejestrowany, otrzymasz na niego wiadomość.',
-					'Zamknij',
+					this.translate.instant('Forgot-password.info3'),
+					this.translate.instant('close'),
 					{
 						duration: 10000,
 					}
