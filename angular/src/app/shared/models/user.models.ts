@@ -61,7 +61,6 @@ export interface IDocument {
 
 export interface ISurveyStudent {
 	party: number;
-	tidiness: number;
 	smoking: boolean;
 	sociability: boolean;
 	animals: boolean;
