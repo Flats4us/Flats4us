@@ -49,3 +49,15 @@ nav ul li a:hover::after {
 nav ul li a.active::after {
 	width: 100%;
 }
+
+@media screen and (max-width: 992px) {
+	.settings {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+	mat-card {
+		width: 100%;
+		padding: 20px;
+	}
+}

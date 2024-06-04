@@ -36,3 +36,15 @@
 .disputes-box {
 	flex: 1;
 }
+
+@media screen and (max-width: 992px) {
+	.disputes-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	mat-card {
+		width: 100%;
+		padding: 16px;
+	}
+}

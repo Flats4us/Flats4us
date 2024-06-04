@@ -31,6 +31,10 @@
 	flex: 1 1 auto;
 }
 
+.spacer-not-loggedin {
+	flex: 1 1 auto;
+}
+
 .button-log,
 .button-sign {
 	margin-right: 20px;
@@ -45,6 +49,7 @@
 .your-profile {
 	min-width: 35px;
 	float: right;
+	margin-left: 8px;
 }
 
 .custom-toolbar .responsive-menu {
@@ -70,6 +75,9 @@
 		button:not(.your-profile):not(.responsive-menu):not(.dark-theme):not(
 			.responsive-menu-lang
 		) {
+		display: none;
+	}
+	.spacer-not-loggedin {
 		display: none;
 	}
 	.custom-toolbar .responsive-menu {

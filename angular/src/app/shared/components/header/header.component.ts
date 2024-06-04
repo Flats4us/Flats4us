@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { BaseComponent } from '../base/base.component';
-import { TranslateService } from '@ngx-translate/core';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { LocaleService } from '@shared/services/locale.service';
 
 @Component({
 	selector: 'app-header',
@@ -13,9 +14,8 @@ import { TranslateService } from '@ngx-translate/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent extends BaseComponent {
-	public isUserLoggedInAsStudent = true;
-
-	public showSidenav = false;
+	@ViewChild('menuTrigger')
+	public menuTrigger: MatMenuTrigger | undefined;
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	protected user$ = this.userService.getMyProfile();
@@ -26,7 +26,7 @@ export class HeaderComponent extends BaseComponent {
 		public authService: AuthService,
 		public userService: UserService,
 		private breakpointObserver: BreakpointObserver,
-		private translate: TranslateService
+		private localeService: LocaleService
 	) {
 		super();
 		this.breakpointObserver
@@ -34,18 +34,12 @@ export class HeaderComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe((result: BreakpointState) => {
 				if (!result.matches) {
-					this.showSidenav = false;
+					this.menuTrigger?.closeMenu();
 				}
 			});
 	}
 
 	public changeLanguage(value: string) {
-		this.translate.use(value.toLowerCase());
-	}
-
-	public hideSidenav(): void {
-		if (this.showSidenav) {
-			this.showSidenav = false;
-		}
+		this.localeService.setLocale(value.toLowerCase());
 	}
 }
