@@ -1,6 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable, Optional, SkipSelf } from '@angular/core';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { noop } from 'rxjs';
+
+type ShouldReuseRoute = (
+	future: ActivatedRouteSnapshot,
+	curr: ActivatedRouteSnapshot
+) => boolean;
 
 @Injectable({
 	providedIn: 'root',
@@ -8,7 +14,32 @@ import { TranslateService } from '@ngx-translate/core';
 export class LocaleService {
 	private initialized = false;
 
-	constructor(private router: Router, private translate: TranslateService) {}
+	constructor(
+		private router: Router,
+		private translate: TranslateService,
+		@Optional()
+		@SkipSelf()
+		otherInstance: LocaleService
+	) {
+		if (otherInstance) {
+			throw 'LocaleService should have only one instance.';
+		}
+	}
+
+	private setRouteReuse(reuse: ShouldReuseRoute) {
+		this.router.routeReuseStrategy.shouldReuseRoute = reuse;
+	}
+
+	private subscribeToLangChange() {
+		this.translate.onLangChange.subscribe(async () => {
+			const { shouldReuseRoute } = this.router.routeReuseStrategy;
+
+			this.setRouteReuse(() => false);
+			this.router.navigated = false;
+			await this.router.navigateByUrl(this.router.url).catch(noop);
+			this.setRouteReuse(shouldReuseRoute);
+		});
+	}
 
 	public getCurrentLocale(): string {
 		return this.translate.currentLang;
@@ -21,6 +52,7 @@ export class LocaleService {
 
 		this.setDefaultLocale(defaultLocaleId);
 		this.setLocale(localeId);
+		this.subscribeToLangChange();
 
 		this.initialized = true;
 	}
