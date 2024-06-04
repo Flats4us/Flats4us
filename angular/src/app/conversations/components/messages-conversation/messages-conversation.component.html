@@ -77,7 +77,7 @@
 		<input
 			matInput
 			type="text"
-			placeholder="Wiadomość..."
+			placeholder="{{ 'Conversation.message' | translate }}..."
 			[formControl]="messageControl"
 			(keydown.enter)="onSend(data.currentUser!.userId, data.otherUser!.userId)"
 		/>

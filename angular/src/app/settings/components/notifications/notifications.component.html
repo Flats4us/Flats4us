@@ -1,25 +1,23 @@
 <mat-card class="notifications">
-	<h2>Ustawienia powiadomień</h2>
+	<h2>{{ "Notifications.notification-settings" | translate }}</h2>
 	<div class="notification-option">
 		<mat-slide-toggle [(ngModel)]="emailMessages"></mat-slide-toggle>
-		<p>Otrzymuj powiadomienia e-mail, gdy użytkownik wyśle Ci wiadomość</p>
+		<p>{{ "Notifications.notification-info1" | translate }}</p>
 	</div>
 	<div class="notification-option">
 		<mat-slide-toggle [(ngModel)]="pushMessages"></mat-slide-toggle>
-		<p>Otrzymuj powiadomienia push, gdy użytkownik wyśle Ci wiadomość</p>
+		<p>{{ "Notifications.notification-info2" | translate }}</p>
 	</div>
 	<div class="notification-option">
 		<mat-slide-toggle [(ngModel)]="emailBookings"></mat-slide-toggle>
 		<p>
-			Otrzymuj powiadomienia e-mail, gdy użytkownik dokona rezerwacji w Twoim
-			obiekcie
+			{{ "Notifications.notification-info3" | translate }}
 		</p>
 	</div>
 	<div class="notification-option">
 		<mat-slide-toggle [(ngModel)]="pushBookings"></mat-slide-toggle>
 		<p>
-			Otrzymuj powiadomienia push, gdy użytkownik dokona rezerwacji w Twoim
-			obiekcie
+			{{ "Notifications.notification-info4" | translate }}
 		</p>
 	</div>
 </mat-card>

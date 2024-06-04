@@ -1,9 +1,15 @@
-<h1 class="text-4xl p-4 font-semibold">Konwersacje</h1>
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Conversation.conversation" | translate }}
+</h1>
 <div *ngIf="conversations$ | async as messages" class="messages-wrapper">
 	<mat-card>
 		<mat-card-header *ngIf="messages.length === 0">
-			<mat-card-title>Brak konwersacji</mat-card-title>
-			<mat-card-subtitle>Nowe rozmowy pojawią się w tym miejscu</mat-card-subtitle>
+			<mat-card-title>{{
+				"Conversation.no-conversation" | translate
+			}}</mat-card-title>
+			<mat-card-subtitle>{{
+				"Conversation.conversation-info" | translate
+			}}</mat-card-subtitle>
 		</mat-card-header>
 		<mat-list class="messages-choice">
 			<mat-list-item
