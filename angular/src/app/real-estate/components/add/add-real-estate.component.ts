@@ -21,6 +21,7 @@ import { HttpClient } from '@angular/common/http';
 import {
 	BehaviorSubject,
 	Observable,
+	concat,
 	concatMap,
 	filter,
 	map,
@@ -473,9 +474,10 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				this.untilDestroyed(),
 				concatMap(result => {
 					if (this.filesArray.length > 0) {
-						return this.realEstateService
-							.addRealEstateFiles(this.actualId, this.formData)
-							.pipe(map(res => of({ files: res, data: result })));
+						return concat(
+							this.realEstateService.addRealEstateFiles(this.actualId, this.formData),
+							of(result)
+						);
 					}
 					return of(result);
 				})
