@@ -41,7 +41,11 @@
 					><div class="box-title">
 						<div class="flex-col text-xl font-bold">
 							<div>
-								Najem - {{ realEstateService.propertyTypes.get(rent.propertyType) }}
+								Najem -
+								{{
+									realEstateService.propertyTypes.get(rent.propertyType) ?? ""
+										| translate
+								}}
 							</div>
 							<div>{{ rent.propertyAddress }}</div>
 						</div>

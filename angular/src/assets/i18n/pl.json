@@ -204,6 +204,7 @@
 		"build-year": "Rok budowy",
 		"equipment": "Wyposażenie",
 		"contract-information": "Informacje o umowie",
+		"regulations": "Reguły najmu",
 		"roommates": "Współlokatorzy",
 		"owner": "Właściciel",
 		"name-surname": "Imię i nazwisko",
@@ -273,7 +274,9 @@
 		"interest": "Zainteresowania",
 		"documentType0": "Dowód osobisty",
 		"documentType1": "Legitymacja studencka",
-		"documentType2": "Paszport"
+		"documentType2": "Paszport",
+		"verified": "zweryfikowany",
+		"unverified": "niezweryfikowany"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "TWOJA OPINIA O UŻYTKOWNIKU",

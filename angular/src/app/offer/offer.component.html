@@ -60,7 +60,10 @@
 								<div class="flex-col text-xl font-bold">
 									<div>
 										{{ "Offer.rent1" | translate }} -
-										{{ realEstateService.propertyTypes.get(offer.property.propertyType) }}
+										{{
+											realEstateService.propertyTypes.get(offer.property.propertyType) ??
+												"" | translate
+										}}
 									</div>
 									<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>
 								</div>
@@ -84,11 +87,11 @@
 								matBadgePosition="below after"
 								matBadgeColor="primary"
 							>
-								{{ "Calendar.date" | translate }} {{ offer.startDate | date }}
+								{{ "Calendar.date" | translate }}: {{ offer.startDate | date }}
 							</div>
 							<ng-template #dateDescription>
 								<div class="box-date">
-									{{ "Calendar.date" | translate }} {{ offer.startDate | date }}
+									{{ "Calendar.date" | translate }}: {{ offer.startDate | date }}
 								</div>
 							</ng-template>
 						</a>

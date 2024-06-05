@@ -29,7 +29,8 @@
 									><h1 class="text-3xl">
 										Najem -
 										{{
-											realEstateService.propertyTypes.get(data.rent?.propertyType ?? 0)
+											realEstateService.propertyTypes.get(data.rent?.propertyType ?? 0) ??
+												"" | translate
 										}}
 										{{ data.rent?.propertyAddress }}
 									</h1></span

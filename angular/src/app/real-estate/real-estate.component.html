@@ -50,7 +50,8 @@
 						routerLink="{{ realEstate.propertyId }}"
 						><div class="box-title">
 							<span class="text-xl font-bold">{{
-								realEstateService.propertyTypes.get(realEstate.propertyType)
+								realEstateService.propertyTypes.get(realEstate.propertyType) ?? ""
+									| translate
 							}}</span>
 							<mat-icon
 								[ngClass]="
