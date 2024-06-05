@@ -429,11 +429,18 @@
 		"error-message": "Failed to add property. Try again.",
 		"success-message": "Property added successfully!",
 		"close-message": "Close",
-		"add-messsage": "Add offer"
+		"add-messsage": "Add offer",
+		"delete-photo-info1": "The photo has been successfully deleted.",
+		"delete-photo-info2": "Failed to delete photo. Try again.",
+		"property-save-info1": "The property has been successfully saved.",
+		"property-save-info2": "Failed to add property. Try again.",
+		"change-info1": "The changes have been successfully saved!",
+		"change-info2": "Failed to modify the property."
 	},
 	"Real-estate-details": {
 		"property-status": "Property status",
 		"property-description": "Property description",
+		"voivodeship": "Voivodeship",
 		"city": "City",
 		"district": "District",
 		"address": "Address",
@@ -444,11 +451,19 @@
 		"max-inhabitants": "Max. number of inhabitants",
 		"build-year": "Build year",
 		"equipment": "Equipment",
-		"delete-property": "Delete property"
+		"delete-property": "Delete property",
+		"related-offers": "Related offers",
+		"show-offer": "Show offer",
+		"date-issue": "Date of issue",
+		"offer-with": "Offer with",
+		"offer-status": "Offer status",
+		"property-info1": "The property has no related offers"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Property removal",
-		"agree-property-removal-info": "Do you confirm the removal of the property"
+		"agree-property-removal-info": "Do you confirm the removal of the property",
+		"info1": "The property has been successfully deleted.",
+		"info2": "The property could not be removed."
 	},
 	"Rents": {
 		"browse-rentals": "Browse rentals",

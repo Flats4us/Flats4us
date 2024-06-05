@@ -33,6 +33,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { ModificationType } from '../../models/types';
 import { environment } from 'src/environments/environment.prod';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-real-estate',
@@ -150,7 +151,8 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		public realEstateService: RealEstateService,
 		private changeDetectorRef: ChangeDetectorRef,
 		private snackBar: MatSnackBar,
-		private activatedRoute: ActivatedRoute
+		private activatedRoute: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super();
 
@@ -231,9 +233,13 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			this.completed = true;
 			this.onAdd();
 			this.snackBar
-				.open('Pomyślnie dodano nieruchomość!', 'Dodaj ofertę', {
-					duration: 10000,
-				})
+				.open(
+					this.translate.instant('Real-estate-add.success-message'),
+					this.translate.instant('Real-estate-add.add-offer'),
+					{
+						duration: 10000,
+					}
+				)
 				.onAction()
 				.pipe(this.untilDestroyed())
 				.subscribe(() => {
@@ -434,14 +440,18 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
-						this.snackBar.open('Zdjęcie zostało pomyślnie usunięte.', 'Zamknij', {
-							duration: 10000,
-						});
+						this.snackBar.open(
+							this.translate.instant('Real-estate-add.delete-photo-info1'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
 					},
 					error: () => {
 						this.snackBar.open(
-							'Nie udało się usunąć zdjęcia. Spróbuj ponownie.',
-							'Zamknij',
+							this.translate.instant('Real-estate-add.delete-photo-info2'),
+							this.translate.instant('close'),
 							{ duration: 10000 }
 						);
 					},
@@ -460,15 +470,19 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			)
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Nieruchomość została pomyślnie zapisana.', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Real-estate-add.property-save-info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.router.navigate(['/']);
 				},
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się dodać nieruchomości. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Real-estate-add.property-save-info2'),
+						this.translate.instant('close'),
 						{ duration: 10000 }
 					);
 				},
@@ -485,15 +499,19 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			)
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Zmiany zostały pomyślnie zapisane', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Real-estate-add.change-info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.router.navigate(['/']);
 				},
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Real-estate-add.change-info2'),
+						this.translate.instant('close'),
 						{ duration: 10000 }
 					);
 				},

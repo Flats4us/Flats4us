@@ -1,18 +1,20 @@
 <div>
 	<div class="box-title">
-		<div class="text-4xl p-4 font-semibold">Przeglądanie nieruchomości</div>
+		<div class="text-4xl p-4 font-semibold">
+			{{ "Real-estate.browsing-properties" | translate }}
+		</div>
 	</div>
 	<ng-template #notFound>
 		<div class="not-found">
 			<h1 class="text-3xl p-4">
-				Nie dodano jeszcze żadnej nieruchomości
+				{{ "Real-estate.browsing-properties-info" | translate }}
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 					mat-icon-button
 					id="add"
 					class="box-icon-add"
 					aria-label="Add"
-					matTooltip="Dodaj nieruchomość"
+					matTooltip="{{ 'Real-estate.add-property' | translate }}"
 					(click)="addRealEstate()"
 				>
 					<mat-icon [inline]="true">add</mat-icon>
@@ -25,14 +27,14 @@
 			<div class="container-list">
 				<h1 class="text-3xl pl-4 font-semibold">
 					<div class="box-title-sub">
-						<span>Moje nieruchomości</span>
+						<span>{{ "Real-estate.my-properties" | translate }}</span>
 						<button
 							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 							mat-icon-button
 							id="add"
 							class="box-icon-add"
 							aria-label="Add"
-							matTooltip="Dodaj nieruchomość"
+							matTooltip="{{ 'Real-estate.add-property' | translate }}"
 							(click)="addRealEstate()"
 						>
 							<mat-icon [inline]="true">add</mat-icon>
@@ -60,8 +62,8 @@
 							>
 						</div>
 						<div class="box-subtitle">
-							{{ realEstate.city }}, ul. {{ realEstate.street }}
-							{{ realEstate.number }}, {{ realEstate.area }} m²
+							{{ realEstate.city }}, {{ "Real-estate.st" | translate }}.
+							{{ realEstate.street }} {{ realEstate.number }}, {{ realEstate.area }} m²
 						</div>
 					</a>
 				</mat-nav-list>

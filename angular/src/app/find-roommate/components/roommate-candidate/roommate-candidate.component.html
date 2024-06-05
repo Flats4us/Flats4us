@@ -13,12 +13,12 @@
 			src="{{ baseUrl }}/{{ student.profilePicture.path }}"
 		/>
 		<div>
-			<mat-icon>school</mat-icon> Uczelnia:
+			<mat-icon>school</mat-icon> {{ "Profile.university" | translate }}:
 			<div>{{ student.university }}</div>
 		</div>
 		<div>
 			<mat-icon>travel_explore</mat-icon>
-			Zainteresowania:
+			{{ "Profile.interest" | translate }}:
 			<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
 				<mat-chip *ngFor="let interest of student.interests">
 					<mat-icon matChipAvatar>check_circle</mat-icon>

@@ -428,11 +428,18 @@
 		"error-message": "Nie udało się dodać nieruchomości. Spróbuj ponownie.",
 		"success-message": "Pomyślnie dodano nieruchomość!",
 		"close-message": "Zamknij",
-		"add-messsage": "Dodaj ofertę"
+		"add-messsage": "Dodaj ofertę",
+		"delete-photo-info1": "Zdjęcie zostało pomyślnie usunięte.",
+		"delete-photo-info2": "Nie udało się usunąć zdjęcia. Spróbuj ponownie.",
+		"property-save-info1": "Nieruchomość została pomyślnie zapisana.",
+		"property-save-info2": "Nie udało się dodać nieruchomości. Spróbuj ponownie.",
+		"change-info1": "Zmiany zostały pomyślnie zapisane!",
+		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie."
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",
 		"property-description": "Opis nieruchomości",
+		"voivodeship": "Województwo",
 		"city": "Miasto",
 		"district": "Dzielnica",
 		"post-code": "Kod pocztowy",
@@ -445,11 +452,19 @@
 		"build-year": "Rok budowy",
 		"equipment": "Wyposażenie",
 		"edit-property": "Edytuj nieruchomość",
-		"delete-property": "Usuń nieruchomość"
+		"delete-property": "Usuń nieruchomość",
+		"related-offers": "Powiązane oferty",
+		"show-offer": "Pokaż ofertę",
+		"date-issue": "Data wystawienia",
+		"offer-with": "Oferta z",
+		"offer-status": "Status oferty",
+		"property-info1": "Nieruchomość nie posiada powiązanych ofert"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Usuwanie nieruchomości",
-		"agree-property-removal-info": "Czy potwierdzasz usunięcie nieruchomości"
+		"agree-property-removal-info": "Czy potwierdzasz usunięcie nieruchomości",
+		"info1": "Nieruchomość została pomyślnie usunięta.",
+		"info2": "Nie udało się usunąć nieruchomości."
 	},
 	"Rents": {
 		"browse-rentals": "Przeglądanie wynajmów",

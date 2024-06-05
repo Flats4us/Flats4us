@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatStepperModule } from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { RealEstateService } from '../../services/real-estate.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [AddRealEstateComponent],
@@ -32,6 +33,7 @@ import { RealEstateService } from '../../services/real-estate.service';
 		MatSlideToggleModule,
 		MatChipsModule,
 		MatStepperModule,
+		TranslateModule,
 	],
 	exports: [AddRealEstateComponent],
 	providers: [

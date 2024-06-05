@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RealEstateDetailsModule } from './components/details/real-estate-details.module';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
 import { AuthService } from '@shared/services/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RealEstateComponent],
@@ -48,6 +49,7 @@ import { AuthService } from '@shared/services/auth.service';
 		MatSnackBarModule,
 		RealEstateDetailsModule,
 		AccessControlDirective,
+		TranslateModule,
 	],
 	exports: [RealEstateComponent],
 	providers: [RealEstateService, AuthService],

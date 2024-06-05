@@ -9,7 +9,7 @@
 			<div class="label-box">
 				<mat-label class="label-description">
 					<span class="text-3xl"
-						>Status nieruchomości:
+						>{{ "Real-estate-details.property-status" | translate }}:
 						{{
 							realEstateService.propertyStatuses.get(
 								data.actualRealEstate?.verificationStatus ?? 0
@@ -45,8 +45,8 @@
 									id="menu"
 									mat-mini-fab
 									color="primary"
-									matTooltip="Więcej opcji"
 									aria-label="MenuButton"
+									matTooltip="{{ 'more-options' | translate }}"
 									[matMenuTriggerFor]="menu"
 								>
 									<mat-icon>more_horiz</mat-icon>
@@ -128,12 +128,18 @@
 			<div class="label-box">
 				<mat-label class="label-description"
 					><mat-icon class="icon" inline="true">description</mat-icon
-					><span class="text-3xl">Opis nieruchomości</span></mat-label
+					><span class="text-3xl">{{
+						"Real-estate-details.property-description" | translate
+					}}</span></mat-label
 				>
 			</div>
 			<mat-divider></mat-divider>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Województwo:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.voivodeship" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.province | lowercase }}
@@ -141,7 +147,9 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Miasto:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">{{ "Real-estate-details.city" | translate }}:</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.city }}
@@ -149,7 +157,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Dzielnica:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.district" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
@@ -161,7 +173,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Kod pocztowy:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.post-code" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.postalCode }}
@@ -169,7 +185,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Ulica:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.street" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{ data.actualRealEstate?.street }} {{ data.actualRealEstate?.number }}
@@ -177,13 +197,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Metraż:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">{{ "Real-estate-details.area" | translate }}:</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">{{ data.actualRealEstate?.area }} m²</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Liczba pokoi:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.room-number" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
@@ -195,7 +221,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Liczba pięter:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.floor-number" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
@@ -207,7 +237,9 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Piętro:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">{{ "Real-estate-details.floor" | translate }}:</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						{{
@@ -220,7 +252,9 @@
 			</div>
 			<div class="row">
 				<div class="column">
-					<p class="text-2xl pt-4">Maks. liczba lokatorów:</p>
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.max-inhabitants" | translate }}:
+					</p>
 				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
@@ -233,13 +267,21 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Rok budowy:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.build-year" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">{{ data.actualRealEstate?.constructionYear }}</p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="column"><p class="text-2xl pt-4">Wyposażenie:</p></div>
+				<div class="column">
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.equipment" | translate }}:
+					</p>
+				</div>
 				<div class="column">
 					<p class="text-2xl pt-4">
 						<span *ngFor="let equipment of data.actualRealEstate?.equipment"
@@ -294,7 +336,9 @@
 			</div>
 			<div class="row">
 				<div class="column">
-					<p class="text-2xl pt-4">Powiązane oferty:</p>
+					<p class="text-2xl pt-4">
+						{{ "Real-estate-details.related-offers" | translate }}:
+					</p>
 				</div>
 				<div class="column">
 					<p
@@ -307,7 +351,7 @@
 						>
 							<div class="profile-details">
 								<mat-card-avatar
-									matTooltip="Pokaż ofertę"
+									matTooltip="{{ 'Real-estate-details.show-offer' | translate }}"
 									(click)="showOffer(offer.offerId)"
 								>
 									<img
@@ -315,13 +359,19 @@
 										src="{{ baseUrl }}/{{ data?.actualRealEstate?.images?.at(0)?.path }}"
 								/></mat-card-avatar>
 								<div class="container-features">
-									<mat-chip matTooltip="Data wystawienia"
+									<mat-chip
+										matTooltip="{{ 'Real-estate-details.date-issue' | translate }}"
 										><div class="box-feature">
 											<mat-icon class="icon-feature">start</mat-icon
-											><span>Oferta z {{ offer.startDate | date }}</span>
+											><span
+												>{{ "Real-estate-details.offer-with" | translate }}
+												{{ offer.startDate | date }}</span
+											>
 										</div></mat-chip
 									>
-									<mat-chip matTooltip="Status oferty">
+									<mat-chip
+										matTooltip="{{ 'Real-estate-details.offer-status' | translate }}"
+									>
 										<div class="box-feature" [ngSwitch]="offer.offerStatus">
 											<mat-icon
 												*ngSwitchCase="0"
@@ -352,7 +402,7 @@
 						*ngIf="!data.actualRealEstate?.offers?.length"
 						class="text-2xl pt-4 grid gap-4"
 					>
-						Nieruchomość nie posiada powiązanych ofert.
+						{{ "Real-estate-details.property-info1" | translate }}.
 					</p>
 				</div>
 			</div>
@@ -360,7 +410,7 @@
 		<mat-card *ngIf="data.actualRealEstate?.verificationStatus === 0">
 			<div class="button-box">
 				<button mat-raised-button color="primary" (click)="addOffer()">
-					Dodaj ofertę
+					{{ "Real-estate-add.add-offer" | translate }}
 				</button>
 			</div>
 		</mat-card>
