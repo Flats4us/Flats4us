@@ -41,6 +41,7 @@ import { WatchedOffersComponent } from './components/watched-offers/watched-offe
 import { WatchedOffersModule } from './components/watched-offers/watched-offers.module';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [OfferComponent],
@@ -81,6 +82,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 		WatchedOffersModule,
 		MatBadgeModule,
 		AccessControlDirective,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, SurveyService],
 	exports: [

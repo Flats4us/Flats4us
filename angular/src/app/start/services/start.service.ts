@@ -14,27 +14,27 @@ import { FormControl, FormGroup } from '@angular/forms';
 @Injectable()
 export class StartService {
 	public sortByOptions: ISortOption[] = [
-		{ type: 'Price ASC', direction: 'asc', description: 'ceny: od najniższej' },
-		{ type: 'Price DSC', direction: 'desc', description: 'ceny: od najwyższej' },
+		{ type: 'Price ASC', direction: 'asc', description: 'Start.sort-option1' },
+		{ type: 'Price DSC', direction: 'desc', description: 'Start.sort-option2' },
 		{
 			type: 'NumberOfRooms ASC',
 			direction: 'asc',
-			description: 'liczby pokoi: od najniższej',
+			description: 'Start.sort-option3',
 		},
 		{
 			type: 'NumberOfRooms DSC',
 			direction: 'desc',
-			description: 'liczby pokoi: od najwyższej',
+			description: 'Start.sort-option4',
 		},
 		{
 			type: 'Area ASC',
 			direction: 'asc',
-			description: 'powierzchni: od najniższej',
+			description: 'Start.sort-option5',
 		},
 		{
 			type: 'Area DSC',
 			direction: 'desc',
-			description: 'powierzchni: od najwyższej',
+			description: 'Start.sort-option6',
 		},
 	];
 

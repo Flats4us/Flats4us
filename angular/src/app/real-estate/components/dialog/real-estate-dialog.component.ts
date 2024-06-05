@@ -12,6 +12,7 @@ import { RealEstateService } from '../../services/real-estate.service';
 import { Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-real-estate-dialog',
@@ -26,6 +27,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 		FormsModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [RealEstateService],
 })
@@ -35,6 +37,7 @@ export class RealEstateDialogComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		private router: Router,
 		public dialogRef: MatDialogRef<number>,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -50,16 +53,24 @@ export class RealEstateDialogComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Nieruchomość została pomyślnie usunięta.', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Real-estate-dialog.info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.router.navigate(['/real-estate', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
-					this.snackBar.open('Nie udało się usunąć nieruchomości.', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Real-estate-dialog.info2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data);
 				},
 			});

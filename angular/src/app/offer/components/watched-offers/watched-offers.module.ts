@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [WatchedOffersComponent],
@@ -29,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 		MatTooltipModule,
 		MatDialogModule,
 		StarRatingComponent,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService, MatPaginatorIntl],
 	exports: [WatchedOffersComponent],

@@ -27,8 +27,8 @@
 	"no": "No",
 	"yes": "Yes",
 	"more-options": "More options",
-	"required-days-info1": "Number of days is required",
-	"required-days-info2": "The number of days is incorrect",
+	"required-month-info1": "Number of months is required",
+	"required-month-info2": "The number of months is incorrect",
 	"mth": "mth",
 	"start": "Start",
 	"end": "End",
@@ -162,7 +162,7 @@
 		"my-offers": "My Offers",
 		"rent1": "Rent",
 		"offer-info2": "Failed to add offer. Try again.",
-		"offer-rental-info": "Rental offer waiting to be accepted",
+		"offer-rental-info": "Rental offer waiting to be accepted!",
 		"promoted-offer": "Promoted offer",
 		"date": "Date",
 		"add-offer": "Add Offer",
@@ -193,6 +193,7 @@
 		"offer-status": "Offer status",
 		"start-date": "Start date",
 		"end-date": "End date",
+		"voivodeship": "Voivodeship",
 		"city": "Miasto",
 		"post-code": "Kod pocztowy",
 		"street": "Ulica",
@@ -205,6 +206,11 @@
 		"equipment": "Equipment",
 		"contract-information": "Contract information",
 		"roommates": "Roommates",
+		"owner": "Owner",
+		"name-surname": "Name and Surname",
+		"email-address": "E-mail adress",
+		"main-tenant": "Main tenent",
+		"phone": "Phone number",
 		"st": "st",
 		"add-roommates": "Add roommates",
 		"add-meeting": "Add meeting",
@@ -245,6 +251,15 @@
 		"offer-status3": "rented",
 		"cancel-dialog1": "The offer has ended.",
 		"cancel-dialog2": "Mistake. Try again!"
+	},
+
+	"Property-rating": {
+		"details-property": "Detailed property assessment",
+		"overall-rating": "Overall rating",
+		"value-money": "Value for money",
+		"location": "Location",
+		"service": "Service",
+		"equipment": "Equipment"
 	},
 
 	"Profile": {
@@ -414,11 +429,18 @@
 		"error-message": "Failed to add property. Try again.",
 		"success-message": "Property added successfully!",
 		"close-message": "Close",
-		"add-messsage": "Add offer"
+		"add-messsage": "Add offer",
+		"delete-photo-info1": "The photo has been successfully deleted.",
+		"delete-photo-info2": "Failed to delete photo. Try again.",
+		"property-save-info1": "The property has been successfully saved.",
+		"property-save-info2": "Failed to add property. Try again.",
+		"change-info1": "The changes have been successfully saved!",
+		"change-info2": "Failed to modify the property."
 	},
 	"Real-estate-details": {
 		"property-status": "Property status",
 		"property-description": "Property description",
+		"voivodeship": "Voivodeship",
 		"city": "City",
 		"district": "District",
 		"address": "Address",
@@ -429,11 +451,19 @@
 		"max-inhabitants": "Max. number of inhabitants",
 		"build-year": "Build year",
 		"equipment": "Equipment",
-		"delete-property": "Delete property"
+		"delete-property": "Delete property",
+		"related-offers": "Related offers",
+		"show-offer": "Show offer",
+		"date-issue": "Date of issue",
+		"offer-with": "Offer with",
+		"offer-status": "Offer status",
+		"property-info1": "The property has no related offers"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Property removal",
-		"agree-property-removal-info": "Do you confirm the removal of the property"
+		"agree-property-removal-info": "Do you confirm the removal of the property",
+		"info1": "The property has been successfully deleted.",
+		"info2": "The property could not be removed."
 	},
 	"Rents": {
 		"browse-rentals": "Browse rentals",
@@ -450,7 +480,7 @@
 		"roommates-email": "Roommates address E-mail",
 		"email-fail": "The email address entered does not exist in the system",
 		"agree-rental": "Do you confirm to conclusion of the contract",
-		"days-number-rent": "Number of rental days",
+		"month-number-rent": "Months of rental days",
 		"address-email-roommates": "Roommate email addresses",
 		"rents-info1": "The lease proposal has been accepted!",
 		"rents-info2": "The lease proposal was rejected!",

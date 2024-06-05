@@ -15,6 +15,7 @@ import { RealEstateDetailsComponent } from './real-estate-details.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { OfferService } from 'src/app/offer/services/offer.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RealEstateDetailsComponent],
@@ -35,6 +36,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		RealEstateDialogComponent,
 		MatChipsModule,
 		MatCardModule,
+		TranslateModule,
 	],
 	exports: [RealEstateDetailsComponent],
 	providers: [OfferService],

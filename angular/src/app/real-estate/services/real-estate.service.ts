@@ -246,29 +246,29 @@ export class RealEstateService {
 		{ value: 100, viewValue: '80' },
 	];
 	public yearOfBuilds: INumeric[] = [
-		{ value: 1, viewValue: 'do 1950' },
-		{ value: 2, viewValue: 'od 1950 do 1989' },
-		{ value: 3, viewValue: 'od 1990 do 2010' },
-		{ value: 4, viewValue: 'od 2010' },
+		{ value: 1, viewValue: 'Real-estate.year-type0' },
+		{ value: 2, viewValue: 'Real-estate.year-type1' },
+		{ value: 3, viewValue: 'Real-estate.year-type2' },
+		{ value: 4, viewValue: 'Real-estate.year-type3' },
 	];
 	public properties: INumeric[] = [
-		{ value: 0, viewValue: 'Mieszkanie' },
-		{ value: 1, viewValue: 'Dom' },
-		{ value: 2, viewValue: 'Pokój' },
+		{ value: 0, viewValue: 'Real-estate.property-type0' },
+		{ value: 1, viewValue: 'Real-estate.property-type1' },
+		{ value: 2, viewValue: 'Real-estate.property-type2' },
 	];
 	public equipment: IEquipment[] = [];
 
 	protected apiRoute = `${environment.apiUrl}`;
 
 	public propertyTypes = new Map<number, string>([
-		[0, 'Mieszkanie'],
-		[1, 'Dom'],
-		[2, 'Pokój'],
+		[0, 'Real-estate.property-type0'],
+		[1, 'Real-estate.property-type1'],
+		[2, 'Real-estate.property-type2'],
 	]);
 
 	public propertyStatuses = new Map<number, string>([
-		[0, 'zweryfikowana'],
-		[1, 'niezweryfikowana'],
+		[0, 'Real-estate.property-status0'],
+		[1, 'Real-estate.property-status1'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}

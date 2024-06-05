@@ -34,8 +34,14 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	public currentIndex = 0;
 
 	public menuOptions: IMenuOptions[] = [
-		{ option: 'editRealEstate', description: 'Edytuj nieruchomość' },
-		{ option: 'deleteRealEstate', description: 'Usuń nieruchomość' },
+		{
+			option: 'editRealEstate',
+			description: 'Real-estate-details.edit-property',
+		},
+		{
+			option: 'deleteRealEstate',
+			description: 'Real-estate-details.delete-property',
+		},
 	];
 
 	constructor(

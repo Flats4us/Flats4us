@@ -1,9 +1,11 @@
 <mat-card *ngIf="matches$ | async as students" class="m-3 py-4">
 	<mat-card-header>
-		<mat-card-title class="text-2xl">Twoje dopasowania:</mat-card-title>
-		<mat-card-subtitle *ngIf="students.length === 0"
-			>Wróć tu później, dopasowania pojawią się w tym miejscu</mat-card-subtitle
+		<mat-card-title class="text-2xl"
+			>{{ "Find-roommates.your-match" | translate }}:</mat-card-title
 		>
+		<mat-card-subtitle *ngIf="students.length === 0">{{
+			"Find-roommates.your-match-info" | translate
+		}}</mat-card-subtitle>
 	</mat-card-header>
 	<mat-card-content>
 		<mat-card *ngFor="let student of students" class="m-3">

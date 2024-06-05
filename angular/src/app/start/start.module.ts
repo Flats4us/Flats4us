@@ -32,6 +32,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [StartComponent],
@@ -63,6 +64,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 		MatSnackBarModule,
 		StarRatingComponent,
 		MatDialogModule,
+		TranslateModule,
 	],
 })
 export class StartModule {}
