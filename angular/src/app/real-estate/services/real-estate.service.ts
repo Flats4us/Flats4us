@@ -310,7 +310,10 @@ export class RealEstateService {
 			);
 	}
 
-	public addRealEstateFiles(id: number, formData: FormData): Observable<IResult> {
+	public addRealEstateFiles(
+		id: number,
+		formData: FormData
+	): Observable<IResult> {
 		const headers = new HttpHeaders();
 		headers.append('enctype', 'multipart/form-data');
 		return this.httpClient.post<IResult>(
