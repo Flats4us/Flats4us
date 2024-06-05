@@ -22,6 +22,7 @@ import { RentsService } from 'src/app/rents/services/rents.service';
 import { StartService } from 'src/app/start/services/start.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -46,6 +47,7 @@ import { StarRatingComponent } from '@shared/components/star-rating/star-rating.
 		AccessControlDirective,
 		MatSnackBarModule,
 		StarRatingComponent,
+		TranslateModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, StartService],
 	exports: [OfferDetailsComponent],

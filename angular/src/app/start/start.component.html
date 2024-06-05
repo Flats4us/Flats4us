@@ -5,12 +5,12 @@
 		(ngSubmit)="onSubmit()"
 	>
 		<div class="container-title">
-			<h1 class="text-4xl p-4">Znajdź mieszkanie, pokój lub dom do wynajęcia</h1>
+			<h1 class="text-4xl p-4">{{ "Start.start-title" | translate }}</h1>
 		</div>
 		<div class="container">
 			<div class="box-filters">
 				<mat-form-field appearance="fill">
-					<mat-label>Województwo</mat-label>
+					<mat-label>{{ "Start.label1" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>location_on</mat-icon></div>
 					</span>
@@ -25,14 +25,14 @@
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Miejscowość</mat-label>
+					<mat-label>{{ "Start.label2" | translate }}</mat-label>
 					<input
 						id="city"
 						type="text"
-						placeholder="Miejscowość"
 						aria-label="City"
 						matInput
 						formControlName="citiesGroup"
+						placeholder="{{ 'Start.label2' | translate }}"
 						[matAutocomplete]="autoCity"
 					/>
 					<span matPrefix>
@@ -51,7 +51,7 @@
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Odległość</mat-label>
+					<mat-label>{{ "Start.label3" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>directions_walk</mat-icon></div>
 					</span>
@@ -66,7 +66,7 @@
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Rodzaj nieruchomości</mat-label>
+					<mat-label>{{ "Start.label4" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>home</mat-icon></div>
 					</span>
@@ -75,13 +75,13 @@
 							*ngFor="let property of this.realEstateService.properties"
 							[value]="property.value"
 						>
-							{{ property.viewValue }}
+							{{ property.viewValue | translate }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Cena min.</mat-label>
+					<mat-label>{{ "Start.label5" | translate }}.</mat-label>
 					<span matPrefix>
 						<div class="box-icon">
 							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
@@ -91,9 +91,9 @@
 						id="minPrice"
 						formControlName="minPrice"
 						type="number"
-						placeholder="Cena min."
 						aria-label="MinimalPrice"
 						matInput
+						placeholder="{{ 'Start.label5' | translate }}"
 						[matAutocomplete]="autoPriceMin"
 					/>
 					<span class="suffix" class="suffix" matSuffix>zł</span>
@@ -105,11 +105,11 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Cena maks.</mat-label>
+					<mat-label>{{ "Start.label6" | translate }}.</mat-label>
 					<span matPrefix>
 						<div class="box-icon">
 							<mat-icon class="material-symbols-outlined"> sell </mat-icon>
@@ -119,9 +119,9 @@
 						id="maxPrice"
 						formControlName="maxPrice"
 						type="number"
-						placeholder="Cena maks."
 						aria-label="MaximalPrice"
 						matInput
+						placeholder="{{ 'Start.label6' | translate }}"
 						[matAutocomplete]="autoPriceMin"
 					/>
 					<span class="suffix" matSuffix>zł</span>
@@ -133,7 +133,7 @@
 							{{ price.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 				<div class="batch">
 					<button
@@ -141,8 +141,8 @@
 						id="showMoreFilters"
 						type="button"
 						mat-icon-button
-						matTooltip="Pokaż więcej filtrów"
 						aria-label="ShowMoreFilters"
+						matTooltip="{{ 'Start.filter' | translate }}"
 						(click)="showFilters()"
 					>
 						<mat-icon class="ico" [inline]="true">filter_list</mat-icon>
@@ -154,8 +154,8 @@
 						id="showMap"
 						type="button"
 						mat-icon-button
-						matTooltip="Pokaż mapę ofert"
 						aria-label="ShowMap"
+						matTooltip="{{ 'Start.map' | translate }}"
 						(click)="showMap()"
 					>
 						<mat-icon class="ico" [inline]="true">map</mat-icon>
@@ -167,8 +167,8 @@
 						id="showList"
 						type="button"
 						mat-icon-button
-						matTooltip="Pokaż listę ofert"
 						aria-label="ShowMap"
+						matTooltip="{{ 'Start.offer' | translate }}"
 						(click)="showMap()"
 					>
 						<mat-icon class="ico" [inline]="true">view_list</mat-icon>
@@ -179,8 +179,8 @@
 						id="search"
 						type="submit"
 						mat-icon-button
-						matTooltip="Szukaj ofert"
 						aria-label="SearchForOffers"
+						matTooltip="{{ 'Start.search' | translate }}"
 						[disabled]="!startSiteForm.valid"
 					>
 						<mat-icon class="ico" [inline]="true">search</mat-icon>
@@ -190,8 +190,8 @@
 						id="sort"
 						type="button"
 						mat-icon-button
-						matTooltip="Sortuj oferty według"
 						aria-label="SortButton"
+						matTooltip="{{ 'Start.sort' | translate }}"
 						[matMenuTriggerFor]="menu"
 						[disabled]="isMapMode"
 					>
@@ -204,21 +204,21 @@
 							[value]="sortByOption"
 							(click)="onSelect(sortByOption)"
 						>
-							<span>{{ sortByOption.description }}</span>
+							<span>{{ sortByOption.description | translate }}</span>
 						</button>
 					</mat-menu>
 				</div>
 			</div>
 			<div *ngIf="showMoreFilters" class="box-other-filters">
 				<mat-form-field appearance="fill">
-					<mat-label>Dzielnica</mat-label>
+					<mat-label>{{ "Start.label7" | translate }}</mat-label>
 					<input
 						id="district"
 						type="text"
-						placeholder="Dzielnica"
 						aria-label="District"
 						matInput
 						formControlName="districtsGroup"
+						placeholder="{{ 'Start.label7' | translate }}"
 						[matAutocomplete]="autoDistrict"
 					/>
 					<span matPrefix>
@@ -240,7 +240,7 @@
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Powierzchnia od</mat-label>
+					<mat-label>{{ "Start.label8" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 					</span>
@@ -248,9 +248,9 @@
 						id="minArea"
 						formControlName="minArea"
 						type="number"
-						placeholder="Powierzchnia od"
 						aria-label="MinimalArea"
 						matInput
+						placeholder="{{ 'Start.label8' | translate }}"
 						[matAutocomplete]="autoAreaFrom"
 					/>
 					<span matSuffix class="suffix">m²</span>
@@ -262,11 +262,11 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Powierzchnia do</mat-label>
+					<mat-label>{{ "Start.label9" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>straighten</mat-icon></div>
 					</span>
@@ -274,9 +274,9 @@
 						id="maxArea"
 						formControlName="maxArea"
 						type="number"
-						placeholder="Powierzchnia do"
 						aria-label="MaximalArea"
 						matInput
+						placeholder="{{ 'Start.label9' | translate }}"
 						[matAutocomplete]="autoAreaTo"
 					/>
 					<span matSuffix class="suffix">m²</span>
@@ -288,11 +288,11 @@
 							{{ area.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Lata budowy</mat-label>
+					<mat-label>{{ "Start.label10" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon">
 							<mat-icon class="material-symbols-outlined"> date_range </mat-icon>
@@ -303,13 +303,13 @@
 							*ngFor="let year of this.realEstateService.yearOfBuilds"
 							[value]="year.value"
 						>
-							{{ year.viewValue }}
+							{{ year.viewValue | translate }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Min. liczba pokoi</mat-label>
+					<mat-label>{{ "Start.label11" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>meeting_room</mat-icon></div>
 					</span>
@@ -317,9 +317,9 @@
 						id="rooms"
 						formControlName="rooms"
 						type="number"
-						placeholder="Min. liczba pokoi"
 						aria-label="NumberOfRooms"
 						matInput
+						placeholder="{{ 'Start.label11' | translate }}"
 						[matAutocomplete]="autoNumberOfRooms"
 					/>
 					<mat-autocomplete #autoNumberOfRooms="matAutocomplete">
@@ -330,11 +330,11 @@
 							{{ room.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Piętro</mat-label>
+					<mat-label>{{ "Start.label12" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon"><mat-icon>location_city</mat-icon></div>
 					</span>
@@ -342,9 +342,9 @@
 						id="floors"
 						formControlName="floors"
 						type="number"
-						placeholder="Piętro"
 						aria-label="NumberOfFloors"
 						matInput
+						placeholder="{{ 'Start.label12' | translate }}"
 						[matAutocomplete]="autoNumberOfFloors"
 					/>
 					<mat-autocomplete #autoNumberOfFloors="matAutocomplete">
@@ -355,11 +355,11 @@
 							{{ floor.viewValue }}
 						</mat-option>
 					</mat-autocomplete>
-					<mat-error> Nieprawidłowa wartość! </mat-error>
+					<mat-error> {{ "wrong-value" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<mat-form-field appearance="fill">
-					<mat-label>Wyposażenie</mat-label>
+					<mat-label>{{ "Start.label13" | translate }}</mat-label>
 					<span matPrefix>
 						<div class="box-icon">
 							<mat-icon class="material-symbols-outlined"> construction </mat-icon>
@@ -370,7 +370,7 @@
 							*ngFor="let equipment of this.realEstateService.equipment"
 							[value]="equipment.equipmentId"
 						>
-							{{ equipment.name }}
+							{{ "Equipment." + equipment.name | translate }}
 						</mat-option>
 					</mat-select>
 				</mat-form-field>
@@ -391,11 +391,11 @@
 				<div class="container-info">
 					<div class="container-title">
 						<h1 *ngIf="flatOptions.totalCount">
-							Znaleziono
+							{{ "Start.found" | translate }}
 							<span [appGetDescription]="flatOptions.totalCount"></span>
 						</h1>
 						<h1 *ngIf="!flatOptions.totalCount">
-							Nie znaleziono ofert dla podanych parametrów
+							{{ "Start.nofound" | translate }}
 						</h1>
 					</div>
 				</div>
@@ -407,13 +407,16 @@
 						<div class="offer-title-outer">
 							<span class="offer-title-inner"
 								><h2 class="text-m flex items-center">
-									Wynajem -
-									{{ realEstateService.propertyTypes.get(flat.property.propertyType) }}
+									{{ "Start.rent" | translate }} -
+									{{
+										realEstateService.propertyTypes.get(flat.property.propertyType) ?? ""
+											| translate
+									}}
 									{{ flat.property.area }} m² {{ flat.property.city }}
 									<mat-icon
 										*ngIf="flat.isPromoted"
 										class="promotion-icon"
-										matTooltip="Promowana oferta"
+										matTooltip="{{ 'Start.promo' | translate }}"
 										[inline]="true"
 										>new_releases</mat-icon
 									>
@@ -432,24 +435,38 @@
 								<mat-chip>
 									<div class="chip">
 										<mat-icon class="material-symbols-outlined"> sell </mat-icon>
-										<span>Cena: {{ flat.price }} zł/mc</span>
+										<span
+											>{{ "Start.price" | translate }}: {{ flat.price }} zł/{{
+												"mth" | translate
+											}}.</span
+										>
 									</div>
 								</mat-chip>
 								<mat-chip>
 									<div class="chip">
-										<mat-icon>add</mat-icon><span>Kaucja: {{ flat.deposit }} zł/mc</span>
+										<mat-icon>add</mat-icon
+										><span
+											>{{ "Start.bail" | translate }}: {{ flat.deposit }} zł/{{
+												"mth" | translate
+											}}.</span
+										>
 									</div>
 								</mat-chip>
 								<mat-chip>
 									<div class="chip">
 										<mat-icon>straighten</mat-icon>
-										<span>Powierzchnia: {{ flat.property.area }} m²</span>
+										<span
+											>{{ "Start.area" | translate }}: {{ flat.property.area }} m²</span
+										>
 									</div>
 								</mat-chip>
 								<mat-chip *ngIf="flat.property.propertyType !== 2">
 									<div class="chip">
 										<mat-icon>meeting_room</mat-icon>
-										<span>Liczba pokoi: {{ flat.property.numberOfRooms }}</span>
+										<span
+											>{{ "Start.nroom" | translate }}:
+											{{ flat.property.numberOfRooms }}</span
+										>
 									</div>
 								</mat-chip>
 								<mat-chip
@@ -472,8 +489,8 @@
 									id="addToWatched"
 									type="button"
 									color="primary"
-									matTooltip="Dodaj do obserwowanych"
 									aria-label="AddToWatched"
+									matTooltip="{{ 'Start.add-to-watch' | translate }}"
 									[disabled]="flat.isInterest"
 									(click)="addToWatched(flat.offerId)"
 								>

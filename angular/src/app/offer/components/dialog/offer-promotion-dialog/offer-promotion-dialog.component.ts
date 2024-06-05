@@ -12,6 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { catchError, throwError } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
@@ -30,6 +31,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		MatFormFieldModule,
 		MatInputModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 })
@@ -46,6 +48,7 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 		private formBuilder: FormBuilder,
 		private snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -61,15 +64,23 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 				.pipe(this.untilDestroyed(), catchError(this.handleError))
 				.subscribe({
 					next: () => {
-						this.snackBar.open('Pomyślnie dodano promowanie oferty.', 'Zamknij', {
-							duration: 10000,
-						});
+						this.snackBar.open(
+							this.translate.instant('Offer.promotion-info4'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
 						this.dialogRef.close(this.data);
 					},
 					error: () => {
-						this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-							duration: 10000,
-						});
+						this.snackBar.open(
+							this.translate.instant('Offer.promotion-info5'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
 						this.dialogRef.close(this.data);
 					},
 				});
@@ -80,7 +91,7 @@ export class OfferPromotionDialogComponent extends BaseComponent {
 	}
 	private handleError() {
 		return throwError(() => {
-			new Error('Nie udało się dodać promowania. Spróbuj ponownie');
+			new Error(this.translate.instant('Offer.promotion-info6'));
 		});
 	}
 }

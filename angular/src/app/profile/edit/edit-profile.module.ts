@@ -35,6 +35,7 @@ import { ProfileRoutingModule } from '../profile-routing.module';
 import { ProfileService } from '../services/profile.service';
 import { EditProfileComponent } from './edit-profile.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [EditProfileComponent],
@@ -69,6 +70,7 @@ import { MatMenuModule } from '@angular/material/menu';
 		RegisterModule,
 		OfferModule,
 		MatMenuModule,
+		TranslateModule,
 	],
 	exports: [EditProfileComponent],
 	providers: [ProfileService, FormGroupDirective, SurveyService],

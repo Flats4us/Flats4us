@@ -35,6 +35,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ProfileService } from './services/profile.service';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -72,6 +73,7 @@ import { StarRatingComponent } from '@shared/components/star-rating/star-rating.
 		AddOpinionComponent,
 		MatChipsModule,
 		StarRatingComponent,
+		TranslateModule,
 	],
 	exports: [ProfileComponent],
 	providers: [ProfileService, SurveyService, UserService],

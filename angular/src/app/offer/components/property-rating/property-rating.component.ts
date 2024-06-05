@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { IProperty } from 'src/app/real-estate/models/real-estate.models';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-property-rating',
@@ -30,6 +31,7 @@ import { MatIconModule } from '@angular/material/icon';
 		MatSnackBarModule,
 		StarRatingComponent,
 		MatIconModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 	templateUrl: './property-rating.component.html',

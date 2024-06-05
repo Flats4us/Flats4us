@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-offer-cancel-dialog',
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
 		FormsModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 	templateUrl: './offer-cancel-dialog.component.html',
@@ -37,6 +39,7 @@ export class OfferCancelDialogComponent extends BaseComponent {
 		private snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private router: Router,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -48,16 +51,24 @@ export class OfferCancelDialogComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
-					this.snackBar.open('Oferta została zakończona.', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Offer.cancel-dialog1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.router.navigate(['/offer', 'owner']);
 					this.dialogRef.close(this.data);
 				},
 				error: () => {
-					this.snackBar.open('Błąd. Spróbuj ponownie', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Offer.cancel-dialog2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close(this.data);
 				},
 			});
