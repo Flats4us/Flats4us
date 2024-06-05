@@ -231,16 +231,6 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		) {
 			this.completed = true;
 			this.onAdd();
-			// this.snackBar
-			// 	.open(this.modificationType === ModificationType.ADD ? 'Pomyślnie dodano nieruchomość!' :
-			// 	'Pomyślnie zmodyfikowano nieruchomość!', 'Dodaj ofertę', {
-			// 		duration: 10000,
-			// 	})
-			// 	.onAction()
-			// 	.pipe(this.untilDestroyed())
-			// 	.subscribe(() => {
-			// 		this.router.navigate(['offer', 'add']);
-			// 	});
 		}
 	}
 
@@ -483,10 +473,9 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 				this.untilDestroyed(),
 				concatMap(result => {
 					if (this.filesArray.length > 0) {
-						return zip(
-							this.realEstateService.addRealEstateFiles(this.actualId, this.formData),
-							of(result)
-						);
+						return this.realEstateService
+							.addRealEstateFiles(this.actualId, this.formData)
+							.pipe(map(res => of({ files: res, data: result })));
 					}
 					return of(result);
 				})
