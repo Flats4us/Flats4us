@@ -139,7 +139,7 @@
 		"end-dispute": "End dispute",
 		"add-moderate": "Add a moderator to the dispute",
 		"id": "SELECTED DISPUTE ID",
-		"message": "Message",
+		"message": "Message...",
 		"open-dispute-owner-dialog": "Open a dispute with the owner",
 		"start-describing-problem": "Start a discussion by describing your problem"
 	},
@@ -194,9 +194,9 @@
 		"start-date": "Start date",
 		"end-date": "End date",
 		"voivodeship": "Voivodeship",
-		"city": "Miasto",
-		"post-code": "Kod pocztowy",
-		"street": "Ulica",
+		"city": "City",
+		"post-code": "Postal code",
+		"street": "Street",
 		"metric-area": "Metric area",
 		"room-number": "Room number",
 		"floor-number": "Floor number",
@@ -205,6 +205,7 @@
 		"build-year": "Build year",
 		"equipment": "Equipment",
 		"contract-information": "Contract information",
+		"regulations": "Regulations",
 		"roommates": "Roommates",
 		"owner": "Owner",
 		"name-surname": "Name and Surname",
@@ -247,10 +248,11 @@
 		"offer-info1": "Offer added successfully!",
 		"offer-status0": "current",
 		"offer-status1": "outdated",
-		"offer-status2": "suspended",
-		"offer-status3": "rented",
+		"offer-status2": "rented",
+		"offer-status3": "suspended",
 		"cancel-dialog1": "The offer has ended.",
-		"cancel-dialog2": "Mistake. Try again!"
+		"cancel-dialog2": "Mistake. Try again!",
+		"months": "month/s"
 	},
 
 	"Property-rating": {
@@ -274,7 +276,9 @@
 		"interest": "Interests",
 		"documentType0": "ID card",
 		"documentType1": "Student card",
-		"documentType2": "Passport"
+		"documentType2": "Passport",
+		"verified": "verified",
+		"unverified": "unverified"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "YOUR OPINION ABOUT THE USER",
@@ -451,11 +455,12 @@
 		"max-inhabitants": "Max. number of inhabitants",
 		"build-year": "Build year",
 		"equipment": "Equipment",
+		"edit-property": "Edit property",
 		"delete-property": "Delete property",
 		"related-offers": "Related offers",
 		"show-offer": "Show offer",
 		"date-issue": "Date of issue",
-		"offer-with": "Offer with",
+		"offer-with": "Offer from",
 		"offer-status": "Offer status",
 		"property-info1": "The property has no related offers"
 	},
@@ -487,7 +492,9 @@
 		"close": "Close",
 		"error1": "Mistake. Try again!",
 		"error2": "Failed to add a lease. Try again!",
-		"rent-info3": "The lease proposal has been sent to the Owner and is waiting for approval!"
+		"rent-info3": "The lease proposal has been sent to the Owner and is waiting for approval!",
+		"rent-info4": "The e-mail address(es) entered does not exist in the system!",
+		"rent-info5": "The number of roommates exceeds the maximum for this offer"
 	},
 	"Rents-details": {
 		"rent-status": "Rent status",
@@ -662,11 +669,11 @@
 	},
 	"Equipment": {
 		"Dishwasher": "Dishwasher",
-		"WashingMachine": "WashingMachine",
+		"WashingMachine": "Washing machine",
 		"Iron": "Iron",
 		"Kettle": "Kettle",
-		"CoffeeMachine": "CoffeeMachine",
-		"AirConditioning": "AirConditioning",
+		"CoffeeMachine": "Coffee machine",
+		"AirConditioning": "Air conditioning",
 		"Balcony": "Balcony",
 		"TV": "TV",
 		"Bath": "Bath",

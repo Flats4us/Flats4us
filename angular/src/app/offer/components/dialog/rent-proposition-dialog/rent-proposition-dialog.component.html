@@ -76,10 +76,10 @@
 			} as errors"
 		>
 			<mat-error *ngIf="errors.emailError">
-				Wpisany/e adres/y email nie istnieje/ą w systemie!
+				{{ "Rents.rent-info4" | translate }}
 			</mat-error>
 			<mat-error *ngIf="errors.tenantsError">
-				Liczba współlokatorów przekracza maksymalną dla danej oferty -
+				{{ "Rents.rent-info5" | translate }} -
 				{{ data.maxNumberOfInhabitants - 1 }}!
 			</mat-error>
 		</div>

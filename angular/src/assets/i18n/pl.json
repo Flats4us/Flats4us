@@ -139,7 +139,7 @@
 		"end-dispute": "Zakończ spór",
 		"add-moderate": "Dodaj moderatora do sporu",
 		"id": "ID WYBRANEGO SPORU",
-		"message": "Wiadomość",
+		"message": "Wiadomość...",
 		"open-dispute-owner-dialog": "Otwórz spór z właścicielem",
 		"start-describing-problem": "Rozpocznij dyskusję opisując swój problem"
 	},
@@ -204,6 +204,7 @@
 		"build-year": "Rok budowy",
 		"equipment": "Wyposażenie",
 		"contract-information": "Informacje o umowie",
+		"regulations": "Reguły najmu",
 		"roommates": "Współlokatorzy",
 		"owner": "Właściciel",
 		"name-surname": "Imię i nazwisko",
@@ -245,10 +246,11 @@
 		"offer-info1": "Oferta dodana pomyślnie",
 		"offer-status0": "aktualna",
 		"offer-status1": "nieaktualna",
-		"offer-status2": "zawieszona",
-		"offer-status3": "wynajęta",
+		"offer-status2": "wynajęta",
+		"offer-status3": "zawieszona",
 		"cancel-dialog1": "Oferta została zakończona.",
-		"cancel-dialog2": "Błąd. Spróbuj ponownie!"
+		"cancel-dialog2": "Błąd. Spróbuj ponownie!",
+		"months": "miesięce/y"
 	},
 
 	"Property-rating": {
@@ -273,7 +275,9 @@
 		"interest": "Zainteresowania",
 		"documentType0": "Dowód osobisty",
 		"documentType1": "Legitymacja studencka",
-		"documentType2": "Paszport"
+		"documentType2": "Paszport",
+		"verified": "zweryfikowany",
+		"unverified": "niezweryfikowany"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "TWOJA OPINIA O UŻYTKOWNIKU",
@@ -489,7 +493,9 @@
 		"close": "Zamknij",
 		"error1": "Błąd. Spróbuj ponownie!",
 		"error2": "Nie udało się dodać najmu. Spróbuj ponownie!",
-		"rent-info3": "Propozycja najmu została wysłana do Właściciela i czeka na akceptację!"
+		"rent-info3": "Propozycja najmu została wysłana do Właściciela i czeka na akceptację!",
+		"rent-info4": "Wpisany/e adres/y email nie istnieje/ą w systemie!",
+		"rent-info5": "Liczba współlokatorów przekracza maksymalną dla danej oferty"
 	},
 	"Rents-details": {
 		"rent-status": "Status najmu",
