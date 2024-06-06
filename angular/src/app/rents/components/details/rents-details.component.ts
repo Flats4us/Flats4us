@@ -175,17 +175,16 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public makePayment(paymentId: number) {
-		this.rentsService
-			.makePayment(paymentId)
-			.pipe(this.untilDestroyed())
-			.subscribe(() => {
+		this.actualRent$ = this.rentsService.makePayment(paymentId).pipe(
+			this.untilDestroyed(),
+			switchMap(() => {
 				this.snackBar.open('Płatność została pomyślnie opłacona!', 'Zamknij', {
 					duration: 10000,
 				});
-				this.actualRent$ = this.rentId$?.pipe(
-					switchMap(value => this.rentsService.getRentById(parseInt(value)))
+				return this.rentId$?.pipe(
+					switchMap(rentId => this.rentsService.getRentById(parseInt(rentId, 10)))
 				);
-				this.cdr.detectChanges();
-			});
+			})
+		);
 	}
 }
