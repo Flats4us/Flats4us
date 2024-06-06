@@ -136,23 +136,23 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpGet("argument/{id}")]
+        [HttpGet("argument/{argumentId}")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Returns argument by id",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> GetArgumentById(int id)
+        public async Task<IActionResult> GetArgumentById(int argumentId)
         {
             try
             {
                 _logger.LogInformation("Geting Argument by Id");
-                var argument = await _argumentService.GetArgumentById(id);
+                var argument = await _argumentService.GetArgumentById(argumentId);
                 return Ok(argument);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"FAILED: Verifying user - id: {id}");
+                _logger.LogInformation($"FAILED: Verifying user - id: {argumentId}");
                 return BadRequest($"An error occurred: {ex.Message}");
             }
 
@@ -225,13 +225,13 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("argument/status")]
+        [HttpPut("argument/{argumentId}/status")]
         [Authorize(Policy = "Moderator")]
         [SwaggerOperation(
             Summary = "Updating argument status",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> PutArgument(int argumentId, ArgumentStatus status)
+        public async Task<IActionResult> PutArgument(int argumentId,[FromBody] ArgumentStatus status)
         {
             try
             {
