@@ -6,6 +6,7 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IArgumentService
     {
+        public Task<IEnumerable<ArgumentDto>> GetYourArgumentsAsync(int userId, ArgumentStatus argumentStatus);
         public Task<IEnumerable<ArgumentDto>> GetArgumentsAsync(ArgumentStatus argument);
         public Task<ArgumentDto> GetArgumentById(int argumentId);
         public Task AddArgumentAsync(AddArgumentDto input, int studentId);

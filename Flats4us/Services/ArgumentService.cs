@@ -4,10 +4,12 @@ using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using System;
+using System.Linq.Dynamic.Core;
 
 namespace Flats4us.Services
 {
@@ -22,6 +24,42 @@ namespace Flats4us.Services
             _context = context;
             _groupChatService = groupChatService;
             _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<ArgumentDto>> GetYourArgumentsAsync(int userId, ArgumentStatus argumentStatus)
+        {
+            var user = await _context.Users
+                .FindAsync(userId);
+
+            if (user is Student)
+            {
+                var arguments = await _context.Arguments
+                .Include(x => x.ArgumentInterventions)
+                .Where(x => x.Student.UserId == userId)
+                .Where(x => x.ArgumentStatus == argumentStatus)
+                .OrderBy(x=>x.StartDate)
+                .Select(x => _mapper.Map<ArgumentDto>(x))
+                .ToListAsync();
+
+                return arguments;
+            }
+            else if (user is Owner)
+            {
+                var arguments = await _context.Arguments
+                    .Include(x => x.ArgumentInterventions)
+                    .Include(x => x.Rent)
+                        .ThenInclude(x => x.Offer)
+                            .ThenInclude(x => x.Property)
+                    .Where(x => x.Rent.Offer.Property.OwnerId == userId)
+                    .Where(x => x.ArgumentStatus == argumentStatus)
+                    .OrderBy(x => x.StartDate)
+                    .Select(x => _mapper.Map<ArgumentDto>(x))
+                    .ToListAsync();
+
+                return arguments;
+            }
+            else
+                throw new ArgumentException($"User with Id: {userId} is not Student or Owner");
         }
 
         public async Task<IEnumerable<ArgumentDto>> GetArgumentsAsync(ArgumentStatus argumentStatus)
@@ -43,7 +81,7 @@ namespace Flats4us.Services
             return arguments;
         }
 
-        public async Task<ArgumentDto> GetArgumentById(int id)                             //dotyczy moderatora
+        public async Task<ArgumentDto> GetArgumentById(int id)
         {
             var argument = await _context.Arguments
                 .Where(x => x.ArgumentId == id)
@@ -55,14 +93,14 @@ namespace Flats4us.Services
             return argument;
         }
 
-        public async Task AddArgumentAsync(AddArgumentDto input, int userId)            //może stworzyć student lub owner
+        public async Task AddArgumentAsync(AddArgumentDto input, int userId)
         {
             var rent = _context.Rents
                 .Include(r => r.Student)
                 .Include(r => r.OtherStudents)
                 .Include(r => r.Offer)
-                .ThenInclude(o => o.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(ow => ow.Owner)
                 .FirstOrDefault(x => x.RentId == input.RentId)
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
 
@@ -113,13 +151,13 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task OwnerAcceptArgument(int argumentId, int ownerId)                                            //tylko owner
+        public async Task OwnerAcceptArgument(int argumentId, int ownerId)
         {
             var argument = await _context.Arguments
                 .Include(r => r.Rent)
-                .ThenInclude(o => o.Offer)
-                .ThenInclude(p => p.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Offer)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(ow => ow.Owner)
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
@@ -148,13 +186,13 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }   
 
-        public async Task AskForIntervention(int argumentId, int userId)                                        //student lub owner
+        public async Task AskForIntervention(int argumentId, int userId)
         {
             var argument = await _context.Arguments
                 .Include(r => r.Rent)
-                .ThenInclude(o => o.Offer)
-                .ThenInclude(p => p.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Offer)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(ow => ow.Owner)
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
