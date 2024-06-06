@@ -4,10 +4,12 @@ using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using System;
+using System.Linq.Dynamic.Core;
 
 namespace Flats4us.Services
 {
@@ -24,9 +26,52 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<ArgumentDto>> GetYourArgumentsAsync(int userId, ArgumentStatus argumentStatus)
+        {
+            var user = await _context.Users
+                .FindAsync(userId);
+
+            if (user is Student)
+            {
+                var arguments = await _context.Arguments
+                .Include(x => x.ArgumentInterventions)
+                .Where(x => x.Student.UserId == userId)
+                .Where(x => x.ArgumentStatus == argumentStatus)
+                .OrderBy(x=>x.StartDate)
+                .Select(x => _mapper.Map<ArgumentDto>(x))
+                .ToListAsync();
+
+                return arguments;
+            }
+            else if (user is Owner)
+            {
+                var arguments = await _context.Arguments
+                    .Include(x => x.ArgumentInterventions)
+                    .Include(x => x.Rent)
+                        .ThenInclude(x => x.Offer)
+                            .ThenInclude(x => x.Property)
+                    .Where(x => x.Rent.Offer.Property.OwnerId == userId)
+                    .Where(x => x.ArgumentStatus == argumentStatus)
+                    .OrderBy(x => x.StartDate)
+                    .Select(x => _mapper.Map<ArgumentDto>(x))
+                    .ToListAsync();
+
+                return arguments;
+            }
+            else
+                throw new ArgumentException($"User with Id: {userId} is not Student or Owner");
+        }
+
         public async Task<IEnumerable<ArgumentDto>> GetArgumentsAsync(ArgumentStatus argumentStatus)
         {
             var arguments = await _context.Arguments
+                .Include(a=>a.Rent)
+                    .ThenInclude(r=>r.Offer)
+                        .ThenInclude(o=>o.Property)
+                            .ThenInclude(p=>p.Owner)
+                                .ThenInclude(x => x.ProfilePicture)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.ProfilePicture)
                 .Where(x => x.ArgumentStatus == argumentStatus)
                 .Where(x => x.InterventionNeed == true)
                 .OrderBy(x => x.InterventionNeedDate)
@@ -36,7 +81,7 @@ namespace Flats4us.Services
             return arguments;
         }
 
-        public async Task<ArgumentDto> GetArgumentById(int id)                             //dotyczy moderatora
+        public async Task<ArgumentDto> GetArgumentById(int id)
         {
             var argument = await _context.Arguments
                 .Where(x => x.ArgumentId == id)
@@ -48,14 +93,14 @@ namespace Flats4us.Services
             return argument;
         }
 
-        public async Task AddArgumentAsync(AddArgumentDto input, int userId)            //może stworzyć student lub owner
+        public async Task AddArgumentAsync(AddArgumentDto input, int userId)
         {
             var rent = _context.Rents
                 .Include(r => r.Student)
                 .Include(r => r.OtherStudents)
                 .Include(r => r.Offer)
-                .ThenInclude(o => o.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(ow => ow.Owner)
                 .FirstOrDefault(x => x.RentId == input.RentId)
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
 
@@ -72,16 +117,6 @@ namespace Flats4us.Services
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
 
-            var argument = new Argument
-            {
-                StartDate = DateTime.Now,
-                ArgumentStatus = ArgumentStatus.Ongoing,
-                Description = input.Description,
-                RentId = input.RentId,
-                InterventionNeed = false,
-                StudentId = userId
-            };
-
             var StudentsIds = rent.OtherStudents
                 .Select(s => s.UserId)
                 .ToList();
@@ -91,28 +126,42 @@ namespace Flats4us.Services
             int[] usersIds = StudentsIds.ToArray();
 
             await _groupChatService.CreateGroupChatAsync(
-                "Argument pomiędzy: student " + rent.Student.UserId +
-                ", oraz właściciel: " + property.OwnerId,
+                "Argument pomiędzy: student " + rent.Student.Name +
+                ", oraz właściciel: " + owner.Name,
                 usersIds);
+
+            var chatId = _context.GroupChats
+                .Where(x => x.Name.Equals("Argument pomiędzy: student " + rent.Student.Name +
+                ", oraz właściciel: " + owner.Name))
+                .Select(x=>x.GroupChatId)
+                .FirstOrDefault();
+
+            var argument = new Argument
+            {
+                StartDate = DateTime.Now,
+                ArgumentStatus = ArgumentStatus.Ongoing,
+                Description = input.Description,
+                RentId = input.RentId,
+                InterventionNeed = false,
+                StudentId = userId,
+                GroupChatId = chatId
+            };
 
             await _context.Arguments.AddAsync(argument);
             await _context.SaveChangesAsync();
         }
 
-        public async Task OwnerAcceptArgument(int argumentId, int ownerId)                                            //tylko owner
+        public async Task OwnerAcceptArgument(int argumentId, int ownerId)
         {
             var argument = await _context.Arguments
                 .Include(r => r.Rent)
-                .ThenInclude(o => o.Offer)
-                .ThenInclude(p => p.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Offer)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(ow => ow.Owner)
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
-            var owner = argument.Rent?.Offer?.Property?.Owner
-                ?? throw new ArgumentException($"Owner with this Id not found");
-
-            if (!(owner.UserId == ownerId))
+            if (argument.Rent.Offer.Property.OwnerId != ownerId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
             argument.OwnerAcceptanceDate = DateTime.Now;
@@ -134,24 +183,17 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }   
 
-        public async Task AskForIntervention(int argumentId, int userId)                                        //student lub owner
+        public async Task AskForIntervention(int argumentId, int userId)
         {
             var argument = await _context.Arguments
                 .Include(r => r.Rent)
-                .ThenInclude(o => o.Offer)
-                .ThenInclude(p => p.Property)
-                .ThenInclude(ow => ow.Owner)
+                    .ThenInclude(o => o.Offer)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(ow => ow.Owner)
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
-            var owner = argument.Rent?.Offer?.Property?.Owner
-                ?? throw new ArgumentException($"Owner with this ID not found");
-
-            var student = await _context.Students
-                .FindAsync(argument.StudentId)
-                ?? throw new ArgumentException($"Student with ID {argument.StudentId} not found");
-
-            if (!(owner.UserId == userId) && !(student.UserId == userId))
+            if (argument.Rent.Offer.Property.Owner.UserId != userId && argument.StudentId != userId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
             argument.InterventionNeed = true;
@@ -165,6 +207,7 @@ namespace Flats4us.Services
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
+
 
             argument.ArgumentStatus = status;
 
@@ -180,16 +223,18 @@ namespace Flats4us.Services
             return interventions;
         }
 
-        public async Task<ArgumentIntervention> GetInterventionById(int id)
+        public async Task<ArgumentInterventionDto> GetInterventionById(int id)
         {
             var intervention = await _context.ArgumentInterventions
-                .FirstAsync(x => x.ArgumentInterventionId == id)
+                .Where(x => x.ArgumentInterventionId == id)
+                .Select(e => _mapper.Map<ArgumentInterventionDto>(e))
+                .FirstOrDefaultAsync()
                 ?? throw new ArgumentException($"Intervention with ID: {id} not found");
 
             return intervention;
         }
 
-        public async Task AddInterventionAsync(AddArgumentInterventionDto input)
+        public async Task AddInterventionAsync(AddArgumentInterventionDto input, int moderatorId)
         {
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == input.ArgumentId)
@@ -207,7 +252,7 @@ namespace Flats4us.Services
                 Date = DateTime.Now,
                 Justification = input.Justification,
                 ArgumentId = input.ArgumentId,
-                ModeratorId = input.ModeratorId
+                ModeratorId = moderatorId
             };
 
             await _context.ArgumentInterventions.AddAsync(argumentIntervention);

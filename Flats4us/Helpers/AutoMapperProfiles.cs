@@ -155,7 +155,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.SourceUserName, opt => opt.MapFrom(src => src.Student.Name))
                 .ForMember(dest => dest.SourceUserProfilePicture, opt => opt.MapFrom(src => src.Student.ProfilePicture));
 
-            CreateMap<Argument, ArgumentDto>();
+            CreateMap<Argument, ArgumentDto>()
+                .ForMember(dest => dest.Owner , opt => opt.MapFrom(src => src.Rent.Offer.Property.Owner));
 
             CreateMap<ArgumentIntervention, ArgumentInterventionDto>();
         }

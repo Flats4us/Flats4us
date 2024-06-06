@@ -32,9 +32,7 @@
     {
         Ongoing,
         Resolved,
-        Unfounded,
-        ResolvedByMod,
-        UnfoundedByMod
+        Unfounded
     }
 
     public enum DocumentType

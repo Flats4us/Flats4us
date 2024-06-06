@@ -2,6 +2,7 @@
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 public static class DataSeeder
 {
@@ -2541,10 +2542,125 @@ public static class DataSeeder
 
         #endregion
 
+        #region GroupChat
+
+        var groupChat1 = new GroupChat
+        {
+            Name = "groupChat do argument 1"
+        };
+
+        var groupChat2 = new GroupChat
+        {
+            Name = "groupChat do argument 2"
+        };
+
+        var groupChat3 = new GroupChat
+        {
+            Name = "groupChat do argument 3"
+        };
+
+        var groupChat4 = new GroupChat
+        {
+            Name = "groupChat do argument 4"
+        };
+
+        var groupChat5 = new GroupChat
+        {
+            Name = "groupChat do argument 5"
+        };
+
+        var groupChat6 = new GroupChat
+        {
+            Name = "groupChat do argument 6"
+        };
+
+        dbContext.GroupChats.AddRange(groupChat1, groupChat2, groupChat3, groupChat4, groupChat5, groupChat6);
+
+        #endregion
+
+        #region UserGroupChat
+
+        var userGroupChat1 = new UserGroupChat
+        {
+            User = student1,
+            GroupChat = groupChat1
+        };
+
+        var userGroupChat2 = new UserGroupChat
+        {
+            User = owner1,
+            GroupChat = groupChat1
+        };
+
+        var userGroupChat3 = new UserGroupChat
+        {
+            User = student4,
+            GroupChat = groupChat2
+        };
+
+        var userGroupChat4 = new UserGroupChat
+        {
+            User = rent2.Offer.Property.Owner,
+            GroupChat = groupChat2
+        };
+
+        var userGroupChat5 = new UserGroupChat
+        {
+            User = student7,
+            GroupChat = groupChat3
+        };
+
+        var userGroupChat6 = new UserGroupChat
+        {
+            User = rent3.Offer.Property.Owner,
+            GroupChat = groupChat3
+        };
+
+        var userGroupChat7 = new UserGroupChat
+        {
+            User = student10,
+            GroupChat = groupChat4
+        };
+
+        var userGroupChat8 = new UserGroupChat
+        {
+            User = rent4.Offer.Property.Owner,
+            GroupChat = groupChat4
+        };
+
+        var userGroupChat9 = new UserGroupChat
+        {
+            User = student8,
+            GroupChat = groupChat5
+        };
+
+        var userGroupChat10 = new UserGroupChat
+        {
+            User = rent3.Offer.Property.Owner,
+            GroupChat = groupChat5
+        };
+
+        var userGroupChat11 = new UserGroupChat
+        {
+            User = student3,
+            GroupChat = groupChat6
+        };
+
+        var userGroupChat12 = new UserGroupChat
+        {
+            User = rent1.Offer.Property.Owner,
+            GroupChat = groupChat6
+        };
+
+        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12);
+
+        #endregion
+
         #region Argument
 
         var argument1 = new Argument
         {
+            Title = "Tytuł do pierwszego sporu",
             Description = "sprzeczka pierwsza",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 2, 13),
@@ -2554,11 +2670,13 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = null,
             Rent = rent1,
-            Student = student1
+            Student = student1,
+            GroupChat = groupChat1
         };
 
         var argument2 = new Argument
         {
+            Title = "Tytuł do drugeigo sporu",
             Description = "a to jest druga sprzeczka",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 1, 13),
@@ -2568,11 +2686,13 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = null,
             Rent = rent2,
-            Student = student4
+            Student = student4,
+            GroupChat = groupChat2
         };
 
         var argument3 = new Argument
         {
+            Title = "Tytuł do trzeciego sporu",
             Description = "to jest sprzeczka trzecia",
             StartDate = new DateTime(2024, 1, 12),
             OwnerAcceptanceDate = null,
@@ -2582,11 +2702,13 @@ public static class DataSeeder
             InterventionNeedDate = new DateTime(2024, 1, 13),
             MederatorDecisionDate = null,
             Rent = rent3,
-            Student = student7
+            Student = student7,
+            GroupChat = groupChat3
         };
 
         var argument4 = new Argument
         {
+            Title = "Tytuł do czwartego sporu",
             Description = "to jest sprzeczka czwarta",
             StartDate = new DateTime(2023, 6, 24),
             OwnerAcceptanceDate = null,
@@ -2596,11 +2718,13 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = new DateTime(2023, 7, 10),
             Rent = rent4,
-            Student = student10
+            Student = student10,
+            GroupChat = groupChat4
         };
 
         var argument5 = new Argument
         {
+            Title = "Tytuł do piątego sporu",
             Description = "to jest sprzeczka piąta",
             StartDate = new DateTime(2024, 4, 12),
             OwnerAcceptanceDate = new DateTime(2024, 4, 15),
@@ -2610,12 +2734,14 @@ public static class DataSeeder
             InterventionNeedDate = null,
             MederatorDecisionDate = new DateTime(2024, 4, 14),
             Rent = rent3,
-            Student = student8
+            Student = student8,
+            GroupChat = groupChat5
         };
 
         var argument6 = new Argument
         {
-            Description = "sprzeczka pierwsza",
+            Title = "Tytuł do szóstego sporu",
+            Description = "sprzeczka szósta",
             StartDate = new DateTime(2024, 2, 22),
             OwnerAcceptanceDate = null,
             StudentAccceptanceDate = null,
@@ -2624,7 +2750,8 @@ public static class DataSeeder
             InterventionNeedDate = new DateTime(2024, 2, 23),
             MederatorDecisionDate = null,
             Rent = rent1,
-            Student = student3
+            Student = student3,
+            GroupChat = groupChat6
         };
 
         dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4, argument5, argument6);
