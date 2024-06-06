@@ -77,7 +77,7 @@ namespace Flats4us.Controllers
             }
         }
 
-        [HttpPut("ownerAcceptArgument")]
+        [HttpPut("{argumentId}/owner-accept")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
             Summary = "Accepting argument on Owner side",
@@ -97,11 +97,11 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
-        [HttpPut("studentAcceptArgument")]
+        [HttpPut("{argumentId}/student-accept")]
         [Authorize(Policy = "VerifiedStudent")]
         [SwaggerOperation(
             Summary = "Accepting argument on Student side",
@@ -121,11 +121,11 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
-        [HttpPut("askingForIntervention/{id}")]
+        [HttpPut("{argumentId}/asking-for-intervention")]
         [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Asking moderator for intervention",
@@ -145,7 +145,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
     }

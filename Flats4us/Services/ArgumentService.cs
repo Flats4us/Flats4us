@@ -161,10 +161,7 @@ namespace Flats4us.Services
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
-            var owner = argument.Rent?.Offer?.Property?.Owner
-                ?? throw new ArgumentException($"Owner with this Id not found");
-
-            if (!(owner.UserId == ownerId))
+            if (argument.Rent.Offer.Property.OwnerId != ownerId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
             argument.OwnerAcceptanceDate = DateTime.Now;
