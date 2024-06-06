@@ -16,8 +16,6 @@
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
 
-
-
         private readonly static ConcurrentDictionary<int, string> _connections = new ConcurrentDictionary<int, string>();
 
         public ChatHub(IChatService chatService, 
@@ -52,11 +50,6 @@
             };
             await _chatService.SaveMessage(chatMessage);
 
-            
-
-
-
-
             if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
             {
 
@@ -78,7 +71,6 @@
                 return null;
         }
 
-
         public async Task SendMessageToAll(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -89,7 +81,6 @@
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
         }
-
 
         public async Task SendMessageToGroup(string groupName, string message)
         {
@@ -106,14 +97,12 @@
             return userId != 0 ? userId : (int?)null;
         }
 
-
         public async Task JoinGroupChat(int groupChatId)
         {
             //var userId = GetUserId();
             var userId = GetUserIdByConnectionId(Context.ConnectionId);
 
             // var userId = (Context.User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
 
             if (userId == null) return;
 
@@ -141,7 +130,6 @@
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"GroupChat-{groupChatId}");
         }
 
-
         public override async Task OnConnectedAsync()
         {
             Console.WriteLine("connected");
@@ -161,7 +149,6 @@
                 _connections.TryRemove(userId.Value, out _);
             }
             // When a user disconnects, remove them from the group
-           
         }
     }
 }
