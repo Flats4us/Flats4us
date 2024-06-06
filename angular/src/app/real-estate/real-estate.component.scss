@@ -28,15 +28,13 @@
 .container-list {
 	text-align: left;
 	box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.24);
-	margin-left: 12px;
 	min-height: 100%;
 	min-width: max-content;
-	padding-top: 4px;
 }
 
 .container-outlet {
 	width: 100%;
-	margin: 0 8px;
+	margin-left: 8px;
 }
 
 .item-list {
@@ -63,6 +61,22 @@
 	align-items: center;
 }
 
+@media screen and (max-width: 768px) {
+	.box-subtitle {
+		display: flex;
+		justify-content: left;
+		margin-bottom: 16px;
+		max-width: 240px;
+		overflow: hidden;
+	}
+	.container-list {
+		text-align: left;
+		box-shadow: 8px 8px 30px -12px rgba(0, 0, 0, 0.24);
+		min-height: 100%;
+		min-width: 100%;
+	}
+}
+
 @media screen and (max-width: 992px) {
 	.real-estate-owner {
 		background: white;
@@ -72,7 +86,7 @@
 	}
 	.container-outlet {
 		width: 100%;
-		margin-left: 4px;
+		margin-left: 0;
 		padding: 4px;
 	}
 	.box-title {

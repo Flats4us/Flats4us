@@ -246,8 +246,8 @@
 		"offer-info1": "Oferta dodana pomyślnie",
 		"offer-status0": "aktualna",
 		"offer-status1": "nieaktualna",
-		"offer-status2": "zawieszona",
-		"offer-status3": "wynajęta",
+		"offer-status2": "wynajęta",
+		"offer-status3": "zawieszona",
 		"cancel-dialog1": "Oferta została zakończona.",
 		"cancel-dialog2": "Błąd. Spróbuj ponownie!"
 	},

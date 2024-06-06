@@ -1,12 +1,10 @@
-<h1 class="text-2xl p-4 font-semibold">
-	{{ "Property-rating.details-property" | translate }}
-</h1>
+<h1 class="text-2xl p-4 font-semibold">Szczegółowa ocena nieruchomości</h1>
 <div mat-dialog-content class="flex-col items-center justify-center">
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
-			<mat-icon class="material-symbols-outlined mr-4" [inline]="true"
+			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>functions</mat-icon
-			>{{ "Property-rating.overall-rating" | translate }}:</mat-label
+			>Ogólna ocena:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -15,9 +13,9 @@
 	</div>
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
-			<mat-icon class="material-symbols-outlined mr-4" [inline]="true"
+			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>savings</mat-icon
-			>{{ "Property-rating.value-money" | translate }}:</mat-label
+			>Jakość do ceny:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -26,9 +24,9 @@
 	</div>
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
-			<mat-icon class="material-symbols-outlined mr-4" [inline]="true"
+			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>home_pin</mat-icon
-			>{{ "Property-rating.location" | translate }}:</mat-label
+			>Lokalizacja:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -37,9 +35,9 @@
 	</div>
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
-			<mat-icon class="material-symbols-outlined mr-4" [inline]="true"
+			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>manage_accounts</mat-icon
-			>{{ "Property-rating.service" | translate }}:</mat-label
+			>Obsługa:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -48,9 +46,9 @@
 	</div>
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
-			<mat-icon class="material-symbols-outlined mr-4" [inline]="true"
+			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>construction</mat-icon
-			>{{ "Property-rating.equipment" | translate }}:</mat-label
+			>Wyposażenie:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -66,6 +64,6 @@
 		cdkFocusInitial
 		(click)="onClose()"
 	>
-		{{ "return" | translate }}
+		Powrót
 	</button>
 </div>

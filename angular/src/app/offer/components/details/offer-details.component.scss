@@ -284,7 +284,7 @@ mat-card-avatar:hover {
 	cursor: pointer;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.slider {
 		width: 100%;
 		min-height: 300px;
@@ -312,27 +312,24 @@ mat-card-avatar:hover {
 	.box-feature {
 		display: flex;
 		align-items: center;
-		max-width: 140px;
+		max-width: 100px;
 		overflow: hidden;
 	}
 	.icon-feature {
 		display: none;
 	}
-}
-
-@media screen and (max-width: 800px) {
 	.offer-title-inner {
 		background: rgba(0, 0, 0, 0.204);
 		color: white;
 		position: absolute;
-		min-width: 300px;
+		min-width: 240px;
 		padding: 4px;
 		z-index: 996;
 	}
 	.box-equipment {
 		display: flex;
 		align-items: center;
-		max-width: 150px;
+		max-width: 100px;
 		overflow: hidden;
 	}
 	.label-right {
@@ -344,13 +341,6 @@ mat-card-avatar:hover {
 		align-items: center;
 		float: left;
 		margin-right: auto;
-	}
-	.column {
-		padding: 4px;
-		float: left;
-		width: 50%;
-		overflow-wrap: break-word;
-		max-width: 300px;
 	}
 	.profile-details {
 		display: flex;

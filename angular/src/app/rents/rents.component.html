@@ -39,22 +39,24 @@
 					class="item-list"
 					routerLink="{{ rent.rentId }}"
 					><div class="box-title">
-						<div class="flex-col text-xl font-bold">
-							<div>
-								Najem -
-								{{
-									realEstateService.propertyTypes.get(rent.propertyType) ?? ""
-										| translate
-								}}
+						<div class="flex-col text-xl font-bold w-full">
+							<div class="flex justify-between">
+								<span>
+									Najem -
+									{{
+										realEstateService.propertyTypes.get(rent.propertyType) ?? ""
+											| translate
+									}}</span
+								>
+								<mat-icon
+									[ngClass]="rent.isFinished ? 'box-icon-invalid' : 'box-icon-valid'"
+									>check_circle</mat-icon
+								>
 							</div>
 							<div>{{ rent.propertyAddress }}</div>
 						</div>
-						<mat-icon
-							[ngClass]="rent.isFinished ? 'box-icon-invalid' : 'box-icon-valid'"
-							>check_circle</mat-icon
-						>
 					</div>
-					<div class="box-date">Data {{ rent.startDate | date }}</div>
+					<div class="box-date">Data: {{ rent.startDate | date }}</div>
 				</a>
 			</mat-nav-list>
 		</div>

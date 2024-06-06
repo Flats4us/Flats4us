@@ -248,8 +248,8 @@
 		"offer-info1": "Offer added successfully!",
 		"offer-status0": "current",
 		"offer-status1": "outdated",
-		"offer-status2": "suspended",
-		"offer-status3": "rented",
+		"offer-status2": "rented",
+		"offer-status3": "suspended",
 		"cancel-dialog1": "The offer has ended.",
 		"cancel-dialog2": "Mistake. Try again!"
 	},

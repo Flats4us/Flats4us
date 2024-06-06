@@ -442,7 +442,7 @@
 									*ngFor="let equipment of this.realEstateService.equipment"
 									[value]="equipment.equipmentId"
 								>
-									{{ equipment.name | translate }}
+									{{ "Equipment." + equipment.name | translate }}
 								</mat-option>
 							</mat-select>
 						</mat-form-field>
