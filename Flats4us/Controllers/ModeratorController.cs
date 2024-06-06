@@ -49,7 +49,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -71,7 +71,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Verifying property - id: {id}");
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -91,7 +91,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Verifying user - id: {id}");
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Verifying user - id: {argumentId}");
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
 
 
@@ -176,7 +176,7 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Verifying user - id: {id}");
-                return BadRequest($"An error occurred: {ex.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -222,7 +222,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding intervention - body: {input}");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Editing argument");
-                return BadRequest($"An error occurred: {ex.InnerException.Message}");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }
     }
