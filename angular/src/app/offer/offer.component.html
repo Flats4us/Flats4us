@@ -61,8 +61,7 @@
 									<div>
 										{{ "Offer.rent1" | translate }} -
 										{{
-											realEstateService.propertyTypes.get(offer.property.propertyType) ??
-												"" | translate
+											offerService.getOfferStatus(offer.property.propertyType) | translate
 										}}
 									</div>
 									<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>

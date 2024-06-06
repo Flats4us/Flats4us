@@ -16,10 +16,7 @@
 				<mat-label class="label-description">
 					<span class="text-3xl"
 						>{{ "Offer.offer-status" | translate }}:
-						{{
-							offerService.offerStatuses.get(data.offer?.offerStatus ?? 0) ?? ""
-								| translate
-						}}
+						{{ offerService.getOfferStatus(data.offer?.offerStatus) | translate }}
 						<button
 							*ngIf="data.offer?.rentPropositionToShow"
 							mat-mini-fab
@@ -68,9 +65,8 @@
 									><h1 class="text-3xl">
 										{{ "Offer.rent1" | translate }} -
 										{{
-											realEstateService.propertyTypes.get(
-												data.offer?.property?.propertyType ?? 0
-											) ?? "" | translate
+											realEstateService.getPropertyType(data.offer?.property?.propertyType)
+												| translate
 										}}
 										{{ data.offer?.property?.area }} m² {{ data.offer?.property?.city }}
 									</h1>

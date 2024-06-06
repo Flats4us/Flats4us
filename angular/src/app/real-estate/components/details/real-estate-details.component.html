@@ -11,9 +11,9 @@
 					<span class="text-3xl"
 						>{{ "Real-estate-details.property-status" | translate }}:
 						{{
-							realEstateService.propertyStatuses.get(
-								data.actualRealEstate?.verificationStatus ?? 0
-							) ?? "" | translate
+							realEstateService.getPropertyStatus(
+								data.actualRealEstate?.verificationStatus
+							) | translate
 						}}</span
 					>
 				</mat-label>
@@ -31,9 +31,9 @@
 								<span class="offer-title-inner"
 									><h1 class="text-3xl">
 										{{
-											realEstateService.propertyTypes.get(
-												data.actualRealEstate?.propertyType ?? 0
-											) ?? "" | translate
+											realEstateService.getPropertyType(
+												data.actualRealEstate?.propertyType
+											) | translate
 										}}
 										{{ data.actualRealEstate?.area }} m² {{ data.actualRealEstate?.city }}
 									</h1></span
@@ -400,7 +400,7 @@
 											<span
 												>Status:
 												{{
-													offerService.offerStatuses.get(offer.offerStatus) ?? "" | translate
+													offerService.getOfferStatus(offer.offerStatus) | translate
 												}}</span
 											>
 										</div></mat-chip

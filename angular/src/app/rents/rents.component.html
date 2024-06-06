@@ -44,8 +44,7 @@
 								<span>
 									Najem -
 									{{
-										realEstateService.propertyTypes.get(rent.propertyType) ?? ""
-											| translate
+										realEstateService.getPropertyType(rent.propertyType) | translate
 									}}</span
 								>
 								<mat-icon

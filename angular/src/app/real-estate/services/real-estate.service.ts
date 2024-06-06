@@ -274,6 +274,22 @@ export class RealEstateService {
 
 	constructor(private httpClient: HttpClient) {}
 
+	public getPropertyType(id?: number): string {
+		const result = this.propertyTypes.get(id ?? 0);
+		if (result !== undefined) {
+			return result;
+		}
+		return 'Real-estate.property-type0';
+	}
+
+	public getPropertyStatus(id?: number): string {
+		const result = this.propertyStatuses.get(id ?? 0);
+		if (result !== undefined) {
+			return result;
+		}
+		return 'Real-estate.property-status0';
+	}
+
 	public readAllEquipment(): Observable<IEquipment[]> {
 		return this.getEquipment('').pipe(
 			map(equipments => {
