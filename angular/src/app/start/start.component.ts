@@ -71,7 +71,7 @@ export class StartComponent
 	@ViewChild(MatPaginator, { static: true })
 	private paginator: MatPaginator = new MatPaginator(
 		this.matPaginatorIntl,
-		ChangeDetectorRef.prototype
+		this.changeDetectorRef
 	);
 
 	@Output()
@@ -288,13 +288,13 @@ export class StartComponent
 
 	public onSubmit() {
 		if (this.startSiteForm.valid) {
-			this.filterOffers();
+			this.filterOffers(true);
 		}
 	}
 
 	public onSelect(sortByOption: ISortOption) {
 		this.startSiteForm.patchValue({ sorting: sortByOption });
-		this.filterOffers();
+		this.filterOffers(true);
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -333,11 +333,15 @@ export class StartComponent
 		this.pageEvent = e;
 		this.pageSize = e.pageSize;
 		this.pageIndex = e.pageIndex;
-		this.filterOffers();
+		this.filterOffers(false);
 	}
 
-	public async filterOffers() {
+	public async filterOffers(onSumbit: boolean) {
 		this.isLoading$ = of(true);
+		if (onSumbit) {
+			this.pageIndex = 0;
+			this.pageSize = 6;
+		}
 		this.startService
 			.getFilteredOffers(this.startSiteForm.value, this.pageIndex, this.pageSize)
 			.pipe(this.untilDestroyed())

@@ -41,7 +41,7 @@
 		"next-page": "next page",
 		"previous-page": "previous page",
 		"of": "of",
-		"offer-info": "offer"
+		"offer-info": "offers"
 	},
 
 	"Forgot-password": {
@@ -139,7 +139,7 @@
 		"end-dispute": "End dispute",
 		"add-moderate": "Add a moderator to the dispute",
 		"id": "SELECTED DISPUTE ID",
-		"message": "Message...",
+		"message": "Message",
 		"open-dispute-owner-dialog": "Open a dispute with the owner",
 		"start-describing-problem": "Start a discussion by describing your problem"
 	},
@@ -251,8 +251,7 @@
 		"offer-status2": "rented",
 		"offer-status3": "suspended",
 		"cancel-dialog1": "The offer has ended.",
-		"cancel-dialog2": "Mistake. Try again!",
-		"months": "month/s"
+		"cancel-dialog2": "Mistake. Try again!"
 	},
 
 	"Property-rating": {
@@ -492,9 +491,7 @@
 		"close": "Close",
 		"error1": "Mistake. Try again!",
 		"error2": "Failed to add a lease. Try again!",
-		"rent-info3": "The lease proposal has been sent to the Owner and is waiting for approval!",
-		"rent-info4": "The e-mail address(es) entered does not exist in the system!",
-		"rent-info5": "The number of roommates exceeds the maximum for this offer"
+		"rent-info3": "The lease proposal has been sent to the Owner and is waiting for approval!"
 	},
 	"Rents-details": {
 		"rent-status": "Rent status",
