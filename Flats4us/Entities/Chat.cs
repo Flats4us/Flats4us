@@ -19,8 +19,6 @@ namespace Flats4us.Entities
 
         public virtual Owner Owner { get; set; }
 
-        
-
         public virtual ICollection<ChatMessage> ChatMessages { get; set; }
 
         public Chat()

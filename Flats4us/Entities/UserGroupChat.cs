@@ -10,7 +10,6 @@ namespace Flats4us.Entities
         [Required]
         public int GroupChatId { get; set; }
 
-        // Navigation properties
         public virtual User User { get; set; }
         public virtual GroupChat GroupChat { get; set; }
     }
