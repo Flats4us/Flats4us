@@ -2670,6 +2670,7 @@ public static class DataSeeder
 
         var argument1 = new Argument
         {
+            Title = "Tytuł do pierwszego sporu",
             Description = "sprzeczka pierwsza",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 2, 13),
@@ -2685,6 +2686,7 @@ public static class DataSeeder
 
         var argument2 = new Argument
         {
+            Title = "Tytuł do drugeigo sporu",
             Description = "a to jest druga sprzeczka",
             StartDate = new DateTime(2023, 1, 12),
             OwnerAcceptanceDate = new DateTime(2023, 1, 13),
@@ -2700,6 +2702,7 @@ public static class DataSeeder
 
         var argument3 = new Argument
         {
+            Title = "Tytuł do trzeciego sporu",
             Description = "to jest sprzeczka trzecia",
             StartDate = new DateTime(2024, 1, 12),
             OwnerAcceptanceDate = null,
@@ -2715,6 +2718,7 @@ public static class DataSeeder
 
         var argument4 = new Argument
         {
+            Title = "Tytuł do czwartego sporu",
             Description = "to jest sprzeczka czwarta",
             StartDate = new DateTime(2023, 6, 24),
             OwnerAcceptanceDate = null,
@@ -2730,6 +2734,7 @@ public static class DataSeeder
 
         var argument5 = new Argument
         {
+            Title = "Tytuł do piątego sporu",
             Description = "to jest sprzeczka piąta",
             StartDate = new DateTime(2024, 4, 12),
             OwnerAcceptanceDate = new DateTime(2024, 4, 15),
@@ -2745,7 +2750,8 @@ public static class DataSeeder
 
         var argument6 = new Argument
         {
-            Description = "sprzeczka pierwsza",
+            Title = "Tytuł do szóstego sporu",
+            Description = "sprzeczka szósta",
             StartDate = new DateTime(2024, 2, 22),
             OwnerAcceptanceDate = null,
             StudentAccceptanceDate = null,
