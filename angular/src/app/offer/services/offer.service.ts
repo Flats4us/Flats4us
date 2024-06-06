@@ -26,10 +26,7 @@ export class OfferService {
 
 	public getOfferStatus(id?: number): string {
 		const result = this.offerStatuses.get(id ?? 0);
-		if (result !== undefined) {
-			return result;
-		}
-		return 'Offer.offer-status0';
+		return result ?? 'Offer.offer-status0';
 	}
 
 	public getOfferById(id: number): Observable<IOffer> {
