@@ -36,13 +36,15 @@ namespace Flats4us.Services
                 throw new ArgumentException("Chat not found.");
             }
 
-            int otherUserId = 0; 
-            if (chat.StudentId == senderUserId) { otherUserId = chat.StudentId; } else if (chat.OwnerId == senderUserId) { otherUserId = chat.OwnerId; }
-            else return null;
-
-
-            return otherUserId;
-
+            if (chat.StudentId == senderUserId)
+            {
+                return chat.StudentId; 
+            } 
+            else if (chat.OwnerId == senderUserId) 
+            {
+                return chat.OwnerId; 
+            }
+            else throw new ArgumentException("Failed to get other user id");
         }
 
 
