@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
@@ -231,12 +232,12 @@ namespace Flats4us.Controllers
             Summary = "Updating argument status",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> PutArgument(int argumentId,[FromBody] ArgumentStatus status)
+        public async Task<IActionResult> PutArgument(int argumentId, [FromBody]  InputDto<ArgumentStatus> status)
         {
             try
             {
                 _logger.LogInformation("Put Argument");
-                await _argumentService.EditStatusArgumentAsync(argumentId, status);
+                await _argumentService.EditStatusArgumentAsync(argumentId, status.Value);
                 return Ok("Argument Updated");
             }
             catch (Exception ex)

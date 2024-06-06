@@ -193,14 +193,7 @@ namespace Flats4us.Services
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
 
-            var owner = argument.Rent?.Offer?.Property?.Owner
-                ?? throw new ArgumentException($"Owner with this ID not found");
-
-            var student = await _context.Students
-                .FindAsync(argument.StudentId)
-                ?? throw new ArgumentException($"Student with ID {argument.StudentId} not found");
-
-            if (!(owner.UserId == userId) && !(student.UserId == userId))
+            if (argument.Rent.Offer.Property.Owner.UserId != userId && argument.StudentId != userId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
             argument.InterventionNeed = true;
@@ -214,6 +207,7 @@ namespace Flats4us.Services
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
+
 
             argument.ArgumentStatus = status;
 
