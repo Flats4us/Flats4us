@@ -9,18 +9,18 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Azure.Core;
 using Flats4us.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/chats")]
     [ApiController]
     public class ChatController : ControllerBase
     {
         private readonly IChatService _chatService;
         private readonly IHubContext<ChatHub> _chatHub;
         public readonly Flats4usContext _context;
-
 
         public ChatController(IChatService chatService, IHubContext<ChatHub> chatHub, Flats4usContext context)
         {
@@ -29,9 +29,9 @@ namespace Flats4us.Controllers
             _context = context;
         }
 
-        // POST: chat/sendmessage
+        // POST: api/chats/send-message
         [Authorize]
-        [HttpPost("sendmessage")]
+        [HttpPost("send-message")]
         public async Task<IActionResult> SendMessage(int receiverUserId, string message)
         {
             var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -42,8 +42,6 @@ namespace Flats4us.Controllers
             }
 
             var senderUser = await _context.Users.FindAsync(senderUserId);
-
-
 
             var chat = await _chatService.EnsureChatSession(senderUserId, receiverUserId);
             if (chat == null)
@@ -67,8 +65,8 @@ namespace Flats4us.Controllers
             return Ok();
         }
 
-        // GET: chat/history/{chatId}
-        [HttpGet("history/{chatId}")]
+        // GET: api/chats/{chatId}/history
+        [HttpGet("{chatId}/history")]
         public async Task<IActionResult> GetChatHistory(int chatId)
         {
             var history = await _chatService.GetChatHistory(chatId);
@@ -79,8 +77,13 @@ namespace Flats4us.Controllers
 
             return Ok(history);
         }
+
+        // GET: api/chats/{chatId}/participants
         [Authorize]
-        [HttpGet("participant/{chatId}")]
+        [HttpGet("{chatId}/participants")]
+        [SwaggerOperation(
+            Summary = "Returns list of chats for current user"
+        )]
         public async Task<IActionResult> GetParticipantId(int chatId)
         {
             var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -98,9 +101,12 @@ namespace Flats4us.Controllers
             return Ok(participantId);
         }
 
-
+        // GET: api/chats/user
         [Authorize]
-        [HttpGet("user/chats")]
+        [HttpGet("user")]
+        [SwaggerOperation(
+            Summary = "Returns list of chats for current user"
+        )]
         public async Task<IActionResult> GetUserChats()
         {
             try
