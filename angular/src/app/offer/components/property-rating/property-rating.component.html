@@ -1,10 +1,12 @@
-<h1 class="text-2xl p-4 font-semibold">Szczegółowa ocena nieruchomości</h1>
+<h1 class="text-2xl p-4 font-semibold">
+	{{ "Property-rating.details-property" | translate }}
+</h1>
 <div mat-dialog-content class="flex-col items-center justify-center">
 	<div class="flex items-center mt-4">
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
 			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>functions</mat-icon
-			>Ogólna ocena:</mat-label
+			>{{ "Property-rating.overall-rating" | translate }}:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -15,7 +17,7 @@
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
 			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>savings</mat-icon
-			>Jakość do ceny:</mat-label
+			>{{ "Property-rating.value-money" | translate }}:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -26,7 +28,7 @@
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
 			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>home_pin</mat-icon
-			>Lokalizacja:</mat-label
+			>{{ "Property-rating.location" | translate }}:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -37,7 +39,7 @@
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
 			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>manage_accounts</mat-icon
-			>Obsługa:</mat-label
+			>{{ "Property-rating.service" | translate }}:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -48,7 +50,7 @@
 		<mat-label class="flex text-xl p-4 font-semibold items-center">
 			<mat-icon class="material-symbols-outlined mr-4 icon-feature" [inline]="true"
 				>construction</mat-icon
-			>Wyposażenie:</mat-label
+			>{{ "Property-rating.equipment" | translate }}:</mat-label
 		>
 		<app-star-rating
 			class="ml-auto"
@@ -64,6 +66,6 @@
 		cdkFocusInitial
 		(click)="onClose()"
 	>
-		Powrót
+		{{ "return" | translate }}
 	</button>
 </div>
