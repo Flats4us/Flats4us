@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { IResult } from 'src/app/offer/models/offer.models';
 import {
 	IAddProperty,
 	IAddResult,
@@ -273,6 +274,16 @@ export class RealEstateService {
 
 	constructor(private httpClient: HttpClient) {}
 
+	public getPropertyType(id?: number): string {
+		const result = this.propertyTypes.get(id ?? 0);
+		return result ?? 'Real-estate.property-type0';
+	}
+
+	public getPropertyStatus(id?: number): string {
+		const result = this.propertyStatuses.get(id ?? 0);
+		return result ?? 'Real-estate.property-status0';
+	}
+
 	public readAllEquipment(): Observable<IEquipment[]> {
 		return this.getEquipment('').pipe(
 			map(equipments => {
@@ -309,10 +320,13 @@ export class RealEstateService {
 			);
 	}
 
-	public addRealEstateFiles(id: number, formData: FormData): Observable<void> {
+	public addRealEstateFiles(
+		id: number,
+		formData: FormData
+	): Observable<IResult> {
 		const headers = new HttpHeaders();
 		headers.append('enctype', 'multipart/form-data');
-		return this.httpClient.post<void>(
+		return this.httpClient.post<IResult>(
 			`${this.apiRoute}/properties/${id}/files`,
 			formData,
 			{ headers }

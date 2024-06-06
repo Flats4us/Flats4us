@@ -21,9 +21,11 @@ import { HttpClient } from '@angular/common/http';
 import {
 	BehaviorSubject,
 	Observable,
+	concat,
 	concatMap,
 	filter,
 	map,
+	of,
 	switchMap,
 	zip,
 } from 'rxjs';
@@ -232,19 +234,6 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		) {
 			this.completed = true;
 			this.onAdd();
-			this.snackBar
-				.open(
-					this.translate.instant('Real-estate-add.success-message'),
-					this.translate.instant('Real-estate-add.add-offer'),
-					{
-						duration: 10000,
-					}
-				)
-				.onAction()
-				.pipe(this.untilDestroyed())
-				.subscribe(() => {
-					this.router.navigate(['offer', 'add']);
-				});
 		}
 	}
 
@@ -493,18 +482,22 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.editRealEstate(this.addRealEstateForm.value, this.actualId)
 			.pipe(
 				this.untilDestroyed(),
-				concatMap(() =>
-					this.realEstateService.addRealEstateFiles(this.actualId, this.formData)
-				)
+				concatMap(result => {
+					if (this.filesArray.length > 0) {
+						return concat(
+							this.realEstateService.addRealEstateFiles(this.actualId, this.formData),
+							of(result)
+						);
+					}
+					return of(result);
+				})
 			)
 			.subscribe({
 				next: () => {
 					this.snackBar.open(
 						this.translate.instant('Real-estate-add.change-info1'),
 						this.translate.instant('close'),
-						{
-							duration: 10000,
-						}
+						{ duration: 10000 }
 					);
 					this.router.navigate(['/']);
 				},

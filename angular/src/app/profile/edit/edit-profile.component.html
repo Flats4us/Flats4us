@@ -94,17 +94,20 @@
 						Status:
 						{{
 							actualUser.verificationStatus === 0
-								? toLowerCase(sType.VERIFIED)
-								: toLowerCase(sType.UNVERIFIED)
+								? ("Profile.verified" | translate)
+								: ("Profile.unverified" | translate)
 						}}
 					</div>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
-						class="text-2xl pb-2"
+						class="text-2xl pb-2 text-center"
 					>
 						Email: {{ actualUser.email }}
 					</div>
-					<div *ngIf="modificationType === mType.CREATE" class="text-2xl pb-2">
+					<div
+						*ngIf="modificationType === mType.CREATE"
+						class="text-2xl pb-2 text-center"
+					>
 						email: {{ email }}
 					</div>
 					<div

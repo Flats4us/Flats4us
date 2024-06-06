@@ -24,6 +24,11 @@ export class OfferService {
 
 	constructor(private httpClient: HttpClient) {}
 
+	public getOfferStatus(id?: number): string {
+		const result = this.offerStatuses.get(id ?? 0);
+		return result ?? 'Offer.offer-status0';
+	}
+
 	public getOfferById(id: number): Observable<IOffer> {
 		return this.httpClient.get<IOffer>(`${this.apiRoute}/offers/${id}`);
 	}

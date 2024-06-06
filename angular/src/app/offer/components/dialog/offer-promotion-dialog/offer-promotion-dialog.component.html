@@ -12,13 +12,13 @@
 		<mat-error
 			*ngIf="promotionForm.controls['promotionDays'].errors?.['required']"
 		>
-			{{ "Offer-promotion-info1" | translate }}!
+			{{ "Offer.promotion-info1" | translate }}!
 		</mat-error>
 		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['min']">
-			{{ "Offer-promotion-info2" | translate }}!
+			{{ "Offer.promotion-info2" | translate }}!
 		</mat-error>
 		<mat-error *ngIf="promotionForm.controls['promotionDays'].errors?.['max']">
-			{{ "Offer-promotion-info2" | translate }}!
+			{{ "Offer.promotion-info2" | translate }}!
 		</mat-error>
 	</mat-form-field>
 	<div mat-dialog-content>

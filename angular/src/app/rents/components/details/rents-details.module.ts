@@ -19,6 +19,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { AccessControlDirective } from '@shared/directives/access-control.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -44,6 +45,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		AccessControlDirective,
+		TranslateModule,
 	],
 	exports: [RentsDetailsComponent],
 })
