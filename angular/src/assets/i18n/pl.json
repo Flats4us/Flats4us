@@ -141,7 +141,9 @@
 		"id": "ID WYBRANEGO SPORU",
 		"message": "Wiadomość...",
 		"open-dispute-owner-dialog": "Otwórz spór z właścicielem",
-		"start-describing-problem": "Rozpocznij dyskusję opisując swój problem"
+		"start-describing-problem": "Rozpocznij dyskusję opisując swój problem",
+		"open": "Otwarte",
+		"close": "Zamknięte"
 	},
 	"Find-roommates": {
 		"find-roommates": "Znajdź swojego współlokatora",
@@ -250,7 +252,9 @@
 		"offer-status3": "zawieszona",
 		"cancel-dialog1": "Oferta została zakończona.",
 		"cancel-dialog2": "Błąd. Spróbuj ponownie!",
-		"months": "miesięce/y"
+		"months": "miesięce/y",
+		"offer-info-rating0": "Zobacz szczegółową ocenę",
+		"offer-info-rating1": "Nieruchomość nie została jeszcze oceniona"
 	},
 
 	"Property-rating": {

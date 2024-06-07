@@ -200,8 +200,8 @@
 							class="p-4 mr-4"
 							matTooltip="{{
 								data.offer?.property?.avgRating
-									? 'Zobacz szczegółową ocenę'
-									: 'Nieruchomość nie została jeszcze oceniona'
+									? ('Offer.offer-info-rating0' | translate)
+									: ('Offer.offer-info-rating1' | translate)
 							}}"
 							(click)="showRating(data.offer?.property)"
 						>

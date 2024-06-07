@@ -141,7 +141,9 @@
 		"id": "SELECTED DISPUTE ID",
 		"message": "Message",
 		"open-dispute-owner-dialog": "Open a dispute with the owner",
-		"start-describing-problem": "Start a discussion by describing your problem"
+		"start-describing-problem": "Start a discussion by describing your problem",
+		"open": "Open",
+		"close": "Close"
 	},
 	"Find-roommates": {
 		"find-roommates": "Find your roommate",
@@ -251,7 +253,9 @@
 		"offer-status2": "rented",
 		"offer-status3": "suspended",
 		"cancel-dialog1": "The offer has ended.",
-		"cancel-dialog2": "Mistake. Try again!"
+		"cancel-dialog2": "Mistake. Try again!",
+		"offer-info-rating0": "View detailed rating",
+		"offer-info-rating1": "The property has not been rated yet"
 	},
 
 	"Property-rating": {
