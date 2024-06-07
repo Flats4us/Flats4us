@@ -76,7 +76,10 @@
 				<div
 					class="profile-opinions__header text-2xl flex justify-between gap-2 content-center"
 				>
-					<div><mat-icon>rate_review</mat-icon> <span>{{ "Profile-add-opinion.opinions" | translate }}</span></div>
+					<div>
+						<mat-icon>rate_review</mat-icon>
+						<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+					</div>
 					<button
 						mat-mini-fab
 						color="primary"
@@ -92,82 +95,82 @@
 						{{ user.avgRating }}</label
 					>
 				</div>
-					<mat-chip-listbox>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.helpful" | translate }}:
-								{{ user.sumHelpful }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.ready-cooperate" | translate }}:
-								{{ user.sumCooperative }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.keeps-things-tidy" | translate }}:
-								{{ user.sumTidy }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.friendly" | translate }}:
-								{{ user.sumFriendly }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.respecting-privacy-others" | translate }}:
-								{{ user.sumRespectingPrivacy }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.communicative" | translate }}:
-								{{ user.sumCommunicative }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.dishonest" | translate }}:
-								{{ user.sumUnfair }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.lack-hygiene" | translate }}:
-								{{ user.sumLackOfHygiene }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.care-tidiness" | translate }}:
-								{{ user.sumUntidy }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.conflicting" | translate }}:
-								{{ user.sumConflicting }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.too-noisy" | translate }}:
-								{{ user.sumNoisy }}</span
-							>
-						</mat-chip>
-						<mat-chip>
-							<span
-								>{{ "Profile-add-opinion.not-follow-arrangements" | translate }}:
-								{{ user.sumNotFollowingTheArrangements }}</span
-							>
-						</mat-chip>
-					</mat-chip-listbox>
-					<div class="profile-opinions__comments">
-            <ng-container *ngFor="let opinion of user.userOpinions">
+				<mat-chip-listbox>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.helpful" | translate }}:
+							{{ user.sumHelpful }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.ready-cooperate" | translate }}:
+							{{ user.sumCooperative }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.keeps-things-tidy" | translate }}:
+							{{ user.sumTidy }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.friendly" | translate }}:
+							{{ user.sumFriendly }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.respecting-privacy-others" | translate }}:
+							{{ user.sumRespectingPrivacy }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.communicative" | translate }}:
+							{{ user.sumCommunicative }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.dishonest" | translate }}:
+							{{ user.sumUnfair }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.lack-hygiene" | translate }}:
+							{{ user.sumLackOfHygiene }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.care-tidiness" | translate }}:
+							{{ user.sumUntidy }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.conflicting" | translate }}:
+							{{ user.sumConflicting }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.too-noisy" | translate }}:
+							{{ user.sumNoisy }}</span
+						>
+					</mat-chip>
+					<mat-chip>
+						<span
+							>{{ "Profile-add-opinion.not-follow-arrangements" | translate }}:
+							{{ user.sumNotFollowingTheArrangements }}</span
+						>
+					</mat-chip>
+				</mat-chip-listbox>
+				<div class="profile-opinions__comments">
+					<ng-container *ngFor="let opinion of user.userOpinions">
 						<div
 							*ngIf="opinion.description !== ''"
 							class="profile-opinions__comments-comment"
