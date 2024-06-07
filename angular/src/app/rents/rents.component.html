@@ -4,14 +4,14 @@
 			*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
 			class="text-4xl p-4 font-semibold"
 		>
-			Przeglądanie wynajmów
+			{{ "Rents.browse-rentals" | translate }}
 		</div>
 		<div *ngIf="data.user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-			Widok najmu
+			{{ "Rents.rental-view" | translate }}
 		</div>
 	</div>
 	<ng-template #notFound>
-		<h1 class="text-3xl p-4">Nie dodano jeszcze żadnego najmu</h1>
+		<h1 class="text-3xl p-4">{{ "Rents.rent-info0" | translate }}</h1>
 	</ng-template>
 	<div
 		*ngIf="
@@ -30,7 +30,9 @@
 		class="rents-owner"
 	>
 		<div class="container-list">
-			<h1 class="text-3xl pl-4 font-semibold">Moje wynajmy</h1>
+			<h1 class="text-3xl pl-4 font-semibold">
+				{{ "Header.my-rentals" | translate }}
+			</h1>
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
 				<a
@@ -42,7 +44,7 @@
 						<div class="flex-col text-xl font-bold w-full">
 							<div class="flex justify-between">
 								<span>
-									Najem -
+									{{ "Rent.rent" | translate }} -
 									{{
 										realEstateService.getPropertyType(rent.propertyType) | translate
 									}}</span
@@ -55,7 +57,9 @@
 							<div>{{ rent.propertyAddress }}</div>
 						</div>
 					</div>
-					<div class="box-date">Data: {{ rent.startDate | date }}</div>
+					<div class="box-date">
+						{{ "Calendar.date" | translate }}: {{ rent.startDate | date }}
+					</div>
 				</a>
 			</mat-nav-list>
 		</div>

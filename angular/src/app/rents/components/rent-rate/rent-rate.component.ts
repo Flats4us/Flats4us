@@ -25,6 +25,7 @@ import { RentsService } from '../../services/rents.service';
 import { IRentOpinion } from '../../models/rents.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-rate',
@@ -39,6 +40,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	templateUrl: './rent-rate.component.html',
 	styleUrls: ['./rent-rate.component.scss'],
@@ -59,7 +61,8 @@ export class RentRateComponent extends BaseComponent {
 		private dialogRef: MatDialogRef<RentRateComponent>,
 		@Inject(MAT_DIALOG_DATA) public data$: Observable<IOffer>,
 		private rentsService: RentsService,
-		private snackbarService: MatSnackBar
+		private snackbarService: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -73,9 +76,13 @@ export class RentRateComponent extends BaseComponent {
 				takeUntil(this.destroyed)
 			)
 			.subscribe(() => {
-				this.snackbarService.open('Opinia została dodana', 'Zamknij', {
-					duration: 2000,
-				});
+				this.snackbarService.open(
+					this.translate.instant('Rent-rate.info-success'),
+					this.translate.instant('close'),
+					{
+						duration: 2000,
+					}
+				);
 				this.dialogRef.close();
 			});
 	}
