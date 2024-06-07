@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FirebaseAdmin.Messaging;
-using Azure.Core;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
@@ -162,7 +161,7 @@ namespace Flats4us.Services
 
                 await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
             }
-        }
+        
 
         public async Task DeleteUserFileAsync(string fileId, int userId)
         {
