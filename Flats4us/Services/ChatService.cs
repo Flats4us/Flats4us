@@ -2,7 +2,6 @@
 using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Flats4us.Services
 {
