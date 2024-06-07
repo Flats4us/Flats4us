@@ -1,15 +1,12 @@
-﻿namespace Flats4us.Hubs
-{
-    using Flats4us.Entities;
-    using Flats4us.Helpers.Enums;
-    using Flats4us.Services;
-    using Flats4us.Services.Interfaces;
-    using Microsoft.AspNetCore.SignalR;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Concurrent;
-    using System.Security.Claims;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+﻿using Flats4us.Entities;
+using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Concurrent;
+using System.Security.Claims;
 
+namespace Flats4us.Hubs
+{
     public class ChatHub : Hub
     {
         private readonly IChatService _chatService;
