@@ -17,9 +17,9 @@ export class RentsService {
 	constructor(private httpClient: HttpClient) {}
 
 	public paymentPurposes = new Map<number, string>([
-		[0, 'czynsz'],
-		[1, 'depozyt'],
-		[2, 'naprawy'],
+		[0, 'Rents.rent2'],
+		[1, 'Rents.deposit'],
+		[2, 'Rents.repairs'],
 	]);
 
 	public addMeeting(meeting: IMeeting) {

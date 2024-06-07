@@ -20,6 +20,7 @@ import { RentsService } from '../../services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { setLocalDate } from '@shared/utils/functions';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -34,6 +35,7 @@ import { setLocalDate } from '@shared/utils/functions';
 		MatDialogModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [RentsService],
 	templateUrl: './meeting-add.component.html',
@@ -57,6 +59,7 @@ export class MeetingAddComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private rentsService: RentsService,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
@@ -74,15 +77,19 @@ export class MeetingAddComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.meetingForm.controls['offerId'].setValue(this.data);
-					this.snackBar.open('Pomyślnie dodano spotkanie.', 'Zamknij', {
-						duration: 10000,
-					});
+					this.snackBar.open(
+						this.translate.instant('Meeting-add.info2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
 					this.dialogRef.close();
 				},
 				error: () => {
 					this.snackBar.open(
-						'Nie udało się dodać spotkania. Spróbuj ponownie.',
-						'Zamknij',
+						this.translate.instant('Meeting-add.info1'),
+						this.translate.instant('close'),
 						{ duration: 10000 }
 					);
 					this.dialogRef.close();
