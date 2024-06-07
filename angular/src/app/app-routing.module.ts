@@ -26,9 +26,11 @@ const routes: Routes = [
 		canActivate: [AuthGuard],
 	},
 	{
-		path: 'messages',
+		path: 'conversations',
 		loadChildren: () =>
-			import('./messages/messages.module').then(m => m.MessagesModule),
+			import('./conversations/conversations.module').then(
+				m => m.ConversationsModule
+			),
 		canActivate: [AuthGuard],
 	},
 	{
@@ -61,6 +63,14 @@ const routes: Routes = [
 		path: 'calendar',
 		loadComponent: () =>
 			import('./calendar/calendar.component').then(c => c.CalendarComponent),
+	},
+	{
+		path: 'report-problem',
+		loadComponent: () =>
+			import('./report-problem/report-problem.component').then(
+				c => c.ReportProblemComponent
+			),
+		canActivate: [AuthGuard],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { IResult } from 'src/app/offer/models/offer.models';
 import {
 	IAddProperty,
 	IAddResult,
@@ -246,36 +247,47 @@ export class RealEstateService {
 		{ value: 100, viewValue: '80' },
 	];
 	public yearOfBuilds: INumeric[] = [
-		{ value: 1, viewValue: 'do 1950' },
-		{ value: 2, viewValue: 'od 1950 do 1989' },
-		{ value: 3, viewValue: 'od 1990 do 2010' },
-		{ value: 4, viewValue: 'od 2010' },
+		{ value: 1, viewValue: 'Real-estate.year-type0' },
+		{ value: 2, viewValue: 'Real-estate.year-type1' },
+		{ value: 3, viewValue: 'Real-estate.year-type2' },
+		{ value: 4, viewValue: 'Real-estate.year-type3' },
 	];
 	public properties: INumeric[] = [
-		{ value: 0, viewValue: 'Mieszkanie' },
-		{ value: 1, viewValue: 'Dom' },
-		{ value: 2, viewValue: 'Pokój' },
+		{ value: 0, viewValue: 'Real-estate.property-type0' },
+		{ value: 1, viewValue: 'Real-estate.property-type1' },
+		{ value: 2, viewValue: 'Real-estate.property-type2' },
 	];
 	public equipment: IEquipment[] = [];
 
 	protected apiRoute = `${environment.apiUrl}`;
 
 	public propertyTypes = new Map<number, string>([
-		[0, 'Mieszkanie'],
-		[1, 'Dom'],
-		[2, 'Pokój'],
+		[0, 'Real-estate.property-type0'],
+		[1, 'Real-estate.property-type1'],
+		[2, 'Real-estate.property-type2'],
 	]);
 
 	public propertyStatuses = new Map<number, string>([
-		[0, 'zweryfikowana'],
-		[1, 'niezweryfikowana'],
+		[0, 'Real-estate.property-status0'],
+		[1, 'Real-estate.property-status1'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}
 
+	public getPropertyType(id?: number): string {
+		const result = this.propertyTypes.get(id ?? 0);
+		return result ?? 'Real-estate.property-type0';
+	}
+
+	public getPropertyStatus(id?: number): string {
+		const result = this.propertyStatuses.get(id ?? 0);
+		return result ?? 'Real-estate.property-status0';
+	}
+
 	public readAllEquipment(): Observable<IEquipment[]> {
 		return this.getEquipment('').pipe(
 			map(equipments => {
+				this.equipment = [];
 				equipments.forEach(equipment => this.equipment.push(equipment));
 				return this.equipment;
 			})
@@ -294,6 +306,7 @@ export class RealEstateService {
 					for (let index = 1; index < csvToRowArray.length - 2; index++) {
 						const row = csvToRowArray[index].split(';');
 						const regionToLowerCase = row[2].trim().toLowerCase();
+						regionCityArray = [];
 						regionCityArray.push(<IRegionCity>{
 							region: regionToLowerCase,
 							city: row[1],
@@ -307,17 +320,25 @@ export class RealEstateService {
 			);
 	}
 
-	public addRealEstateFiles(id: number, formData: FormData): Observable<void> {
+	public addRealEstateFiles(
+		id: number,
+		formData: FormData
+	): Observable<IResult> {
 		const headers = new HttpHeaders();
 		headers.append('enctype', 'multipart/form-data');
-		return this.httpClient.post<void>(
+		return this.httpClient.post<IResult>(
 			`${this.apiRoute}/properties/${id}/files`,
 			formData,
 			{ headers }
 		);
 	}
-	public deleteRealEstate(id: number): Observable<void> {
-		return this.httpClient.delete<void>(`${this.apiRoute}/properties/${id}`);
+	public deletePhoto(propertyId: number, fileId: string) {
+		return this.httpClient.delete(
+			`${this.apiRoute}/properties/${propertyId}/files/${fileId}`
+		);
+	}
+	public deleteRealEstate(id: number) {
+		return this.httpClient.delete(`${this.apiRoute}/properties/${id}`);
 	}
 	public addRealEstate(property: IAddProperty): Observable<number> {
 		return this.httpClient
@@ -330,6 +351,12 @@ export class RealEstateService {
 		return this.httpClient.get<IProperty[]>(`${this.apiRoute}/properties`, {
 			params: params,
 		});
+	}
+	public getRealEstateById(id: number): Observable<IProperty> {
+		return this.httpClient.get<IProperty>(`${this.apiRoute}/properties/${id}`);
+	}
+	public editRealEstate(realEstate: IAddProperty, id: number) {
+		return this.httpClient.put(`${this.apiRoute}/properties/${id}`, realEstate);
 	}
 	public getEquipment(name: string): Observable<IEquipment[]> {
 		let params = new HttpParams();

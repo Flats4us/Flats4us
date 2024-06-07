@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OfferService } from '../../services/offer.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { setLocalDate } from '@shared/utils/functions';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-offer',
@@ -12,14 +15,16 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddOfferComponent extends BaseComponent {
-	public offerForm: FormGroup = this.fb.group({
-		propertyId: ['', Validators.required],
-		price: ['', Validators.required],
-		deposit: ['', Validators.required],
-		description: ['', Validators.required],
-		startDate: ['', Validators.required],
-		endDate: ['', Validators.required],
-		regulations: ['', Validators.required],
+	public setLocalDate = setLocalDate;
+
+	public offerForm: FormGroup = new FormGroup({
+		propertyId: new FormControl('', Validators.required),
+		price: new FormControl('', Validators.required),
+		deposit: new FormControl('', Validators.required),
+		description: new FormControl('', Validators.required),
+		startDate: new FormControl(null, Validators.required),
+		endDate: new FormControl(null, Validators.required),
+		regulations: new FormControl('', Validators.required),
 	});
 
 	public properties$ = this.realEstateService.getRealEstates(true);
@@ -27,8 +32,9 @@ export class AddOfferComponent extends BaseComponent {
 	constructor(
 		private offerService: OfferService,
 		private realEstateService: RealEstateService,
-		private fb: FormBuilder,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private router: Router,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -37,10 +43,24 @@ export class AddOfferComponent extends BaseComponent {
 		this.offerService
 			.addOffer(this.offerForm.value)
 			.pipe(this.untilDestroyed())
-			.subscribe(() =>
-				this.snackBar.open('Oferta dodana pomyślnie', 'Zamknij', {
-					duration: 2000,
-				})
-			);
+			.subscribe({
+				next: () => {
+					this.snackBar.open(
+						this.translate.instant('Offer.offer-info'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
+					this.router.navigate(['offer', 'owner']);
+				},
+				error: () => {
+					this.snackBar.open(
+						this.translate.instant('Offer.offer-info2'),
+						this.translate.instant('close'),
+						{ duration: 10000 }
+					);
+				},
+			});
 	}
 }

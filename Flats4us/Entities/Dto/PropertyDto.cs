@@ -50,6 +50,21 @@ namespace Flats4us.Entities.Dto
         public List<FileDto> Images { get; set; }
 
         [Required]
+        public decimal AvgRating { get; set; }
+
+        [Required]
+        public decimal AvgServiceRating { get; set; }
+
+        [Required]
+        public decimal AvgLocationRating { get; set; }
+
+        [Required]
+        public decimal AvgEquipmentRating { get; set; }
+
+        [Required]
+        public decimal AvgQualityForMoneyRating { get; set; }
+
+        [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
         public int? NumberOfRooms { get; set; }
@@ -59,6 +74,8 @@ namespace Flats4us.Entities.Dto
         public int? PlotArea { get; set; }
 
         public int? Floor { get; set; }
+
+        public List<SimpleOfferForPropertyDetailsDto> Offers { get; set; }
 
         public ICollection<EquipmentDto> Equipment { get; set; }
         public ICollection<RentOpinionDto> RentOpinions { get; set; }

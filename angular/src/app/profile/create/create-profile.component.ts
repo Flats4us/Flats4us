@@ -13,14 +13,15 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, catchError, concatMap, map, throwError } from 'rxjs';
+import { Observable, concatMap, map, of, switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProfileService } from '../services/profile.service';
-import { IAddOwner, IAddStudent } from '../models/profile.models';
+import { IAddOwner, IAddStudent, IInterest } from '../models/profile.models';
 import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { HttpErrorResponse } from '@angular/common/http';
 import { matchPasswordValidator } from '@shared/utils/validators';
+import { UserService } from '@shared/services/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-profile-create',
@@ -43,6 +44,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 	public ownerToAdd?: IAddOwner;
 	public user = '';
 	public modificationType = '';
+	public emailExist$: Observable<boolean> = of(false);
 	private studentFormGroup: FormGroup = this.formBuilder.group({
 		name: new FormControl(''),
 		surname: new FormControl(''),
@@ -56,8 +58,8 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		studentNumber: new FormControl(''),
 		university: new FormControl(''),
 		links: new FormControl([]),
-		party: new FormControl(null),
-		tidiness: new FormControl(null),
+		party: new FormControl(1),
+		tidiness: new FormControl(1),
 		smoking: new FormControl(false),
 		sociability: new FormControl(false),
 		animals: new FormControl(false),
@@ -68,7 +70,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		minRoommateAge: new FormControl(null),
 		maxRoommateAge: new FormControl(null),
 		city: new FormControl(''),
-		interests: new FormControl([]),
+		interestIds: new FormControl([]),
 	});
 	private ownerFormGroup: FormGroup = this.formBuilder.group({
 		name: new FormControl(''),
@@ -97,13 +99,11 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			email: new FormControl('', [Validators.required, Validators.email]),
 			password: new FormControl('', [
 				Validators.required,
-				Validators.pattern(
-					'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-				),
+				Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,50}$'),
 			]),
 			confirmPassword: new FormControl('', [Validators.required]),
 		},
-		{ validators: matchPasswordValidator }
+		{ validators: [matchPasswordValidator] }
 	);
 
 	public createAccountForm = new FormGroup({});
@@ -116,7 +116,9 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		private router: Router,
 		private profileService: ProfileService,
 		private authService: AuthService,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private userService: UserService,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -129,6 +131,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		this.modificationType$
 			.pipe(this.untilDestroyed())
 			.subscribe(type => (this.modificationType = type));
+		this.emailExist$ = !this.registerForm.get('email')?.hasError('email')
+			? this.registerForm
+					.get('email')
+					?.valueChanges.pipe(
+						switchMap(value => this.checkIfEmailExist(value ?? ''))
+					) ?? of(false)
+			: of(false);
 	}
 
 	public onAdd() {
@@ -137,6 +146,13 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 			this.studentFormGroup.patchValue(
 				this.createAccountForm.get('userAdditionalData')?.value ??
 					new FormControl('')
+			);
+			this.studentFormGroup.get('interestIds')?.setValue(
+				this.createAccountForm
+					.get('userAdditionalData')
+					?.get('interestIds')
+					?.getRawValue()
+					.map((hobby: IInterest) => hobby.interestId)
 			);
 			this.studentFormGroup.patchValue(
 				this.surveyForm.get('survey')?.value ?? new FormControl('')
@@ -163,10 +179,17 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 		this.scanName = scan.name;
 	}
 
+	public checkIfEmailExist(email: string): Observable<boolean> {
+		return this.userService
+			.checkIfEmailExist(email)
+			.pipe(map(result => result.result));
+	}
+
 	public onSubmit() {
 		if (
 			this.registerForm.valid &&
 			this.createAccountForm.valid &&
+			this.surveyForm.valid &&
 			this.photoName &&
 			this.scanName
 		) {
@@ -177,19 +200,22 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.addProfileStudent(this.studentFormGroup.value)
 						.pipe(
 							this.untilDestroyed(),
-							catchError(this.handleError),
 							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
 							next: () =>
-								this.snackBar.open('Pomyślnie utworzono konto!', 'Zamknij', {
-									duration: 2000,
-								}),
+								this.snackBar.open(
+									this.translate.instant('Profile-create.info1'),
+									this.translate.instant('close'),
+									{
+										duration: 10000,
+									}
+								),
 							error: () => {
 								this.snackBar.open(
-									'Nie udało się utworzyć konta Studenta. Spróbuj ponownie.',
-									'Zamknij',
-									{ duration: 2000 }
+									this.translate.instant('Profile-create.info2'),
+									this.translate.instant('close'),
+									{ duration: 10000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -200,23 +226,22 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 						.addProfileOwner(this.ownerFormGroup.value)
 						.pipe(
 							this.untilDestroyed(),
-							catchError(this.handleError),
 							concatMap(() => this.profileService.addProfileFiles(this.formData))
 						)
 						.subscribe({
 							next: () =>
 								this.snackBar.open(
-									'Pomyślnie utworzono konto Właściciela!',
-									'Zamknij',
+									this.translate.instant('Profile-create.info3'),
+									this.translate.instant('close'),
 									{
-										duration: 2000,
+										duration: 10000,
 									}
 								),
 							error: () => {
 								this.snackBar.open(
-									'Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.',
-									'Zamknij',
-									{ duration: 2000 }
+									this.translate.instant('Profile-create.info4'),
+									this.translate.instant('close'),
+									{ duration: 10000 }
 								);
 							},
 							complete: () => this.router.navigate(['/']),
@@ -224,10 +249,5 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 				}
 			}
 		}
-	}
-	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się utworzyć konta. Spróbuj ponownie.')
-		);
 	}
 }

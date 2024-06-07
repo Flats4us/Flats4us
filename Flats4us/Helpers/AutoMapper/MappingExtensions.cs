@@ -12,7 +12,6 @@ namespace Flats4us.Helpers.AutoMapper
             where TDest : BaseUserProfileDto
         {
             return mapping
-                .ForMember(dest => dest.ProfilePicture, opt => opt.MapFrom<UserProfilePictureUrlResolver>())
                 .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
                 .ForMember(dest => dest.SumHelpful, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Where(x => x.Helpful).Count()))
                 .ForMember(dest => dest.SumCooperative, opt => opt.MapFrom(src => src.ReceivedUserOpinions.Where(x => x.Cooperative).Count()))
@@ -33,13 +32,23 @@ namespace Flats4us.Helpers.AutoMapper
             where TSrc : Property
         {
             return mapping
-                .ForMember(dest => dest.Images, opt => opt.MapFrom<PropertyImagesUrlResolver>())
-                .ForMember(dest => dest.Document, opt => opt.MapFrom<PropertyDocumentUrlResolver>())
+                .ForMember(dest => dest.Document, opt => opt.MapFrom(src => src.TitleDeed))
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.Owner.Email))
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => (src.Flat != null) ?
                     $"{src.Street} {src.Number}/{src.Flat}, {src.PostalCode} {src.City}" :
                     $"{src.Street} {src.Number}, {src.PostalCode} {src.City}"));
+        }
+
+        public static IMappingExpression<TSrc, PropertyDto> MapBaseProperty<TSrc>(this IMappingExpression<TSrc, PropertyDto> mapping)
+            where TSrc : Property
+        {
+            return mapping
+                .ForMember(dest => dest.AvgRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Rating).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgServiceRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Service).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgLocationRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Location).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgEquipmentRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.Equipment).DefaultIfEmpty().Average()))
+                .ForMember(dest => dest.AvgQualityForMoneyRating, opt => opt.MapFrom(src => src.RentOpinions.Select(x => x.QualityForMoney).DefaultIfEmpty().Average()));
         }
     }
 }

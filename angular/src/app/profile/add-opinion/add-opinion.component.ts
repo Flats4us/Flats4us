@@ -14,12 +14,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
-import { environment } from '../../../environments/environment.prod';
 import { map, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+
+import { environment } from '../../../environments/environment.prod';
 import { ProfileService } from '../services/profile.service';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-opinion',
@@ -37,6 +40,8 @@ import { ProfileService } from '../services/profile.service';
 		MatListModule,
 		ReactiveFormsModule,
 		MatSnackBarModule,
+		StarRatingComponent,
+		TranslateModule,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -47,7 +52,7 @@ export class AddOpinionComponent extends BaseComponent {
 		map(params => params.get('id') ?? '')
 	);
 	public user$ = this.profileId$.pipe(
-		switchMap(id => this.userService.getUserById(parseInt(id)))
+		switchMap(id => this.userService.getUserById(id))
 	);
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
@@ -56,7 +61,8 @@ export class AddOpinionComponent extends BaseComponent {
 		private snackBar: MatSnackBar,
 		private profileService: ProfileService,
 		private userService: UserService,
-		public route: ActivatedRoute
+		public route: ActivatedRoute,
+		private translate: TranslateService
 	) {
 		super();
 		this.opinionForm = this.fb.group({
@@ -86,9 +92,13 @@ export class AddOpinionComponent extends BaseComponent {
 			.addOpinion(profileId, this.opinionForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
-				this.snackBar.open('Pomyślnie dodano opinię!', 'Zamknij', {
-					duration: 10000,
-				})
+				this.snackBar.open(
+					this.translate.instant('Profile-add-opinion.info1'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				)
 			);
 	}
 }

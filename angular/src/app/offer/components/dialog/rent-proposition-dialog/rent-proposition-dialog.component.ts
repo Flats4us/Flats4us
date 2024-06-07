@@ -25,10 +25,11 @@ import { CommonModule } from '@angular/common';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { setLocalDate } from '@shared/utils/functions';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-proposition-dialog',
@@ -48,6 +49,7 @@ import { UserService } from '@shared/services/user.service';
 		CommonModule,
 		MatDatepickerModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [OfferService],
 })
@@ -58,6 +60,8 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public tenants: string[] = [];
 	public minDate: Date = new Date();
 	public invalidEmail$: Observable<boolean> = of(false);
+	public tooManyTenants$: Observable<boolean> = of(false);
+	public setLocalDate = setLocalDate;
 
 	public rentPropositionForm: FormGroup = new FormGroup({
 		roommatesEmails: new FormControl(this.tenants),
@@ -67,32 +71,49 @@ export class RentPropositionDialogComponent extends BaseComponent {
 
 	constructor(
 		private snackBar: MatSnackBar,
-		public dialogRef: MatDialogRef<number>,
+		public dialogRef: MatDialogRef<{
+			id: number;
+			maxNumberOfInhabitants: number;
+		}>,
 		public offerService: OfferService,
 		public userService: UserService,
-		@Inject(MAT_DIALOG_DATA) public data: number
+		private translate: TranslateService,
+		@Inject(MAT_DIALOG_DATA)
+		public data: { id: number; maxNumberOfInhabitants: number }
 	) {
 		super();
 	}
 
 	public onClose() {
-		this.dialogRef.close();
+		this.dialogRef.close(this.data);
 	}
 
 	public onYesClick() {
 		this.rentPropositionForm.markAllAsTouched();
 		if (this.rentPropositionForm.valid) {
 			this.offerService
-				.addRentProposition(this.rentPropositionForm.value, this.data)
-				.pipe(this.untilDestroyed(), catchError(this.handleError))
+				.addRentProposition(this.rentPropositionForm.value, this.data.id)
+				.pipe(this.untilDestroyed())
 				.subscribe({
 					next: () => {
-						this.dialogRef.close();
+						this.snackBar.open(
+							this.translate.instant('Rents.rent-info3'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
+						this.dialogRef.close(this.data);
 					},
 					error: () => {
-						this.snackBar.open('Nie udało się dodać najmu.', 'Zamknij', {
-							duration: 2000,
-						});
+						this.snackBar.open(
+							this.translate.instant('Rents.error2'),
+							this.translate.instant('close'),
+							{
+								duration: 10000,
+							}
+						);
+						this.dialogRef.close(this.data);
 					},
 				});
 		}
@@ -103,12 +124,18 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		formControl: FormControl
 	): void {
 		this.invalidEmail$ = of(false);
+		this.tooManyTenants$ = of(false);
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
 			items.push(value);
 			this.invalidEmail$ = this.userService
 				.checkIfEmailExist(value)
 				.pipe(map(result => !result.result));
+			this.tooManyTenants$ = this.tooManyTenants$.pipe(
+				switchMap(() =>
+					items.length > this.data.maxNumberOfInhabitants - 1 ? of(true) : of(false)
+				)
+			);
 		}
 		event.chipInput.clear();
 
@@ -133,11 +160,5 @@ export class RentPropositionDialogComponent extends BaseComponent {
 		if (index >= 0) {
 			this.tenants[index] = value;
 		}
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		return throwError(() => {
-			new Error('Nie udało się dodać najmu. Spróbuj ponownie');
-		});
 	}
 }

@@ -1,0 +1,34 @@
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Conversation.conversation" | translate }}
+</h1>
+<div *ngIf="conversations$ | async as messages" class="messages-wrapper">
+	<mat-card>
+		<mat-card-header *ngIf="messages.length === 0">
+			<mat-card-title>{{
+				"Conversation.no-conversation" | translate
+			}}</mat-card-title>
+			<mat-card-subtitle>{{
+				"Conversation.conversation-info" | translate
+			}}</mat-card-subtitle>
+		</mat-card-header>
+		<mat-list class="messages-choice">
+			<mat-list-item
+				*ngFor="let message of messages"
+				class="messages-choice__conversation"
+				[routerLink]="[
+					'receiver',
+					message.otherUserId,
+					'conversation',
+					message.chatId.toString()
+				]"
+			>
+				<ng-container>
+					<span>{{ message.otherUsername }}</span>
+				</ng-container>
+			</mat-list-item>
+		</mat-list>
+	</mat-card>
+	<div class="messages-box">
+		<router-outlet></router-outlet>
+	</div>
+</div>

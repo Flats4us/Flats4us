@@ -1,10 +1,12 @@
-﻿using Flats4us.Helpers;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Flats4us.Entities.Dto
 {
     public class MeetingDto
     {
+        [Required]
+        public int MeetingId { get; set; }
+
         [Required]
         public DateTime Date { get; set; }
 
@@ -16,5 +18,9 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int OfferId { get; set; }
+
+        public DateTime? StudentAcceptDate { get; set; }
+
+        public DateTime? OwnerAcceptDate { get; set; }
     }
 }

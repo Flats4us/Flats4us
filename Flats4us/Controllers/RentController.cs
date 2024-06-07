@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Exceptions;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +32,7 @@ namespace Flats4us.Controllers
             Summary = "Returns list of rent for current user",
             Description = "Requires verified owner or student privileges"
         )]
-        public async Task<IActionResult> Get([FromQuery] PaginatorDto input)
+        public async Task<IActionResult> Get([FromQuery] OptionalPaginatorDto input)
         {
             try
             {
@@ -47,6 +48,64 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Getting Rents for current user");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id}")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Returns rent by id",
+            Description = "Requires verified owner or student privileges"
+        )]
+        public async Task<IActionResult> GetRentById(int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                _logger.LogInformation($"Getting rent id: {id}");
+                var rent = await _rentService.GetRentByIdAsync(id, requestUserId);
+                return Ok(rent);
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{rentId}/proposition")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Returns rent proposition by id",
+            Description = "Requires verified ownerprivileges"
+        )]
+        public async Task<IActionResult> GetProposition(int rentId)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                _logger.LogInformation($"Getting rent proposition id: {rentId}");
+                var proposition = await _rentService.GetRentPropositionAsync(rentId, requestUserId);
+                return Ok(proposition);
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }

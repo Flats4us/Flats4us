@@ -5,7 +5,9 @@ using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using System.Linq;
 
 namespace Flats4us.Services
 {
@@ -127,53 +129,131 @@ namespace Flats4us.Services
             }
         }
 
-        public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int pageSize, int pageNumber)
+        public async Task<CountedListDto<RentDto>> GetRentsForCurrentUserAsync(int userId, int? pageSize, int? pageNumber)
         {
             var user = await _context.Users.FindAsync(userId);
-            var rents = new List<RentDto>();
+            var rentDtos = new List<RentDto>();
 
             if (user is Student)
             {
                 var mainStudentRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.Rents)
+                        .Include(r => r.Payments)
+                        .Include(r => r.Offer)
+                            .ThenInclude(o => o.Property)
+                                .ThenInclude(p => p.Images)
+                        .Include(r => r.Student)
+                            .ThenInclude(s => s.ProfilePicture)
+                        .Include(r => r.OtherStudents)
+                            .ThenInclude(os => os.ProfilePicture)
+                        .Include(x=>x.Arguments)
+                            .ThenInclude(x=>x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
                 var roommateRents = await _context.Students
                     .Where(s => s.UserId == userId)
                     .SelectMany(s => s.RoommateInRents)
+                        .Include(r => r.Payments)
+                        .Include(r => r.Offer)
+                            .ThenInclude(o => o.Property)
+                                .ThenInclude(p => p.Images)
+                        .Include(r => r.Student)
+                            .ThenInclude(s => s.ProfilePicture)
+                        .Include(r => r.OtherStudents)
+                            .ThenInclude(os => os.ProfilePicture)
+                        .Include(x => x.Arguments)
+                            .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
-                rents = mainStudentRents;
-                rents.AddRange(roommateRents);
+                rentDtos = mainStudentRents;
+                rentDtos.AddRange(roommateRents);
             }
             else if (user is Owner)
             {
-                rents = await _context.Owners
-                    .Where(o => o.UserId == userId)
-                    .SelectMany(o => o.Properties)
-                    .SelectMany(p => p.Offers)
-                    .Select(of => _mapper.Map<RentDto>(of.Rent))
+                rentDtos = await _context.Rents
+                    .Where(r => r.Offer.Property.OwnerId == userId &&
+                        r.Offer.OfferStatus != OfferStatus.Waiting)
+                    .Include(r => r.Payments)
+                    .Include(r => r.Offer)
+                        .ThenInclude(o => o.Property)
+                            .ThenInclude(p => p.Images)
+                    .Include(r => r.Student)
+                        .ThenInclude(s => s.ProfilePicture)
+                    .Include(r => r.OtherStudents)
+                        .ThenInclude(os => os.ProfilePicture)
+                    .Include(x => x.Arguments)
+                            .ThenInclude(x => x.ArgumentInterventions)
+                    .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
             }
             else throw new Exception("Unable to fetch rents for current user");
 
-            var totalCount = rents.Count;
+            var totalCount = rentDtos.Count;
 
-            rents = rents
-                //.OrderBy(rent => rent.???)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            var result = new CountedListDto<RentDto>(rents, totalCount);
+            if(pageNumber != null && pageSize != null )
+            {
+                rentDtos = rentDtos
+                    .Skip(((int)pageNumber - 1) * (int)pageSize)
+                    .Take((int)pageSize)
+                    .ToList();
+            }
+            
+            var result = new CountedListDto<RentDto>(rentDtos, totalCount);
 
             return result;
         }
 
-        public async Task AddRentOpinionAsync(RentOpinionDto input, int userId, int rentId)
+        public async Task<RentDto> GetRentByIdAsync(int id, int requestUserId)
+        {
+            var rent = await _context.Rents
+                .Include(r => r.Payments)
+                .Include(r => r.Offer)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(p => p.Images)
+                .Include(r => r.Student)
+                    .ThenInclude(s => s.ProfilePicture)
+                .Include(r => r.OtherStudents)
+                    .ThenInclude(os => os.ProfilePicture)
+                .Include(x => x.Arguments)
+                    .ThenInclude(x => x.ArgumentInterventions)
+            .FirstOrDefaultAsync(o => o.RentId == id);
+
+            if (rent == null) throw new ArgumentException($"Rent with ID {id} not found.");
+
+            if (rent.Offer.Property.OwnerId != requestUserId &&
+                rent.StudentId != requestUserId &&
+                !rent.OtherStudents.Any(os => os.UserId == requestUserId))
+            {
+                throw new ForbiddenException($"You do not have permission to view this rent.");
+            }
+
+            return _mapper.Map<RentDto>(rent);
+        }
+
+        public async Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId)
+        {
+            var rent = await _context.Rents
+                .Include(r => r.Offer)
+                    .ThenInclude(o => o.Property)
+                .Include(r => r.Student)
+                    .ThenInclude(s => s.ProfilePicture)
+                .Include(r => r.OtherStudents)
+                    .ThenInclude(os => os.ProfilePicture)
+                .SingleOrDefaultAsync(r => r.RentId == rentId);
+
+            if (rent is null) throw new ArgumentException($"Rent with  ID: {rentId} not found.");
+
+            if (rent.Offer.OfferStatus != OfferStatus.Waiting) throw new ArgumentException($"Unable to get proposition for this rent");
+        
+            if (rent.Offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own associated offer");
+
+            return _mapper.Map<RentPropositionDto>(rent);
+        }
+
+        public async Task AddRentOpinionAsync(AddRentOpinionDto input, int userId, int rentId)
         {
             var sourceUser = await _context.Users.
                 FindAsync(userId);
@@ -203,6 +283,7 @@ namespace Flats4us.Services
             var opinion = new RentOpinion
             {
                 Rating = input.Rating,
+                Date = DateTime.Now,
                 Service = input.Service,
                 Location = input.Location,
                 Equipment = input.Equipment,

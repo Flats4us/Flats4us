@@ -32,7 +32,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting SurveyStudent");
-                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent), "PL");
+                var surveyStudent = await _surveyService.MakingSurvey(typeof(SurveyStudent));
 
                 return Ok(surveyStudent);
             }
@@ -54,7 +54,7 @@ namespace Flats4us.Controllers
             try
             {
                 _logger.LogInformation("Getting SurveyOwnerOffer");
-                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer), "PL");
+                var surveyOwnerOffer = await _surveyService.MakingSurvey(typeof(SurveyOwnerOffer));
 
                 return Ok(surveyOwnerOffer);
             }

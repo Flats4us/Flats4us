@@ -22,46 +22,33 @@ namespace Flats4us.Entities.Dto
 
         public FileDto? ProfilePicture { get; set; }
 
-        [Required]
-        public decimal AvgRating { get; set; }
+        public decimal? AvgRating { get; set; }
 
-        [Required]
-        public int SumHelpful { get; set; }
+        public int? SumHelpful { get; set; }
 
-        [Required]
-        public int SumCooperative { get; set; }
+        public int? SumCooperative { get; set; }
 
-        [Required]
-        public int SumTidy { get; set; }
+        public int? SumTidy { get; set; }
 
-        [Required]
-        public int SumFriendly { get; set; }
+        public int? SumFriendly { get; set; }
 
-        [Required]
-        public int SumRespectingPrivacy { get; set; }
+        public int? SumRespectingPrivacy { get; set; }
 
-        [Required]
-        public int SumCommunicative { get; set; }
+        public int? SumCommunicative { get; set; }
 
-        [Required]
-        public int SumUnfair { get; set; }
+        public int? SumUnfair { get; set; }
 
-        [Required]
-        public int SumLackOfHygiene { get; set; }
+        public int? SumLackOfHygiene { get; set; }
 
-        [Required]
-        public int SumUntidy { get; set; }
+        public int? SumUntidy { get; set; }
 
-        [Required]
-        public int SumConflicting { get; set; }
+        public int? SumConflicting { get; set; }
 
-        [Required]
-        public int SumNoisy { get; set; }
+        public int? SumNoisy { get; set; }
 
-        [Required]
-        public int SumNotFollowingTheArrangements { get; set; }
+        public int? SumNotFollowingTheArrangements { get; set; }
 
-        public List<UserOpinionDto> UserOpinions { get; set; }
+        public List<UserOpinionDto>? UserOpinions { get; set; }
 
         public string? University { get; set; }
 

@@ -24,6 +24,8 @@ services:
       - "5166:80"
     depends_on:
       - db
+    volumes:
+      - uploads:/app/uploads
     networks:
       - flats4us-network
   db:
@@ -38,6 +40,10 @@ services:
       - db-data:/var/opt/mssql
     networks:
       - flats4us-network
+    security_opt:
+      - "apparmor:unconfined"
+    tmpfs:
+      - /.system
 
 networks:
   flats4us-network:
@@ -47,3 +53,4 @@ networks:
 
 volumes:
   db-data:
+  uploads:

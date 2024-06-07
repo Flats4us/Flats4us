@@ -3,12 +3,15 @@
 	min-height: 600px;
 	overflow: hidden;
 	position: relative;
-	background: #ffffff;
+	background: radial-gradient(
+		circle,
+		rgba(0, 212, 255, 0) 14%,
+		rgba(251, 188, 139, 0.61) 97%
+	);
 }
 
 .slide {
 	position: absolute;
-	top: 4px;
 	left: 50%;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
@@ -139,6 +142,11 @@
 	background-color: transparent;
 }
 
+.box-equipment {
+	display: flex;
+	align-items: center;
+}
+
 .box-icon {
 	font-size: large;
 	margin: 4px;
@@ -146,7 +154,6 @@
 
 .button-box {
 	display: flex;
-	padding: 8px;
 	flex-direction: row;
 }
 
@@ -156,22 +163,21 @@
 	column-gap: 4px;
 	padding: 4px;
 	float: right;
+	margin-left: auto;
 }
 
-.close-rent {
-	color: red;
-}
-
-.column-header-description {
-	width: 50%;
+.column {
 	padding: 4px;
+	float: left;
+	width: 50%;
+	overflow-wrap: break-word;
+	max-width: 800px;
 }
 
-.container-description {
-	display: flex;
-	flex-wrap: wrap;
-	min-height: 300px;
-	width: 100%;
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
 }
 
 .divider {
@@ -187,22 +193,30 @@
 
 .icon {
 	font-size: xx-large;
-	width: 32px;
-	height: 38px;
+	margin-right: 4px;
 }
 
-.label-price {
-	display: inline-flex;
-	justify-content: right;
+.label-right {
 	padding: 4px;
 	min-width: 300px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	float: right;
 	margin-left: auto;
 }
 
 .label-description {
+	font-size: xx-large;
 	padding: 4px;
 	min-width: 160px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	float: left;
+	margin-right: auto;
 }
 
 .label-box {
@@ -211,37 +225,122 @@
 	padding: 4px 0;
 }
 
-.payments {
-	width: 100%;
-	padding-bottom: 12px;
+.profile-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 4px;
+	padding: 4px 4px;
 }
 
-@media screen and (max-width: 700px) {
+.profile-avatar {
+	border-radius: 50%;
+	width: 100px;
+	margin-right: 4px;
+}
+
+.profile-card {
+	width: fit-content;
+	box-shadow: none;
+}
+
+.box-feature {
+	display: flex;
+	align-items: center;
+}
+
+.container-features {
+	display: grid;
+	grid-gap: 4px;
+	grid-auto-flow: dense;
+}
+
+mat-card-avatar:hover {
+	cursor: pointer;
+}
+
+.payments-container {
+	display: flex;
+	flex-direction: column;
+	max-height: 500px;
+}
+
+mat-table {
+	overflow: auto;
+	max-height: 500px;
+}
+
+mat-header-cell {
+	font-weight: bold;
+}
+
+.mobile-view-label {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
 	.slider {
 		width: 100%;
 		min-height: 300px;
 		overflow: hidden;
 		position: relative;
 		background: #ffffff;
-		border: 4px #00000012;
-		border-style: solid;
 	}
-	.label-price {
-		display: inline-flex;
-		justify-content: right;
-		padding: 4px;
-		min-width: 200px;
-		margin-left: auto;
+	.mobile-view-label {
+		max-width: 300px;
+		display: inline-block;
+		font-weight: bold;
 	}
-}
-
-@media screen and (max-width: 800px) {
+	.icon-feature {
+		display: none;
+	}
+	.box-feature {
+		display: flex;
+		align-items: center;
+		max-width: 100px;
+		overflow: hidden;
+	}
 	.offer-title-inner {
 		background: rgba(0, 0, 0, 0.204);
 		color: white;
 		position: absolute;
-		min-width: 300px;
+		min-width: 240px;
 		padding: 4px;
 		z-index: 996;
+	}
+	.profile-details {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: 4px;
+		padding: 4px 4px;
+	}
+	.profile-avatar {
+		border-radius: 50%;
+		height: 100px;
+		width: 100px;
+		margin-bottom: 4px;
+	}
+	.column {
+		padding: 4px;
+		float: left;
+		width: 50%;
+		overflow-wrap: break-word;
+		max-width: 200px;
+	}
+	mat-header-row {
+		display: none;
+	}
+
+	mat-row {
+		flex-direction: column;
+		align-items: start;
+		padding: 8px 24px;
+	}
+
+	mat-cell {
+		border-bottom-style: none;
 	}
 }

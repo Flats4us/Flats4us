@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
-import { GetDescriptionDirective } from './directives/get-description.directive';
+
 import {
 	MatPaginatorIntl,
 	MatPaginatorModule,
@@ -27,9 +27,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StartMapModule } from './start-map/start-map.module';
+import { GetDescriptionDirective } from './directives/get-description.directive';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-	declarations: [StartComponent, GetDescriptionDirective],
+	declarations: [StartComponent],
 	exports: [StartComponent],
 	providers: [MatPaginatorIntl, RealEstateService, StartService],
 	imports: [
@@ -53,6 +59,12 @@ import { StartMapModule } from './start-map/start-map.module';
 		MatMenuModule,
 		MatProgressSpinnerModule,
 		StartMapModule,
+		GetDescriptionDirective,
+		AccessControlDirective,
+		MatSnackBarModule,
+		StarRatingComponent,
+		MatDialogModule,
+		TranslateModule,
 	],
 })
 export class StartModule {}

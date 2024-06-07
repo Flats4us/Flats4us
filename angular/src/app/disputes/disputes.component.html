@@ -1,7 +1,9 @@
-<h1 class="text-4xl p-4 font-semibold">Spory</h1>
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Disputes.disputes" | translate }}
+</h1>
 <div class="disputes-wrapper">
 	<mat-tab-group mat-stretch-tabs="true">
-		<mat-tab label="Otwarte">
+		<mat-tab label="{{ 'Disputes.open' | translate }}">
 			<div class="disputes-choice">
 				<div class="disputes-choice__conversation" routerLink="1">
 					<span>Lorem ipsum</span>
@@ -36,9 +38,12 @@
 				</div>
 			</div>
 		</mat-tab>
-		<mat-tab label="Zamknięte">
+		<mat-tab label="{{ 'Disputes.close' | translate }}"
+			>>
 			<div class="disputes-choice">
-				<div class="disputes-choice__header">Spory</div>
+				<div class="disputes-choice__header">
+					{{ "Disputes.disputes" | translate }}
+				</div>
 				<div class="disputes-choice__conversation" routerLink="1">
 					<span>Lorem ipsum</span>
 					<div>

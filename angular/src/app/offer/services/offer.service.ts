@@ -7,6 +7,7 @@ import {
 	IOffer,
 	IPromotion,
 	IRentProposition,
+	IResult,
 	ISendOffers,
 } from '../models/offer.models';
 
@@ -15,13 +16,18 @@ export class OfferService {
 	protected apiRoute = `${environment.apiUrl}`;
 
 	public offerStatuses = new Map<number, string>([
-		[0, 'aktualna'],
-		[1, 'nieaktualna'],
-		[2, 'zawieszona'],
-		[3, 'wynajęta'],
+		[0, 'Offer.offer-status0'],
+		[1, 'Offer.offer-status1'],
+		[2, 'Offer.offer-status2'],
+		[3, 'Offer.offer-status3'],
 	]);
 
 	constructor(private httpClient: HttpClient) {}
+
+	public getOfferStatus(id?: number): string {
+		const result = this.offerStatuses.get(id ?? 0);
+		return result ?? 'Offer.offer-status0';
+	}
 
 	public getOfferById(id: number): Observable<IOffer> {
 		return this.httpClient.get<IOffer>(`${this.apiRoute}/offers/${id}`);
@@ -46,7 +52,7 @@ export class OfferService {
 		);
 	}
 	public addRentApproval(id: number, decision: IDecision) {
-		return this.httpClient.post(
+		return this.httpClient.put(
 			`${this.apiRoute}/offers/${id}/rent/accept`,
 			decision
 		);
@@ -63,9 +69,16 @@ export class OfferService {
 		);
 	}
 
-	public deleteInterest(id: number): Observable<string> {
-		return this.httpClient.delete<string>(
+	public deleteInterest(id: number): Observable<IResult> {
+		return this.httpClient.delete<IResult>(
 			`${this.apiRoute}/offers/${id}/interest`
+		);
+	}
+
+	public cancelOffer(id: number): Observable<IResult> {
+		return this.httpClient.put<IResult>(
+			`${this.apiRoute}/offers/${id}/cancel`,
+			null
 		);
 	}
 }

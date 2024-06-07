@@ -1,15 +1,18 @@
-﻿using Flats4us.Entities;
+﻿using Flats4us.Entities.Dto;
+using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Net.Mail;
+using AutoMapper;
 
 namespace Flats4us.Services
 {
     public class EmailService : IEmailService
     {
         public readonly Flats4usContext _context;
+        private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
 
@@ -22,21 +25,23 @@ namespace Flats4us.Services
         private bool UseDefaultCredentials => bool.Parse(_configuration["Smtp:UseDefaultCredentials"]);
 
         public EmailService(
-            IConfiguration configuration,
-            Flats4usContext context)
+            Flats4usContext context,
+            IMapper mapper,
+            IConfiguration configuration)
         {
+            _context = context;
+            _mapper = mapper;
             _configuration = configuration;
             _context = context;
         }
 
         public async Task SendEmailAsync(int toUserId, string subject, string body)
         {
-            
-            var sender = await _context.Users.FindAsync(toUserId);
-            if (sender == null)
-                return;
-            if (!sender.EmailConsent)
-                    return;
+            var user = await _context.Users.FindAsync(toUserId);
+
+            if (user is null) throw new ArgumentException($"User with ID {toUserId} not found.");
+
+            var userInfo = _mapper.Map<UserInfoDto>(user);
 
                 using (var client = new SmtpClient())
                 {
@@ -47,10 +52,10 @@ namespace Flats4us.Services
                     client.EnableSsl = EnableSsl;
                     client.Credentials = new NetworkCredential(SenderAddress, AppPassword);
 
-                    using var message = new MailMessage(
-                        from: new MailAddress(SenderAddress, "Flats4us"),
-                        to: new MailAddress("flats4us.system@gmail.com", sender.Email)
-                    );
+                using var message = new MailMessage(
+                    from: new MailAddress(SenderAddress, "Flats4us"),
+                    to: new MailAddress("flats4us.system@gmail.com", userInfo.FullName)
+                );
 
                     message.Subject = subject;
                     message.Body = EmailHelper.PrepareEmail(body);

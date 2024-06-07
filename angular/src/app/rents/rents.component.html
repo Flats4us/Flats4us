@@ -1,61 +1,73 @@
-<div *ngIf="user$ | async as user">
+<div *ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data">
 	<div class="box-title">
-		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
-			Przeglądanie wynajmów
+		<div
+			*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+			class="text-4xl p-4 font-semibold"
+		>
+			{{ "Rents.browse-rentals" | translate }}
 		</div>
-		<div *ngIf="user === uType.STUDENT" class="text-4xl p-4 font-semibold">
-			Mój najem
-		</div>
-		<div *ngIf="user === uType.DETAILS" class="text-4xl p-4 font-semibold">
-			Widok najmu
+		<div *ngIf="data.user === uType.DETAILS" class="text-4xl p-4 font-semibold">
+			{{ "Rents.rental-view" | translate }}
 		</div>
 	</div>
-	<div *ngIf="user === uType.OWNER" class="rents-owner">
-		<mat-card class="container-list">
+	<ng-template #notFound>
+		<h1 class="text-3xl p-4">{{ "Rents.rent-info0" | translate }}</h1>
+	</ng-template>
+	<div
+		*ngIf="
+			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
+			!data.rents?.totalCount
+		"
+		class="not-found"
+	>
+		<ng-container [ngTemplateOutlet]="notFound"></ng-container>
+	</div>
+	<div
+		*ngIf="
+			(data.user === uType.OWNER || data.user === uType.STUDENT) &&
+			data.rents?.totalCount
+		"
+		class="rents-owner"
+	>
+		<div class="container-list">
 			<h1 class="text-3xl pl-4 font-semibold">
-				Moje wynajmy
-				<button
-					mat-icon-button
-					id="add"
-					class="box-icon"
-					aria-label="Add"
-					matTooltip="Utwórz najem"
-					(click)="addOffer()"
-				>
-					<mat-icon [inline]="true">add</mat-icon>
-				</button>
+				{{ "Header.my-rentals" | translate }}
 			</h1>
 			<mat-divider class="divider"></mat-divider>
 			<mat-nav-list>
 				<a
-					*ngFor="let rent of rentsOptions$ | async"
+					*ngFor="let rent of data.rents?.result"
 					mat-list-item
 					class="item-list"
-					routerLink="{{ rent.id }}"
+					routerLink="{{ rent.rentId }}"
 					><div class="box-title">
-						<span class="text-xl font-bold">{{ rent.title }}</span>
-						<mat-icon
-							class="box-icon-invalid"
-							[ngClass]="
-								rent.status === statusName.SUSPENDED
-									? 'box-icon-invalid'
-									: 'box-icon-valid'
-							"
-							>check_circle</mat-icon
-						>
+						<div class="flex-col text-xl font-bold w-full">
+							<div class="flex justify-between">
+								<span>
+									{{ "Rent.rent" | translate }} -
+									{{
+										realEstateService.getPropertyType(rent.propertyType) | translate
+									}}</span
+								>
+								<mat-icon
+									[ngClass]="rent.isFinished ? 'box-icon-invalid' : 'box-icon-valid'"
+									>check_circle</mat-icon
+								>
+							</div>
+							<div>{{ rent.propertyAddress }}</div>
+						</div>
 					</div>
-					<div class="box-date">Data {{ rent.publishDate }}</div>
+					<div class="box-date">
+						{{ "Calendar.date" | translate }}: {{ rent.startDate | date }}
+					</div>
 				</a>
 			</mat-nav-list>
-		</mat-card>
+		</div>
 		<div class="container-outlet">
 			<router-outlet></router-outlet>
 		</div>
 	</div>
-	<div
-		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
-		class="rents-student"
-	>
+	<div *ngIf="data.user === uType.DETAILS" class="rents-student">
 		<router-outlet></router-outlet>
 	</div>
 </div>

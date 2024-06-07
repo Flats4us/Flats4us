@@ -1,6 +1,6 @@
 <div class="survey">
 	<form
-		class="survey-form"
+		[ngClass]="createProfileMode ? 'survey-form-profile' : 'survey-form-offer'"
 		[formGroup]="createProfileMode ? formToAdd : offerForm"
 	>
 		<ng-container *ngFor="let question of questions$ | async; let i = index">
@@ -26,53 +26,210 @@
 					></mat-slide-toggle>
 				</div>
 
-				<mat-label *ngIf="i < 7">{{ question.content }} </mat-label>
-
-				<mat-label *ngIf="i >= 7 && showMoreQuestions"
-					>{{ question.content }}
+				<mat-label *ngIf="i < 6" [ngSwitch]="question.name">
+					<span *ngSwitchCase="'party'" class="flex justify-center items-center">
+						<mat-icon class="mr-4">celebration</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchCase="'smoking'" class="flex justify-center items-center">
+						<mat-icon class="mr-4">smoking_rooms</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span
+						*ngSwitchCase="'sociability'"
+						class="flex justify-center items-center"
+					>
+						<mat-icon class="mr-4">groups</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchCase="'animals'" class="flex justify-center items-center">
+						<mat-icon class="mr-4">pets</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchCase="'vegan'" class="flex justify-center items-center">
+						<mat-icon class="material-symbols-outlined mr-4">psychiatry</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span
+						*ngSwitchCase="'lookingForRoommate'"
+						class="flex justify-center items-center mt-4"
+					>
+						<mat-icon class="mr-4">person_search</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchCase="'smokingAllowed'" class="flex-col justify-center">
+						<div><mat-icon>smoking_rooms</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'partiesAllowed'" class="flex-col justify-center">
+						<div><mat-icon>celebration</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'animalsAllowed'" class="flex-col justify-center">
+						<div><mat-icon>pets</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchCase="'gender'" class="flex-col justify-center">
+						<div><mat-icon>male</mat-icon><mat-icon>female</mat-icon></div>
+						<div>{{ question.name }}</div>
+					</span>
+					<span *ngSwitchDefault>
+						{{ question.name }}
+					</span>
 				</mat-label>
 
 				<div class="pt-4">
 					<mat-slider
 						*ngIf="question.typeName === typeName.SLIDER"
 						discrete
-						min="0"
-						max="5"
+						min="1"
+						max="10"
 						step="1"
 					>
 						<input matSliderThumb [formControlName]="question.name" />
 					</mat-slider>
 				</div>
 
+				<mat-label *ngIf="i >= 6 && showMoreQuestions" [ngSwitch]="question.name">
+					<span
+						*ngSwitchCase="'roommateGender'"
+						class="flex justify-center items-center"
+					>
+						<mat-icon>male</mat-icon><mat-icon>female</mat-icon>
+						<span>{{ question.name }}</span>
+					</span>
+					<span *ngSwitchDefault>
+						{{ question.name }}
+					</span>
+				</mat-label>
+
+				<div class="pt-4">
+					<mat-form-field
+						*ngIf="
+							question.typeName === typeName.TEXT &&
+							showMoreQuestions &&
+							question.name !== 'city'
+						"
+						class="h-min"
+					>
+						<input matInput type="text" [formControlName]="question.name" />
+					</mat-form-field>
+				</div>
+
+				<div>
+					<mat-form-field
+						*ngIf="
+							question.typeName === typeName.TEXT &&
+							showMoreQuestions &&
+							question.name === 'city'
+						"
+						class="h-min"
+					>
+						<span matPrefix>
+							<span class="px-4"
+								><mat-icon class="material-symbols-outlined"> home_pin </mat-icon></span
+							>
+						</span>
+						<input
+							matInput
+							type="text"
+							[formControlName]="question.name"
+							[matAutocomplete]="autoCity"
+						/>
+						<mat-autocomplete #autoCity="matAutocomplete">
+							<mat-optgroup
+								*ngFor="let groupCities of citiesGroupOptions$ | async"
+								[label]="groupCities.whole"
+							>
+								<mat-option *ngFor="let city of groupCities.parts" [value]="city">
+									{{ city }}
+								</mat-option>
+							</mat-optgroup>
+						</mat-autocomplete>
+					</mat-form-field>
+				</div>
+
 				<mat-form-field
-					*ngIf="question.typeName === typeName.TEXT && showMoreQuestions"
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'maxNumberOfRoommates'
+					"
 					class="h-min"
 				>
-					<input matInput type="text" [formControlName]="question.name" />
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined"> groups_2 </mat-icon></span
+						>
+					</span>
+					<input matInput type="number" min="1" [formControlName]="question.name" />
+					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
+						Podano nieprawidłową wartość!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field
-					*ngIf="question.typeName === typeName.NUMBER && showMoreQuestions"
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'minRoommateAge'
+					"
 					class="h-min"
 				>
-					<input matInput type="number" min="0" [formControlName]="question.name" />
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined">
+								arrow_circle_up
+							</mat-icon></span
+						>
+					</span>
+					<input
+						matInput
+						type="number"
+						min="18"
+						max="150"
+						[formControlName]="question.name"
+					/>
+					<mat-error> Podano nieprawidłowy wiek!</mat-error>
 				</mat-form-field>
 
-				<section
-					*ngIf="question.typeName === typeName.CHECKBOX && showMoreQuestions"
-					class="example-section"
+				<mat-form-field
+					*ngIf="
+						question.typeName === typeName.NUMBER &&
+						showMoreQuestions &&
+						question.name === 'maxRoommateAge'
+					"
+					class="h-min"
 				>
+					<span matPrefix>
+						<span class="px-4"
+							><mat-icon class="material-symbols-outlined">
+								arrow_circle_down
+							</mat-icon></span
+						>
+					</span>
+					<input
+						matInput
+						type="number"
+						min="18"
+						max="150"
+						[formControlName]="question.name"
+					/>
+					<mat-error> Podano nieprawidłowy wiek! </mat-error>
+				</mat-form-field>
+
+				<div *ngIf="question.typeName === typeName.CHECKBOX && showMoreQuestions">
 					<mat-checkbox
 						*ngFor="let answer of question.answers; let i = index"
 						value="{{ i }}"
 						>{{ answer }}</mat-checkbox
 					>
-				</section>
+				</div>
 
 				<mat-radio-group
 					*ngIf="
 						(question.typeName === typeName.RADIOBUTTON && showMoreQuestions) ||
-						(i < 7 &&
+						(i < 6 &&
 							question.typeName === typeName.RADIOBUTTON &&
 							!createProfileMode)
 					"

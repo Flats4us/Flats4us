@@ -39,7 +39,14 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offer = await _offerService.GetByIdAsync(id);
+                var requestUserId = 0;
+
+                if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int parsedUserId))
+                {
+                    requestUserId = parsedUserId;
+                }
+
+                var offer = await _offerService.GetByIdAsync(id, requestUserId);
                 return Ok(offer);
             }
             catch (Exception ex)
@@ -81,7 +88,14 @@ namespace Flats4us.Controllers
         {
             try
             {
-                var offers = await _offerService.GetFilteredAndSortedOffersAsync(input);
+                var requestUserId = 0;
+
+                if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int parsedUserId))
+                {
+                    requestUserId = parsedUserId;
+                }
+
+                var offers = await _offerService.GetFilteredAndSortedOffersAsync(input, requestUserId);
                 return Ok(offers);
             }
             catch (Exception ex)
@@ -131,6 +145,36 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding offer - body: {input}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // PUT: api/offers/{id}/cancel
+        [HttpPut("{id}/cancel")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Cancels offer",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> CancelOffer(int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _offerService.CancelOfferAsync(id, requestUserId);
+                _logger.LogInformation($"Cancelling offer with ID: {id}");
+                return Ok(new OutputDto<string>("Offer canceled successfully"));
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }
@@ -269,14 +313,14 @@ namespace Flats4us.Controllers
             }
         }
 
-        // POST: api/offers/{offerId}/rent
+        // POST: api/offers/{offerId}/rent/accept
         [HttpPut("{offerId}/rent/accept")]
         [Authorize(Policy = "VerifiedOwner")]
         [SwaggerOperation(
-            Summary = "Adds rent proposition to an offer",
-            Description = "Requires verified student privileges"
+            Summary = "Accepts or denies rent proposition",
+            Description = "Requires verified owner privileges"
         )]
-        public async Task<IActionResult> ProposeRent(int offerId, [FromBody] AcceptDto input)
+        public async Task<IActionResult> AcceptRentProposition(int offerId, [FromBody] AcceptDto input)
         {
             try
             {
@@ -286,8 +330,8 @@ namespace Flats4us.Controllers
                 }
 
                 await _rentService.AcceptRentAsync(input.Decision, requestUserId, offerId);
-                _logger.LogInformation($"Accepting rent proposition for offer ID: {offerId}");
-                return Ok(new OutputDto<string>("Rent accepted"));
+                _logger.LogInformation($"Accepting or denying rent proposition for offer ID: {offerId}");
+                return Ok(new OutputDto<string>("Rent accepted or denied"));
             }
             catch (ForbiddenException ex)
             {
@@ -305,7 +349,7 @@ namespace Flats4us.Controllers
             Summary = "Adds rent opinion",
             Description = "Requires verified student privileges"
         )]
-        public async Task<IActionResult> AddRentOpinion(int rentId, RentOpinionDto input)
+        public async Task<IActionResult> AddRentOpinion(int rentId, AddRentOpinionDto input)
         {
             try
             {
@@ -324,7 +368,6 @@ namespace Flats4us.Controllers
             }
             catch (Exception ex)
             {
-                //return BadRequest($"An error occurred: {ex.Message}");
                 return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
         }

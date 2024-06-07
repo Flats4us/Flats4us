@@ -1,0 +1,12 @@
+.button-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 200px;
+	min-height: 100px;
+}
+@media screen and (max-width: 768px) {
+	.icon-feature {
+		display: none;
+	}
+}

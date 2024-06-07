@@ -17,6 +17,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { OfferService } from '../../services/offer.service';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { RentsService } from 'src/app/rents/services/rents.service';
+import { StartService } from 'src/app/start/services/start.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -38,8 +44,12 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 		ReactiveFormsModule,
 		MatFormFieldModule,
 		MatCardModule,
+		AccessControlDirective,
+		MatSnackBarModule,
+		StarRatingComponent,
+		TranslateModule,
 	],
-	providers: [OfferService, RealEstateService],
+	providers: [OfferService, RealEstateService, RentsService, StartService],
 	exports: [OfferDetailsComponent],
 })
 export class OfferDetailsModule {}

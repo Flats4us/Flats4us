@@ -9,6 +9,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
 
@@ -51,7 +52,8 @@ export class PasswordChangeComponent extends BaseComponent {
 	constructor(
 		private fb: FormBuilder,
 		private snackBar: MatSnackBar,
-		private service: AuthService
+		private service: AuthService,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -62,13 +64,21 @@ export class PasswordChangeComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				error: () =>
-					this.snackBar.open('Wystąpił błąd', 'Zamknij', {
-						duration: 2000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Password-change.info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 				complete: () =>
-					this.snackBar.open('Pomyślnie zmieniono hasło!', 'Zamknij', {
-						duration: 2000,
-					}),
+					this.snackBar.open(
+						this.translate.instant('Password-change.info2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					),
 			});
 	}
 }

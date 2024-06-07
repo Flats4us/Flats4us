@@ -1,0 +1,50 @@
+.messages-wrapper {
+	display: flex;
+	gap: 16px;
+}
+
+.messages-choice {
+	background: #fff;
+	min-width: 300px;
+}
+
+.messages-choice__conversation {
+	width: 100%;
+	min-height: 48px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 0 16px;
+	cursor: pointer;
+
+	> div {
+		display: flex;
+		gap: 4px;
+	}
+
+	&:hover {
+		background: linear-gradient(
+				0deg,
+				rgba(187, 134, 252, 0.12) 0%,
+				rgba(187, 134, 252, 0.12) 100%
+			),
+			#fff;
+	}
+}
+
+.messages-box {
+	flex: 1;
+}
+
+@media screen and (max-width: 992px) {
+	.messages-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+	mat-card {
+		width: 100%;
+		padding: 16px;
+	}
+}

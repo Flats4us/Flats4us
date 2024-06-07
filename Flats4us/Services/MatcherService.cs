@@ -33,6 +33,7 @@ namespace Flats4us.Services
 
             var matchingStudents = await _context.Students
                 .Include(potential => potential.Interests)
+                .Include(potential => potential.ProfilePicture)
                 .Where(s => matchingIds.Contains(s.UserId) && s.UserId != requestUserId)
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
                 .ToListAsync();
@@ -54,6 +55,7 @@ namespace Flats4us.Services
             var potentialRoommates = await _context.Students
                 .Include(potential => potential.SurveyStudent)
                 .Include(potential => potential.Interests)
+                .Include(potential => potential.ProfilePicture)
                 .Where(potential =>
 
                     potential.UserId != studentId &&
@@ -62,11 +64,6 @@ namespace Flats4us.Services
                     (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) &&
 
                     //  Party
-
-                    (potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) && 
-                    (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) &&
-
-                    //  Tidiness
 
                     potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking &&
 
@@ -119,9 +116,6 @@ namespace Flats4us.Services
                     ConditionsMet = (
                         (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party - 2)) &&
                         (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) ? 1 : 0) +
-
-                        ((potential.SurveyStudent.Tidiness >= (requestingStudent.SurveyStudent.Tidiness - 2)) &&
-                        (potential.SurveyStudent.Tidiness <= (requestingStudent.SurveyStudent.Tidiness + 2)) ? 1 : 0) +
 
                         (potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking ? 1 : 0) +
 

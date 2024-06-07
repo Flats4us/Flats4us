@@ -34,7 +34,7 @@ namespace Flats4us.Controllers
             Summary = "Returns list of meetings for current user",
             Description = "Requires verified owner or verified student privileges"
         )]
-        public async Task<IActionResult> GetMeetingsForCurrentUser([FromQuery] GetMeetingsDto input)
+        public async Task<IActionResult> GetMeetingsForCurrentUser()
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                var meetings = await _meetingService.GetMeetingsForCurrentUserAsync(requestUserId, input.Month, input.Year);
+                var meetings = await _meetingService.GetMeetingsForCurrentUserAsync(requestUserId);
                 _logger.LogInformation($"Getting meetings for current user: {requestUserId}");
                 return Ok(meetings);
             }
@@ -56,10 +56,10 @@ namespace Flats4us.Controllers
 
         // POST: api/meetings
         [HttpPost]
-        [Authorize(Policy = "VerifiedStudent")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
         [SwaggerOperation(
             Summary = "Adds a new meeting",
-            Description = "Requires verified student privileges"
+            Description = "Requires verified owner or student privileges"
         )]
         public async Task<IActionResult> AddMeeting([FromBody] AddMeetingDto input)
         {
@@ -82,6 +82,37 @@ namespace Flats4us.Controllers
             catch (Exception ex)
             {
                 _logger.LogInformation($"FAILED: Adding meeting - body: {input}");
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
+
+        // PUT: api/meetings/{id}/accept
+        [HttpPut("{id}/accept")]
+        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [SwaggerOperation(
+            Summary = "Accept or denies meeting",
+            Description = "Requires verified owner or student privileges"
+        )]
+        public async Task<IActionResult> AcceptMeeting([FromBody] AcceptDto input, int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _meetingService.ConfirmMeetingAsync(input.Decision, requestUserId, id);
+                _logger.LogInformation($"Trying to accept meeting ID: {id}");
+
+                return Ok(new OutputDto<string>("Meeting accepted or denied successfully"));
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
                 return BadRequest($"An error occurred: {ex.Message}");
             }
         }

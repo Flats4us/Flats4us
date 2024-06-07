@@ -9,22 +9,31 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
 	margin-top: 4px;
-	max-width: 400px;
+	padding: 4px 4px;
 }
 
 .profile-avatar {
 	border-radius: 50%;
+	width: 100px;
+	margin-right: 4px;
 }
 
-.profiles-container {
+.profile-card {
+	width: fit-content;
+	box-shadow: none;
+}
+
+.box-feature {
+	display: flex;
+	align-items: center;
+}
+
+.container-features {
 	display: grid;
+	grid-gap: 4px;
 	grid-auto-flow: dense;
-}
-
-mat-chip {
-	max-width: 90%;
-	overflow: hidden;
 }
 
 @media screen and (max-width: 800px) {
@@ -32,8 +41,13 @@ mat-chip {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: center;
 		margin-top: 4px;
-		max-width: 400px;
+	}
+	.profile-avatar {
+		border-radius: 50%;
+		width: 100px;
+		margin-bottom: 4px;
 	}
 }
 

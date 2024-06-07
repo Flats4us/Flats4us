@@ -7,7 +7,7 @@
 
 .button-box {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	min-width: 200px;
 	min-height: 100px;
@@ -15,4 +15,17 @@
 
 mat-form-field {
 	margin: 16px 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[matinput]::-webkit-outer-spin-button,
+input[matinput]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[matinput][type="number"] {
+	-moz-appearance: textfield;
+	appearance: textfield;
 }

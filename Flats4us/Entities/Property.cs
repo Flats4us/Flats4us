@@ -44,19 +44,19 @@ namespace Flats4us.Entities
         public int ConstructionYear { get; set; }
 
         [Required]
-        public string ImagesPath { get; set; }
-
-        [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
         [Required]
         public DateTime CreationDate { get; set; }
 
-        [Required]
-        public DateTime DateForVerificationSorting { get; set; }
+        public DateTime? DateForVerificationSorting { get; set; }
+
+        public DateTime? VerificationOrRejectionDate { get; set; }
 
         [Required]
         public int OwnerId { get; set; }
+
+        public FileUpload? TitleDeed { get; set; }
 
         public virtual Owner Owner { get; set; }
 
@@ -64,10 +64,14 @@ namespace Flats4us.Entities
         public virtual ICollection<Offer> Offers { get; set; }
         public virtual ICollection<RentOpinion> RentOpinions { get; set; }
 
+        public ICollection<FileUpload> Images { get; set; }
+
         public Property()
         {
             this.Equipment = new HashSet<Equipment>();
             this.Offers = new HashSet<Offer>();
+            this.RentOpinions = new HashSet<RentOpinion>();
+            this.Images = new HashSet<FileUpload>();
         }
     }
 }

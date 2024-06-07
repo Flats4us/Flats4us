@@ -12,19 +12,20 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-import { RentsCancelDialogComponent } from '../dialog/rents-cancel-dialog/rents-cancel-dialog.component';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { RentRateComponent } from '../rent-rate/rent-rate.component';
 import { RentsDetailsComponent } from './rents-details.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
 	imports: [
 		CommonModule,
 		MatButtonModule,
-		MatIconModule,
 		MatInputModule,
 		MatListModule,
 		MatDividerModule,
@@ -33,7 +34,6 @@ import { MatChipsModule } from '@angular/material/chips';
 		MatTooltipModule,
 		ScrollingModule,
 		MatDialogModule,
-		RentsCancelDialogComponent,
 		MeetingAddComponent,
 		RentRateComponent,
 		MatIconModule,
@@ -41,6 +41,11 @@ import { MatChipsModule } from '@angular/material/chips';
 		MatCardModule,
 		CdkTableModule,
 		MatChipsModule,
+		FormsModule,
+		ReactiveFormsModule,
+		MatFormFieldModule,
+		AccessControlDirective,
+		TranslateModule,
 	],
 	exports: [RentsDetailsComponent],
 })

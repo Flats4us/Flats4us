@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { DisputesConversationComponent } from './disputes-conversation.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [DisputesConversationComponent],
@@ -15,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 		MatIconModule,
 		ReactiveFormsModule,
 		MatMenuModule,
+		TranslateModule,
 	],
 })
 export class DisputesConversationModule {}

@@ -1,7 +1,12 @@
 import { registerLocaleData } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+	HTTP_INTERCEPTORS,
+	HttpClient,
+	HttpClientModule,
+} from '@angular/common/http';
 import localePl from '@angular/common/locales/pl';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import localeEN from '@angular/common/locales/en';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -21,7 +26,16 @@ import { AppComponent } from './app.component';
 import { MatCardModule } from '@angular/material/card';
 
 registerLocaleData(localePl);
+registerLocaleData(localeEN);
+
 import { FindRoommateModule } from './find-roommate/find-roommate.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LocaleProvider } from '@shared/utils/locale.provider';
+
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http);
+}
 
 @NgModule({
 	declarations: [AppComponent, NotFoundComponent],
@@ -40,9 +54,16 @@ import { FindRoommateModule } from './find-roommate/find-roommate.module';
 		MatNativeDateModule,
 		MatCardModule,
 		FindRoommateModule,
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
 	],
 	providers: [
-		{ provide: LOCALE_ID, useValue: 'pl' },
+		LocaleProvider,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthInterceptor,

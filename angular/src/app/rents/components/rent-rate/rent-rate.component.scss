@@ -3,8 +3,14 @@ form {
 	flex-direction: column;
 	gap: 16px;
 
+	> div,
 	mat-form-field {
 		min-width: 300px;
+	}
+
+	> div {
+		display: flex;
+		flex-direction: column;
 	}
 }
 

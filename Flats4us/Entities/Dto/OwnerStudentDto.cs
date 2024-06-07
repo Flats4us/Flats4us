@@ -20,9 +20,6 @@ namespace Flats4us.Entities.Dto
         public string PhoneNumber { get; set; }
 
         [Required]
-        public string ImagesPath { get; set; }
-
-        [Required]
-        public bool ActivityStatus { get; set; }
+        public FileDto ProfilePicture { get; set; }
     }
 }

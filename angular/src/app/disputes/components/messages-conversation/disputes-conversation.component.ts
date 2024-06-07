@@ -13,11 +13,11 @@ import { map, Observable } from 'rxjs';
 export class DisputesConversationComponent {
 	public conversationId$: Observable<string>;
 	public messageControl = new FormControl();
-	public currentUser = 'User1';
+	public currentUser = 1;
 
 	public messages: IConversation[] = [
-		{ sender: 'User1', message: 'Msg' },
-		{ sender: 'User2', message: 'Msg..' },
+		{ sender: 1, message: 'Msg' },
+		{ sender: 2, message: 'Msg..' },
 	];
 
 	constructor(public route: ActivatedRoute) {

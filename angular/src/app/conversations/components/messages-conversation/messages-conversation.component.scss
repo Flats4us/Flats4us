@@ -1,0 +1,46 @@
+.conversation-header {
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.avatar {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	margin-left: 4px;
+}
+
+.receiver-avatar {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: min-content 1fr;
+}
+
+.conversation {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	min-width: 100px;
+	margin: 8px;
+
+	.bubble {
+		padding: 8px 16px;
+		border-radius: 8px;
+		background-color: #f2f2f2;
+	}
+
+	&-sent {
+		margin-left: auto;
+
+		.bubble {
+			background-color: #ecf3fe;
+		}
+	}
+}

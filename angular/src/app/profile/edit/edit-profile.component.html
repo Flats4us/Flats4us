@@ -9,10 +9,10 @@
 		class="container-title"
 	>
 		<h1 *ngIf="actualUser.userType === 1" class="text-4xl p-4 font-semibold">
-			Edycja profilu studenta
+			{{ "Profile-edit.edit-student-profile" | translate }}
 		</h1>
 		<h1 *ngIf="actualUser.userType === 0" class="text-4xl p-4 font-semibold">
-			Edycja profilu właściciela
+			{{ "Profile-edit.edit-owner-profile" | translate }}
 		</h1>
 	</div>
 	<form [formGroup]="actualForm" (ngSubmit)="onSubmit()">
@@ -22,8 +22,8 @@
 					id="menu"
 					mat-mini-fab
 					color="primary"
-					matTooltip="Więcej opcji"
 					aria-label="MenuButton"
+					matTooltip="{{ 'more-options' | translate }}"
 					[matMenuTriggerFor]="menu"
 				>
 					<mat-icon>more_horiz</mat-icon>
@@ -33,14 +33,26 @@
 						*ngFor="let menuOption of this.menuOptions"
 						mat-menu-item
 						[value]="menuOption.description"
-						[disabled]="
-							actualUser.userType !== 1 && menuOption.option === 'editSurvey'
-								? true
-								: false
-						"
+						[disabled]="menuOption.option === 'editSurvey'"
 						(click)="onSelect(menuOption)"
 					>
-						<span>{{ menuOption.description }}</span>
+						<div
+							class="flex items-center justify-center"
+							[ngSwitch]="menuOption.option"
+						>
+							<mat-icon *ngSwitchCase="'editEmail'" class="material-icons-outlined"
+								>mail</mat-icon
+							>
+							<mat-icon
+								*ngSwitchCase="'changePassword'"
+								class="material-icons-outlined"
+								>key</mat-icon
+							>
+							<mat-icon *ngSwitchCase="'editSurvey'" class="material-icons-outlined"
+								>fact_check</mat-icon
+							>
+							<span>{{ menuOption.description | translate }}</span>
+						</div>
 					</button>
 				</mat-menu>
 			</div>
@@ -57,9 +69,12 @@
 						value="urlPhoto"
 						(change)="onFileSelected($event, regexImage)"
 					/>
-					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar"
-						>Nie wczytano zdjęcia!</mat-error
-					>
+					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar">
+						<div class="text-xl flex justify-center items-center">
+							<mat-icon>error</mat-icon
+							><span>{{ "Profile-edit.photo-load" | translate }}!</span>
+						</div>
+					</mat-error>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
 						class="text-3xl p-4 semibold"
@@ -79,17 +94,20 @@
 						Status:
 						{{
 							actualUser.verificationStatus === 0
-								? toLowerCase(sType.VERIFIED)
-								: toLowerCase(sType.UNVERIFIED)
+								? ("Profile.verified" | translate)
+								: ("Profile.unverified" | translate)
 						}}
 					</div>
 					<div
 						*ngIf="actualUser && modificationType === mType.EDIT"
-						class="text-2xl pb-2"
+						class="text-2xl pb-2 text-center"
 					>
 						Email: {{ actualUser.email }}
 					</div>
-					<div *ngIf="modificationType === mType.CREATE" class="text-2xl pb-2">
+					<div
+						*ngIf="modificationType === mType.CREATE"
+						class="text-2xl pb-2 text-center"
+					>
 						email: {{ email }}
 					</div>
 					<div
@@ -105,7 +123,7 @@
 							"
 							class="text-2xl pb-2"
 						>
-							Wiek {{ getAge(actualUser.birthDate) }}
+							{{ "Profile-edit.age1" | translate }} {{ getAge(actualUser.birthDate) }}
 						</div>
 						<div
 							*ngIf="
@@ -114,7 +132,8 @@
 							"
 							class="text-3xl pb-4 semibold"
 						>
-							wiek {{ getAge(actualForm.get("birthDate")?.value ?? "") }}
+							{{ "Profile-edit.age2" | translate }}
+							{{ getAge(actualForm.get("birthDate")?.value ?? "") }}
 						</div>
 					</div>
 					<div class="button-box">
@@ -126,8 +145,22 @@
 							aria-label="Upload"
 							(click)="photoUpload.click()"
 						>
-							<span *ngIf="modificationType === mType.EDIT">Zmień zdjęcie</span>
-							<span *ngIf="modificationType === mType.CREATE">Dodaj zdjęcie</span>
+							<span *ngIf="modificationType === mType.EDIT">{{
+								"Profile-edit.change-photo" | translate
+							}}</span>
+							<span
+								*ngIf="
+									(modificationType === mType.CREATE && !urlPhoto) ||
+									urlPhoto === urlAvatar
+								"
+								>{{ "Profile-edit.add-photo" | translate }}</span
+							>
+							<span
+								*ngIf="
+									modificationType === mType.CREATE && urlPhoto && urlPhoto !== urlAvatar
+								"
+								>{{ "Profile-edit.change-photo" | translate }}</span
+							>
 							<mat-icon iconPositionEnd>add_photo_alternate</mat-icon>
 						</button>
 					</div>
@@ -138,20 +171,25 @@
 					<mat-form-field
 						*ngIf="userType === uType.STUDENT && modificationType === mType.CREATE"
 					>
-						<mat-label>Data urodzenia</mat-label>
-						<input matInput formControlName="birthDate" [matDatepicker]="picker" />
+						<mat-label>{{ "Profile-edit.birthDate" | translate }}</mat-label>
+						<input
+							matInput
+							formControlName="birthDate"
+							[matDatepicker]="picker"
+							(dateChange)="setLocalDate($event, actualForm.get('birthDate'))"
+						/>
 						<mat-datepicker-toggle
 							matIconSuffix
 							[for]="picker"
 						></mat-datepicker-toggle>
 						<mat-datepicker #picker [startAt]="startDate"></mat-datepicker>
 						<mat-error *ngIf="actualForm.controls['birthDate'].errors?.['required']">
-							Nie określono daty urodzenia!
+							{{ "Profile-edit.birthDate-info1" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="actualForm.controls['birthDate'].errors?.['validityAge']"
 						>
-							Podano nieprawidłową datę urodzenia!
+							{{ "Profile-edit.birthDate-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field
@@ -159,19 +197,19 @@
 							userType === uType.STUDENT || (actualUser && actualUser.userType === 1)
 						"
 					>
-						<mat-label>Numer studencki</mat-label>
+						<mat-label>{{ "Profile-edit.student-number" | translate }}</mat-label>
 						<input
 							id="studentNumber"
 							formControlName="studentNumber"
 							type="text"
-							placeholder="Numer studencki"
 							aria-label="StudentNumber"
 							matInput
+							placeholder="{{ 'Profile-edit.student-number' | translate }}"
 						/>
 						<mat-error
 							*ngIf="actualForm.controls['studentNumber'].errors?.['required']"
 						>
-							Nie podano numeru studenta!
+							{{ "Profile-edit.student-number-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field
@@ -179,47 +217,51 @@
 							userType === uType.STUDENT || (actualUser && actualUser.userType === 1)
 						"
 					>
-						<mat-label>Uczelnia</mat-label>
+						<mat-label>{{ "Profile-edit.university" | translate }}</mat-label>
 						<input
 							id="university"
 							formControlName="university"
 							type="text"
-							placeholder="Uczelnia"
 							aria-label="University"
 							matInput
+							placeholder="{{ 'Profile-edit.university' | translate }}"
 						/>
 						<mat-error *ngIf="actualForm.controls['university'].errors?.['required']">
-							Nie podano nazwy uczelni!
+							{{ "Profile-edit.school-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<mat-label>Adres zamieszkania</mat-label>
+						<mat-label>{{ "Profile-edit.address" | translate }}</mat-label>
 						<input
 							id="address"
 							formControlName="address"
 							type="text"
-							placeholder="Adres zamieszkania"
 							aria-label="Address"
 							matInput
+							placeholder="{{ 'Profile-edit.address' | translate }}"
 						/>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
 						>
-							Nie podano adresu!
+							{{ "Profile-edit.address-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<mat-label>Nr telefonu</mat-label>
-						<input matInput formControlName="phoneNumber" placeholder="Nr telefonu" />
+						<mat-label>{{ "Profile-edit.phone" | translate }}</mat-label>
+						<input
+							matInput
+							formControlName="phoneNumber"
+							placeholder="{{ 'Profile-edit.phone' | translate }}"
+						/>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
 						>
-							Nie podano numeru telefonu!
+							{{ "Profile-edit.phone-info1" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
 						>
-							Nieprawidłowy numer telefonu!
+							{{ "Profile-edit.phone-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field
@@ -227,19 +269,19 @@
 							userType === uType.OWNER || (actualUser && actualUser.userType === 0)
 						"
 					>
-						<mat-label>Nr konta bankowego</mat-label>
+						<mat-label>{{ "Profile-edit.bank-account" | translate }}</mat-label>
 						<input
 							matInput
 							formControlName="bankAccount"
-							placeholder="Nr konta bankowego"
+							placeholder="{{ 'Profile-edit.bank-account' | translate }}"
 						/>
 						<mat-error
 							*ngIf="actualForm.controls['bankAccount'].errors?.['required']"
 						>
-							Nie podano numeru konta bankowego!
+							{{ "Profile-edit.bank-account-info1" | translate }}!
 						</mat-error>
 						<mat-error *ngIf="actualForm.controls['bankAccount'].errors?.['pattern']">
-							Nieprawidłowy numeru konta bankowego!
+							{{ "Profile-edit.bank-account-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field
@@ -247,48 +289,33 @@
 							userType === uType.STUDENT || (actualUser && actualUser.userType === 1)
 						"
 					>
-						<mat-label>Zainteresowania</mat-label>
-						<mat-chip-grid #chipGrid aria-label="Interests">
-							<mat-chip-row
-								*ngFor="let myHobby of myHobbies"
-								(removed)="removeHobby(myHobby, myHobbies)"
+						<mat-label>{{ "Profile.interest" | translate }}</mat-label>
+						<mat-select
+							multiple
+							formControlName="interestIds"
+							[compareWith]="hobbyComparisonFunction"
+							[(ngModel)]="selectedHobbies"
+						>
+							<mat-select-trigger>
+								<mat-chip-set>
+									<mat-chip *ngFor="let myHobby of selectedHobbies">
+										{{ myHobby.name | translate }}
+									</mat-chip>
+								</mat-chip-set>
+							</mat-select-trigger>
+							<mat-option
+								*ngFor="let hobby of filteredHobbies$ | async"
+								[value]="hobby"
+								>{{ hobby.name | translate }}</mat-option
 							>
-								{{ myHobby.name }}
-								<button
-									matChipRemove
-									type="button"
-									[attr.aria-label]="'remove ' + myHobby.name"
-								>
-									<mat-icon>cancel</mat-icon>
-								</button>
-							</mat-chip-row>
-							<input
-								#hobbiesInput
-								[formControl]="hobbyCtrl"
-								[matChipInputFor]="chipGrid"
-								[matAutocomplete]="auto"
-								[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-								(matChipInputTokenEnd)="addHobby($event, myHobbies, hobbyCtrl)"
-							/>
-							<mat-autocomplete
-								#auto="matAutocomplete"
-								(optionSelected)="selected($event)"
-							>
-								<mat-option
-									*ngFor="let hobby of filteredHobbies$ | async"
-									[value]="hobby"
-									>{{ hobby.name }}</mat-option
-								>
-							</mat-autocomplete>
-						</mat-chip-grid>
+						</mat-select>
 					</mat-form-field>
 					<mat-form-field
 						*ngIf="
 							userType === uType.STUDENT || (actualUser && actualUser.userType === 1)
 						"
-						class="example-chip-list"
 					>
-						<mat-label>Linki do social media</mat-label>
+						<mat-label>{{ "Profile-edit.links-social" | translate }}</mat-label>
 						<mat-chip-grid #chipGrid2 aria-label="Links">
 							<mat-chip-row
 								*ngFor="let socialMedia of socialMedias"
@@ -297,17 +324,19 @@
 								(removed)="removeSocialMedia(socialMedia, socialMedias)"
 								(edited)="editSocialMedia(socialMedia, $event)"
 							>
-								{{ socialMedia }}
-								<button
-									matChipRemove
-									type="button"
-									[attr.aria-label]="'remove ' + socialMedia"
-								>
-									<mat-icon>cancel</mat-icon>
-								</button>
+								<span class="flex items-center pr-4">
+									<button
+										matChipRemove
+										type="button"
+										[attr.aria-label]="'remove ' + socialMedia"
+									>
+										<mat-icon>cancel</mat-icon>
+									</button>
+									<span>{{ socialMedia }}</span>
+								</span>
 							</mat-chip-row>
 							<input
-								placeholder="Wpisz link do social media"
+								placeholder="{{ 'Profile-edit.links-social2' | translate }}"
 								[formControl]="socialMediaCtrl"
 								[matChipInputFor]="chipGrid2"
 								[matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -321,20 +350,37 @@
 					<span
 						*ngIf="
 							modificationType === mType.CREATE ||
-							(actualUser && !checkValidityTill(actualUser.documentExpireDate))
+							(modificationType === mType.EDIT && actualUser.userType === 1)
 						"
 						class="btn-upload-box"
 					>
-						<a *ngIf="!urlNewScan">Wczytaj skan aktualnego dokumentu!</a>
 						<button
 							mat-icon-button
 							type="button"
 							aria-label="Upload"
-							matTooltip="Wczytaj skan dokumentu"
+							matTooltip="{{
+								!this.urlNewScan || this.modificationType === mType.EDIT
+									? descriptionsMap.get('read')
+									: descriptionsMap.get('edit')
+							}}"
 							(click)="scanUpload.click()"
 						>
-							<mat-icon>attachment</mat-icon>
+							<mat-icon class="material-symbols-outlined">attach_file</mat-icon>
 						</button>
+						<span
+							*ngIf="!urlNewScan && modificationType === mType.CREATE"
+							class="scan-url-box"
+							>{{ "Profile-edit.load-scan-actual" | translate }}!</span
+						>
+						<span
+							*ngIf="urlNewScan || modificationType === mType.EDIT"
+							class="scan-url-box"
+						>
+							{{ "Profile-edit.load-scan-info2" | translate }}</span
+						>
+						<span *ngIf="urlNewScan" class="scan-url-box ml-4"
+							>| {{ fileScanName }}</span
+						>
 						<input
 							#scanUpload
 							id="documentScan"
@@ -344,15 +390,18 @@
 							aria-label="File"
 							(change)="onFileSelected($event, regexScan)"
 						/>
-						<mat-error *ngIf="!urlNewScan">Nie wczytano skanu dokumentu!</mat-error>
+						<mat-error *ngIf="!urlNewScan && modificationType === mType.CREATE"
+							>{{ "Profile-edit.load-scan-info1" | translate }}!</mat-error
+						>
 					</span>
 					<mat-form-field
 						*ngIf="
-							(actualUser && !checkValidityTill(actualUser.documentExpireDate)) ||
+							(actualUser === uType.STUDENT &&
+								!checkValidityTill(actualUser.documentExpireDate)) ||
 							modificationType === mType.CREATE
 						"
 					>
-						<mat-label>Dokument tożsamości</mat-label>
+						<mat-label>{{ "Profile-edit.identification" | translate }}</mat-label>
 						<mat-select id="documentType" formControlName="documentType">
 							<mat-option
 								*ngFor="let document of profileService.documentTypes"
@@ -361,25 +410,26 @@
 									(userType === uType.OWNER ||
 										(actualUser && actualUser.userType === 0)) &&
 									document.value === 1
-										? true
-										: false
 								"
 							>
-								{{ document.viewValue }}
+								{{ document.viewValue | translate }}
 							</mat-option>
 						</mat-select>
 						<mat-error
 							*ngIf="actualForm.controls['documentType'].errors?.['required']"
 						>
-							Nie wybrano rodzaju dokumentu!
+							{{ "Profile-edit.identification-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<mat-label>Data ważności dokumentu</mat-label>
+						<mat-label>{{
+							"Profile-edit.identification-date" | translate
+						}}</mat-label>
 						<input
 							matInput
 							formControlName="documentExpireDate"
 							[matDatepicker]="picker"
+							(dateChange)="setLocalDate($event, actualForm.get('documentExpireDate'))"
 						/>
 						<mat-datepicker-toggle
 							matIconSuffix
@@ -389,18 +439,18 @@
 						<mat-error
 							*ngIf="actualForm.controls['documentExpireDate'].errors?.['required']"
 						>
-							Nie określono daty ważności dokumentu!
+							{{ "Profile-edit.identification-date-info" | translate }}!
 						</mat-error>
 						<mat-error
 							*ngIf="actualForm.controls['documentExpireDate'].errors?.['validityTill']"
 						>
-							Termin ważności dokumentu upłynął!
+							{{ "Profile-edit.identification-date-end" | translate }}!
 						</mat-error>
 					</mat-form-field>
 				</div>
 				<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
 					<button mat-raised-button color="primary" type="submit">
-						Zapisz <mat-icon iconPositionEnd>done_outline</mat-icon>
+						{{ "save" | translate }} <mat-icon iconPositionEnd>done_outline</mat-icon>
 					</button>
 				</div>
 			</div>

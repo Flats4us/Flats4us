@@ -11,13 +11,12 @@ namespace Flats4us.Entities
     {
         public DbSet<Argument> Arguments { get; set; }
         public DbSet<ArgumentIntervention> ArgumentInterventions { get; set; }
-        public DbSet<ArgumentMessage> ArgumentMessages { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<GroupChat> GroupChats { get; set; }
         public DbSet<UserGroupChat> UserGroupChats { get; set; }
-
         public DbSet<Equipment> Equipment { get; set; }
+        public DbSet<FileUpload> FileUploads { get; set; }
         public DbSet<Flat> Flats { get; set; }
         public DbSet<House> Houses { get; set; }
         public DbSet<Interest> Interests { get; set; }
@@ -163,7 +162,7 @@ namespace Flats4us.Entities
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserGroupChat>()
-.HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+                .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
 
             modelBuilder.Entity<UserGroupChat>()
                 .HasOne(ugc => ugc.User)
@@ -189,9 +188,43 @@ namespace Flats4us.Entities
 
             modelBuilder.Entity<RentOpinion>()
                 .HasOne(ro => ro.Student) 
-                .WithMany()  
+                .WithMany(s => s.IssuedRentOpinions)  
                 .HasForeignKey(ro => ro.StudentId)  
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Rent)
+                .WithMany(r => r.Payments)
+                .HasForeignKey(p => p.RentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OfferInterest>()
+                .HasOne(oi => oi.Offer)
+                .WithMany(o => o.OfferInterests)
+                .HasForeignKey(oi => oi.OfferId);
+
+            modelBuilder.Entity<OfferInterest>()
+                .HasOne(oi => oi.Student)
+                .WithMany(o => o.OfferInterests)
+                .HasForeignKey(oi => oi.StudentId);
+
+            modelBuilder.Entity<ArgumentIntervention>()
+               .HasOne(x => x.Argument)
+               .WithMany(x => x.ArgumentInterventions)
+               .HasForeignKey(x => x.ArgumentId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ArgumentIntervention>()
+                .HasOne(x => x.Moderator)
+                .WithMany(x => x.ArgumentInterventions)
+                .HasForeignKey(x => x.ModeratorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Argument>()
+            //.HasOne(a => a.GroupChat)
+            //.WithOne(g => g.Argument)
+            //.HasForeignKey<Argument>(a => a.GroupChatId)
+            //.OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

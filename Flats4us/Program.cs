@@ -23,7 +23,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<Flats4usContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("Flats4usConn"));
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("Flats4usConn"),
+            sqlServerOptionsAction: sqlOptions =>
+            {
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+            });
     }, 
     ServiceLifetime.Scoped
 );
@@ -42,13 +50,12 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IMatcherService, MatcherService>();
 builder.Services.AddScoped<IRentService, RentService>();
 builder.Services.AddScoped<ITechnicalProblemService, TechnicalProblemService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IGroupChatService, GroupChatService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IArgumentService, ArgumentService>();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 
 builder.Services.AddSingleton(new AppInfo { 
     CommitHash = Environment.GetEnvironmentVariable("COMMIT_HASH") ?? "notFound", 
@@ -98,7 +105,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration.GetSection("Jwt:Key").Value)),
             ValidateIssuer = false,
             ValidateAudience = false
         };
@@ -223,10 +230,11 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
 
     var dbContext = services.GetRequiredService<Flats4usContext>();
+    var configuration = services.GetRequiredService<IConfiguration>();
 
     if (dbContext.Database.EnsureCreated())
     {
-        DataSeeder.SeedData(dbContext);
+        await DataSeeder.SeedDataAsync(dbContext, configuration);
     }
 }
 
@@ -236,8 +244,8 @@ app.MapHub<ChatHub>("/chatHub");
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "Images")),
-    RequestPath = "/Images"
+        Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
 });
 
 app.UseSwagger();

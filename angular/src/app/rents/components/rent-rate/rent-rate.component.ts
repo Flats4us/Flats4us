@@ -3,7 +3,9 @@ import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {
 	FormControl,
 	FormGroup,
+	FormsModule,
 	ReactiveFormsModule,
+	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,8 +19,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { IEnumerableItem } from '@shared/models/shared.models';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, takeUntil } from 'rxjs';
 import { IOffer } from 'src/app/offer/models/offer.models';
+import { RentsService } from '../../services/rents.service';
+import { IRentOpinion } from '../../models/rents.models';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-rent-rate',
@@ -30,30 +37,53 @@ import { IOffer } from 'src/app/offer/models/offer.models';
 		MatInputModule,
 		MatSliderModule,
 		MatSelectModule,
+		FormsModule,
 		ReactiveFormsModule,
 		MatButtonModule,
+		TranslateModule,
 	],
 	templateUrl: './rent-rate.component.html',
 	styleUrls: ['./rent-rate.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RentRateComponent {
-	public form = new FormGroup({
-		rate: new FormControl(null, Validators.required),
-		cleanliness: new FormControl(null, Validators.required),
-		service: new FormControl(null, Validators.required),
-		location: new FormControl(null, Validators.required),
-		equipment: new FormControl(null, Validators.required),
-		price: new FormControl(null, Validators.required),
-		opinion: new FormControl(null),
+export class RentRateComponent extends BaseComponent {
+	public form = new UntypedFormGroup({
+		rating: new FormControl(1, Validators.required),
+		cleanliness: new FormControl(1, Validators.required),
+		service: new FormControl(1, Validators.required),
+		location: new FormControl(1, Validators.required),
+		equipment: new FormControl(1, Validators.required),
+		qualityForMoney: new FormControl(1, Validators.required),
+		description: new FormControl(null),
 	});
 
 	constructor(
 		private dialogRef: MatDialogRef<RentRateComponent>,
-		@Inject(MAT_DIALOG_DATA) public data$: Observable<IOffer>
-	) {}
+		@Inject(MAT_DIALOG_DATA) public data$: Observable<IOffer>,
+		private rentsService: RentsService,
+		private snackbarService: MatSnackBar,
+		private translate: TranslateService
+	) {
+		super();
+	}
 
 	public onSubmit(): void {
-		this.dialogRef.close(this.form.value);
+		this.data$
+			.pipe(
+				switchMap(data =>
+					this.rentsService.postOpinion(data.offerId, this.form.value)
+				),
+				takeUntil(this.destroyed)
+			)
+			.subscribe(() => {
+				this.snackbarService.open(
+					this.translate.instant('Rent-rate.info-success'),
+					this.translate.instant('close'),
+					{
+						duration: 2000,
+					}
+				);
+				this.dialogRef.close();
+			});
 	}
 }

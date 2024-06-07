@@ -1,20 +1,23 @@
-﻿using Azure.Core;
-using Flats4us.Entities;
+﻿using Flats4us.Entities;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
-using System;
-using System.Linq;
+using Flats4us.Services;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 public static class DataSeeder
 {
-    public static void SeedData(Flats4usContext dbContext)
+    private static FileUploadService _fileUploadService;
+
+    public static async Task SeedDataAsync(Flats4usContext dbContext, IConfiguration configuration)
     {
-        ImageUtility.DeleteDirectory("Images/Properties").Wait();
-        ImageUtility.DeleteDirectory("Images/Users").Wait();
+        _fileUploadService = new FileUploadService(dbContext, configuration);
+
+        await _fileUploadService.ClearDirectoryAsync(configuration["FileUploadSettings:UploadPath"]);
 
         #region Equipment
 
-        var equipment1 = new Equipment { 
+        var equipment1 = new Equipment
+        {
             Name = "Dishwasher"
         };
         var equipment2 = new Equipment
@@ -164,13 +167,11 @@ public static class DataSeeder
             Email = "mkowalski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkowalski123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BankAccount = "12341234123412341234123412",
             DocumentNumber = "XXX 000000"
@@ -186,8 +187,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 3, 23),
             LastLoginDate = new DateTime(2023, 10, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bnowak123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
@@ -202,11 +201,9 @@ public static class DataSeeder
             Email = "rpawlak@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 7, 13),
-            DateForVerificationSorting = new DateTime(2023, 7, 13),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 13),
             LastLoginDate = new DateTime(2023, 10, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rpawlak123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 4, 8),
@@ -221,11 +218,9 @@ public static class DataSeeder
             Email = "kklik@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 2, 8),
-            DateForVerificationSorting = new DateTime(2023, 2, 8),
+            VerificationOrRejectionDate = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 9, 30),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kklik123"),
-            ImagesPath = Guid.NewGuid().ToString(),
-            ActivityStatus = false,
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 5, 14),
@@ -240,11 +235,9 @@ public static class DataSeeder
             Email = "anowakowska@gmail.com",
             PhoneNumber = "987654321",
             AccountCreationDate = new DateTime(2022, 5, 20),
-            DateForVerificationSorting = new DateTime(2022, 5, 20),
+            VerificationOrRejectionDate = new DateTime(2022, 5, 20),
             LastLoginDate = new DateTime(2023, 5, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowakowska123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 11, 15),
@@ -259,11 +252,9 @@ public static class DataSeeder
             Email = "pdabrowski@gmail.com",
             PhoneNumber = "555444333",
             AccountCreationDate = new DateTime(2023, 3, 10),
-            DateForVerificationSorting = new DateTime(2023, 3, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 10),
             LastLoginDate = new DateTime(2023, 8, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pdabrowski123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 10, 22),
@@ -278,11 +269,9 @@ public static class DataSeeder
             Email = "jwisniewski@gmail.com",
             PhoneNumber = "111222333",
             AccountCreationDate = new DateTime(2023, 6, 15),
-            DateForVerificationSorting = new DateTime(2023, 6, 15),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 15),
             LastLoginDate = new DateTime(2023, 11, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jwisniewski123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 8, 17),
@@ -300,8 +289,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2022, 8, 25),
             LastLoginDate = new DateTime(2023, 2, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mlewandowska123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 9, 30),
@@ -317,11 +304,9 @@ public static class DataSeeder
             Email = "kkaczmarek@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 4, 8),
-            DateForVerificationSorting = new DateTime(2023, 4, 8),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 8),
             LastLoginDate = new DateTime(2023, 9, 8),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkaczmarek123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 7, 10),
@@ -340,8 +325,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2022, 10, 3),
             LastLoginDate = new DateTime(2023, 3, 3),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Tzajac123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 8, 20),
@@ -357,11 +340,9 @@ public static class DataSeeder
             Email = "ewojcik@gmail.com",
             PhoneNumber = "333222111",
             AccountCreationDate = new DateTime(2023, 7, 18),
-            DateForVerificationSorting = new DateTime(2023, 7, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 18),
             LastLoginDate = new DateTime(2023, 12, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ewojcik123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 5, 5),
@@ -376,11 +357,9 @@ public static class DataSeeder
             Email = "kwojcik@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 4, 18),
-            DateForVerificationSorting = new DateTime(2023, 4, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 18),
             LastLoginDate = new DateTime(2023, 9, 18),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwojcik123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 10, 25),
@@ -398,8 +377,6 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 2, 8),
             LastLoginDate = new DateTime(2023, 7, 8),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Ajankowski123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2025, 11, 20),
@@ -414,11 +391,9 @@ public static class DataSeeder
             Email = "bkaminska@gmail.com",
             PhoneNumber = "444555666",
             AccountCreationDate = new DateTime(2023, 7, 21),
-            DateForVerificationSorting = new DateTime(2023, 7, 21),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 21),
             LastLoginDate = new DateTime(2023, 12, 21),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bkaminska123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.ID,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 1, 5),
@@ -428,20 +403,20 @@ public static class DataSeeder
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14);
 
-        ImageUtility.SeedUserImage(owner1.ImagesPath, owner1.VerificationStatus, owner1.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner2.ImagesPath, owner2.VerificationStatus, owner2.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner3.ImagesPath, owner3.VerificationStatus, owner3.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner4.ImagesPath, owner4.VerificationStatus, owner4.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner5.ImagesPath, owner5.VerificationStatus, owner5.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner6.ImagesPath, owner6.VerificationStatus, owner6.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner7.ImagesPath, owner7.VerificationStatus, owner7.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner8.ImagesPath, owner8.VerificationStatus, owner8.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner9.ImagesPath, owner9.VerificationStatus, owner9.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner10.ImagesPath, owner10.VerificationStatus, owner10.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner11.ImagesPath, owner11.VerificationStatus, owner11.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner12.ImagesPath, owner12.VerificationStatus, owner12.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner13.ImagesPath, owner13.VerificationStatus, owner13.DocumentType).Wait();
-        ImageUtility.SeedUserImage(owner14.ImagesPath, owner14.VerificationStatus, owner14.DocumentType).Wait();
+        SeedUserFiles(owner1).Wait();
+        SeedUserFiles(owner2).Wait();
+        SeedUserFiles(owner3).Wait();
+        SeedUserFiles(owner4).Wait();
+        SeedUserFiles(owner5).Wait();
+        SeedUserFiles(owner6).Wait();
+        SeedUserFiles(owner7).Wait();
+        SeedUserFiles(owner8).Wait();
+        SeedUserFiles(owner9).Wait();
+        SeedUserFiles(owner10).Wait();
+        SeedUserFiles(owner11).Wait();
+        SeedUserFiles(owner12).Wait();
+        SeedUserFiles(owner13).Wait();
+        SeedUserFiles(owner14).Wait();
 
         #endregion
 
@@ -455,18 +430,16 @@ public static class DataSeeder
             Email = "kkajetanski@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kkajetanski123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s27235",
             University = "Warszawski Uniwersytet Medyczny",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/kkajetanski|https://www.instagram.com/kkajetanski/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
         };
@@ -479,18 +452,16 @@ public static class DataSeeder
             Email = "aklocek@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Aklocek123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(2002, 12, 1),
             StudentNumber = "s2137",
             University = "Collegium Civitas w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -503,18 +474,16 @@ public static class DataSeeder
             Email = "kfilipek@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kfilipek123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(1978, 12, 1), //45 lat
             StudentNumber = "s2137",
             University = "Wojskowa Akademia Techniczna w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -527,18 +496,16 @@ public static class DataSeeder
             Email = "lguziewicz@gmail.com",
             PhoneNumber = "123456789",
             AccountCreationDate = new DateTime(2023, 1, 12),
-            DateForVerificationSorting = new DateTime(2023, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 10, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lguziewicz123"),
-            ActivityStatus = false,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
             BirthDate = new DateTime(1998, 12, 1), //25 lat
             StudentNumber = "s12345",
             University = "Szkoła Główna Gospodarstwa Wiejskiego w Warszawie",
-            Links = "https://www.facebook.com/profile.php?id=XXXXXXXXX|https://twitter.com/aklocek|https://www.instagram.com/aklocek/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
@@ -550,18 +517,16 @@ public static class DataSeeder
             Email = "anowak@gmail.com",
             PhoneNumber = "987654321",
             AccountCreationDate = new DateTime(2023, 2, 5),
-            DateForVerificationSorting = new DateTime(2023, 2, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 2, 5),
             LastLoginDate = new DateTime(2023, 11, 5),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Anowak123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 6, 15),
             BirthDate = new DateTime(1995, 5, 18),  //29 lat
             StudentNumber = "s19876",
             University = "Polsko-Japońska Akademia Technik Komputerowych w Warszawie",
-            Links = "https://www.facebook.com/anna.nowak|https://twitter.com/annanowak|https://www.instagram.com/annanowak/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest6, interest3, interest8 }
         };
@@ -574,18 +539,16 @@ public static class DataSeeder
             Email = "zkowalski@gmail.com",
             PhoneNumber = "555666777",
             AccountCreationDate = new DateTime(2023, 3, 20),
-            DateForVerificationSorting = new DateTime(2023, 3, 20),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 20),
             LastLoginDate = new DateTime(2023, 12, 20),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zkowalski123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 4, 30),
             BirthDate = new DateTime(1990, 8, 7),  //33 lata
             StudentNumber = "s12345",
             University = "Uniwersytet Warszawski",
-            Links = "https://www.facebook.com/mateusz.kowalski|https://twitter.com/mateuszkowal|https://www.instagram.com/mateuszkowalski/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest1, interest3, interest9 }
         };
@@ -597,18 +560,16 @@ public static class DataSeeder
             Email = "mwisniewska@gmail.com",
             PhoneNumber = "789012345",
             AccountCreationDate = new DateTime(2023, 4, 10),
-            DateForVerificationSorting = new DateTime(2023, 4, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 10),
             LastLoginDate = new DateTime(2024, 1, 1),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwisniewska123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2028, 8, 22),
             BirthDate = new DateTime(1993, 7, 14),  //28 lat
             StudentNumber = "s33456",
             University = "Politechnika Warszawska",
-            Links = "https://www.facebook.com/marta.wisniewska|https://twitter.com/martawisniewska|https://www.instagram.com/martawisniewska/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest19, interest17, interest6 }
         };
@@ -624,15 +585,13 @@ public static class DataSeeder
             DateForVerificationSorting = new DateTime(2023, 5, 15),
             LastLoginDate = new DateTime(2023, 12, 15),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pzawadzki123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2026, 5, 10),
             BirthDate = new DateTime(1994, 11, 28),  //27 lat
             StudentNumber = "s44567",
             University = "Akademia Leona Kożmińskiego w Warszawie",
-            Links = "https://www.facebook.com/piotr.zawadzki|https://twitter.com/piotrzawadzki|https://www.instagram.com/piotrzawadzki/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest4, interest15, interest8 }
         };
@@ -644,18 +603,16 @@ public static class DataSeeder
             Email = "kdabrowska@gmail.com",
             PhoneNumber = "876543210",
             AccountCreationDate = new DateTime(2023, 6, 25),
-            DateForVerificationSorting = new DateTime(2023, 6, 25),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 25),
             LastLoginDate = new DateTime(2023, 12, 25),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kdabrowska123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 9, 5),
             BirthDate = new DateTime(1991, 3, 8),  //32 lata
             StudentNumber = "s56789",
             University = "Collegium Humanum w Warszawie",
-            Links = "https://www.facebook.com/karolina.dabrowska|https://twitter.com/karolinadab|https://www.instagram.com/karolinadabrowska/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = true,
             Interests = { interest17, interest4, interest6 }
         };
@@ -668,18 +625,16 @@ public static class DataSeeder
             Email = "lnowicki@gmail.com",
             PhoneNumber = "999888777",
             AccountCreationDate = new DateTime(2023, 7, 10),
-            DateForVerificationSorting = new DateTime(2023, 7, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 10),
             LastLoginDate = new DateTime(2023, 12, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lnowicki123"),
-            ActivityStatus = true,
-            ImagesPath = Guid.NewGuid().ToString(),
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 12, 18),
             BirthDate = new DateTime(1992, 9, 22),  //29 lat
             StudentNumber = "s67890",
             University = "Uczelnia Łazarskiego w Warszawie",
-            Links = "https://www.facebook.com/lukasz.nowicki|https://twitter.com/lukasznowicki|https://www.instagram.com/lukasznowicki/",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
             IsTenant = false,
             Interests = { interest15, interest13, interest18 }
         };
@@ -687,16 +642,16 @@ public static class DataSeeder
 
         dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10);
 
-        ImageUtility.SeedUserImage(student1.ImagesPath, student1.VerificationStatus, student1.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student2.ImagesPath, student2.VerificationStatus, student2.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student3.ImagesPath, student3.VerificationStatus, student3.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student4.ImagesPath, student4.VerificationStatus, student4.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student5.ImagesPath, student5.VerificationStatus, student5.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student6.ImagesPath, student6.VerificationStatus, student6.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student7.ImagesPath, student7.VerificationStatus, student7.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student8.ImagesPath, student8.VerificationStatus, student8.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student9.ImagesPath, student9.VerificationStatus, student9.DocumentType).Wait();
-        ImageUtility.SeedUserImage(student10.ImagesPath, student10.VerificationStatus, student10.DocumentType).Wait();
+        SeedUserFiles(student1).Wait();
+        SeedUserFiles(student2).Wait();
+        SeedUserFiles(student3).Wait();
+        SeedUserFiles(student4).Wait();
+        SeedUserFiles(student5).Wait();
+        SeedUserFiles(student6).Wait();
+        SeedUserFiles(student7).Wait();
+        SeedUserFiles(student8).Wait();
+        SeedUserFiles(student9).Wait();
+        SeedUserFiles(student10).Wait();
 
         #endregion
 
@@ -712,7 +667,6 @@ public static class DataSeeder
             AccountCreationDate = new DateTime(2023, 1, 12),
             LastLoginDate = new DateTime(2023, 1, 12),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zmoderator123"),
-            ActivityStatus = false,
             VerificationStatus = VerificationStatus.Verified,
             HireDate = new DateTime(2023, 2, 7),
         };
@@ -737,10 +691,9 @@ public static class DataSeeder
             Area = 40,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2000,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 1),
-            DateForVerificationSorting = new DateTime(2023, 10, 1),
+            VerificationOrRejectionDate = new DateTime(2023, 10, 1),
             Owner = owner1,
             NumberOfRooms = 2,
             Floor = 2,
@@ -760,10 +713,9 @@ public static class DataSeeder
             Area = 64,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1980,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 10, 9),
-            DateForVerificationSorting = new DateTime(2023, 10, 9),
+            VerificationOrRejectionDate = new DateTime(2023, 10, 9),
             Owner = owner1,
             NumberOfRooms = 3,
             Floor = 2,
@@ -783,7 +735,6 @@ public static class DataSeeder
             Area = 50,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1980,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 11, 1),
             DateForVerificationSorting = new DateTime(2023, 11, 1),
@@ -806,10 +757,9 @@ public static class DataSeeder
             Area = 70,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1993,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 1),
-            DateForVerificationSorting = new DateTime(2023, 7, 1),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 1),
             Owner = owner2,
             NumberOfRooms = 3,
             Floor = 2,
@@ -829,7 +779,6 @@ public static class DataSeeder
             Area = 45,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2001,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 5, 6),
             DateForVerificationSorting = new DateTime(2023, 5, 6),
@@ -852,10 +801,9 @@ public static class DataSeeder
             Area = 50,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 3),
-            DateForVerificationSorting = new DateTime(2023, 7, 3),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 3),
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 3,
@@ -875,10 +823,9 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2003,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 11, 14),
-            DateForVerificationSorting = new DateTime(2023, 11, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 11, 14),
             Owner = owner3,
             NumberOfRooms = 3,
             Floor = 9,
@@ -898,10 +845,9 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 1987,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 4),
-            DateForVerificationSorting = new DateTime(2023, 9, 4),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 4),
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 10,
@@ -921,10 +867,9 @@ public static class DataSeeder
             Area = 45,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2019,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 18),
-            DateForVerificationSorting = new DateTime(2023, 8, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 18),
             Owner = owner4,
             NumberOfRooms = 2,
             Floor = 4,
@@ -944,10 +889,9 @@ public static class DataSeeder
             Area = 80,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 2015,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 4, 6),
-            DateForVerificationSorting = new DateTime(2023, 4, 6),
+            VerificationOrRejectionDate = new DateTime(2023, 4, 6),
             Owner = owner4,
             NumberOfRooms = 4,
             Floor = 2,
@@ -967,7 +911,6 @@ public static class DataSeeder
             Area = 55,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 1960,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 7, 15),
             DateForVerificationSorting = new DateTime(2023, 7, 15),
@@ -990,10 +933,9 @@ public static class DataSeeder
             Area = 70,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 20),
-            DateForVerificationSorting = new DateTime(2023, 5, 20),
+            VerificationOrRejectionDate = new DateTime(2023, 5, 20),
             Owner = owner7,
             NumberOfRooms = 4,
             Floor = 3,
@@ -1013,7 +955,6 @@ public static class DataSeeder
             Area = 90,
             MaxNumberOfInhabitants = 5,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 9, 28),
             DateForVerificationSorting = new DateTime(2023, 9, 28),
@@ -1036,10 +977,9 @@ public static class DataSeeder
             Area = 65,
             MaxNumberOfInhabitants = 3,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 12, 10),
-            DateForVerificationSorting = new DateTime(2023, 12, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 12, 10),
             Owner = owner9,
             NumberOfRooms = 3,
             Floor = 3,
@@ -1048,20 +988,20 @@ public static class DataSeeder
 
         dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14);
 
-        ImageUtility.SeedPropertyImage(flat1.ImagesPath, flat1.VerificationStatus);  
-        ImageUtility.SeedPropertyImage(flat2.ImagesPath, flat2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat3.ImagesPath, flat3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat4.ImagesPath, flat4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat5.ImagesPath, flat5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat6.ImagesPath, flat6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat7.ImagesPath, flat7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat8.ImagesPath, flat8.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat9.ImagesPath, flat9.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat10.ImagesPath, flat10.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat11.ImagesPath, flat11.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat12.ImagesPath, flat12.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat13.ImagesPath, flat13.VerificationStatus);
-        ImageUtility.SeedPropertyImage(flat14.ImagesPath, flat14.VerificationStatus);
+        await SeedPropertyFiles(flat1);
+        await SeedPropertyFiles(flat2);
+        await SeedPropertyFiles(flat3);
+        await SeedPropertyFiles(flat4);
+        await SeedPropertyFiles(flat5);
+        await SeedPropertyFiles(flat6);
+        await SeedPropertyFiles(flat7);
+        await SeedPropertyFiles(flat8);
+        await SeedPropertyFiles(flat9);
+        await SeedPropertyFiles(flat10);
+        await SeedPropertyFiles(flat11);
+        await SeedPropertyFiles(flat12);
+        await SeedPropertyFiles(flat13);
+        await SeedPropertyFiles(flat14);
 
         #endregion
 
@@ -1081,10 +1021,9 @@ public static class DataSeeder
             Area = 20,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1970,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 6, 23),
-            DateForVerificationSorting = new DateTime(2023, 6, 23),
+            VerificationOrRejectionDate = new DateTime(2023, 6, 23),
             Owner = owner1,
             Floor = 4,
             Equipment = { equipment4, equipment5, equipment7, equipment9, equipment11 }
@@ -1103,10 +1042,9 @@ public static class DataSeeder
             Area = 15,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1969,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 22),
-            DateForVerificationSorting = new DateTime(2023, 7, 22),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 22),
             Owner = owner1,
             Floor = 3,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment7, equipment10 }
@@ -1125,7 +1063,6 @@ public static class DataSeeder
             Area = 25,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2023,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 10, 3),
             DateForVerificationSorting = new DateTime(2023, 10, 3),
@@ -1147,7 +1084,6 @@ public static class DataSeeder
             Area = 20,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 8, 30),
             DateForVerificationSorting = new DateTime(2023, 8, 30),
@@ -1169,10 +1105,9 @@ public static class DataSeeder
             Area = 22,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2000,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 3, 17),
-            DateForVerificationSorting = new DateTime(2023, 3, 17),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 17),
             Owner = owner4,
             Floor = 3,
             Equipment = { equipment3, equipment7, equipment9, equipment10 }
@@ -1191,7 +1126,6 @@ public static class DataSeeder
             Area = 25,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1950,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 8, 10),
             DateForVerificationSorting = new DateTime(2023, 8, 10),
@@ -1213,10 +1147,9 @@ public static class DataSeeder
             Area = 18,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
-            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 5),
             Owner = owner6,
             Floor = 3,
             Equipment = { equipment2, equipment4, equipment7, equipment9, equipment11 }
@@ -1235,7 +1168,6 @@ public static class DataSeeder
             Area = 22,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 1965,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 10, 20),
             DateForVerificationSorting = new DateTime(2023, 10, 20),
@@ -1247,14 +1179,14 @@ public static class DataSeeder
 
         dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8);
 
-        ImageUtility.SeedPropertyImage(room1.ImagesPath, room1.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room2.ImagesPath, room2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room3.ImagesPath, room3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room4.ImagesPath, room4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room5.ImagesPath, room5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room6.ImagesPath, room6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room7.ImagesPath, room7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(room8.ImagesPath, room8.VerificationStatus);
+        await SeedPropertyFiles(room1);
+        await SeedPropertyFiles(room2);
+        await SeedPropertyFiles(room3);
+        await SeedPropertyFiles(room4);
+        await SeedPropertyFiles(room5);
+        await SeedPropertyFiles(room6);
+        await SeedPropertyFiles(room7);
+        await SeedPropertyFiles(room8);
 
         #endregion
 
@@ -1273,14 +1205,13 @@ public static class DataSeeder
             Area = 150,
             MaxNumberOfInhabitants = 6,
             ConstructionYear = 2001,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 14),
-            DateForVerificationSorting = new DateTime(2023, 7, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 14),
             Owner = owner1,
             NumberOfRooms = 5,
             NumberOfFloors = 3,
-            PlotArea= 200,
+            PlotArea = 200,
             Equipment = { equipment1, equipment2, equipment5, equipment6, equipment7 }
         };
         var house2 = new House
@@ -1296,16 +1227,15 @@ public static class DataSeeder
             Area = 110,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1989,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 9),
-            DateForVerificationSorting = new DateTime(2023, 8, 9),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 9),
             Owner = owner2,
             NumberOfRooms = 4,
             NumberOfFloors = 2,
             PlotArea = 120,
             Equipment = { equipment3, equipment4, equipment8, equipment10, equipment11 }
-        };        
+        };
         var house3 = new House
         {
             Province = "Mazowieckie",
@@ -1319,16 +1249,15 @@ public static class DataSeeder
             Area = 180,
             MaxNumberOfInhabitants = 6,
             ConstructionYear = 1999,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 14),
-            DateForVerificationSorting = new DateTime(2023, 8, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 14),
             Owner = owner2,
             NumberOfRooms = 7,
             NumberOfFloors = 4,
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
-        };        
+        };
         var house4 = new House
         {
             Province = "Mazowieckie",
@@ -1342,7 +1271,6 @@ public static class DataSeeder
             Area = 120,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1997,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.NotVerified,
             CreationDate = new DateTime(2023, 4, 5),
             DateForVerificationSorting = new DateTime(2023, 4, 5),
@@ -1365,10 +1293,9 @@ public static class DataSeeder
             Area = 130,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 2010,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 12),
-            DateForVerificationSorting = new DateTime(2023, 7, 12),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 12),
             Owner = owner4,
             NumberOfRooms = 3,
             NumberOfFloors = 1,
@@ -1388,10 +1315,9 @@ public static class DataSeeder
             Area = 180,
             MaxNumberOfInhabitants = 8,
             ConstructionYear = 1985,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 28),
-            DateForVerificationSorting = new DateTime(2023, 5, 28),
+            VerificationOrRejectionDate = new DateTime(2023, 5, 28),
             Owner = owner5,
             NumberOfRooms = 6,
             NumberOfFloors = 2,
@@ -1411,10 +1337,9 @@ public static class DataSeeder
             Area = 130,
             MaxNumberOfInhabitants = 5,
             ConstructionYear = 1998,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 10),
-            DateForVerificationSorting = new DateTime(2023, 8, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 10),
             Owner = owner6,
             NumberOfRooms = 4,
             NumberOfFloors = 2,
@@ -1434,10 +1359,9 @@ public static class DataSeeder
             Area = 200,
             MaxNumberOfInhabitants = 7,
             ConstructionYear = 2005,
-            ImagesPath = Guid.NewGuid().ToString(),
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 9, 5),
-            DateForVerificationSorting = new DateTime(2023, 9, 5),
+            VerificationOrRejectionDate = new DateTime(2023, 9, 5),
             Owner = owner8,
             NumberOfRooms = 7,
             NumberOfFloors = 3,
@@ -1447,14 +1371,14 @@ public static class DataSeeder
 
         dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8);
 
-        ImageUtility.SeedPropertyImage(house1.ImagesPath, house1.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house2.ImagesPath, house2.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house3.ImagesPath, house3.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house4.ImagesPath, house4.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house5.ImagesPath, house5.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house6.ImagesPath, house6.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house7.ImagesPath, house7.VerificationStatus);
-        ImageUtility.SeedPropertyImage(house8.ImagesPath, house8.VerificationStatus);
+        await SeedPropertyFiles(house1);
+        await SeedPropertyFiles(house2);
+        await SeedPropertyFiles(house3);
+        await SeedPropertyFiles(house4);
+        await SeedPropertyFiles(house5);
+        await SeedPropertyFiles(house6);
+        await SeedPropertyFiles(house7);
+        await SeedPropertyFiles(house8);
 
         #endregion
 
@@ -1463,7 +1387,7 @@ public static class DataSeeder
         var offer1 = new Offer
         {
             Date = new DateTime(2023, 10, 10),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2000,
             Deposit = 1500,
             Description = "placeholder",
@@ -1476,7 +1400,7 @@ public static class DataSeeder
         var offer2 = new Offer
         {
             Date = new DateTime(2023, 10, 5),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2200,
             Deposit = 1500,
             Description = "placeholder",
@@ -1489,7 +1413,7 @@ public static class DataSeeder
         var offer3 = new Offer
         {
             Date = new DateTime(2023, 9, 25),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 1800,
             Deposit = 1500,
             Description = "placeholder",
@@ -1502,12 +1426,12 @@ public static class DataSeeder
         var offer4 = new Offer
         {
             Date = new DateTime(2023, 9, 20),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Rented,
             Price = 2100,
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
-            EndDate = new DateTime(2024, 4, 1),
+            EndDate = new DateTime(2024, 8, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = flat6
@@ -1789,7 +1713,7 @@ public static class DataSeeder
         dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25);
 
         #endregion
-        
+
         #region OfferPromotions
 
         var offerPromotion1 = new OfferPromotion
@@ -1797,21 +1721,21 @@ public static class DataSeeder
             StartDate = new DateTime(2023, 11, 26),
             EndDate = new DateTime(2024, 11, 30),
             Price = 50,
-            Offer = offer1
+            Offer = offer5
         };
         var offerPromotion2 = new OfferPromotion
         {
             StartDate = new DateTime(2023, 11, 26),
             EndDate = new DateTime(2024, 11, 30),
             Price = 50,
-            Offer = offer2
+            Offer = offer6
         };
         var offerPromotion3 = new OfferPromotion
         {
             StartDate = new DateTime(2022, 11, 26),
             EndDate = new DateTime(2023, 11, 30),
             Price = 50,
-            Offer = offer3
+            Offer = offer7
         };
 
         dbContext.OfferPromotions.AddRange(offerPromotion1, offerPromotion2, offerPromotion3);
@@ -1950,7 +1874,6 @@ public static class DataSeeder
         var surveyStudent1 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1966,7 +1889,6 @@ public static class DataSeeder
         var surveyStudent2 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1982,7 +1904,6 @@ public static class DataSeeder
         var surveyStudent3 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -1998,7 +1919,6 @@ public static class DataSeeder
         var surveyStudent4 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 1,
             Smoking = true,
             Sociability = true,
             Animals = true,
@@ -2014,7 +1934,6 @@ public static class DataSeeder
         var surveyStudent5 = new SurveyStudent
         {
             Party = 3,
-            Tidiness = 2,
             Smoking = false,
             Sociability = true,
             Animals = false,
@@ -2031,7 +1950,6 @@ public static class DataSeeder
         var surveyStudent6 = new SurveyStudent
         {
             Party = 2,
-            Tidiness = 3,
             Smoking = false,
             Sociability = true,
             Animals = true,
@@ -2048,7 +1966,6 @@ public static class DataSeeder
         var surveyStudent7 = new SurveyStudent
         {
             Party = 4,
-            Tidiness = 1,
             Smoking = true,
             Sociability = false,
             Animals = true,
@@ -2065,7 +1982,6 @@ public static class DataSeeder
         var surveyStudent8 = new SurveyStudent
         {
             Party = 2,
-            Tidiness = 2,
             Smoking = false,
             Sociability = true,
             Animals = false,
@@ -2081,7 +1997,6 @@ public static class DataSeeder
         var surveyStudent9 = new SurveyStudent
         {
             Party = 3,
-            Tidiness = 3,
             Smoking = false,
             Sociability = true,
             Animals = true,
@@ -2098,7 +2013,6 @@ public static class DataSeeder
         var surveyStudent10 = new SurveyStudent
         {
             Party = 1,
-            Tidiness = 2,
             Smoking = true,
             Sociability = true,
             Animals = false,
@@ -2232,38 +2146,341 @@ public static class DataSeeder
 
         var rent1 = new Rent
         {
-            StartDate = new DateTime(2023, 1, 1),
-            Duration = 10,
-            EndDate = new DateTime(2023, 11, 1),
+            StartDate = new DateTime(2024, 1, 1),
+            Duration = 12,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer1,
             Student = student1,
-            OtherStudents = { student2, student3 },
-            Payments = null
+            OtherStudents = { student2, student3 }
         };
 
         var rent2 = new Rent
         {
-            StartDate = new DateTime(2023, 2, 1),
-            Duration = 10,
-            EndDate = new DateTime(2023, 12, 1),
+            StartDate = new DateTime(2024, 2, 1),
+            Duration = 11,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer2,
             Student = student4,
-            OtherStudents = { student5, student6 },
-            Payments = null
+            OtherStudents = { student5, student6 }
         };
 
         var rent3 = new Rent
         {
-            StartDate = new DateTime(2023, 3, 1),
-            Duration = 8,
-            EndDate = new DateTime(2023, 11, 1),
+            StartDate = new DateTime(2024, 3, 1),
+            Duration = 10,
+            EndDate = new DateTime(2025, 1, 1),
             Offer = offer3,
             Student = student7,
-            OtherStudents = { student8, student9 },
-            Payments = null
+            OtherStudents = { student8, student9 }
         };
 
-        dbContext.Rents.AddRange(rent1, rent2, rent3);
+        var rent4 = new Rent
+        {
+            StartDate = new DateTime(2023, 4, 1),
+            Duration = 9,
+            EndDate = new DateTime(2025, 1, 1),
+            Offer = offer4,
+            Student = student10,
+            OtherStudents = { }
+        };
+
+        dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
+
+        #endregion
+
+        #region Payments
+
+        // Rent1
+
+        var payment1 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 8),
+            PaidAtDate = new DateTime(2024, 1, 4),
+            Rent = rent1
+        };
+
+        var payment2 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 8),
+            PaidAtDate = new DateTime(2024, 1, 4),
+            Rent = rent1
+        };
+
+        var payment3 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent1
+        };
+
+        var payment4 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent1
+        };
+
+        var payment5 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent1
+        };
+
+        var payment6 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent1
+        };
+
+        var payment7 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent1
+        };
+
+        var payment8 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2000,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent1
+        };
+
+        // Rent2
+
+        var payment9 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent2
+        };
+
+        var payment10 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 8),
+            PaidAtDate = new DateTime(2024, 2, 4),
+            Rent = rent2
+        };
+
+        var payment11 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent2
+        };
+
+        var payment12 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent2
+        };
+
+        var payment13 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent2
+        };
+
+        var payment14 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent2
+        };
+
+        var payment15 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2200,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent2
+        };
+
+        // Rent3
+
+        var payment16 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent3
+        };
+
+        var payment17 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 8),
+            PaidAtDate = new DateTime(2024, 3, 4),
+            Rent = rent3
+        };
+
+        var payment18 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent3
+        };
+
+        var payment19 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent3
+        };
+
+        var payment20 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent3
+        };
+
+        var payment21 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 1800,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent3
+        };
+
+        // Rent4
+
+        var payment22 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent4
+        };
+
+        var payment23 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 8),
+            PaidAtDate = new DateTime(2024, 4, 4),
+            Rent = rent4
+        };
+
+        var payment24 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 8),
+            PaidAtDate = new DateTime(2024, 5, 4),
+            Rent = rent4
+        };
+
+        var payment25 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 6, 1),
+            PaymentDate = new DateTime(2024, 6, 8),
+            PaidAtDate = new DateTime(2024, 6, 4),
+            Rent = rent4
+        };
+
+        var payment26 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = false,
+            CreatedDate = new DateTime(2024, 7, 1),
+            PaymentDate = new DateTime(2024, 7, 8),
+            Rent = rent4
+        };
+
+        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26);
 
         #endregion
 
@@ -2271,6 +2488,7 @@ public static class DataSeeder
 
         var rentOpinion1 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 1,
             Service = 1,
             Location = 1,
@@ -2283,6 +2501,7 @@ public static class DataSeeder
 
         var rentOpinion2 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 2,
             Service = 2,
             Location = 2,
@@ -2295,6 +2514,7 @@ public static class DataSeeder
 
         var rentOpinion3 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 3,
             Service = 3,
             Location = 3,
@@ -2307,6 +2527,7 @@ public static class DataSeeder
 
         var rentOpinion4 = new RentOpinion
         {
+            Date = DateTime.Now,
             Rating = 4,
             Service = 4,
             Location = 4,
@@ -2321,6 +2542,323 @@ public static class DataSeeder
 
         #endregion
 
-        dbContext.SaveChanges();
+        #region GroupChat
+
+        var groupChat1 = new GroupChat
+        {
+            Name = "groupChat do argument 1"
+        };
+
+        var groupChat2 = new GroupChat
+        {
+            Name = "groupChat do argument 2"
+        };
+
+        var groupChat3 = new GroupChat
+        {
+            Name = "groupChat do argument 3"
+        };
+
+        var groupChat4 = new GroupChat
+        {
+            Name = "groupChat do argument 4"
+        };
+
+        var groupChat5 = new GroupChat
+        {
+            Name = "groupChat do argument 5"
+        };
+
+        var groupChat6 = new GroupChat
+        {
+            Name = "groupChat do argument 6"
+        };
+
+        dbContext.GroupChats.AddRange(groupChat1, groupChat2, groupChat3, groupChat4, groupChat5, groupChat6);
+
+        #endregion
+
+        #region UserGroupChat
+
+        var userGroupChat1 = new UserGroupChat
+        {
+            User = student1,
+            GroupChat = groupChat1
+        };
+
+        var userGroupChat2 = new UserGroupChat
+        {
+            User = owner1,
+            GroupChat = groupChat1
+        };
+
+        var userGroupChat3 = new UserGroupChat
+        {
+            User = student4,
+            GroupChat = groupChat2
+        };
+
+        var userGroupChat4 = new UserGroupChat
+        {
+            User = rent2.Offer.Property.Owner,
+            GroupChat = groupChat2
+        };
+
+        var userGroupChat5 = new UserGroupChat
+        {
+            User = student7,
+            GroupChat = groupChat3
+        };
+
+        var userGroupChat6 = new UserGroupChat
+        {
+            User = rent3.Offer.Property.Owner,
+            GroupChat = groupChat3
+        };
+
+        var userGroupChat7 = new UserGroupChat
+        {
+            User = student10,
+            GroupChat = groupChat4
+        };
+
+        var userGroupChat8 = new UserGroupChat
+        {
+            User = rent4.Offer.Property.Owner,
+            GroupChat = groupChat4
+        };
+
+        var userGroupChat9 = new UserGroupChat
+        {
+            User = student8,
+            GroupChat = groupChat5
+        };
+
+        var userGroupChat10 = new UserGroupChat
+        {
+            User = rent3.Offer.Property.Owner,
+            GroupChat = groupChat5
+        };
+
+        var userGroupChat11 = new UserGroupChat
+        {
+            User = student3,
+            GroupChat = groupChat6
+        };
+
+        var userGroupChat12 = new UserGroupChat
+        {
+            User = rent1.Offer.Property.Owner,
+            GroupChat = groupChat6
+        };
+
+        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12);
+
+        #endregion
+
+        #region Argument
+
+        var argument1 = new Argument
+        {
+            Title = "Tytuł do pierwszego sporu",
+            Description = "sprzeczka pierwsza",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 2, 13),
+            StudentAccceptanceDate = new DateTime(2023, 2, 13),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = false,
+            InterventionNeedDate = null,
+            MederatorDecisionDate = null,
+            Rent = rent1,
+            Student = student1,
+            GroupChat = groupChat1
+        };
+
+        var argument2 = new Argument
+        {
+            Title = "Tytuł do drugeigo sporu",
+            Description = "a to jest druga sprzeczka",
+            StartDate = new DateTime(2023, 1, 12),
+            OwnerAcceptanceDate = new DateTime(2023, 1, 13),
+            StudentAccceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = false,
+            InterventionNeedDate = null,
+            MederatorDecisionDate = null,
+            Rent = rent2,
+            Student = student4,
+            GroupChat = groupChat2
+        };
+
+        var argument3 = new Argument
+        {
+            Title = "Tytuł do trzeciego sporu",
+            Description = "to jest sprzeczka trzecia",
+            StartDate = new DateTime(2024, 1, 12),
+            OwnerAcceptanceDate = null,
+            StudentAccceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            InterventionNeedDate = new DateTime(2024, 1, 13),
+            MederatorDecisionDate = null,
+            Rent = rent3,
+            Student = student7,
+            GroupChat = groupChat3
+        };
+
+        var argument4 = new Argument
+        {
+            Title = "Tytuł do czwartego sporu",
+            Description = "to jest sprzeczka czwarta",
+            StartDate = new DateTime(2023, 6, 24),
+            OwnerAcceptanceDate = null,
+            StudentAccceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = false,
+            InterventionNeedDate = null,
+            MederatorDecisionDate = new DateTime(2023, 7, 10),
+            Rent = rent4,
+            Student = student10,
+            GroupChat = groupChat4
+        };
+
+        var argument5 = new Argument
+        {
+            Title = "Tytuł do piątego sporu",
+            Description = "to jest sprzeczka piąta",
+            StartDate = new DateTime(2024, 4, 12),
+            OwnerAcceptanceDate = new DateTime(2024, 4, 15),
+            StudentAccceptanceDate = new DateTime(2024, 4, 15),
+            ArgumentStatus = ArgumentStatus.Resolved,
+            InterventionNeed = false,
+            InterventionNeedDate = null,
+            MederatorDecisionDate = new DateTime(2024, 4, 14),
+            Rent = rent3,
+            Student = student8,
+            GroupChat = groupChat5
+        };
+
+        var argument6 = new Argument
+        {
+            Title = "Tytuł do szóstego sporu",
+            Description = "sprzeczka szósta",
+            StartDate = new DateTime(2024, 2, 22),
+            OwnerAcceptanceDate = null,
+            StudentAccceptanceDate = null,
+            ArgumentStatus = ArgumentStatus.Ongoing,
+            InterventionNeed = true,
+            InterventionNeedDate = new DateTime(2024, 2, 23),
+            MederatorDecisionDate = null,
+            Rent = rent1,
+            Student = student3,
+            GroupChat = groupChat6
+        };
+
+        dbContext.Arguments.AddRange(argument1, argument2, argument3, argument4, argument5, argument6);
+
+        #endregion
+
+        #region ArgumentIntervention
+
+        var argumentIntervention1 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2023, 7, 9),
+            Justification = "interwencja do argumenttu 4tego",
+            Argument = argument4,
+            Moderator = moderator1
+        };
+
+        var argumentIntervention2 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2024, 4, 13),
+            Justification = "interwencja do argumenttu 5tego",
+            Argument = argument5,
+            Moderator = moderator1
+        };
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1, argumentIntervention2);
+
+        #endregion
+
+        await dbContext.SaveChangesAsync();
+    }
+
+    private static async Task SeedPropertyFiles(Property property)
+    {
+        if (property.VerificationStatus == VerificationStatus.NotVerified)
+        {
+            var titleDeedPath = Path.Combine("FileSeed", "PropertiesSeed", "TitleDeed", "TitleDeed.pdf");
+
+            if (!File.Exists(titleDeedPath))
+            {
+                throw new FileNotFoundException($"The file {titleDeedPath} does not exist.");
+            }
+
+            property.TitleDeed = await _fileUploadService.CreateFileFromSourceFilePathAsync(titleDeedPath);
+        }
+
+        var imagesPath = Path.Combine("FileSeed", "PropertiesSeed", "Images");
+
+        var random = new Random();
+        var files = Directory.GetFiles(imagesPath);
+        var selectedFiles = files.OrderBy(f => random.Next()).Take(4);
+
+        foreach (var file in selectedFiles)
+        {
+            property.Images.Add(await _fileUploadService.CreateFileFromSourceFilePathAsync(file));
+        }
+    }
+
+    private static async Task SeedUserFiles(OwnerStudent user)
+    {
+        if (user.VerificationStatus == VerificationStatus.NotVerified)
+        {
+            var documentPath = string.Empty;
+
+            switch (user.DocumentType)
+            {
+                case DocumentType.StudentCard:
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "StudentCard", "StudentCard.jpg");
+                    break;
+                case DocumentType.ID:
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "ID", "ID.jpg");
+                    break;
+                case DocumentType.Passport:
+                    documentPath = Path.Combine("FileSeed", "UsersSeed", "Passport", "Passport.jpg");
+                    break;
+            }
+
+            if (!File.Exists(documentPath))
+            {
+                throw new FileNotFoundException($"The file {documentPath} does not exist.");
+            }
+
+            user.Document = await _fileUploadService.CreateFileFromSourceFilePathAsync(documentPath);
+        }
+
+        try
+        {
+            var profilePicturePath = await ProfilePictureSeeder.GetRandomProfilePicturePath();
+
+            user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(profilePicturePath);
+
+            if (File.Exists(profilePicturePath))
+            {
+                File.Delete(profilePicturePath);
+            }
+        }
+        catch (Exception)
+        {
+            var backupImagePath = Path.Combine("FileSeed", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
+
+            if (File.Exists(backupImagePath))
+            {
+                user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(backupImagePath);
+            }
+        }
+
+        await Task.Delay(1000);
     }
 }

@@ -3,7 +3,6 @@ using Flats4us.Entities;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Flats4us.Services
 {

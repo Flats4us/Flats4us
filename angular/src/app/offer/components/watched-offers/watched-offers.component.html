@@ -1,90 +1,124 @@
 <div>
-	<h1 class="text-4xl p-4 font-semibold">Obserwowane oferty</h1>
+	<h1 class="text-4xl p-4 font-semibold">
+		{{ "Offer.watched-offers" | translate }}
+	</h1>
 </div>
+<ng-template #notFound>
+	<h1 class="text-2xl p-4">
+		{{ "Offer.watched-offers-info" | translate }}
+	</h1></ng-template
+>
 <div *ngIf="watchedOffers$ | async as watchedOffers" class="watched-offers">
-	<div class="container">
-		<mat-card
-			*ngFor="let watchedOffer of watchedOffers.result"
-			[ngClass]="watchedOffer.isPromoted === true ? 'promoted-card' : 'card'"
-		>
-			<div class="offer-title-outer">
-				<span class="offer-title-inner"
-					><h2 class="text-m">
-						Wynajem -
-						{{
-							realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
-						}}
-						{{ watchedOffer.property.area }} m² {{ watchedOffer.property.city }}
-						<mat-icon
-							*ngIf="watchedOffer.isPromoted"
-							class="promotion-icon"
-							matTooltip="Promowana oferta"
-							>new_releases</mat-icon
+	<div *ngIf="watchedOffers.totalCount > 0; else notFound">
+		<div class="container">
+			<mat-card
+				*ngFor="let watchedOffer of watchedOffers.result"
+				[ngClass]="watchedOffer.isPromoted ? 'promoted-card' : 'card'"
+			>
+				<div class="offer-title-outer">
+					<span class="offer-title-inner"
+						><h2 class="text-m flex items-center">
+							{{ "Offer.rent1" | translate }} -
+							{{
+								realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
+							}}
+							{{ watchedOffer.property.area }} m² {{ watchedOffer.property.city }}
+							<mat-icon
+								*ngIf="watchedOffer.isPromoted"
+								class="promotion-icon"
+								matTooltip="{{ 'Offer.promoted-offer' | translate }}"
+								[inline]="true"
+								>new_releases</mat-icon
+							>
+						</h2>
+					</span>
+				</div>
+				<img
+					mat-card-image
+					class="imgs"
+					alt="Mieszkanie"
+					src="{{ baseUrl }}/{{ watchedOffer.property.images[0].path }}"
+					(click)="navigateToFlat(watchedOffer.offerId)"
+				/>
+				<mat-card-content matSort class="mcc-description">
+					<mat-chip-listbox>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>attach_money</mat-icon>
+								<span
+									>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/{{
+										"mth" | translate
+									}}.</span
+								>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>add</mat-icon
+								><span
+									>{{ "Offer.deposit" | translate }}: {{ watchedOffer.deposit }} zł/{{
+										"mth" | translate
+									}}.</span
+								>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>straighten</mat-icon>
+								<span
+									>{{ "Offer.area" | translate }}:
+									{{ watchedOffer.property.area }} m²</span
+								>
+							</div>
+						</mat-chip>
+						<mat-chip>
+							<div class="chip">
+								<mat-icon>meeting_room</mat-icon>
+								<span
+									>{{ "Offer.room-number" | translate }}:
+									{{ watchedOffer.property.numberOfRooms }}</span
+								>
+							</div>
+						</mat-chip>
+						<mat-chip
+							matTooltip="{{
+								watchedOffer.property.avgRating
+									? ('Offer.offer-info-rating0' | translate)
+									: ('Offer.offer-info-rating1' | translate)
+							}}"
+							(click)="showRating(watchedOffer.property)"
 						>
-					</h2>
-				</span>
-			</div>
-			<img
-				mat-card-image
-				class="imgs"
-				alt="Mieszkanie"
-				src="{{ baseUrl }}/{{ watchedOffer.property.images[0]?.path }}"
-				(click)="navigateToFlat(watchedOffer.offerId)"
-			/>
-			<mat-card-content matSort class="mcc-description">
-				<mat-chip-listbox>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>attach_money</mat-icon>
-							<span>Cena: {{ watchedOffer.price }} zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>add</mat-icon
-							><span>Depozyt: {{ watchedOffer.deposit }} zł/mc</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>straighten</mat-icon>
-							<span>Powierzchnia: {{ watchedOffer.property.area }} m²</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
-						<div class="chip">
-							<mat-icon>meeting_room</mat-icon>
-							<span>Liczba pokoi: {{ watchedOffer.property.numberOfRooms }}</span>
-						</div>
-					</mat-chip>
-					<mat-chip>
+							<span class="flex items-center pt-1">
+								<app-star-rating [avgRating]="watchedOffer.property.avgRating">
+								</app-star-rating>
+							</span>
+						</mat-chip>
 						<button
-							class="box-icon"
+							class="delete-icon"
 							id="deleteOffer"
 							type="button"
 							mat-icon-button
-							matTooltip="Usuń z obserwowanych"
 							aria-label="DeleteOffer"
+							matTooltip="{{ 'Offer.delete-watched' | translate }}"
 							(click)="deleteInterest(watchedOffer.offerId)"
 						>
 							<mat-icon>delete_forever</mat-icon>
 						</button>
-					</mat-chip>
-				</mat-chip-listbox>
-			</mat-card-content>
-		</mat-card>
-	</div>
-	<mat-paginator
-		#paginator
-		id="paginator2"
-		showFirstLastButtons
-		aria-label="Paginator"
-		[length]="watchedOffers.totalCount"
-		[pageSize]="pageSize"
-		[pageIndex]="pageIndex"
-		[pageSizeOptions]="[3, 6, 12, 18]"
-		(page)="changePage($event)"
-	>
+					</mat-chip-listbox>
+				</mat-card-content>
+			</mat-card>
+		</div>
+		<mat-paginator
+			#paginator
+			id="paginator"
+			showFirstLastButtons
+			aria-label="Paginator"
+			[length]="watchedOffers.totalCount"
+			[pageSize]="pageSize"
+			[pageIndex]="pageIndex"
+			[pageSizeOptions]="[3, 6, 12, 18]"
+			(page)="changePage($event)"
 		>
-	</mat-paginator>
+		</mat-paginator>
+	</div>
 </div>

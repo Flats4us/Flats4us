@@ -198,7 +198,23 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        
+        public async Task AddModeratorToGroupChatAsync(int groupChatId, int newUserId)
+        {
+            // Check if the new user is already a member of the group chat
+            var isNewUserAlreadyMember = await _context.UserGroupChats.AnyAsync(ugc => ugc.UserId == newUserId && ugc.GroupChatId == groupChatId);
+            if (isNewUserAlreadyMember)
+            {
+                throw new InvalidOperationException("The user is already a member of the group chat.");
+            }
+
+            var userGroupChat = new UserGroupChat
+            {
+                UserId = newUserId,
+                GroupChatId = groupChatId
+            };
+            _context.UserGroupChats.Add(userGroupChat);
+            await _context.SaveChangesAsync();
+        }
 
         // Additional implementation for other methods...
     }

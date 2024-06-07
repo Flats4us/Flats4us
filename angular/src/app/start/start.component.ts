@@ -6,21 +6,31 @@ import {
 	ChangeDetectorRef,
 	Output,
 	EventEmitter,
+	AfterViewInit,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ISortOption } from './models/start-site.models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
-import { IGroup, IRegionCity } from '../real-estate/models/real-estate.models';
+import {
+	IGroup,
+	IProperty,
+	IRegionCity,
+} from '../real-estate/models/real-estate.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { StartService } from './services/start.service';
 import { environment } from 'src/environments/environment.prod';
 import { ISendOffers } from '../offer/models/offer.models';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '@shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PropertyRatingComponent } from '../offer/components/property-rating/property-rating.component';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start',
@@ -28,12 +38,13 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	styleUrls: ['./start.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent extends BaseComponent implements OnInit {
+export class StartComponent
+	extends BaseComponent
+	implements OnInit, AfterViewInit
+{
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 
 	public showMoreFilters = false;
-
-	public isSubmitted = false;
 
 	public startSiteForm: FormGroup;
 
@@ -48,17 +59,19 @@ export class StartComponent extends BaseComponent implements OnInit {
 	public pageSize = 6;
 	public pageIndex = 0;
 	public flatOptions$: Observable<ISendOffers>;
-	public flatOptionsPromoted$: Observable<ISendOffers>;
 	private sortState: ISortOption = {
 		type: 'Price ASC',
 		direction: 'asc',
-		description: 'ceny: od najniższej',
+		description: 'Start.sort-option1',
 	};
+	private paginatorDescriptionA = 'z';
+	private paginatorDescriptionB = 'ofert';
+	public languageChange: string = this.translate.currentLang;
 
-	@ViewChild(MatPaginator)
+	@ViewChild(MatPaginator, { static: true })
 	private paginator: MatPaginator = new MatPaginator(
 		this.matPaginatorIntl,
-		ChangeDetectorRef.prototype
+		this.changeDetectorRef
 	);
 
 	@Output()
@@ -66,19 +79,22 @@ export class StartComponent extends BaseComponent implements OnInit {
 
 	constructor(
 		private router: Router,
-		private route: ActivatedRoute,
 		private matPaginatorIntl: MatPaginatorIntl,
 		public realEstateService: RealEstateService,
 		public startService: StartService,
 		private changeDetectorRef: ChangeDetectorRef,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private snackBar: MatSnackBar,
+		public authService: AuthService,
+		public dialog: MatDialog,
+		private translate: TranslateService
 	) {
 		super();
 		this.startSiteForm = this.formBuilder.group({
-			regionsGroup: new FormControl('', Validators.required),
-			citiesGroup: new FormControl('', Validators.required),
-			distance: new FormControl(0, Validators.required),
-			property: new FormControl([], Validators.required),
+			regionsGroup: new FormControl(''),
+			citiesGroup: new FormControl(''),
+			distance: new FormControl(0),
+			property: new FormControl([]),
 			minPrice: new FormControl(null, [Validators.min(0)]),
 			maxPrice: new FormControl(null, [Validators.min(0)]),
 			districtsGroup: new FormControl(''),
@@ -89,8 +105,6 @@ export class StartComponent extends BaseComponent implements OnInit {
 			floors: new FormControl(null, [Validators.min(0)]),
 			equipment: new FormControl([]),
 			sorting: new FormControl(this.sortState),
-			pageIndex: new FormControl(this.pageIndex),
-			pageSize: new FormControl(this.pageSize),
 		});
 		this.startService.mapOffersForm = this.startSiteForm;
 		this.realEstateService
@@ -101,16 +115,69 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.pipe(this.untilDestroyed())
 			.subscribe();
 		this.flatOptions$ = this.startService.getFilteredOffers(
-			this.startSiteForm.value
+			this.startSiteForm.value,
+			this.pageIndex,
+			this.pageSize
 		);
-		this.flatOptionsPromoted$ = this.startService
-			.getFilteredOffers(this.startSiteForm.value)
-			.pipe(
-				map(offers => ({
-					totalCount: offers.result.filter(offer => offer.isPromoted).length,
-					result: offers.result.filter(offer => offer.isPromoted === true),
-				}))
-			);
+	}
+	public ngAfterViewInit(): void {
+		this.paginatorDescriptionA = this.translate.instant('Paginator.of');
+		this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
+		this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+			'Paginator.first-page'
+		);
+		this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+			'Paginator.offers-page'
+		);
+		this.matPaginatorIntl.lastPageLabel = this.matPaginatorIntl.lastPageLabel =
+			this.translate.instant('Paginator.last-page');
+		this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+			'Paginator.next-page'
+		);
+		this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+			'Paginator.previous-page'
+		);
+		this.translate.onLangChange
+			.pipe(this.untilDestroyed())
+			.subscribe((event: LangChangeEvent) => {
+				this.languageChange = event.lang;
+				this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+					'Paginator.first-page'
+				);
+				this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+					'Paginator.offers-page'
+				);
+				this.matPaginatorIntl.lastPageLabel = this.translate.instant(
+					'Paginator.last-page'
+				);
+				this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+					'Paginator.next-page'
+				);
+				this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+					'Paginator.previous-page'
+				);
+				this.paginatorDescriptionA = this.translate.instant('Paginator.of');
+				this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
+				this.matPaginatorIntl.changes.next();
+			});
+		this.matPaginatorIntl.getRangeLabel = (
+			page: number,
+			pageSize: number,
+			length: number
+		) => {
+			if (length == 0 || pageSize == 0) {
+				return `0 ${this.paginatorDescriptionA} ${length} ${this.paginatorDescriptionB}`;
+			}
+			length = Math.max(length, 0);
+			const startIndex = page * pageSize;
+			const endIndex =
+				startIndex < length
+					? Math.min(startIndex + pageSize, length)
+					: startIndex + pageSize;
+			return `${startIndex + 1} - ${endIndex} ${
+				this.paginatorDescriptionA
+			} ${length} ${this.paginatorDescriptionB}`;
+		};
 	}
 
 	public ngOnInit() {
@@ -176,8 +243,6 @@ export class StartComponent extends BaseComponent implements OnInit {
 			.subscribe(() => {
 				this.startSiteForm.get('citiesGroup')?.reset();
 			});
-
-		this.filterOffers();
 	}
 
 	public filter(opt: string[], value: string): string[] {
@@ -194,19 +259,42 @@ export class StartComponent extends BaseComponent implements OnInit {
 	}
 
 	public addToWatched(id: number) {
-		this.startService.addToWatched(id).pipe(this.untilDestroyed()).subscribe();
+		this.startService
+			.addToWatched(id)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () =>
+					this.snackBar.open(
+						this.translate.instant('Start.info1'),
+						this.translate.instant('close'),
+						{
+							duration: 2000,
+						}
+					),
+				error: () => {
+					this.snackBar.open(
+						this.translate.instant('Start.info2'),
+						this.translate.instant('close'),
+						{ duration: 2000 }
+					);
+				},
+			});
+		this.flatOptions$ = this.startService.getFilteredOffers(
+			this.startSiteForm.value,
+			this.pageIndex,
+			this.pageSize
+		);
 	}
 
 	public onSubmit() {
 		if (this.startSiteForm.valid) {
-			this.isSubmitted = true;
-			this.filterOffers();
+			this.filterOffers(true);
 		}
 	}
 
 	public onSelect(sortByOption: ISortOption) {
 		this.startSiteForm.patchValue({ sorting: sortByOption });
-		this.filterOffers();
+		this.filterOffers(true);
 	}
 
 	private filterCitiesGroup(value: string): IGroup[] {
@@ -245,24 +333,33 @@ export class StartComponent extends BaseComponent implements OnInit {
 		this.pageEvent = e;
 		this.pageSize = e.pageSize;
 		this.pageIndex = e.pageIndex;
-		this.filterOffers();
+		this.filterOffers(false);
 	}
 
-	public async filterOffers() {
+	public async filterOffers(onSumbit: boolean) {
 		this.isLoading$ = of(true);
+		if (onSumbit) {
+			this.pageIndex = 0;
+			this.pageSize = 6;
+		}
 		this.startService
-			.getFilteredOffers(this.startSiteForm.value)
+			.getFilteredOffers(this.startSiteForm.value, this.pageIndex, this.pageSize)
 			.pipe(this.untilDestroyed())
 			.subscribe(result => {
 				this.flatOptions$ = of(result);
-				if (!this.isSubmitted) {
-					this.flatOptionsPromoted$ = of({
-						totalCount: result.result.filter(offer => offer.isPromoted).length,
-						result: result.result.filter(offer => offer.isPromoted),
-					});
-				}
 				this.isLoading$ = of(false);
 				this.changeDetectorRef.markForCheck();
 			});
+	}
+
+	public showRating(property: IProperty) {
+		if (!property.avgRating) {
+			return;
+		}
+		this.dialog.open(PropertyRatingComponent, {
+			disableClose: false,
+			closeOnNavigation: true,
+			data: property,
+		});
 	}
 }

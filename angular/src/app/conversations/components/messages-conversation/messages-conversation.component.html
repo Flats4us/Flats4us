@@ -1,0 +1,92 @@
+<mat-card
+	*ngIf="{
+		currentUser: currentUser$ | async,
+		otherUser: otherUser$ | async,
+		messagesHistory: messages$ | async
+	} as data"
+>
+	<div
+		*ngIf="data.currentUser && data.otherUser && data.messagesHistory"
+		class="conversation-list"
+	>
+		<div class="flex flex-col items-center py-5">
+			<img
+				alt="profile photo"
+				class="receiver-avatar"
+				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+			/>
+			<span>{{ data.otherUser.name }}, {{ data.otherUser.age }}</span>
+		</div>
+		<div
+			*ngFor="let message of data.messagesHistory; let index = index"
+			class="flex"
+		>
+			<img
+				*ngIf="message.senderId !== data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center"
+				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+			/>
+			<div
+				class="conversation"
+				[class]="
+					message.senderId === data.currentUser.userId
+						? 'conversation-sent'
+						: 'conversation-received'
+				"
+			>
+				<span *ngIf="message.senderId === data.currentUser.userId">{{
+					data.currentUser.name
+				}}</span>
+
+				<span *ngIf="message.senderId !== data.currentUser.userId">{{
+					data.otherUser.name
+				}}</span>
+				<span class="bubble">{{ message.content }}</span>
+			</div>
+		</div>
+		<div *ngFor="let msg of messages; let index = index" class="flex">
+			<div
+				class="conversation"
+				[class]="
+					msg.user === data.currentUser.userId
+						? 'conversation-sent'
+						: 'conversation-received'
+				"
+			>
+				<span *ngIf="msg.user === data.currentUser.userId">{{
+					data.currentUser.name
+				}}</span>
+				<img
+					*ngIf="msg.user !== data.currentUser.userId"
+					alt="profile photo"
+					class="avatar self-center"
+					src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+				/>
+				<span *ngIf="msg.user !== data.currentUser.userId">{{
+					data.otherUser.name
+				}}</span>
+				<span class="bubble">{{ msg.message }}</span>
+			</div>
+		</div>
+	</div>
+	<mat-form-field
+		*ngIf="data.currentUser?.userId && data.otherUser?.userId"
+		class="w-full"
+	>
+		<input
+			matInput
+			type="text"
+			placeholder="{{ 'Conversation.message' | translate }}..."
+			[formControl]="messageControl"
+			(keydown.enter)="onSend(data.currentUser!.userId, data.otherUser!.userId)"
+		/>
+		<button
+			matSuffix
+			mat-icon-button
+			(click)="onSend(data.currentUser!.userId, data.otherUser!.userId)"
+		>
+			<mat-icon>send</mat-icon>
+		</button>
+	</mat-form-field>
+</mat-card>

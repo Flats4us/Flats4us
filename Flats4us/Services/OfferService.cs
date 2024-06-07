@@ -7,6 +7,7 @@ using Flats4us.Helpers.Enums;
 using System.Linq.Dynamic.Core;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
+using System;
 
 namespace Flats4us.Services
 {
@@ -28,28 +29,56 @@ namespace Flats4us.Services
             _emailService = emailService;
         }
 
-        public async Task<OfferDto> GetByIdAsync(int id)
+        public async Task<OfferDto> GetByIdAsync(int id, int requestUserId)
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.RentOpinions)
+                        .ThenInclude(ro => ro.Student)
+                            .ThenInclude(s => s.ProfilePicture)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.Rent)
+                    .ThenInclude(r => r.OtherStudents)
+                .Include(o => o.Rent)
+                    .ThenInclude(r => r.Student)
+                .Include(o => o.OfferPromotions)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
 
             var result = _mapper.Map<OfferDto>(offer);
 
+            if (requestUserId != 0)
+            {
+                result.IsInterest = await _context.OfferInterests.AnyAsync(oi => oi.StudentId == requestUserId && oi.OfferId == offer.OfferId);
+            }
+
+            if (result.Owner.UserId == requestUserId &&
+                 result.OfferStatus == OfferStatus.Waiting)
+            {
+                result.RentPropositionToShow = offer.Rent.RentId;
+            }
+
+            if (offer.Rent != null &&
+                (result.OfferStatus == OfferStatus.Rented || result.OfferStatus == OfferStatus.Old) &&
+                (result.Owner.UserId == requestUserId || offer.Rent.StudentId == requestUserId || offer.Rent.OtherStudents.Any(os => os.UserId == requestUserId)))
+            {
+                result.RentId = offer.Rent.RentId;
+            }
+
             return result;
         }
 
-        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input)
+        public async Task<CountedListDto<OfferDto>> GetFilteredAndSortedOffersAsync(GetFilteredAndSortedOffersDto input, int requestUserId)
         {
             var allowedSorts = new List<string>{ "Price ASC", "Price DSC", "NumberOfRooms ASC", "NumberOfRooms DSC", "Area ASC", "Area DSC" };
-
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
 
             var currentDate = DateTime.Now;
 
@@ -73,8 +102,13 @@ namespace Flats4us.Services
             var promotedOffers = await promotedQuery
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .ToListAsync();
@@ -156,8 +190,13 @@ namespace Flats4us.Services
             var notPromotedOffers = await query
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
                 .Select(o => _mapper.Map<OfferDto>(o))
@@ -170,8 +209,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
@@ -233,6 +274,19 @@ namespace Flats4us.Services
                 joinedOffers.Insert(insertIndex, promoted);
             }
 
+            if (requestUserId != 0)
+            {
+                var userOfferInterestIds = await _context.OfferInterests
+                    .Where(oi => oi.StudentId == requestUserId)
+                    .Select(oi => oi.OfferId)
+                    .ToListAsync();
+
+                foreach (var offerDto in joinedOffers)
+                {
+                    offerDto.IsInterest = userOfferInterestIds.Contains(offerDto.OfferId);
+                }
+            }
+
             var result = new CountedListDto<OfferDto>(joinedOffers, totalCount);
 
             return result;
@@ -240,8 +294,6 @@ namespace Flats4us.Services
 
         public async Task<CountedListDto<SimpleOfferForMapDto>> GetFilteredOffersForMapAsync(GetFilteredOffersDto input)
         {
-            var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
-
             var currentDate = DateTime.Now;
 
             var promotedQuery = _context.Offers.AsQueryable();
@@ -350,8 +402,10 @@ namespace Flats4us.Services
 
             if (input.Distance.HasValue && !string.IsNullOrEmpty(input.Province) && !string.IsNullOrEmpty(input.City))
             {
+                var geoInfo = await _openStreetMapService.GetCoordinatesAsync(input.Province, input.District, null, null, input.City, null);
+
                 notPromotedOffers = notPromotedOffers
-                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Latitude, geoInfo.Longitude, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
+                    .Where(o => _openStreetMapService.CalculateDistance(geoInfo.Lat, geoInfo.Lon, o.Property.GeoLat, o.Property.GeoLon) <= input.Distance)
                     .ToList();
             }
 
@@ -381,16 +435,28 @@ namespace Flats4us.Services
             var offers = await _context.Offers
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Owner)
+                        .ThenInclude(ow => ow.ProfilePicture)
                 .Include(o => o.Property)
                     .ThenInclude(p => p.Equipment)
+                .Include(o => o.Property)
+                    .ThenInclude(p => p.Images)
                 .Include(o => o.SurveyOwnerOffer)
+                .Include(o => o.Rent)
+                .Include(o => o.OfferPromotions)
                 .Where(o => o.Property.OwnerId == ownerId)
-                .Select(offer => _mapper.Map<OfferDto>(offer))
                 .ToListAsync();
 
-            var result = new CountedListDto<OfferDto>(offers);
+            var results = offers.Select(_mapper.Map<OfferDto>).ToList();
 
-            return result;
+            foreach (var result in results)
+            {
+                if (result.OfferStatus == OfferStatus.Waiting)
+                {
+                    result.RentPropositionToShow = offers.Find(o => o.OfferId == result.OfferId).Rent.RentId;
+                }
+            }
+
+            return new CountedListDto<OfferDto>(results);
         }
 
         public async Task AddOfferAsync(AddEditOfferDto input, int ownerId)
@@ -428,6 +494,23 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task CancelOfferAsync(int id, int requestUserId)
+        {
+            var offer = await _context.Offers
+                .Include(o => o.Property)
+                .FirstOrDefaultAsync(o => o.OfferId == id);
+
+            if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
+
+            if (offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this offer");
+
+            if (offer.OfferStatus != OfferStatus.Current) throw new ArgumentException($"Cannot cancel this offer due to offerStatus");
+
+            offer.OfferStatus = OfferStatus.Old;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task AddOfferPromotionAsync(int duration, int offerId, int userId)
         {
             var offer = await _context.Offers
@@ -461,9 +544,13 @@ namespace Flats4us.Services
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.Property)
                         .ThenInclude(p => p.Owner)
+                            .ThenInclude(ow => ow.ProfilePicture)
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.Property)
                         .ThenInclude(p => p.Equipment)
+                .Include(oi => oi.Offer)
+                    .ThenInclude(o => o.Property)
+                        .ThenInclude(p => p.Images)
                 .Include(oi => oi.Offer)
                     .ThenInclude(o => o.SurveyOwnerOffer)
                 .Select(oi => oi.Offer)
@@ -476,6 +563,11 @@ namespace Flats4us.Services
             offers = offers.Skip((input.PageNumber - 1) * input.PageSize)
                 .Take(input.PageSize)
                 .ToList();
+
+            foreach (var offer in offers)
+            {
+                offer.IsInterest = true;
+            }
 
             var result = new CountedListDto<OfferDto>(offers, totalCount);
 
@@ -502,8 +594,8 @@ namespace Flats4us.Services
             var offerInterest = new OfferInterest
             {
                 Date = DateTime.Now,
-                Student = student,
-                Offer = offer
+                StudentId = student.UserId,
+                OfferId = offer.OfferId
             };
 
             await _context.OfferInterests.AddAsync(offerInterest);

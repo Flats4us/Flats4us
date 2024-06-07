@@ -18,9 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RentsService } from '../../services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { setLocalDate } from '@shared/utils/functions';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -35,6 +35,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 		MatDialogModule,
 		MatButtonModule,
 		MatSnackBarModule,
+		TranslateModule,
 	],
 	providers: [RentsService],
 	templateUrl: './meeting-add.component.html',
@@ -42,7 +43,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingAddComponent extends BaseComponent {
-	public minDate: Date = new Date();
+	public currentDate: Date = new Date();
+	public minDate = new Date(
+		this.currentDate.setDate(this.currentDate.getDate() + 1)
+	);
+	public setLocalDate = setLocalDate;
 
 	public meetingForm: FormGroup = new FormGroup({
 		date: new FormControl(null, Validators.required),
@@ -54,38 +59,41 @@ export class MeetingAddComponent extends BaseComponent {
 		public snackBar: MatSnackBar,
 		public dialogRef: MatDialogRef<number>,
 		private rentsService: RentsService,
+		private translate: TranslateService,
 		@Inject(MAT_DIALOG_DATA) public data: number
 	) {
 		super();
 		this.meetingForm.controls['offerId'].setValue(data);
-		this.minDate.setDate(this.minDate.getDate() + 1);
 	}
 
 	public onAdd(): void {
 		this.meetingForm.markAllAsTouched();
-		if (this.meetingForm.valid) {
-			this.rentsService
-				.addMeeting(this.meetingForm.value)
-				.pipe(this.untilDestroyed(), catchError(this.handleError))
-				.subscribe({
-					next: () => {
-						this.meetingForm.controls['offerId'].setValue(this.data);
-						this.dialogRef.close();
-					},
-					error: () => {
-						this.snackBar.open(
-							'Nie udało się dodać spotkania. Spróbuj ponownie.',
-							'Zamknij',
-							{ duration: 2000 }
-						);
-					},
-				});
+		if (!this.meetingForm.valid) {
+			return;
 		}
-	}
-
-	private handleError(error: HttpErrorResponse) {
-		return throwError(
-			() => new Error('Nie udało się dodać spotkania. Spróbuj później')
-		);
+		this.rentsService
+			.addMeeting(this.meetingForm.value)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				next: () => {
+					this.meetingForm.controls['offerId'].setValue(this.data);
+					this.snackBar.open(
+						this.translate.instant('Meeting-add.info2'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
+					this.dialogRef.close();
+				},
+				error: () => {
+					this.snackBar.open(
+						this.translate.instant('Meeting-add.info1'),
+						this.translate.instant('close'),
+						{ duration: 10000 }
+					);
+					this.dialogRef.close();
+				},
+			});
 	}
 }

@@ -1,4 +1,4 @@
-<h1 class="text-4xl p-4 font-semibold">Dodawanie oferty</h1>
+<h1 class="text-4xl p-4 font-semibold">{{ "Offer.add-offer" | translate }}</h1>
 <div class="grid-container">
 	<div></div>
 	<mat-card class="flex justify-center">
@@ -7,30 +7,64 @@
 		<mat-card-content>
 			<form class="w-full" [formGroup]="offerForm" (ngSubmit)="onSubmit()">
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Cena: </mat-label>
+					<mat-label>{{ "Offer.price" | translate }}: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>sell</mat-icon>
+					</span>
 					<input type="number" matInput formControlName="price" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['price'].errors?.['required']">
+						{{ "Offer.price-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Kaucja: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>add</mat-icon>
+					</span>
+					<mat-label>{{ "Offer.bail" | translate }}: </mat-label>
 					<input type="number" matInput formControlName="deposit" />
 					<span matTextSuffix>zł</span>
+					<mat-error *ngIf="offerForm.controls['deposit'].errors?.['required']">
+						{{ "Offer.bail-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Okres wynajmu: </mat-label>
+					<mat-label>{{ "Offer.rental-period" | translate }}: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>date_range</mat-icon>
+					</span>
 					<mat-date-range-input [rangePicker]="picker">
-						<input matStartDate formControlName="startDate" placeholder="Początek" />
-						<input matEndDate formControlName="endDate" placeholder="Koniec" />
+						<input
+							matStartDate
+							formControlName="startDate"
+							placeholder="{{ 'Offer.start-date' | translate }}"
+							(dateChange)="setLocalDate($event, offerForm.get('startDate'))"
+						/>
+						<input
+							matEndDate
+							formControlName="endDate"
+							placeholder="{{ 'Offer.end-date' | translate }}"
+							(dateChange)="setLocalDate($event, offerForm.get('endDate'))"
+						/>
 					</mat-date-range-input>
 					<mat-datepicker-toggle
 						matIconSuffix
 						[for]="picker"
 					></mat-datepicker-toggle>
 					<mat-date-range-picker #picker></mat-date-range-picker>
+					<mat-error
+						*ngIf="offerForm.controls['startDate'].errors?.['required'] || 
+					offerForm.controls['endDate'].errors?.['required']"
+					>
+						{{ "Offer.rental-period-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Wybierz nieruchomość: </mat-label>
+					<mat-label>{{ "Offer.select-property" | translate }}: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>real_estate_agent</mat-icon>
+					</span>
 					<mat-select formControlName="propertyId">
 						<mat-option
 							*ngFor="let property of properties$ | async"
@@ -40,31 +74,46 @@
 							}}</mat-option
 						>
 					</mat-select>
+					<mat-error *ngIf="offerForm.controls['propertyId'].errors?.['required']">
+						{{ "Offer.select-property-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Opis: </mat-label>
+					<mat-label>{{ "Offer.description" | translate }}: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>description</mat-icon>
+					</span>
 					<textarea matInput formControlName="description"></textarea>
+					<mat-error *ngIf="offerForm.controls['description'].errors?.['required']">
+						{{ "Offer.description-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 
 				<mat-form-field class="md:w-2/3">
-					<mat-label>Reguły wynajmu: </mat-label>
+					<mat-label>{{ "Offer.rental-rules" | translate }}: </mat-label>
+					<span matPrefix class="px-4">
+						<mat-icon>rule</mat-icon>
+					</span>
 					<textarea matInput formControlName="regulations"></textarea>
+					<mat-error *ngIf="offerForm.controls['regulations'].errors?.['required']">
+						{{ "Offer.rental-rules-info" | translate }}!
+					</mat-error>
 				</mat-form-field>
 
 				<app-survey [offerForm]="offerForm"></app-survey>
 
 				<div class="flex justify-between">
+					<button mat-flat-button color="accent" type="button" routerLink="/start">
+						{{ "cancel" | translate }}
+					</button>
 					<button
 						mat-flat-button
 						color="primary"
 						type="submit"
 						[disabled]="!offerForm.valid"
 					>
-						Zapisz
-					</button>
-					<button mat-flat-button color="accent" type="button" routerLink="/start">
-						Anuluj
+						{{ "save" | translate }}
 					</button>
 				</div>
 			</form>
