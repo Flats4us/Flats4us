@@ -18,7 +18,8 @@ namespace Flats4us.Services
 
         public MeetingService(Flats4usContext context,
             INotificationService notificationService,
-            IMapper mapper)
+            IMapper mapper,
+            IEmailService emailService)
         {
             _context = context;
             _notificationService = notificationService;
