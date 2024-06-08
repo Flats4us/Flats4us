@@ -67,7 +67,7 @@
 				<div>
 					<mat-chip-listbox>
 						<mat-chip *ngFor="let interest of user.interests">{{
-							interest.name | translate
+							"Interest." + interest.name | translate
 						}}</mat-chip>
 					</mat-chip-listbox>
 				</div>

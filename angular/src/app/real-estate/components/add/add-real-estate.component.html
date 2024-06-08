@@ -510,7 +510,7 @@
 							</div>
 							<div class="batch">
 								<div class="desctext">
-									{{ fileName || "{{ 'Real-estate-add.add-photo' | translate }}" }}
+									{{ fileName || ("Real-estate-add.add-photo" | translate) }}
 								</div>
 
 								<button
@@ -563,13 +563,13 @@
 							>
 							<h2>{{ "Real-estate-add.form" | translate }}!</h2>
 							<h2>
-								Klikająć na przycisk
+								{{ "Real-estate-add.pressing-button" | translate }}
 								{{
 									modificationType === mType.ADD
-										? '"Zapisz nieruchomość"'
-										: '"Zapisz zmiany"'
+										? "'" + ("Real-estate-add.save-property" | translate) + "'"
+										: "'" + ("Real-estate-add.save-changes" | translate) + "'"
 								}}
-								potwierdzasz prawdziwość wprowadzonych danych.
+								{{ "Real-estate-add.to-confirm" | translate }}
 							</h2>
 						</div>
 						<div class="button-box">
@@ -605,8 +605,8 @@
 							>
 								{{
 									modificationType === mType.ADD
-										? "Zapisz nieruchomość"
-										: "Zapisz zmiany"
+										? ("Real-estate-add.save-property" | translate)
+										: ("Real-estate-add.save-changes" | translate)
 								}}
 							</button>
 							<div class="btn-spacer"></div>

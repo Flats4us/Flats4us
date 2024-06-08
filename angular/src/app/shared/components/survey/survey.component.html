@@ -29,52 +29,52 @@
 				<mat-label *ngIf="i < 6" [ngSwitch]="question.name">
 					<span *ngSwitchCase="'party'" class="flex justify-center items-center">
 						<mat-icon class="mr-4">celebration</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span *ngSwitchCase="'smoking'" class="flex justify-center items-center">
 						<mat-icon class="mr-4">smoking_rooms</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span
 						*ngSwitchCase="'sociability'"
 						class="flex justify-center items-center"
 					>
 						<mat-icon class="mr-4">groups</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span *ngSwitchCase="'animals'" class="flex justify-center items-center">
 						<mat-icon class="mr-4">pets</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span *ngSwitchCase="'vegan'" class="flex justify-center items-center">
 						<mat-icon class="material-symbols-outlined mr-4">psychiatry</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span
 						*ngSwitchCase="'lookingForRoommate'"
 						class="flex justify-center items-center mt-4"
 					>
 						<mat-icon class="mr-4">person_search</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span *ngSwitchCase="'smokingAllowed'" class="flex-col justify-center">
 						<div><mat-icon>smoking_rooms</mat-icon></div>
-						<div>{{ question.name }}</div>
+						<div>{{ "Survey." + question.name | translate }}</div>
 					</span>
 					<span *ngSwitchCase="'partiesAllowed'" class="flex-col justify-center">
 						<div><mat-icon>celebration</mat-icon></div>
-						<div>{{ question.name }}</div>
+						<div>{{ "Survey." + question.name | translate }}</div>
 					</span>
 					<span *ngSwitchCase="'animalsAllowed'" class="flex-col justify-center">
 						<div><mat-icon>pets</mat-icon></div>
-						<div>{{ question.name }}</div>
+						<div>{{ "Survey." + question.name | translate }}</div>
 					</span>
 					<span *ngSwitchCase="'gender'" class="flex-col justify-center">
 						<div><mat-icon>male</mat-icon><mat-icon>female</mat-icon></div>
-						<div>{{ question.name }}</div>
+						<div>{{ "Survey." + question.name | translate }}</div>
 					</span>
 					<span *ngSwitchDefault>
-						{{ question.name }}
+						{{ "Survey." + question.name | translate }}
 					</span>
 				</mat-label>
 
@@ -96,10 +96,10 @@
 						class="flex justify-center items-center"
 					>
 						<mat-icon>male</mat-icon><mat-icon>female</mat-icon>
-						<span>{{ question.name }}</span>
+						<span>{{ "Survey." + question.name | translate }}</span>
 					</span>
 					<span *ngSwitchDefault>
-						{{ question.name }}
+						{{ "Survey." + question.name | translate }}
 					</span>
 				</mat-label>
 
@@ -164,7 +164,7 @@
 					</span>
 					<input matInput type="number" min="1" [formControlName]="question.name" />
 					<mat-error *ngIf="question.name === 'maxNumberOfRoommates'">
-						Podano nieprawidłową wartość!
+						{{ "Survey.info1" | translate }}!
 					</mat-error>
 				</mat-form-field>
 
@@ -190,7 +190,7 @@
 						max="150"
 						[formControlName]="question.name"
 					/>
-					<mat-error> Podano nieprawidłowy wiek!</mat-error>
+					<mat-error> {{ "Survey.info2" | translate }}!</mat-error>
 				</mat-form-field>
 
 				<mat-form-field
@@ -215,14 +215,14 @@
 						max="150"
 						[formControlName]="question.name"
 					/>
-					<mat-error> Podano nieprawidłowy wiek! </mat-error>
+					<mat-error> {{ "Survey.info2" | translate }}! </mat-error>
 				</mat-form-field>
 
 				<div *ngIf="question.typeName === typeName.CHECKBOX && showMoreQuestions">
 					<mat-checkbox
 						*ngFor="let answer of question.answers; let i = index"
 						value="{{ i }}"
-						>{{ answer }}</mat-checkbox
+						>{{ "Survey." + answer | translate }}</mat-checkbox
 					>
 				</div>
 
@@ -238,7 +238,7 @@
 					<mat-radio-button
 						*ngFor="let answer of question.answers; let i = index"
 						[value]="i"
-						>{{ answer }}</mat-radio-button
+						>{{ "Survey." + answer | translate }}</mat-radio-button
 					>
 				</mat-radio-group>
 			</div>

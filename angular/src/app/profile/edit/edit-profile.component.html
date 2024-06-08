@@ -227,7 +227,7 @@
 							placeholder="{{ 'Profile-edit.university' | translate }}"
 						/>
 						<mat-error *ngIf="actualForm.controls['university'].errors?.['required']">
-							{{ "Profile-edit.school-info" | translate }}!
+							{{ "Profile-edit.university-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
 					<mat-form-field>
@@ -299,14 +299,14 @@
 							<mat-select-trigger>
 								<mat-chip-set>
 									<mat-chip *ngFor="let myHobby of selectedHobbies">
-										{{ myHobby.name | translate }}
+										{{ "Interest." + myHobby.name | translate }}
 									</mat-chip>
 								</mat-chip-set>
 							</mat-select-trigger>
 							<mat-option
 								*ngFor="let hobby of filteredHobbies$ | async"
 								[value]="hobby"
-								>{{ hobby.name | translate }}</mat-option
+								>{{ "Interest." + hobby.name | translate }}</mat-option
 							>
 						</mat-select>
 					</mat-form-field>
@@ -360,8 +360,8 @@
 							aria-label="Upload"
 							matTooltip="{{
 								!this.urlNewScan || this.modificationType === mType.EDIT
-									? descriptionsMap.get('read')
-									: descriptionsMap.get('edit')
+									? ('Profile-edit.load-scan' | translate)
+									: ('Profile-edit.change-scan' | translate)
 							}}"
 							(click)="scanUpload.click()"
 						>
