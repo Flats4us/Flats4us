@@ -9,8 +9,5 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public int ArgumentId { get; set; }
-
-        [Required]
-        public int ModeratorId { get; set; }
     }
 }

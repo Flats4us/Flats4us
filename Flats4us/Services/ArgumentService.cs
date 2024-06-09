@@ -26,7 +26,7 @@ namespace Flats4us.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ArgumentDto>> GetYourArgumentsAsync(int userId, ArgumentStatus argumentStatus)
+        public async Task<IEnumerable<ArgumentDto>> GetYourArgumentsAsync(int userId)
         {
             var user = await _context.Users
                 .FindAsync(userId);
@@ -36,7 +36,6 @@ namespace Flats4us.Services
                 var arguments = await _context.Arguments
                 .Include(x => x.ArgumentInterventions)
                 .Where(x => x.Student.UserId == userId)
-                .Where(x => x.ArgumentStatus == argumentStatus)
                 .OrderBy(x=>x.StartDate)
                 .Select(x => _mapper.Map<ArgumentDto>(x))
                 .ToListAsync();
@@ -51,7 +50,6 @@ namespace Flats4us.Services
                         .ThenInclude(x => x.Offer)
                             .ThenInclude(x => x.Property)
                     .Where(x => x.Rent.Offer.Property.OwnerId == userId)
-                    .Where(x => x.ArgumentStatus == argumentStatus)
                     .OrderBy(x => x.StartDate)
                     .Select(x => _mapper.Map<ArgumentDto>(x))
                     .ToListAsync();
@@ -62,7 +60,7 @@ namespace Flats4us.Services
                 throw new ArgumentException($"User with Id: {userId} is not Student or Owner");
         }
 
-        public async Task<IEnumerable<ArgumentDto>> GetArgumentsAsync(ArgumentStatus argumentStatus)
+        public async Task<IEnumerable<ArgumentDto>> GetArgumentsAsync()
         {
             var arguments = await _context.Arguments
                 .Include(a=>a.Rent)
@@ -72,7 +70,7 @@ namespace Flats4us.Services
                                 .ThenInclude(x => x.ProfilePicture)
                 .Include(x => x.Student)
                     .ThenInclude(x => x.ProfilePicture)
-                .Where(x => x.ArgumentStatus == argumentStatus)
+                .Include(x => x.ArgumentInterventions)
                 .Where(x => x.InterventionNeed == true)
                 .OrderBy(x => x.InterventionNeedDate)
                 .Select(e => _mapper.Map<ArgumentDto>(e))
@@ -85,6 +83,13 @@ namespace Flats4us.Services
         {
             var argument = await _context.Arguments
                 .Where(x => x.ArgumentId == id)
+                .Include(a => a.Rent)
+                    .ThenInclude(r => r.Offer)
+                        .ThenInclude(o => o.Property)
+                            .ThenInclude(p => p.Owner)
+                                .ThenInclude(x => x.ProfilePicture)
+                .Include(x => x.Student)
+                    .ThenInclude(x => x.ProfilePicture)
                 .Include(x => x.ArgumentInterventions)
                 .Select(e => _mapper.Map<ArgumentDto>(e))
                 .FirstOrDefaultAsync()
@@ -140,6 +145,7 @@ namespace Flats4us.Services
             {
                 StartDate = DateTime.Now,
                 ArgumentStatus = ArgumentStatus.Ongoing,
+                Title = input.Title,
                 Description = input.Description,
                 RentId = input.RentId,
                 InterventionNeed = false,
@@ -241,8 +247,8 @@ namespace Flats4us.Services
                 ?? throw new ArgumentException($"Argument with id {input.ArgumentId} not found ");
 
             var moderator = await _context.Users
-                .FirstAsync(x => x.UserId == input.ModeratorId)
-                ?? throw new ArgumentException($"Moderator with id {input.ModeratorId} not found ");
+                .FirstAsync(x => x.UserId == moderatorId)
+                ?? throw new ArgumentException($"Moderator with id {moderatorId} not found ");
 
             argument.InterventionNeed = false;
             argument.InterventionNeedDate = null;

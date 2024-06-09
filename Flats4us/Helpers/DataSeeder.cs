@@ -2668,7 +2668,6 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = false,
             InterventionNeedDate = null,
-            MederatorDecisionDate = null,
             Rent = rent1,
             Student = student1,
             GroupChat = groupChat1
@@ -2682,9 +2681,8 @@ public static class DataSeeder
             OwnerAcceptanceDate = new DateTime(2023, 1, 13),
             StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Ongoing,
-            InterventionNeed = false,
-            InterventionNeedDate = null,
-            MederatorDecisionDate = null,
+            InterventionNeed = true,
+            InterventionNeedDate = new DateTime(2023, 1 , 14),
             Rent = rent2,
             Student = student4,
             GroupChat = groupChat2
@@ -2699,8 +2697,7 @@ public static class DataSeeder
             StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
-            InterventionNeedDate = new DateTime(2024, 1, 13),
-            MederatorDecisionDate = null,
+            InterventionNeedDate = new DateTime(2024, 2, 13),
             Rent = rent3,
             Student = student7,
             GroupChat = groupChat3
@@ -2714,9 +2711,8 @@ public static class DataSeeder
             OwnerAcceptanceDate = null,
             StudentAccceptanceDate = null,
             ArgumentStatus = ArgumentStatus.Ongoing,
-            InterventionNeed = false,
-            InterventionNeedDate = null,
-            MederatorDecisionDate = new DateTime(2023, 7, 10),
+            InterventionNeed = true,
+            InterventionNeedDate = new DateTime(2023, 6, 25),
             Rent = rent4,
             Student = student10,
             GroupChat = groupChat4
@@ -2732,7 +2728,6 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = false,
             InterventionNeedDate = null,
-            MederatorDecisionDate = new DateTime(2024, 4, 14),
             Rent = rent3,
             Student = student8,
             GroupChat = groupChat5
@@ -2748,7 +2743,6 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             InterventionNeedDate = new DateTime(2024, 2, 23),
-            MederatorDecisionDate = null,
             Rent = rent1,
             Student = student3,
             GroupChat = groupChat6
@@ -2764,7 +2758,7 @@ public static class DataSeeder
         {
 
             Date = new DateTime(2023, 7, 9),
-            Justification = "interwencja do argumenttu 4tego",
+            Justification = "interwencja do argumentu 4tego",
             Argument = argument4,
             Moderator = moderator1
         };
@@ -2773,12 +2767,30 @@ public static class DataSeeder
         {
 
             Date = new DateTime(2024, 4, 13),
-            Justification = "interwencja do argumenttu 5tego",
+            Justification = "interwencja do argumentu 5tego",
             Argument = argument5,
             Moderator = moderator1
         };
 
-        dbContext.ArgumentInterventions.AddRange(argumentIntervention1, argumentIntervention2);
+        var argumentIntervention3 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2024, 1, 14),
+            Justification = "interwencja do argumentu 3tego",
+            Argument = argument3,
+            Moderator = moderator1
+        };
+
+        var argumentIntervention4 = new ArgumentIntervention
+        {
+
+            Date = new DateTime(2024, 1, 25),
+            Justification = "interwencja do argumentu 3tego druga",
+            Argument = argument3,
+            Moderator = moderator1
+        };
+
+        dbContext.ArgumentInterventions.AddRange(argumentIntervention1, argumentIntervention2, argumentIntervention3, argumentIntervention4);
 
         #endregion
 

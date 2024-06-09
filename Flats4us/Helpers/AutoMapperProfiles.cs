@@ -159,6 +159,9 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.Owner , opt => opt.MapFrom(src => src.Rent.Offer.Property.Owner));
 
             CreateMap<ArgumentIntervention, ArgumentInterventionDto>();
+
+            CreateMap<Rent, RentForArgumentDto>()
+                .ForMember(dest => dest.PropertyAddress, opt => opt.MapFrom(src => $"{src.Offer.Property.Street} {src.Offer.Property.Number}{(src.Offer.Property.Flat != null ? ("/" + src.Offer.Property.Flat) : "")}, {src.Offer.Property.City}"));
         }
     }
 }

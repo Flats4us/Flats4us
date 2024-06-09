@@ -31,7 +31,7 @@ namespace Flats4us.Controllers
             Summary = "Getting all your arguments with interventions",
             Description = "Requires VerifiedOwnerOrStudent privileges"
         )]
-        public async Task<IActionResult> GetYourArguments(ArgumentStatus argumentStatus)
+        public async Task<IActionResult> GetYourArguments()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Flats4us.Controllers
                     return BadRequest("Server error: Failed to get user id from request");
                 }
                 _logger.LogInformation("Getting your arguments");
-                var arguments = await _argumentService.GetYourArgumentsAsync(requestUserId, argumentStatus);
+                var arguments = await _argumentService.GetYourArgumentsAsync(requestUserId);
                 return Ok(arguments);
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Posting Argument");
                 await _argumentService.AddArgumentAsync(input, requestUserId);
-                return Ok("Argument Added");
+                return Ok(new OutputDto<string>("Argument Added"));
             }
             catch (Exception ex)
             {
