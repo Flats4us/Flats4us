@@ -239,7 +239,7 @@ namespace Flats4us.Controllers
             {
                 _logger.LogInformation("Put Argument");
                 await _argumentService.EditStatusArgumentAsync(argumentId, status.Value);
-                return Ok("Argument Updated");
+                return Ok(new OutputDto<string>("Argument Updated"));
             }
             catch (Exception ex)
             {

@@ -93,7 +93,7 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Accepting argument on Owner side");
                 await _argumentService.OwnerAcceptArgument(argumentId, requestUserId);
-                return Ok("Argument accepted from Owner side");
+                return Ok(new OutputDto<string>("Argument accepted from Owner side"));
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Accepting argument on Student side");
                 await _argumentService.StudentAcceptArgument(argumentId, requestUserId);
-                return Ok("Argument accepted from Student side");
+                return Ok(new OutputDto<string>("Argument accepted from Student side"));
             }
             catch (Exception ex)
             {
@@ -141,7 +141,7 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Asked moderator for intervention");
                 await _argumentService.AskForIntervention(argumentId, requestUserId);
-                return Ok("Asked Moderator for intervention");
+                return Ok(new OutputDto<string>("Asked Moderator for intervention"));
             }
             catch (Exception ex)
             {
