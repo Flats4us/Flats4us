@@ -123,12 +123,12 @@ namespace Flats4us.Controllers
             Summary = "Returns list of arguments",
             Description = "Requires moderator privileges"
         )]
-        public async Task<IActionResult> GetArguments(ArgumentStatus argument)
+        public async Task<IActionResult> GetArguments()
         {
             try
             {
                 _logger.LogInformation("Geting Arguments");
-                var arguments = await _argumentService.GetArgumentsAsync(argument);
+                var arguments = await _argumentService.GetArgumentsAsync();
                 return Ok(arguments);
             }
             catch (Exception ex)
@@ -217,7 +217,8 @@ namespace Flats4us.Controllers
                 }
                 _logger.LogInformation("Posting Intervention");
                 await _argumentService.AddInterventionAsync(input, requestUserId);
-                return Ok("Intervention Added");
+                return Ok(new OutputDto<string>("Intervention Added"));
+
             }
             catch (Exception ex)
             {
@@ -238,7 +239,7 @@ namespace Flats4us.Controllers
             {
                 _logger.LogInformation("Put Argument");
                 await _argumentService.EditStatusArgumentAsync(argumentId, status.Value);
-                return Ok("Argument Updated");
+                return Ok(new OutputDto<string>("Argument Updated"));
             }
             catch (Exception ex)
             {

@@ -25,15 +25,16 @@ namespace Flats4us.Entities.Dto
 
         public DateTime? InterventionNeedDate { get; set; }
 
-        public DateTime? MederatorDecisionDate { get; set; }
-
         [Required]
-        public int RentId { get; set; }
+        public int GroupChatId { get; set; }
 
         [Required]
         public UserInfoDto Student { get; set; }
         public UserInfoDto Owner { get; set; }
 
         public virtual ICollection<ArgumentInterventionDto> ArgumentInterventions { get; set; }
+
+        public RentForArgumentDto Rent { get; set; }
+
     }
 }
