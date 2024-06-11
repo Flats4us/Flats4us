@@ -13,9 +13,20 @@
 				</div>
 				<div>
 					<span class="text-black font-bold"
-						>{{ "Calendar.nick" | translate }}:
+						>{{ "Calendar.place" | translate }}:
 					</span>
-					<span>{{ event.name }}</span>
+					<span>{{ event.place }}</span>
+				</div>
+				<div>
+					<span class="text-black font-bold"
+						>{{ "Calendar.reason" | translate }}:
+					</span>
+					<span>{{ event.reason }}</span>
+				</div>
+				<div>
+					<a [routerLink]="['/offer', 'details', event.offerId]">{{
+						"Calendar.offerDetails" | translate
+					}}</a>
 				</div>
 			</div>
 		</div>

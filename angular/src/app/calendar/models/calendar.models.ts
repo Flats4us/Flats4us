@@ -1,4 +1,9 @@
 export interface IEvent {
+	meetingId: number;
 	date: Date;
-	name: string;
+	place: string;
+	reason: string;
+	offerId: number;
+	studentAcceptDate: Date;
+	ownerAcceptDate: Date;
 }

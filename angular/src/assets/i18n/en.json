@@ -130,9 +130,11 @@
 	"Calendar": {
 		"add-event": "Add event",
 		"date": "Date",
-		"nick": "Name",
+		"place": "Place",
+		"reason": "Reason",
 		"event": "Event",
-		"calendar": "Calendar"
+		"calendar": "Calendar",
+		"offerDetails": "Offer details"
 	},
 	"Disputes": {
 		"dispute": "Dispute",

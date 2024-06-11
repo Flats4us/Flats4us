@@ -129,9 +129,11 @@
 	"Calendar": {
 		"add-event": "Dodaj wydarzenie",
 		"date": "Data",
-		"nick": "Nazwa",
+		"place": "Miejsce",
+		"reason": "Powód",
 		"event": "Wydarzenia",
-		"calendar": "Kalendarz"
+		"calendar": "Kalendarz",
+		"offerDetails": "Szczegóły oferty"
 	},
 	"Disputes": {
 		"dispute": "Spór",
