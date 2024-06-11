@@ -49,7 +49,9 @@ namespace Flats4us.Services
 
         public async Task SaveMessage(ChatMessage chatMessage)
         {
-            _context.ChatMessages.Add(chatMessage);
+
+
+            await _context.ChatMessages.AddAsync(chatMessage);
             
             await _context.SaveChangesAsync();
             // Notify the user of password change

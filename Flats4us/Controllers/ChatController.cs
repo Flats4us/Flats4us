@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Azure.Core;
 using Flats4us.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Enums;
 
 namespace Flats4us.Controllers
 {
@@ -18,32 +19,51 @@ namespace Flats4us.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
+        private readonly ILogger<ChatController> _logger;
         private readonly IChatService _chatService;
         private readonly IHubContext<ChatHub> _chatHub;
         public readonly Flats4usContext _context;
 
-        public ChatController(IChatService chatService, IHubContext<ChatHub> chatHub, Flats4usContext context)
+        public ChatController(
+            IChatService chatService,
+            IHubContext<ChatHub> chatHub,
+            Flats4usContext context,
+            ILogger<ChatController> logger)
         {
             _chatService = chatService;
             _chatHub = chatHub;
             _context = context;
+            _logger = logger;
         }
 
         // POST: api/chats/send-message
-        [Authorize]
         [HttpPost("send-message")]
-        public async Task<IActionResult> SendMessage(int receiverUserId, string message)
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Sends message to user",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<IActionResult> SendMessage([FromBody] SendMessageDto input)
         {
-            var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(senderUserIdClaim) || !int.TryParse(senderUserIdClaim, out var senderUserId))
+            try
             {
-                return BadRequest("Sender user ID is not available.");
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                _logger.LogInformation("SendingMessage");
+                var arguments = await _chatService.
+                return Ok(arguments);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Sendiong message");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+
             }
 
-            var senderUser = await _context.Users.FindAsync(senderUserId);
-
-            var chat = await _chatService.EnsureChatSession(senderUserId, receiverUserId);
+            var chat = await _chatService.EnsureChatSession(senderUserId, input.UserId);
             if (chat == null)
             {
                 return BadRequest("Unable to create or find a chat session.");
