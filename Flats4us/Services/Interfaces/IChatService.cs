@@ -5,12 +5,9 @@ namespace Flats4us.Services.Interfaces
 {
     public interface IChatService
     {
-        Task<Chat> EnsureChatSession(int studentId, int userId);
-        Task<int?> GetChatParticipant(int chatId, int senderUserId);
-
-        Task SaveMessage(ChatMessage chatMessage);
-
-        Task<IEnumerable<ChatMessage>> GetChatHistory(int chatId);
+        Task<List<ChatMessageDto>> GetChatHistoryAsync(int chatId, int requestUserId);
+        Task<int?> GetChatParticipantAsync(int chatId, int senderUserId);
+        Task SendMessageAsync(int senderId, int receiverId, string message);
         Task<List<ChatInfoDto>> GetUserChatsAsync(int userId);
     }
 }

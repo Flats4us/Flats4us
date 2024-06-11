@@ -142,7 +142,7 @@ namespace Flats4us.Services
                 {
                     Content = msg.Content,
                     DateTime = msg.DateTime,
-                    UserId = userId 
+                    SenderId = userId 
                 })
                 .ToListAsync();
 

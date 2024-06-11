@@ -1,24 +1,21 @@
-﻿namespace Flats4us.Hubs
-{
-    using Flats4us.Entities;
-    using Flats4us.Helpers.Enums;
-    using Flats4us.Services;
-    using Flats4us.Services.Interfaces;
-    using Microsoft.AspNetCore.SignalR;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Concurrent;
-    using System.Security.Claims;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+﻿using Flats4us.Entities;
+using Flats4us.Helpers.Enums;
+using Flats4us.Services;
+using Flats4us.Services.Interfaces;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Concurrent;
+using System.Security.Claims;
 
+namespace Flats4us.Hubs
+{
     public class ChatHub : Hub
     {
         private readonly IChatService _chatService;
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
 
-
-
-        private readonly static ConcurrentDictionary<int, string> _connections = new ConcurrentDictionary<int, string>();
+        private readonly static ConcurrentDictionary<int, List<string>> _connections = new ConcurrentDictionary<int, List<string>>();
 
         public ChatHub(IChatService chatService, 
             Flats4usContext context,
@@ -29,59 +26,36 @@
             _notificationService = notificationService;
         }
 
-        public async Task SendMessage(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
-        }
-
         public async Task SendPrivateMessage(int receiverUserId, string message)
         {
             var senderUserId = GetUserId();
             if (!senderUserId.HasValue) return;
-            var sender = await _context.Users.FirstOrDefaultAsync(u => u.UserId == senderUserId.Value);
-            if (sender == null) return;
 
-            var chat = await _chatService.EnsureChatSession(senderUserId.Value, receiverUserId);
+            await _chatService.SendMessageAsync(senderUserId.Value, receiverUserId, message);
 
-            var chatMessage = new ChatMessage
+
+            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionIds) && receiverConnectionIds.Any())
             {
-                Content = message,
-                DateTime = DateTime.UtcNow,
-                SenderId = senderUserId.Value,
-                Chat = chat
-            };
-            await _chatService.SaveMessage(chatMessage);
-
-            
-
-
-
-
-            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
-            {
-
-                await Clients.Client(receiverConnectionId).SendAsync("ReceivePrivateMessage", senderUserId.Value, message, DateTime.UtcNow);
+                await Clients.User(receiverUserId.ToString()).SendAsync("ReceivePrivateMessage", senderUserId, message, DateTime.Now);
             }
             else
             {
-                // Handle the case where the user is not connected or not found
+                var sender = await _context.Users.FindAsync(senderUserId.Value);
+                if (sender == null) return;
+
+                var notificationTitle = sender.Name + " " + sender.Surname;
+                var notificationBody = message;
+                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, receiverUserId);
             }
         }
+
         private int? GetUserId()
         {
-            
-            // Assuming the user ID claim is stored as "NameIdentifier"
             if (int.TryParse(Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int userId))
-                { 
-                    return userId;
-                }
-                return null;
-        }
-
-
-        public async Task SendMessageToAll(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
+            { 
+                return userId;
+            }
+            return null;
         }
 
         public async Task AddToGroup(string groupName)
@@ -90,22 +64,24 @@
             await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
         }
 
-
         public async Task SendMessageToGroup(string groupName, string message)
         {
             await Clients.Group(groupName).SendAsync("ReceiveMessage", message);
         }
 
         // This method sends a message to a specific user.
-
-
-
         private int? GetUserIdByConnectionId(string connectionId)
         {
-            var userId = _connections.FirstOrDefault(x => x.Value == connectionId).Key;
-            return userId != 0 ? userId : (int?)null;
-        }
+            foreach (var kvp in _connections)
+            {
+                if (kvp.Value.Contains(connectionId))
+                {
+                    return kvp.Key;
+                }
+            }
 
+            return null;
+        }
 
         public async Task JoinGroupChat(int groupChatId)
         {
@@ -125,7 +101,6 @@
             await Groups.AddToGroupAsync(Context.ConnectionId, $"GroupChat-{groupChatId}");
         }
 
-
         public async Task SendGroupMessage(int groupChatId, string message)
         {
             var userId = GetUserId();
@@ -136,21 +111,26 @@
             // Send message to the SignalR group
             await Clients.Group($"GroupChat-{groupChatId}").SendAsync("ReceiveGroupMessage", groupChatId, userId.Value, message, DateTime.UtcNow);
         }
+
         public async Task LeaveGroupChat(int groupChatId)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, $"GroupChat-{groupChatId}");
         }
 
-
         public override async Task OnConnectedAsync()
         {
-            Console.WriteLine("connected");
-
             var userId = GetUserId();
             if (userId != null)
             {
-                _connections[userId.Value] = Context.ConnectionId;
+                if (!_connections.ContainsKey(userId.Value))
+                {
+                    _connections[userId.Value] = new List<string>();
+                }
+
+                _connections[userId.Value].Add(Context.ConnectionId);
             }
+
+            await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
@@ -158,12 +138,18 @@
             var userId = GetUserId();
             if (userId != null)
             {
-                _connections.TryRemove(userId.Value, out _);
+                if (_connections.TryGetValue(userId.Value, out var receiverConnectionIds))
+                {
+                    receiverConnectionIds.Remove(Context.ConnectionId);
+
+                    if (!receiverConnectionIds.Any())
+                    {
+                        _connections.Remove(userId.Value, out _);
+                    }
+                }
             }
-            // When a user disconnects, remove them from the group
-           
+
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }
-
-

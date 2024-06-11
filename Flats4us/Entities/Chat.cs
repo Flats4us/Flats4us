@@ -10,16 +10,14 @@ namespace Flats4us.Entities
         public int ChatId { get; set; }
 
         [Required]
-        public int StudentId { get; set; }
+        public int User1Id { get; set; }
 
         [Required]
-        public int OwnerId { get; set; }
+        public int User2Id { get; set; }
 
-        public virtual Student Student { get; set; }
+        public virtual User User1 { get; set; }
 
-        public virtual Owner Owner { get; set; }
-
-        
+        public virtual User User2 { get; set; }
 
         public virtual ICollection<ChatMessage> ChatMessages { get; set; }
 
