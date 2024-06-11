@@ -23,8 +23,6 @@ namespace Flats4us.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateGroupChat([FromBody] CreateGroupChatDto dto)
         {
-            
-
             try
             {
                 var groupChat = await _groupChatService.CreateGroupChatAsync(dto.GroupName, dto.UserIds);
@@ -129,7 +127,6 @@ namespace Flats4us.Controllers
             }
         }
 
-
         [Authorize]
         [HttpGet("user/groupchats")]
         public async Task<IActionResult> GetUserGroupChats()
@@ -165,7 +162,4 @@ namespace Flats4us.Controllers
             }
         }
     }
-
-    
-
 }

@@ -18,8 +18,11 @@ namespace Flats4us.Entities
 
         [Required]
         public int SenderId { get; set; }
+
         public int? GroupChatId { get; set; }
+
         public int? ChatId { get; set; }
+
         public virtual GroupChat GroupChat { get; set; }
 
         public virtual Chat Chat { get; set; }

@@ -151,6 +151,8 @@ namespace Flats4us.Helpers
 
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
 
+            CreateMap<ChatMessage, ChatMessageDto>();
+
             CreateMap<RentOpinion, RentOpinionDto>()
                 .ForMember(dest => dest.SourceUserName, opt => opt.MapFrom(src => src.Student.Name))
                 .ForMember(dest => dest.SourceUserProfilePicture, opt => opt.MapFrom(src => src.Student.ProfilePicture));
