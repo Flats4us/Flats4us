@@ -9,9 +9,14 @@
 		<mat-card>
 			<div class="label-box">
 				<mat-label class="label-description">
-					<span class="text-3xl"
-						>{{ "Rents-details.offer-status" | translate }}:
-						{{ data.rent?.isFinished ? "zakończony" : "trwający" }}</span
+					<span class="text-3xl">
+						{{ "Rents-details.rent-status" | translate }} :
+						{{
+							(data.rent?.isFinished
+								? "Rents-details.finished"
+								: "Rents-details.ongoing"
+							) | translate
+						}}</span
 					>
 				</mat-label>
 			</div>
@@ -95,7 +100,7 @@
 												class="material-icons-outlined"
 												>gavel</mat-icon
 											>
-											<span>{{ menuOption.description }}</span>
+											<span>{{ menuOption.description | translate }}</span>
 										</div>
 									</button>
 								</mat-menu>
@@ -148,7 +153,7 @@
 				<mat-label class="label-description"
 					><mat-icon class="icon" [inline]="true">description</mat-icon
 					><span class="text-3xl">{{
-						"Rents-details.offer-description" | translate
+						"Rents-details.rent-description" | translate
 					}}</span></mat-label
 				>
 			</div>
@@ -266,7 +271,9 @@
 								<span class="mobile-view-label"
 									>{{ "Rents-details.type" | translate }}:</span
 								>
-								{{ this.rentsService.paymentPurposes.get(element.paymentPurpose) }}
+								{{
+									this.rentsService.getPaymentPurpose(element.paymentPurpose) | translate
+								}}
 							</mat-cell>
 						</ng-container>
 						<ng-container matColumnDef="amount">
@@ -288,7 +295,7 @@
 								<span class="mobile-view-label"
 									>{{ "Rents-details.pay" | translate }}:</span
 								>
-								{{ element.isPaid ? "tak" : "nie" }}
+								{{ (element.isPaid ? "yes" : "no") | translate }}
 							</mat-cell>
 						</ng-container>
 						<ng-container matColumnDef="createdDate">
@@ -332,7 +339,7 @@
 						color="primary"
 						(click)="navigateStudentRents()"
 					>
-						Powrót
+						{{ "return" | translate }}
 					</button>
 					<button
 						*appAccessControl="authService.allPermissions.get('verifiedOwner')"

@@ -17,10 +17,15 @@ export class RentsService {
 	constructor(private httpClient: HttpClient) {}
 
 	public paymentPurposes = new Map<number, string>([
-		[0, 'Rents.rent2'],
+		[0, 'Rents.bail'],
 		[1, 'Rents.deposit'],
 		[2, 'Rents.repairs'],
 	]);
+
+	public getPaymentPurpose(id?: number): string {
+		const result = this.paymentPurposes.get(id ?? 0);
+		return result ?? 'Rents.bail';
+	}
 
 	public addMeeting(meeting: IMeeting) {
 		return this.httpClient.post(`${this.apiRoute}/meetings`, meeting);

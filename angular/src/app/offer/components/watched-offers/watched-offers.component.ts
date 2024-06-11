@@ -45,7 +45,7 @@ export class WatchedOffersComponent
 	private paginatorDescriptionB = 'ofert';
 
 	@ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator =
-		new MatPaginator(this.matPaginatorIntl, ChangeDetectorRef.prototype);
+		new MatPaginator(this.matPaginatorIntl, this.cdr);
 
 	@Output()
 	public page: EventEmitter<PageEvent> = new EventEmitter();

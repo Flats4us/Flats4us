@@ -20,7 +20,8 @@
 						><h2 class="text-m flex items-center">
 							{{ "Offer.rent1" | translate }} -
 							{{
-								realEstateService.propertyTypes.get(watchedOffer.property.propertyType)
+								realEstateService.getPropertyType(watchedOffer.property.propertyType)
+									| translate
 							}}
 							{{ watchedOffer.property.area }} m² {{ watchedOffer.property.city }}
 							<mat-icon
@@ -44,7 +45,7 @@
 					<mat-chip-listbox>
 						<mat-chip>
 							<div class="chip">
-								<mat-icon>attach_money</mat-icon>
+								<mat-icon class="material-symbols-outlined"> sell </mat-icon>
 								<span
 									>{{ "Offer.price" | translate }}: {{ watchedOffer.price }} zł/{{
 										"mth" | translate

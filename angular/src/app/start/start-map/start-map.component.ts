@@ -20,6 +20,7 @@ import { FormGroup } from '@angular/forms';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { IOffer } from 'src/app/offer/models/offer.models';
 import { Observable } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start-map',
@@ -31,15 +32,8 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	@ViewChild('searchInput')
 	public searchInput!: ElementRef;
 
-	constructor(
-		private http: HttpClient,
-		public realEstateService: RealEstateService,
-		private startService: StartService,
-		private offerService: OfferService,
-		private router: Router
-	) {
-		super();
-	}
+	private price = this.translate.instant('Start.price').toLowerCase();
+	private street = this.translate.instant('Start.street');
 
 	public map: Map | undefined;
 
@@ -64,6 +58,21 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 		floors: null,
 		equipment: [],
 	};
+
+	constructor(
+		private http: HttpClient,
+		public realEstateService: RealEstateService,
+		private startService: StartService,
+		private offerService: OfferService,
+		private router: Router,
+		private translate: TranslateService
+	) {
+		super();
+	}
+
+	private getType(type: number): string {
+		return this.translate.instant(this.realEstateService.getPropertyType(type));
+	}
 
 	public ngOnInit(): void {
 		this.map = map('map').setView([0, 0], 13);
@@ -147,17 +156,21 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				'cursor: pointer;' +
 				'}</style>' +
 				'<b>' +
-				this.realEstateService.propertyTypes.get(mapOffer.property.propertyType) +
+				this.getType(mapOffer.property.propertyType) +
 				'</b>' +
 				' ' +
 				mapOffer.property.area +
 				' m², ' +
 				mapOffer.property.city +
-				', ulica ' +
+				', ' +
+				this.street +
+				': ' +
 				mapOffer.property.street +
 				' ' +
 				mapOffer.property.number +
-				', cena: ' +
+				', ' +
+				this.price +
+				': ' +
 				mapOffer.price +
 				' zł' +
 				`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element"></img>`;

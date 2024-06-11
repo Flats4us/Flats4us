@@ -8,6 +8,7 @@ import { StartService } from '../services/start.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OfferService } from 'src/app/offer/services/offer.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [StartMapComponent],
@@ -17,6 +18,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		ReactiveFormsModule,
 		MatIconModule,
 		MatTooltipModule,
+		TranslateModule,
 	],
 	exports: [StartMapComponent],
 	providers: [RealEstateService, StartService, RealEstateService, OfferService],

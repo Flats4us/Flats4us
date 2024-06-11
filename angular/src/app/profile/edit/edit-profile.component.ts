@@ -101,11 +101,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		{ option: 'editSurvey', description: 'Profile-edit.edit-survey' },
 	];
 
-	public descriptionsMap: Map<string, string> = new Map([
-		['read', 'Wczytaj skan dokumentu'],
-		['change', 'Zmień skan dokumentu'],
-	]);
-
 	constructor(
 		private formDir: FormGroupDirective,
 		private formBuilder: FormBuilder,

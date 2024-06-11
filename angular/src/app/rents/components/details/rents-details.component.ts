@@ -54,7 +54,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		{ option: 'rentDetails', description: 'Rents-details.option-details' },
 		{ option: 'offerDetails', description: 'Rents-details.option-offer' },
 		{ option: 'propertyDetails', description: 'Rents-details.option-property' },
-		{ option: 'startDispute', description: 'Rents-details.potion-dispute' },
+		{ option: 'startDispute', description: 'Rents-details.option-dispute' },
 	];
 
 	constructor(
