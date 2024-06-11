@@ -1,39 +1,48 @@
-<h1 mat-dialog-title>
-	{{ "Calendar.event" | translate }} {{ date | date : "dd.MM.YYYY" }}
+<h1 mat-dialog-title class="text-2xl font-semibold text-center">
+	{{ "Calendar.event" | translate }}
 </h1>
-<div mat-dialog-content>
-	<div class="flex flex-col gap-4 m-4">
-		<div *ngFor="let event of events">
+<div mat-dialog-content class="p-4">
+	<div class="flex flex-col gap-6">
+		<div
+			*ngFor="let event of events"
+			class="p-4 border rounded-lg shadow-sm bg-white"
+		>
+			<div class="mb-4">
+				<span class="text-black font-bold"
+					>{{ "Calendar.date" | translate }}:
+				</span>
+				<span>{{ event.date | date : "dd.MM.YYYY HH:mm" }}</span>
+			</div>
+			<div class="mb-4">
+				<span class="text-black font-bold"
+					>{{ "Calendar.place" | translate }}:
+				</span>
+				<span>{{ event.place }}</span>
+			</div>
+			<div class="mb-4">
+				<span class="text-black font-bold"
+					>{{ "Calendar.reason" | translate }}:
+				</span>
+				<span>{{ event.reason }}</span>
+			</div>
 			<div>
-				<div class="mb-2">
-					<span class="text-black font-bold"
-						>{{ "Calendar.date" | translate }}:
-					</span>
-					<span>{{ event.date | date : "dd.MM.YYY HH:mm" }}</span>
-				</div>
-				<div>
-					<span class="text-black font-bold"
-						>{{ "Calendar.place" | translate }}:
-					</span>
-					<span>{{ event.place }}</span>
-				</div>
-				<div>
-					<span class="text-black font-bold"
-						>{{ "Calendar.reason" | translate }}:
-					</span>
-					<span>{{ event.reason }}</span>
-				</div>
-				<div>
-					<a [routerLink]="['/offer', 'details', event.offerId]">{{
-						"Calendar.offerDetails" | translate
-					}}</a>
-				</div>
+				<a
+					mat-dialog-close
+					class="text-blue-600 hover:underline"
+					[routerLink]="['/offer', 'details', event.offerId]"
+					>{{ "Calendar.offerDetails" | translate }}</a
+				>
 			</div>
 		</div>
 	</div>
 </div>
-<div mat-dialog-actions>
-	<button mat-button mat-dialog-close cdkFocusInitial>
+<div mat-dialog-actions class="flex justify-end p-4">
+	<button
+		mat-button
+		mat-dialog-close
+		cdkFocusInitial
+		class="text-white px-4 py-2 rounded-lg"
+	>
 		{{ "close" | translate }}
 	</button>
 </div>

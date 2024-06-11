@@ -63,7 +63,7 @@ export class CalendarComponent {
 				e => new Date(e.date).toDateString() === new Date(event).toDateString()
 			)
 		) {
-			const ref = this.dialog.open(EventListComponent);
+			const ref = this.dialog.open(EventListComponent, { width: '400px' });
 			ref.componentInstance.date = event;
 			ref.componentInstance.events = calendar.filter(
 				e => new Date(e.date).toDateString() === new Date(event).toDateString()
