@@ -445,8 +445,8 @@
 		"property-save-info2": "Failed to add property. Try again.",
 		"change-info1": "The changes have been successfully saved!",
 		"change-info2": "Failed to modify the property.",
-		"pressing-button": "By clicking the button",
-		"to-confirm": "you confirm that the entered data is correct."
+		"add-info": "By clicking the 'Save property' button, you confirm that the entered data is correct.",
+		"edit-info": "By clicking the 'Edit property' button, you confirm that the entered data is correct."
 	},
 	"Real-estate-details": {
 		"property-status": "Property status",

@@ -563,13 +563,12 @@
 							>
 							<h2>{{ "Real-estate-add.form" | translate }}!</h2>
 							<h2>
-								{{ "Real-estate-add.pressing-button" | translate }}
 								{{
-									modificationType === mType.ADD
-										? "'" + ("Real-estate-add.save-property" | translate) + "'"
-										: "'" + ("Real-estate-add.save-changes" | translate) + "'"
+									(modificationType === mType.ADD
+										? "Real-estate-add.add-info"
+										: "Real-estate-add.edit-info"
+									) | translate
 								}}
-								{{ "Real-estate-add.to-confirm" | translate }}
 							</h2>
 						</div>
 						<div class="button-box">
@@ -604,9 +603,10 @@
 								(click)="saveRealEstate()"
 							>
 								{{
-									modificationType === mType.ADD
-										? ("Real-estate-add.save-property" | translate)
-										: ("Real-estate-add.save-changes" | translate)
+									(modificationType === mType.ADD
+										? "Real-estate-add.save-property"
+										: "Real-estate-add.save-changes"
+									) | translate
 								}}
 							</button>
 							<div class="btn-spacer"></div>

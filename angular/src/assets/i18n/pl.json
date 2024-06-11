@@ -444,8 +444,8 @@
 		"property-save-info2": "Nie udało się dodać nieruchomości. Spróbuj ponownie.",
 		"change-info1": "Zmiany zostały pomyślnie zapisane!",
 		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.",
-		"pressing-button": "Klikająć na przycisk",
-		"to-confirm": "potwierdzasz prawdziwość wprowadzonych danych."
+		"add-info": "Klikająć na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
+		"edit-info": "Klikająć na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych."
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",

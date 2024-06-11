@@ -9,12 +9,13 @@
 		<mat-card>
 			<div class="label-box">
 				<mat-label class="label-description">
-					<span class="text-3xl"
-						>{{ "Rents-details.rent-status" | translate }}:
+					<span class="text-3xl">
+						{{ "Rents-details.rent-status" | translate }} :
 						{{
-							data.rent?.isFinished
-								? ("Rents-details.finished" | translate)
-								: ("Rents-details.ongoing" | translate)
+							(data.rent?.isFinished
+								? "Rents-details.finished"
+								: "Rents-details.ongoing"
+							) | translate
 						}}</span
 					>
 				</mat-label>
@@ -294,7 +295,7 @@
 								<span class="mobile-view-label"
 									>{{ "Rents-details.pay" | translate }}:</span
 								>
-								{{ element.isPaid ? ("yes" | translate) : ("no" | translate) }}
+								{{ (element.isPaid ? "yes" : "no") | translate }}
 							</mat-cell>
 						</ng-container>
 						<ng-container matColumnDef="createdDate">
