@@ -62,7 +62,7 @@ namespace Flats4us.Services
             }
             else if (chat.User2Id == senderUserId)
             {
-                return chat.User2Id;
+                return chat.User1Id;
             }
             else return null;
         }
@@ -72,14 +72,6 @@ namespace Flats4us.Services
             var chatId = await EnsureChatSessionAsync(senderId, receiverId);
 
             await SaveMessageAsync(chatId, senderId, message);
-
-            var sender = await _context.Users.FindAsync(senderId);
-
-            var notificationTitle = sender.Name + " " + sender.Surname;
-            var notificationBody = message;
-            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, receiverId);
-
-            await _chatHub.Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", message);
         }
 
         public async Task<List<ChatInfoDto>> GetUserChatsAsync(int userId)

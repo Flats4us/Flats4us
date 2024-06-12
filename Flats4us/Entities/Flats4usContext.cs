@@ -60,8 +60,6 @@ namespace Flats4us.Entities
                 .HasForeignKey(x => x.User2Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //.WithMany(x => x.Chats)
-
             modelBuilder.Entity<Chat>()
                 .HasIndex(x => new { x.User1Id, x.User2Id })
                 .IsUnique();
@@ -137,8 +135,10 @@ namespace Flats4us.Entities
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
+
             modelBuilder.Entity<UserGroupChat>()
-       .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+                .HasKey(ugc => new { ugc.UserId, ugc.GroupChatId });
+
             modelBuilder.Entity<Rent>()
                 .HasOne(x => x.Student)
                 .WithMany(x => x.Rents)

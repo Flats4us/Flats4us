@@ -18,6 +18,9 @@ namespace Flats4us.Helpers
 
             CreateMap<Payment, PaymentDto>();
 
+            CreateMap<GroupChat, GroupChatDto>()
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserGroupChats.Select(ugc => ugc.User)));
+
             CreateMap<Rent, RentDto>()
                 .ForMember(dest => dest.PropertyId, opt => opt.MapFrom(src => src.Offer.PropertyId))
                 .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date > src.EndDate))
