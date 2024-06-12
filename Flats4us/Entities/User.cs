@@ -45,8 +45,10 @@ namespace Flats4us.Entities
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
 
-        public bool PushConsent { get; set; } = true;
-        public bool EmailConsent { get; set; } = true;
+        public bool PushChatConsent { get; set; } = true;
+        public bool EmailChatConsent { get; set; } = true;
+        public bool PushPropertyConsent { get; set; } = true;
+        public bool EmailPropertyConsent { get; set; } = true;
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }
         public virtual ICollection<TechnicalProblem> TechnicalProblems { get; set; }
         public string? FcmToken { get; set; }

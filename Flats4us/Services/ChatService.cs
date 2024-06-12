@@ -17,6 +17,7 @@ namespace Flats4us.Services
         private readonly IMapper _mapper;
         private readonly IHubContext<ChatHub> _chatHub;
         private readonly INotificationService _notificationService;
+        private readonly IEmailService _emailService;
 
         public ChatService(Flats4usContext context,
             IMapper mapper,
@@ -28,6 +29,7 @@ namespace Flats4us.Services
             _chatHub = chatHub;
             _notificationService = notificationService;
             _userService = ownerService;
+            _emailService = emailService;
         }
 
         public async Task<List<ChatMessageDto>> GetChatHistoryAsync(int chatId, int requestUserId)
@@ -98,8 +100,9 @@ namespace Flats4us.Services
 
             var notificationTitle = sender.Name + " " + sender.Surname;
             var notificationBody = chatMessage.Content;
-            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId);
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId, true);
 
+            await _emailService.SendEmailAsync(chatMessage.SenderId, notificationTitle, notificationBody, true);
         }
 
         private async Task<int> EnsureChatSessionAsync(int user1Id, int user2Id)

@@ -35,15 +35,24 @@ namespace Flats4us.Services
             _context = context;
         }
 
-        public async Task SendEmailAsync(int toUserId, string subject, string body)
+        public async Task SendEmailAsync(int toUserId, string subject, string body, bool chatEmail)
         {
             var user = await _context.Users.FindAsync(toUserId);
 
             if (user is null) throw new ArgumentException($"User with ID {toUserId} not found.");
 
-            var userInfo = await _userService.GetUserInfo(toUserId);
-            if (!userInfo.EmailConsent)
-                return;
+            if (chatEmail && !user.EmailChatConsent)
+            {
+                throw new ArgumentException($"User didn't give chat email consent");
+            }
+
+            if (!chatEmail && !user.EmailPropertyConsent)
+            {
+                throw new ArgumentException($"User didn't give property email consent");
+
+            }
+
+            var userInfo = _mapper.Map<UserInfoDto>(user);
 
                 using (var client = new SmtpClient())
                 {

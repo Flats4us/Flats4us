@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -186,6 +187,32 @@ namespace Flats4us.Controllers
             }
 
         }
+        [HttpGet("consent")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Get user notifications consent info",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<IActionResult> GetUserConsent()
+        {
+
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var consent = await _userService.GetUserConsentAsync(requestUserId);
+                return Ok(consent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
 
         [HttpPut("current")]
         [Authorize(Policy = "RegisteredUser")]
