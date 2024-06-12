@@ -82,7 +82,7 @@ namespace Flats4us.Services
                 {
                     ChatId = c.ChatId,
                     OtherUserId = c.User1Id == userId ? c.User2Id : c.User1Id,
-                    OtherUsername = c.User1Id == userId ? c.User2.Email : c.User1.Email
+                    OtherUsername = c.User1Id == userId ? c.User2.Name + " " + c.User2.Surname : c.User1.Name + " " + c.User1.Surname
                 })
                 .ToListAsync();
         }
