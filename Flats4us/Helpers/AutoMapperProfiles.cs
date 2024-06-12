@@ -18,6 +18,9 @@ namespace Flats4us.Helpers
 
             CreateMap<Payment, PaymentDto>();
 
+            CreateMap<GroupChat, GroupChatDto>()
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserGroupChats.Select(ugc => ugc.User)));
+
             CreateMap<Rent, RentDto>()
                 .ForMember(dest => dest.PropertyId, opt => opt.MapFrom(src => src.Offer.PropertyId))
                 .ForMember(dest => dest.IsFinished, opt => opt.MapFrom(src => DateTime.Now.Date > src.EndDate))
@@ -150,6 +153,8 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year));
 
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
+
+            CreateMap<ChatMessage, ChatMessageDto>();
 
             CreateMap<RentOpinion, RentOpinionDto>()
                 .ForMember(dest => dest.SourceUserName, opt => opt.MapFrom(src => src.Student.Name))

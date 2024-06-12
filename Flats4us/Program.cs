@@ -36,7 +36,6 @@ builder.Services.AddDbContext<Flats4usContext>(options =>
     ServiceLifetime.Scoped
 );
 
-
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IOpenStreetMapService, OpenStreetMapService>();
@@ -212,13 +211,11 @@ builder.Services.AddHangfire(configuration => configuration
 
 builder.Services.AddHangfireServer();
 
-
 var firebaseApp = FirebaseApp.Create(new AppOptions()
 {
     Credential = GoogleCredential.FromFile("onlyflats-410722-firebase-adminsdk-2t3aj-e8b09bb560.json")
 });
 builder.Services.AddSingleton(firebaseApp);
-
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

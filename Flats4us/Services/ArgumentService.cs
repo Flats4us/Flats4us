@@ -130,16 +130,10 @@ namespace Flats4us.Services
             StudentsIds.Add(property.OwnerId);
             int[] usersIds = StudentsIds.ToArray();
 
-            await _groupChatService.CreateGroupChatAsync(
-                "Argument pomiędzy: student " + rent.Student.Name +
+            var chatId = await _groupChatService.CreateGroupChatAsync(
+                "Spór pomiędzy: student: " + rent.Student.Name +
                 ", oraz właściciel: " + owner.Name,
                 usersIds);
-
-            var chatId = _context.GroupChats
-                .Where(x => x.Name.Equals("Argument pomiędzy: student " + rent.Student.Name +
-                ", oraz właściciel: " + owner.Name))
-                .Select(x=>x.GroupChatId)
-                .FirstOrDefault();
 
             var argument = new Argument
             {

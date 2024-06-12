@@ -9,18 +9,20 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Azure.Core;
 using Flats4us.Services;
+using Swashbuckle.AspNetCore.Annotations;
+using Flats4us.Entities.Dto;
+using Flats4us.Helpers.Exceptions;
 
 namespace Flats4us.Controllers
 {
     [EnableCors("AllowOrigin")]
-    [Route("api/[controller]")]
+    [Route("api/chats")]
     [ApiController]
     public class ChatController : ControllerBase
     {
         private readonly IChatService _chatService;
         private readonly IHubContext<ChatHub> _chatHub;
         public readonly Flats4usContext _context;
-
 
         public ChatController(IChatService chatService, IHubContext<ChatHub> chatHub, Flats4usContext context)
         {
@@ -29,99 +31,95 @@ namespace Flats4us.Controllers
             _context = context;
         }
 
-        // POST: chat/sendmessage
-        [Authorize]
-        [HttpPost("sendmessage")]
-        public async Task<IActionResult> SendMessage(int receiverUserId, string message)
-        {
-            var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(senderUserIdClaim) || !int.TryParse(senderUserIdClaim, out var senderUserId))
-            {
-                return BadRequest("Sender user ID is not available.");
-            }
-
-            var senderUser = await _context.Users.FindAsync(senderUserId);
-
-
-
-            var chat = await _chatService.EnsureChatSession(senderUserId, receiverUserId);
-            if (chat == null)
-            {
-                return BadRequest("Unable to create or find a chat session.");
-            }
-
-            var chatMessage = new ChatMessage
-            {
-                Content = message,
-                DateTime = DateTime.UtcNow,
-                SenderId = senderUserId,
-                //Chat = chat
-            };
-
-            await _chatService.SaveMessage(chatMessage);
-
-            // Optionally, use the chatHub to notify the receiver in real-time
-            // await _chatHub.Clients.User(receiverUserId.ToString()).SendAsync("ReceiveMessage", chatMessage);
-
-            return Ok();
-        }
-
-        // GET: chat/history/{chatId}
-        [HttpGet("history/{chatId}")]
+        // GET: api/chats/{chatId}/history
+        [HttpGet("{chatId}/history")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns chat history by id",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> GetChatHistory(int chatId)
         {
-            var history = await _chatService.GetChatHistory(chatId);
-            if (history == null)
+            try
             {
-                return NotFound();
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var history = await _chatService.GetChatHistoryAsync(chatId, requestUserId);
+
+                if (history == null) return NotFound();
+
+                return Ok(history);
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
 
-            return Ok(history);
         }
-        [Authorize]
-        [HttpGet("participant/{chatId}")]
+
+        // GET: api/chats/{chatId}/participant
+        [HttpGet("{chatId}/participant")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns chat otherParticipantId by id",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> GetParticipantId(int chatId)
         {
-            var senderUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (string.IsNullOrEmpty(senderUserIdClaim) || !int.TryParse(senderUserIdClaim, out var senderUserId))
+            try
             {
-                return BadRequest("Sender user ID is not available.");
-            }
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
 
-            var participantId = await _chatService.GetChatParticipant(chatId, senderUserId);
-            if (participantId == null)
+                var participantId = await _chatService.GetChatParticipantAsync(chatId, requestUserId);
+
+                if (participantId == null) return NotFound();
+
+                return Ok(new OutputDto<int?>(participantId));
+            }
+            catch (ForbiddenException ex)
             {
-                return NotFound();
+                return StatusCode(403, ex.Message);
             }
-
-            return Ok(participantId);
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
         }
 
-
-        [Authorize]
-        [HttpGet("user/chats")]
+        // GET: api/chats/user
+        [HttpGet("user")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns chats info for current user",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> GetUserChats()
         {
             try
             {
-                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var verifiedUserId))
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
                 {
-                    return BadRequest("Sender user ID is not available.");
+                    return BadRequest("Server error: Failed to get user id from request");
                 }
 
-                var chats = await _chatService.GetUserChatsAsync(verifiedUserId);
+                var chats = await _chatService.GetUserChatsAsync(requestUserId);
+
                 return Ok(chats);
             }
             catch (Exception ex)
             {
-                // Handle exceptions
-                return BadRequest(ex.Message);
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
             }
-
-            // Helper method to get the current user's ID
-
         }
     }
 

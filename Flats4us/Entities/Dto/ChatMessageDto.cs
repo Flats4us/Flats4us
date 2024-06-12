@@ -2,10 +2,9 @@
 {
     public class ChatMessageDto
     {
+        public int ChatMessageId { get; set; }
         public string Content { get; set; }
         public DateTime DateTime { get; set; }
-        public int UserId { get; set; } // Optional: Include if you want to show who sent the message
-
+        public int SenderId { get; set; }
     }
-
 }

@@ -10,12 +10,10 @@ namespace Flats4us.Entities
         [Required]
         public string DocumentNumber { get; set; }
 
-        public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<Property> Properties { get; set; }
 
         public Owner()
         {
-            this.Chats = new HashSet<Chat>();
             this.Properties = new HashSet<Property>();
         }
     }
