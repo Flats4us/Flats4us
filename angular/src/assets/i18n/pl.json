@@ -584,7 +584,8 @@
 	},
 	"Help-center": {
 		"help-center": "Centrum pomocy",
-		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz odpowiedzi na najczęściej zadawane pytania pytania, a także dane kontaktowe naszego zespołu wsparcia"
+		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz możliwość zgłoszenia problemu technicznego",
+		"report-problem": "Zgłoś problem"
 	},
 	"Notifications": {
 		"notification": "Powiadomienia",

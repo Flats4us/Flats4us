@@ -3,10 +3,9 @@
 	<p>{{ "Help-center.help-info" | translate }}.</p>
 	<ul>
 		<li>
-			<a href="#">{{ "Footer.faq" | translate }}</a>
-		</li>
-		<li>
-			<a href="#">{{ "Footer.contact" | translate }}</a>
+			<button mat-flat-button [routerLink]="['/report-problem']">
+				{{ "Help-center.report-problem" | translate }}
+			</button>
 		</li>
 	</ul>
 </mat-card>

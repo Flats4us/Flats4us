@@ -70,7 +70,6 @@ const routes: Routes = [
 			import('./report-problem/report-problem.component').then(
 				c => c.ReportProblemComponent
 			),
-		canActivate: [AuthGuard],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

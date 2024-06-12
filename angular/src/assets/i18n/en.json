@@ -585,7 +585,8 @@
 	},
 	"Help-center": {
 		"help-center": "Help center",
-		"help-info": "Welcome to our help center. Here you will find answers to frequently asked questions as well as contact details for our support team"
+		"help-info": "Welcome to our help center. You can report a technical problem here",
+		"report-problem": "Report problem"
 	},
 	"Notifications": {
 		"notification": "Notification",
