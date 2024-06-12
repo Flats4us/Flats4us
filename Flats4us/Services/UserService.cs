@@ -478,52 +478,7 @@ namespace Flats4us.Services
             return result;
         }
 
-        public async Task EditUserGeneral(EditUserGeneral input, int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
 
-            user.Address = input.Address ?? user.Address;
-            user.Email = input.Email ?? user.Email;
-            user.PhoneNumber = input.PhoneNumber ?? user.PhoneNumber;
-
-            await _context.SaveChangesAsync();
-
-        }
-
-        public async Task EditUserSensitive(EditUserSensitive input, int userId)
-        {
-            var user = await _context.Users.FindAsync(userId);
-            user.Name = input.Name ?? user.Name;
-            user.Surname = input.Surname ?? user.Name;
-            user.VerificationStatus = VerificationStatus.NotVerified;
-
-            await _context.SaveChangesAsync();
-        }
-        public async Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId)
-        {
-            var user = await _context.Owners.FindAsync(userId);
-            user.DocumentNumber = input.DocumentNumber ?? user.DocumentNumber;
-            user.DocumentExpireDate = input.DocumentExpireDate ?? user.DocumentExpireDate;
-            user.VerificationStatus = VerificationStatus.NotVerified;
-            await _context.SaveChangesAsync();
-        }
-        public async Task EditStudentSensitive(EditStudentSensitiveDto input, int userId)
-        {
-
-            var student = await _context.Students.FindAsync(userId);
-
-            if (student == null)
-            {
-                throw new Exception($"Cannot find student with ID: {userId}");
-            }
-
-            student.BirthDate = input.BirthDate ?? student.BirthDate;
-            student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
-            student.University = input.University ?? student.University;
-            student.VerificationStatus = VerificationStatus.NotVerified;
-
-            await _context.SaveChangesAsync();
-        }
 
         public async Task EditUser(EditUserDto input, int userId)
         {
