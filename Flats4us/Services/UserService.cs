@@ -551,7 +551,7 @@ namespace Flats4us.Services
             // Update Student-specific data
             if (user is Student student)
             {
-
+                
                 if (input.Links != null)
                 {
                     student.Links = string.Join("|", input.Links);
@@ -564,6 +564,25 @@ namespace Flats4us.Services
                     student.StudentNumber = input.StudentNumber ?? student.StudentNumber;
                     student.University = input.University ?? student.University;
                 }
+
+                if (input.InterestIds != null)
+                {
+                    student = await _context.Students
+                        .Include(f => f.Interests)
+                        .FirstOrDefaultAsync(f => f.UserId == userId);
+                    
+
+                    var interestList = await _context.Interests
+                        .Where(i => input.InterestIds.Contains(i.InterestId))
+                        .ToListAsync();
+
+                    student.Interests = interestList;
+                    
+
+                    
+                }
+                
+
             }
             // Update Owner-specific data
             else if (user is Owner owner)

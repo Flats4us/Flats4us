@@ -1,4 +1,6 @@
-﻿namespace Flats4us.Entities.Dto
+﻿using Flats4us.Helpers.Enums;
+
+namespace Flats4us.Entities.Dto
 {
     public class EditUserDto
     {
@@ -21,5 +23,8 @@
         public string? StudentNumber { get; set; }
         public string? University { get; set; }
         public List<string>? Links { get; set; }
+        public List<int> InterestIds { get; set; }
+
+
     }
 }
