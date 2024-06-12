@@ -188,7 +188,7 @@ public static class DataSeeder
             LastLoginDate = new DateTime(2023, 10, 10),
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bnowak123"),
             DocumentType = DocumentType.Passport,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 9, 8),
             BankAccount = "12341234123412341234123412",
             DocumentNumber = "XXX 000000"
@@ -295,7 +295,6 @@ public static class DataSeeder
             BankAccount = "44445555666677778888999900",
             DocumentNumber = "DEF 123456"
         };
-
         var owner9 = new Owner
         {
             Name = "Karolina",
@@ -313,7 +312,6 @@ public static class DataSeeder
             BankAccount = "55556666777788889999000011",
             DocumentNumber = "GHI 654321"
         };
-
         var owner10 = new Owner
         {
             Name = "Tomasz",
@@ -331,7 +329,6 @@ public static class DataSeeder
             BankAccount = "66667777888899990000111122",
             DocumentNumber = "JKL 987654"
         };
-
         var owner11 = new Owner
         {
             Name = "Ewa",
@@ -403,20 +400,20 @@ public static class DataSeeder
 
         dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14);
 
-        SeedUserFiles(owner1).Wait();
-        SeedUserFiles(owner2).Wait();
-        SeedUserFiles(owner3).Wait();
-        SeedUserFiles(owner4).Wait();
-        SeedUserFiles(owner5).Wait();
-        SeedUserFiles(owner6).Wait();
-        SeedUserFiles(owner7).Wait();
-        SeedUserFiles(owner8).Wait();
-        SeedUserFiles(owner9).Wait();
-        SeedUserFiles(owner10).Wait();
-        SeedUserFiles(owner11).Wait();
-        SeedUserFiles(owner12).Wait();
-        SeedUserFiles(owner13).Wait();
-        SeedUserFiles(owner14).Wait();
+        SeedUserFiles(owner1, Gender.Male).Wait();
+        SeedUserFiles(owner2, Gender.Female).Wait();
+        SeedUserFiles(owner3, Gender.Male).Wait();
+        SeedUserFiles(owner4, Gender.Female).Wait();
+        SeedUserFiles(owner5, Gender.Female).Wait();
+        SeedUserFiles(owner6, Gender.Male).Wait();
+        SeedUserFiles(owner7, Gender.Male).Wait();
+        SeedUserFiles(owner8, Gender.Female).Wait();
+        SeedUserFiles(owner9, Gender.Female).Wait();
+        SeedUserFiles(owner10, Gender.Male).Wait();
+        SeedUserFiles(owner11, Gender.Female).Wait();
+        SeedUserFiles(owner12, Gender.Female).Wait();
+        SeedUserFiles(owner13, Gender.Male).Wait();
+        SeedUserFiles(owner14, Gender.Female).Wait();
 
         #endregion
 
@@ -443,7 +440,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest12, interest14, interest1 }
         };
-
         var student2 = new Student
         {
             Name = "Adrian",
@@ -465,7 +461,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
-
         var student3 = new Student
         {
             Name = "Kuba",
@@ -487,7 +482,6 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest8, interest7, interest2 }
         };
-
         var student4 = new Student
         {
             Name = "Łukasz",
@@ -530,7 +524,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest6, interest3, interest8 }
         };
-
         var student6 = new Student
         {
             Name = "Zenon",
@@ -573,7 +566,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest19, interest17, interest6 }
         };
-
         var student8 = new Student
         {
             Name = "Piotr",
@@ -616,7 +608,6 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest17, interest4, interest6 }
         };
-
         var student10 = new Student
         {
             Name = "Łukasz",
@@ -638,20 +629,130 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest15, interest13, interest18 }
         };
+        var student11 = new Student // rent5
+        {
+            Name = "Anna",
+            Surname = "Kowalska",
+            Address = "ul. Jana Pawła II 5/3, 30-084 Kraków",
+            Email = "akowalska@gmail.com",
+            PhoneNumber = "888777666",
+            AccountCreationDate = new DateTime(2022, 8, 15),
+            VerificationOrRejectionDate = new DateTime(2022, 8, 20),
+            LastLoginDate = new DateTime(2024, 1, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Akowalska123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2028, 4, 30),
+            BirthDate = new DateTime(1995, 11, 15),  // 28 lat
+            StudentNumber = "s12345",
+            University = "Uniwersytet Jagielloński",
+            Links = "https://www.linkedin.com|https://www.github.com|https://www.instagram.com",
+            IsTenant = false,
+            Interests = { interest2, interest7, interest14 }
+        };
+        var student12 = new Student // rent6
+        {
+            Name = "Michał",
+            Surname = "Nowak",
+            Address = "ul. Piłsudskiego 12/6, 02-678 Warszawa",
+            Email = "mnowak@gmail.com",
+            PhoneNumber = "777666555",
+            AccountCreationDate = new DateTime(2021, 3, 18),
+            VerificationOrRejectionDate = new DateTime(2021, 3, 25),
+            LastLoginDate = new DateTime(2024, 5, 2),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mnowak123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2028, 7, 15),
+            BirthDate = new DateTime(1998, 1, 10),  // 26 lat
+            StudentNumber = "s98765",
+            University = "Politechnika Warszawska",
+            Links = "https://www.linkedin.com|https://twitter.com|https://www.instagram.com",
+            IsTenant = false,
+            Interests = { interest3, interest5, interest9 }
+        };
+        var student13 = new Student //rent 7
+        {
+            Name = "Katarzyna",
+            Surname = "Zielińska",
+            Address = "ul. Grunwaldzka 22/8, 40-027 Katowice",
+            Email = "kzielinska@gmail.com",
+            PhoneNumber = "666555444",
+            AccountCreationDate = new DateTime(2020, 11, 5),
+            VerificationOrRejectionDate = new DateTime(2020, 11, 10),
+            LastLoginDate = new DateTime(2024, 6, 1),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kzielinska123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2029, 9, 22),
+            BirthDate = new DateTime(1993, 5, 30),  // 31 lat
+            StudentNumber = "s54321",
+            University = "Uniwersytet Śląski",
+            Links = "https://www.facebook.com|https://www.linkedin.com|https://www.instagram.com",
+            IsTenant = false,
+            Interests = { interest1, interest6, interest11 }
+        };
+        var student14 = new Student
+        {
+            Name = "Paweł",
+            Surname = "Wiśniewski",
+            Address = "ul. Kościuszki 9/7, 80-171 Gdańsk",
+            Email = "pwisniewski@gmail.com",
+            PhoneNumber = "555444333",
+            AccountCreationDate = new DateTime(2019, 4, 22),
+            VerificationOrRejectionDate = new DateTime(2019, 4, 28),
+            LastLoginDate = new DateTime(2024, 4, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pwisniewski123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2026, 11, 30),
+            BirthDate = new DateTime(1996, 8, 15),  // 27 lat
+            StudentNumber = "s24680",
+            University = "Uniwersytet Gdański",
+            Links = "https://www.linkedin.com|https://www.github.com|https://www.twitter.com",
+            IsTenant = false,
+            Interests = { interest4, interest8, interest12 }
+        };
+        var student15 = new Student
+        {
+            Name = "Agnieszka",
+            Surname = "Kaczmarek",
+            Address = "ul. Długa 18/10, 60-100 Poznań",
+            Email = "akaczmarek@gmail.com",
+            PhoneNumber = "444333222",
+            AccountCreationDate = new DateTime(2021, 6, 30),
+            VerificationOrRejectionDate = new DateTime(2021, 7, 5),
+            LastLoginDate = new DateTime(2024, 3, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Akaczmarek123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2029, 10, 12),
+            BirthDate = new DateTime(1994, 3, 22),  // 30 lat
+            StudentNumber = "s13579",
+            University = "Uniwersytet im. Adama Mickiewicza w Poznaniu",
+            Links = "https://www.facebook.com|https://twitter.com|https://www.linkedin.com",
+            IsTenant = false,
+            Interests = { interest10, interest16, interest19 }
+        };
 
 
-        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10);
+        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15);
 
-        SeedUserFiles(student1).Wait();
-        SeedUserFiles(student2).Wait();
-        SeedUserFiles(student3).Wait();
-        SeedUserFiles(student4).Wait();
-        SeedUserFiles(student5).Wait();
-        SeedUserFiles(student6).Wait();
-        SeedUserFiles(student7).Wait();
-        SeedUserFiles(student8).Wait();
-        SeedUserFiles(student9).Wait();
-        SeedUserFiles(student10).Wait();
+        SeedUserFiles(student1, Gender.Male).Wait();
+        SeedUserFiles(student2, Gender.Male).Wait();
+        SeedUserFiles(student3, Gender.Male).Wait();
+        SeedUserFiles(student4, Gender.Male).Wait();
+        SeedUserFiles(student5, Gender.Female).Wait();
+        SeedUserFiles(student6, Gender.Male).Wait();
+        SeedUserFiles(student7, Gender.Female).Wait();
+        SeedUserFiles(student8, Gender.Male).Wait();
+        SeedUserFiles(student9, Gender.Female).Wait();
+        SeedUserFiles(student10, Gender.Male).Wait();
+        SeedUserFiles(student11, Gender.Female).Wait();
+        SeedUserFiles(student12, Gender.Male).Wait();
+        SeedUserFiles(student13, Gender.Female).Wait();
+        SeedUserFiles(student14, Gender.Male).Wait();
+        SeedUserFiles(student15, Gender.Female).Wait();
 
         #endregion
 
@@ -765,7 +866,7 @@ public static class DataSeeder
             Floor = 2,
             Equipment = { equipment2, equipment4, equipment7, equipment9, equipment10 }
         };
-        var flat5 = new Flat
+        var flat5 = new Flat //owner id 4, offer id 26
         {
             Province = "Mazowieckie",
             District = "Ochota",
@@ -779,9 +880,10 @@ public static class DataSeeder
             Area = 45,
             MaxNumberOfInhabitants = 2,
             ConstructionYear = 2001,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 5, 6),
-            DateForVerificationSorting = new DateTime(2023, 5, 6),
+            DateForVerificationSorting = null,
+            VerificationOrRejectionDate = new DateTime(2023, 5, 16),
             Owner = owner3,
             NumberOfRooms = 2,
             Floor = 3,
@@ -803,6 +905,7 @@ public static class DataSeeder
             ConstructionYear = 2010,
             VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 7, 3),
+            DateForVerificationSorting = null,
             VerificationOrRejectionDate = new DateTime(2023, 7, 3),
             Owner = owner3,
             NumberOfRooms = 3,
@@ -1070,7 +1173,7 @@ public static class DataSeeder
             Floor = 1,
             Equipment = { equipment3, equipment6, equipment8, equipment11 }
         };
-        var room4 = new Room
+        var room4 = new Room //owner id 4, offer id 27
         {
             Province = "Mazowieckie",
             District = "Mokotów",
@@ -1084,9 +1187,10 @@ public static class DataSeeder
             Area = 20,
             MaxNumberOfInhabitants = 1,
             ConstructionYear = 2005,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 8, 30),
-            DateForVerificationSorting = new DateTime(2023, 8, 30),
+            DateForVerificationSorting = null,
+            VerificationOrRejectionDate = new DateTime(2023, 9, 7),
             Owner = owner3,
             Floor = 4,
             Equipment = { equipment1, equipment2, equipment4, equipment5, equipment8 }
@@ -1258,7 +1362,7 @@ public static class DataSeeder
             PlotArea = 210,
             Equipment = { equipment2, equipment4, equipment6, equipment9 }
         };
-        var house4 = new House
+        var house4 = new House //owner id 4, offer id 28
         {
             Province = "Mazowieckie",
             District = "Ursynów",
@@ -1271,9 +1375,10 @@ public static class DataSeeder
             Area = 120,
             MaxNumberOfInhabitants = 4,
             ConstructionYear = 1997,
-            VerificationStatus = VerificationStatus.NotVerified,
+            VerificationStatus = VerificationStatus.Verified,
             CreationDate = new DateTime(2023, 4, 5),
-            DateForVerificationSorting = new DateTime(2023, 4, 5),
+            DateForVerificationSorting = null,
+            VerificationOrRejectionDate = new DateTime(2023, 4, 7),
             Owner = owner3,
             NumberOfRooms = 4,
             NumberOfFloors = 3,
@@ -1423,7 +1528,7 @@ public static class DataSeeder
             Regulations = "placeholder",
             Property = flat4
         };
-        var offer4 = new Offer
+        var offer4 = new Offer //property id 6
         {
             Date = new DateTime(2023, 9, 20),
             OfferStatus = OfferStatus.Rented,
@@ -1436,7 +1541,7 @@ public static class DataSeeder
             Regulations = "placeholder",
             Property = flat6
         };
-        var offer5 = new Offer
+        var offer5 = new Offer //property id 7
         {
             Date = new DateTime(2023, 9, 15),
             OfferStatus = OfferStatus.Current,
@@ -1709,8 +1814,47 @@ public static class DataSeeder
             Regulations = "Brak zwierząt.",
             Property = house8
         };
+        var offer26 = new Offer //property id 5
+        {
+            Date = new DateTime(2023, 6, 15),
+            OfferStatus = OfferStatus.Current,
+            Price = 2100,
+            Deposit = 1500,
+            Description = "wynajem nr 26",
+            StartDate = new DateTime(2023, 8, 1),
+            EndDate = new DateTime(2024, 5, 1),
+            NumberOfInterested = 3,
+            Regulations = "regulacje pod wynajem 26",
+            Property = flat5
+        };
+        var offer27 = new Offer //property id 18
+        {
+            Date = new DateTime(2023, 9, 17),
+            OfferStatus = OfferStatus.Current,
+            Price = 2100,
+            Deposit = 1500,
+            Description = "wynajem nr 27",
+            StartDate = new DateTime(2023, 10, 1),
+            EndDate = new DateTime(2024, 5, 10),
+            NumberOfInterested = 2,
+            Regulations = "regulacje pod wynajem 27",
+            Property = room4
+        };
+        var offer28 = new Offer //property id 26
+        {
+            Date = new DateTime(2023, 9, 20),
+            OfferStatus = OfferStatus.Current,
+            Price = 2100,
+            Deposit = 1500,
+            Description = "wynajem nr 28",
+            StartDate = new DateTime(2023, 12, 1),
+            EndDate = new DateTime(2024, 6, 1),
+            NumberOfInterested = 9,
+            Regulations = "regulacje pod wynajem 28",
+            Property = house4
+        };
 
-        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25);
+        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25, offer26, offer27, offer28);
 
         #endregion
 
@@ -1946,7 +2090,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student5
         };
-
         var surveyStudent6 = new SurveyStudent
         {
             Party = 2,
@@ -1962,7 +2105,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student6
         };
-
         var surveyStudent7 = new SurveyStudent
         {
             Party = 4,
@@ -1978,7 +2120,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student7
         };
-
         var surveyStudent8 = new SurveyStudent
         {
             Party = 2,
@@ -2009,7 +2150,6 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student9
         };
-
         var surveyStudent10 = new SurveyStudent
         {
             Party = 1,
@@ -2153,7 +2293,6 @@ public static class DataSeeder
             Student = student1,
             OtherStudents = { student2, student3 }
         };
-
         var rent2 = new Rent
         {
             StartDate = new DateTime(2024, 2, 1),
@@ -2163,7 +2302,6 @@ public static class DataSeeder
             Student = student4,
             OtherStudents = { student5, student6 }
         };
-
         var rent3 = new Rent
         {
             StartDate = new DateTime(2024, 3, 1),
@@ -2173,7 +2311,6 @@ public static class DataSeeder
             Student = student7,
             OtherStudents = { student8, student9 }
         };
-
         var rent4 = new Rent
         {
             StartDate = new DateTime(2023, 4, 1),
@@ -2183,14 +2320,41 @@ public static class DataSeeder
             Student = student10,
             OtherStudents = { }
         };
+        var rent5 = new Rent // offer26
+        {
+            StartDate = new DateTime(2023, 9, 1),
+            Duration = 8,
+            EndDate = new DateTime(2024, 5, 1),
+            Offer = offer26,
+            Student = student11,
+            OtherStudents = { }
+        };
+        var rent6 = new Rent //offer27
+        {
+            StartDate = new DateTime(2023, 11, 1),
+            Duration = 5,
+            EndDate = new DateTime(2024, 4, 1),
+            Offer = offer27,
+            Student = student12,
+            OtherStudents = { }
+        };
+        var rent7 = new Rent //offer28, 
+        {
+            StartDate = new DateTime(2024, 1, 1),
+            Duration = 5,
+            EndDate = new DateTime(2024, 6, 1),
+            Offer = offer28,
+            Student = student13,
+            OtherStudents = { student14, student15 }
+        };
 
-        dbContext.Rents.AddRange(rent1, rent2, rent3, rent4);
+        dbContext.Rents.AddRange(rent1, rent2, rent3, rent4, rent5, rent6, rent7);
 
         #endregion
 
         #region Payments
 
-        // Rent1
+        #region PaymentsRent1
 
         var payment1 = new Payment
         {
@@ -2202,7 +2366,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 1, 4),
             Rent = rent1
         };
-
         var payment2 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2213,7 +2376,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 1, 4),
             Rent = rent1
         };
-
         var payment3 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2224,7 +2386,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 2, 4),
             Rent = rent1
         };
-
         var payment4 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2235,7 +2396,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 3, 4),
             Rent = rent1
         };
-
         var payment5 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2246,7 +2406,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 4, 4),
             Rent = rent1
         };
-
         var payment6 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2257,7 +2416,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 5, 4),
             Rent = rent1
         };
-
         var payment7 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2268,7 +2426,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 6, 4),
             Rent = rent1
         };
-
         var payment8 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2279,7 +2436,8 @@ public static class DataSeeder
             Rent = rent1
         };
 
-        // Rent2
+        #endregion PaymentsRent1
+        #region PaymentsRent2
 
         var payment9 = new Payment
         {
@@ -2291,7 +2449,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 2, 4),
             Rent = rent2
         };
-
         var payment10 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2302,7 +2459,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 2, 4),
             Rent = rent2
         };
-
         var payment11 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2313,7 +2469,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 3, 4),
             Rent = rent2
         };
-
         var payment12 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2324,7 +2479,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 4, 4),
             Rent = rent2
         };
-
         var payment13 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2335,7 +2489,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 5, 4),
             Rent = rent2
         };
-
         var payment14 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2346,7 +2499,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 6, 4),
             Rent = rent2
         };
-
         var payment15 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2357,7 +2509,8 @@ public static class DataSeeder
             Rent = rent2
         };
 
-        // Rent3
+        #endregion PaymentsRent2
+        #region PaymentsRent3
 
         var payment16 = new Payment
         {
@@ -2369,7 +2522,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 3, 4),
             Rent = rent3
         };
-
         var payment17 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2380,7 +2532,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 3, 4),
             Rent = rent3
         };
-
         var payment18 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2391,7 +2542,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 4, 4),
             Rent = rent3
         };
-
         var payment19 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2402,7 +2552,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 5, 4),
             Rent = rent3
         };
-
         var payment20 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2413,7 +2562,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 6, 4),
             Rent = rent3
         };
-
         var payment21 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2424,7 +2572,8 @@ public static class DataSeeder
             Rent = rent3
         };
 
-        // Rent4
+        #endregion PaymentsRent3
+        #region PaymentsRent4
 
         var payment22 = new Payment
         {
@@ -2436,7 +2585,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 4, 4),
             Rent = rent4
         };
-
         var payment23 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2447,7 +2595,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 4, 4),
             Rent = rent4
         };
-
         var payment24 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2458,7 +2605,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 5, 4),
             Rent = rent4
         };
-
         var payment25 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2469,7 +2615,6 @@ public static class DataSeeder
             PaidAtDate = new DateTime(2024, 6, 4),
             Rent = rent4
         };
-
         var payment26 = new Payment
         {
             PaymentPurpose = PaymentPurpose.Rent,
@@ -2480,7 +2625,232 @@ public static class DataSeeder
             Rent = rent4
         };
 
-        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26);
+        #endregion PaymentsRent4
+        #region PaymentsRent5
+
+        var payment27 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 9, 1),
+            PaymentDate = new DateTime(2023, 9, 1),
+            PaidAtDate = new DateTime(2023, 9, 1),
+            Rent = rent5
+        };
+        var payment28 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 9, 1),
+            PaymentDate = new DateTime(2023, 9, 1),
+            PaidAtDate = new DateTime(2023, 9, 1),
+            Rent = rent5
+        };
+        var payment29 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 10, 1),
+            PaymentDate = new DateTime(2023, 10, 1),
+            PaidAtDate = new DateTime(2023, 10, 1),
+            Rent = rent5
+        };
+        var payment30 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 11, 1),
+            PaymentDate = new DateTime(2023, 11, 1),
+            PaidAtDate = new DateTime(2023, 11, 1),
+            Rent = rent5
+        };
+        var payment31 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 12, 1),
+            PaymentDate = new DateTime(2023, 12, 1),
+            PaidAtDate = new DateTime(2023, 12, 1),
+            Rent = rent5
+        };
+        var payment32 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 1),
+            PaidAtDate = new DateTime(2024, 1, 1),
+            Rent = rent5
+        };
+        var payment33 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 1),
+            PaidAtDate = new DateTime(2024, 2, 1),
+            Rent = rent5
+        };
+        var payment34 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 1),
+            PaidAtDate = new DateTime(2024, 3, 1),
+            Rent = rent5
+        };
+        var payment35 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 1),
+            PaidAtDate = new DateTime(2024, 4, 1),
+            Rent = rent5
+        };
+
+        #endregion PaymentsRent5
+        #region PaymentsRent6
+
+        var payment36 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 11, 1),
+            PaymentDate = new DateTime(2023, 11, 1),
+            PaidAtDate = new DateTime(2023, 11, 1),
+            Rent = rent6
+        };
+        var payment37 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 11, 1),
+            PaymentDate = new DateTime(2023, 11, 1),
+            PaidAtDate = new DateTime(2023, 11, 1),
+            Rent = rent6
+        };
+        var payment38 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2023, 12, 1),
+            PaymentDate = new DateTime(2023, 12, 1),
+            PaidAtDate = new DateTime(2023, 12, 1),
+            Rent = rent6
+        };
+        var payment39 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 1),
+            PaidAtDate = new DateTime(2024, 1, 1),
+            Rent = rent6
+        };
+        var payment40 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 1),
+            PaidAtDate = new DateTime(2024, 2, 1),
+            Rent = rent6
+        };
+        var payment41 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 1),
+            PaidAtDate = new DateTime(2024, 3, 1),
+            Rent = rent6
+        };
+
+        #endregion PaymentsRent6
+        #region PaymentsRent7
+
+        var payment42 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Deposit,
+            Amount = 1500,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 1),
+            PaidAtDate = new DateTime(2024, 1, 1),
+            Rent = rent7
+        };
+        var payment43 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 1, 1),
+            PaymentDate = new DateTime(2024, 1, 1),
+            PaidAtDate = new DateTime(2024, 1, 1),
+            Rent = rent7
+        };
+        var payment44 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 2, 1),
+            PaymentDate = new DateTime(2024, 2, 1),
+            PaidAtDate = new DateTime(2024, 2, 1),
+            Rent = rent7
+        };
+        var payment45 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 3, 1),
+            PaymentDate = new DateTime(2024, 3, 1),
+            PaidAtDate = new DateTime(2024, 3, 1),
+            Rent = rent7
+        };
+        var payment46 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 4, 1),
+            PaymentDate = new DateTime(2024, 4, 1),
+            PaidAtDate = new DateTime(2024, 4, 1),
+            Rent = rent7
+        };
+        var payment47 = new Payment
+        {
+            PaymentPurpose = PaymentPurpose.Rent,
+            Amount = 2100,
+            IsPaid = true,
+            CreatedDate = new DateTime(2024, 5, 1),
+            PaymentDate = new DateTime(2024, 5, 1),
+            PaidAtDate = new DateTime(2024, 5, 1),
+            Rent = rent7
+        };
+
+        #endregion PaymentsRent7
+
+
+        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26, payment27, payment28, payment29, payment30, payment31, payment32, payment33, payment34, payment35, payment36, payment37, payment38, payment39, payment40, payment41, payment42, payment43, payment44, payment45, payment46, payment47);
 
         #endregion
 
@@ -2823,7 +3193,7 @@ public static class DataSeeder
         }
     }
 
-    private static async Task SeedUserFiles(OwnerStudent user)
+    private static async Task SeedUserFiles(OwnerStudent user, Gender gender)
     {
         if (user.VerificationStatus == VerificationStatus.NotVerified)
         {
@@ -2852,7 +3222,7 @@ public static class DataSeeder
 
         try
         {
-            var profilePicturePath = await ProfilePictureSeeder.GetRandomProfilePicturePath();
+            var profilePicturePath = await ProfilePictureSeeder.GetRandomProfilePicturePath(gender);
 
             user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(profilePicturePath);
 

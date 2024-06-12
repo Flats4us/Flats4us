@@ -1,12 +1,14 @@
-﻿namespace Flats4us.Helpers
+﻿using Flats4us.Helpers.Enums;
+
+namespace Flats4us.Helpers
 {
     public class ProfilePictureSeeder
     {
-        public static async Task<string> GetRandomProfilePicturePath()
+        public static async Task<string> GetRandomProfilePicturePath(Gender gender)
         {
             using (var httpClient = new HttpClient())
             {
-                var imageUrl = await GetRandomProfilePictureUrl(httpClient);
+                var imageUrl = await GetRandomProfilePictureUrl(httpClient, gender);
 
                 var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
                 var fileName = $"{Guid.NewGuid()}.jpg";
@@ -18,9 +20,9 @@
             }
         }
 
-        static async Task<string> GetRandomProfilePictureUrl(HttpClient httpClient)
+        static async Task<string> GetRandomProfilePictureUrl(HttpClient httpClient, Gender gender)
         {
-            var apiUrl = "https://randomuser.me/api/";
+            var apiUrl = $"https://randomuser.me/api/?gender={(gender == Gender.Male ? "male" : "female")}";
             var response = await httpClient.GetStringAsync(apiUrl);
 
             var json = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(response);
