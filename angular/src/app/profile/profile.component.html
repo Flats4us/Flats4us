@@ -9,10 +9,10 @@
 					mat-card-avatar
 					alt="avatar"
 					class="profile-avatar__image"
-					src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+					src="{{ baseUrl }}/{{ user?.profilePicture?.path }}"
 				/>
 			</div>
-			<div class="profile-name flex justify-center">{{ user.name }}</div>
+			<div class="text-3xl font-semibold flex justify-center">{{ user.name }}</div>
 			<div class="profile-features__wrapper flex justify-center">
 				<mat-chip-listbox *ngIf="user.userType === 1">
 					<mat-chip *ngIf="!user.surveyStudent.smoking">

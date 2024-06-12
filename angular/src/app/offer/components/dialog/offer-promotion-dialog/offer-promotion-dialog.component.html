@@ -1,4 +1,6 @@
-<h1 class="text-2xl p-4 font-semibold">{{ "Offer.promoting" | translate }}</h1>
+<h1 class="dialog-title text-2xl p-4 font-semibold">
+	{{ "Offer.promoting" | translate }}
+</h1>
 <form class="dialog" [formGroup]="promotionForm" (ngSubmit)="onYesClick()">
 	<mat-form-field>
 		<mat-label>{{ "Offer.promotion-period" | translate }}</mat-label>

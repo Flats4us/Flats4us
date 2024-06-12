@@ -5,7 +5,7 @@
 		</div>
 		<div
 			*ngIf="user === uType.DETAILS || user === uType.STUDENT"
-			class="text-4xl p-4 font-semibold"
+			class="text-4xl pl-4 font-semibold"
 		>
 			{{ "Offer.view" | translate }}
 		</div>
@@ -17,14 +17,15 @@
 					{{ "Offer.no-offers" | translate }}
 					<button
 						*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-						mat-icon-button
+						mat-mini-fab
 						id="add"
+						color="basic"
 						class="box-icon"
 						aria-label="Add"
 						matTooltip="{{ 'Header.add-offer' | translate }}"
 						(click)="addOffer()"
 					>
-						<mat-icon [inline]="true">add</mat-icon>
+						<mat-icon class="font-bold">add</mat-icon>
 					</button>
 				</h1>
 			</ng-template>
@@ -32,20 +33,21 @@
 				<ng-container [ngTemplateOutlet]="notFound"></ng-container>
 			</div>
 			<div *ngIf="user === uType.OWNER && offers.totalCount" class="offers-owner">
-				<div class="container-list">
-					<h1 class="text-3xl pl-4 font-semibold">
+				<mat-card class="container-list">
+					<h1 class="text-3xl p-4 font-semibold">
 						<div class="box-title-sub">
 							<span>{{ "Offer.my-offers" | translate }}</span>
 							<button
 								*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-								mat-icon-button
+								mat-mini-fab
 								id="add"
+								color="basic"
 								class="box-icon"
 								aria-label="Add"
 								matTooltip="{{ 'Header.add-offer' | translate }}"
 								(click)="addOffer()"
 							>
-								<mat-icon [inline]="true">add</mat-icon>
+								<mat-icon class="font-bold">add</mat-icon>
 							</button>
 						</div>
 					</h1>
@@ -95,7 +97,7 @@
 							</ng-template>
 						</a>
 					</mat-nav-list>
-				</div>
+				</mat-card>
 				<div class="container-outlet">
 					<router-outlet (deactivate)="onDeactivate()"></router-outlet>
 				</div>

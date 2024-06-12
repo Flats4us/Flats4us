@@ -1,5 +1,4 @@
 .startsite {
-	background-color: #ffffff;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -13,20 +12,19 @@
 	object-fit: cover;
 	height: 400px;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 .card {
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
-	cursor: pointer;
 }
 
 .promoted-card {
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
-	cursor: pointer;
 	border: 4px #fbbb8b;
 	border-style: solid;
 }

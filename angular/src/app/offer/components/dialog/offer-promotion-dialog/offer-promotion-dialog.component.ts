@@ -8,7 +8,11 @@ import {
 	Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+	MAT_DIALOG_DATA,
+	MatDialogModule,
+	MatDialogRef,
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -32,6 +36,7 @@ import { OfferService } from 'src/app/offer/services/offer.service';
 		MatInputModule,
 		MatSnackBarModule,
 		TranslateModule,
+		MatDialogModule,
 	],
 	providers: [OfferService],
 })

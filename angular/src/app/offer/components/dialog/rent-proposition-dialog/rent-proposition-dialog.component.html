@@ -1,4 +1,6 @@
-<h1 class="text-2xl p-4 font-semibold">{{ "Rents.add-rent" | translate }}</h1>
+<h1 class="dialog-title text-2xl p-4 font-semibold">
+	{{ "Rents.add-rent" | translate }}
+</h1>
 <div mat-dialog-content>
 	<form
 		class="flex flex-col"
@@ -6,7 +8,7 @@
 		(ngSubmit)="onYesClick()"
 	>
 		<mat-form-field>
-			<mat-label>{{ "Rents.start-rent" | translate }}</mat-label>
+			<mat-label>{{ "Rents.start-date" | translate }}</mat-label>
 			<input
 				matInput
 				readonly
@@ -84,9 +86,9 @@
 			</mat-error>
 		</div>
 	</form>
+	<p class="mb-4">{{ "Rents.agree-rental" | translate }}?</p>
 </div>
 <div mat-dialog-actions class="button-box">
-	<p class="mb-4">{{ "Rents.agree-rental" | translate }}?</p>
 	<div class="button-box-yn">
 		<button
 			mat-button

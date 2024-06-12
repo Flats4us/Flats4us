@@ -36,7 +36,7 @@
 	<div class="column">
 		<p>Copyright {{ version }}</p>
 
-		<img id="logo-footer" src="./assets/logoFlats4Us.png" alt="Company Logo" />
+		<img id="logo-footer" alt="Company Logo" [src]="logoUrl$ | async" />
 	</div>
 
 	<div class="column social-logos">

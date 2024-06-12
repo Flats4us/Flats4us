@@ -49,6 +49,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		'isPaid',
 		'createdDate',
 		'paymentDate',
+		'paidAtDate',
 	];
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'rentDetails', description: 'Rents-details.option-details' },

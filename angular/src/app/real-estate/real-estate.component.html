@@ -5,39 +5,41 @@
 		</div>
 	</div>
 	<ng-template #notFound>
-		<div class="not-found">
+		<mat-card class="not-found">
 			<h1 class="text-3xl p-4">
 				{{ "Real-estate.browsing-properties-info" | translate }}
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-					mat-icon-button
+					mat-mini-fab
 					id="add"
+					color="basic"
 					class="box-icon-add"
 					aria-label="Add"
 					matTooltip="{{ 'Real-estate.add-property' | translate }}"
 					(click)="addRealEstate()"
 				>
-					<mat-icon [inline]="true">add</mat-icon>
+					<mat-icon class="font-bold">add</mat-icon>
 				</button>
 			</h1>
-		</div>
+		</mat-card>
 	</ng-template>
 	<div *ngIf="realEstateOptions$ | async as realEstates; else notFound">
 		<div class="real-estate-owner">
-			<div class="container-list">
-				<h1 class="text-3xl pl-4 font-semibold">
+			<mat-card class="container-list">
+				<h1 class="text-3xl p-4 font-semibold">
 					<div class="box-title-sub">
-						<span>{{ "Real-estate.my-properties" | translate }}</span>
+						<span class="mr-4">{{ "Real-estate.my-properties" | translate }}</span>
 						<button
 							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-							mat-icon-button
+							mat-mini-fab
 							id="add"
+							color="basic"
 							class="box-icon-add"
 							aria-label="Add"
 							matTooltip="{{ 'Real-estate.add-property' | translate }}"
 							(click)="addRealEstate()"
 						>
-							<mat-icon [inline]="true">add</mat-icon>
+							<mat-icon class="font-bold">add</mat-icon>
 						</button>
 					</div>
 				</h1>
@@ -67,7 +69,7 @@
 						</div>
 					</a>
 				</mat-nav-list>
-			</div>
+			</mat-card>
 			<div class="container-outlet">
 				<router-outlet (deactivate)="onDeactivate()"></router-outlet>
 			</div>

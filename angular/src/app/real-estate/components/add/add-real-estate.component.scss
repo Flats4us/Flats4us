@@ -1,5 +1,4 @@
 .add-real-estate {
-	background-color: #ffffff;
 	padding-top: 0px;
 	margin: 0 16px;
 }
@@ -97,7 +96,7 @@ mat-form-field {
 
 .subtitle-map:before,
 .subtitle-map:after {
-	background-color: #000000;
+	background-color: var(--textColor);
 	content: "";
 	display: inline-block;
 	height: 1px;
