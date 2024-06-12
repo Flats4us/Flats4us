@@ -2782,6 +2782,28 @@ public static class DataSeeder
 
         #endregion
 
+        #region Alert
+        var alert1 = new Alert
+        {
+            AlertName = "Meeting Reminder",
+            AlertBody = "You have a meeting tomorrow at 10:00 AM.",
+            DateTime = new DateTime(2024, 6, 11, 10, 0, 0), // Example date and time
+            Read = false,
+            UserId = 17
+        };
+
+        var alert2 = new Alert
+        {
+            AlertName = "Payment Due",
+            AlertBody = "Your monthly subscription payment is due soon.",
+            DateTime = new DateTime(2024, 6, 15), // Example date
+            Read = false,
+            UserId = 17
+        };
+        dbContext.Alerts.AddRange(alert1, alert2);
+        #endregion
+
+
         await dbContext.SaveChangesAsync();
     }
 

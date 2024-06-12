@@ -2,7 +2,10 @@
 {
     public class ConsentDto
     {
-        public bool pushConsent { get; set; }
-        public bool emailConsent { get; set; }
+        public bool PushChatConsent { get; set; }
+        public bool EmailChatConsent { get; set; }
+
+        public bool PushPropertyConsent { get; set; }
+        public bool EmailPropertyConsent { get; set; }
     }
 }

@@ -11,12 +11,15 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly IUserService _userService;
         private readonly INotificationService _notificationService;
+        private readonly IEmailService _emailService;
 
-        public ChatService(Flats4usContext context, IUserService ownerService, INotificationService notificationService)
+
+        public ChatService(Flats4usContext context, IUserService ownerService, INotificationService notificationService, IEmailService emailService)
         {
             _context = context;
             _userService = ownerService;
             _notificationService = notificationService;
+            _emailService = emailService;
         }
 
         public async Task<IEnumerable<ChatMessage>> GetChatHistory(int chatId)
@@ -56,8 +59,9 @@ namespace Flats4us.Services
 
             var notificationTitle = sender.Name + " " + sender.Surname;
             var notificationBody = chatMessage.Content;
-            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId);
+            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId, true);
 
+            await _emailService.SendEmailAsync(chatMessage.SenderId, notificationTitle, notificationBody, true);
         }
 
         public async Task<Chat> EnsureChatSession(int user1Id, int user2Id)

@@ -22,6 +22,7 @@ namespace Flats4us.Services.Interfaces
         Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
         Task<UserInfoDto> GetUserInfo(int userId);
         Task UpdateConsentAsync(int userId, ConsentDto input);
+        Task<ConsentDto> GetUserConsentAsync(int userId);
         Task EditUserGeneral(EditUserGeneral input, int userId);
         Task EditUserSensitive(EditUserSensitive input, int userId);
         Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId);
