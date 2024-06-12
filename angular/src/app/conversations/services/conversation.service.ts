@@ -6,7 +6,7 @@ import * as signalR from '@microsoft/signalr';
 
 @Injectable()
 export class ConversationService {
-	protected apiRoute = `${environment.apiUrl}/chat`;
+	protected apiRoute = `${environment.apiUrl}/chats`;
 	public baseRoute = environment.apiUrl.replace('/api', '');
 	private hubConnection!: signalR.HubConnection;
 	private onReceivePrivateMessageCallbacks: ((
@@ -65,14 +65,14 @@ export class ConversationService {
 	};
 
 	public getConversations() {
-		return this.http.get<IConversations[]>(`${this.apiRoute}/user/chats`);
+		return this.http.get<IConversations[]>(`${this.apiRoute}/user`);
 	}
 
 	public getMessages(chatId: string) {
-		return this.http.get<IMessage[]>(`${this.apiRoute}/history/${chatId}`);
+		return this.http.get<IMessage[]>(`${this.apiRoute}/${chatId}/history`);
 	}
 
 	public getParticipantId(chatId: string) {
-		return this.http.get<string>(`${this.apiRoute}/participant/${chatId}`);
+		return this.http.get<string>(`${this.apiRoute}/${chatId}participant`);
 	}
 }
