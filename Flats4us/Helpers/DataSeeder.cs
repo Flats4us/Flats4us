@@ -2436,7 +2436,7 @@ public static class DataSeeder
             Rent = rent1
         };
 
-        #endregion PaymentsRent5
+        #endregion PaymentsRent1
         #region PaymentsRent2
 
         var payment9 = new Payment
@@ -2509,7 +2509,7 @@ public static class DataSeeder
             Rent = rent2
         };
 
-        #endregion PaymentsRent5
+        #endregion PaymentsRent2
         #region PaymentsRent3
 
         var payment16 = new Payment
@@ -2572,7 +2572,7 @@ public static class DataSeeder
             Rent = rent3
         };
 
-        #endregion PaymentsRent5
+        #endregion PaymentsRent3
         #region PaymentsRent4
 
         var payment22 = new Payment
@@ -2625,7 +2625,7 @@ public static class DataSeeder
             Rent = rent4
         };
 
-        #endregion PaymentsRent5
+        #endregion PaymentsRent4
         #region PaymentsRent5
 
         var payment27 = new Payment
@@ -2850,7 +2850,7 @@ public static class DataSeeder
         #endregion PaymentsRent7
 
 
-        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26, payment27, payment28, payment29, payment30, payment31, payment32, payment33, payment34, payment35, payment36, payment37, payment38, payment39, payment40, payment41);
+        dbContext.Payments.AddRange(payment1, payment2, payment3, payment4, payment5, payment6, payment7, payment8, payment9, payment10, payment11, payment12, payment13, payment14, payment15, payment16, payment17, payment18, payment19, payment20, payment21, payment22, payment23, payment24, payment25, payment26, payment27, payment28, payment29, payment30, payment31, payment32, payment33, payment34, payment35, payment36, payment37, payment38, payment39, payment40, payment41, payment42, payment43, payment44, payment45, payment46, payment47);
 
         #endregion
 
