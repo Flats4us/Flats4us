@@ -177,7 +177,7 @@ namespace Flats4us.Controllers
                 }
 
                 await _userService.EditUser(input, userId);
-                return Ok("User information updated successfully.");
+                return Ok(new OutputDto<string>("User information updated successfully."));
             }
             catch (Exception ex)
             {
