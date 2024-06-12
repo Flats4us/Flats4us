@@ -36,6 +36,11 @@ namespace Flats4us.Services
                     .SelectMany(s => s.Meetings)
                     .Select(meeting => _mapper.Map<MeetingDto>(meeting))
                     .ToListAsync();
+
+                foreach (var meeting in meetings)
+                {
+                    meeting.NeedsAction = meeting.StudentAcceptDate == null ? true : false;
+                }
             }
             else if (user is Owner)
             {
@@ -46,6 +51,11 @@ namespace Flats4us.Services
                     .SelectMany(o => o.Meetings)
                     .Select(meeting => _mapper.Map<MeetingDto>(meeting))
                     .ToListAsync();
+
+                foreach(var meeting in meetings)
+                {
+                    meeting.NeedsAction = meeting.OwnerAcceptDate == null ? true : false;
+                }
             }
             else throw new Exception("Unable to fetch meetings for current user");
 

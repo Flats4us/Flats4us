@@ -94,7 +94,8 @@ namespace Flats4us.Helpers
 
             CreateMap<SurveyStudent, SurveyStudentDto>();
 
-            CreateMap<Meeting, MeetingDto>();
+            CreateMap<Meeting, MeetingDto>()
+                .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null));
 
             CreateMap<Student, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student));

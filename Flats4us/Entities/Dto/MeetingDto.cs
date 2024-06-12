@@ -22,5 +22,8 @@ namespace Flats4us.Entities.Dto
         public DateTime? StudentAcceptDate { get; set; }
 
         public DateTime? OwnerAcceptDate { get; set; }
+
+        public bool? NeedsAction { get; set; }
+
     }
 }
