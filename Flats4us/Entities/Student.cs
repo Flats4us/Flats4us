@@ -31,7 +31,6 @@ namespace Flats4us.Entities
         public virtual ICollection<Rent> RoommateInRents { get; set; }
         public virtual ICollection<Rent> Rents { get; set; }
         public virtual ICollection<OfferInterest> OfferInterests { get; set; }
-        public virtual ICollection<Chat> Chats { get; set; }
         public virtual ICollection<RentOpinion> IssuedRentOpinions { get; set; }
 
         public Student()
@@ -42,7 +41,6 @@ namespace Flats4us.Entities
             this.RoommateInRents= new HashSet<Rent>();
             this.Rents = new HashSet<Rent>();
             this.OfferInterests = new HashSet<OfferInterest>();
-            this.Chats = new HashSet<Chat>();
             this.IssuedRentOpinions = new HashSet<RentOpinion>();
         }
     }

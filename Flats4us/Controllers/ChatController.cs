@@ -31,31 +31,6 @@ namespace Flats4us.Controllers
             _context = context;
         }
 
-        // POST: api/chats/send-message
-        [HttpPost("send-message")]
-        [Authorize(Policy = "RegisteredUser")]
-        [SwaggerOperation(
-            Summary = "Sends message to user",
-            Description = "Requires registered user privileges"
-        )]
-        public async Task<IActionResult> SendMessage([FromBody] SendMessageDto input)
-        {
-            try
-            {
-                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
-                {
-                    return BadRequest("Server error: Failed to get user id from request");
-                }
-
-                await _chatService.SendMessageAsync(requestUserId, input.UserId, input.Message);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
-            }
-        }
-
         // GET: api/chats/{chatId}/history
         [HttpGet("{chatId}/history")]
         [Authorize(Policy = "RegisteredUser")]
