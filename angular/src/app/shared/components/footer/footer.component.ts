@@ -11,7 +11,7 @@ import { BaseComponent } from '../base/base.component';
 })
 export class FooterComponent extends BaseComponent {
 	public version = `${environment.commitDate} ${environment.commitHash}`;
-	public logoUrl$ = this.themeService.getLogoUrl();
+	public isDarkMode$ = this.themeService.checkDarkMode();
 	constructor(private themeService: ThemeService) {
 		super();
 	}

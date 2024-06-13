@@ -1,6 +1,12 @@
 <mat-toolbar class="custom-toolbar" role="heading">
 	<a class="h-full logo" [routerLink]="['/']">
-		<img class="h-full w-auto" alt="" [src]="logoUrl$ | async" />
+		<img
+			class="h-full w-auto"
+			alt=""
+			[src]="
+				isDarkMode ? './assets/logoFlats4Us_dark.svg' : './assets/logoFlats4Us.svg'
+			"
+		/>
 	</a>
 	<div
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"

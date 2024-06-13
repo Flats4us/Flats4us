@@ -36,7 +36,15 @@
 	<div class="column">
 		<p>Copyright {{ version }}</p>
 
-		<img id="logo-footer" alt="Company Logo" [src]="logoUrl$ | async" />
+		<img
+			id="logo-footer"
+			alt="Company Logo"
+			[src]="
+				(isDarkMode$ | async)
+					? './assets/logoFlats4Us_dark.svg'
+					: './assets/logoFlats4Us.svg'
+			"
+		/>
 	</div>
 
 	<div class="column social-logos">

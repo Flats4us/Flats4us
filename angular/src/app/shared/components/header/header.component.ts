@@ -25,8 +25,6 @@ export class HeaderComponent extends BaseComponent {
 
 	public languages = ['PL', 'EN'];
 
-	public logoUrl$ = this.themeService.getLogoUrl();
-
 	constructor(
 		public authService: AuthService,
 		public userService: UserService,
@@ -53,6 +51,5 @@ export class HeaderComponent extends BaseComponent {
 	public changeTheme() {
 		this.isDarkMode = !this.isDarkMode;
 		this.themeService.setDarkMode(this.isDarkMode);
-		this.logoUrl$ = this.themeService.getLogoUrl();
 	}
 }
