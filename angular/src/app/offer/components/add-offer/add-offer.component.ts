@@ -46,7 +46,7 @@ export class AddOfferComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open(
-						this.translate.instant('Offer.offer-info'),
+						this.translate.instant('Offer.offer-info1'),
 						this.translate.instant('close'),
 						{
 							duration: 10000,

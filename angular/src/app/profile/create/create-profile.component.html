@@ -118,6 +118,9 @@
 							}}</span></ng-template
 						>
 						<form [formGroup]="surveyForm">
+							<span class="text-3xl font-semibold mt-4">{{
+								"Profile-create.about-me" | translate
+							}}</span>
 							<app-survey [createProfileMode]="true"></app-survey>
 							<div class="button-box">
 								<button mat-raised-button color="primary" matStepperPrevious>

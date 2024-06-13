@@ -128,6 +128,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 							autoPan: true,
 							autoClose: false,
 							keepInView: true,
+							className: 'stylePopup',
 						})
 						.on('popupopen', e => {
 							e.target.setIcon(
@@ -173,7 +174,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				': ' +
 				mapOffer.price +
 				' zł' +
-				`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element"></img>`;
+				`<img id="propertyImage" src=${this.baseUrl}/${mapOffer.property.images[0]?.path} class="inner-element mt-4"></img>`;
 			popup.innerHTML = description;
 		});
 		return mapOffer$;

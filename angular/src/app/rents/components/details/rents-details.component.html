@@ -320,6 +320,17 @@
 								{{ element.paymentDate | date }}
 							</mat-cell>
 						</ng-container>
+						<ng-container matColumnDef="paidAtDate">
+							<mat-header-cell *matHeaderCellDef>
+								{{ "Rents-details.paid-at" | translate }}
+							</mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<span class="mobile-view-label"
+									>{{ "Rents-details.paid-at" | translate }}:</span
+								>
+								{{ element.paidAtDate | date }}
+							</mat-cell>
+						</ng-container>
 						<mat-header-row
 							*matHeaderRowDef="this.displayedColumnsPayments"
 						></mat-header-row>

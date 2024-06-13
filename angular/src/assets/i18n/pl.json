@@ -326,7 +326,8 @@
 		"info3": "Pomyślnie utworzono konto Właściciela!",
 		"info4": "Nie udało się utworzyć konta Właściciela. Spróbuj ponownie.",
 		"info5": "Nie udało się utworzyć konta. Spróbuj ponownie.",
-		"close": "Zamknij"
+		"close": "Zamknij",
+		"about-me": "O mnie:"
 	},
 	"Profile-edit": {
 		"edit-student-profile": "Edycja profilu studenta",
@@ -492,7 +493,7 @@
 		"add-rent": "Dodawanie najmu",
 		"start-date": "Data rozpoczęcia najmu",
 		"end-date": "Data zakończenia najmu",
-		"rental-period": "Okres najmu (miesiącach)",
+		"rental-period": "Okres najmu (w miesiącach)",
 		"name-surname": "Imię i nazwisko",
 		"email-address": "Adres email",
 		"roommates-email": "Adresy email współlokatorów",
@@ -530,6 +531,7 @@
 		"pay": "Opłacono",
 		"date": "Data wygenerowania",
 		"term": "Termin płatności",
+		"paid-at": "Data wpłaty",
 		"metric-area": "Metraż",
 		"nr-room": "Liczba pokoi",
 		"nr-floor": "Liczba pięter",

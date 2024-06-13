@@ -326,7 +326,8 @@
 		"info3": "Owner account successfully created!",
 		"info4": "Failed to create Owner account. Try again.",
 		"info5": "Failed to create account. Try again.",
-		"close": "Close"
+		"close": "Close",
+		"about-me": "About me:"
 	},
 	"Profile-edit": {
 		"edit-student-profile": "Edit Student profile",
@@ -491,7 +492,7 @@
 		"deposit": "deposit",
 		"repairs": "repairs",
 		"start-rent": "Rent start date",
-		"rental-period": "Rental period (months)",
+		"rental-period": "Rental period (in months)",
 		"name-surname": "Name and Surname",
 		"email-address": "E-mail adress",
 		"roommates-email": "Roommates address E-mail",
@@ -528,6 +529,7 @@
 		"pay": "Paid",
 		"date": "Date generated",
 		"term": "Date of payment",
+		"paid-at": "Paid on",
 		"post-code": "Postal code",
 		"address": "Address",
 		"metric-area": "Metric area",

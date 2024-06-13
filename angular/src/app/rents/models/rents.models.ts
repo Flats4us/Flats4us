@@ -32,6 +32,7 @@ export interface IRentPayment {
 	isPaid: boolean;
 	createdDate: Date;
 	paymentDate: Date;
+	paidAtDate: Date;
 }
 
 export interface IRent {

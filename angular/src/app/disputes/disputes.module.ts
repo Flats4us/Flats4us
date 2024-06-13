@@ -8,6 +8,7 @@ import { DisputesConversationModule } from './components/messages-conversation/d
 import { DisputesRoutingModule } from './disputes-routing.module';
 import { DisputesComponent } from './disputes.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
 	declarations: [DisputesComponent],
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatButtonModule,
 		MatTabsModule,
 		TranslateModule,
+		MatCardModule,
 	],
 })
 export class DisputesModule {}

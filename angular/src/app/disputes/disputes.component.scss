@@ -4,7 +4,6 @@
 }
 
 .disputes-choice {
-	background: #fff;
 	min-width: 300px;
 }
 
@@ -17,19 +16,15 @@
 	gap: 16px;
 	padding: 0 16px;
 	cursor: pointer;
-
+	color: var(--textColor);
 	> div {
 		display: flex;
 		gap: 4px;
 	}
 
 	&:hover {
-		background: linear-gradient(
-				0deg,
-				rgba(187, 134, 252, 0.12) 0%,
-				rgba(187, 134, 252, 0.12) 100%
-			),
-			#fff;
+		background-color: var(--headerBgColor);
+		color: var(--bgColor);
 	}
 }
 

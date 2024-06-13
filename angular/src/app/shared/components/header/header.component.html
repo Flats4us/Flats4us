@@ -1,6 +1,12 @@
 <mat-toolbar class="custom-toolbar" role="heading">
 	<a class="h-full logo" [routerLink]="['/']">
-		<img class="h-full w-auto" src="./assets/logoFlats4Us.svg" alt="" />
+		<img
+			class="h-full w-auto"
+			alt=""
+			[src]="
+				isDarkMode ? './assets/logoFlats4Us_dark.svg' : './assets/logoFlats4Us.svg'
+			"
+		/>
 	</a>
 	<div
 		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
@@ -87,6 +93,9 @@
 	</div>
 	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
 		<div class="language">
+			<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+				<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
+			</button>
 			<button
 				mat-icon-button
 				class="responsive-menu-lang"
@@ -216,6 +225,9 @@
 				{{ "Login.registration" | translate }}
 			</button>
 		</div>
+		<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+			<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
+		</button>
 		<button
 			mat-icon-button
 			class="responsive-menu-lang"

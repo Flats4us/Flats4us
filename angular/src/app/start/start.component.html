@@ -1,4 +1,4 @@
-<div class="startsite">
+<mat-card class="startsite">
 	<form
 		class="container-form"
 		[formGroup]="startSiteForm"
@@ -477,7 +477,7 @@
 									}}"
 									(click)="showRating(flat.property)"
 								>
-									<span class="flex items-center pt-1">
+									<span class="flex items-center pt-1 w-fit cursor-pointer">
 										<app-star-rating [avgRating]="flat.property.avgRating">
 										</app-star-rating>
 									</span>
@@ -537,4 +537,4 @@
 			flatOptions: flatOptions$ | async
 		}"
 	></ng-container>
-</div>
+</mat-card>

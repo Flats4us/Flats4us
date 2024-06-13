@@ -1,4 +1,7 @@
-<div *ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data">
+<div
+	*ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data"
+	class="rents"
+>
 	<div class="box-title">
 		<div
 			*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
@@ -29,8 +32,8 @@
 		"
 		class="rents-owner"
 	>
-		<div class="container-list">
-			<h1 class="text-3xl pl-4 font-semibold">
+		<mat-card class="container-list">
+			<h1 class="text-3xl p-4 font-semibold">
 				{{ "Header.my-rentals" | translate }}
 			</h1>
 			<mat-divider class="divider"></mat-divider>
@@ -62,7 +65,7 @@
 					</div>
 				</a>
 			</mat-nav-list>
-		</div>
+		</mat-card>
 		<div class="container-outlet">
 			<router-outlet></router-outlet>
 		</div>

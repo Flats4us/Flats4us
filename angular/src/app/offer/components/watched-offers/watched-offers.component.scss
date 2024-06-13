@@ -1,5 +1,4 @@
 .watched-offers {
-	background-color: #ffffff;
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
@@ -13,22 +12,27 @@
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
-	cursor: pointer;
+	margin-top: 16px;
 }
 
 .promoted-card {
 	height: auto;
 	min-width: 200px;
 	max-width: 500px;
-	cursor: pointer;
 	border: 4px #fbbb8b;
 	border-style: solid;
+	margin-top: 16px;
 }
 
 .imgs {
 	object-fit: cover;
 	height: 400px;
 	overflow: hidden;
+	cursor: pointer;
+}
+
+.card-content {
+	margin-top: 8px;
 }
 
 .container {

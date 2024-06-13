@@ -49,9 +49,18 @@ $angular-accent: mat.define-palette($md-flats4uspalette, 900);
 // The warn palette is optional (defaults to red).
 $angular-warn: mat.define-palette(mat.$red-palette);
 
+$textColor_light: black;
+$textColor_dark: white;
+$bgColor_light: rgb(245 245 244);
+$bgColor_dark: #282828;
+$borderColor_light: black;
+$borderColor_dark: white;
+$bgColor_dark_header: #3f3f3f;
+$bgColor_light_header: #fbbb8b;
+
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$angular-theme: mat.define-light-theme(
+$angular-light-theme: mat.define-light-theme(
 	(
 		color: (
 			basic: $angular-basic,
@@ -62,10 +71,48 @@ $angular-theme: mat.define-light-theme(
 	)
 );
 
+$angular-dark-theme: mat.define-dark-theme(
+	(
+		color: (
+			basic: $angular-basic,
+			primary: $angular-primary,
+			accent: $angular-accent,
+			warn: $angular-warn,
+		),
+		typography: mat.define-typography-config(),
+		density: 0,
+	)
+);
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($angular-theme);
+
+@mixin darken() {
+	--textColor: #{$textColor_dark};
+	--bgColor: #{$bgColor_dark};
+	--borderColor: #{$borderColor_dark};
+	--headerBgColor: #{$bgColor_dark_header};
+}
+
+@mixin lighten() {
+	--textColor: #{$textColor_light};
+	--bgColor: #{$bgColor_light};
+	--borderColor: #{$borderColor_light};
+	--headerBgColor: #{$bgColor_light_header};
+}
+
+body.dark {
+	@include darken();
+	@include mat.all-component-themes($angular-dark-theme);
+}
+
+body.light {
+	@include lighten();
+	@include mat.all-component-themes($angular-light-theme);
+}
+
+@include mat.all-component-themes($angular-light-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -80,6 +127,7 @@ body {
 body {
 	margin: 0;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
+	@include lighten();
 }
 .mdc-notched-outline__notch {
 	border-right: none;
@@ -120,6 +168,54 @@ body {
 	font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
+footer {
+	background-color: var(--headerBgColor);
+	color: var(--textColor);
+	.quick-links a {
+		color: var(--textColor);
+	}
+	.quick-links a:hover {
+		background-color: var(--textColor);
+		color: var(--bgColor);
+	}
+	.social-logos a {
+		color: var(--textColor);
+	}
+
+	.social-logos a:hover {
+		background-color: var(--textColor);
+		color: var(--bgColor);
+	}
+}
+
+.custom-toolbar {
+	background-color: var(--headerBgColor) !important;
+}
+
 mat-error {
 	font-size: x-small;
+}
+
+.stylePopup .leaflet-popup-content-wrapper,
+.stylePopup .leaflet-popup-tip {
+	background-color: var(--bgColor);
+	color: var(--textColor);
+}
+
+.marker-cluster {
+	background-color: var(--headerBgColor) !important;
+}
+
+.marker-cluster div {
+	background-color: var(--headerBgColor) !important;
+}
+
+.dialog-title {
+	color: var(--textColor);
+}
+
+@media screen and (max-width: 600px) {
+	.stylePopup .leaflet-popup-content-wrapper {
+		max-width: 200px;
+	}
 }

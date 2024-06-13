@@ -197,15 +197,16 @@
 				<mat-label class="label-survey">
 					<span>
 						<mat-chip
-							class="p-4 mr-4"
+							class="mr-4"
 							matTooltip="{{
-								data.offer?.property?.avgRating
-									? ('Offer.offer-info-rating0' | translate)
-									: ('Offer.offer-info-rating1' | translate)
+								(data.offer?.property?.avgRating
+									? 'Offer.offer-info-rating0'
+									: 'Offer.offer-info-rating1'
+								) | translate
 							}}"
 							(click)="showRating(data.offer?.property)"
 						>
-							<div class="flex items-center">
+							<div class="flex items-center pt-1 w-fit cursor-pointer">
 								<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
 								</app-star-rating>
 							</div>
