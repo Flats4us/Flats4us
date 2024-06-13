@@ -71,7 +71,7 @@ export class RentRateComponent extends BaseComponent {
 		this.data$
 			.pipe(
 				switchMap(data =>
-					this.rentsService.postOpinion(data.offerId, this.form.value)
+					this.rentsService.postOpinion(data.rentId, this.form.value)
 				),
 				takeUntil(this.destroyed)
 			)
