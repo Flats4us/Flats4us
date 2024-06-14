@@ -100,14 +100,18 @@ namespace Flats4us.Services
 
         public async Task AddArgumentAsync(AddArgumentDto input, int userId)
         {
-            var rent = _context.Rents
+            var rent = await _context.Rents
                 .Include(r => r.Student)
                 .Include(r => r.OtherStudents)
                 .Include(r => r.Offer)
                     .ThenInclude(o => o.Property)
                         .ThenInclude(ow => ow.Owner)
-                .FirstOrDefault(x => x.RentId == input.RentId)
+                .FirstOrDefaultAsync(x => x.RentId == input.RentId)
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
+
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) throw new ArgumentException("Cannot find user with given id");
 
             var property = rent.Offer?.Property
                 ?? throw new ArgumentException($"Property associated with Rent ID {input.RentId} not found.");
@@ -122,7 +126,18 @@ namespace Flats4us.Services
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
 
-            List<int> usersIds = new List<int> { userId, property.OwnerId };
+            int studentId;
+
+            if (user is Owner)
+            {
+                studentId = rent.StudentId;
+            } 
+            else
+            {
+                studentId = userId;
+            }
+
+            List<int> usersIds = new List<int> { studentId, property.OwnerId };
 
             var chatId = await _groupChatService.CreateGroupChatAsync(
                 "Spór pomiędzy: student: " + rent.Student.Name +
@@ -137,7 +152,7 @@ namespace Flats4us.Services
                 Description = input.Description,
                 RentId = input.RentId,
                 InterventionNeed = false,
-                StudentId = userId,
+                StudentId = studentId,
                 GroupChatId = chatId
             };
 
