@@ -25,6 +25,8 @@ namespace Flats4us.Entities.Dto
 
         public DateTime? InterventionNeedDate { get; set; }
 
+        public int ArgumentCreatedByUserId { get; set; }
+
         [Required]
         public int GroupChatId { get; set; }
 

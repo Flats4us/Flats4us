@@ -124,6 +124,8 @@ namespace Flats4us.Services
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
 
+            var mainStudentId = rent.Student.UserId;
+
             var StudentsIds = rent.OtherStudents
                 .Select(s => s.UserId)
                 .ToList();
@@ -139,13 +141,17 @@ namespace Flats4us.Services
 
             var argument = new Argument
             {
-                StartDate = DateTime.Now,
-                ArgumentStatus = ArgumentStatus.Ongoing,
                 Title = input.Title,
                 Description = input.Description,
-                RentId = input.RentId,
+                StartDate = DateTime.Now,
+                OwnerAcceptanceDate = null,
+                StudentAccceptanceDate = null,
+                ArgumentStatus = ArgumentStatus.Ongoing,
                 InterventionNeed = false,
-                StudentId = userId,
+                InterventionNeedDate = null,
+                ArgumentCreatedByUserId = userId,
+                RentId = input.RentId,
+                StudentId = mainStudentId,
                 GroupChatId = chatId
             };
 

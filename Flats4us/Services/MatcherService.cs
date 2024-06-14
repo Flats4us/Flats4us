@@ -60,49 +60,16 @@ namespace Flats4us.Services
 
                     (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party-2)) && 
                     (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) &&
-
-                    //  Party
-
                     potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking &&
-
-                    //  Smoking
-
                     potential.SurveyStudent.Sociability == requestingStudent.SurveyStudent.Sociability &&
-
-                    //  Sociability
-
                     potential.SurveyStudent.Animals == requestingStudent.SurveyStudent.Animals &&
-
-                    //  Animals
-
                     potential.SurveyStudent.Vegan == requestingStudent.SurveyStudent.Vegan &&
-
-                    //  Vegan
-
                     potential.SurveyStudent.LookingForRoommate == requestingStudent.SurveyStudent.LookingForRoommate &&
-
-                    //  LookingForRoommate
-
                     potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates &&
-
-                    //  MaxNumberOfRoommates
-
                     potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender &&
-
-                    //  RoommateGender
-
                     (requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year - potential.BirthDate.Year)) &&
-
-                    //  MinRoommateAge
-
                     (requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) &&
-
-                    //  MaxRoommateAge
-
                     potential.SurveyStudent.City == requestingStudent.SurveyStudent.City &&
-
-                    //  City
-
                     !_context.Matcher.Any(matcher =>
                         (matcher.Student1Id == studentId && matcher.Student2Id == potential.UserId && matcher.IsStudent1Interested != null) ||
                         (matcher.Student1Id == potential.UserId && matcher.Student2Id == studentId && matcher.IsStudent2Interested != null)
@@ -114,25 +81,15 @@ namespace Flats4us.Services
                     ConditionsMet = (
                         (potential.SurveyStudent.Party >= (requestingStudent.SurveyStudent.Party - 2)) &&
                         (potential.SurveyStudent.Party <= (requestingStudent.SurveyStudent.Party + 2)) ? 1 : 0) +
-
                         (potential.SurveyStudent.Smoking == requestingStudent.SurveyStudent.Smoking ? 1 : 0) +
-
                         (potential.SurveyStudent.Sociability == requestingStudent.SurveyStudent.Sociability ? 1 : 0) +
-
                         (potential.SurveyStudent.Animals == requestingStudent.SurveyStudent.Animals ? 1 : 0) +
-
                         (potential.SurveyStudent.Vegan == requestingStudent.SurveyStudent.Vegan ? 1 : 0) +
-
                         (potential.SurveyStudent.LookingForRoommate == requestingStudent.SurveyStudent.LookingForRoommate ? 1 : 0) +
-
                         (potential.SurveyStudent.MaxNumberOfRoommates == requestingStudent.SurveyStudent.MaxNumberOfRoommates ? 1 : 0) +
-
                         (potential.SurveyStudent.RoommateGender == requestingStudent.SurveyStudent.RoommateGender ? 1 : 0) +
-
                         ((requestingStudent.SurveyStudent.MinRoommateAge <= (DateTime.Now.Year - potential.BirthDate.Year)) ? 1 : 0) +
-
                         ((requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) ? 1 : 0) +
-
                         (potential.SurveyStudent.City == requestingStudent.SurveyStudent.City ? 1 : 0)
                 })
                 .Where(result => result.ConditionsMet >= 0.8 * 12) 

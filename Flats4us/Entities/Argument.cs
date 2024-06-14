@@ -30,6 +30,8 @@ namespace Flats4us.Entities
 
         public DateTime? InterventionNeedDate { get; set; }
 
+        public int ArgumentCreatedByUserId { get; set; }
+
         [Required]
         public int RentId { get; set; }
 
