@@ -3,6 +3,7 @@
 	let-actualForm="actualForm"
 	let-actualUser="actualUser"
 	let-userType="userType"
+	let-ifConfidentialData="ifConfidentialData"
 >
 	<div
 		*ngIf="actualUser && modificationType === mType.EDIT"
@@ -15,13 +16,14 @@
 			{{ "Profile-edit.edit-owner-profile" | translate }}
 		</h1>
 	</div>
-	<form [formGroup]="actualForm" (ngSubmit)="onSubmit()">
+	<form [formGroup]="actualForm" (ngSubmit)="onSubmit(actualUser.userType)">
 		<mat-card class="edit-profile">
 			<div *ngIf="modificationType === mType.EDIT" class="menu-btn">
 				<button
 					id="menu"
 					mat-mini-fab
 					color="primary"
+					type="button"
 					aria-label="MenuButton"
 					matTooltip="{{ 'more-options' | translate }}"
 					[matMenuTriggerFor]="menu"
@@ -32,6 +34,7 @@
 					<button
 						*ngFor="let menuOption of this.menuOptions"
 						mat-menu-item
+						type="button"
 						[value]="menuOption.description"
 						[disabled]="menuOption.option === 'editSurvey'"
 						(click)="onSelect(menuOption)"
@@ -93,9 +96,10 @@
 					>
 						Status:
 						{{
-							actualUser.verificationStatus === 0
-								? ("Profile.verified" | translate)
-								: ("Profile.unverified" | translate)
+							(actualUser.verificationStatus === 0
+								? "Profile.verified"
+								: "Profile.unverified"
+							) | translate
 						}}
 					</div>
 					<div
@@ -350,7 +354,7 @@
 					<span
 						*ngIf="
 							modificationType === mType.CREATE ||
-							(modificationType === mType.EDIT && actualUser.userType === 1)
+							(modificationType === mType.EDIT && ifConfidentialData)
 						"
 						class="btn-upload-box"
 					>
@@ -359,28 +363,32 @@
 							type="button"
 							aria-label="Upload"
 							matTooltip="{{
-								!this.urlNewScan || this.modificationType === mType.EDIT
-									? ('Profile-edit.load-scan' | translate)
-									: ('Profile-edit.change-scan' | translate)
+								(!this.urlNewScan || this.modificationType === mType.EDIT
+									? 'Profile-edit.load-scan'
+									: 'Profile-edit.change-scan'
+								) | translate
 							}}"
 							(click)="scanUpload.click()"
 						>
 							<mat-icon class="material-symbols-outlined">attach_file</mat-icon>
 						</button>
 						<span
-							*ngIf="!urlNewScan && modificationType === mType.CREATE"
-							class="scan-url-box"
-							>{{ "Profile-edit.load-scan-actual" | translate }}!</span
+							*ngIf="
+								(!urlNewScan && modificationType === mType.CREATE) ||
+								(modificationType === mType.EDIT && ifConfidentialData)
+							"
+							class="scan-url-box-desc"
+							>{{ "Profile-edit.load-scan-actual" | translate }}! |</span
 						>
 						<span
-							*ngIf="urlNewScan || modificationType === mType.EDIT"
-							class="scan-url-box"
+							*ngIf="urlNewScan && modificationType === mType.CREATE"
+							class="scan-url-box-desc"
 						>
-							{{ "Profile-edit.load-scan-info2" | translate }}</span
+							{{ "Profile-edit.load-scan-info2" | translate }}! |</span
 						>
-						<span *ngIf="urlNewScan" class="scan-url-box ml-4"
-							>| {{ fileScanName }}</span
-						>
+						<span *ngIf="urlNewScan" class="scan-url-box ml-4">{{
+							fileScanName
+						}}</span>
 						<input
 							#scanUpload
 							id="documentScan"
@@ -394,13 +402,7 @@
 							>{{ "Profile-edit.load-scan-info1" | translate }}!</mat-error
 						>
 					</span>
-					<mat-form-field
-						*ngIf="
-							(actualUser === uType.STUDENT &&
-								!checkValidityTill(actualUser.documentExpireDate)) ||
-							modificationType === mType.CREATE
-						"
-					>
+					<mat-form-field *ngIf="modificationType === mType.CREATE">
 						<mat-label>{{ "Profile-edit.identification" | translate }}</mat-label>
 						<mat-select id="documentType" formControlName="documentType">
 							<mat-option
@@ -447,9 +449,47 @@
 							{{ "Profile-edit.identification-date-end" | translate }}!
 						</mat-error>
 					</mat-form-field>
+					<mat-form-field
+						*ngIf="
+							(modificationType === mType.CREATE && userType === uType.OWNER) ||
+							(modificationType === mType.EDIT && actualUser.userType === 0)
+						"
+					>
+						<mat-label>{{ "Profile-edit.document-number" | translate }}</mat-label>
+						<input
+							id="documentNumber"
+							formControlName="documentNumber"
+							type="text"
+							aria-label="DocumentNumber"
+							matInput
+							placeholder="{{ 'Profile-edit.document-number' | translate }}"
+						/>
+						<mat-error
+							*ngIf="dataFormGroupOwner.controls['documentNumber'].errors?.['required']"
+						>
+							{{ "Profile-edit.document-number-info" | translate }}!
+						</mat-error>
+					</mat-form-field>
 				</div>
 				<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
-					<button mat-raised-button color="primary" type="submit">
+					<button
+						mat-mini-fab
+						color="primary"
+						type="button"
+						class="mr-4"
+						[matTooltip]="'Profile-edit.confidential-edit' | translate"
+						(click)="lockUnlockData(actualUser.userType)"
+					>
+						<mat-icon class="material-symbols-outlined">
+							{{ ifConfidentialData ? "lock_open" : "lock" }}
+						</mat-icon>
+					</button>
+					<button
+						mat-raised-button
+						color="primary"
+						type="submit"
+						[disabled]="!actualForm.valid || (ifConfidentialData && !editedScanFile)"
+					>
 						{{ "save" | translate }} <mat-icon iconPositionEnd>done_outline</mat-icon>
 					</button>
 				</div>
@@ -465,7 +505,8 @@
 			[ngTemplateOutletContext]="{
 				actualForm: dataFormGroupStudent,
 				actualUser: actualUser,
-				userType: user
+				userType: user,
+				ifConfidentialData: ifConfidentialData
 			}"
 		></ng-container>
 		<ng-container
@@ -474,7 +515,8 @@
 			[ngTemplateOutletContext]="{
 				actualForm: dataFormGroupOwner,
 				actualUser: actualUser,
-				userType: user
+				userType: user,
+				ifConfidentialData: ifConfidentialData
 			}"
 		></ng-container>
 	</div>

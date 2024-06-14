@@ -28,7 +28,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { SurveyService } from '@shared/services/survey.service';
 import { RegisterModule } from 'src/app/auth/components/register/register.module';
 import { OfferModule } from 'src/app/offer/offer.module';
-import { EmailChangeModule } from 'src/app/settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from 'src/app/settings/components/password-change/password-change.module';
 import { SettingsRoutingModule } from 'src/app/settings/settings-routing.module';
 import { ProfileRoutingModule } from '../profile-routing.module';
@@ -36,6 +35,8 @@ import { ProfileService } from '../services/profile.service';
 import { EditProfileComponent } from './edit-profile.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserService } from '@shared/services/user.service';
+import { EmailChangeModule } from 'src/app/settings/components/email-change/email-change.module';
 
 @NgModule({
 	declarations: [EditProfileComponent],
@@ -73,6 +74,6 @@ import { TranslateModule } from '@ngx-translate/core';
 		TranslateModule,
 	],
 	exports: [EditProfileComponent],
-	providers: [ProfileService, FormGroupDirective, SurveyService],
+	providers: [ProfileService, FormGroupDirective, SurveyService, UserService],
 })
 export class EditProfileModule {}

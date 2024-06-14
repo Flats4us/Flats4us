@@ -1,7 +1,4 @@
-<div
-	*ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data"
-	class="rents"
->
+<div *ngIf="{ user: user$ | async, rents: rentsOffers$ | async } as data">
 	<div class="box-title">
 		<div
 			*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
@@ -14,7 +11,9 @@
 		</div>
 	</div>
 	<ng-template #notFound>
-		<h1 class="text-3xl p-4">{{ "Rents.rent-info0" | translate }}</h1>
+		<mat-card>
+			<h1 class="text-3xl p-4">{{ "Rents.rent-info0" | translate }}</h1>
+		</mat-card>
 	</ng-template>
 	<div
 		*ngIf="

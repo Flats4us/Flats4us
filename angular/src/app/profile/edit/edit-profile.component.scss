@@ -10,6 +10,10 @@
 
 .btn-box-submit {
 	align-self: flex-end;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 }
 
 .btn-upload-box {
@@ -95,7 +99,7 @@
 
 .scan-url-box {
 	display: inline-block;
-	max-width: 300px;
+	max-width: 400px;
 	overflow: hidden;
 }
 
@@ -145,7 +149,7 @@ mat-form-field {
 	}
 	.scan-url-box {
 		display: inline-block;
-		max-width: 100px;
+		max-width: 200px;
 		overflow: hidden;
 	}
 	.scan-url-box-desc {

@@ -1,9 +1,19 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { IInterest, IOpinion, IUserProfile } from '../models/profile.models';
+import {
+	IEditProfile,
+	IEditProfileOwner,
+	IEditProfileOwnerConfidential,
+	IEditProfileStudent,
+	IEditProfileStudentConfiential,
+	IInterest,
+	IOpinion,
+	IUserProfile,
+} from '../models/profile.models';
 import { environment } from 'src/environments/environment.prod';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
+import { IResult } from 'src/app/offer/models/offer.models';
 
 @Injectable()
 export class ProfileService {
@@ -27,8 +37,34 @@ export class ProfileService {
 			})
 		);
 	}
-	public addProfileFiles(formData: FormData): Observable<void> {
-		return this.httpClient.post<void>(`${this.apiRoute}/users/files`, formData);
+
+	public addProfileFiles(formData: FormData): Observable<IResult> {
+		return this.httpClient.post<IResult>(
+			`${this.apiRoute}/users/files`,
+			formData
+		);
+	}
+
+	public deleteProfileFile(fileId: string): Observable<IResult> {
+		return this.httpClient.delete<IResult>(
+			`${this.apiRoute}/users/files/${fileId}`
+		);
+	}
+
+	public editProfile(newData: IEditProfile) {
+		return this.httpClient.put(`${this.apiRoute}/users/current`, newData);
+	}
+
+	public editProfileOwner(
+		newData: IEditProfileOwner | IEditProfileOwnerConfidential
+	) {
+		return this.httpClient.put(`${this.apiRoute}/users/current`, newData);
+	}
+
+	public editProfileStudent(
+		newData: IEditProfileStudent | IEditProfileStudentConfiential
+	) {
+		return this.httpClient.put(`${this.apiRoute}/users/current`, newData);
 	}
 
 	public getActualProfile(): Observable<IUserProfile> {

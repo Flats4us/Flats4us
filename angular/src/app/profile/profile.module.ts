@@ -25,17 +25,17 @@ import { SurveyService } from '@shared/services/survey.service';
 import { UserService } from '@shared/services/user.service';
 
 import { RegisterModule } from '../auth/components/register/register.module';
-import { EmailChangeModule } from '../settings/components/emailChange/emailChange.module';
 import { PasswordChangeModule } from '../settings/components/password-change/password-change.module';
 import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { AddOpinionComponent } from './add-opinion/add-opinion.component';
-import { CreateProfileModule } from './create/create-profile.module';
-import { EditProfileModule } from './edit/edit-profile.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 import { ProfileService } from './services/profile.service';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { EmailChangeModule } from '../settings/components/email-change/email-change.module';
+import { EditProfileModule } from './edit/edit-profile.module';
+import { CreateProfileModule } from './create/create-profile.module';
 
 @NgModule({
 	declarations: [ProfileComponent],
