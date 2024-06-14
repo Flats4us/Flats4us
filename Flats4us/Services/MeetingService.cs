@@ -85,8 +85,8 @@ namespace Flats4us.Services
                     if (offer.OfferStatus == OfferStatus.Old ) throw new ArgumentException($"Cannot add meeting to old offer");
 
                     if (offer.OfferStatus == OfferStatus.Rented &&
-                        (offer.Rent.StudentId != userId ||
-                        !offer.Rent.OtherStudents.Any(os => os.UserId == userId))) throw new ArgumentException($"You cannot add meeting to this offer");
+                        offer.Rent.StudentId != userId &&
+                        !offer.Rent.OtherStudents.Any(os => os.UserId == userId)) throw new ArgumentException($"You cannot add meeting to this offer");
 
                     meeting = new Meeting
                     {
