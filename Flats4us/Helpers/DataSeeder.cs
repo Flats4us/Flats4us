@@ -3728,7 +3728,6 @@ public static class DataSeeder
             Student = student1,
             Property = flat1
         };
-
         var rentOpinion2 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -3741,7 +3740,6 @@ public static class DataSeeder
             Student = student2,
             Property = flat1
         };
-
         var rentOpinion3 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -3754,7 +3752,6 @@ public static class DataSeeder
             Student = student3,
             Property = flat1
         };
-
         var rentOpinion4 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -3776,8 +3773,8 @@ public static class DataSeeder
             Equipment = 5,
             QualityForMoney = 5,
             Description = "Opinia do rent 5",
-            Student = student,
-            Property = 
+            Student = student11,
+            Property = flat5
         };
         var rentOpinion6 = new RentOpinion
         {
@@ -3788,8 +3785,8 @@ public static class DataSeeder
             Equipment = 6,
             QualityForMoney = 6,
             Description = "Opinia do rent 6",
-            Student = student,
-            Property =
+            Student = student12,
+            Property = room4
         };
         var rentOpinion7 = new RentOpinion
         {
@@ -3800,11 +3797,11 @@ public static class DataSeeder
             Equipment = 7,
             QualityForMoney = 7,
             Description = "Opinia do rent 7",
-            Student = student,
-            Property =
+            Student = student13,
+            Property = house4
         };
 
-        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
+        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4, rentOpinion5, rentOpinion6, rentOpinion7);
 
         #endregion
 
@@ -4146,13 +4143,3 @@ public static class DataSeeder
         await Task.Delay(1000);
     }
 }
-
-/*
-- DONE   Więcej nieruchomości i ofert do większej ilości województw
-- DONE   Wynajmy ze skończonym statusem, potrzebne do testu mobilki
-- DONE   Więcej profili studentów do testów matcha - zweryfikowanych
-- DONE   Spory i problemy techniczne
-- DONE   Interwencje między studentem i właścicielem i te z moderatorem
--        Eventy w kalendarzach
-- D      Opinie do użytkowników (studentów jak i właścicieli) i nieruchomości
-*/
