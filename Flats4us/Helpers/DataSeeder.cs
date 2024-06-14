@@ -755,43 +755,43 @@ public static class DataSeeder
         };
         var student16 = new Student
         {
-            Name = "Bartosz",
+            Name = "Piotr",
             Surname = "Nowak",
             Address = "ul. Krótka 5, 30-200 Kraków",
-            Email = "bnowak@gmail.com",
+            Email = "pnowak@gmail.com",
             PhoneNumber = "555666777",
             AccountCreationDate = new DateTime(2021, 8, 15),
             VerificationOrRejectionDate = new DateTime(2021, 8, 20),
             LastLoginDate = new DateTime(2024, 4, 20),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Bnowak123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pnowak123"),
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2030, 5, 25),
             BirthDate = new DateTime(1995, 7, 10),  // 28 lat
             StudentNumber = "s24680",
             University = "Uniwersytet Jagielloński",
-            Links = "https://www.facebook.com/bnowak|https://twitter.com/bnowak|https://www.linkedin.com/in/bnowak",
+            Links = "https://www.facebook.com/pnowak|https://twitter.com/pnowak|https://www.linkedin.com/in/pnowak",
             IsTenant = false,
             Interests = { interest3, interest8, interest12 }
         };
         var student17 = new Student
         {
-            Name = "Katarzyna",
+            Name = "Marzena",
             Surname = "Wójcik",
             Address = "ul. Lipowa 3/5, 50-300 Wrocław",
-            Email = "kwojcik@gmail.com",
+            Email = "mwojcik@gmail.com",
             PhoneNumber = "111222333",
             AccountCreationDate = new DateTime(2021, 7, 10),
             VerificationOrRejectionDate = new DateTime(2021, 7, 15),
             LastLoginDate = new DateTime(2024, 5, 10),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwojcik123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwojcik123"),
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2031, 8, 20),
             BirthDate = new DateTime(1996, 9, 5),  // 27 lat
             StudentNumber = "s97531",
             University = "Uniwersytet Wrocławski",
-            Links = "https://www.facebook.com/kwojcik|https://twitter.com/kwojcik|https://www.linkedin.com/in/kwojcik",
+            Links = "https://www.facebook.com/mwojcik|https://twitter.com/mwojcik|https://www.linkedin.com/in/mwojcik",
             IsTenant = false,
             Interests = { interest5, interest14, interest15 }
         };
@@ -818,15 +818,15 @@ public static class DataSeeder
         };
         var student19 = new Student
         {
-            Name = "Magdalena",
+            Name = "Ewelina",
             Surname = "Nowak",
             Address = "ul. Zielona 7, 30-400 Kraków",
-            Email = "mnowak@gmail.com",
+            Email = "enowak@gmail.com",
             PhoneNumber = "555444333",
             AccountCreationDate = new DateTime(2021, 10, 5),
             VerificationOrRejectionDate = new DateTime(2021, 10, 10),
             LastLoginDate = new DateTime(2024, 7, 15),
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mnowak123"),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Enowak123"),
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2033, 5, 20),
