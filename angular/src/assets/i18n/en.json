@@ -364,12 +364,17 @@
 		"identification-date": "Document expiration date",
 		"identification-date-info": "The expiry date of the document has not been specified",
 		"identification-date-end": "The document has expired",
+		"document-number": "Document number",
+		"document-number-info": "Document number not provided",
 		"options-email": "Edit E-mail",
 		"edit-email": "Edit E-mail",
 		"change-password": "Change password",
 		"edit-survey": "Edit Survey",
 		"info1": "Data changed successfully!",
-		"close": "Close"
+		"info2": "Data have not been changed. Please try again!",
+		"close": "Close",
+		"confidential-edit": "Sensitive data editing",
+		"confidential-info": "Attention! Editing sensitive data requires re-verification of the account."
 	},
 	"Real-estate": {
 		"browsing-properties": "Browsing properties",
@@ -581,13 +586,17 @@
 	},
 	"Email-change": {
 		"error": "An error occured!",
-		"email-change": "Change email address",
-		"email-info1": "Your email address has been successfully changed!",
-		"close": "Close"
+		"email-change": "Change e-mail address",
+		"email-info1": "Your e-mail address has been successfully changed!",
+		"close": "Close",
+		"wrong-format-error": "Invalid e-mail address!",
+		"repeat-error": "The e-mail addresses should be the same!",
+		"repeat": "Confirm e-mail"
 	},
 	"Help-center": {
 		"help-center": "Help center",
-		"help-info": "Welcome to our help center. Here you will find answers to frequently asked questions as well as contact details for our support team"
+		"help-info": "Welcome to our help center. You can report a technical problem here",
+		"report-problem": "Report problem"
 	},
 	"Notifications": {
 		"notification": "Notification",

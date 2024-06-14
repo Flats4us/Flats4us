@@ -5,37 +5,31 @@
 	<form [formGroup]="form">
 		<div>
 			<mat-label>{{ "Rent-rate.rate" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="10" step="1">
 				<input matInput matSliderThumb formControlName="rating" />
 			</mat-slider>
 		</div>
 		<div>
-			<mat-label>{{ "Rent-rate.cleanliness" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
-				<input matInput matSliderThumb formControlName="cleanliness" />
-			</mat-slider>
-		</div>
-		<div>
 			<mat-label>{{ "Rent-rate.service" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="10" step="1">
 				<input matInput matSliderThumb formControlName="service" />
 			</mat-slider>
 		</div>
 		<div>
 			<mat-label>{{ "Rent-rate.location" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="10" step="1">
 				<input matInput matSliderThumb formControlName="location" />
 			</mat-slider>
 		</div>
 		<div>
 			<mat-label>{{ "Rent-rate.equipment" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="10" step="1">
 				<input matInput matSliderThumb formControlName="equipment" />
 			</mat-slider>
 		</div>
 		<div>
 			<mat-label>{{ "Rent-rate.value-for-money" | translate }}</mat-label>
-			<mat-slider thumbLabel tickInterval="1" min="1" max="5" step="1">
+			<mat-slider thumbLabel tickInterval="1" min="1" max="10" step="1">
 				<input matInput matSliderThumb formControlName="qualityForMoney" />
 			</mat-slider>
 		</div>

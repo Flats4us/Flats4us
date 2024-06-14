@@ -79,7 +79,6 @@ $angular-dark-theme: mat.define-dark-theme(
 			accent: $angular-accent,
 			warn: $angular-warn,
 		),
-		typography: mat.define-typography-config(),
 		density: 0,
 	)
 );

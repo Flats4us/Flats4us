@@ -218,7 +218,9 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 									{ duration: 10000 }
 								);
 							},
-							complete: () => this.router.navigate(['/']),
+							complete: () => {
+								this.router.navigate(['/']);
+							},
 						});
 				}
 				if (this.user === UserType.OWNER) {
@@ -244,7 +246,9 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 									{ duration: 10000 }
 								);
 							},
-							complete: () => this.router.navigate(['/']),
+							complete: () => {
+								this.router.navigate(['/']);
+							},
 						});
 				}
 			}

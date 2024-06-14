@@ -281,7 +281,7 @@
 		"interest": "Zainteresowania",
 		"document-type0": "Dowód osobisty",
 		"document-type1": "Legitymacja studencka",
-		"document=type2": "Paszport",
+		"document-type2": "Paszport",
 		"verified": "zweryfikowany",
 		"unverified": "niezweryfikowany"
 	},
@@ -364,12 +364,17 @@
 		"identification-date": "Data ważności dokumentu",
 		"identification-date-info": "Nie określono daty ważności dokumentu",
 		"identification-date-end": "Termin ważności dokumentu upłynął",
+		"document-number": "Numer dokumentu",
+		"document-number-info": "Nie podano numeru dokumentu",
 		"options-email": "Edytuj email",
 		"edit-email": "Edytuj Email",
 		"change-password": "Zmień hasło",
 		"edit-survey": "Edytuj ankietę",
 		"info1": "Pomyślnie zmieniono dane!",
-		"close": "Zamknij"
+		"info2": "Nie udało się zmienić danych. Spróbuj ponownie!",
+		"close": "Zamknij",
+		"confidential-edit": "Edycja danych wrażliwych",
+		"confidential-info": "Uwaga! Edycja danych wrażliwych wiąże się z ponowną weryfikacją konta."
 	},
 	"Real-estate": {
 		"browsing-properties": "Przeglądanie nieruchomości",
@@ -580,13 +585,17 @@
 
 	"Email-change": {
 		"error": "Wystąpił błąd!",
-		"email-change": "Zmiana adresu email",
+		"email-change": "Zmiana adresu e-mail",
 		"email-info1": "Pomyślnie zmieniono adres mailowy!",
-		"close": "Zamknij"
+		"close": "Zamknij",
+		"wrong-format-error": "Niepoprawny adres e-mail!",
+		"repeat-error": "Adresy e-mail muszą być takie same!",
+		"repeat": "Potwierdź e-mail"
 	},
 	"Help-center": {
 		"help-center": "Centrum pomocy",
-		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz odpowiedzi na najczęściej zadawane pytania pytania, a także dane kontaktowe naszego zespołu wsparcia"
+		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz możliwość zgłoszenia problemu technicznego",
+		"report-problem": "Zgłoś problem"
 	},
 	"Notifications": {
 		"notification": "Powiadomienia",

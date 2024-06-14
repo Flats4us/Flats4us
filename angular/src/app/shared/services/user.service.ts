@@ -26,8 +26,8 @@ export class UserService {
 	}
 
 	public changeEmail(email: string) {
-		return this.http.put(`${this.apiRoute}/general`, {
-			email,
+		return this.http.put(`${this.apiRoute}/current`, {
+			email: email,
 		});
 	}
 }

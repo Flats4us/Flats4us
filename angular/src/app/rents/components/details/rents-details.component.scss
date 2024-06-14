@@ -282,7 +282,7 @@ mat-header-cell {
 @media screen and (max-width: 768px) {
 	.slider {
 		width: 100%;
-		min-height: 300px;
+		min-height: 200px;
 		overflow: hidden;
 		position: relative;
 	}
@@ -328,6 +328,9 @@ mat-header-cell {
 		width: 50%;
 		overflow-wrap: break-word;
 		max-width: 200px;
+	}
+	.inner-title {
+		font-size: large;
 	}
 	mat-header-row {
 		display: none;

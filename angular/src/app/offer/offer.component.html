@@ -13,21 +13,23 @@
 	<div *ngIf="user === uType.OWNER">
 		<div *ngIf="offersOptions$ | async as offers">
 			<ng-template #notFound>
-				<h1 class="text-3xl p-4">
-					{{ "Offer.no-offers" | translate }}
-					<button
-						*appAccessControl="authService.allPermissions.get('verifiedOwner')"
-						mat-mini-fab
-						id="add"
-						color="basic"
-						class="box-icon"
-						aria-label="Add"
-						matTooltip="{{ 'Header.add-offer' | translate }}"
-						(click)="addOffer()"
-					>
-						<mat-icon class="font-bold">add</mat-icon>
-					</button>
-				</h1>
+				<mat-card>
+					<h1 class="text-3xl p-4">
+						<span class="mr-4">{{ "Offer.no-offers" | translate }}</span>
+						<button
+							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+							mat-mini-fab
+							id="add"
+							color="basic"
+							class="box-icon"
+							aria-label="Add"
+							matTooltip="{{ 'Header.add-offer' | translate }}"
+							(click)="addOffer()"
+						>
+							<mat-icon class="font-bold">add</mat-icon>
+						</button>
+					</h1>
+				</mat-card>
 			</ng-template>
 			<div *ngIf="!offers.totalCount" class="not-found">
 				<ng-container [ngTemplateOutlet]="notFound"></ng-container>

@@ -286,7 +286,7 @@ mat-card-avatar:hover {
 @media screen and (max-width: 768px) {
 	.slider {
 		width: 100%;
-		min-height: 300px;
+		min-height: 200px;
 		overflow: hidden;
 		position: relative;
 	}
@@ -353,5 +353,8 @@ mat-card-avatar:hover {
 		height: 100px;
 		width: 100px;
 		margin-bottom: 4px;
+	}
+	.inner-title {
+		font-size: large;
 	}
 }

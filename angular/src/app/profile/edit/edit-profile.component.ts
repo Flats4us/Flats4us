@@ -7,7 +7,7 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, concat, concatMap, of } from 'rxjs';
 import {
 	AbstractControl,
 	FormBuilder,
@@ -86,6 +86,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public regexScan = /image\/*/ || /application\/pdf/;
 	public isValidDocument = true;
 
+	public editedPhotoFile: File | undefined;
+	public editedScanFile: File | undefined;
+	public formData = new FormData();
+
 	public dataFormGroupStudent: FormGroup;
 	public dataFormGroupOwner: FormGroup;
 
@@ -94,6 +98,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public startDate = new Date().getDate();
 
 	public setLocalDate = setLocalDate;
+
+	public ifConfidentialData = false;
 
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'editEmail', description: 'Profile-edit.options-email' },
@@ -123,7 +129,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			]),
 			interestIds: new FormControl([]),
 			links: new FormControl(this.socialMedias),
-			documentType: new FormControl(''),
 			documentExpireDate: new FormControl(null, [
 				Validators.required,
 				this.validityTillValidator(),
@@ -138,7 +143,6 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
 				),
 			]),
-			documentType: new FormControl('', Validators.required),
 			documentExpireDate: new FormControl(null, [
 				Validators.required,
 				this.validityTillValidator(),
@@ -147,7 +151,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 				Validators.required,
 				Validators.pattern('^[0-9]{26}$'),
 			]),
-			documentNumber: new FormControl('placeholder'),
+			documentNumber: new FormControl('', Validators.required),
 		});
 	}
 	public ngOnInit(): void {
@@ -156,6 +160,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			this.dataFormGroupStudent.addControl(
 				'birthDate',
 				new FormControl(null, [Validators.required, validityAgeValidator()])
+			);
+			this.dataFormGroupStudent.addControl(
+				'documentType',
+				new FormControl(null, Validators.required)
+			);
+			this.dataFormGroupOwner.addControl(
+				'documentType',
+				new FormControl(null, Validators.required)
 			);
 		}
 		if (this.modificationType === ModificationType.EDIT) {
@@ -167,11 +179,14 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					this.selectedHobbies = user.interests;
 					this.socialMedias = user.links;
 					this.dataFormGroupStudent.patchValue(user);
+					this.dataFormGroupStudent.get('documentExpireDate')?.disable();
 					this.dataFormGroupStudent.get('studentNumber')?.disable();
+					this.dataFormGroupStudent.get('university')?.disable();
 				} else {
 					this.dataFormGroupOwner.patchValue(user);
 					this.dataFormGroupOwner.get('documentExpireDate')?.disable();
 					this.dataFormGroupOwner.get('bankAccount')?.disable();
+					this.dataFormGroupOwner.get('documentNumber')?.disable();
 				}
 			});
 		}
@@ -236,6 +251,38 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['profile', 'survey', 'student']);
 	}
 
+	public lockUnlockData(userType: number) {
+		this.editedScanFile = undefined;
+		this.urlNewScan = '';
+		this.ifConfidentialData = !this.ifConfidentialData;
+		if (this.ifConfidentialData) {
+			this.snackBar.open(
+				this.translate.instant('Profile-edit.confidential-info'),
+				this.translate.instant('close'),
+				{ duration: 10000 }
+			);
+			if (userType === 1) {
+				this.dataFormGroupStudent.get('documentExpireDate')?.enable();
+				this.dataFormGroupStudent.get('studentNumber')?.enable();
+				this.dataFormGroupStudent.get('university')?.enable();
+			} else {
+				this.dataFormGroupOwner.get('documentExpireDate')?.enable();
+				this.dataFormGroupOwner.get('bankAccount')?.enable();
+				this.dataFormGroupOwner.get('documentNumber')?.enable();
+			}
+		} else {
+			if (userType === 1) {
+				this.dataFormGroupStudent.get('documentExpireDate')?.disable();
+				this.dataFormGroupStudent.get('studentNumber')?.disable();
+				this.dataFormGroupStudent.get('university')?.disable();
+			} else {
+				this.dataFormGroupOwner.get('documentExpireDate')?.disable();
+				this.dataFormGroupOwner.get('bankAccount')?.disable();
+				this.dataFormGroupOwner.get('documentNumber')?.disable();
+			}
+		}
+	}
+
 	public onSelect(menuOption: IMenuOptions) {
 		switch (menuOption.option) {
 			case 'editEmail': {
@@ -253,26 +300,91 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	public onSubmit() {
-		if (this.dataFormGroupStudent.valid || this.dataFormGroupOwner.valid) {
-			if (
-				this.urlPhoto !== this.urlAvatar &&
-				this.urlNewScan &&
-				!this.isValidDocument
-			) {
-				this.snackBar
-					.open(
-						this.translate.instant('Profile-edit.info1'),
-						this.translate.instant('close'),
-						{
-							duration: 10000,
-						}
+	public onSubmit(userType: number) {
+		if (this.modificationType === ModificationType.EDIT) {
+			if (this.editedPhotoFile) {
+				this.formData.append('ProfilePicture', this.editedPhotoFile);
+			}
+			if (this.ifConfidentialData && this.editedScanFile) {
+				this.formData.append('Document', this.editedScanFile);
+			}
+			if (this.isValidDocument) {
+				this.editUserData(userType)
+					.pipe(
+						this.untilDestroyed(),
+						concatMap(result => {
+							if (this.editedPhotoFile || this.ifConfidentialData) {
+								return concat(
+									this.profileService.addProfileFiles(this.formData),
+									of(result)
+								);
+							}
+							return of(result);
+						})
 					)
-					.afterDismissed()
-					.pipe(this.untilDestroyed())
-					.subscribe(() => {
-						this.router.navigate(['/']);
+					.subscribe({
+						next: () =>
+							this.snackBar.open(
+								this.translate.instant('Profile-edit.info1'),
+								this.translate.instant('close'),
+								{
+									duration: 10000,
+								}
+							),
+						error: () => {
+							this.snackBar.open(
+								this.translate.instant('Profile-edit.info2'),
+								this.translate.instant('close'),
+								{ duration: 10000 }
+							);
+						},
+						complete: () => {
+							this.actualUser$ = this.profileService.getActualProfile();
+							window.location.reload();
+						},
 					});
+			}
+		}
+	}
+
+	private editUserData(userType: number) {
+		if (!this.ifConfidentialData) {
+			if (userType === 1) {
+				return this.profileService.editProfileStudent({
+					address: this.dataFormGroupStudent.value.address,
+					phoneNumber: this.dataFormGroupStudent.value.phoneNumber,
+					links: this.dataFormGroupStudent.value.links,
+					interestIds: this.dataFormGroupStudent.value.interestIds.map(
+						(hobby: IInterest) => hobby.interestId
+					),
+				});
+			} else {
+				return this.profileService.editProfileOwner({
+					address: this.dataFormGroupOwner.value.address,
+					phoneNumber: this.dataFormGroupOwner.value.phoneNumber,
+				});
+			}
+		} else {
+			if (userType === 1) {
+				return this.profileService.editProfileStudent({
+					address: this.dataFormGroupStudent.value.address,
+					phoneNumber: this.dataFormGroupStudent.value.phoneNumber,
+					university: this.dataFormGroupStudent.value.university,
+					links: this.dataFormGroupStudent.value.links,
+					interestIds: this.dataFormGroupStudent.value.interestIds.map(
+						(hobby: IInterest) => hobby.interestId
+					),
+					documentExpireDate: this.dataFormGroupStudent.value.documentExpireDate,
+					studentNumber: this.dataFormGroupStudent.value.studentNumber,
+				});
+			} else {
+				return this.profileService.editProfileOwner({
+					address: this.dataFormGroupOwner.value.address,
+					phoneNumber: this.dataFormGroupOwner.value.phoneNumber,
+					documentNumber: this.dataFormGroupStudent.value.documentNumber,
+					bankAccount: this.dataFormGroupStudent.value.bankAccount,
+					documentExpireDate: this.dataFormGroupOwner.value.documentExpireDate,
+				});
 			}
 		}
 	}
@@ -325,6 +437,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 				this.filePhotoName = file.name;
 				formData.append(this.filePhotoName, file);
 				this.urlPhoto = <string>reader.result;
+				this.editedPhotoFile = file;
 				this.newPhotoEvent.emit(file);
 			}
 			if (regex === this.regexScan) {
@@ -332,6 +445,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 				formData.append(this.fileScanName, file);
 				this.urlScan = <string>reader.result;
 				this.urlNewScan = <string>reader.result;
+				this.editedScanFile = file;
 				this.newScanEvent.emit(file);
 			}
 			this.changeDetectorRef.markForCheck();
