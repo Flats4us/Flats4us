@@ -1,48 +1,87 @@
-<table mat-table class="mat-elevation-z8 mb-4" [dataSource]="properties$">
-	<ng-container matColumnDef="ownerName">
-		<th *matHeaderCellDef mat-header-cell>Właściciel</th>
-		<td *matCellDef="let element" mat-cell>{{ element.ownerName }}</td>
-	</ng-container>
-	<ng-container matColumnDef="ownerEmail">
-		<th *matHeaderCellDef mat-header-cell>Adres email właściciela</th>
-		<td *matCellDef="let element" mat-cell>{{ element.ownerEmail }}</td>
-	</ng-container>
-	<ng-container matColumnDef="address">
-		<th *matHeaderCellDef mat-header-cell>Adres nieruchomości</th>
-		<td *matCellDef="let element" mat-cell>{{ element.address }}</td>
-	</ng-container>
-	<ng-container matColumnDef="document">
-		<th *matHeaderCellDef mat-header-cell>Dokument</th>
-		<td *matCellDef="let element" mat-cell>
-			<a
-				mat-button
-				target="_blank"
-				href="{{ baseUrl }}/{{ element.document.path }}"
+<div class="mat-elevation-z8">
+	<table mat-table [dataSource]="properties$">
+		<ng-container matColumnDef="ownerName">
+			<th *matHeaderCellDef mat-header-cell>Właściciel</th>
+			<td *matCellDef="let element" mat-cell>{{ element.ownerName }}</td>
+		</ng-container>
+		<ng-container matColumnDef="ownerEmail">
+			<th *matHeaderCellDef mat-header-cell>Adres email właściciela</th>
+			<td *matCellDef="let element" mat-cell>{{ element.ownerEmail }}</td>
+		</ng-container>
+		<ng-container matColumnDef="address">
+			<th *matHeaderCellDef mat-header-cell>Adres nieruchomości</th>
+			<td *matCellDef="let element" mat-cell>
+				<button mat-flat-button [routerLink]="['/real-estate', element.propertyId]">
+					{{ element.address }}
+				</button>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="status">
+			<th *matHeaderCellDef mat-header-cell>Status</th>
+			<td *matCellDef="let element" mat-cell>
+				<span *ngIf="element.verificationStatus === 0">Zweryfikowany</span>
+				<span *ngIf="element.verificationStatus === 1">Niezweryfikowany</span>
+				<span *ngIf="element.verificationStatus === 2">Odrzucony</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="verificationOrRejectionDate">
+			<th *matHeaderCellDef mat-header-cell>Data weryfikacji</th>
+			<td *matCellDef="let element" mat-cell>
+				{{
+					element.verificationOrRejectionDate !== null
+						? formatDate(element.verificationOrRejectionDate, "dd/MM/yyyy", "pl-PL")
+						: "-"
+				}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="document">
+			<th *matHeaderCellDef mat-header-cell>Dokument</th>
+			<td *matCellDef="let element" mat-cell>
+				<a
+					*ngIf="element.verificationStatus === 1"
+					mat-button
+					target="_blank"
+					href="{{ baseUrl }}/{{ element.document.path }}"
+				>
+					Wyświetl dokument
+				</a>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="actions">
+			<th *matHeaderCellDef mat-header-cell>Akcje</th>
+			<td *matCellDef="let element" mat-cell>
+				<button
+					*ngIf="element.verificationStatus === 1"
+					class="mr-2"
+					mat-stroked-button
+					(click)="acceptProperty(element.propertyId)"
+				>
+					Zaakceptuj
+				</button>
+				<button
+					*ngIf="element.verificationStatus === 1"
+					class="mr-2"
+					mat-stroked-button
+					(click)="rejectProperty(element.propertyId)"
+				>
+					Odrzuć
+				</button>
+			</td>
 			>
-				Wyświetl dokument
-			</a>
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="actions">
-		<th *matHeaderCellDef mat-header-cell>Akcje</th>
-		<td *matCellDef="let element" mat-cell>
-			<button
-				class="mr-2"
-				mat-stroked-button
-				(click)="acceptProperty(element.propertyId)"
-			>
-				Zaakceptuj
-			</button>
-			<button
-				class="mr-2"
-				mat-stroked-button
-				(click)="rejectProperty(element.propertyId)"
-			>
-				Odrzuć
-			</button>
-		</td>
-		>
-	</ng-container>
-	<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-</table>
+		</ng-container>
+		<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+		<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+	</table>
+	<mat-paginator
+		#paginator
+		id="paginator2"
+		showFirstLastButtons
+		aria-label="Paginator"
+		[length]="propertiesCount$ | async"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
+		[pageSizeOptions]="[6, 12, 18, 48]"
+		(page)="changePage($event)"
+	>
+	</mat-paginator>
+</div>

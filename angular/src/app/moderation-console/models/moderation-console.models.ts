@@ -1,4 +1,5 @@
 import { IImage } from '../../real-estate/models/real-estate.models';
+import { IRent, ITenant } from '../../rents/models/rents.models';
 
 export interface IPropertyData {
 	totalCount: number;
@@ -39,11 +40,27 @@ export interface IUser {
 }
 
 export interface IDispute {
-	disputeId: number;
-	disputeBetween: string;
-	createdBy: string;
-	creationDate: Date;
-	moderatorAdditionDate: Date;
+	argumentId: number;
+	description: string;
+	startDate: string;
+	ownerAcceptanceDate: string;
+	studentAccceptanceDate: string;
+	argumentStatus: number;
+	interventionNeed: boolean;
+	interventionNeedDate: string;
+	mederatorDecisionDate: string;
+	groupChatId: number;
+	student: ITenant;
+	owner: ITenant;
+	argumentInterventions: IIntervention[];
+	rent: IRent;
+}
+
+export interface IIntervention {
+	date: Date;
+	justification: string;
+	argumentId: number;
+	moderatorId: number;
 }
 
 export interface ITechnicalProblemData {

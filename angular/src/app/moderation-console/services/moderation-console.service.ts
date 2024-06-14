@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import {
 	IDispute,
+	IIntervention,
 	IProperty,
 	IPropertyData,
 	ITechnicalProblem,
@@ -18,17 +19,24 @@ export class ModerationConsoleService {
 
 	constructor(private http: HttpClient) {}
 
-	public getUsers(): Observable<IUser[]> {
+	public getUsers(pageSize: number, pageIndex: number): Observable<IUser[]> {
 		let params = new HttpParams();
-		params = params.append('pageNumber', 1).append('pageSize', 3);
+		params = params
+			.append('pageNumber', pageIndex + 1)
+			.append('pageSize', pageSize);
 		return this.http
 			.get<IUserData>(`${this.apiRoute}/moderator/users`, { params: params })
 			.pipe(map(response => response.result));
 	}
 
-	public getProperties(): Observable<IProperty[]> {
+	public getProperties(
+		pageSize: number,
+		pageIndex: number
+	): Observable<IProperty[]> {
 		let params = new HttpParams();
-		params = params.append('pageNumber', 1).append('pageSize', 3);
+		params = params
+			.append('pageNumber', pageIndex + 1)
+			.append('pageSize', pageSize);
 
 		return this.http
 			.get<IPropertyData>(`${this.apiRoute}/moderator/properties`, {
@@ -37,9 +45,14 @@ export class ModerationConsoleService {
 			.pipe(map(response => response.result));
 	}
 
-	public getTechnicalProblems(): Observable<ITechnicalProblem[]> {
+	public getTechnicalProblems(
+		pageSize: number,
+		pageIndex: number
+	): Observable<ITechnicalProblem[]> {
 		let params = new HttpParams();
-		params = params.append('pageNumber', 1).append('pageSize', 3);
+		params = params
+			.append('pageNumber', pageIndex + 1)
+			.append('pageSize', pageSize);
 		return this.http
 			.get<ITechnicalProblemData>(`${this.apiRoute}/technical-problems`, {
 				params: params,
@@ -48,7 +61,7 @@ export class ModerationConsoleService {
 	}
 
 	public getDisputes(): Observable<IDispute[]> {
-		return this.http.get<IDispute[]>('./assets/disputes.json');
+		return this.http.get<IDispute[]>(`${this.apiRoute}/moderator/arguments`);
 	}
 
 	public acceptUser(userId: number) {
@@ -94,5 +107,53 @@ export class ModerationConsoleService {
 				id: technicalProblemId,
 			}
 		);
+	}
+
+	public getUsersCount(): Observable<number> {
+		let params = new HttpParams();
+		params = params.append('pageNumber', 0).append('pageSize', 0);
+		return this.http
+			.get<IUserData>(`${this.apiRoute}/moderator/users`, { params: params })
+			.pipe(map(response => response.totalCount));
+	}
+
+	public getPropertiesCount() {
+		let params = new HttpParams();
+		params = params.append('pageNumber', 0).append('pageSize', 0);
+		return this.http
+			.get<IPropertyData>(`${this.apiRoute}/moderator/properties`, {
+				params: params,
+			})
+			.pipe(map(response => response.totalCount));
+	}
+
+	public getTechnicalProblemsCount() {
+		let params = new HttpParams();
+		params = params.append('pageNumber', 1).append('pageSize', 0);
+		return this.http
+			.get<ITechnicalProblemData>(`${this.apiRoute}/technical-problems`, {
+				params: params,
+			})
+			.pipe(map(response => response.totalCount));
+	}
+
+	public getInterventions() {
+		return this.http.get<IIntervention[]>(
+			`${this.apiRoute}/moderator/interventions`
+		);
+	}
+
+	public addIntervention(justification: string, argumentId: number) {
+		return this.http.post(`${this.apiRoute}/moderator/intervention`, {
+			justification,
+			argumentId,
+		});
+	}
+
+	public changeDisputeStatus(argumentId: number, status: number) {
+		return this.http.post(`${this.apiRoute}/moderator/argument/status`, {
+			argumentId,
+			status,
+		});
 	}
 }

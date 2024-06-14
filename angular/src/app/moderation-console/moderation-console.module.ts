@@ -20,6 +20,13 @@ import { ModerationConsoleService } from './services/moderation-console.service'
 import { PropertiesVerificationComponent } from './components/properties-verification/properties-verification.component';
 import { UsersVerificationComponent } from './components/users-verification/users-verification.component';
 import { ProblemsVerificationComponent } from './components/problems-verification/problems-verification.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { AddInterventionDialogComponent } from './components/add-intervention-dialog/add-intervention-dialog.component';
+import { ChangeDisputeStatusDialogComponent } from './components/change-dispute-status-dialog/change-dispute-status-dialog.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
 	declarations: [
@@ -28,6 +35,8 @@ import { ProblemsVerificationComponent } from './components/problems-verificatio
 		PropertiesVerificationComponent,
 		UsersVerificationComponent,
 		ProblemsVerificationComponent,
+		AddInterventionDialogComponent,
+		ChangeDisputeStatusDialogComponent,
 	],
 	imports: [
 		CommonModule,
@@ -46,6 +55,11 @@ import { ProblemsVerificationComponent } from './components/problems-verificatio
 		ReactiveFormsModule,
 		MatDialogModule,
 		MatMenuModule,
+		MatPaginatorModule,
+		MatOptionModule,
+		MatSelectModule,
+		MatTooltipModule,
+		MatSortModule,
 	],
 	providers: [ModerationConsoleService, MatSnackBarModule],
 	exports: [ModerationConsoleComponent],

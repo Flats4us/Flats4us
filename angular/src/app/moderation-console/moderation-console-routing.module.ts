@@ -5,7 +5,6 @@ import { PropertiesVerificationComponent } from './components/properties-verific
 import { UsersVerificationComponent } from './components/users-verification/users-verification.component';
 import { ProblemsVerificationComponent } from './components/problems-verification/problems-verification.component';
 import { DisputeComponent } from './components/dispute/dispute.component';
-import { DisputesConversationComponent } from '@shared/components/disputes-conversation/disputes-conversation.component';
 
 const routes: Routes = [
 	{
@@ -23,7 +22,6 @@ const routes: Routes = [
 			{
 				path: 'disputes',
 				component: DisputeComponent,
-				children: [{ path: ':id', component: DisputesConversationComponent }],
 			},
 		],
 	},

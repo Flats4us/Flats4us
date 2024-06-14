@@ -1,51 +1,92 @@
-<table
-	mat-table
-	class="mat-elevation-z8 mb-4"
-	[dataSource]="technicalProblems$"
->
-	<ng-container matColumnDef="kind">
-		<th *matHeaderCellDef mat-header-cell>Rodzaj</th>
-		<td *matCellDef="let element" mat-cell>
-			<span *ngIf="element.kind === 1">Obsługa aplikacji</span>
-			<span *ngIf="element.kind === 2">Płatność</span>
-			<span *ngIf="element.kind === 3">Wydajność konta</span>
-			<span *ngIf="element.kind === 4">Inne</span>
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="date">
-		<th *matHeaderCellDef mat-header-cell>Data zgłoszenia</th>
-		<td *matCellDef="let element" mat-cell>
-			{{ formatDate(element.date, "dd/MM/yyyy", "pl-PL") }}
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="description">
-		<th *matHeaderCellDef mat-header-cell>Opis zgłoszenia</th>
-		<td *matCellDef="let element" mat-cell>{{ element.description }}</td>
-	</ng-container>
-	<ng-container matColumnDef="solved">
-		<th *matHeaderCellDef mat-header-cell>Czy rozwiązany?</th>
-		<td *matCellDef="let element" mat-cell>
-			{{ element.solved ? "Tak" : "Nie" }}
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="userId">
-		<th *matHeaderCellDef mat-header-cell>Id Zgłaszającego</th>
-		<td *matCellDef="let element" mat-cell>{{ element.userId }}</td>
-	</ng-container>
-	<ng-container matColumnDef="actions">
-		<th *matHeaderCellDef mat-header-cell>Akcje</th>
-		<td *matCellDef="let element" mat-cell>
-			<button
-				class="mr-2"
-				mat-stroked-button
-				mat-flat-button
-				routerLink="{{ element.disputeId }}"
+<div class="mat-elevation-z8">
+	<table mat-table multiTemplateDataRows [dataSource]="technicalProblems$">
+		<ng-container matColumnDef="kind">
+			<th *matHeaderCellDef mat-header-cell>Rodzaj</th>
+			<td *matCellDef="let element" mat-cell>
+				<span *ngIf="element.kind === 1">Obsługa aplikacji</span>
+				<span *ngIf="element.kind === 2">Płatność</span>
+				<span *ngIf="element.kind === 3">Wydajność konta</span>
+				<span *ngIf="element.kind === 4">Inne</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="date">
+			<th *matHeaderCellDef mat-header-cell>Data zgłoszenia</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ formatDate(element.date, "dd/MM/yyyy", "pl-PL") }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="solved">
+			<th *matHeaderCellDef mat-header-cell>Status</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ element.solved ? "Rozwiązany" : "Nierozwiązany" }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="userId">
+			<th *matHeaderCellDef mat-header-cell>Id Zgłaszającego</th>
+			<td *matCellDef="let element" mat-cell>{{ element.userId }}</td>
+		</ng-container>
+		<ng-container matColumnDef="actions">
+			<th *matHeaderCellDef mat-header-cell>Akcje</th>
+			<td *matCellDef="let element" mat-cell>
+				<button
+					class="mr-2"
+					mat-icon-button
+					aria-label="expand row"
+					matTooltip="Wyświetl opis"
+					(click)="
+						expandedElement = expandedElement === element ? null : element;
+						$event.stopPropagation()
+					"
+				>
+					<mat-icon *ngIf="expandedElement !== element"
+						>keyboard_arrow_down</mat-icon
+					>
+					<mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+				</button>
+				<button
+					*ngIf="!element.solved"
+					mat-stroked-button
+					class="mb-2"
+					(click)="markAsSolved(element.technicalProblemId)"
+				>
+					Oznacz jako rozwiązane
+				</button>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="expandedDetail">
+			<td
+				*matCellDef="let element"
+				mat-cell
+				[attr.colspan]="displayedColumns.length"
 			>
-				Zobacz spór
-			</button>
-			<button class="mr-2" mat-stroked-button>Oznacz jako rozwiązane</button>
-		</td>
-	</ng-container>
-	<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-</table>
+				<div
+					class="element-detail"
+					[@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+				>
+					<div class="element-description">
+						Opis zgłoszenia: {{ element.description }}
+					</div>
+				</div>
+			</td>
+		</ng-container>
+		<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+		<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+		<tr
+			*matRowDef="let row; columns: ['expandedDetail']"
+			class="detail-row"
+			mat-row
+		></tr>
+	</table>
+	<mat-paginator
+		#paginator
+		id="paginator2"
+		showFirstLastButtons
+		aria-label="Paginator"
+		[length]="problemsCount$ | async"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
+		[pageSizeOptions]="[6, 12, 18, 48]"
+	>
+	</mat-paginator>
+</div>

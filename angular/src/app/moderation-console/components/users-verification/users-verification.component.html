@@ -1,57 +1,103 @@
-<table mat-table class="mat-elevation-z8 mb-4" [dataSource]="users$">
-	<ng-container matColumnDef="email">
-		<th *matHeaderCellDef mat-header-cell>Email</th>
-		<td *matCellDef="let element" mat-cell>{{ element.email }}</td>
-	</ng-container>
-	<ng-container matColumnDef="university">
-		<th *matHeaderCellDef mat-header-cell>Uczelnia</th>
-		<td *matCellDef="let element" mat-cell>{{ element.university }}</td>
-	</ng-container>
-	<ng-container matColumnDef="studentNumber">
-		<th *matHeaderCellDef mat-header-cell>Nr albumu</th>
-		<td *matCellDef="let element" mat-cell>{{ element.studentNumber }}</td>
-	</ng-container>
-	<ng-container matColumnDef="documentNumber">
-		<th *matHeaderCellDef mat-header-cell>Nr dokumentu</th>
-		<td *matCellDef="let element" mat-cell>{{ element.documentNumber }}</td>
-	</ng-container>
-	<ng-container matColumnDef="name">
-		<th *matHeaderCellDef mat-header-cell>Imię</th>
-		<td *matCellDef="let element" mat-cell>{{ element.name }}</td>
-	</ng-container>
-	<ng-container matColumnDef="surname">
-		<th *matHeaderCellDef mat-header-cell>Nazwisko</th>
-		<td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
-	</ng-container>
-	<ng-container matColumnDef="documentExpireDate">
-		<th *matHeaderCellDef mat-header-cell>Data ważności legitymacji</th>
-		<td *matCellDef="let element" mat-cell>
-			{{ formatDate(element.documentExpireDate, "dd/MM/yyyy", "pl-PL") }}
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="document">
-		<th *matHeaderCellDef mat-header-cell>Dokument tożsamości</th>
-		<td *matCellDef="let element" mat-cell>
-			<a target="_blank" href="{{ baseUrl }}/{{ element.document.path }}">
-				<img
-					class="inline-block h-32"
-					alt="document"
-					src="{{ baseUrl }}/{{ element.document.path }}"
-				/>
-			</a>
-		</td>
-	</ng-container>
-	<ng-container matColumnDef="actions">
-		<th *matHeaderCellDef mat-header-cell>Akcje</th>
-		<td *matCellDef="let element" mat-cell>
-			<button class="mr-2" mat-stroked-button (click)="acceptUser(element.userId)">
-				Zaakceptuj
-			</button>
-			<button class="mr-2" mat-stroked-button (click)="acceptUser(element.userId)">
-				Odrzuć
-			</button>
-		</td>
-	</ng-container>
-	<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-	<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
-</table>
+<div class="mat-elevation-z8">
+	<table mat-table [dataSource]="users$">
+		<ng-container matColumnDef="email">
+			<th *matHeaderCellDef mat-header-cell>Email</th>
+			<td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+		</ng-container>
+		<ng-container matColumnDef="university">
+			<th *matHeaderCellDef mat-header-cell>Uczelnia</th>
+			<td *matCellDef="let element" mat-cell>{{ element.university }}</td>
+		</ng-container>
+		<ng-container matColumnDef="studentNumber">
+			<th *matHeaderCellDef mat-header-cell>Nr albumu</th>
+			<td *matCellDef="let element" mat-cell>{{ element.studentNumber }}</td>
+		</ng-container>
+		<ng-container matColumnDef="documentNumber">
+			<th *matHeaderCellDef mat-header-cell>Nr dokumentu</th>
+			<td *matCellDef="let element" mat-cell>{{ element.documentNumber }}</td>
+		</ng-container>
+		<ng-container matColumnDef="name">
+			<th *matHeaderCellDef mat-header-cell>Imię</th>
+			<td *matCellDef="let element" mat-cell>{{ element.name }}</td>
+		</ng-container>
+		<ng-container matColumnDef="surname">
+			<th *matHeaderCellDef mat-header-cell>Nazwisko</th>
+			<td *matCellDef="let element" mat-cell>{{ element.surname }}</td>
+		</ng-container>
+		<ng-container matColumnDef="documentExpireDate">
+			<th *matHeaderCellDef mat-header-cell>Data ważności legitymacji</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ formatDate(element.documentExpireDate, "dd/MM/yyyy", "pl-PL") }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="document">
+			<th *matHeaderCellDef mat-header-cell>Dokument tożsamości</th>
+			<td *matCellDef="let element" mat-cell>
+				<a
+					*ngIf="element.verificationStatus === 1 && element.document"
+					target="_blank"
+					href="{{ baseUrl }}/{{ element.document.path }}"
+				>
+					<img
+						class="inline-block h-32"
+						alt="document"
+						src="{{ baseUrl }}/{{ element.document.path }}"
+					/>
+				</a>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="status">
+			<th *matHeaderCellDef mat-header-cell>Status</th>
+			<td *matCellDef="let element" mat-cell>
+				<span *ngIf="element.verificationStatus === 0">Zweryfikowany</span>
+				<span *ngIf="element.verificationStatus === 1">Niezweryfikowany</span>
+				<span *ngIf="element.verificationStatus === 2">Odrzucony</span>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="verificationOrRejectionDate">
+			<th *matHeaderCellDef mat-header-cell>Data weryfikacji</th>
+			<td *matCellDef="let element" mat-cell>
+				{{
+					element.verificationOrRejectionDate !== null
+						? formatDate(element.verificationOrRejectionDate, "dd/MM/yyyy", "pl-PL")
+						: "-"
+				}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="actions">
+			<th *matHeaderCellDef mat-header-cell>Akcje</th>
+			<td *matCellDef="let element" mat-cell>
+				<button
+					*ngIf="element.verificationStatus === 1"
+					class="mr-2"
+					mat-stroked-button
+					(click)="acceptUser(element.userId)"
+				>
+					Zaakceptuj
+				</button>
+				<button
+					*ngIf="element.verificationStatus === 1"
+					class="mr-2"
+					mat-stroked-button
+					(click)="acceptUser(element.userId)"
+				>
+					Odrzuć
+				</button>
+			</td>
+		</ng-container>
+		<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+		<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+	</table>
+	<mat-paginator
+		#paginator
+		id="paginator2"
+		showFirstLastButtons
+		aria-label="Paginator"
+		[length]="usersCount$ | async"
+		[pageSize]="pageSize"
+		[pageIndex]="pageIndex"
+		[pageSizeOptions]="[6, 12, 18, 48]"
+		(page)="changePage($event)"
+	>
+	</mat-paginator>
+</div>
