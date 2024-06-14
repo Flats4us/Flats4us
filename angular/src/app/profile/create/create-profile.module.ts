@@ -31,10 +31,10 @@ import { OfferModule } from 'src/app/offer/offer.module';
 import { ProfileRoutingModule } from '../profile-routing.module';
 import { ProfileService } from '../services/profile.service';
 import { CreateProfileComponent } from './create-profile.component';
-import { EditProfileModule } from '../edit/edit-profile.module';
 import { SurveyModule } from '@shared/components/survey/survey.module';
 import { UserService } from '@shared/services/user.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { EditProfileModule } from '../edit/edit-profile.module';
 
 @NgModule({
 	declarations: [CreateProfileComponent],

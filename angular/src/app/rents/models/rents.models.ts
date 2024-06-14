@@ -52,12 +52,11 @@ export interface IRent {
 }
 
 export interface IRentOpinion {
-	rating: boolean;
-	cleanliness: boolean;
-	service: boolean;
-	location: boolean;
-	equipment: boolean;
-	qualityForMoney: boolean;
+	rating: number;
+	service: number;
+	location: number;
+	equipment: number;
+	qualityForMoney: number;
 	description: string;
 }
 

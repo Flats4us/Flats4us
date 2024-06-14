@@ -1,0 +1,51 @@
+<mat-card>
+	<h2>{{ "Email-change.email-change" | translate }}</h2>
+	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/3">
+		<form [formGroup]="emailChangeForm" (ngSubmit)="onSubmit()">
+			<mat-form-field appearance="outline">
+				<mat-label>E-mail</mat-label>
+				<input matInput formControlName="email" />
+				<mat-error *ngIf="emailChangeForm.controls['email'].hasError('required')">{{
+					"required-field" | translate
+				}}</mat-error>
+				<mat-error *ngIf="emailChangeForm.controls['email'].hasError('email')">{{
+					"Email-change.wrong-format-error" | translate
+				}}</mat-error>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>{{ "Email-change.repeat" | translate }}</mat-label>
+				<input matInput formControlName="confirmEmail" />
+				<mat-error
+					*ngIf="emailChangeForm.controls['confirmEmail'].hasError('required')"
+					>{{ "required-field" | translate }}</mat-error
+				>
+				<mat-error
+					*ngIf="emailChangeForm.controls['confirmEmail'].hasError('emailNoMatch')"
+					>{{ "Email-change.repeat-error" | translate }}</mat-error
+				>
+			</mat-form-field>
+
+			<div class="buttons">
+				<button
+					mat-flat-button
+					color="primary"
+					class="btn-submit"
+					type="submit"
+					[disabled]="!emailChangeForm.valid"
+				>
+					{{ "save" | translate }}
+				</button>
+				<button
+					mat-flat-button
+					color="accent"
+					class="btn-cancel"
+					type="button"
+					routerLink="../"
+				>
+					{{ "cancel" | translate }}
+				</button>
+			</div>
+		</form>
+	</mat-card-content>
+</mat-card>

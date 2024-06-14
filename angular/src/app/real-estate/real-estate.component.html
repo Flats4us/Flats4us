@@ -1,19 +1,20 @@
-<div>
+<div *ngIf="realEstateOptions$ | async as realEstates">
 	<div class="box-title">
 		<div class="text-4xl p-4 font-semibold">
 			{{ "Real-estate.browsing-properties" | translate }}
 		</div>
 	</div>
 	<ng-template #notFound>
-		<mat-card class="not-found">
+		<mat-card>
 			<h1 class="text-3xl p-4">
-				{{ "Real-estate.browsing-properties-info" | translate }}
+				<span class="mr-4">{{
+					"Real-estate.browsing-properties-info" | translate
+				}}</span>
 				<button
 					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
 					mat-mini-fab
 					id="add"
 					color="basic"
-					class="box-icon-add"
 					aria-label="Add"
 					matTooltip="{{ 'Real-estate.add-property' | translate }}"
 					(click)="addRealEstate()"
@@ -23,7 +24,10 @@
 			</h1>
 		</mat-card>
 	</ng-template>
-	<div *ngIf="realEstateOptions$ | async as realEstates; else notFound">
+	<div *ngIf="!realEstates.length" class="not-found">
+		<ng-container [ngTemplateOutlet]="notFound"></ng-container>
+	</div>
+	<div *ngIf="realEstates.length">
 		<div class="real-estate-owner">
 			<mat-card class="container-list">
 				<h1 class="text-3xl p-4 font-semibold">

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {
 	FormControl,
-	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
 	UntypedFormGroup,
@@ -18,11 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
-import { IEnumerableItem } from '@shared/models/shared.models';
 import { Observable, switchMap, takeUntil } from 'rxjs';
 import { IOffer } from 'src/app/offer/models/offer.models';
 import { RentsService } from '../../services/rents.service';
-import { IRentOpinion } from '../../models/rents.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -49,7 +46,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class RentRateComponent extends BaseComponent {
 	public form = new UntypedFormGroup({
 		rating: new FormControl(1, Validators.required),
-		cleanliness: new FormControl(1, Validators.required),
 		service: new FormControl(1, Validators.required),
 		location: new FormControl(1, Validators.required),
 		equipment: new FormControl(1, Validators.required),

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EmailChangeComponent } from './components/emailChange/emailChange.component';
+import { EmailChangeComponent } from './components/email-change/email-change.component';
 import { HelpCenterComponent } from './components/help-center/help-center.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';

@@ -139,3 +139,49 @@ export interface IOpinion {
 	notFollowingTheArrangements: boolean;
 	description: string;
 }
+
+export interface IEditProfile {
+	address: string;
+	email: string;
+	phoneNumber: string;
+	name: string;
+	surname: string;
+	bankAccount: string;
+	documentNumber: string;
+	documentExpireDate: Date;
+	birthDate: Date;
+	studentNumber: string;
+	university: string;
+	links: string[];
+	interestIds: number[];
+}
+
+export interface IEditProfileOwner {
+	address: string;
+	phoneNumber: string;
+}
+
+export interface IEditProfileStudent {
+	address: string;
+	phoneNumber: string;
+	links: string[];
+	interestIds: number[];
+}
+
+export interface IEditProfileStudentConfiential {
+	address: string;
+	phoneNumber: string;
+	university: string;
+	links: string[];
+	interestIds: number[];
+	studentNumber: string;
+	documentExpireDate: Date;
+}
+
+export interface IEditProfileOwnerConfidential {
+	address: string;
+	phoneNumber: string;
+	bankAccount: string;
+	documentNumber: string;
+	documentExpireDate: Date;
+}
