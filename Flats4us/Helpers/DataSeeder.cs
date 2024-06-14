@@ -397,8 +397,26 @@ public static class DataSeeder
             BankAccount = "77778888999900001111222233",
             DocumentNumber = "MNO 123456"
         };
+        var owner15 = new Owner
+        {
+            Name = "Dominika",
+            Surname = "Sękowska",
+            Address = "Złota 20, 20-001 Wołomin",
+            Email = "dsekowska@gmail.com",
+            PhoneNumber = "444555666",
+            AccountCreationDate = new DateTime(2024, 1, 2),
+            VerificationOrRejectionDate = new DateTime(2024, 1, 12),
+            LastLoginDate = new DateTime(2024, 6, 13),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Dsekowska123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2027, 1, 5),
+            BankAccount = "77778888999900001111222233",
+            DocumentNumber = "MNO 123456"
+        };
 
-        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14);
+
+        dbContext.Owners.AddRange(owner1, owner2, owner3, owner4, owner5, owner6, owner7, owner8, owner9, owner10, owner11, owner12, owner13, owner14, owner15);
 
         SeedUserFiles(owner1, Gender.Male).Wait();
         SeedUserFiles(owner2, Gender.Female).Wait();
@@ -414,6 +432,7 @@ public static class DataSeeder
         SeedUserFiles(owner12, Gender.Female).Wait();
         SeedUserFiles(owner13, Gender.Male).Wait();
         SeedUserFiles(owner14, Gender.Female).Wait();
+        SeedUserFiles(owner15, Gender.Female).Wait();
 
         #endregion
 
@@ -734,9 +753,113 @@ public static class DataSeeder
             IsTenant = false,
             Interests = { interest10, interest16, interest19 }
         };
+        var student16 = new Student
+        {
+            Name = "Piotr",
+            Surname = "Nowak",
+            Address = "ul. Krótka 5, 30-200 Kraków",
+            Email = "pnowak@gmail.com",
+            PhoneNumber = "555666777",
+            AccountCreationDate = new DateTime(2021, 8, 15),
+            VerificationOrRejectionDate = new DateTime(2021, 8, 20),
+            LastLoginDate = new DateTime(2024, 4, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pnowak123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2030, 5, 25),
+            BirthDate = new DateTime(1995, 7, 10),  // 28 lat
+            StudentNumber = "s24680",
+            University = "Uniwersytet Jagielloński",
+            Links = "https://www.facebook.com/pnowak|https://twitter.com/pnowak|https://www.linkedin.com/in/pnowak",
+            IsTenant = false,
+            Interests = { interest3, interest8, interest12 }
+        };
+        var student17 = new Student
+        {
+            Name = "Marzena",
+            Surname = "Wójcik",
+            Address = "ul. Lipowa 3/5, 50-300 Wrocław",
+            Email = "mwojcik@gmail.com",
+            PhoneNumber = "111222333",
+            AccountCreationDate = new DateTime(2021, 7, 10),
+            VerificationOrRejectionDate = new DateTime(2021, 7, 15),
+            LastLoginDate = new DateTime(2024, 5, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mwojcik123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2031, 8, 20),
+            BirthDate = new DateTime(1996, 9, 5),  // 27 lat
+            StudentNumber = "s97531",
+            University = "Uniwersytet Wrocławski",
+            Links = "https://www.facebook.com/mwojcik|https://twitter.com/mwojcik|https://www.linkedin.com/in/mwojcik",
+            IsTenant = false,
+            Interests = { interest5, interest14, interest15 }
+        };
+        var student18 = new Student
+        {
+            Name = "Piotr",
+            Surname = "Kowalski",
+            Address = "ul. Parkowa 12, 00-001 Warszawa",
+            Email = "pkowalski@gmail.com",
+            PhoneNumber = "777888999",
+            AccountCreationDate = new DateTime(2021, 9, 20),
+            VerificationOrRejectionDate = new DateTime(2021, 9, 25),
+            LastLoginDate = new DateTime(2024, 6, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pkowalski789"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2032, 12, 31),
+            BirthDate = new DateTime(1993, 11, 15),  // 30 lat
+            StudentNumber = "s75319",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/pkowalski|https://twitter.com/pkowalski|https://www.linkedin.com/in/pkowalski",
+            IsTenant = false,
+            Interests = { interest1, interest7, interest18 }
+        };
+        var student19 = new Student
+        {
+            Name = "Ewelina",
+            Surname = "Nowak",
+            Address = "ul. Zielona 7, 30-400 Kraków",
+            Email = "enowak@gmail.com",
+            PhoneNumber = "555444333",
+            AccountCreationDate = new DateTime(2021, 10, 5),
+            VerificationOrRejectionDate = new DateTime(2021, 10, 10),
+            LastLoginDate = new DateTime(2024, 7, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Enowak123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2033, 5, 20),
+            BirthDate = new DateTime(1997, 4, 25),  // 27 lat
+            StudentNumber = "s86420",
+            University = "Uniwersytet Pedagogiczny w Krakowie",
+            Links = "https://www.facebook.com/mnowak|https://twitter.com/mnowak|https://www.linkedin.com/in/mnowak",
+            IsTenant = false,
+            Interests = { interest2, interest9, interest15 }
+        };
+        var student20 = new Student
+        {
+            Name = "Anna",
+            Surname = "Wiśniewska",
+            Address = "ul. Kwiatowa 15, 80-200 Gdańsk",
+            Email = "awiśniewska@gmail.com",
+            PhoneNumber = "111222333",
+            AccountCreationDate = new DateTime(2021, 11, 12),
+            VerificationOrRejectionDate = new DateTime(2021, 11, 17),
+            LastLoginDate = new DateTime(2024, 8, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Awisniewska123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2034, 3, 10),
+            BirthDate = new DateTime(1998, 8, 5),  // 25 lat
+            StudentNumber = "s102938",
+            University = "Uniwersytet Gdański",
+            Links = "https://www.facebook.com/awisniewska|https://twitter.com/awisniewska|https://www.linkedin.com/in/awisniewska",
+            IsTenant = true,
+            Interests = { interest4, interest11, interest20 }
+        };
 
-
-        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15);
+        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15, student16, student17, student18, student19, student20);
 
         SeedUserFiles(student1, Gender.Male).Wait();
         SeedUserFiles(student2, Gender.Male).Wait();
@@ -753,6 +876,11 @@ public static class DataSeeder
         SeedUserFiles(student13, Gender.Female).Wait();
         SeedUserFiles(student14, Gender.Male).Wait();
         SeedUserFiles(student15, Gender.Female).Wait();
+        SeedUserFiles(student16, Gender.Male).Wait();
+        SeedUserFiles(student17, Gender.Female).Wait();
+        SeedUserFiles(student18, Gender.Male).Wait();
+        SeedUserFiles(student19, Gender.Female).Wait();
+        SeedUserFiles(student20, Gender.Female).Wait();
 
         #endregion
 
@@ -1088,8 +1216,74 @@ public static class DataSeeder
             Floor = 3,
             Equipment = { equipment3, equipment6, equipment9 }
         };
+        var flat15 = new Flat
+        {
+            Province = "Kujawsko-Pomorskie",
+            District = "Centrum",
+            Street = "Jana Pawła II",
+            Number = "21",
+            Flat = 37,
+            City = "Toruń",
+            PostalCode = "40-097",
+            GeoLat = 50.259366,
+            GeoLon = 19.021578,
+            Area = 65,
+            MaxNumberOfInhabitants = 3,
+            ConstructionYear = 2005,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 1, 10),
+            VerificationOrRejectionDate = new DateTime(2024, 1, 12),
+            Owner = owner15,
+            NumberOfRooms = 3,
+            Floor = 1,
+            Equipment = { equipment3, equipment5, equipment9 }
+        };
+        var flat16 = new Flat
+        {
+            Province = "Lubelskie",
+            District = "Międzylesie",
+            Street = "Zaruby",
+            Number = "13",
+            Flat = 6,
+            City = "Lublin",
+            PostalCode = "40-097",
+            GeoLat = 50.435421,
+            GeoLon = 48.021578,
+            Area = 36,
+            MaxNumberOfInhabitants = 2,
+            ConstructionYear = 2005,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 1, 12),
+            VerificationOrRejectionDate = new DateTime(2024, 1, 14),
+            Owner = owner15,
+            NumberOfRooms = 2,
+            Floor = 3,
+            Equipment = { equipment1, equipment2, equipment4 }
+        };
+        var flat17 = new Flat
+        {
+            Province = "Lubuskie",
+            District = "Gdzieś",
+            Street = "Wąwozowa",
+            Number = "43",
+            Flat = 5,
+            City = "Zielona Góra",
+            PostalCode = "26-846",
+            GeoLat = 48.318329,
+            GeoLon = 25.286845,
+            Area = 84,
+            MaxNumberOfInhabitants = 7,
+            ConstructionYear = 2010,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 3, 15),
+            VerificationOrRejectionDate = new DateTime(2024, 3, 17),
+            Owner = owner9,
+            NumberOfRooms = 7,
+            Floor = 6,
+            Equipment = { equipment5, equipment6, equipment6 }
+        };
 
-        dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14);
+        dbContext.Flats.AddRange(flat1, flat2, flat3, flat4, flat5, flat6, flat7, flat8, flat9, flat10, flat11, flat12, flat13, flat14, flat15, flat16, flat17);
 
         await SeedPropertyFiles(flat1);
         await SeedPropertyFiles(flat2);
@@ -1105,6 +1299,9 @@ public static class DataSeeder
         await SeedPropertyFiles(flat12);
         await SeedPropertyFiles(flat13);
         await SeedPropertyFiles(flat14);
+        await SeedPropertyFiles(flat15);
+        await SeedPropertyFiles(flat16);
+        await SeedPropertyFiles(flat17);
 
         #endregion
 
@@ -1279,9 +1476,72 @@ public static class DataSeeder
             Floor = 5,
             Equipment = { equipment3, equipment5, equipment8, equipment10, equipment12 }
         };
+        var room9 = new Room
+        {
+            Province = "Opolskie",
+            District = "Rakowiec",
+            Street = "Grzesiowska",
+            Number = "485",
+            Flat = 7,
+            City = "Opole",
+            PostalCode = "16-846",
+            GeoLat = 25.784685,
+            GeoLon = 25.795486,
+            Area = 48,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 2019,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 2, 20),
+            DateForVerificationSorting = new DateTime(2024, 2, 21),
+            Owner = owner15,
+            Floor = 10,
+            Equipment = { equipment1, equipment3, equipment5, equipment7, equipment12 }
+        };
+        var room10 = new Room
+        {
+            Province = "Podkarpackie",
+            District = "Śródmieście",
+            Street = "Jana Pawła II",
+            Number = "123",
+            Flat = 7,
+            City = "Rzeszów",
+            PostalCode = "35-064",
+            GeoLat = 50.041187,
+            GeoLon = 21.999119,
+            Area = 48,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 2007,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 3, 3),
+            DateForVerificationSorting = new DateTime(2024, 3, 8),
+            Owner = owner15,
+            Floor = 5,
+            Equipment = { equipment2, equipment5, equipment5, equipment11, equipment12 }
+        };
+        var room11 = new Room
+        {
+            Province = "Podlaskie",
+            District = "Centrum",
+            Street = "Lipowa",
+            Number = "58",
+            Flat = 7,
+            City = "Białystok",
+            PostalCode = "15-424",
+            GeoLat = 53.132488,
+            GeoLon = 23.168840,
+            Area = 48,
+            MaxNumberOfInhabitants = 1,
+            ConstructionYear = 1965,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 3, 25),
+            DateForVerificationSorting = new DateTime(2024, 3, 29),
+            Owner = owner15,
+            Floor = 2,
+            Equipment = { equipment2, equipment3, equipment4, equipment9, equipment11 }
+        };
 
 
-        dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8);
+        dbContext.Rooms.AddRange(room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11);
 
         await SeedPropertyFiles(room1);
         await SeedPropertyFiles(room2);
@@ -1291,6 +1551,9 @@ public static class DataSeeder
         await SeedPropertyFiles(room6);
         await SeedPropertyFiles(room7);
         await SeedPropertyFiles(room8);
+        await SeedPropertyFiles(room9);
+        await SeedPropertyFiles(room10);
+        await SeedPropertyFiles(room11);
 
         #endregion
 
@@ -1473,8 +1736,96 @@ public static class DataSeeder
             PlotArea = 300,
             Equipment = { equipment2, equipment3, equipment8 }
         };
+        var house9 = new House
+        {
+            Province = "Pomorskie",
+            District = "Oliwa",
+            Street = "Opata Jacka Rybińskiego",
+            Number = "23",
+            City = "Gdańsk",
+            PostalCode = "80-320",
+            GeoLat = 54.402348,
+            GeoLon = 18.567110,
+            Area = 200,
+            MaxNumberOfInhabitants = 6,
+            ConstructionYear = 2005,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 4, 5),
+            VerificationOrRejectionDate = new DateTime(2024, 4, 6),
+            Owner = owner15,
+            NumberOfRooms = 3,
+            NumberOfFloors = 1,
+            PlotArea = 84,
+            Equipment = { equipment5, equipment6, equipment9 }
+        };
+        var house10 = new House
+        {
+            Province = "Świętokrzyskie",
+            District = "Sady",
+            Street = "Sienkiewicza",
+            Number = "12",
+            City = "Kielce",
+            PostalCode = "25-333",
+            GeoLat = 50.866077,
+            GeoLon = 20.628569,
+            Area = 200,
+            MaxNumberOfInhabitants = 9,
+            ConstructionYear = 2005,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 4, 10),
+            VerificationOrRejectionDate = new DateTime(2024, 4, 13),
+            Owner = owner15,
+            NumberOfRooms = 9,
+            NumberOfFloors = 3,
+            PlotArea = 306,
+            Equipment = { equipment4, equipment6, equipment8 }
+        };
+        var house11 = new House
+        {
+            Province = "Warmińsko-Mazurskie",
+            District = "Śródmieście",
+            Street = "Kościuszki",
+            Number = "18",
+            City = "Olsztyn",
+            PostalCode = "10-503",
+            GeoLat = 53.778422,
+            GeoLon = 20.481449,
+            Area = 200,
+            MaxNumberOfInhabitants = 5,
+            ConstructionYear = 2010,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 4, 20),
+            VerificationOrRejectionDate = new DateTime(2024, 4, 22),
+            Owner = owner15,
+            NumberOfRooms = 5,
+            NumberOfFloors = 2,
+            PlotArea = 150,
+            Equipment = { equipment5, equipment6, equipment9 }
+        };
+        var house12 = new House
+        {
+            Province = "Zachodniopomorskie",
+            District = "Pogodno",
+            Street = "Wojska Polskiego",
+            Number = "45",
+            City = "Szczecin",
+            PostalCode = "70-473",
+            GeoLat = 53.42894,
+            GeoLon = 14.55302,
+            Area = 200,
+            MaxNumberOfInhabitants = 12,
+            ConstructionYear = 2005,
+            VerificationStatus = VerificationStatus.Verified,
+            CreationDate = new DateTime(2024, 4, 12),
+            VerificationOrRejectionDate = new DateTime(2024, 4, 14),
+            Owner = owner15,
+            NumberOfRooms = 12,
+            NumberOfFloors = 3,
+            PlotArea = 406,
+            Equipment = { equipment5, equipment6, equipment9 }
+        };
 
-        dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8);
+        dbContext.Houses.AddRange(house1, house2, house3, house4, house5, house6, house7, house8, house9, house10, house11, house12);
 
         await SeedPropertyFiles(house1);
         await SeedPropertyFiles(house2);
@@ -1484,6 +1835,10 @@ public static class DataSeeder
         await SeedPropertyFiles(house6);
         await SeedPropertyFiles(house7);
         await SeedPropertyFiles(house8);
+        await SeedPropertyFiles(house9);
+        await SeedPropertyFiles(house10);
+        await SeedPropertyFiles(house11);
+        await SeedPropertyFiles(house12);
 
         #endregion
 
@@ -1853,8 +2208,139 @@ public static class DataSeeder
             Regulations = "regulacje pod wynajem 28",
             Property = house4
         };
+        var offer29 = new Offer 
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 29",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 29",
+            Property = flat15
+        };
+        var offer30 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 30",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 30",
+            Property = flat16
+        };
+        var offer31 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 31",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 31",
+            Property = flat17
+        };
+        var offer32 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 32",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 32",
+            Property = room9
+        };
+        var offer33 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 33",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 33",
+            Property = room10
+        };
+        var offer34 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 34",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 34",
+            Property = room11
+        };
+        var offer35 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 35",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 35",
+            Property = house9
+        };
+        var offer36 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 36",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 36",
+            Property = house10
+        };
+        var offer37 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 37",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 37",
+            Property = house11
+        };
+        var offer38 = new Offer
+        {
+            Date = new DateTime(2024, 6, 1),
+            OfferStatus = OfferStatus.Waiting,
+            Price = 1990,
+            Deposit = 1000,
+            Description = "wynajem nr 38",
+            StartDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2025, 7, 1),
+            NumberOfInterested = 0,
+            Regulations = "regulacje pod wynajem 38",
+            Property = house12
+        };
 
-        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25, offer26, offer27, offer28);
+
+        dbContext.Offers.AddRange(offer1, offer2, offer3, offer4, offer5, offer6, offer7, offer8, offer9, offer10, offer11, offer12, offer13, offer14, offer15, offer16, offer17, offer18, offer19, offer20, offer21, offer22, offer23, offer24, offer25, offer26, offer27, offer28, offer29, offer30, offer31, offer32, offer33, offer34, offer35, offer36, offer37, offer38);
 
         #endregion
 
@@ -2008,8 +2494,192 @@ public static class DataSeeder
             Gender = Gender.Both,
             Offer = offer15
         };
+        var surveyOwnerOffer16 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer16
+        };
+        var surveyOwnerOffer17 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer17
+        };
+        var surveyOwnerOffer18 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer18
+        };
+        var surveyOwnerOffer19 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer19
+        };
+        var surveyOwnerOffer20 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer20
+        };
+        var surveyOwnerOffer21 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer21
+        };
+        var surveyOwnerOffer22 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = true,
+            PartiesAllowed = true,
+            AnimalsAllowed = true,
+            Gender = Gender.Both,
+            Offer = offer22
+        };
+        var surveyOwnerOffer23 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer23
+        };
+        var surveyOwnerOffer24 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer24
+        };
+        var surveyOwnerOffer25 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer25
+        };
+        var surveyOwnerOffer26 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer26
+        };
+        var surveyOwnerOffer27 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer27
+        };
+        var surveyOwnerOffer28 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer28
+        };
+        var surveyOwnerOffer29 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer29
+        };
+        var surveyOwnerOffer30 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = true,
+            AnimalsAllowed = false,
+            Gender = Gender.Female,
+            Offer = offer30
+        };
+        var surveyOwnerOffer31 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer31
+        };
+        var surveyOwnerOffer32 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer32
+        };
+        var surveyOwnerOffer33 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer33
+        };
+        var surveyOwnerOffer34 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer34
+        };
+        var surveyOwnerOffer35 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer35
+        };
+        var surveyOwnerOffer36 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer36
+        };
+        var surveyOwnerOffer37 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer37
+        };
+        var surveyOwnerOffer38 = new SurveyOwnerOffer
+        {
+            SmokingAllowed = false,
+            PartiesAllowed = false,
+            AnimalsAllowed = true,
+            Gender = Gender.Male,
+            Offer = offer38
+        };
 
-        dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15);
+        dbContext.OwnerOfferSurveys.AddRange(surveyOwnerOffer1, surveyOwnerOffer2, surveyOwnerOffer3, surveyOwnerOffer4, surveyOwnerOffer5, surveyOwnerOffer6, surveyOwnerOffer7, surveyOwnerOffer8, surveyOwnerOffer9, surveyOwnerOffer10, surveyOwnerOffer11, surveyOwnerOffer12, surveyOwnerOffer13, surveyOwnerOffer14, surveyOwnerOffer15, surveyOwnerOffer16, surveyOwnerOffer17, surveyOwnerOffer18, surveyOwnerOffer19, surveyOwnerOffer20, surveyOwnerOffer2, surveyOwnerOffer21, surveyOwnerOffer22, surveyOwnerOffer23, surveyOwnerOffer24, surveyOwnerOffer25, surveyOwnerOffer26, surveyOwnerOffer27, surveyOwnerOffer28, surveyOwnerOffer29, surveyOwnerOffer30, surveyOwnerOffer31, surveyOwnerOffer32, surveyOwnerOffer33, surveyOwnerOffer34, surveyOwnerOffer35, surveyOwnerOffer36, surveyOwnerOffer37, surveyOwnerOffer38);
 
         #endregion
 
@@ -2165,9 +2835,159 @@ public static class DataSeeder
             City = "Warszawa",
             Student = student10
         };
+        var surveyStudent11 = new SurveyStudent
+        {
+            Party = 2,
+            Smoking = false,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = false,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 24,
+            MaxRoommateAge = 30,
+            City = "Kraków",
+            Student = student11
+        };
+        var surveyStudent12 = new SurveyStudent
+        {
+            Party = 3,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Gdańsk",
+            Student = student12
+        };
+        var surveyStudent13 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = false,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 1,
+            RoommateGender = 0,
+            MinRoommateAge = 26,
+            MaxRoommateAge = 27,
+            City = "Poznań",
+            Student = student13
+        };
+        var surveyStudent14 = new SurveyStudent
+        {
+            Party = 2,
+            Smoking = true,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 4,
+            RoommateGender = 0,
+            MinRoommateAge = 23,
+            MaxRoommateAge = 29,
+            City = "Warszawa",
+            Student = student14
+        };
+        var surveyStudent15 = new SurveyStudent
+        {
+            Party = 3,
+            Smoking = false,
+            Sociability = true,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = false,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 24,
+            MaxRoommateAge = 30,
+            City = "Kraków",
+            Student = student15
+        };
+        var surveyStudent16 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = false,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Gdańsk",
+            Student = student16
+        };
+        var surveyStudent17 = new SurveyStudent
+        {
+            Party = 2,
+            Smoking = false,
+            Sociability = false,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 1,
+            RoommateGender = 0,
+            MinRoommateAge = 26,
+            MaxRoommateAge = 27,
+            City = "Poznań",
+            Student = student17
+        };
+        var surveyStudent18 = new SurveyStudent
+        {
+            Party = 3,
+            Smoking = true,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 4,
+            RoommateGender = 0,
+            MinRoommateAge = 23,
+            MaxRoommateAge = 29,
+            City = "Warszawa",
+            Student = student18
+        };
+        var surveyStudent19 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = true,
+            Vegan = true,
+            LookingForRoommate = false,
+            MaxNumberOfRoommates = 3,
+            RoommateGender = 0,
+            MinRoommateAge = 24,
+            MaxRoommateAge = 30,
+            City = "Kraków",
+            Student = student19
+        };
+        var surveyStudent20 = new SurveyStudent
+        {
+            Party = 2,
+            Smoking = true,
+            Sociability = true,
+            Animals = true,
+            Vegan = false,
+            LookingForRoommate = false,
+            MaxNumberOfRoommates = 2,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Gdańsk",
+            Student = student20
+        };
 
 
-        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10);
+        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10, surveyStudent11, surveyStudent12, surveyStudent13, surveyStudent14, surveyStudent15, surveyStudent16, surveyStudent17, surveyStudent18, surveyStudent19, surveyStudent20);
 
         #endregion
 
@@ -2277,8 +3097,48 @@ public static class DataSeeder
             Solved = false,
             User = student4
         };
+        var technicalProblem6 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.ApplicationOperation,
+            Description = "Technical Problem o numerze 6",
+            Date = new DateTime(2024, 2, 29),
+            Solved = false,
+            User = student6
+        };
+        var technicalProblem7 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.AccountPerformance,
+            Description = "Technical Problem o numerze 7",
+            Date = new DateTime(2024, 3, 29),
+            Solved = true,
+            User = student7
+        };
+        var technicalProblem8 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.ApplicationOperation,
+            Description = "Technical Problem o numerze 8",
+            Date = new DateTime(2024, 3, 14),
+            Solved = false,
+            User = student8
+        };
+        var technicalProblem9 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.Payment,
+            Description = "Technical Problem o numerze 9",
+            Date = new DateTime(2024, 1, 15),
+            Solved = true,
+            User = student9
+        };
+        var technicalProblem10 = new TechnicalProblem
+        {
+            Kind = TechnicalProblemType.ApplicationOperation,
+            Description = "Technical Problem o numerze 10",
+            Date = new DateTime(2024, 2, 2),
+            Solved = false,
+            User = student10
+        };
 
-        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2, technicalProblem3, technicalProblem4, technicalProblem5);
+        dbContext.TechnicalProblems.AddRange(technicalProblem1, technicalProblem2, technicalProblem3, technicalProblem4, technicalProblem5, technicalProblem6, technicalProblem7, technicalProblem8, technicalProblem9, technicalProblem10);
 
         #endregion
 
@@ -2868,7 +3728,6 @@ public static class DataSeeder
             Student = student1,
             Property = flat1
         };
-
         var rentOpinion2 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -2881,7 +3740,6 @@ public static class DataSeeder
             Student = student2,
             Property = flat1
         };
-
         var rentOpinion3 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -2894,7 +3752,6 @@ public static class DataSeeder
             Student = student3,
             Property = flat1
         };
-
         var rentOpinion4 = new RentOpinion
         {
             Date = DateTime.Now,
@@ -2907,8 +3764,44 @@ public static class DataSeeder
             Student = student4,
             Property = house1
         };
+        var rentOpinion5 = new RentOpinion
+        {
+            Date = DateTime.Now,
+            Rating = 5,
+            Service = 5,
+            Location = 5,
+            Equipment = 5,
+            QualityForMoney = 5,
+            Description = "Opinia do rent 5",
+            Student = student11,
+            Property = flat5
+        };
+        var rentOpinion6 = new RentOpinion
+        {
+            Date = DateTime.Now,
+            Rating = 6,
+            Service = 6,
+            Location = 6,
+            Equipment = 6,
+            QualityForMoney = 6,
+            Description = "Opinia do rent 6",
+            Student = student12,
+            Property = room4
+        };
+        var rentOpinion7 = new RentOpinion
+        {
+            Date = DateTime.Now,
+            Rating = 7,
+            Service = 7,
+            Location = 7,
+            Equipment = 7,
+            QualityForMoney = 7,
+            Description = "Opinia do rent 7",
+            Student = student13,
+            Property = house4
+        };
 
-        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4);
+        dbContext.RentOpinions.AddRange(rentOpinion1, rentOpinion2, rentOpinion3, rentOpinion4, rentOpinion5, rentOpinion6, rentOpinion7);
 
         #endregion
 
@@ -3038,6 +3931,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = false,
             InterventionNeedDate = null,
+            ArgumentCreatedByUserId = owner1.UserId,
             Rent = rent1,
             Student = student1,
             GroupChat = groupChat1
@@ -3053,6 +3947,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             InterventionNeedDate = new DateTime(2023, 1 , 14),
+            ArgumentCreatedByUserId = student4.UserId,
             Rent = rent2,
             Student = student4,
             GroupChat = groupChat2
@@ -3068,6 +3963,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             InterventionNeedDate = new DateTime(2024, 2, 13),
+            ArgumentCreatedByUserId = owner2.UserId,
             Rent = rent3,
             Student = student7,
             GroupChat = groupChat3
@@ -3083,6 +3979,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             InterventionNeedDate = new DateTime(2023, 6, 25),
+            ArgumentCreatedByUserId = student10.UserId,
             Rent = rent4,
             Student = student10,
             GroupChat = groupChat4
@@ -3098,6 +3995,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Resolved,
             InterventionNeed = false,
             InterventionNeedDate = null,
+            ArgumentCreatedByUserId = student8.UserId,
             Rent = rent3,
             Student = student8,
             GroupChat = groupChat5
@@ -3113,6 +4011,7 @@ public static class DataSeeder
             ArgumentStatus = ArgumentStatus.Ongoing,
             InterventionNeed = true,
             InterventionNeedDate = new DateTime(2024, 2, 23),
+            ArgumentCreatedByUserId = owner1.UserId,
             Rent = rent1,
             Student = student3,
             GroupChat = groupChat6

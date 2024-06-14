@@ -35,6 +35,7 @@ namespace Flats4us.Services
             {
                 var arguments = await _context.Arguments
                 .Include(x => x.ArgumentInterventions)
+                .Include(x => x.Student)
                 .Where(x => x.Student.UserId == userId)
                 .OrderBy(x=>x.StartDate)
                 .Select(x => _mapper.Map<ArgumentDto>(x))
@@ -49,6 +50,7 @@ namespace Flats4us.Services
                     .Include(x => x.Rent)
                         .ThenInclude(x => x.Offer)
                             .ThenInclude(x => x.Property)
+                    .Include(x => x.Student)
                     .Where(x => x.Rent.Offer.Property.OwnerId == userId)
                     .OrderBy(x => x.StartDate)
                     .Select(x => _mapper.Map<ArgumentDto>(x))
@@ -125,7 +127,7 @@ namespace Flats4us.Services
 
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
-
+                
             int studentId;
 
             if (user is Owner)
@@ -146,12 +148,16 @@ namespace Flats4us.Services
 
             var argument = new Argument
             {
-                StartDate = DateTime.Now,
-                ArgumentStatus = ArgumentStatus.Ongoing,
                 Title = input.Title,
                 Description = input.Description,
-                RentId = input.RentId,
+                StartDate = DateTime.Now,
+                OwnerAcceptanceDate = null,
+                StudentAccceptanceDate = null,
+                ArgumentStatus = ArgumentStatus.Ongoing,
                 InterventionNeed = false,
+                InterventionNeedDate = null,
+                ArgumentCreatedByUserId = userId,
+                RentId = input.RentId,
                 StudentId = studentId,
                 GroupChatId = chatId
             };
