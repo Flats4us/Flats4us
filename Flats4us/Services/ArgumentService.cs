@@ -122,7 +122,7 @@ namespace Flats4us.Services
             if (!(ifStudentExistsv1 || ifStudentExistsv2) && !(owner.UserId == userId))
                 throw new ArgumentException($"User with Id {userId} is not in this Rent");
 
-            List<int> usersIds = new List<int> { rent.Student.UserId, property.OwnerId };
+            List<int> usersIds = new List<int> { userId, property.OwnerId };
 
             var chatId = await _groupChatService.CreateGroupChatAsync(
                 "Spór pomiędzy: student: " + rent.Student.Name +
