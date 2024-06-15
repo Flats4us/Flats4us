@@ -1,8 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Observable, switchMap } from 'rxjs';
 import { ITechnicalProblem } from '../../models/moderation-console.models';
@@ -50,8 +46,7 @@ export class ProblemsVerificationComponent extends BaseComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private snackBar: MatSnackBar,
-		private cdr: ChangeDetectorRef
+		private snackBar: MatSnackBar
 	) {
 		super();
 	}
