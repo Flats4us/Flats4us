@@ -152,7 +152,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.router.navigate(['rents', 'owner']);
 	}
 
-	public showProfile(id: number) {
+	public showProfile(id?: number) {
 		this.router.navigate(['profile', 'details', id]);
 	}
 

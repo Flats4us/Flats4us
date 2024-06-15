@@ -8,9 +8,9 @@
 	<div *ngIf="data.show" class="grid gap-4">
 		<mat-card>
 			<div class="label-box">
-				<mat-label class="label-description">
+				<mat-label class="label-description ml-4">
 					<span class="text-3xl">
-						{{ "Rents-details.rent-status" | translate }} :
+						{{ "Rents-details.rent-status" | translate }}:
 						{{
 							(data.rent?.isFinished
 								? "Rents-details.finished"
@@ -152,11 +152,12 @@
 			<mat-card-header>
 				<mat-card-title class="label-description"
 					><mat-icon [inline]="true">description</mat-icon
-					><span class="text-3xl ml-4">{{
+					><span class="text-3xl">{{
 						"Rents-details.rent-description" | translate
 					}}</span></mat-card-title
 				>
 			</mat-card-header>
+			<mat-divider></mat-divider>
 			<mat-card-content>
 				<div class="row">
 					<div class="column">
@@ -242,6 +243,53 @@
 						</p>
 					</div>
 				</div>
+				<div
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					class="row"
+				>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.owner" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4 grid gap-4">
+							<mat-card class="profile-card mat-elevation-z0">
+								<div class="profile-details">
+									<mat-card-avatar
+										matTooltip="{{ 'Rents-details.show-profile' | translate }}"
+										(click)="showProfile(data.rent?.owner?.userId)"
+									>
+										<img
+											*ngIf="data.rent?.owner?.profilePicture?.path as path"
+											class="profile-avatar"
+											src="{{ baseUrl }}/{{ path }}"
+									/></mat-card-avatar>
+									<div class="container-features">
+										<mat-chip matTooltip="{{ 'Rents-details.name-surname' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">account_circle</mat-icon
+												><span
+													>{{ data.rent?.owner?.name }} {{ data.rent?.owner?.surname }}</span
+												>
+											</div></mat-chip
+										>
+										<mat-chip matTooltip="{{ 'Rents-details.email-address' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">mail</mat-icon
+												><span>{{ data.rent?.owner?.email }}</span>
+											</div></mat-chip
+										>
+										<mat-chip matTooltip="{{ 'Rents-details.phone' | translate }}">
+											<div class="box-feature">
+												<mat-icon class="icon-feature">phone_iphone</mat-icon
+												><span>{{ data.rent?.owner?.phoneNumber }}</span>
+											</div></mat-chip
+										>
+									</div>
+								</div>
+							</mat-card>
+						</p>
+					</div>
+				</div>
 			</mat-card-content>
 		</mat-card>
 		<mat-card>
@@ -250,11 +298,12 @@
 					<mat-card-title class="label-description"
 						><mat-icon class="material-symbols-outlined" [inline]="true">
 							payments </mat-icon
-						><span class="text-3xl ml-4">{{
+						><span class="text-3xl">{{
 							"Header.payments" | translate
 						}}</span></mat-card-title
 					>
 				</mat-card-header>
+				<mat-divider></mat-divider>
 				<div class="payments-container">
 					<mat-table [dataSource]="data.rent?.payments ?? []">
 						<ng-container matColumnDef="paymentId">
@@ -343,6 +392,7 @@
 									mat-mini-fab
 									color="primary"
 									matTooltip="Dokonaj płatności"
+									class="ml-auto"
 									(click)="makePayment(element.paymentId)"
 								>
 									<mat-icon>payments</mat-icon>

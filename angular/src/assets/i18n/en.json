@@ -555,7 +555,9 @@
 		"option-property": "Related property",
 		"option-close": "Close rent",
 		"edit-property": "Edit property",
-		"delete-property": "Delete property"
+		"delete-property": "Delete property",
+		"phone": "Phone number",
+		"owner": "Owner"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "End of rental",
