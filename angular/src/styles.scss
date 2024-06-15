@@ -213,6 +213,12 @@ mat-error {
 	color: var(--textColor);
 }
 
+.profile-card {
+	width: fit-content !important;
+	box-shadow: none !important;
+	@include mat.elevation(0);
+}
+
 @media screen and (max-width: 600px) {
 	.stylePopup .leaflet-popup-content-wrapper {
 		max-width: 200px;
