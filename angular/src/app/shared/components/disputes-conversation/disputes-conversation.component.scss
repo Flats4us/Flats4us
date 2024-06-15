@@ -2,22 +2,25 @@
 	padding: 16px;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	gap: 16px;
-
-	font-size: x-large;
-
-	> span {
-		flex: 1;
-		text-align: center;
-	}
 }
 
 .avatar {
-	background: red;
 	border-radius: 50%;
-	width: 25px;
-	height: 25px;
+	width: 40px;
+	height: 40px;
+	margin-left: 4px;
+}
+
+.receiver-avatar {
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: min-content 1fr;
 }
 
 .conversation {
@@ -30,14 +33,14 @@
 	.bubble {
 		padding: 8px 16px;
 		border-radius: 8px;
-		background-color: grey;
+		background-color: #f2f2f2;
 	}
 
 	&-sent {
 		margin-left: auto;
 
 		.bubble {
-			background-color: lightblue;
+			background-color: #ecf3fe;
 		}
 	}
 }

@@ -19,6 +19,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { StartDisputeDialogComponent } from '@shared/components/start-dispute-dialog/start-dispute-dialog.component';
 
 @Component({
 	selector: 'app-rents-details',
@@ -100,8 +101,11 @@ export class RentsDetailsComponent extends BaseComponent {
 	public navigateToProperty(id: number) {
 		this.router.navigate(['real-estate', 'owner', id]);
 	}
-	public startDispute(id: number) {
-		this.router.navigate(['disputes', id]);
+	public startDispute(rentId: number) {
+		this.dialog.open(StartDisputeDialogComponent, {
+			width: '500px',
+			data: rentId,
+		});
 	}
 
 	public onSelect(

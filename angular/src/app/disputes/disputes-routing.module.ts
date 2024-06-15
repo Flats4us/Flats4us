@@ -8,7 +8,12 @@ const routes: Routes = [
 	{
 		path: '',
 		component: DisputesComponent,
-		children: [{ path: ':id', component: DisputesConversationComponent }],
+		children: [
+			{
+				path: 'conversation/:conversationId',
+				component: DisputesConversationComponent,
+			},
+		],
 	},
 ];
 
