@@ -60,7 +60,7 @@
 						{{ "Profile.index" | translate }}: {{ actualUser.studentNumber }}
 					</div>
 				</div>
-				<div class="links">
+				<div *ngIf="id === 'my'" class="links">
 					<div
 						class="profile-education__header text-2xl flex gap-2 items-center mb-4 font-semibold"
 					>
@@ -300,6 +300,17 @@
 							{{ "Profile.creation-date" | translate }}:
 							{{ actualUser.accountCreationDate | date }}
 						</p>
+					</div>
+					<div
+						*ngIf="actualUser.userType === 1"
+						class="flex flex-col items-start mb-4"
+					>
+						<div *ngFor="let link of actualUser.links">
+							<div class="profile-link">
+								<mat-icon>link</mat-icon>
+								<a href="{{ link }}">{{ link }}</a>
+							</div>
+						</div>
 					</div>
 					<ng-container
 						*ngIf="actualUser.userType === 1"
