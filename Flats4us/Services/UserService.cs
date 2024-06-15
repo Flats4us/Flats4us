@@ -478,8 +478,6 @@ namespace Flats4us.Services
             return result;
         }
 
-
-
         public async Task EditUser(EditUserDto input, int userId)
         {
             bool isSensitiveDataUpdated = false;
