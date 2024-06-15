@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from "rxjs";
-import { IDispute } from "./models/disputes.models";
-import { DisputesService } from "./services/disputes.service";
+import { Observable } from 'rxjs';
+import { IDispute } from './models/disputes.models';
+import { DisputesService } from './services/disputes.service';
 
 @Component({
 	selector: 'app-disputes',
@@ -10,8 +10,7 @@ import { DisputesService } from "./services/disputes.service";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DisputesComponent {
-  public disputes$: Observable<IDispute[]> =
-    this.disputesService.getDisputes();
+	public disputes$: Observable<IDispute[]> = this.disputesService.getDisputes();
 
-  constructor(public disputesService: DisputesService) {}
+	constructor(public disputesService: DisputesService) {}
 }
