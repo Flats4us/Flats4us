@@ -105,7 +105,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 				iconUrl: '../../assets/leafletIconShadow.svg',
 				iconSize: [60, 60],
 				iconAnchor: [25, 16],
-				popupAnchor: [6, -16],
+				popupAnchor: [0, -16],
 			}),
 		};
 		this.startService
@@ -211,7 +211,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			iconUrl: '../../assets/leafletIconShadow.svg',
 			iconSize: [60, 60],
 			iconAnchor: [25, 16],
-			popupAnchor: [6, -16],
+			popupAnchor: [0, -16],
 		});
 		switch (propertyType) {
 			case 0:
@@ -221,7 +221,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						: '../../assets/leafletIconShadowFlat.svg',
 					iconSize: [60, 60],
 					iconAnchor: [25, 16],
-					popupAnchor: [6, -16],
+					popupAnchor: [0, -16],
 				});
 				break;
 			case 1:
@@ -231,7 +231,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						: '../../assets/leafletIconShadowHouse.svg',
 					iconSize: [60, 60],
 					iconAnchor: [25, 16],
-					popupAnchor: [6, -16],
+					popupAnchor: [0, -16],
 				});
 				break;
 			case 2:
@@ -241,7 +241,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						: '../../assets/leafletIconShadowRoom.svg',
 					iconSize: [60, 60],
 					iconAnchor: [25, 16],
-					popupAnchor: [6, -16],
+					popupAnchor: [0, -16],
 				});
 				break;
 			default:
@@ -251,7 +251,7 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 						: '../../assets/leafletIconShadow.svg',
 					iconSize: [60, 60],
 					iconAnchor: [25, 16],
-					popupAnchor: [6, -16],
+					popupAnchor: [0, -16],
 				});
 				break;
 		}
