@@ -172,7 +172,7 @@
 				<div class="profile-opinions__comments">
 					<ng-container *ngFor="let opinion of user.userOpinions">
 						<div
-							*ngIf="opinion.description !== ''"
+							*ngIf="opinion.description"
 							class="profile-opinions__comments-comment"
 						>
 							<img
