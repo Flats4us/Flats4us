@@ -28,6 +28,7 @@ namespace Flats4us.Helpers
                     src.Offer.Property is Flat ? PropertyType.Flat :
                     src.Offer.Property is House ? PropertyType.House :
                     PropertyType.Room))
+                .ForMember(dest => dest.Owner, opt => opt.MapFrom(src => src.Offer.Property.Owner))
                 .ForMember(dest => dest.PropertyAddress, opt => opt.MapFrom(src => $"{src.Offer.Property.Street} {src.Offer.Property.Number}{(src.Offer.Property.Flat != null ? ("/" + src.Offer.Property.Flat) : "")}, {src.Offer.Property.City}"))
                 .ForMember(dest => dest.PropertyImages, opt => opt.MapFrom(src => src.Offer.Property.Images))
                 .ForMember(dest => dest.MainTenantId, opt => opt.MapFrom(src => src.StudentId))

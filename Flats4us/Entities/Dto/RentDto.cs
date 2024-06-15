@@ -35,6 +35,8 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int MainTenantId { get; set; }
 
+        public OwnerStudentDto Owner { get; set; }
+
         [Required]
         public List<FileDto> PropertyImages { get; set; }
 
