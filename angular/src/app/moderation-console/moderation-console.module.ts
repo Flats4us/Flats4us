@@ -61,7 +61,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatSelectModule,
 		MatTooltipModule,
 		MatSortModule,
-		TranslateModule
+		TranslateModule,
 	],
 	providers: [ModerationConsoleService, MatSnackBarModule],
 	exports: [ModerationConsoleComponent],

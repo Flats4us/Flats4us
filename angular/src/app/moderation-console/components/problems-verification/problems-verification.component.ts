@@ -57,9 +57,13 @@ export class ProblemsVerificationComponent extends BaseComponent {
 		this.technicalProblems$ = this.service.markAsSolved(technicalProblemId).pipe(
 			this.untilDestroyed(),
 			switchMap(() => {
-				this.snackBar.open(this.translate.instant('Report-problem.info2'), this.translate.instant('close'), {
-					duration: 10000,
-				});
+				this.snackBar.open(
+					this.translate.instant('Report-problem.info2'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				);
 				return this.service.getTechnicalProblems(this.pageSize, this.pageIndex);
 			})
 		);
