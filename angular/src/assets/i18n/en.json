@@ -283,7 +283,15 @@
 		"document-type1": "Student card",
 		"document-type2": "Passport",
 		"verified": "verified",
-		"unverified": "unverified"
+		"unverified": "unverified",
+		"student-profile": "Student profile",
+		"owner-profile": "Owner profile",
+		"birth-date": "Birth date",
+		"address": "Address",
+		"index": "Student number",
+		"bank": "Bank account no",
+		"creation-date": "User since",
+		"links": "Social media"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "YOUR OPINION ABOUT THE USER",
@@ -555,7 +563,9 @@
 		"option-property": "Related property",
 		"option-close": "Close rent",
 		"edit-property": "Edit property",
-		"delete-property": "Delete property"
+		"delete-property": "Delete property",
+		"phone": "Phone number",
+		"owner": "Owner"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "End of rental",
@@ -595,8 +605,7 @@
 	},
 	"Help-center": {
 		"help-center": "Help center",
-		"help-info": "Welcome to our help center. You can report a technical problem here",
-		"report-problem": "Report problem"
+		"help-info": "Welcome to our help center. Here you will find answers to frequently asked questions as well as contact details for our support team"
 	},
 	"Notifications": {
 		"notification": "Notification",

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.prod';
 import { UserService } from '@shared/services/user.service';
 import { IMyProfile, IUser } from '@shared/models/user.models';
 import { ActivatedRoute } from '@angular/router';
+import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
 	selector: 'app-profile',
@@ -11,8 +12,9 @@ import { ActivatedRoute } from '@angular/router';
 	styleUrls: ['./profile.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent {
+export class ProfileComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
+	protected id = '';
 	protected user$: Observable<IMyProfile | IUser> = this.route.paramMap.pipe(
 		map(params => params.get('id')),
 		filter(Boolean),
@@ -23,5 +25,14 @@ export class ProfileComponent {
 		})
 	);
 
-	constructor(private route: ActivatedRoute, public userService: UserService) {}
+	constructor(private route: ActivatedRoute, public userService: UserService) {
+		super();
+		this.route.paramMap
+			.pipe(
+				map(params => params.get('id')),
+				filter(Boolean),
+				this.untilDestroyed()
+			)
+			.subscribe(id => (this.id = id));
+	}
 }

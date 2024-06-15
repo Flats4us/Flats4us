@@ -11,6 +11,15 @@
 	}
 }
 
+.first-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.links {
+	margin-left: auto;
+}
+
 .profile-avatar__image {
 	width: 250px;
 	height: 250px;
@@ -53,7 +62,6 @@
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	padding: 20px;
-	margin-bottom: 20px;
 }
 
 .profile-opinions__header {
@@ -84,10 +92,29 @@ ul {
 	padding: 0;
 }
 
-li {
-	margin-bottom: 10px;
-}
-
 span {
 	margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+	.profile-avatar__image {
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+	}
+	.profile-details__wrapper {
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		padding: 4px;
+		max-width: 100%;
+		overflow: hidden;
+		font-size: large;
+	}
+	.first-container {
+		display: flex;
+		flex-direction: column;
+	}
+	.links {
+		margin-left: 0;
+	}
 }

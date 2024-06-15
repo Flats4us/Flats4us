@@ -283,7 +283,15 @@
 		"document-type1": "Legitymacja studencka",
 		"document-type2": "Paszport",
 		"verified": "zweryfikowany",
-		"unverified": "niezweryfikowany"
+		"unverified": "niezweryfikowany",
+		"student-profile": "Profil Studenta",
+		"owner-profile": "Profil Właściciela",
+		"birth-date": "Data urodzenia",
+		"address": "Adres",
+		"index": "Numer albumu",
+		"bank": "Nr konta bankowego",
+		"creation-date": "Użytkownik od",
+		"links": "Media społecznościowe"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "TWOJA OPINIA O UŻYTKOWNIKU",
@@ -553,7 +561,9 @@
 		"option-offer": "Powiązana oferta",
 		"option-property": "Powiązana nieruchomość",
 		"option-dispute": "Rozpocznij spór",
-		"option-close": "Zakończ najem"
+		"option-close": "Zakończ najem",
+		"phone": "Numer telefonu",
+		"owner": "Właściciel"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "Kończenie najmu",
@@ -594,8 +604,7 @@
 	},
 	"Help-center": {
 		"help-center": "Centrum pomocy",
-		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz możliwość zgłoszenia problemu technicznego",
-		"report-problem": "Zgłoś problem"
+		"help-info": "Witamy w naszym centrum pomocy. Tutaj znajdziesz odpowiedzi na najczęściej zadawane pytania pytania, a także dane kontaktowe naszego zespołu wsparcia"
 	},
 	"Notifications": {
 		"notification": "Powiadomienia",
