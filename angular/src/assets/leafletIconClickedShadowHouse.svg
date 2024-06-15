@@ -162,7 +162,7 @@
            style="stroke:#000000;stroke-opacity:1;fill:#fbbb8b;fill-opacity:1;stroke-width:0.99975;stroke-miterlimit:4;stroke-dasharray:none">
           <path
              d="m 0,0 v 11.984 l -4.749,6.586 h -5.888 l -33.705,-7.172 -17.211,-31.043 40.039,2.183 10.877,16.55 v 13.417 l 1.927,2.479 h 2.168 l 2,-2.517 V -1.032 l 9.323,-16.613 h 5.334 z"
-             style="fill:#fbbb8b;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1;stroke-width:3.99975001;stroke-miterlimit:4;stroke-dasharray:none"
+             style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1;stroke-width:3.99975001;stroke-miterlimit:4;stroke-dasharray:none"
              id="path138" />
         </g>
         <g
