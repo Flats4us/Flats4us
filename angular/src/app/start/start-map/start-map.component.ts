@@ -103,9 +103,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 			draggable: false,
 			icon: L.icon({
 				iconUrl: '../../assets/leafletIconShadow.svg',
-				iconSize: [60, 60],
+				iconSize: [50, 50],
 				iconAnchor: [25, 16],
-				popupAnchor: [0, -16],
+				popupAnchor: [-6, -16],
 			}),
 		};
 		this.startService
@@ -209,9 +209,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 	): L.Icon<L.IconOptions> {
 		let markerIcon = L.icon({
 			iconUrl: '../../assets/leafletIconShadow.svg',
-			iconSize: [60, 60],
+			iconSize: [50, 50],
 			iconAnchor: [25, 16],
-			popupAnchor: [0, -16],
+			popupAnchor: [-6, -16],
 		});
 		switch (propertyType) {
 			case 0:
@@ -219,9 +219,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					iconUrl: isClicked
 						? '../../assets/leafletIconClickedShadowFlat.svg'
 						: '../../assets/leafletIconShadowFlat.svg',
-					iconSize: [60, 60],
+					iconSize: [50, 50],
 					iconAnchor: [25, 16],
-					popupAnchor: [0, -16],
+					popupAnchor: [-6, -16],
 				});
 				break;
 			case 1:
@@ -229,9 +229,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					iconUrl: isClicked
 						? '../../assets/leafletIconClickedShadowHouse.svg'
 						: '../../assets/leafletIconShadowHouse.svg',
-					iconSize: [60, 60],
+					iconSize: [50, 50],
 					iconAnchor: [25, 16],
-					popupAnchor: [0, -16],
+					popupAnchor: [-6, -16],
 				});
 				break;
 			case 2:
@@ -239,9 +239,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					iconUrl: isClicked
 						? '../../assets/leafletIconClickedShadowRoom.svg'
 						: '../../assets/leafletIconShadowRoom.svg',
-					iconSize: [60, 60],
+					iconSize: [50, 50],
 					iconAnchor: [25, 16],
-					popupAnchor: [0, -16],
+					popupAnchor: [-6, -16],
 				});
 				break;
 			default:
@@ -249,9 +249,9 @@ export class StartMapComponent extends BaseComponent implements OnInit {
 					iconUrl: isClicked
 						? '../../assets/leafletIconClickedShadow.svg'
 						: '../../assets/leafletIconShadow.svg',
-					iconSize: [60, 60],
+					iconSize: [50, 50],
 					iconAnchor: [25, 16],
-					popupAnchor: [0, -16],
+					popupAnchor: [-6, -16],
 				});
 				break;
 		}
