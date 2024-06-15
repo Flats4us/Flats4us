@@ -526,18 +526,12 @@ namespace Flats4us.Services
                         .Include(f => f.Interests)
                         .FirstOrDefaultAsync(f => f.UserId == userId);
                     
-
                     var interestList = await _context.Interests
                         .Where(i => input.InterestIds.Contains(i.InterestId))
                         .ToListAsync();
 
                     student.Interests = interestList;
-                    
-
-                    
                 }
-                
-
             }
             // Update Owner-specific data
             else if (user is Owner owner)

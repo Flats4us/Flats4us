@@ -23,7 +23,7 @@ namespace Flats4us.Entities.Dto
         public string? StudentNumber { get; set; }
         public string? University { get; set; }
         public List<string>? Links { get; set; }
-        public List<int> InterestIds { get; set; }
+        public List<int>? InterestIds { get; set; }
 
 
     }
