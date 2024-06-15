@@ -27,6 +27,7 @@ import { AddInterventionDialogComponent } from './components/add-intervention-di
 import { ChangeDisputeStatusDialogComponent } from './components/change-dispute-status-dialog/change-dispute-status-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSortModule } from '@angular/material/sort';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 	declarations: [
@@ -60,6 +61,7 @@ import { MatSortModule } from '@angular/material/sort';
 		MatSelectModule,
 		MatTooltipModule,
 		MatSortModule,
+		TranslateModule
 	],
 	providers: [ModerationConsoleService, MatSnackBarModule],
 	exports: [ModerationConsoleComponent],

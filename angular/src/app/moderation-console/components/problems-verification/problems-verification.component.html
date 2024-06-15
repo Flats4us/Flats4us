@@ -1,16 +1,28 @@
 <div class="mat-elevation-z8">
 	<table mat-table multiTemplateDataRows [dataSource]="technicalProblems$">
 		<ng-container matColumnDef="kind">
-			<th *matHeaderCellDef mat-header-cell>Rodzaj</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Report-problem.type" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
-				<span *ngIf="element.kind === 1">Obsługa aplikacji</span>
-				<span *ngIf="element.kind === 2">Płatność</span>
-				<span *ngIf="element.kind === 3">Wydajność konta</span>
-				<span *ngIf="element.kind === 4">Inne</span>
+				<span *ngIf="element.kind === 1">{{
+					"Report-problem.app-service" | translate
+				}}</span>
+				<span *ngIf="element.kind === 2">{{
+					"Report-problem.payments" | translate
+				}}</span>
+				<span *ngIf="element.kind === 3">{{
+					"Report-problem.account-performance" | translate
+				}}</span>
+				<span *ngIf="element.kind === 4">{{
+					"Report-problem.other" | translate
+				}}</span>
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="date">
-			<th *matHeaderCellDef mat-header-cell>Data zgłoszenia</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Report-problem.report-date" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				{{ formatDate(element.date, "dd/MM/yyyy", "pl-PL") }}
 			</td>
@@ -18,21 +30,28 @@
 		<ng-container matColumnDef="solved">
 			<th *matHeaderCellDef mat-header-cell>Status</th>
 			<td *matCellDef="let element" mat-cell>
-				{{ element.solved ? "Rozwiązany" : "Nierozwiązany" }}
+				{{
+					(element.solved ? "Report-problem.resolved" : "Report-problem.unresolved")
+						| translate
+				}}
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="userId">
-			<th *matHeaderCellDef mat-header-cell>Id Zgłaszającego</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Report-problem.reporting-id" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>{{ element.userId }}</td>
 		</ng-container>
 		<ng-container matColumnDef="actions">
-			<th *matHeaderCellDef mat-header-cell>Akcje</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Report-problem.actions" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				<button
 					class="mr-2"
 					mat-icon-button
 					aria-label="expand row"
-					matTooltip="Wyświetl opis"
+					matTooltip="{{ 'Report-problem.view-description' | translate }}"
 					(click)="
 						expandedElement = expandedElement === element ? null : element;
 						$event.stopPropagation()
@@ -49,7 +68,7 @@
 					class="mb-2"
 					(click)="markAsSolved(element.technicalProblemId)"
 				>
-					Oznacz jako rozwiązane
+					{{ "Report-problem.mark-solved" | translate }}
 				</button>
 			</td>
 		</ng-container>
@@ -65,7 +84,8 @@
 					[@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
 				>
 					<div class="element-description">
-						Opis zgłoszenia: {{ element.description }}
+						{{ "Report-problem.report-description" | translate }}:
+						{{ element.description }}
 					</div>
 				</div>
 			</td>

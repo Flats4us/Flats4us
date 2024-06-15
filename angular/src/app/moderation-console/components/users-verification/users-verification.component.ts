@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
@@ -11,6 +12,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';
 import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-properties-verification',
@@ -18,7 +20,10 @@ import { MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 	styleUrls: ['./users-verification.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersVerificationComponent extends BaseComponent {
+export class UsersVerificationComponent
+	extends BaseComponent
+	implements AfterViewInit
+{
 	public pageSize = 4;
 	public pageIndex = 0;
 	public pageEvent = new PageEvent();
@@ -46,19 +51,28 @@ export class UsersVerificationComponent extends BaseComponent {
 		private service: ModerationConsoleService,
 		private snackBar: MatSnackBar,
 		private matPaginatorIntl: MatPaginatorIntl,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		private translate: TranslateService
 	) {
 		super();
-		this.matPaginatorIntl.itemsPerPageLabel = 'Zgłoszenia na stronie';
+	}
+	public ngAfterViewInit(): void {
+		this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+			'Moderation-console.reports-website'
+		);
 	}
 
 	public acceptUser(userId: number) {
 		this.users$ = this.service.acceptUser(userId).pipe(
 			this.untilDestroyed(),
 			switchMap(() => {
-				this.snackBar.open('Profil został pomyślnie zaakceptowany!', 'Zamknij', {
-					duration: 10000,
-				});
+				this.snackBar.open(
+					this.translate.instant('Moderation-console.info2'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				);
 				return this.service.getUsers(this.pageSize, this.pageIndex);
 			})
 		);
@@ -68,9 +82,13 @@ export class UsersVerificationComponent extends BaseComponent {
 		this.users$ = this.service.rejectUser(userId).pipe(
 			this.untilDestroyed(),
 			switchMap(() => {
-				this.snackBar.open('Profil został pomyślnie odrzucony!', 'Zamknij', {
-					duration: 10000,
-				});
+				this.snackBar.open(
+					this.translate.instant('Moderation-console.info3'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				);
 				return this.service.getUsers(this.pageSize, this.pageIndex);
 			})
 		);

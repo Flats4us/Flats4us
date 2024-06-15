@@ -1,15 +1,21 @@
 <div class="mat-elevation-z8">
 	<table mat-table [dataSource]="properties$">
 		<ng-container matColumnDef="ownerName">
-			<th *matHeaderCellDef mat-header-cell>Właściciel</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.owner" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>{{ element.ownerName }}</td>
 		</ng-container>
 		<ng-container matColumnDef="ownerEmail">
-			<th *matHeaderCellDef mat-header-cell>Adres email właściciela</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.owner-email" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>{{ element.ownerEmail }}</td>
 		</ng-container>
 		<ng-container matColumnDef="address">
-			<th *matHeaderCellDef mat-header-cell>Adres nieruchomości</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.property-address" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				<button mat-flat-button [routerLink]="['/real-estate', element.propertyId]">
 					{{ element.address }}
@@ -19,13 +25,21 @@
 		<ng-container matColumnDef="status">
 			<th *matHeaderCellDef mat-header-cell>Status</th>
 			<td *matCellDef="let element" mat-cell>
-				<span *ngIf="element.verificationStatus === 0">Zweryfikowany</span>
-				<span *ngIf="element.verificationStatus === 1">Niezweryfikowany</span>
-				<span *ngIf="element.verificationStatus === 2">Odrzucony</span>
+				<span *ngIf="element.verificationStatus === 0">{{
+					"Moderation-console.verified" | translate
+				}}</span>
+				<span *ngIf="element.verificationStatus === 1">{{
+					"Moderation-console.not-verified" | translate
+				}}</span>
+				<span *ngIf="element.verificationStatus === 2">{{
+					"Moderation-console.rejected" | translate
+				}}</span>
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="verificationOrRejectionDate">
-			<th *matHeaderCellDef mat-header-cell>Data weryfikacji</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.verification-date" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				{{
 					element.verificationOrRejectionDate !== null
@@ -35,7 +49,9 @@
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="document">
-			<th *matHeaderCellDef mat-header-cell>Dokument</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.document" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				<a
 					*ngIf="element.verificationStatus === 1"
@@ -43,12 +59,14 @@
 					target="_blank"
 					href="{{ baseUrl }}/{{ element.document.path }}"
 				>
-					Wyświetl dokument
+					{{ "Moderation-console.view-document" | translate }}
 				</a>
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="actions">
-			<th *matHeaderCellDef mat-header-cell>Akcje</th>
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.actions" | translate }}
+			</th>
 			<td *matCellDef="let element" mat-cell>
 				<button
 					*ngIf="element.verificationStatus === 1"
@@ -56,7 +74,7 @@
 					mat-stroked-button
 					(click)="acceptProperty(element.propertyId)"
 				>
-					Zaakceptuj
+					{{ "accept" | translate }}
 				</button>
 				<button
 					*ngIf="element.verificationStatus === 1"
@@ -64,7 +82,7 @@
 					mat-stroked-button
 					(click)="rejectProperty(element.propertyId)"
 				>
-					Odrzuć
+					{{ "reject" | translate }}
 				</button>
 			</td>
 			>

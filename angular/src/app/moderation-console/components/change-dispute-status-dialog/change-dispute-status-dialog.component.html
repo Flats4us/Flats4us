@@ -1,17 +1,21 @@
-<h1 class="p-4 text-xl">Zmień status</h1>
+<h1 class="p-4 text-xl">
+	{{ "Moderation-console.change-status" | translate }}
+</h1>
 <form [formGroup]="addInterventionForm" (ngSubmit)="onSubmit()">
 	<mat-dialog-content>
 		<mat-form-field class="w-full text-lg">
 			<mat-label>Status</mat-label>
 			<mat-select formControlName="status">
 				<mat-option *ngFor="let status of statuses" [value]="status.value">
-					{{ status.name }}
+					{{ status.name | translate }}
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
 	</mat-dialog-content>
 	<div mat-dialog-actions align="end">
-		<button mat-raised-button mat-dialog-close>Anuluj</button>
-		<button mat-raised-button mat-dialog-close type="submit">Wyślij</button>
+		<button mat-raised-button mat-dialog-close>{{ "cancel" | translate }}</button>
+		<button mat-raised-button mat-dialog-close type="submit">
+			{{ "send" | translate }}
+		</button>
 	</div>
 </form>

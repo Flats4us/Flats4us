@@ -9,6 +9,7 @@ import { ModerationConsoleService } from '../../services/moderation-console.serv
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-add-intervention-dialog',
@@ -24,7 +25,8 @@ export class AddInterventionDialogComponent extends BaseComponent {
 		@Inject(MAT_DIALOG_DATA) public data: { argumentId: number },
 		private fb: FormBuilder,
 		private service: ModerationConsoleService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 		this.addInterventionForm = this.fb.group({
@@ -40,9 +42,13 @@ export class AddInterventionDialogComponent extends BaseComponent {
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
-				this.snackBar.open('Pomyślnie dodano interwencję!', 'Zamknij', {
-					duration: 10000,
-				})
+				this.snackBar.open(
+					this.translate.instant('Moderation-console.info1'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				)
 			);
 	}
 }

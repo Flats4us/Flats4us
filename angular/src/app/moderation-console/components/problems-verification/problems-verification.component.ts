@@ -12,6 +12,7 @@ import {
 	transition,
 	trigger,
 } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-problems-verification',
@@ -46,7 +47,8 @@ export class ProblemsVerificationComponent extends BaseComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -55,7 +57,7 @@ export class ProblemsVerificationComponent extends BaseComponent {
 		this.technicalProblems$ = this.service.markAsSolved(technicalProblemId).pipe(
 			this.untilDestroyed(),
 			switchMap(() => {
-				this.snackBar.open('Problem został oznaczony jako rozwiązany!', 'Zamknij', {
+				this.snackBar.open(this.translate.instant('Report-problem.info2'), this.translate.instant('close'), {
 					duration: 10000,
 				});
 				return this.service.getTechnicalProblems(this.pageSize, this.pageIndex);

@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-change-dispute-status-dialog',
@@ -18,11 +19,11 @@ import { BaseComponent } from '@shared/components/base/base.component';
 })
 export class ChangeDisputeStatusDialogComponent extends BaseComponent {
 	public statuses = [
-		{ value: 0, name: 'Trwający' },
-		{ value: 1, name: 'Rozwiązany' },
-		{ value: 2, name: 'Nieuzasadniony' },
-		{ value: 3, name: 'Rozwiązany przez moderatora' },
-		{ value: 4, name: 'Nieuzasadniony przez moderatora' },
+		{ value: 0, name: 'Moderation-console.statutes0' },
+		{ value: 1, name: 'Moderation-console.statutes0' },
+		{ value: 2, name: 'Moderation-console.statutes0' },
+		{ value: 3, name: 'Moderation-console.statutes0' },
+		{ value: 4, name: 'Moderation-console.statutes0' },
 	];
 
 	public addInterventionForm: FormGroup;
@@ -32,7 +33,8 @@ export class ChangeDisputeStatusDialogComponent extends BaseComponent {
 		@Inject(MAT_DIALOG_DATA) public data: { argumentId: number },
 		private fb: FormBuilder,
 		private service: ModerationConsoleService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 		this.addInterventionForm = this.fb.group({
@@ -48,9 +50,13 @@ export class ChangeDisputeStatusDialogComponent extends BaseComponent {
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
-				this.snackBar.open('Pomyślnie dodano interwencję!', 'Zamknij', {
-					duration: 10000,
-				})
+				this.snackBar.open(
+					this.translate.instant('Moderation-console.info1'),
+					this.translate.instant('close'),
+					{
+						duration: 10000,
+					}
+				)
 			);
 	}
 }

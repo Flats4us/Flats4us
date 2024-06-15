@@ -1,25 +1,29 @@
-<h1 class="text-4xl p-4 font-semibold">Konsola moderacyjna</h1>
+<h1 class="text-4xl p-4 font-semibold">
+	{{ "Moderation-console.moderation-console" | translate }}
+</h1>
 <div class="settings">
 	<mat-card>
 		<nav>
 			<ul>
 				<li>
-					<a routerLink="verify/users" routerLinkActive="active"
-						>Weryfikacja dokumentu tożsamości</a
-					>
+					<a routerLink="verify/users" routerLinkActive="active">{{
+						"Moderation-console.verification-id" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="verify/properties" routerLinkActive="active"
-						>Weryfikacja aktu własności</a
-					>
+					<a routerLink="verify/properties" routerLinkActive="active">{{
+						"Moderation-console.verification-property" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="verify/problems" routerLinkActive="active"
-						>Problemy techniczne</a
-					>
+					<a routerLink="verify/problems" routerLinkActive="active">{{
+						"Moderation-console.technical-problems" | translate
+					}}</a>
 				</li>
 				<li>
-					<a routerLink="disputes" routerLinkActive="active">Spory</a>
+					<a routerLink="disputes" routerLinkActive="active">{{
+						"Moderation-console.disputes" | translate
+					}}</a>
 				</li>
 			</ul>
 		</nav>
