@@ -149,111 +149,112 @@
 		</mat-card>
 
 		<mat-card>
-			<div class="label-box">
-				<mat-label class="label-description"
-					><mat-icon class="icon" [inline]="true">description</mat-icon
-					><span class="text-3xl">{{
+			<mat-card-header>
+				<mat-card-title class="label-description"
+					><mat-icon [inline]="true">description</mat-icon
+					><span class="text-3xl ml-4">{{
 						"Rents-details.rent-description" | translate
-					}}</span></mat-label
+					}}</span></mat-card-title
 				>
-			</div>
-			<mat-divider></mat-divider>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Rents-details.start-date" | translate }}:</p>
+			</mat-card-header>
+			<mat-card-content>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.start-date" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.rent?.startDate | date }}
+						</p>
+					</div>
 				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.rent?.startDate | date }}
-					</p>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.end-date" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.rent?.endDate | date }}
+						</p>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Rents-details.end-date" | translate }}:</p>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.address" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.rent?.propertyAddress }}
+						</p>
+					</div>
 				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.rent?.endDate | date }}
-					</p>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.time" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.rent?.duration }} {{ "mth" | translate }}.
+						</p>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Rents-details.address" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.rent?.propertyAddress }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Rents-details.time" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.rent?.duration }} {{ "mth" | translate }}.
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Rents-details.tenants" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4 grid gap-4">
-						<mat-card
-							*ngFor="let tenant of data.rent?.tenants"
-							class="profile-card mat-elevation-z0"
-						>
-							<div class="profile-details">
-								<mat-card-avatar
-									matTooltip="{{ 'Rents-details.show-profile' | translate }}"
-									(click)="showProfile(tenant.userId)"
-								>
-									<img
-										class="profile-avatar"
-										src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
-								/></mat-card-avatar>
-								<div class="container-features">
-									<mat-chip matTooltip="{{ 'Rents-details.name-surname' | translate }}"
-										><div class="box-feature">
-											<mat-icon class="icon-feature">account_circle</mat-icon
-											><span>{{ tenant.fullName }}</span>
-										</div></mat-chip
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Rents-details.tenants" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4 grid gap-4">
+							<mat-card
+								*ngFor="let tenant of data.rent?.tenants"
+								class="profile-card mat-elevation-z0"
+							>
+								<div class="profile-details">
+									<mat-card-avatar
+										matTooltip="{{ 'Rents-details.show-profile' | translate }}"
+										(click)="showProfile(tenant.userId)"
 									>
-									<mat-chip matTooltip="{{ 'Rents-details.email-address' | translate }}"
-										><div class="box-feature">
-											<mat-icon class="icon-feature">mail</mat-icon
-											><span>{{ tenant.email }}</span>
-										</div></mat-chip
-									>
-									<mat-chip *ngIf="tenant.userId === data.rent?.mainTenantId">
-										<div class="box-feature">
-											<mat-icon class="icon-feature">priority_high</mat-icon
-											><span>{{ "Rents-details.main-tenant" | translate }}</span>
-										</div></mat-chip
-									>
+										<img
+											class="profile-avatar"
+											src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
+									/></mat-card-avatar>
+									<div class="container-features">
+										<mat-chip matTooltip="{{ 'Rents-details.name-surname' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">account_circle</mat-icon
+												><span>{{ tenant.fullName }}</span>
+											</div></mat-chip
+										>
+										<mat-chip matTooltip="{{ 'Rents-details.email-address' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">mail</mat-icon
+												><span>{{ tenant.email }}</span>
+											</div></mat-chip
+										>
+										<mat-chip *ngIf="tenant.userId === data.rent?.mainTenantId">
+											<div class="box-feature">
+												<mat-icon class="icon-feature">priority_high</mat-icon
+												><span>{{ "Rents-details.main-tenant" | translate }}</span>
+											</div></mat-chip
+										>
+									</div>
 								</div>
-							</div>
-						</mat-card>
-					</p>
+							</mat-card>
+						</p>
+					</div>
 				</div>
-			</div>
+			</mat-card-content>
 		</mat-card>
 		<mat-card>
 			<div>
-				<mat-card>
-					<mat-label class="label-description"
+				<mat-card-header>
+					<mat-card-title class="label-description"
 						><mat-icon class="material-symbols-outlined" [inline]="true">
 							payments </mat-icon
 						><span class="text-3xl ml-4">{{
 							"Header.payments" | translate
-						}}</span></mat-label
+						}}</span></mat-card-title
 					>
-				</mat-card>
+				</mat-card-header>
 				<div class="payments-container">
 					<mat-table [dataSource]="data.rent?.payments ?? []">
 						<ng-container matColumnDef="paymentId">
@@ -331,23 +332,23 @@
 								{{ element.paidAtDate | date }}
 							</mat-cell>
 						</ng-container>
-            <ng-container matColumnDef="actions">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let element">
-                <button
-                  *ngIf="
-								(student$ | async)?.userId === data.rent?.mainTenantId &&
-								!element.isPaid
-							"
-                  mat-mini-fab
-                  color="primary"
-                  matTooltip="Dokonaj płatności"
-                  (click)="makePayment(element.paymentId)"
-                >
-                  <mat-icon>payments</mat-icon>
-                </button>
-              </mat-cell>
-            </ng-container>
+						<ng-container matColumnDef="actions">
+							<mat-header-cell *matHeaderCellDef></mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button
+									*ngIf="
+										(student$ | async)?.userId === data.rent?.mainTenantId &&
+										!element.isPaid
+									"
+									mat-mini-fab
+									color="primary"
+									matTooltip="Dokonaj płatności"
+									(click)="makePayment(element.paymentId)"
+								>
+									<mat-icon>payments</mat-icon>
+								</button>
+							</mat-cell>
+						</ng-container>
 						<mat-header-row
 							*matHeaderRowDef="this.displayedColumnsPayments"
 						></mat-header-row>
