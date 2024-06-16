@@ -107,9 +107,7 @@
 									</mat-menu>
 								</div>
 								<img
-									*ngIf="
-										(data.rent?.propertyImages?.length ?? 0) > 0 && isCurrentSlideIndex(i)
-									"
+									*ngIf="data.rent?.propertyImages?.length && isCurrentSlideIndex(i)"
 									class="slide slide-animation non-draggable-image"
 									src="{{ baseUrl }}/{{ slide?.path }}"
 									(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
