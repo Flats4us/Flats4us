@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
 import { map, switchMap } from 'rxjs';
@@ -62,7 +62,8 @@ export class AddOpinionComponent extends BaseComponent {
 		private profileService: ProfileService,
 		private userService: UserService,
 		public route: ActivatedRoute,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private router: Router
 	) {
 		super();
 		this.opinionForm = this.fb.group({
@@ -91,14 +92,26 @@ export class AddOpinionComponent extends BaseComponent {
 		this.profileService
 			.addOpinion(profileId, this.opinionForm.value)
 			.pipe(this.untilDestroyed())
-			.subscribe(() =>
-				this.snackBar.open(
-					this.translate.instant('Profile-add-opinion.info1'),
-					this.translate.instant('close'),
-					{
-						duration: 10000,
-					}
-				)
-			);
+			.subscribe({
+				next: () => {
+					this.snackBar.open(
+						this.translate.instant('Profile-add-opinion.info1'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
+					this.router.navigate(['profile', 'details', profileId]);
+				},
+				error: () => {
+					this.snackBar.open(
+						this.translate.instant('Profile-add-opinion.error'),
+						this.translate.instant('close'),
+						{
+							duration: 10000,
+						}
+					);
+				},
+			});
 	}
 }

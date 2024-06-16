@@ -97,6 +97,16 @@
 			<div class="profile-opinions__header text-2xl flex gap-2 items-center">
 				<mat-icon>rate_review</mat-icon>
 				<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+				<button
+					*ngIf="id !== 'my' && !checkIfYetAssesed(actualUser.userOpinions)"
+					mat-mini-fab
+					color="primary"
+					class="ml-auto"
+					matTooltip="{{ 'Profile-add-opinion.add-opinion2' | translate }}"
+					[routerLink]="['/profile', actualUser.userId, 'opinion', 'add']"
+				>
+					<mat-icon class="font-bold">add</mat-icon>
+				</button>
 			</div>
 			<div class="flex flex-col my-4">
 				<app-star-rating [avgRating]="actualUser.avgRating"></app-star-rating>
@@ -180,10 +190,10 @@
 				</mat-chip>
 			</mat-chip-listbox>
 			<div class="profile-opinions__comments">
-				<ng-container *ngFor="let opinion of user.userOpinions">
+				<ng-container *ngFor="let opinion of actualUser.userOpinions">
 					<div
 						*ngIf="opinion.description"
-						class="profile-opinions__comments-comment"
+						class="profile-opinions__comments-comment mb-1"
 					>
 						<img
 							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"

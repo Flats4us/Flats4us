@@ -318,7 +318,8 @@
 		"enter-comments": "Tutaj wpisz komentarz",
 		"add-opinion2": "Dodaj opinię",
 		"info1": "Pomyślnie dodano opinię!",
-		"close": "Zamknij"
+		"close": "Zamknij",
+		"error": "Nie udało się dodać opinii! Spróbuj ponownie."
 	},
 	"Profile-create": {
 		"creating-profile": "Tworzenie profilu",

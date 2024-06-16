@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable, filter, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { UserService } from '@shared/services/user.service';
-import { IMyProfile, IUser } from '@shared/models/user.models';
+import { IMyProfile, IUser, IUserOpinion } from '@shared/models/user.models';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 
@@ -15,6 +15,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 export class ProfileComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	protected id = '';
+	protected myId = 0;
 	protected user$: Observable<IMyProfile | IUser> = this.route.paramMap.pipe(
 		map(params => params.get('id')),
 		filter(Boolean),
@@ -34,5 +35,15 @@ export class ProfileComponent extends BaseComponent {
 				this.untilDestroyed()
 			)
 			.subscribe(id => (this.id = id));
+		this.userService
+			.getMyProfile()
+			.pipe(this.untilDestroyed())
+			.subscribe(profile => (this.myId = profile.userId));
+	}
+
+	public checkIfYetAssesed(opinions: IUserOpinion[]): boolean {
+		let ifAssesed = false;
+		ifAssesed = !!opinions.find(opinion => opinion.sourceUserId === this.myId);
+		return ifAssesed;
 	}
 }

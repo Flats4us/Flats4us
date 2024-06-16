@@ -318,7 +318,8 @@
 		"enter-comments": "Enter your comments here",
 		"add-opinion2": "Add opinion",
 		"info1": "Review successfully added!",
-		"close": "Close"
+		"close": "Close",
+		"error": "Failed to add the opinion! Please try again."
 	},
 	"Profile-create": {
 		"creating-profile": "Creating a profile",
