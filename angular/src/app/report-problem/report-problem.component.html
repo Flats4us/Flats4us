@@ -1,23 +1,29 @@
 <mat-card>
-	<h1>Zgłoś problem techniczny</h1>
+	<h1>{{ "Report-problem.report-problem" | translate }}</h1>
 	<mat-card-content class="mx-auto pt-1 w-3/4 md:w-3/5 lg:w-1/2 2xl:w-2/5">
 		<form [formGroup]="form" (ngSubmit)="reportProblem()">
 			<div class="form-group">
 				<mat-form-field>
-					<mat-label>Rodzaj</mat-label>
+					<mat-label>{{ "Report-problem.type" | translate }}</mat-label>
 					<mat-select formControlName="kind" type="number">
-						<mat-option [value]="1">Obsługa aplikacji</mat-option>
-						<mat-option [value]="2">Płatność</mat-option>
-						<mat-option [value]="3">Wydajność konta</mat-option>
+						<mat-option [value]="1">{{
+							"Report-problem.app-service" | translate
+						}}</mat-option>
+						<mat-option [value]="2">{{
+							"Report-problem.payments" | translate
+						}}</mat-option>
+						<mat-option [value]="3">{{
+							"Report-problem.account-performance" | translate
+						}}</mat-option>
 						<mat-option [value]="4">Inne</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>
 			<div class="form-group">
 				<mat-form-field appearance="outline">
-					<mat-label>Opis</mat-label>
+					<mat-label>{{ "Report-problem.description" | translate }}</mat-label>
 					<textarea matInput required formControlName="description"> </textarea>
-					<mat-error>Pole jest wymagane</mat-error>
+					<mat-error>{{ "required-field" | translate }}</mat-error>
 				</mat-form-field>
 			</div>
 			<div class="buttons">
@@ -28,7 +34,7 @@
 					type="submit"
 					[disabled]="form.invalid"
 				>
-					Wyślij
+					{{ "send" | translate }}
 				</button>
 			</div>
 		</form>

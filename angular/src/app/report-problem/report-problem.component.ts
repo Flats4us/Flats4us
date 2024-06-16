@@ -15,6 +15,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ReportProblemService } from './services/report-problem.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-report-problem',
@@ -28,6 +29,7 @@ import { ReportProblemService } from './services/report-problem.service';
 		MatInputModule,
 		ReactiveFormsModule,
 		MatSelectModule,
+		TranslateModule,
 	],
 	providers: [MatSnackBar],
 	templateUrl: './report-problem.component.html',
@@ -42,7 +44,8 @@ export class ReportProblemComponent extends BaseComponent {
 
 	constructor(
 		private service: ReportProblemService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
 	) {
 		super();
 	}
@@ -56,8 +59,8 @@ export class ReportProblemComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe(() =>
 				this.snackBar.open(
-					'Problem techniczny został pomyślnie zgłoszony. Dziękujemy',
-					'Zamknij',
+					this.translate.instant('Report-problem.info1'),
+					this.translate.instant('close'),
 					{
 						duration: 10000,
 					}

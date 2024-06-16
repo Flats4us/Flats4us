@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 
-import { DisputesConversationModule } from './components/messages-conversation/disputes-conversation.module';
+import { DisputesConversationModule } from '@shared/components/disputes-conversation/disputes-conversation.module';
 import { DisputesRoutingModule } from './disputes-routing.module';
 import { DisputesComponent } from './disputes.component';
 import { TranslateModule } from '@ngx-translate/core';

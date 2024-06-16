@@ -1,0 +1,131 @@
+<mat-card>
+	<table mat-table multiTemplateDataRows matSort [dataSource]="disputes$">
+		<ng-container matColumnDef="startDate">
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.date-dispute" | translate }}
+			</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ formatDate(element.startDate, "dd/MM/yyyy", "pl-PL") }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="argumentStatus">
+			<th *matHeaderCellDef mat-header-cell>Status</th>
+			<td *matCellDef="let element" mat-cell>
+				{{
+					(element.argumentStatus === 0 ? "Moderation-console.statutes0" : "")
+						| translate
+				}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="interventionNeed">
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.date-dispute" | translate }}
+			</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ (element.interventionNeed ? "yes" : "no") | translate }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="rentId">
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.rent" | translate }}
+			</th>
+			<td *matCellDef="let element" mat-cell>
+				<button mat-flat-button [routerLink]="['/rents', element.rent.rentId]">
+					{{ element.rent.propertyAddress }}
+				</button>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="student">
+			<th *matHeaderCellDef mat-header-cell>Student</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ element.student.fullName }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="owner">
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.owner" | translate }}
+			</th>
+			<td *matCellDef="let element" mat-cell>
+				{{ element.owner.fullName }}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="actions">
+			<th *matHeaderCellDef mat-header-cell>
+				{{ "Moderation-console.actions" | translate }}
+			</th>
+			<td *matCellDef="let element" mat-cell>
+				<button
+					class="mr-2"
+					mat-icon-button
+					aria-label="expand row"
+					matTooltip="{{
+						'Moderation-console.view-description-interventions' | translate
+					}}"
+					(click)="
+						expandedElement = expandedElement === element ? null : element;
+						$event.stopPropagation()
+					"
+				>
+					<mat-icon *ngIf="expandedElement !== element"
+						>keyboard_arrow_down</mat-icon
+					>
+					<mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+				</button>
+				<button
+					class="mb-2 mr-2"
+					mat-stroked-button
+					mat-flat-button
+					(click)="openInterventionDialog(element.argumentId)"
+				>
+					{{ "Moderation-console.add-intervention" | translate }}
+				</button>
+				<button
+					class="mb-2"
+					mat-stroked-button
+					mat-flat-button
+					(click)="openChangeStatusDialog(element.argumentId)"
+				>
+					{{ "Moderation-console.change-status" | translate }}
+				</button>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="expandedDetail">
+			<td
+				*matCellDef="let element"
+				mat-cell
+				[attr.colspan]="displayedColumns.length"
+			>
+				<div
+					class="element-detail"
+					[@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+				>
+					<div class="p-2">
+						{{ "Moderation-console.report-description" | translate }}:
+						{{ element.description }}
+					</div>
+					<ng-container *ngIf="element.argumentInterventions">
+						<div
+							*ngFor="let intervention of element.argumentInterventions"
+							class="p-2"
+						>
+							{{ "Moderation-console.intervention-day" | translate }}
+							{{ formatDate(intervention.date, "dd/MM/yyyy", "pl-PL") }},
+							{{ "Moderation-console.verdict" | translate }}:
+							{{ intervention.justification }}
+						</div>
+					</ng-container>
+				</div>
+			</td>
+		</ng-container>
+		<tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+		<tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
+		<tr
+			*matRowDef="let row; columns: ['expandedDetail']"
+			class="detail-row"
+			mat-row
+		></tr>
+	</table>
+	<mat-card>
+		<router-outlet></router-outlet>
+	</mat-card>
+</mat-card>

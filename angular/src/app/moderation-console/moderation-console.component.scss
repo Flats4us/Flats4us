@@ -1,0 +1,54 @@
+.settings {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}
+
+mat-card {
+	width: 200px;
+	padding: 20px;
+}
+
+nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+	margin-bottom: 8px;
+}
+
+nav {
+	ul {
+		li {
+			a {
+				display: block;
+				position: relative;
+				padding-bottom: 4px;
+				text-decoration: none;
+				font-weight: 500;
+
+				&.active {
+					font-weight: 600;
+				}
+
+				&::after {
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 4px;
+					width: 0;
+					background-color: #fbbb8b;
+					transition: width 0.3s ease-in-out;
+				}
+
+				&:hover::after,
+				&.active::after {
+					width: 100%;
+				}
+			}
+		}
+	}
+}
