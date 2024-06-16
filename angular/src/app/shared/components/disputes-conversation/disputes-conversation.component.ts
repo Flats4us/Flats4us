@@ -1,14 +1,19 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IMessage } from '@shared/models/conversation.models';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { IMyProfile } from '@shared/models/user.models';
 import { environment } from '../../../../environments/environment.prod';
 import { ConversationService } from '../../../conversations/services/conversation.service';
 import { UserService } from '@shared/services/user.service';
 import { AuthService } from '@shared/services/auth.service';
-import { DisputesService } from '../../services/disputes.service';
+import { DisputesService } from '../../../disputes/services/disputes.service';
 
 @Component({
 	selector: 'app-disputes-conversation',
@@ -16,16 +21,14 @@ import { DisputesService } from '../../services/disputes.service';
 	styleUrls: ['./disputes-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DisputesConversationComponent {
+export class DisputesConversationComponent implements OnInit, OnDestroy {
 	public messageControl = new FormControl();
 	public messages: { groupId: number; user: number; message: string }[] = [];
 	public groupChatId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('conversationId') ?? '')
 	);
 	protected messages$: Observable<IMessage[]> = this.groupChatId$.pipe(
-		switchMap(value => {
-			return this.disputesService.getDisputeMessages(value);
-		})
+		switchMap(value => this.disputesService.getDisputeMessages(value))
 	);
 	public currentUser$: Observable<IMyProfile> = this.userService.getMyProfile();
 	public baseUrl = environment.apiUrl.replace('/api', '');

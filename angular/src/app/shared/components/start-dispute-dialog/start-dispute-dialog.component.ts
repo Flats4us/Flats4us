@@ -3,10 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
-	FormBuilder,
+	FormControl,
 	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
+	UntypedFormGroup,
 	Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,19 +31,17 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	],
 })
 export class StartDisputeDialogComponent extends BaseComponent {
-	public startDisputeForm: FormGroup;
+	public startDisputeForm: FormGroup = new UntypedFormGroup({
+		title: new FormControl<string>('', Validators.required),
+		description: new FormControl<string>('', Validators.required),
+	});
 
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: number,
-		private fb: FormBuilder,
 		private service: RentsService,
 		private snackBar: MatSnackBar
 	) {
 		super();
-		this.startDisputeForm = this.fb.group({
-			title: ['', Validators.required],
-			description: ['', Validators.required],
-		});
 	}
 
 	public onSubmit() {

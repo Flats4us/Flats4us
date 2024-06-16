@@ -2,7 +2,7 @@
 	{{ "Disputes.disputes" | translate }}
 </h1>
 <div class="disputes-wrapper">
-	<div *ngIf="disputes$ | async as disputes" class="disputes-choice">
+	<mat-card *ngIf="disputes$ | async as disputes" class="disputes-choice">
 		<div
 			*ngFor="let dispute of disputes"
 			class="disputes-choice__conversation"
@@ -10,7 +10,7 @@
 		>
 			<span>{{ dispute.description }}</span>
 		</div>
-	</div>
+	</mat-card>
 	<div class="disputes-box">
 		<router-outlet></router-outlet>
 	</div>
