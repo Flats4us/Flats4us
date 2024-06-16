@@ -67,8 +67,17 @@
 				mat-menu-item
 				[matMenuTriggerFor]="extended"
 			>
-				<mat-icon class="material-icons-outlined">arrow_drop_down</mat-icon>
 				{{ "Header.additional" | translate }}
+			</button>
+
+			<button
+				*appAccessControl="authService.allPermissions.get('moderator')"
+				mat-button
+				class="mr-2"
+				[routerLink]="['/moderation-console']"
+			>
+				<mat-icon class="material-icons-outlined">admin_panel_settings</mat-icon>
+				{{ "Header.moderation-console" | translate }}
 			</button>
 
 			<mat-menu #extended="matMenu">

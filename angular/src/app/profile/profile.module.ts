@@ -36,6 +36,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EmailChangeModule } from '../settings/components/email-change/email-change.module';
 import { EditProfileModule } from './edit/edit-profile.module';
 import { CreateProfileModule } from './create/create-profile.module';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
+import { AuthService } from '@shared/services/auth.service';
 
 @NgModule({
 	declarations: [ProfileComponent],
@@ -74,8 +76,9 @@ import { CreateProfileModule } from './create/create-profile.module';
 		MatChipsModule,
 		StarRatingComponent,
 		TranslateModule,
+		AccessControlDirective,
 	],
 	exports: [ProfileComponent],
-	providers: [ProfileService, SurveyService, UserService],
+	providers: [ProfileService, SurveyService, UserService, AuthService],
 })
 export class ProfileModule {}

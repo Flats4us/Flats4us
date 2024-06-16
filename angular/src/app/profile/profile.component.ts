@@ -5,6 +5,7 @@ import { UserService } from '@shared/services/user.service';
 import { IMyProfile, IUser, IUserOpinion } from '@shared/models/user.models';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-profile',
@@ -26,7 +27,11 @@ export class ProfileComponent extends BaseComponent {
 		})
 	);
 
-	constructor(private route: ActivatedRoute, public userService: UserService) {
+	constructor(
+		private route: ActivatedRoute,
+		public userService: UserService,
+		public authService: AuthService
+	) {
 		super();
 		this.route.paramMap
 			.pipe(

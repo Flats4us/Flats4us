@@ -215,7 +215,11 @@
 							mat-card-avatar
 							alt="avatar"
 							class="profile-avatar__image"
-							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
+							[src]="
+								actualUser?.profilePicture?.path
+									? baseUrl + '/' + actualUser?.profilePicture?.path
+									: './assets/avatar.png'
+							"
 						/>
 					</div>
 					<div class="text-2xl flex-col justify-center text-center mb-4">
@@ -234,6 +238,9 @@
 						<p>
 							{{ "Profile.creation-date" | translate }}:
 							{{ actualUser.accountCreationDate | date }}
+						</p>
+						<p *appAccessControl="authService.allPermissions.get('moderator')">
+							Moderator
 						</p>
 						<span *ngIf="actualUser.userType === 1" class="flex-col">
 							<p>
