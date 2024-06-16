@@ -92,6 +92,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 
 	public dataFormGroupStudent: FormGroup;
 	public dataFormGroupOwner: FormGroup;
+	public dataFormGroupModerator: FormGroup;
 
 	public addOnBlur = true;
 
@@ -153,6 +154,15 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 			]),
 			documentNumber: new FormControl('', Validators.required),
 		});
+
+		this.dataFormGroupModerator = this.formBuilder.group({
+			phoneNumber: new FormControl('', [
+				Validators.required,
+				Validators.pattern(
+					'^[+]?[(]?[0-9]{2,3}[)]?[-s.]?[0-9]{2,3}[-s.]?[0-9]{2,6}$'
+				),
+			]),
+		});
 	}
 	public ngOnInit(): void {
 		this.createAccountForm = this.formDir.form;
@@ -182,6 +192,11 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					this.dataFormGroupStudent.get('documentExpireDate')?.disable();
 					this.dataFormGroupStudent.get('studentNumber')?.disable();
 					this.dataFormGroupStudent.get('university')?.disable();
+				} else if (user.userType === 2) {
+					this.dataFormGroupModerator.patchValue(user);
+					if (!user?.profilePicture?.path) {
+						this.urlPhoto = this.urlAvatar;
+					}
 				} else {
 					this.dataFormGroupOwner.patchValue(user);
 					this.dataFormGroupOwner.get('documentExpireDate')?.disable();
@@ -358,6 +373,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 						(hobby: IInterest) => hobby.interestId
 					),
 				});
+			} else if (userType === 2) {
+				return this.profileService.editProfileModerator({
+					phoneNumber: this.dataFormGroupModerator.value.phoneNumber,
+				});
 			} else {
 				return this.profileService.editProfileOwner({
 					address: this.dataFormGroupOwner.value.address,
@@ -376,6 +395,10 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 					),
 					documentExpireDate: this.dataFormGroupStudent.value.documentExpireDate,
 					studentNumber: this.dataFormGroupStudent.value.studentNumber,
+				});
+			} else if (userType === 2) {
+				return this.profileService.editProfileModerator({
+					phoneNumber: this.dataFormGroupModerator.value.phoneNumber,
 				});
 			} else {
 				return this.profileService.editProfileOwner({

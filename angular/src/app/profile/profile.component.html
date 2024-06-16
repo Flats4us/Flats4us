@@ -265,10 +265,11 @@
 					></ng-container>
 				</section>
 				<section
-					*ngIf="actualUser.userType === 0"
+					*ngIf="actualUser.userType === 0 || actualUser.userType === 2"
 					class="flex flex-col items-center"
 				>
 					<div
+						*ngIf="actualUser.userType === 0"
 						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
 					>
 						<div class="flex flex-row items-center">
@@ -295,6 +296,7 @@
 						</div>
 					</div>
 					<div
+						*ngIf="actualUser.userType === 0"
 						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
 					>
 						<div class="flex flex-row items-center">

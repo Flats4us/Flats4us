@@ -391,8 +391,9 @@
 		"about-me": "O mnie:"
 	},
 	"Profile-edit": {
-		"edit-student-profile": "Edycja profilu studenta",
-		"edit-owner-profile": "Edycja profilu właściciela",
+		"edit-student-profile": "Edycja profilu Studenta",
+		"edit-owner-profile": "Edycja profilu Właściciela",
+		"edit-moderator-profile": "Edycja profilu Moderatora",
 		"photo-load": "Nie wczytano zdjęcia",
 		"age1": "Wiek",
 		"age2": "wiek",

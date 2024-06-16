@@ -393,6 +393,7 @@
 	"Profile-edit": {
 		"edit-student-profile": "Edit Student profile",
 		"edit-owner-profile": "Edit Owner profile",
+		"edit-moderator-profile": "Edit Moderator profile",
 		"photo-load": "Photo not loaded",
 		"age1": "Age",
 		"age2": "age",

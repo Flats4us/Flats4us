@@ -67,6 +67,10 @@ export class ProfileService {
 		return this.httpClient.put(`${this.apiRoute}/users/current`, newData);
 	}
 
+	public editProfileModerator(newData: { phoneNumber: string }) {
+		return this.httpClient.put(`${this.apiRoute}/users/current`, newData);
+	}
+
 	public getActualProfile(): Observable<IUserProfile> {
 		return this.httpClient.get<IUserProfile>(`${this.apiRoute}/users/my-profile`);
 	}
