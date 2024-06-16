@@ -553,7 +553,10 @@
 		"option-offer": "Powiązana oferta",
 		"option-property": "Powiązana nieruchomość",
 		"option-dispute": "Rozpocznij spór",
-		"option-close": "Zakończ najem"
+		"option-close": "Zakończ najem",
+		"phone": "Numer telefonu",
+		"owner": "Właściciel",
+		"payment": "Dokonaj płatności"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "Kończenie najmu",

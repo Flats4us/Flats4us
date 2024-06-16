@@ -60,4 +60,11 @@ export class RentsService {
 			opinion
 		);
 	}
+
+	public makePayment(paymentId: number) {
+		return this.httpClient.put(
+			`${this.apiRoute}/payments/${paymentId}/pay`,
+			paymentId
+		);
+	}
 }

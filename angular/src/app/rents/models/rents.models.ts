@@ -46,6 +46,7 @@ export interface IRent {
 	propertyAddress: string;
 	propertyType: number;
 	mainTenantId: number;
+	owner: IOwner;
 	propertyImages: IImage[];
 	tenants: ITenant[];
 	payments: IRentPayment[];
@@ -79,4 +80,13 @@ export interface IRentProposition {
 	duration: number;
 	mainTenantId: number;
 	tenants: ITenant[];
+}
+
+export interface IOwner {
+	userId: number;
+	name: string;
+	surname: string;
+	email: string;
+	phoneNumber: string;
+	profilePicture: IImage;
 }
