@@ -155,10 +155,7 @@
 									</button>
 								</div>
 								<img
-									*ngIf="
-										(data.offer?.property?.images?.length ?? 0) > 0 &&
-										isCurrentSlideIndex(i)
-									"
+									*ngIf="data.offer?.property?.images?.length && isCurrentSlideIndex(i)"
 									class="slide slide-animation non-draggable-image"
 									src="{{ baseUrl }}/{{ slide?.path }}"
 									(swiperight)="nextSlide(data.offer?.property?.images?.length)"
@@ -377,11 +374,7 @@
 					</div>
 					<div class="column">
 						<p class="text-2xl pt-4">
-							{{
-								data.offer?.property?.numberOfRooms === null
-									? "-"
-									: data.offer?.property?.numberOfRooms
-							}}
+							{{ data.offer?.property?.numberOfRooms ?? "-" }}
 						</p>
 					</div>
 				</div>
@@ -391,11 +384,7 @@
 					</div>
 					<div class="column">
 						<p class="text-2xl pt-4">
-							{{
-								data.offer?.property?.numberOfFloors === null
-									? "-"
-									: data.offer?.property?.numberOfFloors
-							}}
+							{{ data.offer?.property?.numberOfFloors ?? "-" }}
 						</p>
 					</div>
 				</div>
@@ -405,9 +394,7 @@
 					</div>
 					<div class="column">
 						<p class="text-2xl pt-4">
-							{{
-								data.offer?.property?.floor === null ? "-" : data.offer?.property?.floor
-							}}
+							{{ data.offer?.property?.floor ?? "-" }}
 						</p>
 					</div>
 				</div>
@@ -417,11 +404,7 @@
 					</div>
 					<div class="column">
 						<p class="text-2xl pt-4">
-							{{
-								data.offer?.property?.maxNumberOfInhabitants === null
-									? "-"
-									: data.offer?.property?.maxNumberOfInhabitants
-							}}
+							{{ data.offer?.property?.maxNumberOfInhabitants ?? "-" }}
 						</p>
 					</div>
 				</div>
@@ -567,35 +550,33 @@
 			</mat-card-content>
 		</mat-card>
 		<mat-card *ngIf="data.user === uType.DETAILS">
-			<mat-card-content>
-				<div class="button-box-options">
-					<button mat-raised-button color="primary" (click)="returnStart()">
-						{{ "return" | translate }}
-					</button>
-					<button
-						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-						mat-raised-button
-						color="primary"
-						(click)="onAddMeeting(data.offer?.offerId)"
-					>
-						{{ "Offer.add-meeting" | translate }}
-					</button>
-					<button
-						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-						mat-raised-button
-						color="primary"
-						[disabled]="data.offer?.offerStatus !== 0"
-						(click)="
-							startRent(
-								data.offer?.offerId,
-								data.offer?.property?.maxNumberOfInhabitants
-							)
-						"
-					>
-						{{ "Offer.rent2" | translate }}
-					</button>
-				</div>
-			</mat-card-content>
+			<div class="button-box-options">
+				<button mat-raised-button color="primary" (click)="returnStart()">
+					{{ "return" | translate }}
+				</button>
+				<button
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					mat-raised-button
+					color="primary"
+					(click)="onAddMeeting(data.offer?.offerId)"
+				>
+					{{ "Offer.add-meeting" | translate }}
+				</button>
+				<button
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					mat-raised-button
+					color="primary"
+					[disabled]="data.offer?.offerStatus !== 0"
+					(click)="
+						startRent(
+							data.offer?.offerId,
+							data.offer?.property?.maxNumberOfInhabitants
+						)
+					"
+				>
+					{{ "Offer.rent2" | translate }}
+				</button>
+			</div>
 		</mat-card>
 	</div>
 </div>

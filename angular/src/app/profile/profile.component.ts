@@ -42,8 +42,6 @@ export class ProfileComponent extends BaseComponent {
 	}
 
 	public checkIfYetAssesed(opinions: IUserOpinion[]): boolean {
-		let ifAssesed = false;
-		ifAssesed = !!opinions.find(opinion => opinion.sourceUserId === this.myId);
-		return ifAssesed;
+		return !!opinions.find(opinion => opinion.sourceUserId === this.myId);
 	}
 }

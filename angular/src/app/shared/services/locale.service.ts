@@ -1,7 +1,7 @@
-import { Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
+import { Injectable, Optional, SkipSelf } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject, noop, takeUntil } from 'rxjs';
+import { noop } from 'rxjs';
 
 type ShouldReuseRoute = (
 	future: ActivatedRouteSnapshot,
@@ -11,8 +11,7 @@ type ShouldReuseRoute = (
 @Injectable({
 	providedIn: 'root',
 })
-export class LocaleService implements OnDestroy {
-	protected destroyed: Subject<void> = new Subject<void>();
+export class LocaleService {
 	private initialized = false;
 
 	constructor(
@@ -32,16 +31,14 @@ export class LocaleService implements OnDestroy {
 	}
 
 	private subscribeToLangChange() {
-		this.translate.onLangChange
-			.pipe(takeUntil(this.destroyed))
-			.subscribe(async () => {
-				const { shouldReuseRoute } = this.router.routeReuseStrategy;
+		this.translate.onLangChange.subscribe(async () => {
+			const { shouldReuseRoute } = this.router.routeReuseStrategy;
 
-				this.setRouteReuse(() => false);
-				this.router.navigated = false;
-				await this.router.navigateByUrl(this.router.url).catch(noop);
-				this.setRouteReuse(shouldReuseRoute);
-			});
+			this.setRouteReuse(() => false);
+			this.router.navigated = false;
+			await this.router.navigateByUrl(this.router.url).catch(noop);
+			this.setRouteReuse(shouldReuseRoute);
+		});
 	}
 
 	public getCurrentLocale(): string {
@@ -66,10 +63,5 @@ export class LocaleService implements OnDestroy {
 
 	public setLocale(localeId: string) {
 		this.translate.use(localeId);
-	}
-
-	public ngOnDestroy(): void {
-		this.destroyed.next();
-		this.destroyed.complete();
 	}
 }

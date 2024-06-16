@@ -195,6 +195,14 @@ mat-error {
 	font-size: x-small;
 }
 
+mat-card-title {
+	color: var(--textColor) !important;
+}
+
+mat-card-subtitle {
+	color: var(--textColor) !important;
+}
+
 .stylePopup .leaflet-popup-content-wrapper,
 .stylePopup .leaflet-popup-tip {
 	background-color: var(--bgColor);
