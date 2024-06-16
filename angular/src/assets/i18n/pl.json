@@ -555,7 +555,8 @@
 		"option-dispute": "Rozpocznij spór",
 		"option-close": "Zakończ najem",
 		"phone": "Numer telefonu",
-		"owner": "Właściciel"
+		"owner": "Właściciel",
+		"payment": "Dokonaj płatności"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "Kończenie najmu",
