@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	HostListener,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { environment } from '../../../../environments/environment.prod';
@@ -14,7 +20,7 @@ import { ThemeService } from '@shared/services/theme.service';
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent extends BaseComponent {
+export class HeaderComponent extends BaseComponent implements OnInit {
 	@ViewChild('menuTrigger')
 	public menuTrigger: MatMenuTrigger | undefined;
 
@@ -42,6 +48,33 @@ export class HeaderComponent extends BaseComponent {
 					this.menuTrigger?.closeMenu();
 				}
 			});
+	}
+
+	@HostListener('window:unload', ['$event'])
+	public unloadHandler() {
+		if (this.themeService.isDarkMode) {
+			window.localStorage.setItem(
+				'isDarkMode',
+				this.themeService.isDarkMode() ? '1' : '0'
+			);
+		}
+		if (this.localeService.getCurrentLocale()) {
+			window.localStorage.setItem(
+				'currentLocale',
+				this.localeService.getCurrentLocale()
+			);
+		}
+	}
+
+	public ngOnInit(): void {
+		const theme = window.localStorage.getItem('isDarkMode');
+		const locale = window.localStorage.getItem('currentLocale');
+		if (theme && !!parseInt(theme) !== this.isDarkMode) {
+			this.changeTheme();
+		}
+		if (locale && locale !== this.localeService.getCurrentLocale()) {
+			this.changeLanguage(locale);
+		}
 	}
 
 	public changeLanguage(value: string) {

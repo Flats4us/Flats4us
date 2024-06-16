@@ -195,6 +195,14 @@ mat-error {
 	font-size: x-small;
 }
 
+mat-card-title {
+	color: var(--textColor) !important;
+}
+
+mat-card-subtitle {
+	color: var(--textColor) !important;
+}
+
 .stylePopup .leaflet-popup-content-wrapper,
 .stylePopup .leaflet-popup-tip {
 	background-color: var(--bgColor);
@@ -211,6 +219,12 @@ mat-error {
 
 .dialog-title {
 	color: var(--textColor);
+}
+
+.profile-card {
+	width: fit-content !important;
+	box-shadow: none !important;
+	@include mat.elevation(0);
 }
 
 @media screen and (max-width: 600px) {

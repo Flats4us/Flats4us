@@ -335,7 +335,15 @@
 		"document-type1": "Legitymacja studencka",
 		"document-type2": "Paszport",
 		"verified": "zweryfikowany",
-		"unverified": "niezweryfikowany"
+		"unverified": "niezweryfikowany",
+		"student-profile": "Profil Studenta",
+		"owner-profile": "Profil Właściciela",
+		"birth-date": "Data urodzenia",
+		"address": "Adres",
+		"index": "Numer albumu",
+		"bank": "Nr konta bankowego",
+		"creation-date": "Użytkownik od",
+		"links": "Media społecznościowe"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "TWOJA OPINIA O UŻYTKOWNIKU",
@@ -362,7 +370,8 @@
 		"enter-comments": "Tutaj wpisz komentarz",
 		"add-opinion2": "Dodaj opinię",
 		"info1": "Pomyślnie dodano opinię!",
-		"close": "Zamknij"
+		"close": "Zamknij",
+		"error": "Nie udało się dodać opinii! Spróbuj ponownie."
 	},
 	"Profile-create": {
 		"creating-profile": "Tworzenie profilu",
@@ -437,8 +446,8 @@
 		"property-type0": "Mieszkanie",
 		"property-type1": "Dom",
 		"property-type2": "Pokój",
-		"property-status0": "zweryfikowany",
-		"property-status1": "niezweryfikowany",
+		"property-status0": "zweryfikowana",
+		"property-status1": "niezweryfikowana",
 		"year-type0": "do 1950",
 		"year-type1": "od 1950 do 1989",
 		"year-type2": "od 1990 do 2010",
@@ -524,6 +533,8 @@
 		"equipment": "Wyposażenie",
 		"edit-property": "Edytuj nieruchomość",
 		"delete-property": "Usuń nieruchomość",
+		"phone": "Numer telefonu",
+		"owner": "Właściciel",
 		"related-offers": "Powiązane oferty",
 		"show-offer": "Pokaż ofertę",
 		"date-issue": "Data wystawienia",

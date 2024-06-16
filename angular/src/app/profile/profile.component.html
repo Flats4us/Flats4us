@@ -1,192 +1,391 @@
-<h1 class="text-4xl p-4 font-semibold">
-	{{ "Profile.my-profile" | translate }}
-</h1>
-<mat-card *ngIf="user$ | async as user">
-	<mat-card-content>
-		<section class="flex flex-col items-center">
-			<div class="flex justify-center">
-				<img
-					mat-card-avatar
-					alt="avatar"
-					class="profile-avatar__image"
-					src="{{ baseUrl }}/{{ user?.profilePicture?.path }}"
-				/>
-			</div>
-			<div class="text-3xl font-semibold flex justify-center">{{ user.name }}</div>
-			<div class="profile-features__wrapper flex justify-center">
-				<mat-chip-listbox *ngIf="user.userType === 1">
-					<mat-chip *ngIf="!user.surveyStudent.smoking">
-						<div class="chip">
-							<mat-icon>smoke_free</mat-icon>
-							<span>{{ "Profile.smoking" | translate }}</span>
-						</div>
-					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.sociability">
-						<div class="chip">
-							<mat-icon>group</mat-icon>
-							<span>{{ "Profile.sociable" | translate }}</span>
-						</div>
-					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.animals">
-						<div class="chip">
-							<mat-icon>pets</mat-icon>
-							<span>{{ "Profile.has-animals" | translate }}</span>
-						</div>
-					</mat-chip>
-					<mat-chip *ngIf="user.surveyStudent.vegan">
-						<div class="chip">
-							<mat-icon>cruelty_free</mat-icon> <span>Vegan</span>
-						</div>
-					</mat-chip>
-				</mat-chip-listbox>
-			</div>
-			<div class="flex flex-col items-start">
-				<div *ngFor="let link of user.links" class="text-gray-400">
-					<div class="profile-link">
-						<mat-icon>link</mat-icon>
-						<a href="{{ link }}">{{ link }}</a>
+<div *ngIf="user$ | async as user">
+	<h1 *ngIf="id === 'my'" class="text-4xl p-4 font-semibold">
+		{{ "Profile.my-profile" | translate }}
+	</h1>
+	<h1
+		*ngIf="id !== 'my' && user.userType === 1"
+		class="text-4xl p-4 font-semibold"
+	>
+		{{ "Profile.student-profile" | translate }}
+	</h1>
+	<h1
+		*ngIf="id !== 'my' && user.userType === 0"
+		class="text-4xl p-4 font-semibold"
+	>
+		{{ "Profile.owner-profile" | translate }}
+	</h1>
+	<ng-template let-actualUser="actualUser" #survey>
+		<div class="profile-features__wrapper flex justify-center">
+			<mat-chip-listbox>
+				<mat-chip *ngIf="!actualUser.surveyStudent.smoking">
+					<div class="chip">
+						<mat-icon>smoke_free</mat-icon>
+						<span>{{ "Profile.smoking" | translate }}</span>
 					</div>
-				</div>
-			</div>
-		</section>
-		<section>
-			<div class="profile-details__wrapper mb-4">
-				<div class="profile-education__header text-2xl flex gap-2 content-center">
-					<mat-icon>school</mat-icon>
-					<span>{{ "Profile.university" | translate }}</span>
-				</div>
-				<div class="text-gray-400">
-					{{ user.university }}
-				</div>
-			</div>
-			<div class="profile-details__wrapper mb-4">
-				<div class="profile-interests__header text-2xl flex gap-2 content-center">
-					<mat-icon>travel_explore</mat-icon>
-					<span>{{ "Profile.interest" | translate }}</span>
-				</div>
+				</mat-chip>
+				<mat-chip *ngIf="actualUser.surveyStudent.sociability">
+					<div class="chip">
+						<mat-icon>group</mat-icon>
+						<span>{{ "Profile.sociable" | translate }}</span>
+					</div>
+				</mat-chip>
+				<mat-chip *ngIf="actualUser.surveyStudent.animals">
+					<div class="chip">
+						<mat-icon>pets</mat-icon>
+						<span>{{ "Profile.has-animals" | translate }}</span>
+					</div>
+				</mat-chip>
+				<mat-chip *ngIf="actualUser.surveyStudent.vegan">
+					<div class="chip">
+						<mat-icon>cruelty_free</mat-icon> <span>Vegan</span>
+					</div>
+				</mat-chip>
+			</mat-chip-listbox>
+		</div>
+	</ng-template>
+	<ng-template let-actualUser="actualUser" #opinions>
+		<div class="profile-details__wrapper mb-4">
+			<div class="first-container">
 				<div>
-					<mat-chip-listbox>
-						<mat-chip *ngFor="let interest of user.interests">{{
-							"Interest." + interest.name | translate
-						}}</mat-chip>
-					</mat-chip-listbox>
-				</div>
-			</div>
-			<div class="profile-details__wrapper grid gap-4">
-				<div
-					class="profile-opinions__header text-2xl flex justify-between gap-2 content-center"
-				>
-					<div>
-						<mat-icon>rate_review</mat-icon>
-						<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+					<div
+						class="profile-education__header text-2xl flex gap-2 items-center mb-4 font-semibold"
+					>
+						<mat-icon>school</mat-icon>
+						<span>{{ "Profile.university" | translate }}</span>
 					</div>
-					<button
-						mat-mini-fab
-						color="primary"
-						[routerLink]="['/profile', user.userId, 'opinion', 'add']"
-					>
-						<mat-icon>add</mat-icon>
-					</button>
+					<div>
+						{{ actualUser.university }}
+					</div>
+					<div *ngIf="id === 'my'">
+						{{ "Profile.index" | translate }}: {{ actualUser.studentNumber }}
+					</div>
 				</div>
-				<div class="flex flex-col">
-					<app-star-rating [avgRating]="user.avgRating"></app-star-rating>
-					<label
-						>{{ "Profile-add-opinion.average" | translate }}:
-						{{ user.avgRating }}</label
+				<div *ngIf="id === 'my'" class="links">
+					<div
+						class="profile-education__header text-2xl flex gap-2 items-center mb-4 font-semibold"
 					>
-				</div>
-				<mat-chip-listbox>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.helpful" | translate }}:
-							{{ user.sumHelpful }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.ready-cooperate" | translate }}:
-							{{ user.sumCooperative }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.keeps-things-tidy" | translate }}:
-							{{ user.sumTidy }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.friendly" | translate }}:
-							{{ user.sumFriendly }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.respecting-privacy-others" | translate }}:
-							{{ user.sumRespectingPrivacy }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.communicative" | translate }}:
-							{{ user.sumCommunicative }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.dishonest" | translate }}:
-							{{ user.sumUnfair }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.lack-hygiene" | translate }}:
-							{{ user.sumLackOfHygiene }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.care-tidiness" | translate }}:
-							{{ user.sumUntidy }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.conflicting" | translate }}:
-							{{ user.sumConflicting }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.too-noisy" | translate }}:
-							{{ user.sumNoisy }}</span
-						>
-					</mat-chip>
-					<mat-chip>
-						<span
-							>{{ "Profile-add-opinion.not-follow-arrangements" | translate }}:
-							{{ user.sumNotFollowingTheArrangements }}</span
-						>
-					</mat-chip>
-				</mat-chip-listbox>
-				<div class="profile-opinions__comments">
-					<ng-container *ngFor="let opinion of user.userOpinions">
-						<div
-							*ngIf="opinion.description"
-							class="profile-opinions__comments-comment"
-						>
-							<img
-								src="{{ baseUrl }}/{{ opinion.sourceUserProfilePicture.path }}"
-								[alt]="opinion.sourceUserProfilePicture.name"
-							/>
-							<span class="text-gray-500">
-								{{ opinion.sourceUserName }} {{ opinion.date | date }}:
-							</span>
-							<span>{{ opinion.description }}</span>
+						<mat-icon>share</mat-icon>
+						<span>{{ "Profile.links" | translate }}</span>
+					</div>
+					<div class="flex flex-col items-start">
+						<div *ngFor="let link of actualUser.links">
+							<div class="profile-link">
+								<mat-icon>link</mat-icon>
+								<a href="{{ link }}">{{ link }}</a>
+							</div>
 						</div>
-					</ng-container>
+					</div>
 				</div>
 			</div>
-		</section>
-	</mat-card-content>
-</mat-card>
+		</div>
+		<div class="profile-details__wrapper mb-4">
+			<div
+				class="profile-interests__header text-2xl flex gap-2 items-center mb-4 font-semibold"
+			>
+				<mat-icon>travel_explore</mat-icon>
+				<span>{{ "Profile.interest" | translate }}</span>
+			</div>
+			<div>
+				<mat-chip-listbox>
+					<mat-chip *ngFor="let interest of actualUser.interests">{{
+						"Interest." + interest.name | translate
+					}}</mat-chip>
+				</mat-chip-listbox>
+			</div>
+		</div>
+		<div class="profile-details__wrapper">
+			<div class="profile-opinions__header text-2xl flex gap-2 items-center">
+				<mat-icon>rate_review</mat-icon>
+				<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
+				<button
+					*ngIf="id !== 'my' && !checkIfYetAssesed(actualUser.userOpinions)"
+					mat-mini-fab
+					color="primary"
+					class="ml-auto"
+					matTooltip="{{ 'Profile-add-opinion.add-opinion2' | translate }}"
+					[routerLink]="['/profile', actualUser.userId, 'opinion', 'add']"
+				>
+					<mat-icon class="font-bold">add</mat-icon>
+				</button>
+			</div>
+			<div class="flex flex-col my-4">
+				<app-star-rating [avgRating]="actualUser.avgRating"></app-star-rating>
+				<label
+					>{{ "Profile-add-opinion.average" | translate }}:
+					{{ actualUser.avgRating }}</label
+				>
+			</div>
+			<mat-chip-listbox>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.helpful" | translate }}:
+						{{ actualUser.sumHelpful }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.ready-cooperate" | translate }}:
+						{{ actualUser.sumCooperative }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.keeps-things-tidy" | translate }}:
+						{{ actualUser.sumTidy }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.friendly" | translate }}:
+						{{ actualUser.sumFriendly }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.respecting-privacy-others" | translate }}:
+						{{ actualUser.sumRespectingPrivacy }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.communicative" | translate }}:
+						{{ actualUser.sumCommunicative }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.dishonest" | translate }}:
+						{{ actualUser.sumUnfair }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.lack-hygiene" | translate }}:
+						{{ actualUser.sumLackOfHygiene }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.care-tidiness" | translate }}:
+						{{ actualUser.sumUntidy }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.conflicting" | translate }}:
+						{{ actualUser.sumConflicting }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.too-noisy" | translate }}:
+						{{ actualUser.sumNoisy }}</span
+					>
+				</mat-chip>
+				<mat-chip>
+					<span
+						>{{ "Profile-add-opinion.not-follow-arrangements" | translate }}:
+						{{ actualUser.sumNotFollowingTheArrangements }}</span
+					>
+				</mat-chip>
+			</mat-chip-listbox>
+			<div class="profile-opinions__comments">
+				<ng-container *ngFor="let opinion of actualUser.userOpinions">
+					<div
+						*ngIf="opinion.description"
+						class="profile-opinions__comments-comment mb-1"
+					>
+						<img
+							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
+							[alt]="opinion.sourceUserProfilePicture.name"
+						/>
+						<span> {{ opinion.sourceUserName }} {{ opinion.date | date }}: </span>
+						<span>{{ opinion.description }}</span>
+					</div>
+				</ng-container>
+			</div>
+		</div>
+	</ng-template>
+	<ng-template #myProfile let-actualUser="actualUser">
+		<mat-card>
+			<mat-card-content>
+				<section class="flex flex-col items-center">
+					<div class="flex justify-center">
+						<img
+							mat-card-avatar
+							alt="avatar"
+							class="profile-avatar__image"
+							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
+						/>
+					</div>
+					<div class="text-2xl flex-col justify-center text-center mb-4">
+						<p class="text-3xl font-semibold">
+							{{ actualUser.name }} {{ actualUser.surname }}
+						</p>
+						<p>
+							Status:
+							{{
+								(actualUser.verificationStatus === 0
+									? "Profile.verified"
+									: "Profile.unverified"
+								) | translate
+							}}
+						</p>
+						<p>
+							{{ "Profile.creation-date" | translate }}:
+							{{ actualUser.accountCreationDate | date }}
+						</p>
+						<span *ngIf="actualUser.userType === 1" class="flex-col">
+							<p>
+								{{ "Profile.birth-date" | translate }}:
+								{{ actualUser.birthDate | date }}
+							</p>
+							<p>{{ "Profile.address" | translate }}: {{ actualUser.address }}</p>
+							<p>E-mail: {{ actualUser.email }}</p>
+							<p>Tel.: {{ actualUser.phoneNumber }}</p>
+						</span>
+					</div>
+					<ng-container
+						*ngIf="actualUser.userType === 1"
+						[ngTemplateOutlet]="survey"
+						[ngTemplateOutletContext]="{ actualUser: actualUser }"
+					></ng-container>
+				</section>
+				<section *ngIf="actualUser.userType === 1">
+					<ng-container
+						[ngTemplateOutlet]="opinions"
+						[ngTemplateOutletContext]="{ actualUser: actualUser }"
+					></ng-container>
+				</section>
+				<section
+					*ngIf="actualUser.userType === 0"
+					class="flex flex-col items-center"
+				>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">home</mat-icon>
+							<span
+								>{{ "Profile.address" | translate }}: {{ actualUser.address }}</span
+							>
+						</div>
+					</div>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">mail</mat-icon>
+							<span>E-mail: {{ actualUser.email }}</span>
+						</div>
+					</div>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">phone_iphone</mat-icon>
+							<span>Tel.: {{ actualUser.phoneNumber }}</span>
+						</div>
+					</div>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">account_balance</mat-icon>
+							<span
+								>{{ "Profile.bank" | translate }}: {{ actualUser.bankAccount }}</span
+							>
+						</div>
+					</div>
+				</section>
+			</mat-card-content>
+		</mat-card>
+	</ng-template>
+	<ng-template #userProfile let-actualUser="actualUser">
+		<mat-card>
+			<mat-card-content>
+				<section class="flex flex-col items-center">
+					<div class="flex justify-center">
+						<img
+							mat-card-avatar
+							alt="avatar"
+							class="profile-avatar__image"
+							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
+						/>
+					</div>
+					<div class="flex flex-col justify-center text-center mb-4">
+						<p class="font-semibold text-3xl">{{ actualUser.name }}</p>
+						<p *ngIf="actualUser.userType === 1" class="text-2xl">
+							{{ "Profile.creation-date" | translate }}:
+							{{ actualUser.accountCreationDate | date }}
+						</p>
+					</div>
+					<div
+						*ngIf="actualUser.userType === 1"
+						class="flex flex-col items-start mb-4"
+					>
+						<div *ngFor="let link of actualUser.links">
+							<div class="profile-link">
+								<mat-icon>link</mat-icon>
+								<a href="{{ link }}">{{ link }}</a>
+							</div>
+						</div>
+					</div>
+					<ng-container
+						*ngIf="actualUser.userType === 1"
+						[ngTemplateOutlet]="survey"
+						[ngTemplateOutletContext]="{ actualUser: actualUser }"
+					></ng-container>
+				</section>
+				<section *ngIf="actualUser.userType === 1">
+					<ng-container
+						[ngTemplateOutlet]="opinions"
+						[ngTemplateOutletContext]="{ actualUser: actualUser }"
+					></ng-container>
+				</section>
+				<section
+					*ngIf="actualUser.userType === 0"
+					class="flex flex-col items-center"
+				>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">mail</mat-icon>
+							<span>E-mail: {{ actualUser.email }}</span>
+						</div>
+					</div>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">phone_iphone</mat-icon>
+							<span>Tel.: {{ actualUser.phoneNumber }}</span>
+						</div>
+					</div>
+					<div
+						class="profile-details__wrapper text-2xl justify-center items-center mb-4 w-full"
+					>
+						<div class="flex flex-row items-center">
+							<mat-icon class="material-symbols-outlined">start</mat-icon>
+							<span
+								>{{ "Profile.creation-date" | translate }}:
+								{{ actualUser.accountCreationDate | date }}</span
+							>
+						</div>
+					</div>
+				</section>
+			</mat-card-content>
+		</mat-card>
+	</ng-template>
+	<ng-container
+		*ngIf="id === 'my'"
+		[ngTemplateOutlet]="myProfile"
+		[ngTemplateOutletContext]="{ actualUser: user }"
+	></ng-container>
+	<ng-container
+		*ngIf="id !== 'my'"
+		[ngTemplateOutlet]="userProfile"
+		[ngTemplateOutletContext]="{ actualUser: user }"
+	></ng-container>
+</div>

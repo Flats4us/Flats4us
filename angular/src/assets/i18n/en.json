@@ -335,7 +335,15 @@
 		"document-type1": "Student card",
 		"document-type2": "Passport",
 		"verified": "verified",
-		"unverified": "unverified"
+		"unverified": "unverified",
+		"student-profile": "Student profile",
+		"owner-profile": "Owner profile",
+		"birth-date": "Birth date",
+		"address": "Address",
+		"index": "Student number",
+		"bank": "Bank account no",
+		"creation-date": "User since",
+		"links": "Social media"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "YOUR OPINION ABOUT THE USER",
@@ -362,7 +370,8 @@
 		"enter-comments": "Enter your comments here",
 		"add-opinion2": "Add opinion",
 		"info1": "Review successfully added!",
-		"close": "Close"
+		"close": "Close",
+		"error": "Failed to add the opinion! Please try again."
 	},
 	"Profile-create": {
 		"creating-profile": "Creating a profile",
@@ -524,6 +533,8 @@
 		"equipment": "Equipment",
 		"edit-property": "Edit property",
 		"delete-property": "Delete property",
+		"phone": "Phone number",
+		"owner": "Owner",
 		"related-offers": "Related offers",
 		"show-offer": "Show offer",
 		"date-issue": "Date of issue",

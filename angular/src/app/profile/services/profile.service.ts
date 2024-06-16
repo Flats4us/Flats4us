@@ -13,7 +13,7 @@ import {
 } from '../models/profile.models';
 import { environment } from 'src/environments/environment.prod';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
-import { IResult } from 'src/app/offer/models/offer.models';
+import { IResult } from '@shared/models/shared.models';
 
 @Injectable()
 export class ProfileService {

@@ -1,14 +1,10 @@
-<div class="grid-container">
-	<div></div>
+<div>
+	<h1 class="text-4xl p-4 font-semibold">
+		{{ "Profile-add-opinion.your-opinion" | translate }}
+	</h1>
+</div>
+<div>
 	<mat-card *ngIf="user$ | async as user">
-		<mat-card-header class="justify-center">
-			<mat-card-title>
-				<h1 class="font-medium my-6">
-					{{ "Profile-add-opinion.your-opinion" | translate }}
-				</h1>
-			</mat-card-title>
-		</mat-card-header>
-		<mat-divider></mat-divider>
 		<form [formGroup]="opinionForm" (ngSubmit)="onSubmit(user.userId)">
 			<mat-card-content class="flex flex-wrap justify-center">
 				<div class="flex-[1_1_400px] p-5">
@@ -17,7 +13,7 @@
 						mat-card-avatar
 						alt="avatar"
 						class="avatar__image m-auto"
-						src="{{ baseUrl }}/{{ user.profilePicture.path }}"
+						src="{{ baseUrl }}/{{ user?.profilePicture?.path }}"
 					/>
 
 					<div class="text-center">
@@ -29,7 +25,6 @@
 						{{ user.avgRating }}
 					</div>
 					<div class="text-center">
-						v class="text-center">
 						{{ "Profile-add-opinion.opinions" | translate }} ({{
 							user.userOpinions.length
 						}})
@@ -132,10 +127,12 @@
 				</div>
 			</mat-card-content>
 			<mat-card-actions class="gap-2 justify-center">
+				<button mat-raised-button type="button" (click)="opinionForm.reset()">
+					{{ "clear" | translate }}
+				</button>
 				<button mat-raised-button type="submit" [disabled]="!opinionForm.valid">
 					{{ "Profile-add-opinion.add-opinion2" | translate }}
 				</button>
-				<button mat-raised-button>{{ "clear" | translate }}</button>
 			</mat-card-actions>
 		</form>
 	</mat-card>

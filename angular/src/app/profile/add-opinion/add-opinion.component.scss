@@ -1,6 +1,6 @@
 .avatar__image {
-	width: 150px;
-	height: 150px;
+	width: 250px;
+	height: 250px;
 }
 
 .tags {
@@ -47,4 +47,11 @@ mat-card-content {
 .grid-container {
 	display: grid;
 	grid-template-columns: 1fr 4fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+	.avatar__image {
+		width: 200px;
+		height: 200px;
+	}
 }

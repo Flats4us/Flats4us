@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IResult } from '@shared/models/shared.models';
 import { Observable, map } from 'rxjs';
-import { IResult } from 'src/app/offer/models/offer.models';
 import {
 	IAddProperty,
 	IAddResult,

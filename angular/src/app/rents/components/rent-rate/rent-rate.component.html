@@ -1,4 +1,7 @@
-<h1 *ngIf="data$ | async as data" mat-dialog-title>
+<h1
+	*ngIf="data$ | async as data"
+	class="dialog-title text-2xl p-4 font-semibold"
+>
 	{{ "Rents-details.rate-rental" | translate }} {{ data.description }}
 </h1>
 <div mat-dialog-content>

@@ -245,7 +245,6 @@
 .label-box {
 	display: inline-block;
 	justify-content: left;
-	padding: 4px 0;
 }
 
 .profile-details {
@@ -259,7 +258,8 @@
 
 .profile-avatar {
 	border-radius: 50%;
-	width: 100px;
+	width: 120px;
+	height: 120px;
 	margin-right: 4px;
 }
 

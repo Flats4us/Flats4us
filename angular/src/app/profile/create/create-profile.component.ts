@@ -219,7 +219,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 								);
 							},
 							complete: () => {
-								this.router.navigate(['/']);
+								window.location.replace('/');
 							},
 						});
 				}
@@ -247,7 +247,7 @@ export class CreateProfileComponent extends BaseComponent implements OnInit {
 								);
 							},
 							complete: () => {
-								this.router.navigate(['/']);
+								window.location.replace('/');
 							},
 						});
 				}
