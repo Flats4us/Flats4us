@@ -12,8 +12,8 @@
 		class="grid gap-4"
 	>
 		<mat-card>
-			<div *ngIf="data.user === uType.OWNER" class="label-box">
-				<mat-label class="label-description">
+			<mat-card-header *ngIf="data.user === uType.OWNER" class="label-box">
+				<mat-card-title class="label-description">
 					<span class="text-3xl"
 						>{{ "Offer.offer-status" | translate }}:
 						{{ offerService.getOfferStatus(data.offer?.offerStatus) | translate }}
@@ -41,553 +41,561 @@
 						>
 							<mat-icon class="material-symbols-outlined">handshake</mat-icon>
 						</button>
-					</span></mat-label
+					</span></mat-card-title
 				>
-				<mat-label class="label-right">
+				<mat-card-title class="label-right">
 					<mat-icon class="icon" inline="true">visibility</mat-icon>
 					<span class="text-2xl">
 						{{ "Offer.followers-number" | translate }}:
 						{{ data.offer?.numberOfInterested }}
 					</span>
-				</mat-label>
-			</div>
-			<div class="gallery">
-				<div class="container slider">
-					<div [@slideAnimation]="currentIndex">
-						<ng-template
-							ngFor
-							[ngForOf]="data.offer?.property?.images"
-							let-slide
-							let-i="index"
-						>
-							<div class="offer-title-outer">
-								<span class="offer-title-inner"
-									><h1 class="inner-title text-3xl">
-										{{ "Offer.rent1" | translate }} -
-										{{
-											realEstateService.getPropertyType(data.offer?.property?.propertyType)
-												| translate
-										}}
-										{{ data.offer?.property?.area }} m² {{ data.offer?.property?.city }}
-									</h1>
-								</span>
-							</div>
-							<div
-								*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-								class="menu-title"
+				</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<div class="gallery">
+					<div class="container slider">
+						<div [@slideAnimation]="currentIndex">
+							<ng-template
+								ngFor
+								[ngForOf]="data.offer?.property?.images"
+								let-slide
+								let-i="index"
 							>
-								<button
-									class="box-icon"
-									id="menu"
-									mat-mini-fab
-									color="primary"
-									aria-label="MenuButton"
-									matTooltip="{{ 'more-options' | translate }}"
-									[matMenuTriggerFor]="menu"
-									[disabled]="
-										data?.offer?.offerStatus === 2 || data?.offer?.offerStatus === 3
-									"
+								<div class="offer-title-outer">
+									<span class="offer-title-inner"
+										><h1 class="inner-title text-3xl">
+											{{ "Offer.rent1" | translate }} -
+											{{
+												realEstateService.getPropertyType(
+													data.offer?.property?.propertyType
+												) | translate
+											}}
+											{{ data.offer?.property?.area }} m² {{ data.offer?.property?.city }}
+										</h1>
+									</span>
+								</div>
+								<div
+									*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+									class="menu-title"
 								>
-									<mat-icon>more_horiz</mat-icon>
-								</button>
-								<mat-menu #menu="matMenu" id="options">
 									<button
-										*ngFor="let menuOption of this.menuOptions"
-										mat-menu-item
-										[value]="menuOption.description"
+										class="box-icon"
+										id="menu"
+										mat-mini-fab
+										color="primary"
+										aria-label="MenuButton"
+										matTooltip="{{ 'more-options' | translate }}"
+										[matMenuTriggerFor]="menu"
 										[disabled]="
-											(data.offer?.isPromoted && menuOption.option === 'promoteOffer') ||
-											(data.offer?.offerStatus !== 0 && menuOption.option === 'closeOffer')
-										"
-										(click)="
-											onSelect(
-												menuOption,
-												data?.offer?.offerId,
-												data.offer?.property?.propertyId
-											)
+											data?.offer?.offerStatus === 2 || data?.offer?.offerStatus === 3
 										"
 									>
-										<div
-											class="flex items-center justify-center"
-											[ngSwitch]="menuOption.option"
-											[class.close-offer]="menuOption.option === 'closeOffer'"
-										>
-											<mat-icon
-												*ngSwitchCase="'offerDetails'"
-												class="material-icons-outlined"
-												>info</mat-icon
-											>
-											<mat-icon
-												*ngSwitchCase="'promoteOffer'"
-												class="material-icons-outlined"
-												>new_releases</mat-icon
-											>
-											<mat-icon *ngSwitchCase="'property'" class="material-icons-outlined"
-												>real_estate_agent</mat-icon
-											>
-											<mat-icon
-												*ngSwitchCase="'closeOffer'"
-												class="material-icons-outlined"
-												>close</mat-icon
-											>
-											<span>{{ menuOption.description | translate }}</span>
-										</div>
+										<mat-icon>more_horiz</mat-icon>
 									</button>
-								</mat-menu>
-							</div>
-							<div *ngIf="data.user === uType.DETAILS" class="menu-title">
-								<button
-									*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-									mat-mini-fab
-									class="ml-auto"
-									id="addToWatched"
-									type="button"
-									color="primary"
-									aria-label="AddToWatched"
-									matTooltip="{{ 'Offer.add-to-watch' | translate }}"
-									[disabled]="data.offer?.isInterest"
-									(click)="addToWatched(data.offer?.offerId)"
-								>
-									<mat-icon>favorite_border</mat-icon>
-								</button>
-							</div>
-							<img
-								*ngIf="
-									(data.offer?.property?.images?.length ?? 0) > 0 &&
-									isCurrentSlideIndex(i)
-								"
-								class="slide slide-animation non-draggable-image"
-								src="{{ baseUrl }}/{{ slide?.path }}"
-								(swiperight)="nextSlide(data.offer?.property?.images?.length)"
-								(swipeleft)="prevSlide(data.offer?.property?.images?.length)"
-							/>
-						</ng-template>
-					</div>
-
-					<button
-						class="arrow prev"
-						(click)="nextSlide(data.offer?.property?.images?.length)"
-					>
-						<mat-icon>arrow_back_ios</mat-icon>
-					</button>
-					<button
-						class="arrow next"
-						(click)="prevSlide(data.offer?.property?.images?.length)"
-					>
-						<mat-icon>arrow_forward_ios</mat-icon>
-					</button>
-					<nav class="nav">
-						<div class="wrapper">
-							<ul class="dots">
-								<li
-									*ngFor="let slide of data.offer?.property?.images; let i = index"
-									class="dot"
-								>
-									<span
-										[ngClass]="{ active: isCurrentSlideIndex(i) }"
-										(click)="setCurrentSlideIndex(i)"
-									></span>
-								</li>
-							</ul>
+									<mat-menu #menu="matMenu" id="options">
+										<button
+											*ngFor="let menuOption of this.menuOptions"
+											mat-menu-item
+											[value]="menuOption.description"
+											[disabled]="
+												(data.offer?.isPromoted && menuOption.option === 'promoteOffer') ||
+												(data.offer?.offerStatus !== 0 &&
+													menuOption.option === 'closeOffer')
+											"
+											(click)="
+												onSelect(
+													menuOption,
+													data?.offer?.offerId,
+													data.offer?.property?.propertyId
+												)
+											"
+										>
+											<div
+												class="flex items-center justify-center"
+												[ngSwitch]="menuOption.option"
+												[class.close-offer]="menuOption.option === 'closeOffer'"
+											>
+												<mat-icon
+													*ngSwitchCase="'offerDetails'"
+													class="material-icons-outlined"
+													>info</mat-icon
+												>
+												<mat-icon
+													*ngSwitchCase="'promoteOffer'"
+													class="material-icons-outlined"
+													>new_releases</mat-icon
+												>
+												<mat-icon *ngSwitchCase="'property'" class="material-icons-outlined"
+													>real_estate_agent</mat-icon
+												>
+												<mat-icon
+													*ngSwitchCase="'closeOffer'"
+													class="material-icons-outlined"
+													>close</mat-icon
+												>
+												<span>{{ menuOption.description | translate }}</span>
+											</div>
+										</button>
+									</mat-menu>
+								</div>
+								<div *ngIf="data.user === uType.DETAILS" class="menu-title">
+									<button
+										*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+										mat-mini-fab
+										class="ml-auto"
+										id="addToWatched"
+										type="button"
+										color="primary"
+										aria-label="AddToWatched"
+										matTooltip="{{ 'Offer.add-to-watch' | translate }}"
+										[disabled]="data.offer?.isInterest"
+										(click)="addToWatched(data.offer?.offerId)"
+									>
+										<mat-icon>favorite_border</mat-icon>
+									</button>
+								</div>
+								<img
+									*ngIf="
+										(data.offer?.property?.images?.length ?? 0) > 0 &&
+										isCurrentSlideIndex(i)
+									"
+									class="slide slide-animation non-draggable-image"
+									src="{{ baseUrl }}/{{ slide?.path }}"
+									(swiperight)="nextSlide(data.offer?.property?.images?.length)"
+									(swipeleft)="prevSlide(data.offer?.property?.images?.length)"
+								/>
+							</ng-template>
 						</div>
-					</nav>
-				</div>
-			</div>
-			<div class="button-box">
-				<mat-label class="label-survey">
-					<span>
-						<mat-chip
-							class="mr-4"
-							matTooltip="{{
-								(data.offer?.property?.avgRating
-									? 'Offer.offer-info-rating0'
-									: 'Offer.offer-info-rating1'
-								) | translate
-							}}"
-							(click)="showRating(data.offer?.property)"
+
+						<button
+							class="arrow prev"
+							(click)="nextSlide(data.offer?.property?.images?.length)"
 						>
-							<div class="flex items-center pt-1 w-fit cursor-pointer">
-								<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
-								</app-star-rating>
+							<mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button
+							class="arrow next"
+							(click)="prevSlide(data.offer?.property?.images?.length)"
+						>
+							<mat-icon>arrow_forward_ios</mat-icon>
+						</button>
+						<nav class="nav">
+							<div class="wrapper">
+								<ul class="dots">
+									<li
+										*ngFor="let slide of data.offer?.property?.images; let i = index"
+										class="dot"
+									>
+										<span
+											[ngClass]="{ active: isCurrentSlideIndex(i) }"
+											(click)="setCurrentSlideIndex(i)"
+										></span>
+									</li>
+								</ul>
 							</div>
-						</mat-chip>
-					</span>
-					<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
-						<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
-							<div class="text-red-600 flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info1' | translate }}"
-									>smoke_free</mat-icon
-								>
-							</div>
-						</mat-chip>
-						<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
-							<div class="flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info2' | translate }}"
-									>smoking_rooms</mat-icon
-								>
-							</div>
-						</mat-chip>
-					</span>
-					<span [ngSwitch]="data.offer?.surveyOwnerOffer?.animalsAllowed">
-						<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
-							<div class="text-red-600 flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info3' | translate }}"
-									>pets</mat-icon
-								>
-							</div>
-						</mat-chip>
-						<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
-							<div class="flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info4' | translate }}"
-									>pets</mat-icon
-								>
-							</div>
-						</mat-chip>
-					</span>
-					<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
-						<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
-							<div class="text-red-600 flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info5' | translate }}"
-									>celebration</mat-icon
-								>
-							</div>
-						</mat-chip>
-						<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
-							<div class="flex items-center justify-center">
-								<mat-icon matTooltip="{{ 'Offer.survey-info6' | translate }}"
-									>celebration</mat-icon
-								>
-							</div>
-						</mat-chip>
-					</span>
-				</mat-label>
-				<mat-label class="label-right">
-					<mat-icon class="icon" inline="true"> sell </mat-icon>
-					<span class="text-3xl"
-						>{{ "Offer.price" | translate }}
-						{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/{{
-							"mth" | translate
-						}}.</span
-					></mat-label
-				>
-			</div>
-		</mat-card>
-		<mat-card>
-			<div class="label-box">
-				<mat-label class="label-description"
-					><mat-icon class="icon" inline="true">description</mat-icon
-					><span class="text-3xl">{{
-						"Offer.description" | translate
-					}}</span></mat-label
-				>
-				<mat-label *ngIf="data.offer?.isPromoted" class="label-right">
-					<mat-icon class="icon-promo" inline="true">new_releases</mat-icon>
-					<span class="text-3xl">{{
-						"Offer.offer-promoted" | translate
-					}}</span></mat-label
-				>
-			</div>
-			<mat-divider></mat-divider>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.bail" | translate }}:</p>
+						</nav>
+					</div>
 				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.deposit | currency : "PLN" : true : ".2-2" }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.start-date" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.startDate | date }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.end-date" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.endDate | date }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.voivodeship" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.property?.province | lowercase }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.city" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.property?.city }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.post-code" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.property?.postalCode }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.street" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ data.offer?.property?.street }}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.area" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.room-number" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{
-							data.offer?.property?.numberOfRooms === null
-								? "-"
-								: data.offer?.property?.numberOfRooms
-						}}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.floor-number" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{
-							data.offer?.property?.numberOfFloors === null
-								? "-"
-								: data.offer?.property?.numberOfFloors
-						}}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.floor" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{
-							data.offer?.property?.floor === null ? "-" : data.offer?.property?.floor
-						}}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.max-inhabitants" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{
-							data.offer?.property?.maxNumberOfInhabitants === null
-								? "-"
-								: data.offer?.property?.maxNumberOfInhabitants
-						}}
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.build-year" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">
-						{{ "Offer.contract-information" | translate }}:
-					</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">{{ data.offer?.description }}</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.equipment" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">
-						<span *ngFor="let equipment of data?.offer?.property?.equipment"
-							><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
-								<div *ngSwitchCase="1" class="box-equipment">
-									<span class="material-symbols-outlined">dishwasher</span>
-									<span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="2" class="box-equipment">
-									<mat-icon>local_laundry_service</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="3" class="box-equipment">
-									<mat-icon>iron</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="4" class="box-equipment">
-									<span class="material-symbols-outlined">kettle</span>
-									<span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="5" class="box-equipment">
-									<mat-icon>coffee_maker</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="6" class="box-equipment">
-									<mat-icon>ac_unit</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="7" class="box-equipment">
-									<mat-icon>balcony</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="8" class="box-equipment">
-									<mat-icon>tv</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="9" class="box-equipment">
-									<mat-icon>bathtub</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="10" class="box-equipment">
-									<span class="material-symbols-outlined">oven</span>
-									<span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="11" class="box-equipment">
-									<mat-icon>microwave</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchCase="12" class="box-equipment">
-									<mat-icon>elevator</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
-								</div>
-								<div *ngSwitchDefault class="box-equipment">
-									<mat-icon>devices</mat-icon
-									><span>{{ "Equipment." + equipment.name | translate }}</span>
+				<mat-card-footer class="button-box">
+					<mat-card-subtitle class="label-survey">
+						<span>
+							<mat-chip
+								class="mr-4"
+								matTooltip="{{
+									(data.offer?.property?.avgRating
+										? 'Offer.offer-info-rating0'
+										: 'Offer.offer-info-rating1'
+									) | translate
+								}}"
+								(click)="showRating(data.offer?.property)"
+							>
+								<div class="flex items-center pt-1 w-fit cursor-pointer">
+									<app-star-rating [avgRating]="data.offer?.property?.avgRating ?? 0">
+									</app-star-rating>
 								</div>
 							</mat-chip>
 						</span>
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.regulations" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
-				</div>
-			</div>
-			<div
-				*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-				class="row"
-			>
-				<div class="column">
-					<p class="text-2xl pt-4">{{ "Offer.owner" | translate }}:</p>
-				</div>
-				<div class="column">
-					<p class="text-2xl pt-4 grid gap-4">
-						<mat-card class="profile-card mat-elevation-z0">
-							<div class="profile-details">
-								<mat-card-avatar
-									matTooltip="{{ 'Offer.show-profile' | translate }}"
-									(click)="showProfile(data.offer?.owner?.userId)"
-								>
-									<img
-										*ngIf="data.offer?.owner?.profilePicture?.path as path"
-										class="profile-avatar"
-										src="{{ baseUrl }}/{{ path }}"
-								/></mat-card-avatar>
-								<div class="container-features">
-									<mat-chip matTooltip="{{ 'Offer.name-surname' | translate }}"
-										><div class="box-feature">
-											<mat-icon class="icon-feature">account_circle</mat-icon
-											><span
-												>{{ data.offer?.owner?.name }}
-												{{ data.offer?.owner?.surname }}</span
-											>
-										</div></mat-chip
-									>
-									<mat-chip matTooltip="{{ 'Offer.email-address' | translate }}"
-										><div class="box-feature">
-											<mat-icon class="icon-feature">mail</mat-icon
-											><span>{{ data.offer?.owner?.email }}</span>
-										</div></mat-chip
-									>
-									<mat-chip matTooltip="{{ 'Offer.phone' | translate }}">
-										<div class="box-feature">
-											<mat-icon class="icon-feature">phone_iphone</mat-icon
-											><span>{{ data.offer?.owner?.phoneNumber }}</span>
-										</div></mat-chip
+						<span [ngSwitch]="data.offer?.surveyOwnerOffer?.smokingAllowed">
+							<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+								<div class="text-red-600 flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info1' | translate }}"
+										>smoke_free</mat-icon
 									>
 								</div>
-							</div>
-						</mat-card>
-					</p>
+							</mat-chip>
+							<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+								<div class="flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info2' | translate }}"
+										>smoking_rooms</mat-icon
+									>
+								</div>
+							</mat-chip>
+						</span>
+						<span [ngSwitch]="data.offer?.surveyOwnerOffer?.animalsAllowed">
+							<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+								<div class="text-red-600 flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info3' | translate }}"
+										>pets</mat-icon
+									>
+								</div>
+							</mat-chip>
+							<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+								<div class="flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info4' | translate }}"
+										>pets</mat-icon
+									>
+								</div>
+							</mat-chip>
+						</span>
+						<span [ngSwitch]="data.offer?.surveyOwnerOffer?.partiesAllowed">
+							<mat-chip *ngSwitchCase="false" class="p-4 mr-4">
+								<div class="text-red-600 flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info5' | translate }}"
+										>celebration</mat-icon
+									>
+								</div>
+							</mat-chip>
+							<mat-chip *ngSwitchCase="true" class="p-4 mr-4">
+								<div class="flex items-center justify-center">
+									<mat-icon matTooltip="{{ 'Offer.survey-info6' | translate }}"
+										>celebration</mat-icon
+									>
+								</div>
+							</mat-chip>
+						</span>
+					</mat-card-subtitle>
+					<mat-card-subtitle class="label-right">
+						<mat-icon class="icon" inline="true"> sell </mat-icon>
+						<span class="text-3xl"
+							>{{ "Offer.price" | translate }}
+							{{ data.offer?.price | currency : "PLN" : true : ".2-2" }}/{{
+								"mth" | translate
+							}}.</span
+						></mat-card-subtitle
+					>
+				</mat-card-footer>
+			</mat-card-content>
+		</mat-card>
+		<mat-card>
+			<mat-card-header class="label-box">
+				<mat-card-title class="label-description"
+					><mat-icon class="icon" inline="true">description</mat-icon
+					><span class="text-3xl">{{
+						"Offer.description" | translate
+					}}</span></mat-card-title
+				>
+				<mat-card-title *ngIf="data.offer?.isPromoted" class="label-right">
+					<mat-icon class="icon-promo" inline="true">new_releases</mat-icon>
+					<span class="text-3xl">{{
+						"Offer.offer-promoted" | translate
+					}}</span></mat-card-title
+				>
+			</mat-card-header>
+			<mat-divider></mat-divider>
+			<mat-card-content>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.bail" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.deposit | currency : "PLN" : true : ".2-2" }}
+						</p>
+					</div>
 				</div>
-			</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.start-date" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.startDate | date }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.end-date" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.endDate | date }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.voivodeship" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.property?.province | lowercase }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.city" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.property?.city }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.post-code" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.property?.postalCode }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.street" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ data.offer?.property?.street }}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.area" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ data.offer?.property?.area }} m²</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.room-number" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{
+								data.offer?.property?.numberOfRooms === null
+									? "-"
+									: data.offer?.property?.numberOfRooms
+							}}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.floor-number" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{
+								data.offer?.property?.numberOfFloors === null
+									? "-"
+									: data.offer?.property?.numberOfFloors
+							}}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.floor" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{
+								data.offer?.property?.floor === null ? "-" : data.offer?.property?.floor
+							}}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.max-inhabitants" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{
+								data.offer?.property?.maxNumberOfInhabitants === null
+									? "-"
+									: data.offer?.property?.maxNumberOfInhabitants
+							}}
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.build-year" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ data.offer?.property?.constructionYear }}</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">
+							{{ "Offer.contract-information" | translate }}:
+						</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ data.offer?.description }}</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.equipment" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">
+							<span *ngFor="let equipment of data?.offer?.property?.equipment"
+								><mat-chip class="mr-4" [ngSwitch]="equipment.equipmentId">
+									<div *ngSwitchCase="1" class="box-equipment">
+										<span class="material-symbols-outlined">dishwasher</span>
+										<span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="2" class="box-equipment">
+										<mat-icon>local_laundry_service</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="3" class="box-equipment">
+										<mat-icon>iron</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="4" class="box-equipment">
+										<span class="material-symbols-outlined">kettle</span>
+										<span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="5" class="box-equipment">
+										<mat-icon>coffee_maker</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="6" class="box-equipment">
+										<mat-icon>ac_unit</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="7" class="box-equipment">
+										<mat-icon>balcony</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="8" class="box-equipment">
+										<mat-icon>tv</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="9" class="box-equipment">
+										<mat-icon>bathtub</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="10" class="box-equipment">
+										<span class="material-symbols-outlined">oven</span>
+										<span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="11" class="box-equipment">
+										<mat-icon>microwave</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchCase="12" class="box-equipment">
+										<mat-icon>elevator</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+									<div *ngSwitchDefault class="box-equipment">
+										<mat-icon>devices</mat-icon
+										><span>{{ "Equipment." + equipment.name | translate }}</span>
+									</div>
+								</mat-chip>
+							</span>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.regulations" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ data.offer?.regulations }}</p>
+					</div>
+				</div>
+				<div
+					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					class="row"
+				>
+					<div class="column">
+						<p class="text-2xl pt-4">{{ "Offer.owner" | translate }}:</p>
+					</div>
+					<div class="column">
+						<p class="text-2xl pt-4 grid gap-4">
+							<mat-card class="profile-card mat-elevation-z0">
+								<div class="profile-details">
+									<mat-card-avatar
+										matTooltip="{{ 'Offer.show-profile' | translate }}"
+										(click)="showProfile(data.offer?.owner?.userId)"
+									>
+										<img
+											*ngIf="data.offer?.owner?.profilePicture?.path as path"
+											class="profile-avatar"
+											src="{{ baseUrl }}/{{ path }}"
+									/></mat-card-avatar>
+									<div class="container-features">
+										<mat-chip matTooltip="{{ 'Offer.name-surname' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">account_circle</mat-icon
+												><span
+													>{{ data.offer?.owner?.name }}
+													{{ data.offer?.owner?.surname }}</span
+												>
+											</div></mat-chip
+										>
+										<mat-chip matTooltip="{{ 'Offer.email-address' | translate }}"
+											><div class="box-feature">
+												<mat-icon class="icon-feature">mail</mat-icon
+												><span>{{ data.offer?.owner?.email }}</span>
+											</div></mat-chip
+										>
+										<mat-chip matTooltip="{{ 'Offer.phone' | translate }}">
+											<div class="box-feature">
+												<mat-icon class="icon-feature">phone_iphone</mat-icon
+												><span>{{ data.offer?.owner?.phoneNumber }}</span>
+											</div></mat-chip
+										>
+									</div>
+								</div>
+							</mat-card>
+						</p>
+					</div>
+				</div>
+			</mat-card-content>
 		</mat-card>
 		<mat-card *ngIf="data.user === uType.DETAILS">
-			<div class="button-box-options">
-				<button mat-raised-button color="primary" (click)="returnStart()">
-					{{ "return" | translate }}
-				</button>
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-					mat-raised-button
-					color="primary"
-					(click)="onAddMeeting(data.offer?.offerId)"
-				>
-					{{ "Offer.add-meeting" | translate }}
-				</button>
-				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
-					mat-raised-button
-					color="primary"
-					[disabled]="data.offer?.offerStatus !== 0"
-					(click)="
-						startRent(
-							data.offer?.offerId,
-							data.offer?.property?.maxNumberOfInhabitants
-						)
-					"
-				>
-					{{ "Offer.rent2" | translate }}
-				</button>
-			</div>
+			<mat-card-content>
+				<div class="button-box-options">
+					<button mat-raised-button color="primary" (click)="returnStart()">
+						{{ "return" | translate }}
+					</button>
+					<button
+						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						mat-raised-button
+						color="primary"
+						(click)="onAddMeeting(data.offer?.offerId)"
+					>
+						{{ "Offer.add-meeting" | translate }}
+					</button>
+					<button
+						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						mat-raised-button
+						color="primary"
+						[disabled]="data.offer?.offerStatus !== 0"
+						(click)="
+							startRent(
+								data.offer?.offerId,
+								data.offer?.property?.maxNumberOfInhabitants
+							)
+						"
+					>
+						{{ "Offer.rent2" | translate }}
+					</button>
+				</div>
+			</mat-card-content>
 		</mat-card>
 	</div>
 </div>
