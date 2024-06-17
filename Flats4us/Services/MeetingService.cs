@@ -99,9 +99,11 @@ namespace Flats4us.Services
                         StudentId = userId
                     };
 
-                    await _notificationService.SendNotificationAsync("New meeting proposition",
-                        $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
-                        offer.Property.OwnerId);
+                    // TODO: notification
+
+                    //await _notificationService.SendNotificationAsync("New meeting proposition",
+                    //    $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
+                    //    offer.Property.OwnerId);
 
                     break;
                 case Owner:
@@ -120,10 +122,10 @@ namespace Flats4us.Services
                         OfferId = input.OfferId,
                         StudentId = offer.Rent.StudentId
                     };
-
-                    await _notificationService.SendNotificationAsync("New meeting proposition",
-                        $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
-                        offer.Rent.StudentId);
+                    // TODO: notification
+                    //await _notificationService.SendNotificationAsync("New meeting proposition",
+                    //    $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
+                    //    offer.Rent.StudentId);
 
                     break;
                 default:
@@ -159,18 +161,18 @@ namespace Flats4us.Services
                     if (decision)
                     {
                         meeting.StudentAcceptDate = DateTime.Now;
-
-                        await _notificationService.SendNotificationAsync("Meeting accepted",
-                            $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
-                            meeting.Offer.Property.OwnerId);
+                        // TODO: notification
+                        //await _notificationService.SendNotificationAsync("Meeting accepted",
+                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
+                        //    meeting.Offer.Property.OwnerId);
                     }
                     else
                     {
                         _context.Meetings.Remove(meeting);
-
-                        await _notificationService.SendNotificationAsync("Meeting denied",
-                            $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
-                            meeting.Offer.Property.OwnerId);
+                        // TODO: notification
+                        //await _notificationService.SendNotificationAsync("Meeting denied",
+                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
+                        //    meeting.Offer.Property.OwnerId);
                     }
 
                     await _context.SaveChangesAsync();
@@ -184,18 +186,18 @@ namespace Flats4us.Services
                     if (decision)
                     {
                         meeting.OwnerAcceptDate = DateTime.Now;
-
-                        await _notificationService.SendNotificationAsync("Meeting accepted",
-                            $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
-                            meeting.StudentId);
+                        // TODO: notification
+                        //await _notificationService.SendNotificationAsync("Meeting accepted",
+                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
+                        //    meeting.StudentId);
                     }
                     else
                     {
                         _context.Meetings.Remove(meeting);
-
-                        await _notificationService.SendNotificationAsync("Meeting denied",
-                            $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
-                            meeting.StudentId);
+                        // TODO: notification
+                        //await _notificationService.SendNotificationAsync("Meeting denied",
+                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
+                        //    meeting.StudentId);
                     }
 
                     await _context.SaveChangesAsync();

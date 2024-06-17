@@ -12,6 +12,8 @@ namespace Flats4us.Helpers
         {
             CreateMap<FileUpload, FileDto>();
 
+            CreateMap<Notification, NotificationDto>();
+
             CreateMap<Offer, SimpleOfferForPropertyDetailsDto>();
 
             CreateMap<Equipment, EquipmentDto>();

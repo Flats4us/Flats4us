@@ -185,5 +185,53 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("consent")]
+        [Authorize]
+        [SwaggerOperation(
+            Summary = "Change email and push consents of user"
+        )]
+        public async Task<ActionResult> UpdateConsent([FromBody] ConsentDto input)
+        {
+
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.UpdateConsentAsync(requestUserId, input);
+                return Ok(new OutputDto<string>("Consent updated!"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+        [HttpGet("consent")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Get user notifications consent info",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<IActionResult> GetUserConsent()
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                var consent = await _userService.GetUserConsentAsync(requestUserId);
+                return Ok(consent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

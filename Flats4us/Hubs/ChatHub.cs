@@ -48,7 +48,7 @@ namespace Flats4us.Hubs
 
                 var notificationTitle = sender.Name + " " + sender.Surname;
                 var notificationBody = message;
-                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, receiverUserId);
+                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, notificationTitle, notificationBody, receiverUserId, true);
             }
         }
 
@@ -84,7 +84,7 @@ namespace Flats4us.Hubs
                 {
                     var notificationTitle = sender.Name + " " + sender.Surname;
                     var notificationBody = message;
-                    await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, groupUserId);
+                    await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, notificationTitle, notificationBody, groupUserId, true);
                 }
             }
         }
