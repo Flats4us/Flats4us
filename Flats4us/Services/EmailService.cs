@@ -43,12 +43,12 @@ namespace Flats4us.Services
 
             if (chatEmail && !user.EmailChatConsent)
             {
-                throw new ArgumentException($"User didn't give chat email consent");
+                return;
             }
 
             if (!chatEmail && !user.EmailPropertyConsent)
             {
-                throw new ArgumentException($"User didn't give property email consent");
+                return;
 
             }
 

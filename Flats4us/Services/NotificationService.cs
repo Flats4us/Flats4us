@@ -98,18 +98,10 @@ namespace Flats4us.Services
         {
             var user = await _context.Users.FindAsync(userId);
 
-            if (user == null || string.IsNullOrEmpty(user.FcmToken))
-                return false; // User not found or FCM token not available
+            if (user == null)
+                return false; // User not found
 
-            if (chatNotification && !user.PushChatConsent)
-            {
-                return false; // User has not consented to chat notifications
-            }
-
-            if (!chatNotification && !user.PushPropertyConsent)
-            {
-                return false; // User has not consented to property notifications
-            }
+            
             if (!chatNotification)
             {
                 var alert = new Alert
@@ -121,9 +113,11 @@ namespace Flats4us.Services
                     UserId = userId
                 };
                 _context.Alerts.Add(alert);
+                await _context.SaveChangesAsync();
 
                 var alertDto = new AlertDto
                 {
+                    AlertId = alert.AlertId,
                     AlertBody = body,
                     AlertName = title,
                     DateTime = DateTime.UtcNow,
@@ -131,9 +125,7 @@ namespace Flats4us.Services
 
                 };
 
-                _context.Alerts.Add(alert);
                 await _chatHubContext.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", alertDto);
-                await _context.SaveChangesAsync();
                 return true;
             }
 
@@ -147,7 +139,18 @@ namespace Flats4us.Services
                     Body = body
                 }
             };
+            if (string.IsNullOrEmpty(user.FcmToken))
+                return false; // User FCM token not available
 
+            if (chatNotification && !user.PushChatConsent)
+            {
+                return false; // User has not consented to chat notifications
+            }
+
+            if (!chatNotification && !user.PushPropertyConsent)
+            {
+                return false; // User has not consented to property notifications
+            }
 
             try
             {
