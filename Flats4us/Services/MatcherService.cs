@@ -74,7 +74,6 @@ namespace Flats4us.Services
                         (matcher.Student1Id == studentId && matcher.Student2Id == potential.UserId && matcher.IsStudent1Interested != null) ||
                         (matcher.Student1Id == potential.UserId && matcher.Student2Id == studentId && matcher.IsStudent2Interested != null)
                      ))
-
                 .Select(potential => new
                 {
                     PotentialStudent = potential,

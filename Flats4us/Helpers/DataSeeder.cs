@@ -4143,3 +4143,5 @@ public static class DataSeeder
         await Task.Delay(1000);
     }
 }
+
+//zrobić jakiś chat gdzie jest zaangażowany moderator
