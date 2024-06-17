@@ -21,6 +21,10 @@
 		display: flex;
 		gap: 4px;
 	}
+
+	&.active {
+		background: #ecf3fe;
+	}
 }
 
 .messages-box {

@@ -8,6 +8,8 @@ import { MessagesConversationComponent } from './messages-conversation.component
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
 	declarations: [MessagesConversationComponent],
@@ -19,6 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatCardModule,
 		MatButtonModule,
 		TranslateModule,
+		RouterLink,
+		MatTooltipModule,
 	],
 })
 export class MessagesConversationModule {}

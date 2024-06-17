@@ -15,6 +15,7 @@
 			<mat-list-item
 				*ngFor="let message of messages"
 				class="messages-choice__conversation"
+				routerLinkActive="active"
 				[routerLink]="[
 					'receiver',
 					message.otherUserId,

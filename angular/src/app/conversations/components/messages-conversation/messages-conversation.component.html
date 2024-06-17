@@ -9,14 +9,17 @@
 		*ngIf="data.currentUser && data.otherUser && data.messagesHistory"
 		class="conversation-list"
 	>
-		<div class="flex flex-col items-center py-5">
+		<mat-card-header class="flex flex-col items-center py-5">
 			<img
+				mat-card-avatar
 				alt="profile photo"
 				class="receiver-avatar"
 				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+				matTooltip="{{ 'Rents-details.show-profile' | translate }}"
+				(click)="showProfile(data.otherUser.userId)"
 			/>
 			<span>{{ data.otherUser.name }}, {{ data.otherUser.age }}</span>
-		</div>
+		</mat-card-header>
 		<div
 			*ngFor="let message of data.messagesHistory; let index = index"
 			class="flex"
@@ -24,7 +27,7 @@
 			<img
 				*ngIf="message.senderId !== data.currentUser.userId"
 				alt="profile photo"
-				class="avatar self-center"
+				class="avatar self-center ml-3"
 				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
 			/>
 			<div
@@ -35,17 +38,41 @@
 						: 'conversation-received'
 				"
 			>
-				<span *ngIf="message.senderId === data.currentUser.userId">{{
-					data.currentUser.name
-				}}</span>
-
-				<span *ngIf="message.senderId !== data.currentUser.userId">{{
-					data.otherUser.name
-				}}</span>
+				<span
+					*ngIf="message.senderId === data.currentUser.userId"
+					class="text-right mr-3"
+					>{{ data.currentUser.name }}</span
+				>
+				<span
+					*ngIf="message.senderId !== data.currentUser.userId"
+					class="text-left ml-3"
+					>{{ data.otherUser.name }}</span
+				>
 				<span class="bubble">{{ message.content }}</span>
+				<span
+					class="dateTime text-xs"
+					[class]="
+						message.senderId === data.currentUser.userId
+							? 'text-right mr-3 pt-1'
+							: 'text-left ml-3 pt-1'
+					"
+					>{{ formatDate(message.dateTime, "d MMM · H:mm", "pl-PL", "+0400") }}</span
+				>
 			</div>
+			<img
+				*ngIf="message.senderId === data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center mr-3"
+				src="{{ baseUrl }}/{{ data.currentUser.profilePicture.path }}"
+			/>
 		</div>
 		<div *ngFor="let msg of messages; let index = index" class="flex">
+			<img
+				*ngIf="msg.user !== data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center ml-3"
+				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
+			/>
 			<div
 				class="conversation"
 				[class]="
@@ -54,20 +81,31 @@
 						: 'conversation-received'
 				"
 			>
-				<span *ngIf="msg.user === data.currentUser.userId">{{
-					data.currentUser.name
-				}}</span>
-				<img
-					*ngIf="msg.user !== data.currentUser.userId"
-					alt="profile photo"
-					class="avatar self-center"
-					src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
-				/>
-				<span *ngIf="msg.user !== data.currentUser.userId">{{
+				<span
+					*ngIf="msg.user === data.currentUser.userId"
+					class="text-right mr-3"
+					>{{ data.currentUser.name }}</span
+				>
+				<span *ngIf="msg.user !== data.currentUser.userId" class="text-left ml-3">{{
 					data.otherUser.name
 				}}</span>
 				<span class="bubble">{{ msg.message }}</span>
+				<span
+					class="dateTime text-xs"
+					[class]="
+						msg.user === data.currentUser.userId
+							? 'text-right mr-3 pt-1'
+							: 'text-left ml-3 pt-1'
+					"
+					>{{ formatDate(msg.timestamp, "d MMM · H:mm", "pl-PL") }}</span
+				>
 			</div>
+			<img
+				*ngIf="msg.user === data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center mr-3"
+				src="{{ baseUrl }}/{{ data.currentUser.profilePicture.path }}"
+			/>
 		</div>
 	</div>
 	<mat-form-field

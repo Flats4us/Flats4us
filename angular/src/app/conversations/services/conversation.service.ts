@@ -11,7 +11,8 @@ export class ConversationService {
 	private hubConnection!: signalR.HubConnection;
 	private onReceivePrivateMessageCallbacks: ((
 		user: number,
-		message: string
+		message: string,
+		timestamp: Date
 	) => void)[] = [];
 
 	constructor(private http: HttpClient) {}
@@ -31,14 +32,17 @@ export class ConversationService {
 
 	private registerEventHandlers() {
 		this.onReceivePrivateMessageCallbacks.forEach(callback => {
-			this.hubConnection.on('ReceivePrivateMessage', (user, message) => {
-				callback(user, message);
-			});
+			this.hubConnection.on(
+				'ReceivePrivateMessage',
+				(user, message, timestamp) => {
+					callback(user, message, timestamp);
+				}
+			);
 		});
 	}
 
 	public addReceivePrivateMessageHandler(
-		callback: (user: number, message: string) => void
+		callback: (user: number, message: string, timestamp: Date) => void
 	) {
 		this.onReceivePrivateMessageCallbacks.push(callback);
 	}
@@ -46,10 +50,6 @@ export class ConversationService {
 	public sendPrivateMessage(receiverId: number, message: string) {
 		this.hubConnection.invoke('SendPrivateMessage', receiverId, message);
 	}
-
-	public sendMessage = (user: string, message: string) => {
-		this.hubConnection.invoke('SendMessage', user, message);
-	};
 
 	public isConnected(): boolean {
 		return (
