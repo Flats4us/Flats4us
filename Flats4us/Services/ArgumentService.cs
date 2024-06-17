@@ -111,9 +111,9 @@ namespace Flats4us.Services
                 .FirstOrDefaultAsync(x => x.RentId == input.RentId)
                 ?? throw new ArgumentException($"Rent with Id {input.RentId} not found.");
 
-            var user = await _context.Users.FindAsync(userId);
-
-            if (user == null) throw new ArgumentException("Cannot find user with given id");
+            var user = await _context.Users
+                .FindAsync(userId)
+                ?? throw new ArgumentException("Cannot find user with given id");
 
             var property = rent.Offer?.Property
                 ?? throw new ArgumentException($"Property associated with Rent ID {input.RentId} not found.");
@@ -222,7 +222,6 @@ namespace Flats4us.Services
             var argument = await _context.Arguments
                 .FirstAsync(x => x.ArgumentId == argumentId)
                 ?? throw new ArgumentException($"Argument with ID: {argumentId} not found");
-
 
             argument.ArgumentStatus = status;
 
