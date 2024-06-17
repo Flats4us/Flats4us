@@ -64,7 +64,8 @@ namespace Flats4us.Hubs
             if (sender is null) return;
 
             var groupUsers = await _context.UserGroupChats
-                .Where(ugc => ugc.GroupChatId == groupChatId)
+                .Where(ugc => ugc.GroupChatId == groupChatId &&
+                    ugc.UserId != senderId.Value)
                 .Select(ugc => ugc.UserId)
                 .ToListAsync();
 
