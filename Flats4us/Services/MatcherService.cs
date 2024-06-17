@@ -3,19 +3,23 @@ using Flats4us.Entities.Dto;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Flats4us.Services
 {
     public class MatcherService : IMatcherService
     {
         public readonly Flats4usContext _context;
+        public readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public MatcherService(
             Flats4usContext context,
+            IConfiguration configuration,
             IMapper mapper)
         {
             _context = context;
+            _configuration = configuration;
             _mapper = mapper;
 
         }
@@ -43,12 +47,8 @@ namespace Flats4us.Services
         {
             var requestingStudent = await _context.Students
                 .Include(requesting => requesting.SurveyStudent)
-                .FirstOrDefaultAsync(requesting => requesting.UserId == studentId);
-
-            if (requestingStudent == null)
-            {
-                return null;
-            }
+                .FirstOrDefaultAsync(requesting => requesting.UserId == studentId)
+                ?? throw new ArgumentException($"There is not Studdent with Id {studentId}");
 
             var potentialRoommates = await _context.Students
                 .Include(potential => potential.SurveyStudent)
@@ -91,12 +91,11 @@ namespace Flats4us.Services
                         ((requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) ? 1 : 0) +
                         (potential.SurveyStudent.City == requestingStudent.SurveyStudent.City ? 1 : 0)
                 })
-                .Where(result => result.ConditionsMet >= 0.8 * 12) 
+                .Where(result => result.ConditionsMet >= Matcher.AgreementPercentage * 12) 
                 .OrderByDescending(result => result.ConditionsMet)
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential.PotentialStudent))
                 //.Take(5)
                 .ToListAsync();
-
 
             return potentialRoommates;
         }
