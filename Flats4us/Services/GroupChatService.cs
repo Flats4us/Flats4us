@@ -60,11 +60,12 @@ namespace Flats4us.Services
         public async Task<List<GroupChatDto>> GetGroupChats(int userId)
         {
             return await _context.UserGroupChats
-                .Include(ugc => ugc.GroupChat)
-                    .ThenInclude(gc => gc.UserGroupChats)
-                        .ThenInclude(ugc => ugc.User)
                 .Where(ugc => ugc.UserId == userId)
-                .Select(ugc => _mapper.Map<GroupChatDto>(ugc))
+                .Include(ugc => ugc.GroupChat)
+                .ThenInclude(gc => gc.UserGroupChats)
+                    .ThenInclude(ugc => ugc.User)
+                .Select(ugc => ugc.GroupChat)
+                .Select(gc => _mapper.Map<GroupChatDto>(gc))
                 .ToListAsync();
         }
 
