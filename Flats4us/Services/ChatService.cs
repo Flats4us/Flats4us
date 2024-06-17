@@ -18,18 +18,22 @@ namespace Flats4us.Services
         private readonly IHubContext<ChatHub> _chatHub;
         private readonly INotificationService _notificationService;
         private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
+
 
         public ChatService(Flats4usContext context,
             IMapper mapper,
             IHubContext<ChatHub> chatHub,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IUserService userService,
+            IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
             _chatHub = chatHub;
             _notificationService = notificationService;
-            _userService = ownerService;
             _emailService = emailService;
+            _userService = userService;
         }
 
         public async Task<List<ChatMessageDto>> GetChatHistoryAsync(int chatId, int requestUserId)
@@ -88,21 +92,7 @@ namespace Flats4us.Services
                     OtherUsername = c.User1Id == userId ? c.User2.Name + " " + c.User2.Surname : c.User1.Name + " " + c.User1.Surname
                 })
                 .ToListAsync();
-            // Notify the user of password change
-            var sender = await _context.Users.FindAsync(chatMessage.SenderId);
-
-            var notificationTitle = sender.Name + " " + sender.Surname;
-            var notificationBody = chatMessage.Content;
-            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId);
-
-            // Notify the user of password change
-            var sender = await _context.Users.FindAsync(chatMessage.SenderId);
-
-            var notificationTitle = sender.Name + " " + sender.Surname;
-            var notificationBody = chatMessage.Content;
-            await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, chatMessage.SenderId, true);
-
-            await _emailService.SendEmailAsync(chatMessage.SenderId, notificationTitle, notificationBody, true);
+            
         }
 
         private async Task<int> EnsureChatSessionAsync(int user1Id, int user2Id)

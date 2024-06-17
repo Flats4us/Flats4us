@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using FirebaseAdmin.Messaging;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
+using Flats4us.Services;
 using Flats4us.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +25,13 @@ namespace Flats4us.Services
         private readonly IMapper _mapper;
         private readonly INotificationService _notificationService;
         private readonly IFileUploadService _fileUploadService;
-        private readonly IEmailService _emailService;
 
         public UserService(Flats4usContext context,
             IEmailService emailService,
             IMapper mapper,
             IConfiguration configuration,
-            IFileUploadService fileUploadService)
             INotificationService notificationService,
-            IEmailService emailService)
+            IFileUploadService fileUploadService)
         {
             _context = context;
             _emailService = emailService;
@@ -39,7 +39,6 @@ namespace Flats4us.Services
             _configuration = configuration;
             _notificationService = notificationService;
             _fileUploadService = fileUploadService;
-            _emailService = emailService;
         }
 
         public async Task<TokenDto> AuthenticateAsync(string email, string password, string fcmToken = null)
@@ -129,9 +128,9 @@ namespace Flats4us.Services
             if (user is null) throw new Exception($"Cannot find user ID: {userId}");
             if (input.Document != null)
             {
-            user.VerificationStatus = VerificationStatus.NotVerified;
+                user.VerificationStatus = VerificationStatus.NotVerified;
 
-            var moderators = await _context.Moderators.ToListAsync();
+                var moderators = await _context.Moderators.ToListAsync();
                 foreach (var moderator in moderators)
                 {
                     await _emailService.SendEmailAsync(moderator.UserId, "Verify document", "New document awaits verification");
@@ -142,13 +141,9 @@ namespace Flats4us.Services
                 {
                     await _fileUploadService.DeleteFileByNameAsync(user.Document.Name);
                 }
-                
+
                 user.Document = await _fileUploadService.CreateFileFromIFormFileAsync(input.Document);
             }
-
-                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
-            }
-        }
 
             if (input.ProfilePicture != null)
             {
@@ -156,15 +151,11 @@ namespace Flats4us.Services
                 {
                     await _fileUploadService.DeleteFileByNameAsync(user.ProfilePicture.Name);
                 }
-                
+
                 user.ProfilePicture = await _fileUploadService.CreateFileFromIFormFileAsync(input.ProfilePicture);
             }
 
             await _context.SaveChangesAsync();
-        }
-
-                await ImageUtility.SaveUserFilesAsync(user.ImagesPath, input);
-            }
         }
 
         public async Task DeleteUserFileAsync(string fileId, int userId)

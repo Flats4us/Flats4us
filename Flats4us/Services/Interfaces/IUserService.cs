@@ -23,13 +23,9 @@ namespace Flats4us.Services.Interfaces
         Task<UserInfoDto> GetUserInfo(int userId);
         Task UpdateConsentAsync(int userId, ConsentDto input);
         Task<ConsentDto> GetUserConsentAsync(int userId);
-        Task EditUserGeneral(EditUserGeneral input, int userId);
-        Task EditUserSensitive(EditUserSensitive input, int userId);
-        Task EditOwnerSensitive(EditOwnerSensitiveDto input, int userId);
-        Task EditStudentSensitive(EditStudentSensitiveDto input, int userId);
+
         Task EditUser(EditUserDto input, int userId);
 
 
-        Task UpdateConsentAsync(int userId, ConsentDto input);
     }
 }
