@@ -134,41 +134,41 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Moderator", policy =>
     {
-        policy.RequireRole("Moderator");
+        policy.RequireRole(nameof(Moderator));
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
     options.AddPolicy("Student", policy =>
     {
-        policy.RequireRole("Student");
+        policy.RequireRole(nameof(Student));
     });
 
     options.AddPolicy("Owner", policy =>
     {
-        policy.RequireRole("Owner");
+        policy.RequireRole(nameof(Owner));
     });
 
     options.AddPolicy("VerifiedStudent", policy =>
     {
-        policy.RequireRole("Student");
+        policy.RequireRole(nameof(Student));
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
     options.AddPolicy("VerifiedOwner", policy =>
     {
-        policy.RequireRole("Owner");
+        policy.RequireRole(nameof(Owner));
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
     options.AddPolicy("VerifiedOwnerOrStudent", policy =>
     {
-        policy.RequireRole("Owner", "Student");
+        policy.RequireRole(nameof(Owner), nameof(Student));
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
     options.AddPolicy("RegisteredUser", policy =>
     {
-        policy.RequireRole("Owner", "Student", "Moderator");
+        policy.RequireRole(nameof(Owner), nameof(Student), nameof(Moderator));
     });
 });
 
