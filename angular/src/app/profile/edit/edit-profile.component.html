@@ -15,6 +15,9 @@
 		<h1 *ngIf="actualUser.userType === 0" class="text-4xl p-4 font-semibold">
 			{{ "Profile-edit.edit-owner-profile" | translate }}
 		</h1>
+		<h1 *ngIf="actualUser.userType === 2" class="text-4xl p-4 font-semibold">
+			{{ "Profile-edit.edit-moderator-profile" | translate }}
+		</h1>
 	</div>
 	<form [formGroup]="actualForm" (ngSubmit)="onSubmit(actualUser.userType)">
 		<mat-card class="edit-profile">
@@ -72,7 +75,9 @@
 						value="urlPhoto"
 						(change)="onFileSelected($event, regexImage)"
 					/>
-					<mat-error *ngIf="!urlPhoto || urlPhoto === urlAvatar">
+					<mat-error
+						*ngIf="!urlPhoto || (urlPhoto === urlAvatar && actualUser.userType !== 2)"
+					>
 						<div class="text-xl flex justify-center items-center">
 							<mat-icon>error</mat-icon
 							><span>{{ "Profile-edit.photo-load" | translate }}!</span>
@@ -142,6 +147,7 @@
 					</div>
 					<div class="button-box">
 						<button
+							*ngIf="actualUser.userType !== 2"
 							mat-raised-button
 							color="primary"
 							id="upload"
@@ -234,7 +240,7 @@
 							{{ "Profile-edit.university-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
-					<mat-form-field>
+					<mat-form-field *ngIf="actualUser.userType !== 2">
 						<mat-label>{{ "Profile-edit.address" | translate }}</mat-label>
 						<input
 							id="address"
@@ -244,9 +250,7 @@
 							matInput
 							placeholder="{{ 'Profile-edit.address' | translate }}"
 						/>
-						<mat-error
-							*ngIf="dataFormGroupStudent.controls['address'].errors?.['required']"
-						>
+						<mat-error *ngIf="actualForm.controls['address'].errors?.['required']">
 							{{ "Profile-edit.address-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
@@ -258,13 +262,11 @@
 							placeholder="{{ 'Profile-edit.phone' | translate }}"
 						/>
 						<mat-error
-							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['required']"
+							*ngIf="actualForm.controls['phoneNumber'].errors?.['required']"
 						>
 							{{ "Profile-edit.phone-info1" | translate }}!
 						</mat-error>
-						<mat-error
-							*ngIf="dataFormGroupStudent.controls['phoneNumber'].errors?.['pattern']"
-						>
+						<mat-error *ngIf="actualForm.controls['phoneNumber'].errors?.['pattern']">
 							{{ "Profile-edit.phone-info2" | translate }}!
 						</mat-error>
 					</mat-form-field>
@@ -354,7 +356,9 @@
 					<span
 						*ngIf="
 							modificationType === mType.CREATE ||
-							(modificationType === mType.EDIT && ifConfidentialData)
+							(modificationType === mType.EDIT &&
+								ifConfidentialData &&
+								actualUser.userType !== 2)
 						"
 						class="btn-upload-box"
 					>
@@ -375,7 +379,9 @@
 						<span
 							*ngIf="
 								(!urlNewScan && modificationType === mType.CREATE) ||
-								(modificationType === mType.EDIT && ifConfidentialData)
+								(modificationType === mType.EDIT &&
+									ifConfidentialData &&
+									actualUser.userType !== 2)
 							"
 							class="scan-url-box-desc"
 							>{{ "Profile-edit.load-scan-actual" | translate }}! |</span
@@ -423,7 +429,7 @@
 							{{ "Profile-edit.identification-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
-					<mat-form-field>
+					<mat-form-field *ngIf="actualUser.userType !== 2">
 						<mat-label>{{
 							"Profile-edit.identification-date" | translate
 						}}</mat-label>
@@ -473,6 +479,7 @@
 				</div>
 				<div *ngIf="modificationType === mType.EDIT" class="btn-box-submit">
 					<button
+						*ngIf="actualUser.userType !== 2"
 						mat-mini-fab
 						color="primary"
 						type="button"
@@ -517,6 +524,16 @@
 				actualUser: actualUser,
 				userType: user,
 				ifConfidentialData: ifConfidentialData
+			}"
+		></ng-container>
+		<ng-container
+			*ngIf="actualUser.userType === 2"
+			[ngTemplateOutlet]="modifyProfile"
+			[ngTemplateOutletContext]="{
+				actualForm: dataFormGroupModerator,
+				actualUser: actualUser,
+				userType: user,
+				ifConfidentialData: false
 			}"
 		></ng-container>
 	</div>

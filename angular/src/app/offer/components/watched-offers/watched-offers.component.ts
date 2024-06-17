@@ -23,7 +23,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { IProperty } from 'src/app/real-estate/models/real-estate.models';
 import { PropertyRatingComponent } from '../property-rating/property-rating.component';
 import { MatDialog } from '@angular/material/dialog';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-watched-offers',
@@ -78,28 +78,26 @@ export class WatchedOffersComponent
 		this.matPaginatorIntl.previousPageLabel = this.translate.instant(
 			'Paginator.previous-page'
 		);
-		this.translate.onLangChange
-			.pipe(this.untilDestroyed())
-			.subscribe((event: LangChangeEvent) => {
-				this.matPaginatorIntl.firstPageLabel = this.translate.instant(
-					'Paginator.first-page'
-				);
-				this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
-					'Paginator.offers-page'
-				);
-				this.matPaginatorIntl.lastPageLabel = this.translate.instant(
-					'Paginator.last-page'
-				);
-				this.matPaginatorIntl.nextPageLabel = this.translate.instant(
-					'Paginator.next-page'
-				);
-				this.matPaginatorIntl.previousPageLabel = this.translate.instant(
-					'Paginator.previous-page'
-				);
-				this.paginatorDescriptionA = this.translate.instant('Paginator.of');
-				this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
-				this.matPaginatorIntl.changes.next();
-			});
+		this.translate.onLangChange.pipe(this.untilDestroyed()).subscribe(() => {
+			this.matPaginatorIntl.firstPageLabel = this.translate.instant(
+				'Paginator.first-page'
+			);
+			this.matPaginatorIntl.itemsPerPageLabel = this.translate.instant(
+				'Paginator.offers-page'
+			);
+			this.matPaginatorIntl.lastPageLabel = this.translate.instant(
+				'Paginator.last-page'
+			);
+			this.matPaginatorIntl.nextPageLabel = this.translate.instant(
+				'Paginator.next-page'
+			);
+			this.matPaginatorIntl.previousPageLabel = this.translate.instant(
+				'Paginator.previous-page'
+			);
+			this.paginatorDescriptionA = this.translate.instant('Paginator.of');
+			this.paginatorDescriptionB = this.translate.instant('Paginator.offer-info');
+			this.matPaginatorIntl.changes.next();
+		});
 		this.matPaginatorIntl.getRangeLabel = (
 			page: number,
 			pageSize: number,

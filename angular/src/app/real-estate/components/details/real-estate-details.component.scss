@@ -204,7 +204,6 @@
 .label-box {
 	display: inline-block;
 	justify-content: left;
-	padding: 4px 0;
 }
 
 .profile-details {
@@ -270,7 +269,7 @@ mat-card-avatar:hover {
 		background: rgba(0, 0, 0, 0.204);
 		color: white;
 		position: absolute;
-		min-width: 240px;
+		min-width: 180px;
 		padding: 4px;
 		z-index: 996;
 	}
@@ -295,6 +294,6 @@ mat-card-avatar:hover {
 		margin-bottom: 4px;
 	}
 	.inner-title {
-		font-size: large;
+		font-size: medium;
 	}
 }

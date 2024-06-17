@@ -161,7 +161,7 @@
 		"verification-id": "Identity document verification",
 		"verification-property": "Property verification",
 		"technical-problems": "Technical problems",
-		"Disputes": "Disputes",
+		"disputes": "Disputes",
 		"info1": "Intervention successfully added!",
 		"add-intervention": "Add an intervention",
 		"verdict": "Verdict",
@@ -335,10 +335,18 @@
 		"document-type1": "Student card",
 		"document-type2": "Passport",
 		"verified": "verified",
-		"unverified": "unverified"
+		"unverified": "unverified",
+		"student-profile": "Student profile",
+		"owner-profile": "Owner profile",
+		"birth-date": "Birth date",
+		"address": "Address",
+		"index": "Student number",
+		"bank": "Bank account no",
+		"creation-date": "User since",
+		"links": "Social media"
 	},
 	"Profile-add-opinion": {
-		"your-opinion": "YOUR OPINION ABOUT THE USER",
+		"your-opinion": "Your opinion about the user",
 		"average-grade": "Average Rating",
 		"opinions": "Opinions",
 		"average": "average",
@@ -362,7 +370,8 @@
 		"enter-comments": "Enter your comments here",
 		"add-opinion2": "Add opinion",
 		"info1": "Review successfully added!",
-		"close": "Close"
+		"close": "Close",
+		"error": "Failed to add the opinion! Please try again."
 	},
 	"Profile-create": {
 		"creating-profile": "Creating a profile",
@@ -384,6 +393,7 @@
 	"Profile-edit": {
 		"edit-student-profile": "Edit Student profile",
 		"edit-owner-profile": "Edit Owner profile",
+		"edit-moderator-profile": "Edit Moderator profile",
 		"photo-load": "Photo not loaded",
 		"age1": "Age",
 		"age2": "age",
@@ -524,6 +534,8 @@
 		"equipment": "Equipment",
 		"edit-property": "Edit property",
 		"delete-property": "Delete property",
+		"phone": "Phone number",
+		"owner": "Owner",
 		"related-offers": "Related offers",
 		"show-offer": "Show offer",
 		"date-issue": "Date of issue",

@@ -7,8 +7,8 @@
 >
 	<div *ngIf="data.show" class="grid gap-4">
 		<mat-card>
-			<div class="label-box">
-				<mat-label class="label-description ml-4">
+			<mat-card-header class="label-box">
+				<mat-card-title class="label-description">
 					<span class="text-3xl">
 						{{ "Rents-details.rent-status" | translate }}:
 						{{
@@ -18,134 +18,134 @@
 							) | translate
 						}}</span
 					>
-				</mat-label>
-			</div>
-			<div class="gallery">
-				<div class="container slider">
-					<div [@slideAnimation]="currentIndex">
-						<ng-template
-							ngFor
-							[ngForOf]="data.rent?.propertyImages"
-							let-slide
-							let-i="index"
-						>
-							<div class="offer-title-outer">
-								<span class="offer-title-inner"
-									><h1 class="inner-title text-3xl">
-										{{ "Rents-details.rent" | translate }} -
-										{{
-											realEstateService.getPropertyType(data.rent?.propertyType)
-												| translate
-										}}
-										{{ data.rent?.propertyAddress }}
-									</h1></span
-								>
-							</div>
-							<div
-								*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-								class="menu-title"
+				</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<div class="gallery">
+					<div class="container slider">
+						<div [@slideAnimation]="currentIndex">
+							<ng-template
+								ngFor
+								[ngForOf]="data.rent?.propertyImages"
+								let-slide
+								let-i="index"
 							>
-								<button
-									class="box-icon"
-									id="menu"
-									mat-mini-fab
-									color="primary"
-									aria-label="MenuButton"
-									matTooltip="{{ 'more-options' | translate }}"
-									[matMenuTriggerFor]="menu"
-									[disabled]="data.rent?.isFinished"
-								>
-									<mat-icon>more_horiz</mat-icon>
-								</button>
-								<mat-menu #menu="matMenu" id="options">
-									<button
-										*ngFor="let menuOption of this.menuOptions"
-										mat-menu-item
-										[value]="menuOption.description"
-										[disabled]="
-											data.user === uType.STUDENT &&
-											(menuOption.option === 'offerDetails' ||
-												menuOption.option === 'propertyDetails')
-										"
-										(click)="
-											onSelect(
-												menuOption,
-												data.rent?.rentId,
-												data.rent?.offerId,
-												data.rent?.propertyId
-											)
-										"
+								<div class="offer-title-outer">
+									<span class="offer-title-inner"
+										><h1 class="inner-title text-3xl">
+											{{ "Rents-details.rent" | translate }} -
+											{{
+												realEstateService.getPropertyType(data.rent?.propertyType)
+													| translate
+											}}
+											{{ data.rent?.propertyAddress }}
+										</h1></span
 									>
-										<div
-											class="flex items-center justify-center"
-											[ngSwitch]="menuOption.option"
-										>
-											<mat-icon
-												*ngSwitchCase="'rentDetails'"
-												class="material-icons-outlined"
-												>info</mat-icon
-											>
-											<mat-icon
-												*ngSwitchCase="'offerDetails'"
-												class="material-icons-outlined"
-												>campaign</mat-icon
-											>
-											<mat-icon
-												*ngSwitchCase="'propertyDetails'"
-												class="material-icons-outlined"
-												>real_estate_agent</mat-icon
-											>
-											<mat-icon
-												*ngSwitchCase="'startDispute'"
-												class="material-icons-outlined"
-												>gavel</mat-icon
-											>
-											<span>{{ menuOption.description | translate }}</span>
-										</div>
-									</button>
-								</mat-menu>
-							</div>
-							<img
-								*ngIf="
-									(data.rent?.propertyImages?.length ?? 0) > 0 && isCurrentSlideIndex(i)
-								"
-								class="slide slide-animation non-draggable-image"
-								src="{{ baseUrl }}/{{ slide?.path }}"
-								(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
-								(swipeleft)="prevSlide(data.rent?.propertyImages?.length)"
-							/>
-						</ng-template>
-					</div>
-
-					<button
-						class="arrow prev"
-						(click)="nextSlide(data.rent?.propertyImages?.length)"
-					>
-						<mat-icon>arrow_back_ios</mat-icon>
-					</button>
-					<button
-						class="arrow next"
-						(click)="prevSlide(data.rent?.propertyImages?.length)"
-					>
-						<mat-icon>arrow_forward_ios</mat-icon>
-					</button>
-					<nav class="nav">
-						<div class="wrapper">
-							<ul class="dots">
-								<li
-									*ngFor="let slide of data.rent?.propertyImages; let i = index"
-									class="dot"
+								</div>
+								<div
+									*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
+									class="menu-title"
 								>
-									<span
-										[ngClass]="{ active: isCurrentSlideIndex(i) }"
-										(click)="setCurrentSlideIndex(i)"
-									></span>
-								</li>
-							</ul>
+									<button
+										class="box-icon"
+										id="menu"
+										mat-mini-fab
+										color="primary"
+										aria-label="MenuButton"
+										matTooltip="{{ 'more-options' | translate }}"
+										[matMenuTriggerFor]="menu"
+										[disabled]="data.rent?.isFinished"
+									>
+										<mat-icon>more_horiz</mat-icon>
+									</button>
+									<mat-menu #menu="matMenu" id="options">
+										<button
+											*ngFor="let menuOption of this.menuOptions"
+											mat-menu-item
+											[value]="menuOption.description"
+											[disabled]="
+												data.user === uType.STUDENT &&
+												(menuOption.option === 'offerDetails' ||
+													menuOption.option === 'propertyDetails')
+											"
+											(click)="
+												onSelect(
+													menuOption,
+													data.rent?.rentId,
+													data.rent?.offerId,
+													data.rent?.propertyId
+												)
+											"
+										>
+											<div
+												class="flex items-center justify-center"
+												[ngSwitch]="menuOption.option"
+											>
+												<mat-icon
+													*ngSwitchCase="'rentDetails'"
+													class="material-icons-outlined"
+													>info</mat-icon
+												>
+												<mat-icon
+													*ngSwitchCase="'offerDetails'"
+													class="material-icons-outlined"
+													>campaign</mat-icon
+												>
+												<mat-icon
+													*ngSwitchCase="'propertyDetails'"
+													class="material-icons-outlined"
+													>real_estate_agent</mat-icon
+												>
+												<mat-icon
+													*ngSwitchCase="'startDispute'"
+													class="material-icons-outlined"
+													>gavel</mat-icon
+												>
+												<span>{{ menuOption.description | translate }}</span>
+											</div>
+										</button>
+									</mat-menu>
+								</div>
+								<img
+									*ngIf="data.rent?.propertyImages?.length && isCurrentSlideIndex(i)"
+									class="slide slide-animation non-draggable-image"
+									src="{{ baseUrl }}/{{ slide?.path }}"
+									(swiperight)="nextSlide(data.rent?.propertyImages?.length)"
+									(swipeleft)="prevSlide(data.rent?.propertyImages?.length)"
+								/>
+							</ng-template>
 						</div>
-					</nav>
+
+						<button
+							class="arrow prev"
+							(click)="nextSlide(data.rent?.propertyImages?.length)"
+						>
+							<mat-icon>arrow_back_ios</mat-icon>
+						</button>
+						<button
+							class="arrow next"
+							(click)="prevSlide(data.rent?.propertyImages?.length)"
+						>
+							<mat-icon>arrow_forward_ios</mat-icon>
+						</button>
+						<nav class="nav">
+							<div class="wrapper">
+								<ul class="dots">
+									<li
+										*ngFor="let slide of data.rent?.propertyImages; let i = index"
+										class="dot"
+									>
+										<span
+											[ngClass]="{ active: isCurrentSlideIndex(i) }"
+											(click)="setCurrentSlideIndex(i)"
+										></span>
+									</li>
+								</ul>
+							</div>
+						</nav>
+					</div>
 				</div>
-			</div>
+			</mat-card-content>
 		</mat-card>
 
 		<mat-card>
@@ -243,6 +243,7 @@
 						</p>
 					</div>
 				</div>
+				<mat-divider *ngIf="data.user === uType.STUDENT"></mat-divider>
 				<div
 					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
 					class="row"
