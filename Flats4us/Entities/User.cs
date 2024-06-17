@@ -8,8 +8,8 @@ namespace Flats4us.Entities
     [Table("User")]
     public abstract class User
     {
-        public const int MinPasswordLenght = 6;
-        public const int MaxPasswordeLenght = 30;
+        public const int MinPasswordLenght = 8;
+        public const int MaxPasswordeLenght = 50;
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }

@@ -65,7 +65,7 @@ namespace Flats4us.Services
 
             if (existingUser != null) throw new Exception("Email already exists");
 
-            if (input.Password.Length < 8 || input.Password.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+            if (input.Password.Length < User.MinPasswordLenght || input.Password.Length > User.MaxPasswordeLenght) throw new Exception($"Password must be between {User.MinPasswordLenght} and {User.MaxPasswordeLenght} characters");
 
             if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
             
@@ -85,8 +85,7 @@ namespace Flats4us.Services
 
             if (existingUser != null) throw new Exception("Email already exists");
 
-            if (input.Password.Length < 8 || input.Password.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
-
+            if (input.Password.Length < User.MinPasswordLenght || input.Password.Length > User.MaxPasswordeLenght) throw new Exception($"Password must be between {User.MinPasswordLenght} and {User.MaxPasswordeLenght} characters");
             if (!input.Password.Any(char.IsUpper) || !input.Password.Any(char.IsLower) || !input.Password.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
 
             var student = _mapper.Map<Student>(input);
@@ -246,7 +245,7 @@ namespace Flats4us.Services
 
             if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.PasswordHash)) throw new AuthenticationException("Invalid old password.");
 
-            if (newPassword.Length < 8 || newPassword.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+            if (newPassword.Length < User.MinPasswordLenght || newPassword.Length > User.MaxPasswordeLenght) throw new Exception($"Password must be between {User.MinPasswordLenght} and {User.MaxPasswordeLenght} characters");
 
             if (!newPassword.Any(char.IsUpper) || !newPassword.Any(char.IsLower) || !newPassword.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
 
@@ -364,7 +363,9 @@ namespace Flats4us.Services
 
                 var body = new StringBuilder();
 
-                var link = "http://172.21.40.120/auth/reset-password?token=" + user.PasswordResetToken;
+                var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+
+                var link = $"{baseUrl}/auth/reset-password?token={user.PasswordResetToken}";
 
                 body.AppendLine(EmailHelper.HtmlHTag("Dla twojego konta pojawiło się żądanie zmiany hasła", 1))
                     .AppendLine(EmailHelper.HtmlPTag($"Aby przejść do zmiany hasła naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
@@ -383,7 +384,7 @@ namespace Flats4us.Services
 
             if (user.PasswordResetTokenExpireDate < DateTime.Now) throw new ArgumentException($"Token expired");
 
-            if (newPassword.Length < 8 || newPassword.Length > 50) throw new Exception("Password must be between 8 and 50 characters");
+            if (newPassword.Length < User.MinPasswordLenght || newPassword.Length > User.MaxPasswordeLenght) throw new Exception($"Password must be between {User.MinPasswordLenght} and {User.MaxPasswordeLenght} characters");
 
             if (!newPassword.Any(char.IsUpper) || !newPassword.Any(char.IsLower) || !newPassword.Any(char.IsDigit)) throw new Exception("Password must contain at least one uppercase letter, one lowercase letter, and one digit");
 
