@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
@@ -16,9 +17,7 @@ namespace Flats4us.Hubs
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
 
-        private readonly static ConcurrentDictionary<int, List<string>> _connections = new ConcurrentDictionary<int, List<string>>();
-
-        public ChatHub(IChatService chatService,
+        private readonly static ConcurrentDictionary<int, List<string>> _connections = new ConcurrentDictionary<int, List<string>>(); public ChatHub(IChatService chatService,
             IGroupChatService groupChatService,
             Flats4usContext context,
             INotificationService notificationService)
@@ -51,6 +50,18 @@ namespace Flats4us.Hubs
                 await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, receiverUserId);
             }
         }
+        public async Task SendNotification(int receiverUserId, AlertDto alert)
+        {
+            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
+            {
+
+                await Clients.Client(receiverConnectionId.ToString()).SendAsync("ReceiveNotification", alert);
+            }
+
+        }
+
+
+
 
         public async Task SendGroupChatMessage(int groupChatId, string message)
         {
@@ -131,18 +142,9 @@ namespace Flats4us.Hubs
             var userId = GetUserId();
             if (userId != null)
             {
-                if (_connections.TryGetValue(userId.Value, out var receiverConnectionIds))
-                {
-                    receiverConnectionIds.Remove(Context.ConnectionId);
-
-                    if (!receiverConnectionIds.Any())
-                    {
-                        _connections.Remove(userId.Value, out _);
-                    }
-                }
+                _connections.TryRemove(userId.Value, out _);
             }
 
-            await base.OnDisconnectedAsync(exception);
         }
     }
 }

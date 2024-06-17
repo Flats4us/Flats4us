@@ -3,9 +3,11 @@ using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Hubs;
 using Flats4us.Services.Interfaces;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -16,11 +18,13 @@ namespace Flats4us.Services
         private readonly FirebaseMessaging _messaging;
         private readonly Flats4usContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IHubContext<ChatHub> _chatHubContext;
 
-        public NotificationService(Flats4usContext context, IConfiguration configuration, FirebaseApp firebaseApp)
+        public NotificationService(Flats4usContext context, IConfiguration configuration, FirebaseApp firebaseApp, IHubContext<ChatHub> chatHubContext)
         {
             _context = context;
             _configuration = configuration;
+            _chatHubContext = chatHubContext;
             var serviceAccountKeyPath = _configuration["Firebase:ServiceAccountKeyPath"];
 
             var credential = GoogleCredential.FromFile(serviceAccountKeyPath);
@@ -42,7 +46,6 @@ namespace Flats4us.Services
                 AlertBody = alert.AlertBody,
                 DateTime = alert.DateTime,
                 Read = alert.Read,
-                UserId = alert.UserId
             }).ToList();
 
             return unreadAlertDtos;
@@ -60,8 +63,7 @@ namespace Flats4us.Services
                 AlertName = alert.AlertName,
                 AlertBody = alert.AlertBody,
                 DateTime = alert.DateTime,
-                Read = alert.Read,
-                UserId = alert.UserId
+                Read = alert.Read
             }).ToList();
 
             return alertDtos;
@@ -120,7 +122,19 @@ namespace Flats4us.Services
                 };
                 _context.Alerts.Add(alert);
 
+                var alertDto = new AlertDto
+                {
+                    AlertBody = body,
+                    AlertName = title,
+                    DateTime = DateTime.UtcNow,
+                    Read = false,
+
+                };
+
+                _context.Alerts.Add(alert);
+                await _chatHubContext.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", alertDto);
                 await _context.SaveChangesAsync();
+                return true;
             }
 
 
