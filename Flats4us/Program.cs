@@ -120,7 +120,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 // If the request is for our hub...
                 var path = context.HttpContext.Request.Path;
                 if (!string.IsNullOrEmpty(accessToken) &&
-                    (path.StartsWithSegments("/chatHub"))) // Make sure this matches your SignalR hub route
+                    (path.StartsWithSegments("/chatHub") || path.StartsWithSegments("/notificationHub"))) // Make sure this matches your SignalR hub route
                 {
                     // Read the token out of the query string
                     context.Token = accessToken;
@@ -240,6 +240,7 @@ using (var scope = app.Services.CreateScope())
 
 //app.UseCors(options => options.AllowAnyOrigin());
 app.MapHub<ChatHub>("/chatHub");
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.UseStaticFiles(new StaticFileOptions
 {

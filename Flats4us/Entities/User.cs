@@ -42,6 +42,11 @@ namespace Flats4us.Entities
 
         public DateTime? PasswordResetTokenExpireDate { get; set; }
 
+        public bool PushChatConsent { get; set; } = true;
+        public bool EmailChatConsent { get; set; } = true;
+        public bool PushOtherConsent { get; set; } = true;
+        public bool EmailOtherConsent { get; set; } = true;
+
         [Required]
         public VerificationStatus VerificationStatus { get; set; }
         public virtual ICollection<UserGroupChat> UserGroupChats { get; set; }

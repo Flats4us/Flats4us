@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using FirebaseAdmin.Messaging;
 using Flats4us.Services.Interfaces;
 using System.Security.Claims;
+using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/notifications")]
     [ApiController]
     public class NotificationController : ControllerBase
     {
@@ -17,7 +20,11 @@ namespace Flats4us.Controllers
             _notificationService = notificationService;
         }
 
+        // TODO: remove
         [HttpPost]
+        [SwaggerOperation(
+            Summary = "For testing"
+        )]
         public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request, int userId)
         {
 
@@ -30,6 +37,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("unread")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns a list of unread notifications",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> GetUnreadAlert()
         {
             try
@@ -50,6 +62,11 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("all")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Returns a list of notifications",
+            Description = "Requires registered user privileges"
+        )]
         public async Task<IActionResult> GetAllAlert()
         {
             try
@@ -70,7 +87,12 @@ namespace Flats4us.Controllers
         }
 
         [HttpPost("read")]
-        public async Task<IActionResult> ReadAlerts([FromBody] List<int> alertIds)
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Marks notifications as read",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<IActionResult> ReadAlerts([FromBody] ReadNotificationsDto input)
         {
             try
             {
@@ -80,7 +102,7 @@ namespace Flats4us.Controllers
                 }
 
                 // Mark the alerts as read
-                bool success = await _notificationService.ReadAlertAsync(alertIds, userId);
+                bool success = await _notificationService.ReadAlertAsync(input.NotificationIds, userId);
                 if (success)
                 {
                     return Ok("Alerts marked as read successfully.");

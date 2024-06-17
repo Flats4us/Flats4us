@@ -553,5 +553,34 @@ namespace Flats4us.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateConsentAsync(int userId, ConsentDto input)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user is null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            user.PushChatConsent = input.PushChatConsent;
+            user.EmailChatConsent = input.EmailChatConsent;
+            user.PushOtherConsent = input.PushOtherConsent;
+            user.EmailOtherConsent = input.EmailOtherConsent;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ConsentDto> GetUserConsentAsync(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null) throw new ArgumentException($"User with ID {userId} not found.");
+
+            return new ConsentDto
+            {
+                PushChatConsent = user.PushChatConsent,
+                EmailChatConsent = user.EmailChatConsent,
+                PushOtherConsent = user.PushOtherConsent,
+                EmailOtherConsent = user.EmailOtherConsent
+            };
+        }
     }
 }

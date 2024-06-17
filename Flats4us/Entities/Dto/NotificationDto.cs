@@ -5,7 +5,7 @@ namespace Flats4us.Entities.Dto
     public class NotificationDto
     {
         [Required]
-        public int NotificationDto { get; set; }
+        public int NotificationId { get; set; }
 
         [Required]
         public string Title { get; set; }
