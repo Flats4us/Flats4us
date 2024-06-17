@@ -8,7 +8,6 @@
         public string AlertBody { get; set; }
         public DateTime DateTime { get; set; }
         public bool Read { get; set; }
-        public int UserId { get; set; }
     
     }
 }

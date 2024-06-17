@@ -57,6 +57,7 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IArgumentService, ArgumentService>();
 builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 
+
 builder.Services.AddSingleton(new AppInfo { 
     CommitHash = Environment.GetEnvironmentVariable("COMMIT_HASH") ?? "notFound", 
     CommitDate = Environment.GetEnvironmentVariable("COMMIT_DATE") ?? "notFound"

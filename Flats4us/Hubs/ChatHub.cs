@@ -1,6 +1,8 @@
 ﻿namespace Flats4us.Hubs
 {
+    using FirebaseAdmin.Messaging;
     using Flats4us.Entities;
+    using Flats4us.Entities.Dto;
     using Flats4us.Helpers.Enums;
     using Flats4us.Services;
     using Flats4us.Services.Interfaces;
@@ -14,19 +16,16 @@
     {
         private readonly IChatService _chatService;
         public readonly Flats4usContext _context;
-        private readonly INotificationService _notificationService;
 
 
 
         private readonly static ConcurrentDictionary<int, string> _connections = new ConcurrentDictionary<int, string>();
 
         public ChatHub(IChatService chatService, 
-            Flats4usContext context,
-            INotificationService notificationService)
+            Flats4usContext context)
         {
             _chatService = chatService;
             _context = context;
-            _notificationService = notificationService;
         }
 
         public async Task SendMessage(string user, string message)
@@ -77,7 +76,15 @@
                 }
                 return null;
         }
+        public async Task SendNotification(int receiverUserId, AlertDto alert)
+        {
+            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionId))
+            {
 
+                await Clients.Client(receiverConnectionId).SendAsync("ReceiveNotification", alert);
+            }
+            
+        }
 
         public async Task SendMessageToAll(string user, string message)
         {
