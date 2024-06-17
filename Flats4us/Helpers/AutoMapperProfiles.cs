@@ -118,6 +118,8 @@ namespace Flats4us.Helpers
 
             CreateMap<Student, UserProfilePublicDto>()
                 .MapBaseUserProfile()
+                .ForMember(dest => dest.Email, opt => opt.Ignore())
+                .ForMember(dest => dest.PhoneNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student))
                 .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year))
                 .ForMember(dest => dest.Links, opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Links) ? src.Links.Split(new[] { '|' }, StringSplitOptions.None).ToList() : new List<string>()));

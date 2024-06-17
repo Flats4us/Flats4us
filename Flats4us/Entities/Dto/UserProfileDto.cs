@@ -11,8 +11,12 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int UserId { get; set; }
 
+        public string? Name { get; set; }
+
+        public string? Email { get; set; }
+
         [Required]
-        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         public DateTime AccountCreationDate { get; set; }
@@ -71,12 +75,6 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string Address { get; set; }
-
-        [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
 
         public FileDto? Document { get; set; }
 
