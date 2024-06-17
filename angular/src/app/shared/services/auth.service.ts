@@ -50,6 +50,7 @@ export class AuthService {
 	public accessControl$ = this.accessControl.asObservable();
 
 	constructor(private http: HttpClient, private router: Router) {
+		this.isLoggedIn.next(this.isValidToken());
 		setInterval(() => this.isLoggedIn.next(this.isValidToken()), 1000);
 		this.accessControl.next({
 			user: this.getUserType(),

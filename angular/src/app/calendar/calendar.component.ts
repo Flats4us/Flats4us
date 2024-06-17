@@ -7,12 +7,13 @@ import {
 	MatDatepickerModule,
 } from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
+import { BaseComponent } from '@shared/components/base/base.component';
 import { Observable, tap } from 'rxjs';
 
 import { EventListComponent } from './components/event-list/event-list.component';
 import { IEvent } from './models/calendar.models';
 import { CalendarService } from './services/calendar.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-calendar',
@@ -29,11 +30,11 @@ import { TranslateModule } from '@ngx-translate/core';
 	styleUrls: ['./calendar.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarComponent {
+export class CalendarComponent extends BaseComponent {
 	public selected: Date | null = null;
 	public hasEventsMap: { [date: string]: boolean } = {};
 
-	public calendar$: Observable<IEvent[]> = this.calendaService
+	public calendar$: Observable<IEvent[]> = this.calendarService
 		.getEvents()
 		.pipe(
 			tap(events =>
@@ -43,11 +44,16 @@ export class CalendarComponent {
 			)
 		);
 
+	public calendarToAccept$: Observable<IEvent[]> =
+		this.calendarService.getEventsToAccept();
+
 	constructor(
 		private dateAdapter: DateAdapter<Date>,
-		public calendaService: CalendarService,
+		public calendarService: CalendarService,
 		private dialog: MatDialog
 	) {
+		super();
+
 		this.dateAdapter.getFirstDayOfWeek = () => 1;
 	}
 
@@ -69,5 +75,11 @@ export class CalendarComponent {
 				e => new Date(e.date).toDateString() === new Date(event).toDateString()
 			);
 		}
+	}
+
+	public onEventClick(event: IEvent): void {
+		const ref = this.dialog.open(EventListComponent, { width: '400px' });
+		ref.componentInstance.date = event.date;
+		ref.componentInstance.events = [event];
 	}
 }

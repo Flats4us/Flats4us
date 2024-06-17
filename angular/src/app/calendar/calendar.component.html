@@ -10,3 +10,24 @@
 		(selectedChange)="onSelectedChange($event, calendar)"
 	></mat-calendar>
 </div>
+<div *ngIf="calendarToAccept$ | async as toAccept">
+	<h1 class="text-4xl p-4 font-semibold flex-1">
+		{{ "Calendar.to-accept" | translate }}
+	</h1>
+
+	<div *ngIf="!toAccept.length" class="text-center">
+		<p>{{ "Calendar.no-events" | translate }}</p>
+	</div>
+
+	<div class="flex flex-col gap-4">
+		<div
+			*ngFor="let event of toAccept"
+			class="p-4 border cursor-pointer rounded-lg shadow-sm bg-white flex gap-4 items-center"
+			(click)="onEventClick(event)"
+		>
+			<span>{{ event.date | date }}</span>
+			<span>{{ event.place }}</span>
+			<span>{{ event.reason }}</span>
+		</div>
+	</div>
+</div>

@@ -7,6 +7,19 @@
 			*ngFor="let event of events"
 			class="p-4 border rounded-lg shadow-sm bg-white"
 		>
+			<div *ngIf="event?.user" class="mb-4">
+				<img
+					mat-card-avatar
+					alt="avatar"
+					class="profile-avatar__image"
+					[src]="
+						event?.user?.profilePicture?.path
+							? baseUrl + '/' + event?.user?.profilePicture?.path
+							: './assets/avatar.png'
+					"
+				/>
+				<span class="text-black font-bold">{{ event.user.name }}</span>
+			</div>
 			<div class="mb-4">
 				<span class="text-black font-bold"
 					>{{ "Calendar.date" | translate }}:
@@ -25,13 +38,42 @@
 				</span>
 				<span>{{ event.reason }}</span>
 			</div>
-			<div>
+
+			<div class="mb-4">
+				<span class="text-black font-bold">
+					{{ "Calendar.student-accepted" | translate }}:
+				</span>
+				<span>
+					{{ event.studentAcceptDate ? (event.studentAcceptDate | date) : "-" }}
+				</span>
+			</div>
+			<div class="mb-4">
+				<span class="text-black font-bold">
+					{{ "Calendar.owner-accepted" | translate }}:
+				</span>
+				<span>
+					{{ event.ownerAcceptDate ? (event.ownerAcceptDate | date) : "-" }}
+				</span>
+			</div>
+			<div class="mb-4">
 				<a
 					mat-dialog-close
 					class="text-blue-600 hover:underline"
 					[routerLink]="['/offer', 'details', event.offerId]"
 					>{{ "Calendar.offerDetails" | translate }}</a
 				>
+			</div>
+			<div *ngIf="event.needsAction" class="actions flex gap-4">
+				<button
+					mat-raised-button
+					color="primary"
+					(click)="onAccept(event.meetingId)"
+				>
+					{{ "Calendar.accept" | translate }}
+				</button>
+				<button mat-raised-button color="warn" (click)="onReject(event.meetingId)">
+					{{ "Calendar.reject" | translate }}
+				</button>
 			</div>
 		</div>
 	</div>

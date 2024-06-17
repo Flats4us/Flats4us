@@ -136,7 +136,13 @@
 		"reason": "Powód",
 		"event": "Wydarzenie",
 		"calendar": "Kalendarz",
-		"offerDetails": "Szczegóły oferty"
+		"offerDetails": "Szczegóły oferty",
+		"owner-accepted": "Właściciel zaakceptował",
+		"student-accepted": "Student zaakceptował",
+		"accept": "Zaakceptuj",
+		"reject": "Odrzuć",
+		"to-accept": "Do zaakceptowania",
+		"no-events": "Brak wydarzeń"
 	},
 	"Disputes": {
 		"dispute": "Spór",

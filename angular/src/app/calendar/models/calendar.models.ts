@@ -1,3 +1,5 @@
+import { IUser } from '@shared/models/user.models';
+
 export interface IEvent {
 	meetingId: number;
 	date: Date;
@@ -6,4 +8,6 @@ export interface IEvent {
 	offerId: number;
 	studentAcceptDate: Date;
 	ownerAcceptDate: Date;
+	user: IUser;
+	needsAction: boolean;
 }

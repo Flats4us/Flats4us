@@ -137,7 +137,13 @@
 		"reason": "Reason",
 		"event": "Event",
 		"calendar": "Calendar",
-		"offerDetails": "Offer details"
+		"offerDetails": "Offer details",
+		"owner-accepted": "Owner accepted",
+		"student-accepted": "Student accepted",
+		"accept": "Accept",
+		"reject": "Reject",
+		"to-accept": "To accept",
+		"no-events": "No events"
 	},
 	"Disputes": {
 		"dispute": "Dispute",

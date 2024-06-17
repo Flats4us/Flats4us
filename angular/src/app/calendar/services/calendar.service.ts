@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 import { IEvent } from '../models/calendar.models';
 
@@ -19,5 +19,17 @@ export class CalendarService {
 
 	public addEvent(event: IEvent): Observable<void> {
 		return this.httpClient.post<void>(this.apiRoute, event);
+	}
+
+	public acceptEvent(meetingId: number, decision: boolean): Observable<void> {
+		return this.httpClient.put<void>(`${this.apiRoute}/${meetingId}/accept`, {
+			decision,
+		});
+	}
+
+	public getEventsToAccept(): Observable<IEvent[]> {
+		return this.httpClient
+			.get<IEvent[]>(this.apiRoute)
+			.pipe(map(events => events.filter(e => e.needsAction)));
 	}
 }
