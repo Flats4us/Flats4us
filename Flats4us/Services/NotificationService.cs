@@ -46,6 +46,8 @@ namespace Flats4us.Services
         {
             var user = await _context.Users.FindAsync(userId);
 
+            if (user == null) throw new ArgumentException("User not found");
+
             bool shouldSendPush = true;
             bool shouldSendEmail = true;
 
@@ -94,33 +96,25 @@ namespace Flats4us.Services
 
             if(shouldSendPush)
             {
-                var hubResult = await _notificationHub.SendNotification
-            }
-            // Wysłać fcm jeżeli nie uda się wysłać powiadomienia
+                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow);
 
-            if (user == null || string.IsNullOrEmpty(user.FcmToken))
-                return false; // User not found or FCM token not available
-
-            var message = new Message()
-            {
-                Token = user.FcmToken,
-                Notification = new FirebaseAdmin.Messaging.Notification
+                if (!string.IsNullOrEmpty(user.FcmToken))
                 {
-                    Title = title,
-                    Body = body
+                    var fcmMessage = new Message()
+                    {
+                        Token = user.FcmToken,
+                        Notification = new FirebaseAdmin.Messaging.Notification
+                        {
+                            Title = keyTitle,
+                            Body = keyBody
+                        }
+                    };
+
+                    await _messaging.SendAsync(fcmMessage);
                 }
-            };
-
-
-            try
-            {
-                var response = await _messaging.SendAsync(message);
-                return true; // Notification sent successfully
             }
-            catch (FirebaseAdmin.Messaging.FirebaseMessagingException)
-            {
-                return false; // Failed to send notification
-            }
+
+            return true;
         }
 
         public async Task<List<NotificationDto>> GetUnreadAlertAsync(int userId)

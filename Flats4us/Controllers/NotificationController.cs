@@ -28,7 +28,7 @@ namespace Flats4us.Controllers
         public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request, int userId)
         {
 
-            var success = await _notificationService.SendNotificationAsync(request.Title, request.Body, userId);
+            var success = await _notificationService.SendNotificationAsync(request.Title, request.Body, request.Title, request.Body, userId, false);
 
             if (success)
                 return Ok("Notification sent successfully.");
