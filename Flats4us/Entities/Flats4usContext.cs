@@ -23,6 +23,7 @@ namespace Flats4us.Entities
         public DbSet<Matcher> Matcher { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Moderator> Moderators { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<OfferInterest> OfferInterests { get; set; }
         public DbSet<OfferPromotion> OfferPromotions { get; set; }
@@ -48,6 +49,12 @@ namespace Flats4us.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Notification>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.Notifications)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Chat>()
                 .HasOne(x => x.User1)
                 .WithMany()
