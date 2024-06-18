@@ -12,6 +12,7 @@ import { LocaleService } from '@shared/services/locale.service';
 import { NotificationsService } from '@shared/services/notifications.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { UserService } from '@shared/services/user.service';
+import { takeUntil } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { BaseComponent } from '../base/base.component';
@@ -81,6 +82,14 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		}
 
 		this.notificationsService.startConnection(this.authService.getAuthToken());
+	}
+
+	public readNotification(id: string) {
+		//TODO: notifications have only title and body, no id
+		this.notificationsService
+			.markRead([id])
+			.pipe(takeUntil(this.destroyed))
+			.subscribe();
 	}
 
 	public changeLanguage(value: string) {
