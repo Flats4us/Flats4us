@@ -11,7 +11,7 @@ import {
 	IUser,
 	IUserData,
 } from '../models/moderation-console.models';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ModerationConsoleService {

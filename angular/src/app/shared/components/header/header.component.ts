@@ -1,5 +1,11 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	HostListener,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '@shared/services/auth.service';
 import { LocaleService } from '@shared/services/locale.service';
@@ -7,7 +13,7 @@ import { NotificationsService } from '@shared/services/notifications.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { UserService } from '@shared/services/user.service';
 
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { BaseComponent } from '../base/base.component';
 
 @Component({

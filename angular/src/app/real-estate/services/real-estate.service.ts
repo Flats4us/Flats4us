@@ -12,7 +12,7 @@ import {
 	IRegionCity,
 } from 'src/app/real-estate/models/real-estate.models';
 import { IEquipment } from 'src/app/start/models/start-site.models';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class RealEstateService {

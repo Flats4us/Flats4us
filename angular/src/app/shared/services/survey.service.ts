@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IQuestionsData } from '@shared/models/survey.models';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class SurveyService {

@@ -11,7 +11,7 @@ import {
 	IOpinion,
 	IUserProfile,
 } from '../models/profile.models';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
 import { IResult } from '@shared/models/shared.models';
 

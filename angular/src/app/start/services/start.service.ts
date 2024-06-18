@@ -7,7 +7,7 @@ import {
 } from '../models/start-site.models';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { ISendOffers } from 'src/app/offer/models/offer.models';
 import { FormControl, FormGroup } from '@angular/forms';
 

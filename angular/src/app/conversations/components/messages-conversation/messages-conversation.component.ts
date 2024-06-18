@@ -12,7 +12,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { UserService } from '@shared/services/user.service';
 import { map, Observable, of, switchMap } from 'rxjs';
 
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { ConversationService } from '../../services/conversation.service';
 import { formatDate } from '@angular/common';
 

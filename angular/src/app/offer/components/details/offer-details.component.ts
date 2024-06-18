@@ -6,7 +6,7 @@ import { RealEstateService } from 'src/app/real-estate/services/real-estate.serv
 import { MeetingAddComponent } from 'src/app/rents/components/meeting-add/meeting-add.component';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { statusName } from 'src/app/rents/statusName';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { IOffer } from '../../models/offer.models';
 import { slideAnimation } from 'src/app/rents/slide.animation';
 import { UserType } from 'src/app/profile/models/types';

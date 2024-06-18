@@ -13,7 +13,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
 import { Observable } from 'rxjs';
 import { OfferService } from 'src/app/offer/services/offer.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';

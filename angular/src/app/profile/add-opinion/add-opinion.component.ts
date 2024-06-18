@@ -19,7 +19,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { UserService } from '@shared/services/user.service';
 import { map, switchMap } from 'rxjs';
 
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { ProfileService } from '../services/profile.service';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';

@@ -9,7 +9,7 @@ import {
 	IUser,
 	LoggedUserType,
 } from '../models/auth.models';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
 import { Router } from '@angular/router';
 

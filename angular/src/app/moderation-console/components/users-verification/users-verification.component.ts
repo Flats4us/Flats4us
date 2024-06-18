@@ -7,7 +7,7 @@ import {
 import { Observable, switchMap } from 'rxjs';
 import { IUser } from '../../models/moderation-console.models';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { formatDate } from '@angular/common';

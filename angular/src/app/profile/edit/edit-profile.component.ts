@@ -26,7 +26,7 @@ import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { ModificationType, StatusType, UserType } from '../models/types';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { validityAgeValidator } from '@shared/utils/validators';
 import { setLocalDate } from '@shared/utils/functions';

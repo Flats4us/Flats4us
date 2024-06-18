@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IConversations, IMessage } from '@shared/models/conversation.models';
 import * as signalR from '@microsoft/signalr';
@@ -20,7 +20,7 @@ export class ConversationService {
 	public startConnection = (token?: string) => {
 		this.stopConnection();
 		this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl(`${this.baseRoute}/chatHub`, {
+			.withUrl(`${this.baseRoute}/${environment.chatSocket}`, {
 				accessTokenFactory: () => (token ? token : ''),
 			})
 			.build();

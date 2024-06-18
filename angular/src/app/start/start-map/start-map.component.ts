@@ -14,7 +14,7 @@ import 'leaflet.markercluster';
 
 import { StartService } from '../services/start.service';
 import { IFilteredMapOffers } from '../models/start-site.models';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { OfferService } from 'src/app/offer/services/offer.service';

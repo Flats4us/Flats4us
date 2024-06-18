@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { slideAnimation } from 'src/app/rents/slide.animation';
 import { IMenuOptions } from 'src/app/rents/models/rents.models';

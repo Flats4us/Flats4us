@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable, filter, map, switchMap } from 'rxjs';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { UserService } from '@shared/services/user.service';
 import { IMyProfile, IUser, IUserOpinion } from '@shared/models/user.models';
 import { ActivatedRoute } from '@angular/router';

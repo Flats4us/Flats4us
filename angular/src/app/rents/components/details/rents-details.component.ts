@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
 import { slideAnimation } from '../../slide.animation';
 import { statusName } from '../../statusName';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
 import { MeetingAddComponent } from '../meeting-add/meeting-add.component';
 import { UserType } from 'src/app/profile/models/types';

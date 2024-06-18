@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDecision, IStudent } from '../models/roommate-candidate.models';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class FindRoommateService {

@@ -15,7 +15,7 @@ import {
 	MatPaginatorIntl,
 	PageEvent,
 } from '@angular/material/paginator';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { OfferService } from '../../services/offer.service';
 import { ISendOffers } from '../../models/offer.models';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';

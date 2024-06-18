@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IStudent } from '../../models/roommate-candidate.models';
 import { FindRoommateService } from '../../services/find-roommate.service';
-import { environment } from '../../../../environments/environment.prod';
+import { environment } from '../../../../environments/environment';
 import { BaseComponent } from '@shared/components/base/base.component';
 
 @Component({
