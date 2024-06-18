@@ -900,6 +900,8 @@ public static class DataSeeder
             HireDate = new DateTime(2023, 2, 7),
         };
 
+        SeedModProfilePicture(moderator1, Gender.Male).Wait();
+
         dbContext.Moderators.AddRange(moderator1);
 
         #endregion
@@ -4159,6 +4161,32 @@ public static class DataSeeder
             if (File.Exists(backupImagePath))
             {
                 user.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(backupImagePath);
+            }
+        }
+
+        await Task.Delay(1000);
+    }
+
+    private static async Task SeedModProfilePicture(Moderator mod, Gender gender)
+    {
+        try
+        {
+            var profilePicturePath = await ProfilePictureSeeder.GetRandomProfilePicturePath(gender);
+
+            mod.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(profilePicturePath);
+
+            if (File.Exists(profilePicturePath))
+            {
+                File.Delete(profilePicturePath);
+            }
+        }
+        catch (Exception)
+        {
+            var backupImagePath = Path.Combine("FileSeed", "UsersSeed", "ProfilePicture", "ProfilePicture.jpg");
+
+            if (File.Exists(backupImagePath))
+            {
+                mod.ProfilePicture = await _fileUploadService.CreateFileFromSourceFilePathAsync(backupImagePath);
             }
         }
 

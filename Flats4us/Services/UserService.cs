@@ -295,6 +295,7 @@ namespace Flats4us.Services
                     break;
                 case Moderator:
                     var moderator = await _context.Moderators
+                        .Include(s => s.ProfilePicture)
                         .FirstOrDefaultAsync(o => o.UserId == userId);
                     result = _mapper.Map<UserProfileFullDto>(moderator);
                     break;

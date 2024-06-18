@@ -36,6 +36,8 @@ namespace Flats4us.Entities
         [Required]
         public DateTime AccountCreationDate { get; set; }
 
+        public FileUpload? ProfilePicture { get; set; }
+
         public DateTime? LastLoginDate { get; set; }
 
         public string? PasswordResetToken { get; set; }
