@@ -108,6 +108,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
+                .Where(o => o.Property.Owner.VerificationStatus == VerificationStatus.Verified)
                 .ToListAsync();
 
             var promotedOffersCount = promotedOffers.Count();
@@ -196,6 +197,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.RentOpinions)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
+                .Where(o => o.Property.Owner.VerificationStatus == VerificationStatus.Verified)
                 .Select(o => _mapper.Map<OfferDto>(o))
                 .ToListAsync();
 
@@ -315,6 +317,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
+                .Where(o => o.Property.Owner.VerificationStatus == VerificationStatus.Verified)
                 .Select(o => _mapper.Map<SimpleOfferForMapDto>(o))
                 .ToListAsync();
 
@@ -389,6 +392,7 @@ namespace Flats4us.Services
                     .ThenInclude(p => p.Equipment)
                 .Include(o => o.SurveyOwnerOffer)
                 .Include(o => o.OfferPromotions)
+                .Where(o => o.Property.Owner.VerificationStatus == VerificationStatus.Verified)
                 .Select(o => _mapper.Map<SimpleOfferForMapDto>(o))
                 .ToListAsync();
 
