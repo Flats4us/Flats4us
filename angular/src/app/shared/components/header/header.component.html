@@ -97,6 +97,14 @@
 					<mat-icon class="material-symbols-outlined">person_search</mat-icon>
 					{{ "Header.find-roommates" | translate }}
 				</button>
+				<button
+					*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+					mat-menu-item
+					[routerLink]="['/disputes']"
+				>
+					<mat-icon class="material-symbols-outlined">gavel</mat-icon>
+					spory
+				</button>
 			</mat-menu>
 		</mat-menu>
 	</div>
@@ -311,6 +319,14 @@
 		>
 			<mat-icon class="material-symbols-outlined">person_search</mat-icon>
 			{{ "Header.find-roommates" | translate }}
+		</button>
+		<button
+			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			mat-menu-item
+			[routerLink]="['/disputes']"
+		>
+			<mat-icon class="material-symbols-outlined">gavel</mat-icon>
+			spory
 		</button>
 	</mat-menu>
 </ng-template>

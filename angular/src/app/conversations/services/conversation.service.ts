@@ -14,6 +14,11 @@ export class ConversationService {
 		message: string,
 		timestamp: Date
 	) => void)[] = [];
+	private onReceiveGroupMessageCallbacks: ((
+		groupId: number,
+		user: number,
+		message: string
+	) => void)[] = [];
 
 	constructor(private http: HttpClient) {}
 
@@ -39,6 +44,12 @@ export class ConversationService {
 				}
 			);
 		});
+
+		this.onReceiveGroupMessageCallbacks.forEach(callback => {
+			this.hubConnection.on('ReceiveGroupMessage', (groupId, user, message) => {
+				callback(groupId, user, message);
+			});
+		});
 	}
 
 	public addReceivePrivateMessageHandler(
@@ -47,9 +58,23 @@ export class ConversationService {
 		this.onReceivePrivateMessageCallbacks.push(callback);
 	}
 
+	public addReceiveGroupMessageHandler(
+		callback: (groupId: number, user: number, message: string) => void
+	) {
+		this.onReceiveGroupMessageCallbacks.push(callback);
+	}
+
 	public sendPrivateMessage(receiverId: number, message: string) {
 		this.hubConnection.invoke('SendPrivateMessage', receiverId, message);
 	}
+
+	public sendGroupMessage(groupChatId: number, message: string): void {
+		this.hubConnection.invoke('SendGroupChatMessage', groupChatId, message);
+	}
+
+	public sendMessage = (user: string, message: string) => {
+		this.hubConnection.invoke('SendMessage', user, message);
+	};
 
 	public isConnected(): boolean {
 		return (

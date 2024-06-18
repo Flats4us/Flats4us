@@ -9,6 +9,7 @@ import { DisputesRoutingModule } from './disputes-routing.module';
 import { DisputesComponent } from './disputes.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
 	declarations: [DisputesComponent],
@@ -21,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
 		MatTabsModule,
 		TranslateModule,
 		MatCardModule,
+		MatListModule,
 	],
 })
 export class DisputesModule {}

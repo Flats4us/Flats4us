@@ -67,4 +67,12 @@ export class RentsService {
 			paymentId
 		);
 	}
+
+	public startDispute(title: string, description: string, rentId: number) {
+		return this.httpClient.post(`${this.apiRoute}/arguments`, {
+			title: title,
+			description: description,
+			rentId: rentId,
+		});
+	}
 }
