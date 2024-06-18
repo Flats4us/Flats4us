@@ -56,8 +56,8 @@ namespace Flats4us.Services
 
             var newRent = new Rent
             {
-                StartDate = input.StartDate,
-                EndDate = input.StartDate.AddMonths(input.Duration),
+                StartDate = input.StartDate.Date,
+                EndDate = input.StartDate.Date.AddMonths(input.Duration),
                 Duration = input.Duration,
                 Student = student,
                 OtherStudents = verifiedRoommates

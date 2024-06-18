@@ -3,5 +3,6 @@
     public interface IBackgroundJobService
     {
         Task GeneratePaymentsAsync();
+        Task CheckAndChangeOfferStatusesAsync();
     }
 }

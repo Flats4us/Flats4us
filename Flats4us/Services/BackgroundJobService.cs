@@ -31,31 +31,62 @@ namespace Flats4us.Services
                 )
                 .ToListAsync();
 
-            if (rents.Count > 0)
+            foreach (var rent in rents)
             {
-                foreach (var rent in rents)
+                rent.Payments.Add(new Payment
                 {
-                    rent.Payments.Add(new Payment
-                    {
-                        PaymentPurpose = PaymentPurpose.Rent,
-                        Amount = rent.Offer.Price,
-                        IsPaid = false,
-                        CreatedDate = DateTime.Now,
-                        PaymentDate = DateTime.Now.AddDays(7).Date
-                    });
+                    PaymentPurpose = PaymentPurpose.Rent,
+                    Amount = rent.Offer.Price,
+                    IsPaid = false,
+                    CreatedDate = DateTime.Now,
+                    PaymentDate = DateTime.Now.AddDays(7).Date
+                });
 
-                    if (rent.Payments.Where(p => p.PaymentPurpose == PaymentPurpose.Rent).Count() < rent.Duration ) 
-                    {
-                        rent.NextPaymentGenerationDate = DateTime.Now.AddMonths(1).Date;
-                    }
-                    else
-                    {
-                        rent.NextPaymentGenerationDate = null;
-                    }
+                if (rent.Payments.Where(p => p.PaymentPurpose == PaymentPurpose.Rent).Count() < rent.Duration ) 
+                {
+                    rent.NextPaymentGenerationDate = DateTime.Now.AddMonths(1).Date;
                 }
-
-                await _context.SaveChangesAsync();
+                else
+                {
+                    rent.NextPaymentGenerationDate = null;
+                }
             }
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Payment generation ended at: " + DateTime.Now);
+        }
+
+        public async Task CheckAndChangeOfferStatusesAsync()
+        {
+            _logger.LogInformation("Offer status check executed at: " + DateTime.Now);
+
+            var date = DateTime.Now.Date;
+
+            var endingRentedOffers = await _context.Offers
+                .Include(o => o.Rent)
+                .Where(o => o.OfferStatus == OfferStatus.Rented &&
+                    o.Rent.EndDate.Date < date)
+                .ToListAsync();
+
+            foreach (var offer in endingRentedOffers)
+            {
+                offer.OfferStatus = OfferStatus.Old;
+            }
+
+            var endingCurrentOffers = await _context.Offers
+                .Where(o => o.OfferStatus == OfferStatus.Current &&
+                    o.EndDate.Date < date)
+                .ToListAsync();
+
+            foreach (var offer in endingCurrentOffers)
+            {
+                offer.OfferStatus = OfferStatus.Old;
+            }
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Offer status check ended at: " + DateTime.Now);
         }
     }
 }

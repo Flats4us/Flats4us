@@ -2174,7 +2174,7 @@ public static class DataSeeder
         var offer26 = new Offer //property id 5
         {
             Date = new DateTime(2023, 6, 15),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Old,
             Price = 2100,
             Deposit = 1500,
             Description = "wynajem nr 26",
@@ -2187,7 +2187,7 @@ public static class DataSeeder
         var offer27 = new Offer //property id 18
         {
             Date = new DateTime(2023, 9, 17),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Old,
             Price = 2100,
             Deposit = 1500,
             Description = "wynajem nr 27",
@@ -2200,7 +2200,7 @@ public static class DataSeeder
         var offer28 = new Offer //property id 26
         {
             Date = new DateTime(2023, 9, 20),
-            OfferStatus = OfferStatus.Current,
+            OfferStatus = OfferStatus.Old,
             Price = 2100,
             Deposit = 1500,
             Description = "wynajem nr 28",
@@ -3153,6 +3153,7 @@ public static class DataSeeder
             StartDate = new DateTime(2024, 1, 1),
             Duration = 12,
             EndDate = new DateTime(2025, 1, 1),
+            NextPaymentGenerationDate = new DateTime(2024, 8, 1),
             Offer = offer1,
             Student = student1,
             OtherStudents = { student2, student3 }
@@ -3162,6 +3163,7 @@ public static class DataSeeder
             StartDate = new DateTime(2024, 2, 1),
             Duration = 11,
             EndDate = new DateTime(2025, 1, 1),
+            NextPaymentGenerationDate = new DateTime(2024, 7, 1),
             Offer = offer2,
             Student = student4,
             OtherStudents = { student5, student6 }
@@ -3171,6 +3173,7 @@ public static class DataSeeder
             StartDate = new DateTime(2024, 3, 1),
             Duration = 10,
             EndDate = new DateTime(2025, 1, 1),
+            NextPaymentGenerationDate = new DateTime(2024, 7, 1),
             Offer = offer3,
             Student = student7,
             OtherStudents = { student8, student9 }
@@ -3180,6 +3183,7 @@ public static class DataSeeder
             StartDate = new DateTime(2023, 4, 1),
             Duration = 9,
             EndDate = new DateTime(2025, 1, 1),
+            NextPaymentGenerationDate = new DateTime(2024, 7, 1),
             Offer = offer4,
             Student = student10,
             OtherStudents = { }
@@ -3189,6 +3193,7 @@ public static class DataSeeder
             StartDate = new DateTime(2023, 9, 1),
             Duration = 8,
             EndDate = new DateTime(2024, 5, 1),
+            NextPaymentGenerationDate = null,
             Offer = offer26,
             Student = student11,
             OtherStudents = { }
@@ -3198,6 +3203,7 @@ public static class DataSeeder
             StartDate = new DateTime(2023, 11, 1),
             Duration = 5,
             EndDate = new DateTime(2024, 4, 1),
+            NextPaymentGenerationDate = null,
             Offer = offer27,
             Student = student12,
             OtherStudents = { }
@@ -3207,6 +3213,7 @@ public static class DataSeeder
             StartDate = new DateTime(2024, 1, 1),
             Duration = 5,
             EndDate = new DateTime(2024, 6, 1),
+            NextPaymentGenerationDate = null,
             Offer = offer28,
             Student = student13,
             OtherStudents = { student14, student15 }

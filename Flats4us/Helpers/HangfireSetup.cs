@@ -12,6 +12,7 @@ namespace Flats4us.Helpers
                 var _backgroundJobService = scope.ServiceProvider.GetRequiredService<IBackgroundJobService>();
 
                 RecurringJob.AddOrUpdate("GeneratePayments", () => _backgroundJobService.GeneratePaymentsAsync(), "0 3 * * *");
+                RecurringJob.AddOrUpdate("CheckAndChangeOfferStatuses", () => _backgroundJobService.CheckAndChangeOfferStatusesAsync(), "30 1 * * *");
             }
         }
     }
