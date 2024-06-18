@@ -494,7 +494,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(1978, 12, 1), //45 lat
+            BirthDate = new DateTime(1999, 12, 1), 
             StudentNumber = "s2137",
             University = "Wojskowa Akademia Techniczna w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -515,7 +515,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2025, 12, 8),
-            BirthDate = new DateTime(1998, 12, 1), //25 lat
+            BirthDate = new DateTime(2000, 12, 1), 
             StudentNumber = "s12345",
             University = "Szkoła Główna Gospodarstwa Wiejskiego w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -536,7 +536,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 6, 15),
-            BirthDate = new DateTime(1995, 5, 18),  //29 lat
+            BirthDate = new DateTime(1999, 5, 18),  
             StudentNumber = "s19876",
             University = "Polsko-Japońska Akademia Technik Komputerowych w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -557,7 +557,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 4, 30),
-            BirthDate = new DateTime(1990, 8, 7),  //33 lata
+            BirthDate = new DateTime(2001, 8, 7),
             StudentNumber = "s12345",
             University = "Uniwersytet Warszawski",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -578,7 +578,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2028, 8, 22),
-            BirthDate = new DateTime(1993, 7, 14),  //28 lat
+            BirthDate = new DateTime(2004, 7, 14), 
             StudentNumber = "s33456",
             University = "Politechnika Warszawska",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -599,7 +599,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.NotVerified,
             DocumentExpireDate = new DateTime(2026, 5, 10),
-            BirthDate = new DateTime(1994, 11, 28),  //27 lat
+            BirthDate = new DateTime(1999, 11, 28), 
             StudentNumber = "s44567",
             University = "Akademia Leona Kożmińskiego w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -620,7 +620,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 9, 5),
-            BirthDate = new DateTime(1991, 3, 8),  //32 lata
+            BirthDate = new DateTime(2001, 3, 8),
             StudentNumber = "s56789",
             University = "Collegium Humanum w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -641,7 +641,7 @@ public static class DataSeeder
             DocumentType = DocumentType.StudentCard,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2027, 12, 18),
-            BirthDate = new DateTime(1992, 9, 22),  //29 lat
+            BirthDate = new DateTime(2003, 9, 22),
             StudentNumber = "s67890",
             University = "Uczelnia Łazarskiego w Warszawie",
             Links = "https://www.facebook.com|https://twitter.com|https://www.instagram.com",
@@ -662,7 +662,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2028, 4, 30),
-            BirthDate = new DateTime(1995, 11, 15),  // 28 lat
+            BirthDate = new DateTime(2003, 11, 15),
             StudentNumber = "s12345",
             University = "Uniwersytet Jagielloński",
             Links = "https://www.linkedin.com|https://www.github.com|https://www.instagram.com",
@@ -683,7 +683,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2028, 7, 15),
-            BirthDate = new DateTime(1998, 1, 10),  // 26 lat
+            BirthDate = new DateTime(2000, 1, 10),
             StudentNumber = "s98765",
             University = "Politechnika Warszawska",
             Links = "https://www.linkedin.com|https://twitter.com|https://www.instagram.com",
@@ -704,7 +704,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 9, 22),
-            BirthDate = new DateTime(1993, 5, 30),  // 31 lat
+            BirthDate = new DateTime(2000, 5, 30),
             StudentNumber = "s54321",
             University = "Uniwersytet Śląski",
             Links = "https://www.facebook.com|https://www.linkedin.com|https://www.instagram.com",
@@ -725,7 +725,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2026, 11, 30),
-            BirthDate = new DateTime(1996, 8, 15),  // 27 lat
+            BirthDate = new DateTime(1999, 8, 15),
             StudentNumber = "s24680",
             University = "Uniwersytet Gdański",
             Links = "https://www.linkedin.com|https://www.github.com|https://www.twitter.com",
@@ -746,7 +746,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2029, 10, 12),
-            BirthDate = new DateTime(1994, 3, 22),  // 30 lat
+            BirthDate = new DateTime(2001, 3, 22),
             StudentNumber = "s13579",
             University = "Uniwersytet im. Adama Mickiewicza w Poznaniu",
             Links = "https://www.facebook.com|https://twitter.com|https://www.linkedin.com",
@@ -767,7 +767,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2030, 5, 25),
-            BirthDate = new DateTime(1995, 7, 10),  // 28 lat
+            BirthDate = new DateTime(2002, 7, 10),
             StudentNumber = "s24680",
             University = "Uniwersytet Jagielloński",
             Links = "https://www.facebook.com/pnowak|https://twitter.com/pnowak|https://www.linkedin.com/in/pnowak",
@@ -788,7 +788,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2031, 8, 20),
-            BirthDate = new DateTime(1996, 9, 5),  // 27 lat
+            BirthDate = new DateTime(1999, 9, 5),  // 27 lat
             StudentNumber = "s97531",
             University = "Uniwersytet Wrocławski",
             Links = "https://www.facebook.com/mwojcik|https://twitter.com/mwojcik|https://www.linkedin.com/in/mwojcik",
@@ -809,7 +809,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2032, 12, 31),
-            BirthDate = new DateTime(1993, 11, 15),  // 30 lat
+            BirthDate = new DateTime(2004, 11, 15),
             StudentNumber = "s75319",
             University = "Uniwersytet Warszawski",
             Links = "https://www.facebook.com/pkowalski|https://twitter.com/pkowalski|https://www.linkedin.com/in/pkowalski",
@@ -830,7 +830,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2033, 5, 20),
-            BirthDate = new DateTime(1997, 4, 25),  // 27 lat
+            BirthDate = new DateTime(2000, 4, 25),
             StudentNumber = "s86420",
             University = "Uniwersytet Pedagogiczny w Krakowie",
             Links = "https://www.facebook.com/mnowak|https://twitter.com/mnowak|https://www.linkedin.com/in/mnowak",
@@ -851,7 +851,7 @@ public static class DataSeeder
             DocumentType = DocumentType.Passport,
             VerificationStatus = VerificationStatus.Verified,
             DocumentExpireDate = new DateTime(2034, 3, 10),
-            BirthDate = new DateTime(1998, 8, 5),  // 25 lat
+            BirthDate = new DateTime(1999, 8, 5),
             StudentNumber = "s102938",
             University = "Uniwersytet Gdański",
             Links = "https://www.facebook.com/awisniewska|https://twitter.com/awisniewska|https://www.linkedin.com/in/awisniewska",
@@ -3872,74 +3872,78 @@ public static class DataSeeder
             User = student1,
             GroupChat = groupChat1
         };
-
         var userGroupChat2 = new UserGroupChat
         {
             User = owner1,
             GroupChat = groupChat1
         };
-
         var userGroupChat3 = new UserGroupChat
         {
             User = student4,
             GroupChat = groupChat2
         };
-
         var userGroupChat4 = new UserGroupChat
         {
             User = rent2.Offer.Property.Owner,
             GroupChat = groupChat2
         };
-
         var userGroupChat5 = new UserGroupChat
         {
             User = student7,
             GroupChat = groupChat3
         };
-
         var userGroupChat6 = new UserGroupChat
         {
             User = rent3.Offer.Property.Owner,
             GroupChat = groupChat3
         };
-
         var userGroupChat7 = new UserGroupChat
         {
             User = student10,
             GroupChat = groupChat4
         };
-
         var userGroupChat8 = new UserGroupChat
         {
             User = rent4.Offer.Property.Owner,
             GroupChat = groupChat4
         };
-
         var userGroupChat9 = new UserGroupChat
         {
             User = student8,
             GroupChat = groupChat5
         };
-
         var userGroupChat10 = new UserGroupChat
         {
             User = rent3.Offer.Property.Owner,
             GroupChat = groupChat5
         };
-
         var userGroupChat11 = new UserGroupChat
         {
             User = student3,
             GroupChat = groupChat6
         };
-
         var userGroupChat12 = new UserGroupChat
         {
             User = rent1.Offer.Property.Owner,
             GroupChat = groupChat6
         };
+        var userGroupChat13 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat3
+        };
+        var userGroupChat14 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat4
+        };
+        var userGroupChat15 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat5
+        };
 
-        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12);
+        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12, userGroupChat13, userGroupChat14, userGroupChat15);
 
         #endregion
 
@@ -3960,7 +3964,6 @@ public static class DataSeeder
             Student = student1,
             GroupChat = groupChat1
         };
-
         var argument2 = new Argument
         {
             Title = "Tytuł do drugeigo sporu",
@@ -3976,7 +3979,6 @@ public static class DataSeeder
             Student = student4,
             GroupChat = groupChat2
         };
-
         var argument3 = new Argument
         {
             Title = "Tytuł do trzeciego sporu",
@@ -3992,7 +3994,6 @@ public static class DataSeeder
             Student = student7,
             GroupChat = groupChat3
         };
-
         var argument4 = new Argument
         {
             Title = "Tytuł do czwartego sporu",
@@ -4008,7 +4009,6 @@ public static class DataSeeder
             Student = student10,
             GroupChat = groupChat4
         };
-
         var argument5 = new Argument
         {
             Title = "Tytuł do piątego sporu",
@@ -4024,7 +4024,6 @@ public static class DataSeeder
             Student = student8,
             GroupChat = groupChat5
         };
-
         var argument6 = new Argument
         {
             Title = "Tytuł do szóstego sporu",
@@ -4055,7 +4054,6 @@ public static class DataSeeder
             Argument = argument4,
             Moderator = moderator1
         };
-
         var argumentIntervention2 = new ArgumentIntervention
         {
 
@@ -4064,7 +4062,6 @@ public static class DataSeeder
             Argument = argument5,
             Moderator = moderator1
         };
-
         var argumentIntervention3 = new ArgumentIntervention
         {
 
@@ -4073,7 +4070,6 @@ public static class DataSeeder
             Argument = argument3,
             Moderator = moderator1
         };
-
         var argumentIntervention4 = new ArgumentIntervention
         {
 
