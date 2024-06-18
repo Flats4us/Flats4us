@@ -100,49 +100,33 @@
 			</mat-menu>
 		</mat-menu>
 	</div>
-	<div *ngIf="authService.isLoggedIn$ | async; else notLoggedIn">
-		<div class="language">
-			<button mat-icon-button class="mode_btn" (click)="changeTheme()">
-				<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
-			</button>
-			<button
-				mat-icon-button
-				class="responsive-menu-lang"
-				[matTooltip]="'Header.change-language-tooltip' | translate"
-				[matMenuTriggerFor]="languageChange"
-			>
-				<mat-icon>language</mat-icon>
-			</button>
-			<mat-menu #languageChange="matMenu">
-				<button
-					*ngFor="let lang of languages"
-					mat-menu-item
-					class="flex-row justify-center items-center"
-					(click)="changeLanguage(lang)"
-				>
-					<span> {{ lang }} </span>
-
-					<ng-container [ngSwitch]="lang">
-						<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
-						<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
-					</ng-container>
-				</button>
-			</mat-menu>
-			<button
-				*ngIf="user$ | async as user"
-				class="your-profile"
-				[matMenuTriggerFor]="myProfile"
-			>
-				<img
-					class="your-photo"
-					[src]="
-						user?.profilePicture?.path
-							? baseUrl + '/' + user.profilePicture.path
-							: './assets/avatar.png'
-					"
-				/>
-			</button>
-		</div>
+	<div
+		*ngIf="authService.isLoggedIn$ | async; else notLoggedIn"
+		class="flex items-center"
+	>
+		<button mat-icon-button [matMenuTriggerFor]="notifications">
+			<mat-icon class="material-symbols-outlined">notifications</mat-icon>
+		</button>
+		<mat-menu #notifications="matMenu">
+			<span *ngFor="let notification of notifications$ | async" mat-menu-item>
+				{{ notification }}
+			</span>
+		</mat-menu>
+		<ng-container *ngTemplateOutlet="darkLanguageButtons"></ng-container>
+		<button
+			*ngIf="user$ | async as user"
+			class="your-profile"
+			[matMenuTriggerFor]="myProfile"
+		>
+			<img
+				class="your-photo"
+				[src]="
+					user?.profilePicture?.path
+						? baseUrl + '/' + user.profilePicture.path
+						: './assets/avatar.png'
+				"
+			/>
+		</button>
 	</div>
 	<mat-menu #myProfile="matMenu">
 		<button mat-menu-item [routerLink]="['/profile', 'details', 'my']">
@@ -234,32 +218,7 @@
 				{{ "Login.registration" | translate }}
 			</button>
 		</div>
-		<button mat-icon-button class="mode_btn" (click)="changeTheme()">
-			<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
-		</button>
-		<button
-			mat-icon-button
-			class="responsive-menu-lang"
-			[matTooltip]="'Header.change-language-tooltip' | translate"
-			[matMenuTriggerFor]="languageChange"
-		>
-			<mat-icon>language</mat-icon>
-		</button>
-		<mat-menu #languageChange="matMenu">
-			<button
-				*ngFor="let lang of languages"
-				mat-menu-item
-				class="flex-row justify-center items-center"
-				(click)="changeLanguage(lang)"
-			>
-				<span> {{ lang }} </span>
-
-				<ng-container [ngSwitch]="lang">
-					<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
-					<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
-				</ng-container>
-			</button>
-		</mat-menu>
+		<ng-container *ngTemplateOutlet="darkLanguageButtons"></ng-container>
 	</ng-template>
 </mat-toolbar>
 
@@ -340,6 +299,35 @@
 		>
 			<mat-icon class="material-symbols-outlined">person_search</mat-icon>
 			{{ "Header.find-roommates" | translate }}
+		</button>
+	</mat-menu>
+</ng-template>
+
+<ng-template #darkLanguageButtons>
+	<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+		<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
+	</button>
+	<button
+		mat-icon-button
+		class="responsive-menu-lang"
+		[matTooltip]="'Header.change-language-tooltip' | translate"
+		[matMenuTriggerFor]="languageChange"
+	>
+		<mat-icon>language</mat-icon>
+	</button>
+	<mat-menu #languageChange="matMenu">
+		<button
+			*ngFor="let lang of languages"
+			mat-menu-item
+			class="flex-row justify-center items-center"
+			(click)="changeLanguage(lang)"
+		>
+			<span> {{ lang }} </span>
+
+			<ng-container [ngSwitch]="lang">
+				<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
+				<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
+			</ng-container>
 		</button>
 	</mat-menu>
 </ng-template>
