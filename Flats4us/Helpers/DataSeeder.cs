@@ -2998,6 +2998,8 @@ public static class DataSeeder
             Date = new DateTime(2023, 12, 28),
             Place = "placeholder",
             Reason = "placeholder",
+            OwnerAcceptDate = null,
+            StudentAcceptDate = new DateTime(2023, 12, 20),
             Offer = offer4,
             Student = student2
         };

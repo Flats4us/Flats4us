@@ -31,31 +31,41 @@ namespace Flats4us.Services
 
             if (user is Student)
             {
-                meetings = await _context.Students
+                var studentMeetings = await _context.Students
                     .Where(s =>  s.UserId == userId)
                     .SelectMany(s => s.Meetings)
-                    .Select(meeting => _mapper.Map<MeetingDto>(meeting))
+                        .Include(m => m.Offer)
+                            .ThenInclude(o => o.Property)
+                                .ThenInclude(p => p.Owner)
+                                    .ThenInclude(ow => ow.ProfilePicture)
+                    .Select(meeting => _mapper.Map<MeetingWithOwnerDto>(meeting))
                     .ToListAsync();
 
-                foreach (var meeting in meetings)
+                foreach (var meeting in studentMeetings)
                 {
                     meeting.NeedsAction = meeting.StudentAcceptDate == null ? true : false;
                 }
+
+                meetings.AddRange(studentMeetings);
             }
             else if (user is Owner)
             {
-                meetings = await _context.Owners
+                var ownerMeetings = await _context.Owners
                     .Where(o => o.UserId == userId)
                     .SelectMany(o => o.Properties)
                     .SelectMany(p => p.Offers)
                     .SelectMany(o => o.Meetings)
-                    .Select(meeting => _mapper.Map<MeetingDto>(meeting))
+                        .Include(m => m.Student)
+                            .ThenInclude(s => s.ProfilePicture)
+                    .Select(meeting => _mapper.Map<MeetingWithStudentDto>(meeting))
                     .ToListAsync();
 
-                foreach(var meeting in meetings)
+                foreach(var meeting in ownerMeetings)
                 {
                     meeting.NeedsAction = meeting.OwnerAcceptDate == null ? true : false;
                 }
+
+                meetings.AddRange(ownerMeetings);
             }
             else throw new Exception("Unable to fetch meetings for current user");
 

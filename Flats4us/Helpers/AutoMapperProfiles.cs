@@ -93,12 +93,20 @@ namespace Flats4us.Helpers
             CreateMap<Student, UserInfoDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
 
+            CreateMap<Owner, UserInfoDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.Name} {src.Surname}"));
+
             CreateMap<SurveyOwnerOffer, SurveyOwnerOfferDto>();
 
             CreateMap<SurveyStudent, SurveyStudentDto>();
 
-            CreateMap<Meeting, MeetingDto>()
-                .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null));
+            CreateMap<Meeting, MeetingWithStudentDto>()
+                .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null))
+                .ForMember(dest => dest.OtherUser, opt => opt.MapFrom(src => src.Student));
+
+            CreateMap<Meeting, MeetingWithOwnerDto>()
+                .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null))
+                .ForMember(dest => dest.OtherUser, opt => opt.MapFrom(src => src.Offer.Property.Owner));
 
             CreateMap<Student, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student));
