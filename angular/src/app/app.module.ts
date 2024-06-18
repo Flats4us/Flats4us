@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatMenuModule,
 		MatNativeDateModule,
 		MatCardModule,
+		MatSnackBarModule,
 		FindRoommateModule,
 		TranslateModule.forRoot({
 			loader: {
