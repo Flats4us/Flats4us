@@ -38,6 +38,7 @@ namespace Flats4us.Services
             var uniqueEmails = new HashSet<string>();
             foreach (var email in input.RoommatesEmails)
             {
+                if (email == student.Email) throw new ArgumentException("You cannot add yourself as roommate.");
                 if (!uniqueEmails.Add(email)) throw new ArgumentException($"Duplicate email found: {email}");
             }
 

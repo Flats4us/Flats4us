@@ -396,6 +396,8 @@ namespace Flats4us.Services
 
         public async Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId)
         {
+            if (targetUserId == requestUserId) throw new ArgumentException($"You cannot add opinion about youtself.");
+
             var sourceUser = await _context.OwnerStudents.Include(s => s.IssuedUserOpinions)
                 .FirstOrDefaultAsync(x => x.UserId == requestUserId);
 
