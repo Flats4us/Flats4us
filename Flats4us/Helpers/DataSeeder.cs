@@ -3848,74 +3848,78 @@ public static class DataSeeder
             User = student1,
             GroupChat = groupChat1
         };
-
         var userGroupChat2 = new UserGroupChat
         {
             User = owner1,
             GroupChat = groupChat1
         };
-
         var userGroupChat3 = new UserGroupChat
         {
             User = student4,
             GroupChat = groupChat2
         };
-
         var userGroupChat4 = new UserGroupChat
         {
             User = rent2.Offer.Property.Owner,
             GroupChat = groupChat2
         };
-
         var userGroupChat5 = new UserGroupChat
         {
             User = student7,
             GroupChat = groupChat3
         };
-
         var userGroupChat6 = new UserGroupChat
         {
             User = rent3.Offer.Property.Owner,
             GroupChat = groupChat3
         };
-
         var userGroupChat7 = new UserGroupChat
         {
             User = student10,
             GroupChat = groupChat4
         };
-
         var userGroupChat8 = new UserGroupChat
         {
             User = rent4.Offer.Property.Owner,
             GroupChat = groupChat4
         };
-
         var userGroupChat9 = new UserGroupChat
         {
             User = student8,
             GroupChat = groupChat5
         };
-
         var userGroupChat10 = new UserGroupChat
         {
             User = rent3.Offer.Property.Owner,
             GroupChat = groupChat5
         };
-
         var userGroupChat11 = new UserGroupChat
         {
             User = student3,
             GroupChat = groupChat6
         };
-
         var userGroupChat12 = new UserGroupChat
         {
             User = rent1.Offer.Property.Owner,
             GroupChat = groupChat6
         };
+        var userGroupChat13 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat3
+        };
+        var userGroupChat14 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat4
+        };
+        var userGroupChat15 = new UserGroupChat
+        {
+            User = moderator1,
+            GroupChat = groupChat5
+        };
 
-        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12);
+        dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12, userGroupChat13, userGroupChat14, userGroupChat15);
 
         #endregion
 
@@ -3936,7 +3940,6 @@ public static class DataSeeder
             Student = student1,
             GroupChat = groupChat1
         };
-
         var argument2 = new Argument
         {
             Title = "Tytuł do drugeigo sporu",
@@ -3952,7 +3955,6 @@ public static class DataSeeder
             Student = student4,
             GroupChat = groupChat2
         };
-
         var argument3 = new Argument
         {
             Title = "Tytuł do trzeciego sporu",
@@ -3968,7 +3970,6 @@ public static class DataSeeder
             Student = student7,
             GroupChat = groupChat3
         };
-
         var argument4 = new Argument
         {
             Title = "Tytuł do czwartego sporu",
@@ -3984,7 +3985,6 @@ public static class DataSeeder
             Student = student10,
             GroupChat = groupChat4
         };
-
         var argument5 = new Argument
         {
             Title = "Tytuł do piątego sporu",
@@ -4000,7 +4000,6 @@ public static class DataSeeder
             Student = student8,
             GroupChat = groupChat5
         };
-
         var argument6 = new Argument
         {
             Title = "Tytuł do szóstego sporu",
@@ -4031,7 +4030,6 @@ public static class DataSeeder
             Argument = argument4,
             Moderator = moderator1
         };
-
         var argumentIntervention2 = new ArgumentIntervention
         {
 
@@ -4040,7 +4038,6 @@ public static class DataSeeder
             Argument = argument5,
             Moderator = moderator1
         };
-
         var argumentIntervention3 = new ArgumentIntervention
         {
 
@@ -4049,7 +4046,6 @@ public static class DataSeeder
             Argument = argument3,
             Moderator = moderator1
         };
-
         var argumentIntervention4 = new ArgumentIntervention
         {
 
@@ -4143,5 +4139,3 @@ public static class DataSeeder
         await Task.Delay(1000);
     }
 }
-
-//zrobić jakiś chat gdzie jest zaangażowany moderator
