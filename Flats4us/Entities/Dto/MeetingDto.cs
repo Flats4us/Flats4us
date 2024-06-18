@@ -26,7 +26,7 @@ namespace Flats4us.Entities.Dto
         public bool? NeedsAction { get; set; }
 
         [Required]
-        public UserInfoDto OtherUser { get; set; }
+        public UserInfoDto User { get; set; }
     }
 
     public class MeetingWithStudentDto : MeetingDto { }

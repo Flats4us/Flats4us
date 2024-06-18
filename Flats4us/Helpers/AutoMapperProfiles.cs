@@ -103,11 +103,11 @@ namespace Flats4us.Helpers
 
             CreateMap<Meeting, MeetingWithStudentDto>()
                 .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null))
-                .ForMember(dest => dest.OtherUser, opt => opt.MapFrom(src => src.Student));
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Student));
 
             CreateMap<Meeting, MeetingWithOwnerDto>()
                 .ForMember(dest => dest.NeedsAction, opt => opt.MapFrom(src => (bool?)null))
-                .ForMember(dest => dest.OtherUser, opt => opt.MapFrom(src => src.Offer.Property.Owner));
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.Offer.Property.Owner));
 
             CreateMap<Student, UserForVerificationDto>()
                 .ForMember(dest => dest.UserType, opt => opt.MapFrom(src => UserType.Student));
