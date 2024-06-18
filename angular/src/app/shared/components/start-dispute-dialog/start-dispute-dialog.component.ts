@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
@@ -39,7 +39,8 @@ export class StartDisputeDialogComponent extends BaseComponent {
 	constructor(
 		@Inject(MAT_DIALOG_DATA) public data: number,
 		private service: RentsService,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<StartDisputeDialogComponent>
 	) {
 		super();
 	}
@@ -52,10 +53,12 @@ export class StartDisputeDialogComponent extends BaseComponent {
 				this.data
 			)
 			.pipe(this.untilDestroyed())
-			.subscribe(() =>
-				this.snackBar.open('Pomyślnie dodano interwencję!', 'Zamknij', {
-					duration: 10000,
-				})
+			.subscribe(() => {
+          this.snackBar.open('Pomyślnie dodano interwencję!', 'Zamknij', {
+            duration: 10000,
+          })
+        this.dialogRef.close();
+        }
 			);
 	}
 }
