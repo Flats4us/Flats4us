@@ -2,6 +2,7 @@ export interface IUser {
 	userType: number;
 	userId: number;
 	name: string;
+	fullName: string;
 	accountCreationDate: Date;
 	verificationStatus: number;
 	profilePicture: IProfilePicture;
