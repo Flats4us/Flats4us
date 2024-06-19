@@ -50,7 +50,7 @@
 	"Forgot-password": {
 		"forgot-password": "I forgot my password",
 		"info1": "Enter your email address and we will send you a reset link to create a new password",
-		"email-address": "E-mail adress",
+		"email-address": "E-mail address",
 		"info2": "Please enter a valid email address",
 		"info3": "If the e-mail address provided is registered with us, you will receive a message to it."
 	},
@@ -77,7 +77,7 @@
 		"name-info": "No name provided",
 		"surname": "Surname",
 		"surname-info": "No surname provided",
-		"email-address": "E-mail adress",
+		"email-address": "E-mail address",
 		"email-address-info1": "No email address provided",
 		"email-address-info2": "Incorrect e-mail address",
 		"email-address-info3": "The email address provided already exists in the system"
@@ -88,7 +88,7 @@
 		"new-password": "New password",
 		"new-password-info1": "Confirm your new password",
 		"new-password-info2": "The passwords don't match",
-		"error": "An error occured",
+		"error": "An error occurred",
 		"reset-password-info1": "Password reset successfully!"
 	},
 
@@ -277,8 +277,8 @@
 		"roommates": "Roommates",
 		"owner": "Owner",
 		"name-surname": "Name and Surname",
-		"email-address": "E-mail adress",
-		"main-tenant": "Main tenent",
+		"email-address": "E-mail address",
+		"main-tenant": "Main tenant",
 		"phone": "Phone number",
 		"st": "st",
 		"add-roommates": "Add roommates",
@@ -576,7 +576,7 @@
 		"start-rent": "Rent start date",
 		"rental-period": "Rental period (in months)",
 		"name-surname": "Name and Surname",
-		"email-address": "E-mail adress",
+		"email-address": "E-mail address",
 		"roommates-email": "Roommates address E-mail",
 		"agree-rental": "Do you confirm to conclusion of the contract",
 		"month-number-rent": "Months of rental days",
@@ -606,7 +606,7 @@
 		"main-tenant": "Main tenant",
 		"show-profile": "Show profile",
 		"name-surname": "Name and Surname",
-		"email-address": "E-mail adress",
+		"email-address": "E-mail address",
 		"type": "Type",
 		"price2": "Amount",
 		"pay": "Paid",
@@ -618,8 +618,8 @@
 		"metric-area": "Metric area",
 		"nr-room": "Number rooms",
 		"nr-floor": "Number floors",
-		"floor": "Floot",
-		"max-inhabitans": "Max inhabitans",
+		"floor": "Floor",
+		"max-inhabitans": "Max inhabitants",
 		"build-year": "Build year",
 		"equipment": "Equipment",
 		"contract-info": "Contract information",
@@ -691,7 +691,7 @@
 	},
 
 	"Email-change": {
-		"error": "An error occured!",
+		"error": "An error occurred!",
 		"email-change": "Change e-mail address",
 		"email-info1": "Your e-mail address has been successfully changed!",
 		"close": "Close",
@@ -720,7 +720,7 @@
 		"password-info2": "The password must be between 8 and 50 characters long",
 		"repeat-new-password": "Repeat new password",
 		"same-password": "Passwords must be the same",
-		"info1": "An error occured",
+		"info1": "An error occurred",
 		"info2": "Password changed successfully!",
 		"close": "Close"
 	},
@@ -731,7 +731,7 @@
 		"smokingAllowed": "Smoking allowed",
 		"partiesAllowed": "Parties allowed",
 		"animalsAllowed": "Pets allowed",
-		"gender": "Prefered tenant gender",
+		"gender": "Preferred tenant gender",
 		"minRoommateAge": "Minimum roommate age",
 		"maxRoommateAge": "Maximum roommate age",
 		"party": "I like party?",
@@ -744,7 +744,7 @@
 		"both": "both",
 		"lookingForRoommate": "I am looking for roommate?",
 		"maxNumberOfRoommates": "Maximum number of roommates",
-		"roommateGender": "Prefered roommate gender",
+		"roommateGender": "Preferred roommate gender",
 		"city": "City"
 	},
 
