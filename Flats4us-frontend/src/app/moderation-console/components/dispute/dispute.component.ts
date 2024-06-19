@@ -14,6 +14,7 @@ import { AddInterventionDialogComponent } from '../add-intervention-dialog/add-i
 import { ChangeDisputeStatusDialogComponent } from '../change-dispute-status-dialog/change-dispute-status-dialog.component';
 import { IDispute } from '../../models/moderation-console.models';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-dispute',
@@ -47,7 +48,8 @@ export class DisputeComponent extends BaseComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private router: Router
 	) {
 		super();
 	}
@@ -72,6 +74,21 @@ export class DisputeComponent extends BaseComponent {
 		this.service
 			.joinGroupChat(groupChatId)
 			.pipe(this.untilDestroyed())
-			.subscribe();
+			.subscribe({
+				error: () =>
+					this.router.navigate([
+						'moderation-console',
+						'disputes',
+						'conversation',
+						groupChatId,
+					]),
+				complete: () =>
+					this.router.navigate([
+						'moderation-console',
+						'disputes',
+						'conversation',
+						groupChatId,
+					]),
+			});
 	}
 }

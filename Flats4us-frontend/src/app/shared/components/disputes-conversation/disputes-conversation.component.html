@@ -92,6 +92,14 @@
 			/>
 		</div>
 		<div *ngFor="let msg of messages; let index = index" class="flex">
+			<img
+				*ngIf="msg.user !== data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center ml-3"
+				src="{{ baseUrl }}/{{
+					getParticipantById(data.participants, msg.user)?.profilePicture?.path
+				}}"
+			/>
 			<div
 				class="conversation"
 				[class]="
@@ -100,11 +108,22 @@
 						: 'conversation-received'
 				"
 			>
-				<span *ngIf="msg.user === data.currentUser.userId">{{
-					data.currentUser.name
+				<span
+					*ngIf="msg.user === data.currentUser.userId"
+					class="text-right mr-3"
+					>{{ data.currentUser.name }}</span
+				>
+				<span *ngIf="msg.user !== data.currentUser.userId" class="text-left ml-3">{{
+					getParticipantById(data.participants, msg.user)?.fullName
 				}}</span>
 				<span class="bubble">{{ msg.message }}</span>
 			</div>
+			<img
+				*ngIf="msg.user === data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center mr-3"
+				src="{{ baseUrl }}/{{ data.currentUser.profilePicture.path }}"
+			/>
 		</div>
 	</div>
 	<mat-form-field

@@ -150,11 +150,11 @@ export class ModerationConsoleService {
 		});
 	}
 
-	public changeDisputeStatus(argumentId: number, status: number) {
+	public changeDisputeStatus(argumentId: number, value: number) {
 		return this.http.put(
 			`${this.apiRoute}/moderator/argument/${argumentId}/status`,
 			{
-				status,
+				value,
 			}
 		);
 	}

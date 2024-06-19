@@ -19,14 +19,20 @@
 				<th *matHeaderCellDef mat-header-cell>Status</th>
 				<td *matCellDef="let element" mat-cell>
 					{{
-						(element.argumentStatus === 0 ? "Moderation-console.statutes0" : "")
-							| translate
+						(element.argumentStatus === 0
+							? "Moderation-console.statutes0"
+							: element.argumentStatus === 1
+							? "Moderation-console.statutes1"
+							: element.argumentStatus === 2
+							? "Moderation-console.statutes2"
+							: ""
+						) | translate
 					}}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="interventionNeed">
 				<th *matHeaderCellDef mat-header-cell>
-					{{ "Moderation-console.date-dispute" | translate }}
+					{{ "Moderation-console.intervention-need" | translate }}
 				</th>
 				<td *matCellDef="let element" mat-cell>
 					{{ (element.interventionNeed ? "yes" : "no") | translate }}
@@ -98,7 +104,6 @@
 						class="mb-2 mr-2"
 						mat-stroked-button
 						mat-flat-button
-						[routerLink]="['conversation', element.groupChatId]"
 						(click)="joinGroupChat(element.groupChatId)"
 					>
 						{{ "Moderation-console.open-chat" | translate }}
