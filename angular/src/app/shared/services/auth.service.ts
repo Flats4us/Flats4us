@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
+import { environment } from 'src/environments/environment';
 
 import {
 	IAuthTokenResponse,
@@ -9,9 +12,7 @@ import {
 	IUser,
 	LoggedUserType,
 } from '../models/auth.models';
-import { environment } from 'src/environments/environment';
-import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
-import { Router } from '@angular/router';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -49,14 +50,27 @@ export class AuthService {
 	});
 	public accessControl$ = this.accessControl.asObservable();
 
-	constructor(private http: HttpClient, private router: Router) {
-		this.isLoggedIn.next(this.isValidToken());
-		setInterval(() => this.isLoggedIn.next(this.isValidToken()), 1000);
+	constructor(
+		private http: HttpClient,
+		private router: Router,
+		private notificationsService: NotificationsService
+	) {
+		this.init();
+	}
+
+	public init(): void {
+		const isLoggedIn = this.isValidToken();
+
+		this.isLoggedIn.next(isLoggedIn);
+
+		setInterval(() => this.checkIfLoggedIn(), 1000);
 		this.accessControl.next({
 			user: this.getUserType(),
 			status: this.getUserStatus(),
 			isLoggedIn: this.isValidToken(),
 		});
+
+		this.getNotifications();
 	}
 
 	public login({ email, password }: IUser): Observable<IAuthTokenResponse> {
@@ -94,6 +108,8 @@ export class AuthService {
 		localStorage.setItem('authStatus', verificationStatus.toString());
 		this.isLoggedIn.next(true);
 		this.setUserType(true, response.role, response.verificationStatus.toString());
+
+		this.getNotifications();
 	}
 
 	public getAuthToken(): string {
@@ -129,6 +145,7 @@ export class AuthService {
 		this.isLoggedIn.next(false);
 		this.setUserType(false);
 		this.router.navigate(['/']);
+		this.notificationsService.stopConnection();
 	}
 
 	public changePassword({ oldPassword, newPassword }: IPasswordChangeRequest) {
@@ -162,5 +179,17 @@ export class AuthService {
 			token,
 			password,
 		});
+	}
+
+	private checkIfLoggedIn(): void {
+		if (!this.isValidToken()) {
+			this.logout();
+		}
+
+		this.isLoggedIn.next(this.isValidToken());
+	}
+
+	private getNotifications() {
+		this.notificationsService.startConnection(this.getAuthToken());
 	}
 }

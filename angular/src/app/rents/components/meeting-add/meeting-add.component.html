@@ -2,6 +2,40 @@
 	{{ "Meeting-add.meeting-add" | translate }}
 </h1>
 <div mat-dialog-content>
+	<div *ngIf="owner$ | async as owner" class="mb-4 flex flex-col gap-3">
+		<div>{{ "Rents-details.owner" | translate }}</div>
+		<div class="flex gap-3 items-center">
+			<img
+				mat-card-avatar
+				alt="avatar"
+				class="profile-avatar__image"
+				[src]="
+					owner?.profilePicture?.path
+						? baseUrl + '/' + owner?.profilePicture?.path
+						: './assets/avatar.png'
+				"
+			/>
+			<span class="text-black font-bold"
+				>{{ owner.name }} {{ owner.surname }}</span
+			>
+		</div>
+	</div>
+	<div *ngIf="tenant$ | async as tenant" class="mb-4 flex flex-col gap-3">
+		<div>{{ "Rents-details.main-tenant" | translate }}</div>
+		<div class="flex gap-3 items-center">
+			<img
+				mat-card-avatar
+				alt="avatar"
+				class="profile-avatar__image"
+				[src]="
+					tenant?.profilePicture?.path
+						? baseUrl + '/' + tenant?.profilePicture?.path
+						: './assets/avatar.png'
+				"
+			/>
+			<span class="text-black font-bold">{{ tenant.fullName }}</span>
+		</div>
+	</div>
 	<form class="flex flex-col" [formGroup]="meetingForm" (ngSubmit)="onAdd()">
 		<mat-form-field>
 			<mat-label>{{ "Calendar.date" | translate }}</mat-label>
@@ -9,14 +43,24 @@
 				matInput
 				readonly
 				formControlName="date"
+				[ngxMatDatetimePicker]="dateTimePicker"
 				[min]="minDate"
-				[matDatepicker]="datepicker"
-				(dateChange)="setLocalDate($event, meetingForm.get('date'))"
 			/>
-			<mat-datepicker-toggle
-				matIconSuffix
-				[for]="datepicker"
-			></mat-datepicker-toggle>
+			<ngx-mat-datepicker-toggle
+				matSuffix
+				[for]="dateTimePicker"
+			></ngx-mat-datepicker-toggle>
+			<ngx-mat-datetime-picker #dateTimePicker>
+				<ngx-mat-datepicker-actions>
+					<button mat-button ngxMatDatepickerCancel>
+						{{ "cancel" | translate }}
+					</button>
+					<button mat-raised-button color="primary" ngxMatDatepickerApply>
+						{{ "apply" | translate }}
+					</button>
+				</ngx-mat-datepicker-actions>
+			</ngx-mat-datetime-picker>
+
 			<mat-datepicker #datepicker></mat-datepicker>
 			<mat-error *ngIf="meetingForm.controls['date'].errors?.['required']">
 				{{ "required-field" | translate }}!

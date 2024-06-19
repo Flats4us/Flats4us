@@ -176,10 +176,13 @@ export class OfferDetailsComponent extends BaseComponent {
 	}
 
 	public onAddMeeting(id?: number): void {
-		this.dialog.open(MeetingAddComponent, {
+		const ref = this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
 			data: id ?? 0,
 		});
+		ref.componentInstance.owner$ = this.actualOffer$.pipe(
+			map(offer => offer.owner)
+		);
 	}
 
 	public startRent(id?: number, maxNumberOfInhabitants?: number) {

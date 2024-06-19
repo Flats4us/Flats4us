@@ -3,7 +3,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 } from '@angular/core';
-import { IMenuOptions, IRent } from '../../models/rents.models';
+import { IMenuOptions, IRent, ITenant } from '../../models/rents.models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, map, switchMap, zip } from 'rxjs';
@@ -135,10 +135,17 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public onAddMeeting(offerId?: number): void {
-		this.dialog.open(MeetingAddComponent, {
+		const ref = this.dialog.open(MeetingAddComponent, {
 			disableClose: true,
 			data: offerId ?? 0,
 		});
+		ref.componentInstance.owner$ = this.actualRent$.pipe(map(rent => rent.owner));
+		ref.componentInstance.tenant$ = this.actualRent$.pipe(
+			map(
+				rent =>
+					rent.tenants.find(tenant => tenant.userId === rent.mainTenantId) as ITenant
+			)
+		);
 	}
 
 	public onRate(): void {

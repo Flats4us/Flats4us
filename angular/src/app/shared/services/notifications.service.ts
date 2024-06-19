@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationsService {
 	protected apiRoute = `${environment.apiUrl}/notifications`;
 	public baseRoute = environment.apiUrl.replace('/api', '');
@@ -70,8 +70,12 @@ export class NotificationsService {
 		}
 	};
 
+	public getNotifications() {
+		return this.http.get<string[]>(`${this.apiRoute}/all`);
+	}
+
 	public markRead(notificationIds: string[]) {
-		return this.http.post<void>(`${this.apiRoute}/notifications/read`, {
+		return this.http.post<void>(`${this.apiRoute}/read`, {
 			notificationIds,
 		});
 	}

@@ -17,6 +17,7 @@
 	"required-field": "The field is required",
 	"date": "Date",
 	"add": "Add",
+	"apply": "Apply",
 	"next": "Next",
 	"previous": "Previous",
 	"wrong-value": "Wrong value",

@@ -1,3 +1,8 @@
+import {
+	NgxMatDatetimePickerModule,
+	NgxMatNativeDateModule,
+	NgxMatTimepickerModule,
+} from '@angular-material-components/datetime-picker';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {
@@ -16,11 +21,14 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RentsService } from '../../services/rents.service';
-import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { setLocalDate } from '@shared/utils/functions';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { BaseComponent } from '@shared/components/base/base.component';
+
+import { RentsService } from '../../services/rents.service';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { IOwner, ITenant } from '../../models/rents.models';
 
 @Component({
 	selector: 'app-meeting-add',
@@ -36,6 +44,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 		MatButtonModule,
 		MatSnackBarModule,
 		TranslateModule,
+		NgxMatDatetimePickerModule,
+		NgxMatTimepickerModule,
+		NgxMatNativeDateModule,
 	],
 	providers: [RentsService],
 	templateUrl: './meeting-add.component.html',
@@ -43,11 +54,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MeetingAddComponent extends BaseComponent {
+	protected baseUrl = environment.apiUrl.replace('/api', '');
+
+	public owner$!: Observable<IOwner>;
+	public tenant$!: Observable<ITenant>;
+
 	public currentDate: Date = new Date();
 	public minDate = new Date(
 		this.currentDate.setDate(this.currentDate.getDate() + 1)
 	);
-	public setLocalDate = setLocalDate;
 
 	public meetingForm: FormGroup = new FormGroup({
 		date: new FormControl(null, Validators.required),

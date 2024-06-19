@@ -80,8 +80,6 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		if (locale && locale !== this.localeService.getCurrentLocale()) {
 			this.changeLanguage(locale);
 		}
-
-		this.notificationsService.startConnection(this.authService.getAuthToken());
 	}
 
 	public readNotification(id: string) {
