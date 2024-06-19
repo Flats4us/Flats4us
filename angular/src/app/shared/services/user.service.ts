@@ -30,4 +30,18 @@ export class UserService {
 			email: email,
 		});
 	}
+
+	public changeConsents(
+		pushChatConsent: boolean,
+		emailChatConsent: boolean,
+		pushOtherConsent: boolean,
+		emailOtherConsent: boolean
+	) {
+		return this.http.post(`${this.apiRoute}/consent`, {
+			pushChatConsent,
+			emailChatConsent,
+			pushOtherConsent,
+			emailOtherConsent,
+		});
+	}
 }

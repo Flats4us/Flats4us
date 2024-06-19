@@ -698,8 +698,8 @@
 		"notification-settings": "Notification settings",
 		"notification-info1": "Receive email notifications when a user sends you a message",
 		"notification-info2": "Receive push notifications when a user sends you a message",
-		"notification-info3": "Receive email notifications when a user makes a reservation at your property",
-		"notification-info4": "Receive push notifications when a user makes a reservation at your property"
+		"notification-info3": "Receive other email notifications",
+		"notification-info4": "Receive other push notifications"
 	},
 	"Password-change": {
 		"password-change": "Password change",

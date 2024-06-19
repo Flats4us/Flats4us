@@ -1,23 +1,26 @@
 <mat-card class="notifications">
 	<h2>{{ "Notifications.notification-settings" | translate }}</h2>
-	<div class="notification-option">
-		<mat-slide-toggle [(ngModel)]="emailMessages"></mat-slide-toggle>
-		<p>{{ "Notifications.notification-info1" | translate }}</p>
-	</div>
-	<div class="notification-option">
-		<mat-slide-toggle [(ngModel)]="pushMessages"></mat-slide-toggle>
-		<p>{{ "Notifications.notification-info2" | translate }}</p>
-	</div>
-	<div class="notification-option">
-		<mat-slide-toggle [(ngModel)]="emailBookings"></mat-slide-toggle>
-		<p>
-			{{ "Notifications.notification-info3" | translate }}
-		</p>
-	</div>
-	<div class="notification-option">
-		<mat-slide-toggle [(ngModel)]="pushBookings"></mat-slide-toggle>
-		<p>
-			{{ "Notifications.notification-info4" | translate }}
-		</p>
-	</div>
+	<form [formGroup]="notificationForm" (ngSubmit)="save()">
+		<div class="notification-option">
+			<mat-slide-toggle formControlName="pushChatConsent"></mat-slide-toggle>
+			<p>{{ "Notifications.notification-info2" | translate }}</p>
+		</div>
+		<div class="notification-option">
+			<mat-slide-toggle formControlName="emailChatConsent"></mat-slide-toggle>
+			<p>{{ "Notifications.notification-info1" | translate }}</p>
+		</div>
+		<div class="notification-option">
+			<mat-slide-toggle formControlName="pushOtherConsent"></mat-slide-toggle>
+			<p>
+				{{ "Notifications.notification-info4" | translate }}
+			</p>
+		</div>
+		<div class="notification-option">
+			<mat-slide-toggle formControlName="emailOtherConsent"></mat-slide-toggle>
+			<p>
+				{{ "Notifications.notification-info3" | translate }}
+			</p>
+		</div>
+		<button mat-flat-button color="primary" type="submit">Zapisz</button>
+	</form>
 </mat-card>
