@@ -73,14 +73,14 @@ namespace Flats4us.Services
                 .Include(x => x.Student)
                     .ThenInclude(x => x.ProfilePicture)
                 .Include(x => x.ArgumentInterventions)
-                .Where(x => x.InterventionNeed == true)
-                .OrderBy(x => x.InterventionNeedDate)
+                .OrderByDescending(x => x.InterventionNeed)
+                .ThenBy(x => x.InterventionNeedDate)
                 .Select(e => _mapper.Map<ArgumentDto>(e))
                 .ToListAsync();
 
             return arguments;
         }
-
+                
         public async Task<ArgumentDto> GetArgumentById(int id)
         {
             var argument = await _context.Arguments
@@ -181,6 +181,9 @@ namespace Flats4us.Services
 
             argument.OwnerAcceptanceDate = DateTime.Now;
 
+            if ((argument.OwnerAcceptanceDate != null) && (argument.StudentAccceptanceDate != null))
+                argument.ArgumentStatus = ArgumentStatus.Resolved;
+
             await _context.SaveChangesAsync();
         }
 
@@ -194,6 +197,9 @@ namespace Flats4us.Services
                 throw new ArgumentException($"You are not the part of this Argument");
 
             argument.StudentAccceptanceDate = DateTime.Now;
+
+            if ((argument.OwnerAcceptanceDate != null) && (argument.StudentAccceptanceDate != null))
+                argument.ArgumentStatus = ArgumentStatus.Resolved;
 
             await _context.SaveChangesAsync();
         }   

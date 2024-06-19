@@ -3848,27 +3848,22 @@ public static class DataSeeder
         {
             Name = "groupChat do argument 1"
         };
-
         var groupChat2 = new GroupChat
         {
             Name = "groupChat do argument 2"
         };
-
         var groupChat3 = new GroupChat
         {
             Name = "groupChat do argument 3"
         };
-
         var groupChat4 = new GroupChat
         {
             Name = "groupChat do argument 4"
         };
-
         var groupChat5 = new GroupChat
         {
             Name = "groupChat do argument 5"
         };
-
         var groupChat6 = new GroupChat
         {
             Name = "groupChat do argument 6"
@@ -3957,6 +3952,144 @@ public static class DataSeeder
         };
 
         dbContext.UserGroupChats.AddRange(userGroupChat1, userGroupChat2, userGroupChat3, userGroupChat4, userGroupChat5, userGroupChat6, userGroupChat7, userGroupChat8, userGroupChat9, userGroupChat10, userGroupChat11, userGroupChat12, userGroupChat13, userGroupChat14, userGroupChat15);
+
+        #endregion
+
+        #region ChatMessage
+
+        #region ChatMessage_GroupChat4
+
+        var chatMessage1 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test1",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 32, 123),
+            SenderId = 1,
+            GroupChat = groupChat4
+        };
+        var chatMessage2 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test2",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 1,
+            GroupChat = groupChat4
+        };
+        var chatMessage3 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test3",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 26,
+            GroupChat = groupChat4
+        };
+        var chatMessage4 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test4",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 4,
+            GroupChat = groupChat4
+        };
+        var chatMessage5 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test5",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 26,
+            GroupChat = groupChat4
+        };
+        var chatMessage6 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test6",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 4,
+            GroupChat = groupChat4
+        };
+        var chatMessage7 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test7",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 33, 124),
+            SenderId = 26,
+            GroupChat = groupChat4
+        };
+
+        #endregion ChatMessage_GroupChat4
+        #region ChatMessage_GroupChat5
+
+        var chatMessage8 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test1",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 12, 123),
+            SenderId = 3,
+            GroupChat = groupChat5
+        };
+        var chatMessage9 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test2",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 13, 124),
+            SenderId = 24,
+            GroupChat = groupChat5
+        };
+        var chatMessage10 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test3",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 14, 124),
+            SenderId = 3,
+            GroupChat = groupChat5
+        };
+        var chatMessage11 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test4",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 15, 124),
+            SenderId = 24,
+            GroupChat = groupChat5
+        };
+        var chatMessage12 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test5",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 16, 124),
+            SenderId = 1,
+            GroupChat = groupChat5
+        };
+        var chatMessage13 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test6",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 17, 124),
+            SenderId = 3,
+            GroupChat = groupChat5
+        };
+        var chatMessage14 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test7",
+            DateTime = new DateTime(2024, 6, 18, 19, 24, 18, 124),
+            SenderId = 24,
+            GroupChat = groupChat5
+        };
+
+        #endregion ChatMessage_GroupChat5
+        #region ChatMessage_GroupChat3
+
+        var chatMessage15 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test1",
+            DateTime = new DateTime(2024, 6, 17, 19, 24, 12, 123),
+            SenderId = 3,
+            GroupChat = groupChat3
+        };
+        var chatMessage16 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test2",
+            DateTime = new DateTime(2024, 6, 17, 19, 25, 13, 124),
+            SenderId = 23,
+            GroupChat = groupChat3
+        };
+        var chatMessage17 = new ChatMessage
+        {
+            Content = "jakaś wiadomość test3",
+            DateTime = new DateTime(2024, 6, 17, 19, 26, 14, 124),
+            SenderId = 1,
+            GroupChat = groupChat3
+        };
+
+        #endregion ChatMessage_GroupChat3
+
+        dbContext.ChatMessages.AddRange(chatMessage1, chatMessage2, chatMessage3, chatMessage4, chatMessage5, chatMessage6, chatMessage7, chatMessage8, chatMessage9, chatMessage10, chatMessage11, chatMessage12, chatMessage13, chatMessage14, chatMessage15, chatMessage16, chatMessage17);
 
         #endregion
 
