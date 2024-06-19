@@ -372,7 +372,7 @@ namespace Flats4us.Services
                     .AppendLine(EmailHelper.HtmlPTag($"{link}"))
                     .AppendLine(EmailHelper.HtmlPTag("Jeżeli to nie ty prosiłeś o zmiane hasła wystarczy, że zignorujesz tę wiadomość"));
 
-                await _emailService.SendEmailAsync(user.UserId, "Zmiana hasła w serwisie Flats4us", body.ToString());
+                await _emailService.SendEmailAsync(user.UserId, EmailTitles.PasswordReset, body.ToString());
             }
         }
 

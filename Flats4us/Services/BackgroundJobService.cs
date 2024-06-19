@@ -1,9 +1,12 @@
 ﻿using Flats4us.Controllers;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace Flats4us.Services
 {
@@ -11,12 +14,18 @@ namespace Flats4us.Services
     {
         private readonly Flats4usContext _context;
         private readonly ILogger<BackgroundJobService> _logger;
+        private readonly INotificationService _notificationService;
+        private readonly IConfiguration _configuration;
 
         public BackgroundJobService(Flats4usContext context,
-            ILogger<BackgroundJobService> logger)
+            ILogger<BackgroundJobService> logger,
+            INotificationService notificationService,
+            IConfiguration configuration)
         {
             _context = context;
             _logger = logger;
+            _notificationService = notificationService;
+            _configuration = configuration;
         }
 
         public async Task GeneratePaymentsAsync()
@@ -31,6 +40,9 @@ namespace Flats4us.Services
                 )
                 .ToListAsync();
 
+            var appBaseUrl = _configuration.GetSection("AppBaseUrl").Value;
+            var baseLink = $"{appBaseUrl}/rents/student";
+
             foreach (var rent in rents)
             {
                 rent.Payments.Add(new Payment
@@ -41,6 +53,14 @@ namespace Flats4us.Services
                     CreatedDate = DateTime.Now,
                     PaymentDate = DateTime.Now.AddDays(7).Date
                 });
+
+                var emailBody = new StringBuilder();
+                var link = $"{baseLink}/{rent.RentId}";
+                emailBody.AppendLine(EmailHelper.HtmlHTag($"Masz nową oczekującą płatność", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Aby ją wyświetlić naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                            .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+                await _notificationService.SendNotificationAsync(EmailTitles.NewPaymentGenerated, emailBody.ToString(), TranslateKeys.NewPaymentTitle, TranslateKeys.NewPaymentBody, rent.StudentId, false);
 
                 if (rent.Payments.Where(p => p.PaymentPurpose == PaymentPurpose.Rent).Count() < rent.Duration ) 
                 {
