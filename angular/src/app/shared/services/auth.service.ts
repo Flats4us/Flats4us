@@ -182,8 +182,8 @@ export class AuthService {
 	}
 
 	private checkIfLoggedIn(): void {
-		if (!this.isValidToken()) {
-			this.logout();
+		if (!this.isValidToken() && this.notificationsService.isConnected()) {
+			this.notificationsService.stopConnection();
 		}
 
 		this.isLoggedIn.next(this.isValidToken());
