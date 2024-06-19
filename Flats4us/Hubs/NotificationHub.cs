@@ -1,11 +1,6 @@
-﻿using FirebaseAdmin.Messaging;
-using Flats4us.Entities;
-using Flats4us.Entities.Dto;
-using Flats4us.Services;
-using Flats4us.Services.Interfaces;
+﻿using Flats4us.Entities;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Concurrent;
 using System.Security.Claims;
 
 namespace Flats4us.Hubs
