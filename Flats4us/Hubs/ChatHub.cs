@@ -18,8 +18,6 @@ namespace Flats4us.Hubs
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
 
-        private readonly static ConcurrentDictionary<int, List<string>> _connections = new ConcurrentDictionary<int, List<string>>();
-
         public ChatHub(IChatService chatService,
             IGroupChatService groupChatService,
             Flats4usContext context,
@@ -38,10 +36,17 @@ namespace Flats4us.Hubs
 
             await _chatService.SendMessageAsync(senderUserId.Value, receiverUserId, message);
 
+            var receiverConnections = await _context.Connections
+                .Where(c => c.UserId == receiverUserId && c.HubName == nameof(ChatHub))
+                .Select(c => c.ContextConnectionId)
+                .ToListAsync();
 
-            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionIds) && receiverConnectionIds.Any())
+            if (receiverConnections.Any())
             {
-                await Clients.User(receiverUserId.ToString()).SendAsync("ReceivePrivateMessage", senderUserId, message, DateTime.UtcNow);
+                foreach (var connectionId in receiverConnections)
+                {
+                    await Clients.Client(connectionId).SendAsync("ReceivePrivateMessage", senderUserId, message, DateTime.UtcNow);
+                }
             }
             else
             {
@@ -80,9 +85,14 @@ namespace Flats4us.Hubs
 
             foreach (var groupUserId in groupUsers)
             {
-                if (_connections.TryGetValue(groupUserId, out var connections) && connections.Any())
+                var receiverConnections = await _context.Connections
+                    .Where(c => c.UserId == groupUserId && c.HubName == nameof(ChatHub))
+                    .Select(c => c.ContextConnectionId)
+                    .ToListAsync();
+
+                if (receiverConnections.Any())
                 {
-                    foreach (var connectionId in connections)
+                    foreach (var connectionId in receiverConnections)
                     {
                         await Clients.Client(connectionId).SendAsync("ReceiveGroupMessage", groupChatId, senderId.Value, message, DateTime.UtcNow);
                     }
@@ -110,52 +120,49 @@ namespace Flats4us.Hubs
             return null;
         }
 
-        private int? GetUserIdByConnectionId(string connectionId)
-        {
-            foreach (var kvp in _connections)
-            {
-                if (kvp.Value.Contains(connectionId))
-                {
-                    return kvp.Key;
-                }
-            }
-
-            return null;
-        }
-
         public override async Task OnConnectedAsync()
         {
-            var userId = GetUserId();
-            if (userId != null)
-            {
-                if (!_connections.ContainsKey(userId.Value))
-                {
-                    _connections[userId.Value] = new List<string>();
-                }
-
-                _connections[userId.Value].Add(Context.ConnectionId);
-            }
-
+            await AddConnectionAsync();
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
+            await RemoveConnectionAsync();
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task AddConnectionAsync()
+        {
             var userId = GetUserId();
             if (userId != null)
             {
-                if (_connections.TryGetValue(userId.Value, out var receiverConnectionIds))
+                var connection = new Connection
                 {
-                    receiverConnectionIds.Remove(Context.ConnectionId);
+                    UserId = userId.Value,
+                    ContextConnectionId = Context.ConnectionId,
+                    HubName = nameof(ChatHub)
+                };
 
-                    if (!receiverConnectionIds.Any())
-                    {
-                        _connections.Remove(userId.Value, out _);
-                    }
+                _context.Connections.Add(connection);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task RemoveConnectionAsync()
+        {
+            var userId = GetUserId();
+            if (userId != null)
+            {
+                var connection = await _context.Connections
+                    .FirstOrDefaultAsync(c => c.ContextConnectionId == Context.ConnectionId && c.UserId == userId.Value && c.HubName == nameof(ChatHub));
+
+                if (connection != null)
+                {
+                    _context.Connections.Remove(connection);
+                    await _context.SaveChangesAsync();
                 }
             }
-
-            await base.OnDisconnectedAsync(exception);
         }
     }
 }
