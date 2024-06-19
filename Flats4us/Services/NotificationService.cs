@@ -91,7 +91,7 @@ namespace Flats4us.Services
 
             if (shouldSendPush)
             {
-                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat);
+                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat, notification.NotificationId);
 
                 if (!string.IsNullOrEmpty(user.FcmToken))
                 {
