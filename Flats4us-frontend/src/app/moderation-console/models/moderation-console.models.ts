@@ -41,6 +41,7 @@ export interface IUser {
 
 export interface IDispute {
 	argumentId: number;
+	title: string;
 	description: string;
 	startDate: string;
 	ownerAcceptanceDate: string;

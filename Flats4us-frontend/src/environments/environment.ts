@@ -1,6 +1,6 @@
 export const environment = {
 	production: false,
-	apiUrl: '/api',
+	apiUrl: 'http://172.21.40.120:5166/api',
 	chatSocket: 'chatHub',
 	notificationSocket: 'notificationHub',
 	commitHash: '##COMMIT_HASH##',

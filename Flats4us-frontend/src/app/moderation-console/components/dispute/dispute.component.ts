@@ -13,6 +13,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddInterventionDialogComponent } from '../add-intervention-dialog/add-intervention-dialog.component';
 import { ChangeDisputeStatusDialogComponent } from '../change-dispute-status-dialog/change-dispute-status-dialog.component';
 import { IDispute } from '../../models/moderation-console.models';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-dispute',
@@ -30,9 +33,10 @@ import { IDispute } from '../../models/moderation-console.models';
 	styleUrls: ['./dispute.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DisputeComponent {
+export class DisputeComponent extends BaseComponent {
 	public disputes$ = this.service.getDisputes();
 	public displayedColumns: string[] = [
+		'title',
 		'startDate',
 		'interventionNeed',
 		'rentId',
@@ -45,8 +49,12 @@ export class DisputeComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private dialog: MatDialog
-	) {}
+		private dialog: MatDialog,
+		private snackBar: MatSnackBar,
+		private translate: TranslateService
+	) {
+		super();
+	}
 
 	public openInterventionDialog(argumentId: number): void {
 		this.dialog.open(AddInterventionDialogComponent, {
@@ -63,4 +71,11 @@ export class DisputeComponent {
 		});
 	}
 	protected readonly formatDate = formatDate;
+
+	public joinGroupChat(groupChatId: number) {
+		this.service
+			.joinGroupChat(groupChatId)
+			.pipe(this.untilDestroyed())
+			.subscribe();
+	}
 }

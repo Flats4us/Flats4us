@@ -28,6 +28,7 @@ import { ChangeDisputeStatusDialogComponent } from './components/change-dispute-
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSortModule } from '@angular/material/sort';
 import { TranslateModule } from '@ngx-translate/core';
+import { ConversationService } from '../conversations/services/conversation.service';
 
 @NgModule({
 	declarations: [
@@ -63,7 +64,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatSortModule,
 		TranslateModule,
 	],
-	providers: [ModerationConsoleService, MatSnackBarModule],
+	providers: [ModerationConsoleService, MatSnackBarModule, ConversationService],
 	exports: [ModerationConsoleComponent],
 })
 export class ModerationConsoleModule {}

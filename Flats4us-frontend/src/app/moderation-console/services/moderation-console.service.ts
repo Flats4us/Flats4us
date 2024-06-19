@@ -151,9 +151,18 @@ export class ModerationConsoleService {
 	}
 
 	public changeDisputeStatus(argumentId: number, status: number) {
-		return this.http.post(`${this.apiRoute}/moderator/argument/status`, {
-			argumentId,
-			status,
-		});
+		return this.http.put(
+			`${this.apiRoute}/moderator/argument/${argumentId}/status`,
+			{
+				status,
+			}
+		);
+	}
+
+	public joinGroupChat(groupChatId: number) {
+		return this.http.post(
+			`${this.apiRoute}/group-chats/${groupChatId}/moderator`,
+			{ groupChatId }
+		);
 	}
 }

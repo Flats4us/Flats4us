@@ -208,8 +208,9 @@
 		"statutes0": "Trwający",
 		"statutes1": "Rozwiązany",
 		"statutes2": "Nieuzasadniony",
-		"statutes3": "Rozwiązany przez moderatora",
-		"statutes4": "Nieuzasadniony przez moderatora"
+
+		"open-chat": "Otwórz czat",
+		"info4": "Status pomyślnie zmieniony"
 	},
 
 	"Conversation": {

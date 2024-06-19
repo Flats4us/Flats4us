@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { ConversationService } from '../../../conversations/services/conversation.service';
 import { MatButtonModule } from '@angular/material/button';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
 
 @NgModule({
 	declarations: [DisputesConversationComponent],
@@ -22,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 		TranslateModule,
 		MatCardModule,
 		MatButtonModule,
+		AccessControlDirective,
 	],
 	providers: [ConversationService],
 })

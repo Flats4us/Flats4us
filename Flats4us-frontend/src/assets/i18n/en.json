@@ -209,7 +209,10 @@
 		"statutes1": "Finished",
 		"statutes2": "Unjustifiable",
 		"statutes3": "Solved by moderator",
-		"statutes4": "Unjustified by the moderator"
+		"statutes4": "Unjustified by the moderator",
+
+		"open-chat": "Open chat",
+		"info4": "Status updated"
 	},
 
 	"Conversation": {
