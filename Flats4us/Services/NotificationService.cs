@@ -4,6 +4,7 @@ using FirebaseAdmin.Messaging;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
 using Flats4us.Helpers;
+using Flats4us.Helpers.Enums;
 using Flats4us.Hubs;
 using Flats4us.Services.Interfaces;
 using Google.Apis.Auth.OAuth2;
@@ -91,9 +92,19 @@ namespace Flats4us.Services
 
             if (shouldSendPush)
             {
-                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat, notification.NotificationId);
+                var receiverConnections = await _context.Connections
+                    .Where(c => c.UserId == userId && c.HubName == nameof(NotificationHub))
+                    .Select(c => c.ContextConnectionId)
+                    .ToListAsync();
 
-                if (!string.IsNullOrEmpty(user.FcmToken))
+                if (receiverConnections.Any())
+                {
+                    foreach (var connectionId in receiverConnections)
+                    {
+                        await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat, notification.NotificationId);
+                    }
+                }
+                else if (!string.IsNullOrEmpty(user.FcmToken))
                 {
                     var fcmMessage = new Message()
                     {

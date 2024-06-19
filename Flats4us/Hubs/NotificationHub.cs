@@ -1,10 +1,6 @@
-﻿using FirebaseAdmin.Messaging;
-using Flats4us.Entities;
-using Flats4us.Entities.Dto;
-using Flats4us.Services;
-using Flats4us.Services.Interfaces;
+﻿using Flats4us.Entities;
 using Microsoft.AspNetCore.SignalR;
-using System.Collections.Concurrent;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Flats4us.Hubs
@@ -12,25 +8,10 @@ namespace Flats4us.Hubs
     public class NotificationHub : Hub
     {
         public readonly Flats4usContext _context;
-        private readonly INotificationService _notificationService;
 
-        private readonly static ConcurrentDictionary<int, List<string>> _connections = new ConcurrentDictionary<int, List<string>>();
-
-        public NotificationHub(Flats4usContext context,
-            INotificationService notificationService)
+        public NotificationHub(Flats4usContext context)
         {
             _context = context;
-            _notificationService = notificationService;
-        }
-
-        public async Task<bool> SendNotification(int receiverUserId, string keyTitle, string keyBody)
-        {
-            if (_connections.TryGetValue(receiverUserId, out var receiverConnectionIds) && receiverConnectionIds.Any())
-            {
-                await Clients.User(receiverUserId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody);
-                return true;
-            }
-            else return false;
         }
 
         private int? GetUserId()
@@ -44,37 +25,47 @@ namespace Flats4us.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            var userId = GetUserId();
-            if (userId != null)
-            {
-                if (!_connections.ContainsKey(userId.Value))
-                {
-                    _connections[userId.Value] = new List<string>();
-                }
-
-                _connections[userId.Value].Add(Context.ConnectionId);
-            }
-
+            await AddConnectionAsync();
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
+            await RemoveConnectionAsync();
+            await base.OnDisconnectedAsync(exception);
+        }
+
+        private async Task AddConnectionAsync()
+        {
             var userId = GetUserId();
             if (userId != null)
             {
-                if (_connections.TryGetValue(userId.Value, out var receiverConnectionIds))
+                var connection = new Connection
                 {
-                    receiverConnectionIds.Remove(Context.ConnectionId);
+                    UserId = userId.Value,
+                    ContextConnectionId = Context.ConnectionId,
+                    HubName = nameof(NotificationHub)
+                };
 
-                    if (!receiverConnectionIds.Any())
-                    {
-                        _connections.Remove(userId.Value, out _);
-                    }
+                _context.Connections.Add(connection);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task RemoveConnectionAsync()
+        {
+            var userId = GetUserId();
+            if (userId != null)
+            {
+                var connection = await _context.Connections
+                    .FirstOrDefaultAsync(c => c.ContextConnectionId == Context.ConnectionId && c.UserId == userId.Value && c.HubName == nameof(ChatHub));
+
+                if (connection != null)
+                {
+                    _context.Connections.Remove(connection);
+                    await _context.SaveChangesAsync();
                 }
             }
-
-            await base.OnDisconnectedAsync(exception);
         }
     }
 }
