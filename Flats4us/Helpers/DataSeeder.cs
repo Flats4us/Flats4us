@@ -1906,7 +1906,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 11, 1),
-            EndDate = new DateTime(2024, 6, 1),
+            EndDate = new DateTime(2024, 10, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = flat7
@@ -1945,7 +1945,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 10),
-            EndDate = new DateTime(2024, 6, 10),
+            EndDate = new DateTime(2024, 11, 10),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = flat10
@@ -1958,7 +1958,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 10),
-            EndDate = new DateTime(2024, 8, 10),
+            EndDate = new DateTime(2024, 11, 10),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = house1
@@ -1971,7 +1971,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 3, 1),
-            EndDate = new DateTime(2024, 6, 1),
+            EndDate = new DateTime(2024, 11, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = house2
@@ -1984,7 +1984,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 15),
-            EndDate = new DateTime(2024, 8, 15),
+            EndDate = new DateTime(2024, 10, 15),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = house3
@@ -1997,7 +1997,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
-            EndDate = new DateTime(2024, 9, 1),
+            EndDate = new DateTime(2024, 10, 1),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = house5
@@ -2010,7 +2010,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2023, 12, 1),
-            EndDate = new DateTime(2024, 4, 1),
+            EndDate = new DateTime(2024, 11, 1),
             NumberOfInterested = 8,
             Regulations = "placeholder",
             Property = room1
@@ -2023,7 +2023,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 1, 15),
-            EndDate = new DateTime(2024, 7, 15),
+            EndDate = new DateTime(2024, 12, 15),
             NumberOfInterested = 9,
             Regulations = "placeholder",
             Property = room2
@@ -2036,7 +2036,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "placeholder",
             StartDate = new DateTime(2024, 2, 1),
-            EndDate = new DateTime(2024, 8, 1),
+            EndDate = new DateTime(2024, 10, 1),
             NumberOfInterested = 10,
             Regulations = "placeholder",
             Property = room5
@@ -2049,7 +2049,7 @@ public static class DataSeeder
             Deposit = 1500,
             Description = "Przestronne mieszkanie w centrum Krakowa.",
             StartDate = new DateTime(2023, 12, 1),
-            EndDate = new DateTime(2024, 7, 1),
+            EndDate = new DateTime(2024, 11, 1),
             NumberOfInterested = 9,
             Regulations = "Brak zwierząt.",
             Property = flat11
@@ -2062,7 +2062,7 @@ public static class DataSeeder
             Deposit = 2000,
             Description = "Dom w świetnej lokalizacji, niedaleko Rynku.",
             StartDate = new DateTime(2023, 11, 15),
-            EndDate = new DateTime(2024, 10, 15),
+            EndDate = new DateTime(2024, 11, 15),
             NumberOfInterested = 5,
             Regulations = "Tylko osoby niepalące.",
             Property = house6
@@ -2075,7 +2075,7 @@ public static class DataSeeder
             Deposit = 1000,
             Description = "Przytulne mieszkanie w pobliżu centrum Poznania.",
             StartDate = new DateTime(2023, 12, 5),
-            EndDate = new DateTime(2024, 6, 5),
+            EndDate = new DateTime(2024, 10, 5),
             NumberOfInterested = 3,
             Regulations = "Wynajem na min. rok.",
             Property = flat12
