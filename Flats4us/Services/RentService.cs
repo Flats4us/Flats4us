@@ -80,8 +80,7 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
 
             var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
-            // TODO: uzupełnić
-            var link = $"{baseUrl}/???";
+            var link = $"{baseUrl}/offer/owner/{offer.OfferId}";
 
             var emailBody = new StringBuilder();
             emailBody.AppendLine(EmailHelper.HtmlHTag($"Ktoś wyraża chęć wynajęcia twojej nieruchomości!", 1))

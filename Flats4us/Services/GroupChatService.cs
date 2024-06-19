@@ -50,6 +50,7 @@ namespace Flats4us.Services
             var groupChat = await _context.GroupChats
                 .Include(gc => gc.UserGroupChats)
                     .ThenInclude(ugc => ugc.User)
+                        .ThenInclude(u => u.ProfilePicture)
                 .FirstOrDefaultAsync(gc => gc.GroupChatId == groupChatId);
 
             if (groupChat == null) throw new ArgumentException("Group chat with given id not found");
