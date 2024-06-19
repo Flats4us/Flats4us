@@ -14,8 +14,6 @@ import { AddInterventionDialogComponent } from '../add-intervention-dialog/add-i
 import { ChangeDisputeStatusDialogComponent } from '../change-dispute-status-dialog/change-dispute-status-dialog.component';
 import { IDispute } from '../../models/moderation-console.models';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-dispute',
@@ -49,9 +47,7 @@ export class DisputeComponent extends BaseComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private dialog: MatDialog,
-		private snackBar: MatSnackBar,
-		private translate: TranslateService
+		private dialog: MatDialog
 	) {
 		super();
 	}
