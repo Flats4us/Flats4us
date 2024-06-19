@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using Flats4us.Entities;
 using Flats4us.Entities.Dto;
+using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Text;
 
 namespace Flats4us.Services
 {
@@ -15,17 +18,25 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
+        private readonly INotificationService _notificationService;
 
         public RentService(Flats4usContext context,
-            IMapper mapper)
+            IMapper mapper,
+            IConfiguration configuration,
+            INotificationService notificationService)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
+            _notificationService = notificationService;
         }
 
         public async Task ProposeRentAsync(ProposeRentDto input, int studentId, int offerId)
         {
-            var offer = await _context.Offers.FindAsync(offerId);
+            var offer = await _context.Offers
+                .Include(o => o.Property)
+                .FirstOrDefaultAsync(o => o.OfferId == offerId);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {offerId} not found.");
 
@@ -67,6 +78,17 @@ namespace Flats4us.Services
             offer.OfferStatus = OfferStatus.Waiting;
 
             await _context.SaveChangesAsync();
+
+            var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+            // TODO: uzupełnić
+            var link = $"{baseUrl}/???";
+
+            var emailBody = new StringBuilder();
+            emailBody.AppendLine(EmailHelper.HtmlHTag($"Ktoś wyraża chęć wynajęcia twojej nieruchomości!", 1))
+                        .AppendLine(EmailHelper.HtmlPTag($"Aby zobaczyć kto to i rozpocząć podjać decyzje naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                        .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+            await _notificationService.SendNotificationAsync(EmailTitles.NewRentProposition, emailBody.ToString(), TranslateKeys.NewRentPropositionTitle, TranslateKeys.NewRentPropositionBody, offer.Property.OwnerId, false);
         }
 
         public async Task AcceptRentAsync(bool decision, int requestUserId, int offerId)
@@ -89,13 +111,15 @@ namespace Flats4us.Services
             {
                 offer.OfferStatus = OfferStatus.Rented;
 
+                var paymentDate = rent.StartDate.AddDays(7).Date;
+
                 var firstPayment = new Payment
                 {
                     PaymentPurpose = PaymentPurpose.Rent,
                     Amount = offer.Price,
                     IsPaid = false,
                     CreatedDate = DateTime.Now,
-                    PaymentDate = rent.StartDate.AddDays(7).Date
+                    PaymentDate = paymentDate
                 };
 
                 var depositPayment = new Payment
@@ -104,7 +128,7 @@ namespace Flats4us.Services
                     Amount = offer.Price,
                     IsPaid = false,
                     CreatedDate = DateTime.Now,
-                    PaymentDate = rent.StartDate.AddDays(7).Date
+                    PaymentDate = paymentDate
                 };
 
                 rent.Payments.Add(depositPayment);
@@ -113,6 +137,18 @@ namespace Flats4us.Services
                 if ( rent.Duration > 1 ) rent.NextPaymentGenerationDate = rent.StartDate.AddMonths(1).Date;
 
                 await _context.SaveChangesAsync();
+
+                var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+                var link = $"{baseUrl}/rents/student/{rent.RentId}";
+
+                var emailBody = new StringBuilder();
+                emailBody.AppendLine(EmailHelper.HtmlHTag($"Już zaraz możesz się wprowadzić!", 1))
+                    .AppendLine(EmailHelper.HtmlPTag($"Ale najpierw kilka ważnych informacji"))
+                    .AppendLine(EmailHelper.HtmlPTag($"Aby przejść do swojego wynajmy mozesz nacisnąć {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejść pod poniższy link"))
+                    .AppendLine(EmailHelper.HtmlPTag($"{link}"))
+                    .AppendLine(EmailHelper.HtmlPTag($"Zostały tam wygenerowane dwie płatności, zapoznaj się z nimi i zapłać przed {paymentDate}"));
+
+                await _notificationService.SendNotificationAsync(EmailTitles.RentAccepted, emailBody.ToString(), TranslateKeys.RentPropositionAcceptedTitle, TranslateKeys.RentPropositionAcceptedBody, rent.StudentId, false);
             }
             else
             {
@@ -121,6 +157,12 @@ namespace Flats4us.Services
                 offer.OfferStatus = OfferStatus.Current;
 
                 await _context.SaveChangesAsync();
+
+                var emailBody = new StringBuilder();
+                emailBody.AppendLine(EmailHelper.HtmlHTag($"Niestety nie udało się!", 1))
+                    .AppendLine(EmailHelper.HtmlPTag($"Twoja propozycja wynajmu została odrzucona, ale nie przejmuj się, w naszym serwisie jest jeszcze wiele ofert"));
+
+                await _notificationService.SendNotificationAsync(EmailTitles.RentRejected, emailBody.ToString(), TranslateKeys.RentPropositionRejectedTitle, TranslateKeys.RentPropositionRejectedBody, rent.StudentId, false);
             }
         }
 

@@ -4,6 +4,8 @@ using Flats4us.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Reflection.Metadata.Ecma335;
+using Flats4us.Helpers;
+using System.Text;
 
 namespace Flats4us.Services
 {
@@ -12,16 +14,18 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         public readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly INotificationService _notificationService;
 
         public MatcherService(
             Flats4usContext context,
             IConfiguration configuration,
-            IMapper mapper)
+            IMapper mapper,
+            INotificationService notificationService)
         {
             _context = context;
             _configuration = configuration;
             _mapper = mapper;
-
+            _notificationService = notificationService;
         }
 
         public async Task<List<StudentForMatcherDto>> GetMatchByStudentId(int requestUserId)
@@ -124,6 +128,20 @@ namespace Flats4us.Services
             else
             {
                 match.IsStudent2Interested = isAccept;
+            }
+
+            if (match.IsStudent1Interested == true && match.IsStudent2Interested == true)
+            {
+                var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+                var link = $"{baseUrl}/find-roommate";
+                var emailBody = new StringBuilder();
+
+                emailBody.AppendLine(EmailHelper.HtmlHTag($"Ktoś wyraża chęć zamieszkania z tobą!", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Aby zobaczyć kto to i rozpocząć czat naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                            .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+                await _notificationService.SendNotificationAsync(EmailTitles.NewMessage, emailBody.ToString(), TranslateKeys.NewMatchTitle, TranslateKeys.NewMatchBody, student1Id, false);
+                await _notificationService.SendNotificationAsync(EmailTitles.NewMessage, emailBody.ToString(), TranslateKeys.NewMatchTitle, TranslateKeys.NewMatchBody, student2Id, false);
             }
 
             await _context.SaveChangesAsync();

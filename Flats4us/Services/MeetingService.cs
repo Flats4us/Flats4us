@@ -6,6 +6,10 @@ using AutoMapper;
 using Flats4us.Helpers.Enums;
 using Flats4us.Helpers.Exceptions;
 using System;
+using FirebaseAdmin.Messaging;
+using Flats4us.Helpers;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace Flats4us.Services
 {
@@ -14,14 +18,17 @@ namespace Flats4us.Services
         public readonly Flats4usContext _context;
         private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         public MeetingService(Flats4usContext context,
             INotificationService notificationService,
-            IMapper mapper)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _context = context;
             _notificationService = notificationService;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task<List<MeetingDto>> GetMeetingsForCurrentUserAsync(int userId)
@@ -88,6 +95,10 @@ namespace Flats4us.Services
 
             Meeting meeting;
 
+            var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+            var link = $"{baseUrl}/calendar";
+            var emailBody = new StringBuilder();
+
             switch (user)
             {
                 case Student:
@@ -108,12 +119,12 @@ namespace Flats4us.Services
                         OfferId = input.OfferId,
                         StudentId = userId
                     };
+                    
+                    emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} wysłał propozycje spotkania {input.Date}", 1))
+                        .AppendLine(EmailHelper.HtmlPTag($"Aby zaakceptować lub odrzucić naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                        .AppendLine(EmailHelper.HtmlPTag($"{link}"));
 
-                    // TODO: notification
-
-                    //await _notificationService.SendNotificationAsync("New meeting proposition",
-                    //    $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
-                    //    offer.Property.OwnerId);
+                    await _notificationService.SendNotificationAsync(EmailTitles.NewMeetingProposition, emailBody.ToString(), TranslateKeys.NewMeetingPropositionTitle, TranslateKeys.NewMeetingPropositionBody, offer.Property.OwnerId, false);
 
                     break;
                 case Owner:
@@ -132,10 +143,12 @@ namespace Flats4us.Services
                         OfferId = input.OfferId,
                         StudentId = offer.Rent.StudentId
                     };
-                    // TODO: notification
-                    //await _notificationService.SendNotificationAsync("New meeting proposition",
-                    //    $"You have a new meeting proposition for the day {input.Date} from {user.Name} {user.Surname}. Check it and answer in calendar",
-                    //    offer.Rent.StudentId);
+
+                    emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} wysłał propozycje spotkania {input.Date}", 1))
+                        .AppendLine(EmailHelper.HtmlPTag($"Aby zaakceptować lub odrzucić naciśnij {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                        .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+                    await _notificationService.SendNotificationAsync(EmailTitles.NewMeetingProposition, emailBody.ToString(), TranslateKeys.NewMeetingPropositionTitle, TranslateKeys.NewMeetingPropositionBody, offer.Rent.StudentId, false);
 
                     break;
                 default:
@@ -161,6 +174,10 @@ namespace Flats4us.Services
 
             if (meeting is null) throw new ArgumentException($"Meeting with ID {meetingId} not found.");
 
+            var baseUrl = _configuration.GetSection("AppBaseUrl").Value;
+            var link = $"{baseUrl}/calendar";
+            var emailBody = new StringBuilder();
+
             switch (user)
             {
                 case Student:
@@ -171,18 +188,21 @@ namespace Flats4us.Services
                     if (decision)
                     {
                         meeting.StudentAcceptDate = DateTime.Now;
-                        // TODO: notification
-                        //await _notificationService.SendNotificationAsync("Meeting accepted",
-                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
-                        //    meeting.Offer.Property.OwnerId);
+
+                        emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} zaakceptował spotkanie dnia {meeting.Date}", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Aby zobaczyć szczegóły w kalendarzu naciśnij tutaj {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                            .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+                        await _notificationService.SendNotificationAsync(EmailTitles.MeetingAccepted, emailBody.ToString(), TranslateKeys.MeetingPropositionAcceptedTitle, TranslateKeys.MeetingPropositionAcceptedBody, meeting.Offer.Property.OwnerId, false);
                     }
                     else
                     {
                         _context.Meetings.Remove(meeting);
-                        // TODO: notification
-                        //await _notificationService.SendNotificationAsync("Meeting denied",
-                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
-                        //    meeting.Offer.Property.OwnerId);
+
+                        emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} odrzucił spotkanie dnia {meeting.Date}", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Spróbuj umówić się na spotkanie jeszcze raz. Zachęcamy do skorzystania z czatu aby wcześniej ustalić szczegóły z drugą stroną."));
+
+                        await _notificationService.SendNotificationAsync(EmailTitles.MeetingRejected, emailBody.ToString(), TranslateKeys.MeetingPropositionRejectedTitle, TranslateKeys.MeetingPropositionRejectedBody, meeting.Offer.Property.OwnerId, false);
                     }
 
                     await _context.SaveChangesAsync();
@@ -196,18 +216,21 @@ namespace Flats4us.Services
                     if (decision)
                     {
                         meeting.OwnerAcceptDate = DateTime.Now;
-                        // TODO: notification
-                        //await _notificationService.SendNotificationAsync("Meeting accepted",
-                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been accepted ",
-                        //    meeting.StudentId);
+
+                        emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} zaakceptował spotkanie dnia {meeting.Date}", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Aby zobaczyć szczegóły w kalendarzu naciśnij tutaj {EmailHelper.AddLinkToText(link, "TUTAJ")} lub przejdź pod poniższy link"))
+                            .AppendLine(EmailHelper.HtmlPTag($"{link}"));
+
+                        await _notificationService.SendNotificationAsync(EmailTitles.MeetingAccepted, emailBody.ToString(), TranslateKeys.MeetingPropositionAcceptedTitle, TranslateKeys.MeetingPropositionAcceptedBody, meeting.StudentId, false);
                     }
                     else
                     {
                         _context.Meetings.Remove(meeting);
-                        // TODO: notification
-                        //await _notificationService.SendNotificationAsync("Meeting denied",
-                        //    $"Your offer for meeting with {user.Name} {user.Surname} has been denied ",
-                        //    meeting.StudentId);
+
+                        emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {user.Name} {user.Surname} odrzucił spotkanie dnia {meeting.Date}", 1))
+                            .AppendLine(EmailHelper.HtmlPTag($"Spróbuj umówić się na spotkanie jeszcze raz. Zachęcamy do skorzystania z czatu aby wcześniej ustalić szczegóły z drugą stroną."));
+
+                        await _notificationService.SendNotificationAsync(EmailTitles.MeetingRejected, emailBody.ToString(), TranslateKeys.MeetingPropositionRejectedTitle, TranslateKeys.MeetingPropositionRejectedBody, meeting.StudentId, false);
                     }
 
                     await _context.SaveChangesAsync();
@@ -216,7 +239,6 @@ namespace Flats4us.Services
                 default:
                     throw new ArgumentException($"Wrong user type");
             }
-
         }
     }
 }

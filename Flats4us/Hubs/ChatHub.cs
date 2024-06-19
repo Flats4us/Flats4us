@@ -1,4 +1,5 @@
 ﻿using Flats4us.Entities;
+using Flats4us.Helpers;
 using Flats4us.Helpers.Enums;
 using Flats4us.Services;
 using Flats4us.Services.Interfaces;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Concurrent;
 using System.Security.Claims;
+using System.Text;
 
 namespace Flats4us.Hubs
 {
@@ -48,7 +50,12 @@ namespace Flats4us.Hubs
 
                 var notificationTitle = sender.Name + " " + sender.Surname;
                 var notificationBody = message;
-                await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, notificationTitle, notificationBody, receiverUserId, true);
+
+                var emailBody = new StringBuilder();
+                emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {sender.Name} {sender.Surname} wysłał ci prywatną wiadomość", 1))
+                    .AppendLine(EmailHelper.HtmlPTag(message));
+
+                await _notificationService.SendNotificationAsync(EmailTitles.NewMessage, emailBody.ToString(), notificationTitle, notificationBody, receiverUserId, true);
             }
         }
 
@@ -82,9 +89,14 @@ namespace Flats4us.Hubs
                 }
                 else
                 {
-                    var notificationTitle = sender.Name + " " + sender.Surname;
+                    var notificationTitle = "G: " + sender.Name + " " + sender.Surname;
                     var notificationBody = message;
-                    await _notificationService.SendNotificationAsync(notificationTitle, notificationBody, notificationTitle, notificationBody, groupUserId, true);
+
+                    var emailBody = new StringBuilder();
+                    emailBody.AppendLine(EmailHelper.HtmlHTag($"Użytkownik {sender.Name} {sender.Surname} wysłał wiadomość do twojego czatu grupowego", 1))
+                        .AppendLine(EmailHelper.HtmlPTag(message));
+
+                    await _notificationService.SendNotificationAsync(EmailTitles.NewMessage, emailBody.ToString(), notificationTitle, notificationBody, groupUserId, true);
                 }
             }
         }

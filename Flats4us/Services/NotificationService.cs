@@ -42,7 +42,7 @@ namespace Flats4us.Services
             _messaging = FirebaseMessaging.GetMessaging(firebaseApp);
         }
 
-        public async Task<bool> SendNotificationAsync(string title, string body, string keyTitle, string keyBody, int userId, bool isChat)
+        public async Task<bool> SendNotificationAsync(string emailTitle, string emailBody, string keyTitle, string keyBody, int userId, bool isChat)
         {
             var user = await _context.Users.FindAsync(userId);
 
@@ -51,8 +51,8 @@ namespace Flats4us.Services
             bool shouldSendPush = true;
             bool shouldSendEmail = true;
 
-            if (isChat && !user.PushChatConsent) 
-            { 
+            if (isChat && !user.PushChatConsent)
+            {
                 shouldSendPush = false;
             }
 
@@ -73,8 +73,8 @@ namespace Flats4us.Services
 
             var notification = new Entities.Notification
             {
-                Title = title,
-                Body = body,
+                Title = keyTitle,
+                Body = keyBody,
                 DateTime = DateTime.UtcNow,
                 Read = false,
                 UserId = userId
@@ -85,18 +85,12 @@ namespace Flats4us.Services
 
             if (shouldSendEmail)
             {
-                var emailBody = new StringBuilder();
-
-                emailBody.AppendLine(EmailHelper.HtmlHTag(title, 1))
-                    .AppendLine(EmailHelper.HtmlPTag(body));
-
-
-                await _emailService.SendEmailAsync(userId, title, emailBody.ToString());
+                await _emailService.SendEmailAsync(userId, emailTitle, emailBody);
             }
 
-            if(shouldSendPush)
+            if (shouldSendPush)
             {
-                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow);
+                await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat);
 
                 if (!string.IsNullOrEmpty(user.FcmToken))
                 {
@@ -107,6 +101,10 @@ namespace Flats4us.Services
                         {
                             Title = keyTitle,
                             Body = keyBody
+                        },
+                        Data = new Dictionary<string, string>()
+                        {
+                            { "isChat", isChat.ToString().ToLower() }
                         }
                     };
 
