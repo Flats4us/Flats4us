@@ -17,6 +17,9 @@ namespace Flats4us.Entities.Dto
         public string? Description { get; set; }
 
         [Required]
+        public int SourceUserId { get; set; }
+
+        [Required]
         public string SourceUserName { get; set; }
 
         [Required]
