@@ -23,6 +23,9 @@ namespace Flats4us.Entities
         [Required]
         public int UserId { get; set; }
 
+        [Required]
+        public bool IsChat { get; set; }
+
         public virtual User User { get; set; }
     }
 }

@@ -18,5 +18,8 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public bool Read { get; set; }
+
+        [Required]
+        public bool IsChat { get; set; }
     }
 }

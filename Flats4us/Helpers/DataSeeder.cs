@@ -3227,20 +3227,22 @@ public static class DataSeeder
 
         var alert1 = new Notification
         {
-            Title = "Meeting Reminder",
-            Body = "You have a meeting tomorrow at 10:00 AM.",
+            Title = "meeting-proposition-accepted-title",
+            Body = "meeting-proposition-accepted-body",
             DateTime = new DateTime(2024, 6, 11),
             Read = false,
-            User = student1
+            User = student1,
+            IsChat = false
         };
 
         var alert2 = new Notification
         {
-            Title = "Payment Due",
-            Body = "Your monthly subscription payment is due soon.",
+            Title = "new-payment-title",
+            Body = "new-payment-body",
             DateTime = new DateTime(2024, 6, 15),
             Read = false,
-            User = student1
+            User = student1,
+            IsChat = false
         };
 
         dbContext.Notifications.AddRange(alert1, alert2);

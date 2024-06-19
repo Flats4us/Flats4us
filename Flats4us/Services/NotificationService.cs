@@ -77,7 +77,8 @@ namespace Flats4us.Services
                 Body = keyBody,
                 DateTime = DateTime.UtcNow,
                 Read = false,
-                UserId = userId
+                UserId = userId,
+                IsChat = isChat
             };
 
             await _context.Notifications.AddAsync(notification);
