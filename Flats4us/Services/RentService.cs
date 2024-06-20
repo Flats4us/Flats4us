@@ -287,7 +287,7 @@ namespace Flats4us.Services
 
             if (DateTime.Now > rent.EndDate &&
                 user is Student &&
-                !rent.Offer.Property.RentOpinions.Any(ro => ro.StudentId == requestUserId)
+                !rent.Offer.Property.RentOpinions.Any(ro => ro.StudentId == requestUserId))
             {
                 result.IsAddingOpinionAllowed = true;
             }
