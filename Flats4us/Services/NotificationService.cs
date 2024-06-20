@@ -101,7 +101,7 @@ namespace Flats4us.Services
                 {
                     foreach (var connectionId in receiverConnections)
                     {
-                        await _notificationHub.Clients.User(userId.ToString()).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat, notification.NotificationId);
+                        await _notificationHub.Clients.Client(connectionId).SendAsync("ReceiveNotification", keyTitle, keyBody, DateTime.UtcNow, isChat, notification.NotificationId);
                     }
                 }
                 else if (!string.IsNullOrEmpty(user.FcmToken))
