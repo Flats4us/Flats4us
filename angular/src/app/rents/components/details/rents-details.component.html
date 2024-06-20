@@ -471,7 +471,7 @@
 						{{ "Rents-details.add-meeting" | translate }}
 					</button>
 				</div>
-				<div *ngIf="data.rent?.isFinished">
+				<div *ngIf="data.rent?.isFinished && data.rent?.IsAddingOpinionAllowed">
 					<button
 						*appAccessControl="
 							authService.getPermissions(authModels.VERIFIED_STUDENT)
