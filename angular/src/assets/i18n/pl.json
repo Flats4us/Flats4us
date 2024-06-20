@@ -824,5 +824,23 @@
 		"Oven": "Piekarnik",
 		"Microwave": "Mikrofalówka",
 		"Elevator": "Winda"
+	},
+	"Notifications-content": {
+		"new-meeting-proposition-title": "Nowa propozycja spotkania",
+		"new-meeting-proposition-body": "Sprawdź ją w kalendarzu.",
+		"meeting-proposition-accepted-title": "Spotkanie zaakceptowane!",
+		"meeting-proposition-accepted-body": "Twoja propozycja spotkania została zaakceptowana.",
+		"meeting-proposition-rejected-title": "Spotkanie odrzucone",
+		"meeting-proposition-rejected-body": "Twoja propozycja spotkania została odrzucona.",
+		"new-match-title": "Nowe dopasowanie!",
+		"new-match-body": "Masz nowego potencjalnego współlokatora!",
+		"new-payment-title": "Nowa płatność",
+		"new-payment-body": "Wygenerowaliśmy nową płatność za Twój czynsz.",
+		"new-rent-proposition-title": "Nowa propozycja wynajmu!",
+		"new-rent-proposition-body": "Ktoś chce wynająć Twoją nieruchomość!",
+		"rent-proposition-accepted-title": "Wynajem zaakceptowany!",
+		"rent-proposition-accepted-body": "Twoja propozycja wynajmu została zaakceptowana.",
+		"rent-proposition-rejected-title": "Wynajem odrzucony",
+		"rent-proposition-rejected-body": "Twoja propozycja wynajmu została odrzucona."
 	}
 }

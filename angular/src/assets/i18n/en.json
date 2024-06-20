@@ -826,5 +826,23 @@
 		"Oven": "Oven",
 		"Microwave": "Microwave",
 		"Elevator": "Elevator"
+	},
+	"Notifications-content": {
+		"new-meeting-proposition-title": "New meeting proposition",
+		"new-meeting-proposition-body": "Check it in calendar.",
+		"meeting-proposition-accepted-title": "Meeting accepted!",
+		"meeting-proposition-accepted-body": "Your meeting proposition has been accepted.",
+		"meeting-proposition-rejected-title": "Meeting rejected",
+		"meeting-proposition-rejected-body": "Your meeting proposition has been rejected.",
+		"new-match-title": "New Match!",
+		"new-match-body": "You got new potential roommate match!",
+		"new-payment-title": "New Payment",
+		"new-payment-body": "We generated new payment for your rent",
+		"new-rent-proposition-title": "New rent proposition!",
+		"new-rent-proposition-body": "Someone wants to rent your property!.",
+		"rent-proposition-accepted-title": "Rent accepted!",
+		"rent-proposition-accepted-body": "Your rent proposition has been accepted.",
+		"rent-proposition-rejected-title": "Rent rejected",
+		"rent-proposition-rejected-body": "Your rent proposition has been rejected."
 	}
 }
