@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
@@ -10,7 +10,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 	styleUrls: ['./notifications.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationsComponent extends BaseComponent {
+export class NotificationsComponent extends BaseComponent implements OnInit {
 	public notificationForm: FormGroup = new UntypedFormGroup({
 		pushChatConsent: new FormControl<boolean>(false),
 		emailChatConsent: new FormControl<boolean>(false),
@@ -24,12 +24,7 @@ export class NotificationsComponent extends BaseComponent {
 
 	public save() {
 		this.service
-			.changeConsents(
-				this.notificationForm.value.pushChatConsent,
-				this.notificationForm.value.emailChatConsent,
-				this.notificationForm.value.pushOtherConsent,
-				this.notificationForm.value.emailOtherConsent
-			)
+			.changeConsents(this.notificationForm.value)
 			.pipe(this.untilDestroyed())
 			.subscribe(() => {
 				this.snackBar.open(
@@ -40,5 +35,12 @@ export class NotificationsComponent extends BaseComponent {
 					}
 				);
 			});
+	}
+
+	public ngOnInit(): void {
+		this.service
+			.getConsents()
+			.pipe(this.untilDestroyed())
+			.subscribe(consents => this.notificationForm.patchValue(consents));
 	}
 }

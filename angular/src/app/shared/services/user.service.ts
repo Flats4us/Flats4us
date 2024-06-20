@@ -6,6 +6,7 @@ import {
 	IUser,
 	IVerificationResult,
 } from '@shared/models/user.models';
+import { INotificationsSettings } from '../../settings/components/notifications/models/notifications.models';
 
 @Injectable()
 export class UserService {
@@ -31,17 +32,16 @@ export class UserService {
 		});
 	}
 
-	public changeConsents(
-		pushChatConsent: boolean,
-		emailChatConsent: boolean,
-		pushOtherConsent: boolean,
-		emailOtherConsent: boolean
-	) {
+	public changeConsents(notificationForm: INotificationsSettings) {
 		return this.http.post(`${this.apiRoute}/consent`, {
-			pushChatConsent,
-			emailChatConsent,
-			pushOtherConsent,
-			emailOtherConsent,
+			pushChatConsent: notificationForm.pushChatConsent,
+			emailChatConsent: notificationForm.emailChatConsent,
+			pushOtherConsent: notificationForm.pushOtherConsent,
+			emailOtherConsent: notificationForm.emailOtherConsent,
 		});
+	}
+
+	public getConsents() {
+		return this.http.get<INotificationsSettings>(`${this.apiRoute}/consent`);
 	}
 }
