@@ -6,6 +6,7 @@ import { IMyProfile, IUser, IUserOpinion } from '@shared/models/user.models';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-profile',
@@ -26,6 +27,8 @@ export class ProfileComponent extends BaseComponent {
 				: this.userService.getUserById(id);
 		})
 	);
+	public authModel = AuthModels;
+	public avatarURL = './assets/avatar.png';
 
 	constructor(
 		private route: ActivatedRoute,

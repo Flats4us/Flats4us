@@ -6,6 +6,7 @@ import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
 import { environment } from 'src/environments/environment';
 
 import {
+	AuthModels,
 	IAuthTokenResponse,
 	IPasswordChangeRequest,
 	IPermission,
@@ -13,19 +14,20 @@ import {
 	LoggedUserType,
 } from '../models/auth.models';
 import { NotificationsService } from './notifications.service';
+import { ProfileService } from 'src/app/profile/services/profile.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthService {
-	public allPermissions: Map<string, IPermission> = new Map([
-		['moderator', { user: 'MODERATOR', status: '0' }],
-		['verifiedStudent', { user: 'STUDENT', status: '0' }],
-		['verifiedOwner', { user: 'OWNER', status: '0' }],
-		['unverifiedStudent', { user: 'STUDENT', status: '1' }],
-		['unverifiedOwner', { user: 'OWNER', status: '1' }],
-		['allLoggedIn', { allLoggedIn: true }],
-		['notLoggedIn', { notLoggedIn: true }],
+	public allPermissions: Map<AuthModels, IPermission> = new Map([
+		[AuthModels.MODERATOR, { user: 'MODERATOR', status: '0' }],
+		[AuthModels.VERIFIED_STUDENT, { user: 'STUDENT', status: '0' }],
+		[AuthModels.VERIFIED_OWNER, { user: 'OWNER', status: '0' }],
+		[AuthModels.UNVERIFIED_STUDENT, { user: 'STUDENT', status: '1' }],
+		[AuthModels.UNVERIFIED_OWNER, { user: 'OWNER', status: '1' }],
+		[AuthModels.ALL_LOGGED_IN, { allLoggedIn: true }],
+		[AuthModels.NOT_LOGGED_IN, { notLoggedIn: true }],
 	]);
 
 	protected apiRoute = `${environment.apiUrl}/auth`;
@@ -50,10 +52,25 @@ export class AuthService {
 	});
 	public accessControl$ = this.accessControl.asObservable();
 
+	public getPermissions(
+		permission: AuthModels | AuthModels[]
+	): IPermission | IPermission[] {
+		if (!(permission instanceof Array)) {
+			return this.allPermissions.get(permission) ?? { allLoggedIn: true };
+		} else {
+			const permissions: IPermission[] = [];
+			permission.forEach(perm =>
+				permissions.push(this.allPermissions.get(perm) ?? { allLoggedIn: true })
+			);
+			return permissions ?? { allLoggedIn: true };
+		}
+	}
+
 	constructor(
 		private http: HttpClient,
 		private router: Router,
-		private notificationsService: NotificationsService
+		private notificationsService: NotificationsService,
+		private profileService: ProfileService
 	) {
 		this.init();
 	}
@@ -144,6 +161,7 @@ export class AuthService {
 		localStorage.removeItem('authStatus');
 		this.isLoggedIn.next(false);
 		this.setUserType(false);
+		this.profileService.setHeaderPhotoURL('');
 		this.router.navigate(['/']);
 		this.notificationsService.stopConnection();
 	}

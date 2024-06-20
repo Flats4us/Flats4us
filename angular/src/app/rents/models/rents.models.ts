@@ -45,6 +45,7 @@ export interface IRent {
 	endDate: Date;
 	propertyAddress: string;
 	propertyType: number;
+	propertyAvgRating: number;
 	mainTenantId: number;
 	owner: IOwner;
 	propertyImages: IImage[];

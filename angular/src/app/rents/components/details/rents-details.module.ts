@@ -20,6 +20,7 @@ import { AccessControlDirective } from '@shared/directives/access-control.direct
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TranslateModule } from '@ngx-translate/core';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 
 @NgModule({
 	declarations: [RentsDetailsComponent],
@@ -46,6 +47,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatFormFieldModule,
 		AccessControlDirective,
 		TranslateModule,
+		StarRatingComponent
 	],
 	exports: [RentsDetailsComponent],
 })

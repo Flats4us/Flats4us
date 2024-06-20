@@ -19,6 +19,8 @@ import { AuthService } from '@shared/services/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '@shared/services/user.service';
+import { AuthModels } from '@shared/models/auth.models';
+import { TranslateService } from '@ngx-translate/core';
 import { StartDisputeDialogComponent } from '@shared/components/start-dispute-dialog/start-dispute-dialog.component';
 
 @Component({
@@ -46,9 +48,11 @@ export class RentsDetailsComponent extends BaseComponent {
 		false
 	);
 	public showRent$: Observable<boolean> = this.showRent.asObservable();
-	public student$ = this.userService.getMyProfile();
+	public studentId = 0;
 
 	public currentIndex = 0;
+
+	public authModels = AuthModels;
 
 	public displayedColumnsPayments: string[] = [
 		'paymentId',
@@ -77,7 +81,8 @@ export class RentsDetailsComponent extends BaseComponent {
 		public authService: AuthService,
 		private snackBar: MatSnackBar,
 		private cdr: ChangeDetectorRef,
-		private userService: UserService
+		private userService: UserService,
+		private translate: TranslateService
 	) {
 		super();
 		zip(this.rentId$, this.rentsService.getRents())
@@ -86,19 +91,30 @@ export class RentsDetailsComponent extends BaseComponent {
 				const result = rents.result.find(rents => rents.rentId === parseInt(id));
 				this.showRent.next(!!result);
 			});
+		this.userService
+			.getMyProfile()
+			.pipe(this.untilDestroyed())
+			.subscribe(user => (this.studentId = user.userId));
 	}
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);
 	}
 
-	public navigateToRent(id: number) {
+	public navigateToRent(id?: number) {
 		this.router.navigate(['rents', 'details', id]);
 	}
-	public navigateToOffer(id: number) {
-		this.router.navigate(['offer', 'owner', id]);
+	public navigateToOffer(id?: number, user?: string) {
+		let path = user?.toLowerCase();
+		if (!user) {
+			return;
+		}
+		if (path === 'student') {
+			path = 'details';
+		}
+		this.router.navigate(['offer', path, id]);
 	}
-	public navigateToProperty(id: number) {
+	public navigateToProperty(id?: number) {
 		this.router.navigate(['real-estate', 'owner', id]);
 	}
 	public startDispute(rentId: number) {
@@ -112,7 +128,8 @@ export class RentsDetailsComponent extends BaseComponent {
 		menuOption: IMenuOptions,
 		rentId?: number,
 		offerId?: number,
-		propertyId?: number
+		propertyId?: number,
+		user?: string
 	) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
@@ -120,7 +137,7 @@ export class RentsDetailsComponent extends BaseComponent {
 				break;
 			}
 			case 'offerDetails': {
-				this.navigateToOffer(offerId ?? 0);
+				this.navigateToOffer(offerId, user);
 				break;
 			}
 			case 'propertyDetails': {
@@ -189,9 +206,13 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.actualRent$ = this.rentsService.makePayment(paymentId).pipe(
 			this.untilDestroyed(),
 			switchMap(() => {
-				this.snackBar.open('Płatność została pomyślnie opłacona!', 'Zamknij', {
-					duration: 10000,
-				});
+				this.snackBar.open(
+					this.translate.instant('Rents-details.success-info'),
+					this.translate.instant('Rents-details.close'),
+					{
+						duration: 10000,
+					}
+				);
 				return this.rentId$?.pipe(
 					switchMap(rentId => this.rentsService.getRentById(parseInt(rentId, 10)))
 				);

@@ -39,11 +39,7 @@
 		<img
 			id="logo-footer"
 			alt="Company Logo"
-			[src]="
-				(isDarkMode$ | async)
-					? './assets/logoFlats4Us_dark.svg'
-					: './assets/logoFlats4Us.svg'
-			"
+			[src]="(isDarkMode$ | async) ? logoDarkURL : logoLightURL"
 		/>
 	</div>
 

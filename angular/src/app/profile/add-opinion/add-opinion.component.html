@@ -8,7 +8,9 @@
 		<form [formGroup]="opinionForm" (ngSubmit)="onSubmit(user.userId)">
 			<mat-card-content class="flex flex-wrap justify-center">
 				<div class="flex-[1_1_400px] p-5">
-					<h2 class="font-medium text-2xl mb-4">{{ user.name }}, {{ user.age }}</h2>
+					<h2 class="font-semibold text-2xl mb-4">
+						{{ user.name }}, {{ user.age }}
+					</h2>
 					<img
 						mat-card-avatar
 						alt="avatar"
@@ -31,7 +33,7 @@
 					</div>
 				</div>
 				<div class="flex-[2_2_500px] p-5">
-					<h2 class="flex justify-center font-medium drop-shadow-md mb-4">
+					<h2 class="flex justify-center text-2xl font-semibold mb-4">
 						{{ "Profile-add-opinion.new-opinion" | translate }}
 					</h2>
 					<fieldset class="tags mb-8">
@@ -106,16 +108,21 @@
 					</fieldset>
 					<div class="flex justify-between mb-4">
 						<label>{{ "Profile-add-opinion.your-rate" | translate }}: </label>
-						<div class="star-rating">
-							<mat-icon
-								*ngFor="let star of starsScale"
-								[ngClass]="{
-									selected: star <= this.opinionForm.controls['rating'].value
-								}"
-								(click)="countStar(star)"
-							>
-								star</mat-icon
-							>
+						<div class="flex flex-col justify-center items-center">
+							<div class="star-rating">
+								<mat-icon
+									*ngFor="let star of starsScale"
+									[ngClass]="{
+										selected: star <= this.opinionForm.controls['rating'].value
+									}"
+									(click)="countStar(star)"
+								>
+									star</mat-icon
+								>
+							</div>
+							<mat-error *ngIf="opinionForm.controls['rating'].hasError('min')">{{
+								"Profile-add-opinion.error2" | translate
+							}}</mat-error>
 						</div>
 					</div>
 					<mat-form-field class="w-full">
@@ -127,7 +134,7 @@
 				</div>
 			</mat-card-content>
 			<mat-card-actions class="gap-2 justify-center">
-				<button mat-raised-button type="button" (click)="opinionForm.reset()">
+				<button mat-raised-button type="button" (click)="resetForm()">
 					{{ "clear" | translate }}
 				</button>
 				<button mat-raised-button type="submit" [disabled]="!opinionForm.valid">

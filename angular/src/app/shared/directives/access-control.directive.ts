@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
 	selector: '[appAccessControl]',
 })
 export class AccessControlDirective implements OnDestroy {
-	@Input() public set appAccessControl(permission: IPermission | undefined) {
+	@Input() public set appAccessControl(permission: IPermission | IPermission[]) {
 		if (permission) {
 			this.allowAccess(permission);
 		} else if (!permission) {
@@ -31,28 +31,52 @@ export class AccessControlDirective implements OnDestroy {
 		private viewContainer: ViewContainerRef
 	) {}
 
-	private allowAccess(permission: IPermission) {
-		this.authService.accessControl$
-			.pipe(takeUntil(this.destroyed))
-			.subscribe(data => {
-				switch (true) {
-					case !permission.allLoggedIn &&
-						!permission.notLoggedIn &&
-						data.user === permission.user &&
-						data.status === permission.status:
-						this.showTemplate();
-						break;
-					case permission.allLoggedIn && data.isLoggedIn:
-						this.showTemplate();
-						break;
-					case permission.notLoggedIn && !data.isLoggedIn:
-						this.showTemplate();
-						break;
-					default:
-						this.hideTemplate();
-						break;
-				}
-			});
+	private allowAccess(permission: IPermission | IPermission[]) {
+		if (permission instanceof Array) {
+			this.authService.accessControl$
+				.pipe(takeUntil(this.destroyed))
+				.subscribe(data => {
+					switch (true) {
+						case !permission.find(perm => perm.allLoggedIn) &&
+							!permission.find(perm => perm.notLoggedIn) &&
+							!!permission.find(perm => data.user === perm.user) &&
+							!!permission.find(perm => data.status === perm.status):
+							this.showTemplate();
+							break;
+						case !!permission.find(perm => perm.allLoggedIn) && data.isLoggedIn:
+							this.showTemplate();
+							break;
+						case !!permission.find(perm => perm.notLoggedIn) && !data.isLoggedIn:
+							this.showTemplate();
+							break;
+						default:
+							this.hideTemplate();
+							break;
+					}
+				});
+		} else {
+			this.authService.accessControl$
+				.pipe(takeUntil(this.destroyed))
+				.subscribe(data => {
+					switch (true) {
+						case !permission.allLoggedIn &&
+							!permission.notLoggedIn &&
+							data.user === permission.user &&
+							data.status === permission.status:
+							this.showTemplate();
+							break;
+						case permission.allLoggedIn && data.isLoggedIn:
+							this.showTemplate();
+							break;
+						case permission.notLoggedIn && !data.isLoggedIn:
+							this.showTemplate();
+							break;
+						default:
+							this.hideTemplate();
+							break;
+					}
+				});
+		}
 	}
 
 	private showTemplate() {

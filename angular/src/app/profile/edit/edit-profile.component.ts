@@ -7,7 +7,7 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { Observable, concat, concatMap, of } from 'rxjs';
+import { Observable, concat, concatMap, of, tap } from 'rxjs';
 import {
 	AbstractControl,
 	FormBuilder,
@@ -76,7 +76,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public mType = ModificationType;
 	public sType = StatusType;
 
-	public urlAvatar = '../../../assets/avatar.png';
+	public urlAvatar = './assets/avatar.png';
 	public fileScanName = '';
 	public filePhotoName = '';
 	public urlPhoto = '';
@@ -355,7 +355,12 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 						},
 						complete: () => {
 							this.actualUser$ = this.profileService.getActualProfile();
-							window.location.reload();
+							this.profileService.startEdit();
+							this.actualUser$.pipe(
+								tap(user =>
+									this.profileService.setHeaderPhotoURL(user.profilePicture.path)
+								)
+							);
 						},
 					});
 			}

@@ -51,12 +51,14 @@ $angular-warn: mat.define-palette(mat.$red-palette);
 
 $textColor_light: black;
 $textColor_dark: white;
-$bgColor_light: rgb(245 245 244);
+$bgColor_light: #f5f5f5;
 $bgColor_dark: #282828;
 $borderColor_light: black;
 $borderColor_dark: white;
 $bgColor_dark_header: #3f3f3f;
 $bgColor_light_header: #fbbb8b;
+$bgColor_dark_mat-card: #3f3f3f;
+$bgColor_light_mat-card: #fffafa;
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -92,6 +94,7 @@ $angular-dark-theme: mat.define-dark-theme(
 	--bgColor: #{$bgColor_dark};
 	--borderColor: #{$borderColor_dark};
 	--headerBgColor: #{$bgColor_dark_header};
+	--mat-cardBgColor: #{$bgColor_dark_mat-card};
 }
 
 @mixin lighten() {
@@ -99,19 +102,20 @@ $angular-dark-theme: mat.define-dark-theme(
 	--bgColor: #{$bgColor_light};
 	--borderColor: #{$borderColor_light};
 	--headerBgColor: #{$bgColor_light_header};
+	--mat-cardBgColor: #{$bgColor_light_mat-card};
 }
+
+@include mat.all-component-themes($angular-light-theme);
 
 body.dark {
 	@include darken();
-	@include mat.all-component-themes($angular-dark-theme);
+	@include mat.all-component-colors($angular-dark-theme);
 }
 
 body.light {
 	@include lighten();
-	@include mat.all-component-themes($angular-light-theme);
+	@include mat.all-component-colors($angular-light-theme);
 }
-
-@include mat.all-component-themes($angular-light-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -128,6 +132,7 @@ body {
 	font-family: Roboto, "Helvetica Neue", sans-serif;
 	@include lighten();
 }
+
 .mdc-notched-outline__notch {
 	border-right: none;
 }
@@ -203,16 +208,17 @@ mat-card-subtitle {
 	color: var(--textColor) !important;
 }
 
+mat-paginator mat-card mat-table {
+	background-color: var(--mat-cardBgColor) !important;
+}
+
 .stylePopup .leaflet-popup-content-wrapper,
 .stylePopup .leaflet-popup-tip {
 	background-color: var(--bgColor);
 	color: var(--textColor);
 }
 
-.marker-cluster {
-	background-color: var(--headerBgColor) !important;
-}
-
+.marker-cluster,
 .marker-cluster div {
 	background-color: var(--headerBgColor) !important;
 }

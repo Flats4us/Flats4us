@@ -54,7 +54,6 @@
 										aria-label="MenuButton"
 										matTooltip="{{ 'more-options' | translate }}"
 										[matMenuTriggerFor]="menu"
-										[disabled]="data.rent?.isFinished"
 									>
 										<mat-icon>more_horiz</mat-icon>
 									</button>
@@ -64,16 +63,18 @@
 											mat-menu-item
 											[value]="menuOption.description"
 											[disabled]="
-												data.user === uType.STUDENT &&
-												(menuOption.option === 'offerDetails' ||
-													menuOption.option === 'propertyDetails')
+												(data.user === uType.STUDENT &&
+													(menuOption.option === 'offerDetails' ||
+														menuOption.option === 'propertyDetails')) ||
+												(data.rent?.isFinished && menuOption.option === 'startDispute')
 											"
 											(click)="
 												onSelect(
 													menuOption,
 													data.rent?.rentId,
 													data.rent?.offerId,
-													data.rent?.propertyId
+													data.rent?.propertyId,
+													data.user
 												)
 											"
 										>
@@ -145,6 +146,32 @@
 						</nav>
 					</div>
 				</div>
+				<mat-card-footer class="flex flex-row">
+					<mat-card-subtitle class="label-survey">
+						<span>
+							<mat-chip
+								class="mr-4"
+								matTooltip="{{
+									data.rent?.propertyAvgRating
+										? ('Rents-details.offer-info-rating1' | translate) +
+										  ': ' +
+										  data.rent?.propertyAvgRating
+										: ('Offer.offer-info-rating1' | translate)
+								}}"
+								(click)="
+									data.rent?.propertyAvgRating
+										? navigateToOffer(data.rent?.offerId, data.user ?? '')
+										: navigateToOffer(data.rent?.offerId, '')
+								"
+							>
+								<div class="flex items-center pt-1 w-fit cursor-pointer">
+									<app-star-rating [avgRating]="data.rent?.propertyAvgRating ?? 0">
+									</app-star-rating>
+								</div>
+							</mat-chip>
+						</span>
+					</mat-card-subtitle>
+				</mat-card-footer>
 			</mat-card-content>
 		</mat-card>
 
@@ -245,7 +272,7 @@
 				</div>
 				<mat-divider *ngIf="data.user === uType.STUDENT"></mat-divider>
 				<div
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 					class="row"
 				>
 					<div class="column">
@@ -385,17 +412,16 @@
 						<ng-container matColumnDef="actions">
 							<mat-header-cell *matHeaderCellDef></mat-header-cell>
 							<mat-cell *matCellDef="let element">
-								<div *ngIf="student$ | async as student" class="ml-auto">
-									<button
-										*ngIf="student.userId === data.rent?.mainTenantId && !element.isPaid"
-										mat-mini-fab
-										color="primary"
-										matTooltip="Dokonaj płatności"
-										(click)="makePayment(element.paymentId)"
-									>
-										<mat-icon>payments</mat-icon>
-									</button>
-								</div>
+								<button
+									*ngIf="studentId === data.rent?.mainTenantId && !element.isPaid"
+									mat-mini-fab
+									class="ml-auto"
+									color="primary"
+									matTooltip="{{ 'Rents-details.payment' | translate }}"
+									(click)="makePayment(element.paymentId)"
+								>
+									<mat-icon>payments</mat-icon>
+								</button>
 							</mat-cell>
 						</ng-container>
 						<mat-header-row
@@ -412,7 +438,9 @@
 			<div class="button-box-options">
 				<div *ngIf="data.user === uType.DETAILS">
 					<button
-						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						*appAccessControl="
+							authService.getPermissions(authModels.VERIFIED_STUDENT)
+						"
 						mat-raised-button
 						color="primary"
 						(click)="navigateStudentRents()"
@@ -420,7 +448,7 @@
 						{{ "return" | translate }}
 					</button>
 					<button
-						*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+						*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 						mat-raised-button
 						color="primary"
 						(click)="navigateOwnerRents()"
@@ -430,7 +458,12 @@
 				</div>
 				<div *ngIf="!data.rent?.isFinished">
 					<button
-						*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+						*appAccessControl="
+							authService.getPermissions([
+								authModels.VERIFIED_STUDENT,
+								authModels.VERIFIED_OWNER
+							])
+						"
 						mat-raised-button
 						color="primary"
 						(click)="onAddMeeting(data.rent?.offerId)"
@@ -440,7 +473,9 @@
 				</div>
 				<div *ngIf="data.rent?.isFinished">
 					<button
-						*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+						*appAccessControl="
+							authService.getPermissions(authModels.VERIFIED_STUDENT)
+						"
 						mat-raised-button
 						color="primary"
 						(click)="onRate()"

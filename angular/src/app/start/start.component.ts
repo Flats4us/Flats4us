@@ -31,6 +31,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PropertyRatingComponent } from '../offer/components/property-rating/property-rating.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-start',
@@ -67,6 +68,7 @@ export class StartComponent
 	private paginatorDescriptionA = 'z';
 	private paginatorDescriptionB = 'ofert';
 	public languageChange: string = this.translate.currentLang;
+	public authModels = AuthModels;
 
 	@ViewChild(MatPaginator, { static: true })
 	private paginator: MatPaginator = new MatPaginator(

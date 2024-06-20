@@ -1,4 +1,3 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -6,16 +5,18 @@ import {
 	OnInit,
 	ViewChild,
 } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '@shared/services/auth.service';
-import { LocaleService } from '@shared/services/locale.service';
-import { NotificationsService } from '@shared/services/notifications.service';
-import { ThemeService } from '@shared/services/theme.service';
-import { UserService } from '@shared/services/user.service';
-import { takeUntil } from 'rxjs';
-
 import { environment } from '../../../../environments/environment';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { BaseComponent } from '../base/base.component';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { LocaleService } from '@shared/services/locale.service';
+import { ThemeService } from '@shared/services/theme.service';
+import { AuthModels } from '@shared/models/auth.models';
+import { ProfileService } from 'src/app/profile/services/profile.service';
+import { Observable, take, takeUntil } from 'rxjs';
+import { IUserProfile } from 'src/app/profile/models/profile.models';
+import { NotificationsService } from '@shared/services/notifications.service';
 
 @Component({
 	selector: 'app-header',
@@ -29,12 +30,40 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 
 	public notifications$ = this.notificationsService.notifications$;
 
-	public isDarkMode: boolean = this.themeService.isDarkMode();
+	public isDarkMode = this.themeService.isDarkMode();
 
 	protected baseUrl = environment.apiUrl.replace('/api', '');
-	protected user$ = this.userService.getMyProfile();
 
 	public languages = ['PL', 'EN'];
+
+	public authModels = AuthModels;
+
+	public avatarURL = './assets/avatar.png';
+	public logoDarkURL = './assets/logoFlats4Us_dark.svg';
+	public logoLightURL = './assets/logoFlats4Us.svg';
+
+	public headerPhotoURL$ = this.profileService.getHeaderPhotoURL();
+
+	public profile$: Observable<IUserProfile> | undefined;
+
+	constructor(
+		public authService: AuthService,
+		private breakpointObserver: BreakpointObserver,
+		private localeService: LocaleService,
+		private themeService: ThemeService,
+		private profileService: ProfileService,
+		private notificationsService: NotificationsService
+	) {
+		super();
+		this.breakpointObserver
+			.observe(['(max-width: 1000px)'])
+			.pipe(this.untilDestroyed())
+			.subscribe((result: BreakpointState) => {
+				if (!result.matches) {
+					this.menuTrigger?.closeMenu();
+				}
+			});
+	}
 
 	@HostListener('window:unload', ['$event'])
 	public unloadHandler() {
@@ -52,25 +81,6 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	constructor(
-		public authService: AuthService,
-		public userService: UserService,
-		private breakpointObserver: BreakpointObserver,
-		private localeService: LocaleService,
-		private themeService: ThemeService,
-		private notificationsService: NotificationsService
-	) {
-		super();
-		this.breakpointObserver
-			.observe(['(max-width: 1000px)'])
-			.pipe(this.untilDestroyed())
-			.subscribe((result: BreakpointState) => {
-				if (!result.matches) {
-					this.menuTrigger?.closeMenu();
-				}
-			});
-	}
-
 	public ngOnInit(): void {
 		const theme = window.localStorage.getItem('isDarkMode');
 		const locale = window.localStorage.getItem('currentLocale');
@@ -80,6 +90,23 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		if (locale && locale !== this.localeService.getCurrentLocale()) {
 			this.changeLanguage(locale);
 		}
+
+		this.authService.isLoggedIn$
+			.pipe(this.untilDestroyed())
+			.subscribe(isLoggedIn => {
+				if (isLoggedIn && !this.profile$) {
+					this.profile$ = this.profileService.getActualProfile();
+				}
+				if (
+					this.profile$ &&
+					isLoggedIn &&
+					(!this.profileService.isHeaderPhotoURL() || this.profileService.isToEdit())
+				) {
+					this.profile$.pipe(take(1)).subscribe(user => {
+						this.profileService.setHeaderPhotoURL(user?.profilePicture?.path);
+					});
+				}
+			});
 	}
 
 	public readNotification(id: string) {

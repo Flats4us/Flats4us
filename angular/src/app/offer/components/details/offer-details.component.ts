@@ -23,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { IProperty } from 'src/app/real-estate/models/real-estate.models';
 import { PropertyRatingComponent } from '../property-rating/property-rating.component';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-offer-details',
@@ -60,6 +61,8 @@ export class OfferDetailsComponent extends BaseComponent {
 	public uType = UserType;
 
 	public currentIndex = 0;
+
+	public authModels = AuthModels;
 
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'offerDetails', description: 'Offer.offer-details' },

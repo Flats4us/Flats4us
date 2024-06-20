@@ -1,18 +1,17 @@
-<mat-toolbar class="custom-toolbar" role="heading">
+<mat-toolbar
+	*ngIf="{ loggedIn: authService.isLoggedIn$ | async } as data"
+	class="custom-toolbar"
+	role="heading"
+>
 	<a class="h-full logo" [routerLink]="['/']">
 		<img
 			class="h-full w-auto"
 			alt=""
-			[src]="
-				isDarkMode ? './assets/logoFlats4Us_dark.svg' : './assets/logoFlats4Us.svg'
-			"
+			[src]="isDarkMode ? logoDarkURL : logoLightURL"
 		/>
 	</a>
-	<div
-		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
-		class="flex items-center max-w-max"
-	>
-		<ng-container *ngTemplateOutlet="buttons"></ng-container>
+	<div *ngIf="data.loggedIn" class="flex items-center max-w-max">
+		<ng-container [ngTemplateOutlet]="buttons"></ng-container>
 	</div>
 	<div class="spacer"></div>
 	<div>
@@ -30,7 +29,7 @@
 				{{ "Header.home-page" | translate }}
 			</button>
 			<button
-				*appAccessControl="authService.allPermissions.get('notLoggedIn')"
+				*appAccessControl="authService.getPermissions(authModels.NOT_LOGGED_IN)"
 				mat-menu-item
 				[routerLink]="['/auth', 'login']"
 			>
@@ -38,7 +37,7 @@
 				{{ "Header.log" | translate }}
 			</button>
 			<button
-				*appAccessControl="authService.allPermissions.get('notLoggedIn')"
+				*appAccessControl="authService.getPermissions(authModels.NOT_LOGGED_IN)"
 				mat-menu-item
 				[routerLink]="['/profile', 'create']"
 			>
@@ -46,7 +45,13 @@
 				{{ "Login.registration" | translate }}
 			</button>
 			<button
-				*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+				*appAccessControl="
+					authService.getPermissions([
+						authModels.VERIFIED_STUDENT,
+						authModels.VERIFIED_OWNER,
+						authModels.MODERATOR
+					])
+				"
 				mat-menu-item
 				[routerLink]="['/conversations']"
 			>
@@ -54,7 +59,7 @@
 				{{ "Header.messages" | translate }}
 			</button>
 			<button
-				*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+				*appAccessControl="authService.getPermissions(authModels.ALL_LOGGED_IN)"
 				mat-menu-item
 				[routerLink]="['/settings']"
 			>
@@ -63,7 +68,12 @@
 			</button>
 
 			<button
-				*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+				*appAccessControl="
+					authService.getPermissions([
+						authModels.VERIFIED_OWNER,
+						authModels.VERIFIED_STUDENT
+					])
+				"
 				mat-menu-item
 				[matMenuTriggerFor]="extended"
 			>
@@ -71,7 +81,7 @@
 			</button>
 
 			<button
-				*appAccessControl="authService.allPermissions.get('moderator')"
+				*appAccessControl="authService.getPermissions(authModels.MODERATOR)"
 				mat-button
 				class="mr-2"
 				[routerLink]="['/moderation-console']"
@@ -82,7 +92,12 @@
 
 			<mat-menu #extended="matMenu">
 				<button
-					*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_OWNER,
+							authModels.VERIFIED_STUDENT
+						])
+					"
 					mat-menu-item
 					[routerLink]="['/calendar']"
 				>
@@ -90,7 +105,7 @@
 					{{ "Header.calendar" | translate }}
 				</button>
 				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 					mat-menu-item
 					[routerLink]="['/find-roommate']"
 				>
@@ -98,20 +113,22 @@
 					{{ "Header.find-roommates" | translate }}
 				</button>
 				<button
-					*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_STUDENT,
+							authModels.VERIFIED_OWNER
+						])
+					"
 					mat-menu-item
 					[routerLink]="['/disputes']"
 				>
 					<mat-icon class="material-symbols-outlined">gavel</mat-icon>
-					spory
+					{{ "Header.disputes" | translate }}
 				</button>
 			</mat-menu>
 		</mat-menu>
 	</div>
-	<div
-		*ngIf="authService.isLoggedIn$ | async; else notLoggedIn"
-		class="flex items-center"
-	>
+	<div *ngIf="data.loggedIn; else notLoggedIn" class="flex items-center">
 		<ng-container *ngIf="notifications$ | async as notifications">
 			<button
 				mat-icon-button
@@ -134,17 +151,13 @@
 		</ng-container>
 		<ng-container *ngTemplateOutlet="darkLanguageButtons"></ng-container>
 		<button
-			*ngIf="user$ | async as user"
+			*ngIf="{ photo: headerPhotoURL$ | async } as data"
 			class="your-profile"
 			[matMenuTriggerFor]="myProfile"
 		>
 			<img
 				class="your-photo"
-				[src]="
-					user?.profilePicture?.path
-						? baseUrl + '/' + user.profilePicture.path
-						: './assets/avatar.png'
-				"
+				[src]="data.photo ? baseUrl + '/' + data.photo : avatarURL"
 			/>
 		</button>
 	</div>
@@ -158,7 +171,7 @@
 			{{ "Header.edit-profile" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 			mat-menu-item
 			[routerLink]="['/rents', 'owner']"
 		>
@@ -166,7 +179,7 @@
 			{{ "Header.my-rentals" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 			mat-menu-item
 			[routerLink]="['/rents', 'student']"
 		>
@@ -174,7 +187,7 @@
 			{{ "Header.my-rentals" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 			mat-menu-item
 			[routerLink]="['/offer', 'owner']"
 		>
@@ -182,7 +195,7 @@
 			{{ "Header.my-offers" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 			mat-menu-item
 			[routerLink]="['/real-estate', 'owner']"
 		>
@@ -190,7 +203,7 @@
 			{{ "Header.my-properties" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 			mat-menu-item
 			[routerLink]="['/real-estate', 'add']"
 		>
@@ -198,7 +211,7 @@
 			{{ "Header.add-property" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 			mat-menu-item
 			[routerLink]="['/offer', 'add']"
 		>
@@ -206,7 +219,7 @@
 			{{ "Header.add-offer" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 			mat-menu-item
 			[routerLink]="['/offer', 'watched']"
 		>
@@ -238,7 +251,32 @@
 				{{ "Login.registration" | translate }}
 			</button>
 		</div>
-		<ng-container *ngTemplateOutlet="darkLanguageButtons"></ng-container>
+		<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+			<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
+		</button>
+		<button
+			mat-icon-button
+			class="responsive-menu-lang"
+			[matTooltip]="'Header.change-language-tooltip' | translate"
+			[matMenuTriggerFor]="languageChange"
+		>
+			<mat-icon>language</mat-icon>
+		</button>
+		<mat-menu #languageChange="matMenu">
+			<button
+				*ngFor="let lang of languages"
+				mat-menu-item
+				class="flex-row justify-center items-center"
+				(click)="changeLanguage(lang)"
+			>
+				<span> {{ lang }} </span>
+
+				<ng-container [ngSwitch]="lang">
+					<span *ngSwitchCase="'PL'" class="fi fi-pl"></span>
+					<span *ngSwitchCase="'EN'" class="fi fi-gb"></span>
+				</ng-container>
+			</button>
+		</mat-menu>
 	</ng-template>
 </mat-toolbar>
 
@@ -247,45 +285,22 @@
 		<mat-icon class="material-symbols-outlined">home</mat-icon>
 		{{ "Header.home-page" | translate }}
 	</button>
-	<button
-		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
-		class="mr-2"
-		mat-button
-		[routerLink]="['/auth', 'login']"
-	>
-		<mat-icon class="material-symbols-outlined">login</mat-icon>
-		{{ "Header.log" | translate }}
-	</button>
-	<button
-		*appAccessControl="authService.allPermissions.get('notLoggedIn')"
-		class="mr-2"
-		mat-button
-		[routerLink]="['/profile', 'create']"
-	>
-		<mat-icon class="material-symbols-outlined">app_registration</mat-icon>
-		{{ "Login.registration" | translate }}
-	</button>
-	<button
-		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
-		mat-button
-		class="mr-2"
-		[routerLink]="['/conversations']"
-	>
+	<button mat-button class="mr-2" [routerLink]="['/conversations']">
 		<mat-icon class="material-icons-outlined">chat</mat-icon>
 		{{ "Header.messages" | translate }}
 	</button>
-	<button
-		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
-		mat-button
-		class="mr-2"
-		[routerLink]="['/settings']"
-	>
+	<button mat-button class="mr-2" [routerLink]="['/settings']">
 		<mat-icon class="material-icons-outlined">settings</mat-icon>
 		{{ "Header.settings" | translate }}
 	</button>
 
 	<button
-		*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+		*appAccessControl="
+			authService.getPermissions([
+				authModels.VERIFIED_OWNER,
+				authModels.VERIFIED_STUDENT
+			])
+		"
 		mat-button
 		class="mr-2"
 		[matMenuTriggerFor]="extended"
@@ -294,7 +309,7 @@
 		{{ "Header.additional" | translate }}
 	</button>
 	<button
-		*appAccessControl="authService.allPermissions.get('moderator')"
+		*appAccessControl="authService.getPermissions(authModels.MODERATOR)"
 		mat-button
 		class="mr-2"
 		[routerLink]="['/moderation-console']"
@@ -305,7 +320,12 @@
 
 	<mat-menu #extended="matMenu">
 		<button
-			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			*appAccessControl="
+				authService.getPermissions([
+					authModels.VERIFIED_OWNER,
+					authModels.VERIFIED_STUDENT
+				])
+			"
 			mat-menu-item
 			[routerLink]="['/calendar']"
 		>
@@ -313,7 +333,7 @@
 			{{ "Header.calendar" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 			mat-menu-item
 			[routerLink]="['/find-roommate']"
 		>
@@ -321,12 +341,17 @@
 			{{ "Header.find-roommates" | translate }}
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('allLoggedIn')"
+			*appAccessControl="
+				authService.getPermissions([
+					authModels.VERIFIED_STUDENT,
+					authModels.VERIFIED_OWNER
+				])
+			"
 			mat-menu-item
 			[routerLink]="['/disputes']"
 		>
 			<mat-icon class="material-symbols-outlined">gavel</mat-icon>
-			spory
+			{{ "Header.disputes" | translate }}
 		</button>
 	</mat-menu>
 </ng-template>

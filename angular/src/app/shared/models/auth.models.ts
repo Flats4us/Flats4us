@@ -29,3 +29,13 @@ export interface IPermission {
 	allLoggedIn?: boolean;
 	notLoggedIn?: boolean;
 }
+
+export enum AuthModels {
+	MODERATOR = 'MODERATOR',
+	VERIFIED_STUDENT = 'VERIFIED_STUDENT',
+	VERIFIED_OWNER = 'VERIFIED_OWNER',
+	UNVERIFIED_STUDENT = 'UNVERIFIED_STUDENT',
+	UNVERIFIED_OWNER = 'UNVERIFIED_OWNER',
+	ALL_LOGGED_IN = 'ALL_LOGGED_IN',
+	NOT_LOGGED_IN = 'NOT_LOGGED_IN',
+}

@@ -31,7 +31,6 @@ import { OfferModule } from 'src/app/offer/offer.module';
 import { PasswordChangeModule } from 'src/app/settings/components/password-change/password-change.module';
 import { SettingsRoutingModule } from 'src/app/settings/settings-routing.module';
 import { ProfileRoutingModule } from '../profile-routing.module';
-import { ProfileService } from '../services/profile.service';
 import { EditProfileComponent } from './edit-profile.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
@@ -74,6 +73,6 @@ import { EmailChangeModule } from 'src/app/settings/components/email-change/emai
 		TranslateModule,
 	],
 	exports: [EditProfileComponent],
-	providers: [ProfileService, FormGroupDirective, SurveyService, UserService],
+	providers: [FormGroupDirective, SurveyService, UserService],
 })
 export class EditProfileModule {}

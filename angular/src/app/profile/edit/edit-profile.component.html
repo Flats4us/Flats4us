@@ -76,7 +76,10 @@
 						(change)="onFileSelected($event, regexImage)"
 					/>
 					<mat-error
-						*ngIf="!urlPhoto || (urlPhoto === urlAvatar && actualUser.userType !== 2)"
+						*ngIf="
+							!urlPhoto ||
+							(actualUser && urlPhoto === urlAvatar && actualUser.userType !== 2)
+						"
 					>
 						<div class="text-xl flex justify-center items-center">
 							<mat-icon>error</mat-icon
@@ -147,7 +150,7 @@
 					</div>
 					<div class="button-box">
 						<button
-							*ngIf="actualUser.userType !== 2"
+							*ngIf="!actualUser || (actualUser && actualUser.userType !== 2)"
 							mat-raised-button
 							color="primary"
 							id="upload"
@@ -240,7 +243,12 @@
 							{{ "Profile-edit.university-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
-					<mat-form-field *ngIf="actualUser.userType !== 2">
+					<mat-form-field
+						*ngIf="
+							modificationType === mType.CREATE ||
+							(actualUser && actualUser.userType !== 2)
+						"
+					>
 						<mat-label>{{ "Profile-edit.address" | translate }}</mat-label>
 						<input
 							id="address"
@@ -384,7 +392,8 @@
 									actualUser.userType !== 2)
 							"
 							class="scan-url-box-desc"
-							>{{ "Profile-edit.load-scan-actual" | translate }}! |</span
+							>{{ "Profile-edit.load-scan-actual" | translate }}!
+							{{ urlNewScan ? "|" : "" }}</span
 						>
 						<span
 							*ngIf="urlNewScan && modificationType === mType.CREATE"
@@ -429,7 +438,12 @@
 							{{ "Profile-edit.identification-info" | translate }}!
 						</mat-error>
 					</mat-form-field>
-					<mat-form-field *ngIf="actualUser.userType !== 2">
+					<mat-form-field
+						*ngIf="
+							modificationType === mType.CREATE ||
+							(actualUser && actualUser.userType !== 2)
+						"
+					>
 						<mat-label>{{
 							"Profile-edit.identification-date" | translate
 						}}</mat-label>

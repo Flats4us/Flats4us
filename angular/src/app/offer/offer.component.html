@@ -17,7 +17,7 @@
 					<h1 class="text-3xl p-4">
 						<span class="mr-4">{{ "Offer.no-offers" | translate }}</span>
 						<button
-							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+							*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 							mat-mini-fab
 							id="add"
 							color="basic"
@@ -40,7 +40,9 @@
 						<div class="box-title-sub">
 							<span>{{ "Offer.my-offers" | translate }}</span>
 							<button
-								*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+								*appAccessControl="
+									authService.getPermissions(authModels.VERIFIED_OWNER)
+								"
 								mat-mini-fab
 								id="add"
 								color="basic"
@@ -65,7 +67,8 @@
 									<div>
 										{{ "Offer.rent1" | translate }} -
 										{{
-											offerService.getOfferStatus(offer.property.propertyType) | translate
+											realEstateService.getPropertyType(offer.property.propertyType)
+												| translate
 										}}
 									</div>
 									<div>{{ offer.property.area }} m² {{ offer.property.city }}</div>
@@ -73,9 +76,7 @@
 								<mat-icon
 									*ngIf="offer.offerStatus !== 2"
 									[ngClass]="
-										offer.offerStatus === 0 || offer.offerStatus === 1
-											? 'box-icon-valid'
-											: 'box-icon-invalid'
+										offer.offerStatus === 0 ? 'box-icon-valid' : 'box-icon-invalid'
 									"
 									>check_circle</mat-icon
 								>

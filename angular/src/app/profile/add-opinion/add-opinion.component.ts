@@ -88,6 +88,25 @@ export class AddOpinionComponent extends BaseComponent {
 		this.opinionForm.controls['rating'].setValue(star);
 	}
 
+	public resetForm() {
+		this.opinionForm = this.fb.group({
+			helpful: false,
+			cooperative: false,
+			tidy: false,
+			friendly: false,
+			respectingPrivacy: false,
+			communicative: false,
+			unfair: false,
+			lackOfHygiene: false,
+			untidy: false,
+			conflicting: false,
+			noisy: false,
+			notFollowingTheArrangements: false,
+			rating: [0, Validators.min(1)],
+			description: [''],
+		});
+	}
+
 	public onSubmit(profileId: number) {
 		this.profileService
 			.addOpinion(profileId, this.opinionForm.value)
