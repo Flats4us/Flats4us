@@ -98,7 +98,6 @@ namespace Flats4us.Services
                 .Where(result => result.ConditionsMet >= Matcher.AgreementPercentage * 12) 
                 .OrderByDescending(result => result.ConditionsMet)
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential.PotentialStudent))
-                //.Take(5)
                 .ToListAsync();
 
             return potentialRoommates;
