@@ -47,7 +47,7 @@ import { StarRatingComponent } from '@shared/components/star-rating/star-rating.
 		MatFormFieldModule,
 		AccessControlDirective,
 		TranslateModule,
-		StarRatingComponent
+		StarRatingComponent,
 	],
 	exports: [RentsDetailsComponent],
 })
