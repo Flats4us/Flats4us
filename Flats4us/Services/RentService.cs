@@ -274,14 +274,15 @@ namespace Flats4us.Services
 
             if (rent == null) throw new ArgumentException($"Rent with ID {id} not found.");
 
+            var user = await _context.Users.FindAsync(requestUserId);
+
             if (rent.Offer.Property.OwnerId != requestUserId &&
                 rent.StudentId != requestUserId &&
-                !rent.OtherStudents.Any(os => os.UserId == requestUserId))
+                !rent.OtherStudents.Any(os => os.UserId == requestUserId) &&
+                user is not Moderator)
             {
                 throw new ForbiddenException($"You do not have permission to view this rent.");
             }
-
-            var user = await _context.Users.FindAsync(requestUserId);
 
             var result = _mapper.Map<RentDto>(rent);
 

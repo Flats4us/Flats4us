@@ -53,7 +53,7 @@ namespace Flats4us.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "VerifiedOwnerOrStudent")]
+        [Authorize(Policy = "VerifiedUser")]
         [SwaggerOperation(
             Summary = "Returns rent by id",
             Description = "Requires verified owner or student privileges"

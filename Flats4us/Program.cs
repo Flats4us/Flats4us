@@ -166,6 +166,12 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
     });
 
+    options.AddPolicy("VerifiedUser", policy =>
+    {
+        policy.RequireRole(nameof(Owner), nameof(Student), nameof(Moderator));
+        policy.RequireClaim("VerificationStatus", VerificationStatus.Verified.ToString());
+    });
+
     options.AddPolicy("RegisteredUser", policy =>
     {
         policy.RequireRole(nameof(Owner), nameof(Student), nameof(Moderator));
