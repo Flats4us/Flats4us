@@ -281,7 +281,18 @@ namespace Flats4us.Services
                 throw new ForbiddenException($"You do not have permission to view this rent.");
             }
 
-            return _mapper.Map<RentDto>(rent);
+            var user = await _context.Users.FindAsync(requestUserId);
+
+            var result = _mapper.Map<RentDto>(rent);
+
+            if (DateTime.Now > rent.EndDate &&
+                user is Student &&
+                !rent.Offer.Property.RentOpinions.Any(ro => ro.StudentId == requestUserId)
+            {
+                result.IsAddingOpinionAllowed = true;
+            }
+
+            return result;
         }
 
         public async Task<RentPropositionDto> GetRentPropositionAsync(int rentId, int requestUserId)

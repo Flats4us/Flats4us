@@ -35,6 +35,7 @@ namespace Flats4us.Helpers
                 .ForMember(dest => dest.PropertyAddress, opt => opt.MapFrom(src => $"{src.Offer.Property.Street} {src.Offer.Property.Number}{(src.Offer.Property.Flat != null ? ("/" + src.Offer.Property.Flat) : "")}, {src.Offer.Property.City}"))
                 .ForMember(dest => dest.PropertyImages, opt => opt.MapFrom(src => src.Offer.Property.Images))
                 .ForMember(dest => dest.MainTenantId, opt => opt.MapFrom(src => src.StudentId))
+                .ForMember(dest => dest.IsAddingOpinionAllowed, opt => opt.MapFrom(src => false))
                 .ForMember(dest => dest.Tenants, opt => opt.MapFrom(src => new List<Student>(src.OtherStudents) { src.Student }));
 
             CreateMap<Rent, RentPropositionDto>()

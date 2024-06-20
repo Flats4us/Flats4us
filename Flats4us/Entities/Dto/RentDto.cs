@@ -38,6 +38,9 @@ namespace Flats4us.Entities.Dto
         [Required]
         public int MainTenantId { get; set; }
 
+        [Required]
+        public bool IsAddingOpinionAllowed { get; set; }
+
         public OwnerStudentDto Owner { get; set; }
 
         [Required]
