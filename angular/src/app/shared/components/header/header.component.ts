@@ -14,7 +14,7 @@ import { LocaleService } from '@shared/services/locale.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { AuthModels } from '@shared/models/auth.models';
 import { ProfileService } from 'src/app/profile/services/profile.service';
-import { Observable, take, takeUntil } from 'rxjs';
+import { Observable, of, switchMap, takeUntil } from 'rxjs';
 import { IUserProfile } from 'src/app/profile/models/profile.models';
 import { NotificationsService } from '@shared/services/notifications.service';
 
@@ -92,19 +92,24 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		}
 
 		this.authService.isLoggedIn$
-			.pipe(this.untilDestroyed())
-			.subscribe(isLoggedIn => {
-				if (isLoggedIn && !this.profile$) {
-					this.profile$ = this.profileService.getActualProfile();
-				}
-				if (
-					this.profile$ &&
-					isLoggedIn &&
-					(!this.profileService.isHeaderPhotoURL() || this.profileService.isToEdit())
-				) {
-					this.profile$.pipe(take(1)).subscribe(user => {
-						this.profileService.setHeaderPhotoURL(user?.profilePicture?.path);
-					});
+			.pipe(
+				switchMap(isLoggedIn => {
+					if (
+						isLoggedIn &&
+						(!this.profileService.isHeaderPhotoURL() ||
+							this.profileService.isToEdit())
+					) {
+						this.profile$ = this.profile$ = this.profileService.getActualProfile();
+						return this.profile$;
+					} else {
+						return of(undefined);
+					}
+				}),
+				this.untilDestroyed()
+			)
+			.subscribe(profile => {
+				if (profile) {
+					this.profileService.setHeaderPhotoURL(profile?.profilePicture?.path);
 				}
 			});
 	}
