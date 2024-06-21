@@ -37,12 +37,7 @@ export class UserService {
 		emailChatConsent,
 		pushOtherConsent,
 		emailOtherConsent,
-	}: {
-		pushChatConsent: boolean;
-		emailChatConsent: boolean;
-		pushOtherConsent: boolean;
-		emailOtherConsent: boolean;
-	}) {
+	}: INotificationsSettings) {
 		return this.http.post(`${this.apiRoute}/consent`, {
 			pushChatConsent,
 			emailChatConsent,
