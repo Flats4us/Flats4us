@@ -461,7 +461,8 @@
 		"year-type0": "do 1950",
 		"year-type1": "od 1950 do 1989",
 		"year-type2": "od 1990 do 2010",
-		"year-type3": "od 2010"
+		"year-type3": "od 2010",
+		"view": "Widok nieruchomości"
 	},
 	"Real-estate-add": {
 		"property-creator": "Kreator nieruchomości",
@@ -550,7 +551,8 @@
 		"date-issue": "Data wystawienia",
 		"offer-with": "Oferta z",
 		"offer-status": "Status oferty",
-		"property-info1": "Nieruchomość nie posiada powiązanych ofert"
+		"property-info1": "Nieruchomość nie posiada powiązanych ofert",
+		"option-details": "Szczegóły nieruchomości"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Usuwanie nieruchomości",
@@ -703,8 +705,8 @@
 		"notification-settings": "Ustawienia powiadomień",
 		"notification-info1": "Otrzymuj powiadomienia e-mail, gdy użytkownik wyśle Ci wiadomość",
 		"notification-info2": "Otrzymuj powiadomienia push, gdy użytkownik wyśle Ci wiadomość",
-		"notification-info3": "Otrzymuj pozostałe powiadomienia e-mail",
-		"notification-info4": "Otrzymuj pozostałe push"
+		"notification-info3": "Otrzymuj powiadomienia e-mail, gdy użytkownik dokona rezerwacji w Twoim obiekcie",
+		"notification-info4": "Otrzymuj powiadomienia push, gdy użytkownik dokona rezerwacji w Twoim obiekcie"
 	},
 	"Password-change": {
 		"password-change": "Zmiana hasła",

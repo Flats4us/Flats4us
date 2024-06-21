@@ -43,6 +43,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class RentApprovalDialogComponent extends BaseComponent {
 	protected baseUrl = environment.apiUrl.replace('/api', '');
 	public rentProposition$: Observable<IRentProposition>;
+	public avatarUrl = './assets/avatar.png';
 
 	constructor(
 		public dialogRef: MatDialogRef<number>,

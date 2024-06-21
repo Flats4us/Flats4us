@@ -12,10 +12,10 @@
 				[src]="
 					owner?.profilePicture?.path
 						? baseUrl + '/' + owner?.profilePicture?.path
-						: './assets/avatar.png'
+						: avatarUrl
 				"
 			/>
-			<span class="text-black font-bold"
+			<span class="dialog-title font-bold"
 				>{{ owner.name }} {{ owner.surname }}</span
 			>
 		</div>
@@ -30,7 +30,7 @@
 				[src]="
 					tenant?.profilePicture?.path
 						? baseUrl + '/' + tenant?.profilePicture?.path
-						: './assets/avatar.png'
+						: avatarUrl
 				"
 			/>
 			<span class="text-black font-bold">{{ tenant.fullName }}</span>

@@ -64,6 +64,8 @@ export class OfferDetailsComponent extends BaseComponent {
 
 	public authModels = AuthModels;
 
+	public avatarUrl = './assets/avatar.png';
+
 	public menuOptions: IMenuOptions[] = [
 		{ option: 'offerDetails', description: 'Offer.offer-details' },
 		{ option: 'promoteOffer', description: 'Offer.promote-offer' },
@@ -89,13 +91,19 @@ export class OfferDetailsComponent extends BaseComponent {
 			.pipe(this.untilDestroyed())
 			.subscribe(user => this.user.next(user as UserType));
 
-		if (this.user.value !== UserType.DETAILS) {
-			zip(this.offerId$, this.offerService.getOffers())
-				.pipe(this.untilDestroyed())
-				.subscribe(([id, offers]) => {
-					const result = offers.result.find(offer => offer.offerId === parseInt(id));
-					this.showOffer.next(!!result);
-				});
+		if (this.authService.getUserType() === AuthModels.MODERATOR) {
+			this.showOffer.next(true);
+		} else {
+			if (this.user.value !== UserType.DETAILS) {
+				zip(this.offerId$, this.offerService.getOffers())
+					.pipe(this.untilDestroyed())
+					.subscribe(([id, offers]) => {
+						const result = offers.result.find(
+							offer => offer.offerId === parseInt(id)
+						);
+						this.showOffer.next(!!result);
+					});
+			}
 		}
 	}
 

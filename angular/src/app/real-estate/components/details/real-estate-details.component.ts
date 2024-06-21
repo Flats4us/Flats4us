@@ -11,6 +11,8 @@ import { IProperty } from '../../models/real-estate.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { PropertyRatingComponent } from 'src/app/offer/components/property-rating/property-rating.component';
+import { AuthService } from '@shared/services/auth.service';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-real-estate-details',
@@ -34,7 +36,13 @@ export class RealEstateDetailsComponent extends BaseComponent {
 
 	public currentIndex = 0;
 
+	public authModels = AuthModels;
+
 	public menuOptions: IMenuOptions[] = [
+		{
+			option: 'realEstateDetails',
+			description: 'Real-estate-details.option-details',
+		},
 		{
 			option: 'editRealEstate',
 			description: 'Real-estate-details.edit-property',
@@ -48,23 +56,32 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	constructor(
 		public realEstateService: RealEstateService,
 		public offerService: OfferService,
+		public authService: AuthService,
 		private router: Router,
 		private route: ActivatedRoute,
 		private dialog: MatDialog
 	) {
 		super();
-		zip(this.realEstateId$, this.realEstateService.getRealEstates(false))
-			.pipe(this.untilDestroyed())
-			.subscribe(([id, properties]) => {
-				const result = properties.find(
-					property => property.propertyId === parseInt(id)
-				);
-				this.showRealEstate.next(!!result);
-			});
+		if (this.authService.getUserType() === AuthModels.MODERATOR) {
+			this.showRealEstate.next(true);
+		} else {
+			zip(this.realEstateId$, this.realEstateService.getRealEstates(false))
+				.pipe(this.untilDestroyed())
+				.subscribe(([id, properties]) => {
+					const result = properties.find(
+						property => property.propertyId === parseInt(id)
+					);
+					this.showRealEstate.next(!!result);
+				});
+		}
 	}
 
 	public onSelect(menuOption: IMenuOptions, id?: number) {
 		switch (menuOption.option) {
+			case 'realEstateDetails': {
+				this.realEstateDetails(id ?? 0);
+				break;
+			}
 			case 'deleteRealEstate': {
 				this.openDialog(id ?? 0);
 				break;
@@ -99,7 +116,11 @@ export class RealEstateDetailsComponent extends BaseComponent {
 	}
 
 	public showOffer(id: number) {
-		this.router.navigate(['offer', 'owner', id]);
+		this.router.navigate(['offer', 'details', id]);
+	}
+
+	public realEstateDetails(id: number) {
+		this.router.navigate(['offer', 'details', id]);
 	}
 
 	public editRealEstate(id: number) {

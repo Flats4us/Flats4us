@@ -47,6 +47,12 @@
 									class="menu-title"
 								>
 									<button
+										*appAccessControl="
+											authService.getPermissions([
+												authModels.VERIFIED_OWNER,
+												authModels.VERIFIED_STUDENT
+											])
+										"
 										class="box-icon"
 										id="menu"
 										mat-mini-fab
@@ -73,8 +79,7 @@
 													menuOption,
 													data.rent?.rentId,
 													data.rent?.offerId,
-													data.rent?.propertyId,
-													data.user
+													data.rent?.propertyId
 												)
 											"
 										>
@@ -246,7 +251,11 @@
 									>
 										<img
 											class="profile-avatar"
-											src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
+											[src]="
+												tenant?.profilePicture?.path
+													? baseUrl + '/' + tenant?.profilePicture?.path
+													: avatarUrl
+											"
 									/></mat-card-avatar>
 									<div class="container-features">
 										<mat-chip matTooltip="{{ 'Rents-details.name-surname' | translate }}"
@@ -273,9 +282,21 @@
 						</p>
 					</div>
 				</div>
-				<mat-divider *ngIf="data.user === uType.STUDENT"></mat-divider>
+				<mat-divider
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_STUDENT,
+							authModels.MODERATOR
+						])
+					"
+				></mat-divider>
 				<div
-					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_STUDENT,
+							authModels.MODERATOR
+						])
+					"
 					class="row"
 				>
 					<div class="column">
@@ -292,7 +313,7 @@
 										<img
 											*ngIf="data.rent?.owner?.profilePicture?.path as path"
 											class="profile-avatar"
-											src="{{ baseUrl }}/{{ path }}"
+											[src]="path ? baseUrl + '/' + path : avatarUrl"
 									/></mat-card-avatar>
 									<div class="container-features">
 										<mat-chip matTooltip="{{ 'Rents-details.name-surname' | translate }}"

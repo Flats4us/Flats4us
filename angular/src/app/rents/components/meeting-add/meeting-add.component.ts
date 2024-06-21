@@ -58,6 +58,7 @@ export class MeetingAddComponent extends BaseComponent {
 
 	public owner$!: Observable<IOwner>;
 	public tenant$!: Observable<ITenant>;
+	public avatarUrl = './assets/avatar.png';
 
 	public currentDate: Date = new Date();
 	public minDate = new Date(

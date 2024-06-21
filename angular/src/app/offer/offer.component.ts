@@ -15,7 +15,7 @@ import { AuthModels } from '@shared/models/auth.models';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferComponent {
-	public offersOptions$: Observable<ISendOffers> = this.offerService.getOffers();
+	public offersOptions$: Observable<ISendOffers> | undefined;
 
 	public uType = UserType;
 
@@ -31,7 +31,11 @@ export class OfferComponent {
 		private route: ActivatedRoute,
 		public realEstateService: RealEstateService,
 		public authService: AuthService
-	) {}
+	) {
+		if (this.authService.getUserType() !== AuthModels.MODERATOR) {
+			this.offersOptions$ = this.offerService.getOffers();
+		}
+	}
 
 	public addOffer() {
 		this.router.navigate(['offer', 'add']);

@@ -43,6 +43,9 @@
 								</div>
 								<div class="menu-title">
 									<button
+										*appAccessControl="
+											authService.getPermissions(authModels.VERIFIED_OWNER)
+										"
 										class="box-icon"
 										id="menu"
 										mat-mini-fab
@@ -68,6 +71,11 @@
 												class="flex items-center justify-center"
 												[ngSwitch]="menuOption.option"
 											>
+												<mat-icon
+													*ngSwitchCase="'realEstateDetails'"
+													class="material-icons-outlined"
+													>info</mat-icon
+												>
 												<mat-icon
 													*ngSwitchCase="'deleteRealEstate'"
 													class="material-icons-outlined"

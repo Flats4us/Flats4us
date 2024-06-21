@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
+import { AccessControlDirective } from '@shared/directives/access-control.directive';
 
 @NgModule({
 	declarations: [RealEstateDetailsComponent],
@@ -39,6 +40,7 @@ import { StarRatingComponent } from '@shared/components/star-rating/star-rating.
 		MatCardModule,
 		TranslateModule,
 		StarRatingComponent,
+		AccessControlDirective,
 	],
 	exports: [RealEstateDetailsComponent],
 	providers: [OfferService],

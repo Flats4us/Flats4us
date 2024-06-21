@@ -22,7 +22,11 @@
 					>
 						<img
 							class="profile-avatar"
-							src="{{ baseUrl }}/{{ tenant?.profilePicture?.path }}"
+							[src]="
+								tenant?.profilePicture?.path
+									? baseUrl + '/' + tenant?.profilePicture?.path
+									: avatarUrl
+							"
 					/></mat-card-avatar>
 					<div class="container-features">
 						<mat-chip matTooltip="{{ 'Offer.name-surname' | translate }}"

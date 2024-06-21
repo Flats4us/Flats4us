@@ -461,7 +461,8 @@
 		"year-type0": "to 1950",
 		"year-type1": "since 1950 to 1989",
 		"year-type2": "since 1990 to 2010",
-		"year-type3": "since 2010"
+		"year-type3": "since 2010",
+		"view": "Property view"
 	},
 	"Real-estate-add": {
 		"property-creator": "Property creator",
@@ -550,7 +551,8 @@
 		"date-issue": "Date of issue",
 		"offer-with": "Offer from",
 		"offer-status": "Offer status",
-		"property-info1": "The property has no related offers"
+		"property-info1": "The property has no related offers",
+		"option-details": "Property details"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Property removal",
@@ -705,8 +707,8 @@
 		"notification-settings": "Notification settings",
 		"notification-info1": "Receive email notifications when a user sends you a message",
 		"notification-info2": "Receive push notifications when a user sends you a message",
-		"notification-info3": "Receive other email notifications",
-		"notification-info4": "Receive other push notifications"
+		"notification-info3": "Receive email notifications when a user makes a reservation at your property",
+		"notification-info4": "Receive push notifications when a user makes a reservation at your property"
 	},
 	"Password-change": {
 		"password-change": "Password change",

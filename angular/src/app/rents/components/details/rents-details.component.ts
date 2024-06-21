@@ -54,6 +54,8 @@ export class RentsDetailsComponent extends BaseComponent {
 
 	public authModels = AuthModels;
 
+	public avatarUrl = './assets/avatar.png';
+
 	public displayedColumnsPayments: string[] = [
 		'paymentId',
 		'paymentPurpose',
@@ -85,16 +87,20 @@ export class RentsDetailsComponent extends BaseComponent {
 		private translate: TranslateService
 	) {
 		super();
-		zip(this.rentId$, this.rentsService.getRents())
-			.pipe(this.untilDestroyed())
-			.subscribe(([id, rents]) => {
-				const result = rents.result.find(rents => rents.rentId === parseInt(id));
-				this.showRent.next(!!result);
-			});
-		this.userService
-			.getMyProfile()
-			.pipe(this.untilDestroyed())
-			.subscribe(user => (this.studentId = user.userId));
+		if (this.authService.getUserType() === AuthModels.MODERATOR) {
+			this.showRent.next(true);
+		} else {
+			zip(this.rentId$, this.rentsService.getRents())
+				.pipe(this.untilDestroyed())
+				.subscribe(([id, rents]) => {
+					const result = rents.result.find(rents => rents.rentId === parseInt(id));
+					this.showRent.next(!!result);
+				});
+			this.userService
+				.getMyProfile()
+				.pipe(this.untilDestroyed())
+				.subscribe(user => (this.studentId = user.userId));
+		}
 	}
 
 	public addOffer() {
@@ -102,14 +108,14 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public getAvgRatingDesc(desc: string, rating?: number): string {
-		return desc + ': ' + rating ?? 0;
+		return desc + ': ' + (rating ?? 0) + '/10';
 	}
 
 	public navigateToRent(id?: number) {
 		this.router.navigate(['rents', 'details', id]);
 	}
 	public navigateToOffer(id?: number, user?: string, rating?: number) {
-		if (!user || !rating) {
+		if (!user || (user != 'owner' && !rating)) {
 			return;
 		}
 		let path = user?.toLowerCase();
@@ -132,8 +138,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		menuOption: IMenuOptions,
 		rentId?: number,
 		offerId?: number,
-		propertyId?: number,
-		user?: string
+		propertyId?: number
 	) {
 		switch (menuOption.option) {
 			case 'rentDetails': {
@@ -141,7 +146,7 @@ export class RentsDetailsComponent extends BaseComponent {
 				break;
 			}
 			case 'offerDetails': {
-				this.navigateToOffer(offerId, user);
+				this.navigateToOffer(offerId, 'owner');
 				break;
 			}
 			case 'propertyDetails': {

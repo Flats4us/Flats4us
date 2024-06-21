@@ -74,11 +74,11 @@
 										</h1>
 									</span>
 								</div>
-								<div
-									*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-									class="menu-title"
-								>
+								<div *ngIf="data.user === uType.OWNER" class="menu-title">
 									<button
+										*appAccessControl="
+											authService.getPermissions(authModels.VERIFIED_OWNER)
+										"
 										class="box-icon"
 										id="menu"
 										mat-mini-fab
@@ -519,7 +519,7 @@
 										<img
 											*ngIf="data.offer?.owner?.profilePicture?.path as path"
 											class="profile-avatar"
-											src="{{ baseUrl }}/{{ path }}"
+											[src]="path ? baseUrl + '/' + path : avatarUrl"
 									/></mat-card-avatar>
 									<div class="container-features">
 										<mat-chip matTooltip="{{ 'Offer.name-surname' | translate }}"
