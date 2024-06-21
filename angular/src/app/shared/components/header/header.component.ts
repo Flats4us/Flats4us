@@ -99,7 +99,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 						(!this.profileService.isHeaderPhotoURL() ||
 							this.profileService.isToEdit())
 					) {
-						this.profile$ = this.profile$ = this.profileService.getActualProfile();
+						this.profile$ = this.profileService.getActualProfile();
 						return this.profile$;
 					} else {
 						return of(null);
