@@ -703,8 +703,8 @@
 		"notification-settings": "Ustawienia powiadomień",
 		"notification-info1": "Otrzymuj powiadomienia e-mail, gdy użytkownik wyśle Ci wiadomość",
 		"notification-info2": "Otrzymuj powiadomienia push, gdy użytkownik wyśle Ci wiadomość",
-		"notification-info3": "Otrzymuj powiadomienia e-mail, gdy użytkownik dokona rezerwacji w Twoim obiekcie",
-		"notification-info4": "Otrzymuj powiadomienia push, gdy użytkownik dokona rezerwacji w Twoim obiekcie"
+		"notification-info3": "Otrzymuj pozostałe powiadomienia e-mail",
+		"notification-info4": "Otrzymuj pozostałe push"
 	},
 	"Password-change": {
 		"password-change": "Zmiana hasła",

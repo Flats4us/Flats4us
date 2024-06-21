@@ -6,6 +6,7 @@ import {
 	IUser,
 	IVerificationResult,
 } from '@shared/models/user.models';
+import { INotificationsSettings } from '../../settings/components/notifications/models/notifications.models';
 
 @Injectable()
 export class UserService {
@@ -29,5 +30,23 @@ export class UserService {
 		return this.http.put(`${this.apiRoute}/current`, {
 			email: email,
 		});
+	}
+
+	public changeConsents({
+		pushChatConsent,
+		emailChatConsent,
+		pushOtherConsent,
+		emailOtherConsent,
+	}: INotificationsSettings) {
+		return this.http.post(`${this.apiRoute}/consent`, {
+			pushChatConsent,
+			emailChatConsent,
+			pushOtherConsent,
+			emailOtherConsent,
+		});
+	}
+
+	public getConsents() {
+		return this.http.get<INotificationsSettings>(`${this.apiRoute}/consent`);
 	}
 }
