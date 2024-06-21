@@ -33,50 +33,58 @@ export class AccessControlDirective implements OnDestroy {
 
 	private allowAccess(permission: IPermission | IPermission[]) {
 		if (permission instanceof Array) {
-			this.authService.accessControl$
-				.pipe(takeUntil(this.destroyed))
-				.subscribe(data => {
-					switch (true) {
-						case !permission.find(perm => perm.allLoggedIn) &&
-							!permission.find(perm => perm.notLoggedIn) &&
-							!!permission.find(perm => data.user === perm.user) &&
-							!!permission.find(perm => data.status === perm.status):
-							this.showTemplate();
-							break;
-						case !!permission.find(perm => perm.allLoggedIn) && data.isLoggedIn:
-							this.showTemplate();
-							break;
-						case !!permission.find(perm => perm.notLoggedIn) && !data.isLoggedIn:
-							this.showTemplate();
-							break;
-						default:
-							this.hideTemplate();
-							break;
-					}
-				});
+			this.grantAccessToMultipleRoles(permission);
 		} else {
-			this.authService.accessControl$
-				.pipe(takeUntil(this.destroyed))
-				.subscribe(data => {
-					switch (true) {
-						case !permission.allLoggedIn &&
-							!permission.notLoggedIn &&
-							data.user === permission.user &&
-							data.status === permission.status:
-							this.showTemplate();
-							break;
-						case permission.allLoggedIn && data.isLoggedIn:
-							this.showTemplate();
-							break;
-						case permission.notLoggedIn && !data.isLoggedIn:
-							this.showTemplate();
-							break;
-						default:
-							this.hideTemplate();
-							break;
-					}
-				});
+			this.grantAccessToSingleRole(permission);
 		}
+	}
+
+	private grantAccessToMultipleRoles(permission: IPermission[]) {
+		this.authService.accessControl$
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(data => {
+				switch (true) {
+					case !permission.find(perm => perm.allLoggedIn) &&
+						!permission.find(perm => perm.notLoggedIn) &&
+						!!permission.find(perm => data.user === perm.user) &&
+						!!permission.find(perm => data.status === perm.status):
+						this.showTemplate();
+						break;
+					case !!permission.find(perm => perm.allLoggedIn) && data.isLoggedIn:
+						this.showTemplate();
+						break;
+					case !!permission.find(perm => perm.notLoggedIn) && !data.isLoggedIn:
+						this.showTemplate();
+						break;
+					default:
+						this.hideTemplate();
+						break;
+				}
+			});
+	}
+
+	private grantAccessToSingleRole(permission: IPermission) {
+		this.authService.accessControl$
+			.pipe(takeUntil(this.destroyed))
+			.subscribe(data => {
+				switch (true) {
+					case !permission.allLoggedIn &&
+						!permission.notLoggedIn &&
+						data.user === permission.user &&
+						data.status === permission.status:
+						this.showTemplate();
+						break;
+					case permission.allLoggedIn && data.isLoggedIn:
+						this.showTemplate();
+						break;
+					case permission.notLoggedIn && !data.isLoggedIn:
+						this.showTemplate();
+						break;
+					default:
+						this.hideTemplate();
+						break;
+				}
+			});
 	}
 
 	private showTemplate() {

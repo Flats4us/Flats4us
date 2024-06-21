@@ -14,7 +14,7 @@ import { LocaleService } from '@shared/services/locale.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { AuthModels } from '@shared/models/auth.models';
 import { ProfileService } from 'src/app/profile/services/profile.service';
-import { Observable, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, of, switchMap, takeUntil } from 'rxjs';
 import { IUserProfile } from 'src/app/profile/models/profile.models';
 import { NotificationsService } from '@shared/services/notifications.service';
 
@@ -65,7 +65,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 			});
 	}
 
-	@HostListener('window:unload', ['$event'])
+	@HostListener('window:visibilitychange', ['$event'])
 	public unloadHandler() {
 		if (this.themeService.isDarkMode) {
 			window.localStorage.setItem(
@@ -102,15 +102,14 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 						this.profile$ = this.profile$ = this.profileService.getActualProfile();
 						return this.profile$;
 					} else {
-						return of(undefined);
+						return of(null);
 					}
 				}),
+				filter(profile => !!profile),
 				this.untilDestroyed()
 			)
 			.subscribe(profile => {
-				if (profile) {
-					this.profileService.setHeaderPhotoURL(profile?.profilePicture?.path);
-				}
+				this.profileService.setHeaderPhotoURL(profile?.profilePicture?.path);
 			});
 	}
 

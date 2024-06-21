@@ -238,6 +238,13 @@
 	grid-auto-flow: dense;
 }
 
+.label-survey {
+	padding: 4px;
+	min-width: 300px;
+	margin-right: auto;
+	font-size: xx-large;
+}
+
 mat-card-avatar:hover {
 	cursor: pointer;
 }

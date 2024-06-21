@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IProperty } from '../../models/real-estate.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { OfferService } from 'src/app/offer/services/offer.service';
+import { PropertyRatingComponent } from 'src/app/offer/components/property-rating/property-rating.component';
 
 @Component({
 	selector: 'app-real-estate-details',
@@ -103,6 +104,17 @@ export class RealEstateDetailsComponent extends BaseComponent {
 
 	public editRealEstate(id: number) {
 		this.router.navigate(['real-estate', 'edit', id]);
+	}
+
+	public showRating(property?: IProperty | null) {
+		if (!property || !property.avgRating) {
+			return;
+		}
+		this.dialog.open(PropertyRatingComponent, {
+			disableClose: false,
+			closeOnNavigation: true,
+			data: property,
+		});
 	}
 
 	public setCurrentSlideIndex(index: number) {

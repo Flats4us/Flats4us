@@ -16,6 +16,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { OfferService } from 'src/app/offer/services/offer.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 
 @NgModule({
 	declarations: [RealEstateDetailsComponent],
@@ -37,6 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatChipsModule,
 		MatCardModule,
 		TranslateModule,
+		StarRatingComponent,
 	],
 	exports: [RealEstateDetailsComponent],
 	providers: [OfferService],

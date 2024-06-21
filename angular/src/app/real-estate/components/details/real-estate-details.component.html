@@ -125,6 +125,27 @@
 						</nav>
 					</div>
 				</div>
+				<mat-card-footer class="flex flex-row">
+					<mat-card-subtitle class="label-survey">
+						<span>
+							<mat-chip
+								class="mr-4"
+								matTooltip="{{
+									(data?.actualRealEstate?.avgRating
+										? 'Offer.offer-info-rating0'
+										: 'Offer.offer-info-rating1'
+									) | translate
+								}}"
+								(click)="showRating(data?.actualRealEstate)"
+							>
+								<div class="flex items-center pt-1 w-fit cursor-pointer">
+									<app-star-rating [avgRating]="data?.actualRealEstate?.avgRating ?? 0">
+									</app-star-rating>
+								</div>
+							</mat-chip>
+						</span>
+					</mat-card-subtitle>
+				</mat-card-footer>
 			</mat-card-content>
 		</mat-card>
 		<mat-card>

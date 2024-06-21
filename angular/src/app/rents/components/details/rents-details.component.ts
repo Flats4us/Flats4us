@@ -101,14 +101,18 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.router.navigate(['offer', 'add']);
 	}
 
+	public getAvgRatingDesc(desc: string, rating?: number): string {
+		return desc + ': ' + rating ?? 0;
+	}
+
 	public navigateToRent(id?: number) {
 		this.router.navigate(['rents', 'details', id]);
 	}
-	public navigateToOffer(id?: number, user?: string) {
-		let path = user?.toLowerCase();
-		if (!user) {
+	public navigateToOffer(id?: number, user?: string, rating?: number) {
+		if (!user || !rating) {
 			return;
 		}
+		let path = user?.toLowerCase();
 		if (path === 'student') {
 			path = 'details';
 		}

@@ -153,15 +153,18 @@
 								class="mr-4"
 								matTooltip="{{
 									data.rent?.propertyAvgRating
-										? ('Rents-details.offer-info-rating1' | translate) +
-										  ': ' +
-										  data.rent?.propertyAvgRating
+										? getAvgRatingDesc(
+												'Rents-details.offer-info-rating1' | translate,
+												data.rent?.propertyAvgRating
+										  )
 										: ('Offer.offer-info-rating1' | translate)
 								}}"
 								(click)="
-									data.rent?.propertyAvgRating
-										? navigateToOffer(data.rent?.offerId, data.user ?? '')
-										: navigateToOffer(data.rent?.offerId, '')
+									navigateToOffer(
+										data.rent?.offerId,
+										data.user ?? '',
+										data.rent?.propertyAvgRating
+									)
 								"
 							>
 								<div class="flex items-center pt-1 w-fit cursor-pointer">
