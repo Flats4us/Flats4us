@@ -32,13 +32,17 @@ export class UserService {
 		});
 	}
 
-	public changeConsents(notificationForm: INotificationsSettings) {
-		const {
-			pushChatConsent,
-			emailChatConsent,
-			pushOtherConsent,
-			emailOtherConsent,
-		} = notificationForm;
+	public changeConsents({
+		pushChatConsent,
+		emailChatConsent,
+		pushOtherConsent,
+		emailOtherConsent,
+	}: {
+		pushChatConsent: boolean;
+		emailChatConsent: boolean;
+		pushOtherConsent: boolean;
+		emailOtherConsent: boolean;
+	}) {
 		return this.http.post(`${this.apiRoute}/consent`, {
 			pushChatConsent,
 			emailChatConsent,
