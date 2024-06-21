@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.Configuration;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace Flats4us.Services
@@ -187,8 +188,8 @@ namespace Flats4us.Services
                             .ThenInclude(s => s.ProfilePicture)
                         .Include(r => r.OtherStudents)
                             .ThenInclude(os => os.ProfilePicture)
-                        .Include(x=>x.Arguments)
-                            .ThenInclude(x=>x.ArgumentInterventions)
+                        .Include(x => x.Arguments)
+                            .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
 
@@ -232,6 +233,9 @@ namespace Flats4us.Services
                             .ThenInclude(x => x.ArgumentInterventions)
                     .Select(rent => _mapper.Map<RentDto>(rent))
                     .ToListAsync();
+            }
+            else if (user is Moderator)
+            {
             }
             else throw new Exception("Unable to fetch rents for current user");
 
