@@ -6,6 +6,7 @@ import { UserType } from '../profile/models/types';
 import { ISendOffers } from './models/offer.models';
 import { RealEstateService } from '../real-estate/services/real-estate.service';
 import { AuthService } from '@shared/services/auth.service';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-offers',
@@ -21,6 +22,8 @@ export class OfferComponent {
 	public user$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('user')?.toUpperCase() ?? '')
 	);
+
+	public authModels = AuthModels;
 
 	constructor(
 		public offerService: OfferService,

@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
-import { map } from 'rxjs';
+import { map, tap } from 'rxjs';
+import { ProfileService } from 'src/app/profile/services/profile.service';
 
 @Component({
 	selector: 'app-login',
@@ -30,7 +31,8 @@ export class LoginComponent extends BaseComponent {
 		private service: AuthService,
 		private router: Router,
 		private route: ActivatedRoute,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private profileService: ProfileService
 	) {
 		super();
 	}
@@ -42,7 +44,7 @@ export class LoginComponent extends BaseComponent {
 			.subscribe({
 				next: () => {
 					this.snackBar.open(
-						this.translate.instant('Login.success-message'!),
+						this.translate.instant('Login.success-message'),
 						this.translate.instant('close'),
 						{
 							duration: 10000,
@@ -56,6 +58,15 @@ export class LoginComponent extends BaseComponent {
 					if (error.status === 401) {
 						this.loginForm.setErrors({ invalidCredentials: true });
 					}
+				},
+				complete: () => {
+					this.profileService
+						.getActualProfile()
+						.pipe(
+							tap(profile =>
+								this.profileService.setHeaderPhotoURL(profile.profilePicture.path)
+							)
+						);
 				},
 			});
 	}

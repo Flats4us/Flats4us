@@ -86,9 +86,6 @@
 										aria-label="MenuButton"
 										matTooltip="{{ 'more-options' | translate }}"
 										[matMenuTriggerFor]="menu"
-										[disabled]="
-											data?.offer?.offerStatus === 2 || data?.offer?.offerStatus === 3
-										"
 									>
 										<mat-icon>more_horiz</mat-icon>
 									</button>
@@ -98,8 +95,11 @@
 											mat-menu-item
 											[value]="menuOption.description"
 											[disabled]="
-												(data.offer?.isPromoted && menuOption.option === 'promoteOffer') ||
-												(data.offer?.offerStatus !== 0 &&
+												((data.offer?.offerStatus === 3 ||
+													data.offer?.offerStatus === 2 ||
+													data.offer?.isPromoted) &&
+													menuOption.option === 'promoteOffer') ||
+												((data.offer?.offerStatus === 3 || data.offer?.offerStatus === 2) &&
 													menuOption.option === 'closeOffer')
 											"
 											(click)="
@@ -140,7 +140,9 @@
 								</div>
 								<div *ngIf="data.user === uType.DETAILS" class="menu-title">
 									<button
-										*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+										*appAccessControl="
+											authService.getPermissions(authModels.VERIFIED_STUDENT)
+										"
 										mat-mini-fab
 										class="ml-auto"
 										id="addToWatched"
@@ -500,7 +502,7 @@
 					</div>
 				</div>
 				<div
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 					class="row"
 				>
 					<div class="column">
@@ -555,7 +557,7 @@
 					{{ "return" | translate }}
 				</button>
 				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 					mat-raised-button
 					color="primary"
 					(click)="onAddMeeting(data.offer?.offerId)"
@@ -563,7 +565,7 @@
 					{{ "Offer.add-meeting" | translate }}
 				</button>
 				<button
-					*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
 					mat-raised-button
 					color="primary"
 					[disabled]="data.offer?.offerStatus !== 0"

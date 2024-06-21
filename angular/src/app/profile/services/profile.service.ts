@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import {
 	IEditProfile,
 	IEditProfileOwner,
@@ -15,7 +15,9 @@ import { environment } from 'src/environments/environment';
 import { INumeric } from 'src/app/real-estate/models/real-estate.models';
 import { IResult } from '@shared/models/shared.models';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class ProfileService {
 	protected apiRoute = `${environment.apiUrl}`;
 
@@ -28,6 +30,11 @@ export class ProfileService {
 	];
 
 	constructor(private httpClient: HttpClient) {}
+
+	private static headerPhotoURL: BehaviorSubject<string> =
+		new BehaviorSubject<string>('');
+
+	private toEdit: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	public readAllInterests(): Observable<IInterest[]> {
 		return this.getInterests('').pipe(
@@ -83,5 +90,25 @@ export class ProfileService {
 	}
 	public addOpinion(id: number, opinion: IOpinion) {
 		return this.httpClient.post(`${this.apiRoute}/users/${id}/opinion`, opinion);
+	}
+
+	public setHeaderPhotoURL(url?: string) {
+		ProfileService.headerPhotoURL.next(url ?? '');
+		this.toEdit.next(false);
+	}
+	public getHeaderPhotoURL(): Observable<string> {
+		return ProfileService.headerPhotoURL.asObservable();
+	}
+
+	public isHeaderPhotoURL(): boolean {
+		return !!ProfileService.headerPhotoURL.getValue();
+	}
+
+	public startEdit() {
+		this.toEdit.next(true);
+	}
+
+	public isToEdit(): boolean {
+		return this.toEdit.getValue();
 	}
 }

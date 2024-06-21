@@ -29,7 +29,6 @@ import { SurveyService } from '@shared/services/survey.service';
 import { RegisterModule } from 'src/app/auth/components/register/register.module';
 import { OfferModule } from 'src/app/offer/offer.module';
 import { ProfileRoutingModule } from '../profile-routing.module';
-import { ProfileService } from '../services/profile.service';
 import { CreateProfileComponent } from './create-profile.component';
 import { SurveyModule } from '@shared/components/survey/survey.module';
 import { UserService } from '@shared/services/user.service';
@@ -70,6 +69,6 @@ import { EditProfileModule } from '../edit/edit-profile.module';
 		TranslateModule,
 	],
 	exports: [CreateProfileComponent],
-	providers: [ProfileService, FormGroupDirective, SurveyService, UserService],
+	providers: [FormGroupDirective, SurveyService, UserService],
 })
 export class CreateProfileModule {}

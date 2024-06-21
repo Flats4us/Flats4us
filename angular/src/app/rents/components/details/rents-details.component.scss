@@ -274,6 +274,13 @@ mat-header-cell {
 	display: none;
 }
 
+.label-survey {
+	padding: 4px;
+	min-width: 300px;
+	margin-right: auto;
+	font-size: xx-large;
+}
+
 @media screen and (max-width: 768px) {
 	.slider {
 		width: 100%;
@@ -285,6 +292,7 @@ mat-header-cell {
 		max-width: 300px;
 		display: inline-block;
 		font-weight: bold;
+		margin-right: auto;
 	}
 	.icon-feature {
 		display: none;

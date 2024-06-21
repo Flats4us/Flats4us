@@ -74,7 +74,8 @@
 		<div
 			*ngIf="{
 				emailError: invalidEmail$ | async,
-				tenantsError: tooManyTenants$ | async
+				tenantsError: tooManyTenants$ | async,
+				myEmailError: isMyEmail$ | async
 			} as errors"
 		>
 			<mat-error *ngIf="errors.emailError">
@@ -83,6 +84,9 @@
 			<mat-error *ngIf="errors.tenantsError">
 				{{ "Rents.rent-info5" | translate }} -
 				{{ data.maxNumberOfInhabitants - 1 }}!
+			</mat-error>
+			<mat-error *ngIf="errors.myEmailError">
+				{{ "Rents.rent-info6" | translate }}
 			</mat-error>
 		</div>
 	</form>

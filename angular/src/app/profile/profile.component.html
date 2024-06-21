@@ -98,7 +98,11 @@
 				<mat-icon>rate_review</mat-icon>
 				<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
 				<button
-					*ngIf="id !== 'my' && !checkIfYetAssesed(actualUser.userOpinions)"
+					*ngIf="
+						id !== myId.toString() &&
+						id !== 'my' &&
+						!checkIfYetAssesed(actualUser.userOpinions)
+					"
 					mat-mini-fab
 					color="primary"
 					class="ml-auto"
@@ -218,7 +222,7 @@
 							[src]="
 								actualUser?.profilePicture?.path
 									? baseUrl + '/' + actualUser?.profilePicture?.path
-									: './assets/avatar.png'
+									: avatarURL
 							"
 						/>
 					</div>
@@ -239,7 +243,7 @@
 							{{ "Profile.creation-date" | translate }}:
 							{{ actualUser.accountCreationDate | date }}
 						</p>
-						<p *appAccessControl="authService.allPermissions.get('moderator')">
+						<p *appAccessControl="authService.getPermissions(authModel.MODERATOR)">
 							Moderator
 						</p>
 						<span *ngIf="actualUser.userType === 1" class="flex-col">
@@ -311,7 +315,15 @@
 		</mat-card>
 	</ng-template>
 	<ng-template #userProfile let-actualUser="actualUser">
-		<mat-card>
+		<mat-card
+			*appAccessControl="
+				authService.getPermissions([
+					authModel.VERIFIED_STUDENT,
+					authModel.VERIFIED_OWNER,
+					authModel.MODERATOR
+				])
+			"
+		>
 			<mat-card-content>
 				<section class="flex flex-col items-center">
 					<div class="flex justify-center">
@@ -361,7 +373,16 @@
 					>
 						<div class="flex flex-row items-center">
 							<mat-icon class="material-symbols-outlined">mail</mat-icon>
-							<span>E-mail: {{ actualUser.email }}</span>
+							<span class="flex flex-row"
+								><p class="mr-2">E-mail:</p>
+								<p
+									*appAccessControl="
+										authService.getPermissions(authModel.VERIFIED_STUDENT)
+									"
+								>
+									{{ actualUser.email }}
+								</p></span
+							>
 						</div>
 					</div>
 					<div
@@ -369,7 +390,16 @@
 					>
 						<div class="flex flex-row items-center">
 							<mat-icon class="material-symbols-outlined">phone_iphone</mat-icon>
-							<span>Tel.: {{ actualUser.phoneNumber }}</span>
+							<span class="flex flex-row"
+								><p class="mr-2">Tel.:</p>
+								<p
+									*appAccessControl="
+										authService.getPermissions(authModel.VERIFIED_STUDENT)
+									"
+								>
+									{{ actualUser.phoneNumber }}
+								</p></span
+							>
 						</div>
 					</div>
 					<div

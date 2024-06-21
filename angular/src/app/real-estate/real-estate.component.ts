@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RealEstateService } from './services/real-estate.service';
 import { IProperty } from './models/real-estate.models';
 import { AuthService } from '@shared/services/auth.service';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-real-estate',
@@ -17,6 +18,8 @@ export class RealEstateComponent {
 		this.realEstateService.getRealEstates(false);
 
 	public statusName: typeof statusName = statusName;
+
+	public authModels = AuthModels;
 
 	constructor(
 		public realEstateService: RealEstateService,

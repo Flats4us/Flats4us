@@ -483,7 +483,9 @@
 									</span>
 								</mat-chip>
 								<button
-									*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+									*appAccessControl="
+										authService.getPermissions(authModels.VERIFIED_STUDENT)
+									"
 									mat-mini-fab
 									class="ml-auto"
 									id="addToWatched"

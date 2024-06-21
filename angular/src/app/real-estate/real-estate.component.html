@@ -11,7 +11,7 @@
 					"Real-estate.browsing-properties-info" | translate
 				}}</span>
 				<button
-					*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+					*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 					mat-mini-fab
 					id="add"
 					color="basic"
@@ -34,7 +34,7 @@
 					<div class="box-title-sub">
 						<span class="mr-4">{{ "Real-estate.my-properties" | translate }}</span>
 						<button
-							*appAccessControl="authService.allPermissions.get('verifiedOwner')"
+							*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
 							mat-mini-fab
 							id="add"
 							color="basic"

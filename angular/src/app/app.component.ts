@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { LocaleService } from '@shared/services/locale.service';
 
 @Component({
@@ -11,11 +10,7 @@ import { LocaleService } from '@shared/services/locale.service';
 export class AppComponent {
 	public title = 'angular';
 
-	constructor(
-		private translate: TranslateService,
-		private localeService: LocaleService
-	) {
-		translate.setDefaultLang('pl');
+	constructor(private localeService: LocaleService) {
 		this.localeService.initLocale('pl');
 	}
 }

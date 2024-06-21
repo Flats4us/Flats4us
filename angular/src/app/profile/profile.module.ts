@@ -30,7 +30,6 @@ import { SettingsRoutingModule } from '../settings/settings-routing.module';
 import { AddOpinionComponent } from './add-opinion/add-opinion.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
-import { ProfileService } from './services/profile.service';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { EmailChangeModule } from '../settings/components/email-change/email-change.module';
@@ -79,6 +78,6 @@ import { AuthService } from '@shared/services/auth.service';
 		AccessControlDirective,
 	],
 	exports: [ProfileComponent],
-	providers: [ProfileService, SurveyService, UserService, AuthService],
+	providers: [SurveyService, UserService, AuthService],
 })
 export class ProfileModule {}

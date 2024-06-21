@@ -61,6 +61,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	public minDate: Date = new Date();
 	public invalidEmail$: Observable<boolean> = of(false);
 	public tooManyTenants$: Observable<boolean> = of(false);
+	public isMyEmail$: Observable<boolean> = of(false);
 	public setLocalDate = setLocalDate;
 
 	public rentPropositionForm: FormGroup = new FormGroup({
@@ -125,6 +126,7 @@ export class RentPropositionDialogComponent extends BaseComponent {
 	): void {
 		this.invalidEmail$ = of(false);
 		this.tooManyTenants$ = of(false);
+		this.isMyEmail$ = of(false);
 		const value = (event.value || '').trim();
 		if (value && !items.includes(value.trim())) {
 			items.push(value);
@@ -136,6 +138,9 @@ export class RentPropositionDialogComponent extends BaseComponent {
 					items.length > this.data.maxNumberOfInhabitants - 1 ? of(true) : of(false)
 				)
 			);
+			this.isMyEmail$ = this.userService
+				.getMyProfile()
+				.pipe(map(profile => profile.email === value.trim()));
 		}
 		event.chipInput.clear();
 

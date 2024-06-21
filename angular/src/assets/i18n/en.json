@@ -129,7 +129,8 @@
 		"additional": "Additional",
 		"calendar": "Calendar",
 		"find-roommates": "Find Roommates",
-		"change-language-tooltip": "Change language"
+		"change-language-tooltip": "Change language",
+		"disputes": "Disputes"
 	},
 	"Calendar": {
 		"add-event": "Add event",
@@ -357,7 +358,7 @@
 		"average-grade": "Average Rating",
 		"opinions": "Opinions",
 		"average": "average",
-		"new-opinion": "NEW OPINION",
+		"new-opinion": "New opinion",
 		"opinion": "OPINION",
 		"add-opinion": "ADD OPINION",
 		"user-features": "User features",
@@ -378,7 +379,8 @@
 		"add-opinion2": "Add opinion",
 		"info1": "Review successfully added!",
 		"close": "Close",
-		"error": "Failed to add the opinion! Please try again."
+		"error": "Failed to add the opinion! Please try again.",
+		"error2": "Assessment is required!"
 	},
 	"Profile-create": {
 		"creating-profile": "Creating a profile",
@@ -582,7 +584,8 @@
 		"error2": "Failed to add a lease. Try again!",
 		"rent-info3": "The lease proposal has been sent to the Owner and is waiting for approval!",
 		"rent-info4": "The email address(es) entered do(es) not exist in the system!",
-		"rent-info5": "The number of roommates exceeds the maximum for this offer"
+		"rent-info5": "The number of roommates exceeds the maximum for this offer",
+		"rent-info6": "Enter an email addresss of another user!"
 	},
 	"Rents-details": {
 		"rent-status": "Rent status",
@@ -629,7 +632,10 @@
 		"delete-property": "Delete property",
 		"phone": "Phone number",
 		"owner": "Owner",
-		"payment": "Make a payment"
+		"payment": "Make a payment",
+		"success-info": "The payment has been successfully made!",
+		"close": "Close",
+		"offer-info-rating1": "Property rating"
 	},
 	"Rents-cancel-dialog": {
 		"end-rental": "End of rental",
