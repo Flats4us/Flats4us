@@ -29,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSortModule } from '@angular/material/sort';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConversationService } from '../conversations/services/conversation.service';
+import { ArgumentStatusPipe } from './pipes/argument-status.pipe';
 
 @NgModule({
 	declarations: [
@@ -39,6 +40,7 @@ import { ConversationService } from '../conversations/services/conversation.serv
 		ProblemsVerificationComponent,
 		AddInterventionDialogComponent,
 		ChangeDisputeStatusDialogComponent,
+		ArgumentStatusPipe,
 	],
 	imports: [
 		CommonModule,

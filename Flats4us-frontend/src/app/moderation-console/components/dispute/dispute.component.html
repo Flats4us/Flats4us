@@ -18,16 +18,7 @@
 			<ng-container matColumnDef="argumentStatus">
 				<th *matHeaderCellDef mat-header-cell>Status</th>
 				<td *matCellDef="let element" mat-cell>
-					{{
-						(element.argumentStatus === 0
-							? "Moderation-console.statutes0"
-							: element.argumentStatus === 1
-							? "Moderation-console.statutes1"
-							: element.argumentStatus === 2
-							? "Moderation-console.statutes2"
-							: ""
-						) | translate
-					}}
+					{{ element.argumentStatus | argumentStatus | translate }}
 				</td>
 			</ng-container>
 			<ng-container matColumnDef="interventionNeed">
@@ -43,7 +34,10 @@
 					{{ "Moderation-console.rent" | translate }}
 				</th>
 				<td *matCellDef="let element" mat-cell>
-					<button mat-flat-button [routerLink]="['/rents', element.rent.rentId]">
+					<button
+						mat-flat-button
+						[routerLink]="['/rents', 'details', element.rent.rentId]"
+					>
 						{{ element.rent.propertyAddress }}
 					</button>
 				</td>
@@ -74,10 +68,7 @@
 						matTooltip="{{
 							'Moderation-console.view-description-interventions' | translate
 						}}"
-						(click)="
-							expandedElement = expandedElement === element ? null : element;
-							$event.stopPropagation()
-						"
+						(click)="toggleExpansion(element); $event.stopPropagation()"
 					>
 						<mat-icon *ngIf="expandedElement !== element"
 							>keyboard_arrow_down</mat-icon

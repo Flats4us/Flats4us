@@ -91,4 +91,8 @@ export class DisputeComponent extends BaseComponent {
 					]),
 			});
 	}
+
+	public toggleExpansion(element: IDispute) {
+		this.expandedElement = this.expandedElement === element ? null : element;
+	}
 }
