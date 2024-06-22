@@ -15,6 +15,7 @@ import { ChangeDisputeStatusDialogComponent } from '../change-dispute-status-dia
 import { IDispute } from '../../models/moderation-console.models';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-dispute',
@@ -55,18 +56,34 @@ export class DisputeComponent extends BaseComponent {
 	}
 
 	public openInterventionDialog(argumentId: number): void {
-		this.dialog.open(AddInterventionDialogComponent, {
-			height: '300px',
-			width: '500px',
-			data: { argumentId: argumentId },
-		});
+		const AddInterventionDialog = this.dialog.open(
+			AddInterventionDialogComponent,
+			{
+				height: '300px',
+				width: '500px',
+				data: { argumentId: argumentId },
+			}
+		);
+
+		this.disputes$ = AddInterventionDialog.afterClosed().pipe(
+			this.untilDestroyed(),
+			switchMap(() => this.service.getDisputes())
+		);
 	}
 
 	public openChangeStatusDialog(argumentId: number): void {
-		this.dialog.open(ChangeDisputeStatusDialogComponent, {
-			width: '500px',
-			data: { argumentId: argumentId },
-		});
+		const ChangeDisputeStatusDialog = this.dialog.open(
+			ChangeDisputeStatusDialogComponent,
+			{
+				width: '500px',
+				data: { argumentId: argumentId },
+			}
+		);
+
+		this.disputes$ = ChangeDisputeStatusDialog.afterClosed().pipe(
+			this.untilDestroyed(),
+			switchMap(() => this.service.getDisputes())
+		);
 	}
 	protected readonly formatDate = formatDate;
 
