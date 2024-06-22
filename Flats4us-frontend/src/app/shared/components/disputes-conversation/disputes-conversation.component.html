@@ -10,14 +10,19 @@
 		<div></div>
 
 		<button
-			*appAccessControl="authService.allPermissions.get('moderator')"
+			*appAccessControl="authService.getPermissions(authModels.MODERATOR)"
 			mat-icon-button
 			(click)="goBack()"
 		>
 			<mat-icon>arrow_back</mat-icon>
 		</button>
 		<button
-			*appAccessControl="authService.allPermissions.get('verifiedStudent')"
+			*appAccessControl="
+				authService.getPermissions([
+					authModels.VERIFIED_STUDENT,
+					authModels.VERIFIED_OWNER
+				])
+			"
 			mat-icon-button
 			[matMenuTriggerFor]="menu"
 		>

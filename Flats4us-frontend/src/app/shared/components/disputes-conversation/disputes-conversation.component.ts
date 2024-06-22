@@ -16,6 +16,7 @@ import { AuthService } from '@shared/services/auth.service';
 import { DisputesService } from '../../../disputes/services/disputes.service';
 import { IParticipant } from '../../../disputes/models/disputes.models';
 import { formatDate, Location } from '@angular/common';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-disputes-conversation',
@@ -88,4 +89,5 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 	}
 
 	protected readonly formatDate = formatDate;
+	protected readonly authModels = AuthModels;
 }
