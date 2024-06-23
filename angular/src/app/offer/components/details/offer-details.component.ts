@@ -93,17 +93,13 @@ export class OfferDetailsComponent extends BaseComponent {
 
 		if (this.authService.getUserType() === AuthModels.MODERATOR) {
 			this.showOffer.next(true);
-		} else {
-			if (this.user.value !== UserType.DETAILS) {
-				zip(this.offerId$, this.offerService.getOffers())
-					.pipe(this.untilDestroyed())
-					.subscribe(([id, offers]) => {
-						const result = offers.result.find(
-							offer => offer.offerId === parseInt(id)
-						);
-						this.showOffer.next(!!result);
-					});
-			}
+		} else if (this.user.value !== UserType.DETAILS) {
+			zip(this.offerId$, this.offerService.getOffers())
+				.pipe(this.untilDestroyed())
+				.subscribe(([id, offers]) => {
+					const result = offers.result.find(offer => offer.offerId === parseInt(id));
+					this.showOffer.next(!!result);
+				});
 		}
 	}
 

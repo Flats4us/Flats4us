@@ -1,9 +1,9 @@
 <span class="profile-rating__stars">
 	<mat-icon *ngFor="let star of starsScale; let i = index"
 		>{{
-			i + 1 <= avgRating / 2 && avgRating !== 0
+			i + 1 <= avgRating / 2 && avgRating
 				? "star"
-				: i + 1 - avgRating / 2 <= 0.5 && avgRating !== 0
+				: i + 1 - avgRating / 2 <= 0.5 && avgRating
 				? "star_half"
 				: "star_outline"
 		}}
