@@ -3,7 +3,7 @@ version: "3.8"
 services:
   web:
     build:
-      context: ./angular
+      context: ./Flats4us-frontend
       dockerfile: Dockerfile
     container_name: flats4us_fe
     ports:

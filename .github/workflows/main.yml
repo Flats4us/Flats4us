@@ -8,26 +8,25 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Change working directory
         run: |
-          cd ./angular
+          cd ./Flats4us-frontend
 
       - name: Set up Node.js
         uses: actions/setup-node@v2-beta
         with:
-          node-version: '16.x'
+          node-version: "16.x"
 
       - name: Install dependencies
-        working-directory: ./angular
+        working-directory: ./Flats4us-frontend
         run: |
           npm install
 
       - name: Run ESLint
-        working-directory: ./angular
+        working-directory: ./Flats4us-frontend
         run: npm run lint
 
       - name: Run Prettier
-        working-directory: ./angular
+        working-directory: ./Flats4us-frontend
         run: npm run prettier:check
-      
