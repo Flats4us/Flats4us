@@ -69,8 +69,7 @@ export class DisputesConversationComponent
 
 	public override ngOnDestroy(): void {
 		this.conversationService.stopConnection();
-		this.destroyed.next();
-		this.destroyed.complete();
+		super.ngOnDestroy();
 	}
 
 	public onSend(groupId: string, senderId: number): void {
