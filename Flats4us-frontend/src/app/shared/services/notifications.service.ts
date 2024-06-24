@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as signalR from '@microsoft/signalr';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -20,9 +21,13 @@ export class NotificationsService {
 
 	public notifications$ = new BehaviorSubject<string[]>([]);
 
-	constructor(private http: HttpClient, private snackbar: MatSnackBar) {
+	constructor(
+		private http: HttpClient,
+		private snackbar: MatSnackBar,
+		private translateService: TranslateService
+	) {
 		this.addReceiveNotificationHandler((_user, message) => {
-			this.snackbar.open(message, 'Close', {
+			this.snackbar.open(this.translateService.instant(message), 'Close', {
 				duration: 5000,
 				verticalPosition: 'top',
 				horizontalPosition: 'right',
