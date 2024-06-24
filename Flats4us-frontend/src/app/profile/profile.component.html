@@ -211,6 +211,7 @@
 						<img
 							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
 							[alt]="opinion.sourceUserProfilePicture.name"
+							(click)="showProfile(opinion?.sourceUserId)"
 						/>
 						<span> {{ opinion.sourceUserName }} {{ opinion.date | date }}: </span>
 						<span>{{ opinion.description }}</span>
