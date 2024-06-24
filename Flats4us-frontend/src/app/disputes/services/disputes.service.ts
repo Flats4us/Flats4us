@@ -25,4 +25,25 @@ export class DisputesService {
 			`${this.apiRoute}/group-chats/${groupChatId}`
 		);
 	}
+
+	public addModerator(argumentID: number) {
+		return this.httpClient.put(
+			`${this.apiRoute}/arguments/${argumentID}/asking-for-intervention`,
+			{ argumentID }
+		);
+	}
+
+	public ownerAcceptArgument(argumentID: number) {
+		return this.httpClient.put(
+			`${this.apiRoute}/arguments/${argumentID}/owner-accept`,
+			{ argumentID }
+		);
+	}
+
+	public studentAcceptArgument(argumentID: number) {
+		return this.httpClient.put(
+			`${this.apiRoute}/arguments/${argumentID}/student-accept`,
+			{ argumentID }
+		);
+	}
 }

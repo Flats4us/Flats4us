@@ -6,7 +6,7 @@
 		participants: participants$ | async
 	} as data"
 >
-	<div class="conversation-header">
+	<div *ngIf="data.groupChatId" class="conversation-header">
 		<div></div>
 
 		<button
@@ -29,11 +29,23 @@
 			<mat-icon>more_vert</mat-icon>
 		</button>
 		<mat-menu #menu="matMenu">
-			<button mat-menu-item>
+			<button
+				*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
+				mat-menu-item
+				(click)="studentAcceptArgument(Number(data.groupChatId))"
+			>
 				<mat-icon>close</mat-icon>
 				<span>{{ "Disputes.end-dispute" | translate }}</span>
 			</button>
-			<button mat-menu-item>
+			<button
+				*appAccessControl="authService.getPermissions(authModels.VERIFIED_OWNER)"
+				mat-menu-item
+				(click)="ownerAcceptArgument(Number(data.groupChatId))"
+			>
+				<mat-icon>close</mat-icon>
+				<span>{{ "Disputes.end-dispute" | translate }}</span>
+			</button>
+			<button mat-menu-item (click)="addModerator(Number(data.groupChatId))">
 				<mat-icon>add</mat-icon>
 				<span>{{ "Disputes.add-moderate" | translate }}</span>
 			</button>

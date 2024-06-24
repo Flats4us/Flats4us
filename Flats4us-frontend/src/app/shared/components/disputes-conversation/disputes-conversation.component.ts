@@ -17,6 +17,8 @@ import { DisputesService } from '../../../disputes/services/disputes.service';
 import { IParticipant } from '../../../disputes/models/disputes.models';
 import { formatDate, Location } from '@angular/common';
 import { AuthModels } from '@shared/models/auth.models';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
 	selector: 'app-disputes-conversation',
@@ -24,7 +26,10 @@ import { AuthModels } from '@shared/models/auth.models';
 	styleUrls: ['./disputes-conversation.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DisputesConversationComponent implements OnInit, OnDestroy {
+export class DisputesConversationComponent
+	extends BaseComponent
+	implements OnInit, OnDestroy
+{
 	public messageControl = new FormControl();
 	public messages: { groupId: number; user: number; message: string }[] = [];
 	public groupChatId$: Observable<string> = this.route.paramMap.pipe(
@@ -46,8 +51,11 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 		public userService: UserService,
 		protected authService: AuthService,
 		private disputesService: DisputesService,
-		private location: Location
-	) {}
+		private location: Location,
+		private snackBar: MatSnackBar
+	) {
+		super();
+	}
 
 	public ngOnInit(): void {
 		this.conversationService.startConnection(this.authService.getAuthToken());
@@ -59,8 +67,9 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	public ngOnDestroy(): void {
+	public override ngOnDestroy(): void {
 		this.conversationService.stopConnection();
+		super.ngOnDestroy();
 	}
 
 	public onSend(groupId: string, senderId: number): void {
@@ -88,6 +97,44 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 		this.location.back();
 	}
 
+	public addModerator(groupChatId: number) {
+		this.disputesService
+			.addModerator(groupChatId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open(
+					'Prośba o interwencję została przekazana moderatorowi',
+					'Zamknij',
+					{
+						duration: 10000,
+					}
+				)
+			);
+	}
+
+	public ownerAcceptArgument(groupChatId: number) {
+		this.disputesService
+			.ownerAcceptArgument(groupChatId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open('Pomyślnie zaakceptowano spór', 'Zamknij', {
+					duration: 10000,
+				})
+			);
+	}
+
+	public studentAcceptArgument(groupChatId: number) {
+		this.disputesService
+			.ownerAcceptArgument(groupChatId)
+			.pipe(this.untilDestroyed())
+			.subscribe(() =>
+				this.snackBar.open('Pomyślnie zaakceptowano spór', 'Zamknij', {
+					duration: 10000,
+				})
+			);
+	}
+
 	protected readonly formatDate = formatDate;
 	protected readonly authModels = AuthModels;
+	protected readonly Number = Number;
 }
