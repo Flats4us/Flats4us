@@ -47,7 +47,7 @@ export interface IRent {
 	propertyType: number;
 	propertyAvgRating: number;
 	mainTenantId: number;
-	IsAddingOpinionAllowed: boolean;
+	isAddingOpinionAllowed: boolean;
 	owner: IOwner;
 	propertyImages: IImage[];
 	tenants: ITenant[];
