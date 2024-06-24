@@ -209,6 +209,7 @@
 						class="profile-opinions__comments-comment mb-1"
 					>
 						<img
+							class="cursor-pointer"
 							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
 							[alt]="opinion.sourceUserProfilePicture.name"
 							(click)="showProfile(opinion?.sourceUserId)"
