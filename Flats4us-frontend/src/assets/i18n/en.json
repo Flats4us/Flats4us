@@ -361,7 +361,8 @@
 		"index": "Student number",
 		"bank": "Bank account no",
 		"creation-date": "User since",
-		"links": "Social media"
+		"links": "Social media",
+		"show-profile": "Show profile"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "Your opinion about the user",

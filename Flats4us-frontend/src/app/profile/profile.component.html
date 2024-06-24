@@ -211,6 +211,7 @@
 						<img
 							class="cursor-pointer"
 							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
+							matTooltip="{{ 'Profile.show-profile' | translate }}"
 							[alt]="opinion.sourceUserProfilePicture.name"
 							(click)="showProfile(opinion?.sourceUserId)"
 						/>

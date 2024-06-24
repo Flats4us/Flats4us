@@ -358,7 +358,8 @@
 		"index": "Numer albumu",
 		"bank": "Nr konta bankowego",
 		"creation-date": "Użytkownik od",
-		"links": "Media społecznościowe"
+		"links": "Media społecznościowe",
+		"show-profile": "Pokaż profil"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "Twoja opinia o użytkowniku",

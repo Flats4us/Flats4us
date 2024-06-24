@@ -17,6 +17,8 @@ import { IProperty } from 'src/app/real-estate/models/real-estate.models';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-property-rating',
@@ -32,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		StarRatingComponent,
 		MatIconModule,
 		TranslateModule,
+		MatTooltipModule,
 	],
 	providers: [OfferService],
 	templateUrl: './property-rating.component.html',
@@ -39,6 +42,8 @@ import { TranslateModule } from '@ngx-translate/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PropertyRatingComponent extends BaseComponent {
+	protected baseUrl = environment.apiUrl.replace('/api', '');
+
 	constructor(
 		public offerService: OfferService,
 		private snackBar: MatSnackBar,
@@ -51,5 +56,9 @@ export class PropertyRatingComponent extends BaseComponent {
 
 	public onClose() {
 		this.dialogRef.close();
+	}
+
+	public showProfile(id?: number) {
+		this.router.navigate(['profile', 'details', id ?? 0]);
 	}
 }
