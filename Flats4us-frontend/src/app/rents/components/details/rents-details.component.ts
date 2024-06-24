@@ -85,16 +85,20 @@ export class RentsDetailsComponent extends BaseComponent {
 		private translate: TranslateService
 	) {
 		super();
-		zip(this.rentId$, this.rentsService.getRents())
-			.pipe(this.untilDestroyed())
-			.subscribe(([id, rents]) => {
-				const result = rents.result.find(rents => rents.rentId === parseInt(id));
-				this.showRent.next(!!result);
-			});
-		this.userService
-			.getMyProfile()
-			.pipe(this.untilDestroyed())
-			.subscribe(user => (this.studentId = user.userId));
+		if (this.authService.getUserType() === AuthModels.MODERATOR) {
+			this.showRent.next(true);
+		} else {
+			zip(this.rentId$, this.rentsService.getRents())
+				.pipe(this.untilDestroyed())
+				.subscribe(([id, rents]) => {
+					const result = rents.result.find(rents => rents.rentId === parseInt(id));
+					this.showRent.next(!!result);
+				});
+			this.userService
+				.getMyProfile()
+				.pipe(this.untilDestroyed())
+				.subscribe(user => (this.studentId = user.userId));
+		}
 	}
 
 	public addOffer() {
@@ -109,7 +113,7 @@ export class RentsDetailsComponent extends BaseComponent {
 		this.router.navigate(['rents', 'details', id]);
 	}
 	public navigateToOffer(id?: number, user?: string, rating?: number) {
-		if (!user || !rating) {
+		if (!user || (user != 'owner' && !rating)) {
 			return;
 		}
 		let path = user?.toLowerCase();
@@ -141,7 +145,7 @@ export class RentsDetailsComponent extends BaseComponent {
 				break;
 			}
 			case 'offerDetails': {
-				this.navigateToOffer(offerId, user);
+				this.navigateToOffer(offerId, user, 1);
 				break;
 			}
 			case 'propertyDetails': {

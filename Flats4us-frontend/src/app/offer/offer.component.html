@@ -3,10 +3,7 @@
 		<div *ngIf="user === uType.OWNER" class="text-4xl p-4 font-semibold">
 			{{ "Offer.browsing-offers" | translate }}
 		</div>
-		<div
-			*ngIf="user === uType.DETAILS || user === uType.STUDENT"
-			class="text-4xl pl-4 font-semibold"
-		>
+		<div *ngIf="user === uType.DETAILS" class="text-4xl pl-4 font-semibold">
 			{{ "Offer.view" | translate }}
 		</div>
 	</div>
@@ -107,10 +104,7 @@
 			</div>
 		</div>
 	</div>
-	<div
-		*ngIf="user === uType.STUDENT || user === uType.DETAILS"
-		class="offers-student"
-	>
+	<div *ngIf="user === uType.DETAILS" class="offers-student">
 		<router-outlet></router-outlet>
 	</div>
 </div>

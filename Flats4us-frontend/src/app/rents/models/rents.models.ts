@@ -63,6 +63,16 @@ export interface IRentOpinion {
 	description: string;
 }
 
+export interface IRentUserOpinion {
+	rentOpinionId: number;
+	date: Date;
+	rating: number;
+	description: string;
+	sourceUserId: number;
+	sourceUserName: string;
+	sourceUserProfilePicture: IImage;
+}
+
 export interface IMenuOptions {
 	option: string;
 	description: string;

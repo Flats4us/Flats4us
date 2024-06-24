@@ -2,7 +2,9 @@
 	<mat-card>
 		<table mat-table multiTemplateDataRows matSort [dataSource]="disputes$">
 			<ng-container matColumnDef="title">
-				<th *matHeaderCellDef mat-header-cell>Tytuł</th>
+				<th *matHeaderCellDef mat-header-cell>
+					{{ "Moderation-console.title" | translate }}
+				</th>
 				<td *matCellDef="let element" mat-cell>
 					{{ element.title }}
 				</td>

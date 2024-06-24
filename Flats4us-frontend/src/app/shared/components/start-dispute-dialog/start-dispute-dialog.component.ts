@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { RentsService } from '../../../rents/services/rents.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BaseComponent } from '@shared/components/base/base.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-start-dispute-dialog',
@@ -32,6 +33,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 		FormsModule,
 		MatButtonModule,
 		ReactiveFormsModule,
+		TranslateModule,
 	],
 })
 export class StartDisputeDialogComponent extends BaseComponent {

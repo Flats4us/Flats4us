@@ -3,7 +3,7 @@ import { Observable, filter, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserService } from '@shared/services/user.service';
 import { IMyProfile, IUser, IUserOpinion } from '@shared/models/user.models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { AuthService } from '@shared/services/auth.service';
 import { AuthModels } from '@shared/models/auth.models';
@@ -28,12 +28,12 @@ export class ProfileComponent extends BaseComponent {
 		})
 	);
 	public authModel = AuthModels;
-	public avatarURL = './assets/avatar.png';
 
 	constructor(
 		private route: ActivatedRoute,
 		public userService: UserService,
-		public authService: AuthService
+		public authService: AuthService,
+		private router: Router
 	) {
 		super();
 		this.route.paramMap
@@ -51,5 +51,8 @@ export class ProfileComponent extends BaseComponent {
 
 	public checkIfYetAssesed(opinions: IUserOpinion[]): boolean {
 		return !!opinions.find(opinion => opinion.sourceUserId === this.myId);
+	}
+	public showProfile(id: number) {
+		this.router.navigate(['profile', 'details', id]);
 	}
 }

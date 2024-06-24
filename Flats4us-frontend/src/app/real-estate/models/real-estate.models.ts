@@ -1,4 +1,4 @@
-import { IRentOpinion } from 'src/app/rents/models/rents.models';
+import { IRentUserOpinion } from 'src/app/rents/models/rents.models';
 import { IEquipment } from 'src/app/start/models/start-site.models';
 
 export interface IGroup {
@@ -83,5 +83,5 @@ export interface IProperty {
 	floor: number;
 	offers: IOfferMiniatures[];
 	equipment: IEquipment[];
-	rentOpinions: IRentOpinion[];
+	rentOpinions: IRentUserOpinion[];
 }

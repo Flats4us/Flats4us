@@ -74,11 +74,11 @@
 										</h1>
 									</span>
 								</div>
-								<div
-									*ngIf="data.user === uType.OWNER || data.user === uType.STUDENT"
-									class="menu-title"
-								>
+								<div *ngIf="data.user === uType.OWNER" class="menu-title">
 									<button
+										*appAccessControl="
+											authService.getPermissions(authModels.VERIFIED_OWNER)
+										"
 										class="box-icon"
 										id="menu"
 										mat-mini-fab

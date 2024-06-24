@@ -149,6 +149,7 @@
 	},
 	"Disputes": {
 		"dispute": "Dispute",
+		"disputes": "Disputes",
 		"end-dispute": "End dispute",
 		"add-moderate": "Add a moderator to the dispute",
 		"id": "SELECTED DISPUTE ID",
@@ -156,7 +157,11 @@
 		"open-dispute-owner-dialog": "Open a dispute with the owner",
 		"start-describing-problem": "Start a discussion by describing your problem",
 		"open": "Open",
-		"close": "Close"
+		"close": "Close",
+		"title": "Title of the dispute",
+		"description": "Description of the problem",
+		"cancel": "Cancel",
+		"send": "Send"
 	},
 	"Find-roommates": {
 		"find-roommates": "Find your roommate",
@@ -213,7 +218,8 @@
 
 		"open-chat": "Open chat",
 		"info4": "Status updated",
-		"intervention-need": "Intervention need"
+		"intervention-need": "Intervention need",
+		"title": "Title of the dispute"
 	},
 
 	"Conversation": {
@@ -355,7 +361,8 @@
 		"index": "Student number",
 		"bank": "Bank account no",
 		"creation-date": "User since",
-		"links": "Social media"
+		"links": "Social media",
+		"show-profile": "Show profile"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "Your opinion about the user",
@@ -465,7 +472,8 @@
 		"year-type0": "to 1950",
 		"year-type1": "since 1950 to 1989",
 		"year-type2": "since 1990 to 2010",
-		"year-type3": "since 2010"
+		"year-type3": "since 2010",
+		"view": "Property view"
 	},
 	"Real-estate-add": {
 		"property-creator": "Property creator",
@@ -554,7 +562,8 @@
 		"date-issue": "Date of issue",
 		"offer-with": "Offer from",
 		"offer-status": "Offer status",
-		"property-info1": "The property has no related offers"
+		"property-info1": "The property has no related offers",
+		"option-details": "Property details"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Property removal",

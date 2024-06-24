@@ -156,7 +156,11 @@
 		"open-dispute-owner-dialog": "Otwórz spór z właścicielem",
 		"start-describing-problem": "Rozpocznij dyskusję opisując swój problem",
 		"open": "Otwarte",
-		"close": "Zamknięte"
+		"close": "Zamknięte",
+		"title": "Tytuł sporu",
+		"description": "Opis problemu",
+		"cancel": "Anuluj",
+		"send": "Wyślij"
 	},
 	"Find-roommates": {
 		"find-roommates": "Znajdź swojego współlokatora",
@@ -211,7 +215,8 @@
 
 		"open-chat": "Otwórz czat",
 		"info4": "Status pomyślnie zmieniony",
-		"intervention-need": "Potrzeba interwencji"
+		"intervention-need": "Potrzeba interwencji",
+		"title": "Tytuł sporu"
 	},
 
 	"Conversation": {
@@ -353,7 +358,8 @@
 		"index": "Numer albumu",
 		"bank": "Nr konta bankowego",
 		"creation-date": "Użytkownik od",
-		"links": "Media społecznościowe"
+		"links": "Media społecznościowe",
+		"show-profile": "Pokaż profil"
 	},
 	"Profile-add-opinion": {
 		"your-opinion": "Twoja opinia o użytkowniku",
@@ -463,7 +469,8 @@
 		"year-type0": "do 1950",
 		"year-type1": "od 1950 do 1989",
 		"year-type2": "od 1990 do 2010",
-		"year-type3": "od 2010"
+		"year-type3": "od 2010",
+		"view": "Widok nieruchomości"
 	},
 	"Real-estate-add": {
 		"property-creator": "Kreator nieruchomości",
@@ -552,7 +559,8 @@
 		"date-issue": "Data wystawienia",
 		"offer-with": "Oferta z",
 		"offer-status": "Status oferty",
-		"property-info1": "Nieruchomość nie posiada powiązanych ofert"
+		"property-info1": "Nieruchomość nie posiada powiązanych ofert",
+		"option-details": "Szczegóły nieruchomości"
 	},
 	"Real-estate-dialog": {
 		"property-removal": "Usuwanie nieruchomości",
