@@ -47,6 +47,12 @@
 									class="menu-title"
 								>
 									<button
+										*appAccessControl="
+											authService.getPermissions([
+												authModels.VERIFIED_OWNER,
+												authModels.VERIFIED_STUDENT
+											])
+										"
 										class="box-icon"
 										id="menu"
 										mat-mini-fab
@@ -64,8 +70,7 @@
 											[value]="menuOption.description"
 											[disabled]="
 												(data.user === uType.STUDENT &&
-													(menuOption.option === 'offerDetails' ||
-														menuOption.option === 'propertyDetails')) ||
+													menuOption.option === 'propertyDetails') ||
 												(data.rent?.isFinished && menuOption.option === 'startDispute')
 											"
 											(click)="
@@ -273,9 +278,21 @@
 						</p>
 					</div>
 				</div>
-				<mat-divider *ngIf="data.user === uType.STUDENT"></mat-divider>
+				<mat-divider
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_STUDENT,
+							authModels.MODERATOR
+						])
+					"
+				></mat-divider>
 				<div
-					*appAccessControl="authService.getPermissions(authModels.VERIFIED_STUDENT)"
+					*appAccessControl="
+						authService.getPermissions([
+							authModels.VERIFIED_STUDENT,
+							authModels.MODERATOR
+						])
+					"
 					class="row"
 				>
 					<div class="column">

@@ -97,20 +97,29 @@
 			<div class="profile-opinions__header text-2xl flex gap-2 items-center">
 				<mat-icon>rate_review</mat-icon>
 				<span>{{ "Profile-add-opinion.opinions" | translate }}</span>
-				<button
-					*ngIf="
-						id !== myId.toString() &&
-						id !== 'my' &&
-						!checkIfYetAssesed(actualUser.userOpinions)
+				<div
+					*appAccessControl="
+						authService.getPermissions([
+							authModel.VERIFIED_STUDENT,
+							authModel.VERIFIED_OWNER
+						])
 					"
-					mat-mini-fab
-					color="primary"
-					class="ml-auto"
-					matTooltip="{{ 'Profile-add-opinion.add-opinion2' | translate }}"
-					[routerLink]="['/profile', actualUser.userId, 'opinion', 'add']"
+					class="ml-auto float-right"
 				>
-					<mat-icon class="font-bold">add</mat-icon>
-				</button>
+					<button
+						*ngIf="
+							id !== myId.toString() &&
+							id !== 'my' &&
+							!checkIfYetAssesed(actualUser.userOpinions)
+						"
+						mat-mini-fab
+						color="primary"
+						matTooltip="{{ 'Profile-add-opinion.add-opinion2' | translate }}"
+						[routerLink]="['/profile', actualUser.userId, 'opinion', 'add']"
+					>
+						<mat-icon class="font-bold">add</mat-icon>
+					</button>
+				</div>
 			</div>
 			<div class="flex flex-col my-4">
 				<app-star-rating [avgRating]="actualUser.avgRating"></app-star-rating>
@@ -200,7 +209,11 @@
 						class="profile-opinions__comments-comment mb-1"
 					>
 						<img
-							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
+							[src]="
+								actualUser?.profilePicture?.path
+									? baseUrl + '/' + actualUser?.profilePicture?.path
+									: avatarURL
+							"
 							[alt]="opinion.sourceUserProfilePicture.name"
 						/>
 						<span> {{ opinion.sourceUserName }} {{ opinion.date | date }}: </span>
@@ -331,7 +344,11 @@
 							mat-card-avatar
 							alt="avatar"
 							class="profile-avatar__image"
-							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
+							[src]="
+								actualUser?.profilePicture?.path
+									? baseUrl + '/' + actualUser?.profilePicture?.path
+									: avatarURL
+							"
 						/>
 					</div>
 					<div class="flex flex-col justify-center text-center mb-4">
@@ -377,7 +394,10 @@
 								><p class="mr-2">E-mail:</p>
 								<p
 									*appAccessControl="
-										authService.getPermissions(authModel.VERIFIED_STUDENT)
+										authService.getPermissions([
+											authModel.VERIFIED_STUDENT,
+											authModel.MODERATOR
+										])
 									"
 								>
 									{{ actualUser.email }}
@@ -394,7 +414,10 @@
 								><p class="mr-2">Tel.:</p>
 								<p
 									*appAccessControl="
-										authService.getPermissions(authModel.VERIFIED_STUDENT)
+										authService.getPermissions([
+											authModel.VERIFIED_STUDENT,
+											authModel.MODERATOR
+										])
 									"
 								>
 									{{ actualUser.phoneNumber }}

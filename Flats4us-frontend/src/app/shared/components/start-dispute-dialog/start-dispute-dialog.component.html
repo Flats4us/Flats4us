@@ -1,19 +1,23 @@
-<h1 class="p-4 text-xl">Otwórz spór z właścicielem</h1>
+<h1 class="dialog-title p-4 text-2xl font-semibold">
+	{{ "Disputes.open-dispute-owner-dialog" | translate }}
+</h1>
 <form [formGroup]="startDisputeForm" (ngSubmit)="onSubmit()">
 	<div>
 		<mat-form-field class="w-full text-lg">
-			<mat-label>Tytuł sporu</mat-label>
+			<mat-label>{{ "Disputes.title" | translate }}</mat-label>
 			<textarea matInput formControlName="title"></textarea>
 		</mat-form-field>
 		<mat-form-field class="w-full text-lg">
-			<mat-label>Opis problemu</mat-label>
+			<mat-label>{{ "Disputes.description" | translate }}</mat-label>
 			<textarea matInput formControlName="description"></textarea>
 		</mat-form-field>
 	</div>
 	<div mat-dialog-actions align="end">
-		<button mat-raised-button mat-dialog-close>Anuluj</button>
+		<button mat-raised-button mat-dialog-close>
+			{{ "Disputes.cancel" | translate }}
+		</button>
 		<button mat-raised-button type="submit" [disabled]="startDisputeForm.invalid">
-			Wyślij
+			{{ "Disputes.send" | translate }}
 		</button>
 	</div>
 </form>

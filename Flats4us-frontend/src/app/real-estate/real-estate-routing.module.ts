@@ -16,7 +16,7 @@ const routes: Routes = [
 		component: AddRealEstateComponent,
 	},
 	{
-		path: 'owner',
+		path: ':user',
 		component: RealEstateComponent,
 		children: [{ path: ':id', component: RealEstateDetailsComponent }],
 	},

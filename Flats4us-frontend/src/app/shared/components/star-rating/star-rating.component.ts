@@ -12,5 +12,5 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class StarRatingComponent {
 	@Input() public avgRating = 0;
-	public starsScale: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+	public starsScale: number[] = [1, 2, 3, 4, 5];
 }

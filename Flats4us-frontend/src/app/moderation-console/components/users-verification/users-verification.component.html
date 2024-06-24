@@ -2,7 +2,14 @@
 	<table mat-table [dataSource]="users$">
 		<ng-container matColumnDef="email">
 			<th *matHeaderCellDef mat-header-cell>Email</th>
-			<td *matCellDef="let element" mat-cell>{{ element.email }}</td>
+			<td *matCellDef="let element" mat-cell>
+				<button
+					mat-flat-button
+					[routerLink]="['/profile', 'details', element.userId]"
+				>
+					{{ element.email }}
+				</button>
+			</td>
 		</ng-container>
 		<ng-container matColumnDef="university">
 			<th *matHeaderCellDef mat-header-cell>
