@@ -1,4 +1,5 @@
 import { IRent } from '../../rents/models/rents.models';
+import { IProfilePicture } from '@shared/models/user.models';
 
 export interface IDispute {
 	argumentId: number;
@@ -19,4 +20,17 @@ export interface IStudent {
 	email: string;
 	fullName: string;
 	profilePicture: string | null;
+}
+
+export interface IGroupChat {
+	groupChatId: number;
+	name: string;
+	users: IParticipant[];
+}
+
+export interface IParticipant {
+	userId: number;
+	email: string;
+	fullName: string;
+	profilePicture: IProfilePicture;
 }

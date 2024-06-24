@@ -17,9 +17,7 @@
 				{{ "Moderation-console.property-address" | translate }}
 			</th>
 			<td *matCellDef="let element" mat-cell>
-				<button mat-flat-button [routerLink]="['/real-estate', element.propertyId]">
-					{{ element.address }}
-				</button>
+				{{ element.address }}
 			</td>
 		</ng-container>
 		<ng-container matColumnDef="status">

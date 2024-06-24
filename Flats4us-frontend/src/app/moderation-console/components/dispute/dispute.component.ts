@@ -13,6 +13,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddInterventionDialogComponent } from '../add-intervention-dialog/add-intervention-dialog.component';
 import { ChangeDisputeStatusDialogComponent } from '../change-dispute-status-dialog/change-dispute-status-dialog.component';
 import { IDispute } from '../../models/moderation-console.models';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 
 @Component({
 	selector: 'app-dispute',
@@ -30,9 +33,10 @@ import { IDispute } from '../../models/moderation-console.models';
 	styleUrls: ['./dispute.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DisputeComponent {
+export class DisputeComponent extends BaseComponent {
 	public disputes$ = this.service.getDisputes();
 	public displayedColumns: string[] = [
+		'title',
 		'startDate',
 		'interventionNeed',
 		'rentId',
@@ -45,22 +49,67 @@ export class DisputeComponent {
 
 	constructor(
 		private service: ModerationConsoleService,
-		private dialog: MatDialog
-	) {}
+		private dialog: MatDialog,
+		private router: Router
+	) {
+		super();
+	}
 
 	public openInterventionDialog(argumentId: number): void {
-		this.dialog.open(AddInterventionDialogComponent, {
-			height: '300px',
-			width: '500px',
-			data: { argumentId: argumentId },
-		});
+		const AddInterventionDialog = this.dialog.open(
+			AddInterventionDialogComponent,
+			{
+				height: '300px',
+				width: '500px',
+				data: { argumentId: argumentId },
+			}
+		);
+
+		this.disputes$ = AddInterventionDialog.afterClosed().pipe(
+			this.untilDestroyed(),
+			switchMap(() => this.service.getDisputes())
+		);
 	}
 
 	public openChangeStatusDialog(argumentId: number): void {
-		this.dialog.open(ChangeDisputeStatusDialogComponent, {
-			width: '500px',
-			data: { argumentId: argumentId },
-		});
+		const ChangeDisputeStatusDialog = this.dialog.open(
+			ChangeDisputeStatusDialogComponent,
+			{
+				width: '500px',
+				data: { argumentId: argumentId },
+			}
+		);
+
+		this.disputes$ = ChangeDisputeStatusDialog.afterClosed().pipe(
+			this.untilDestroyed(),
+			switchMap(() => this.service.getDisputes())
+		);
 	}
 	protected readonly formatDate = formatDate;
+
+	public joinGroupChat(groupChatId: number) {
+		this.service
+			.joinGroupChat(groupChatId)
+			.pipe(this.untilDestroyed())
+			.subscribe({
+				error: () =>
+					this.router.navigate([
+						'moderation-console',
+						'disputes',
+						'conversation',
+						groupChatId,
+					]),
+				complete: () =>
+					this.router.navigate([
+						'moderation-console',
+						'disputes',
+						'conversation',
+						groupChatId,
+					]),
+			});
+	}
+
+	public toggleExpansion(element: IDispute) {
+		this.expandedElement = this.expandedElement === element ? null : element;
+	}
 }

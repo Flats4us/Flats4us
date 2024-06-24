@@ -6,7 +6,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { ModerationConsoleService } from '../../services/moderation-console.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +26,8 @@ export class AddInterventionDialogComponent extends BaseComponent {
 		private fb: FormBuilder,
 		private service: ModerationConsoleService,
 		private snackBar: MatSnackBar,
-		private translate: TranslateService
+		private translate: TranslateService,
+		public dialogRef: MatDialogRef<AddInterventionDialogComponent>
 	) {
 		super();
 		this.addInterventionForm = this.fb.group({
@@ -41,14 +42,15 @@ export class AddInterventionDialogComponent extends BaseComponent {
 				this.data.argumentId
 			)
 			.pipe(this.untilDestroyed())
-			.subscribe(() =>
+			.subscribe(() => {
 				this.snackBar.open(
 					this.translate.instant('Moderation-console.info1'),
 					this.translate.instant('close'),
 					{
 						duration: 10000,
 					}
-				)
-			);
+				);
+				this.dialogRef.close();
+			});
 	}
 }

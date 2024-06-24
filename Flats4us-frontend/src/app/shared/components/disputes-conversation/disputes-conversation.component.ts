@@ -14,6 +14,9 @@ import { ConversationService } from '../../../conversations/services/conversatio
 import { UserService } from '@shared/services/user.service';
 import { AuthService } from '@shared/services/auth.service';
 import { DisputesService } from '../../../disputes/services/disputes.service';
+import { IParticipant } from '../../../disputes/models/disputes.models';
+import { formatDate, Location } from '@angular/common';
+import { AuthModels } from '@shared/models/auth.models';
 
 @Component({
 	selector: 'app-disputes-conversation',
@@ -31,14 +34,19 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 		switchMap(value => this.disputesService.getDisputeMessages(value))
 	);
 	public currentUser$: Observable<IMyProfile> = this.userService.getMyProfile();
+	public participants$: Observable<IParticipant[]> = this.groupChatId$.pipe(
+		switchMap(value => this.disputesService.getGroupChats(Number(value))),
+		map(groupChat => groupChat.users)
+	);
 	public baseUrl = environment.apiUrl.replace('/api', '');
 
 	constructor(
 		public route: ActivatedRoute,
 		public conversationService: ConversationService,
 		public userService: UserService,
-		private authService: AuthService,
-		private disputesService: DisputesService
+		protected authService: AuthService,
+		private disputesService: DisputesService,
+		private location: Location
 	) {}
 
 	public ngOnInit(): void {
@@ -71,4 +79,15 @@ export class DisputesConversationComponent implements OnInit, OnDestroy {
 
 		this.messageControl.reset();
 	}
+
+	public getParticipantById(participants: IParticipant[], userId: number) {
+		return participants.find(participant => participant.userId === userId);
+	}
+
+	public goBack() {
+		this.location.back();
+	}
+
+	protected readonly formatDate = formatDate;
+	protected readonly authModels = AuthModels;
 }

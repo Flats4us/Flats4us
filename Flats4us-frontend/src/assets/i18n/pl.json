@@ -63,7 +63,7 @@
 		"password-info1": "Nieprawidłowy email lub hasło",
 		"password-info2": "Zapomniałeś hasła",
 		"password-info3": "Nie podano hasła",
-		"password-info4": "Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielke litery, cyfry i symbole",
+		"password-info4": "Hasło powinno zawierać przynajmniej 8 znaków, w tym małe i wielkie litery, cyfry i symbole",
 		"password-info5": "Użyj przynajmniej 8 znaków, w tym jednocześnie małych i wielkich liter, cyfr i symboli",
 		"password-info6": "Nie powtórzono hasła",
 		"password-info7": "Hasła różnią się od siebie",
@@ -113,7 +113,7 @@
 		"my-properties": "Moje nieruchomości",
 		"add-property": "Dodaj nieruchomość",
 		"add-offer": "Dodaj ofertę",
-		"observed-offers": "Obserowowane oferty",
+		"observed-offers": "Obserwowane oferty",
 		"payments-history": "Historia płatności",
 		"fees": "Opłaty",
 		"bail": "Kaucja",
@@ -127,7 +127,7 @@
 		"change-password": "Zmień hasło",
 		"additional": "Dodatkowe",
 		"calendar": "Kalendarz",
-		"find-roommates": "Znajdź wspólokatora",
+		"find-roommates": "Znajdź współlokatora",
 		"change-language-tooltip": "Zmień język",
 		"disputes": "Spory"
 	},
@@ -208,8 +208,10 @@
 		"statutes0": "Trwający",
 		"statutes1": "Rozwiązany",
 		"statutes2": "Nieuzasadniony",
-		"statutes3": "Rozwiązany przez moderatora",
-		"statutes4": "Nieuzasadniony przez moderatora"
+
+		"open-chat": "Otwórz czat",
+		"info4": "Status pomyślnie zmieniony",
+		"intervention-need": "Potrzeba interwencji"
 	},
 
 	"Conversation": {
@@ -242,10 +244,10 @@
 		"rental-rules": "Reguły wynajmu",
 		"rental-rules-info": "Nie określono regulaminu",
 		"offer-info3": "Oferta została dodana do obserwowanych",
-		"offer-info4": "Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.",
+		"offer-info4": "Nie udało się dodać oferty do obserwowanych. Spróbuj ponownie.",
 		"go-rent": "Przejdź do widoku najmu",
 		"followers-number": "Liczba obserwujących",
-		"add-to-watch": "Dodaj do obeserwowanych",
+		"add-to-watch": "Dodaj do obserwowanych",
 		"survey-info1": "Palenie niedozwolone",
 		"survey-info2": "Palenie dozwolone",
 		"survey-info3": "Zwierzęta niedozwolone",
@@ -282,7 +284,7 @@
 		"end-offer": "Kończenie oferty",
 		"end-offer-info": "Czy potwierdzasz zakończenie oferty",
 		"promoting": "Promowanie oferty",
-		"promotion-period": "Okres promownia",
+		"promotion-period": "Okres promowania",
 		"promotion-info1": "Liczba dni jest wymagana",
 		"promotion-info2": "Wprowadzona liczba dni jest nieprawidłowa",
 		"promotion-info3": "Czy potwierdzasz promowanie oferty",
@@ -294,7 +296,7 @@
 		"rent-period": "Okres najmu",
 		"tenants": "Najemcy",
 		"rent-proposal-info": "Czy akceptujesz propozycję najmu",
-		"watched-offers": "Obserowowane oferty",
+		"watched-offers": "Obserwowane oferty",
 		"watched-offers-info": "Nie dodano jeszcze żadnej oferty do obserwowanych",
 		"deposit": "Depozyt",
 		"area": "Powierzchnia",
@@ -523,8 +525,8 @@
 		"property-save-info2": "Nie udało się dodać nieruchomości. Spróbuj ponownie.",
 		"change-info1": "Zmiany zostały pomyślnie zapisane!",
 		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.",
-		"add-info": "Klikająć na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
-		"edit-info": "Klikająć na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych."
+		"add-info": "Klikając na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
+		"edit-info": "Klikając na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych."
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",
@@ -736,9 +738,9 @@
 		"male": "męska",
 		"female": "żeńska",
 		"both": "bez różnicy",
-		"lookingForRoommate": "Szukam wspólokatora?",
-		"maxNumberOfRoommates": "Maksymalna liczba wspólokatorów",
-		"roommateGender": "Preferowana płeć wspólokatora",
+		"lookingForRoommate": "Szukam współlokatora?",
+		"maxNumberOfRoommates": "Maksymalna liczba współlokatorów",
+		"roommateGender": "Preferowana płeć współlokatora",
 		"city": "Miasto"
 	},
 
@@ -776,7 +778,7 @@
 		"sort": "Sortuj oferty według",
 		"add-to-watch": "Dodaj do obeserwowanych",
 		"info1": "Oferta została dodana do obserwowanych!",
-		"info2": "Nie udało się dodać oferty do obserowowanych. Spróbuj ponownie.",
+		"info2": "Nie udało się dodać oferty do obserwowanych. Spróbuj ponownie.",
 		"close": "Zamknij",
 
 		"o1": "ofertę",

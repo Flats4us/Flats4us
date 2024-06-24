@@ -2,12 +2,30 @@
 	*ngIf="{
 		currentUser: currentUser$ | async,
 		messagesHistory: messages$ | async,
-		groupChatId: groupChatId$ | async
+		groupChatId: groupChatId$ | async,
+		participants: participants$ | async
 	} as data"
 >
 	<div class="conversation-header">
 		<div></div>
-		<button mat-icon-button [matMenuTriggerFor]="menu">
+
+		<button
+			*appAccessControl="authService.getPermissions(authModels.MODERATOR)"
+			mat-icon-button
+			(click)="goBack()"
+		>
+			<mat-icon>arrow_back</mat-icon>
+		</button>
+		<button
+			*appAccessControl="
+				authService.getPermissions([
+					authModels.VERIFIED_STUDENT,
+					authModels.VERIFIED_OWNER
+				])
+			"
+			mat-icon-button
+			[matMenuTriggerFor]="menu"
+		>
 			<mat-icon>more_vert</mat-icon>
 		</button>
 		<mat-menu #menu="matMenu">
@@ -22,13 +40,22 @@
 		</mat-menu>
 	</div>
 	<div
-		*ngIf="data.currentUser && data.messagesHistory"
+		*ngIf="data.currentUser && data.participants && data.messagesHistory"
 		class="conversation-list"
 	>
 		<div
 			*ngFor="let message of data.messagesHistory; let index = index"
 			class="flex"
 		>
+			<img
+				*ngIf="message.senderId !== data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center ml-3"
+				src="{{ baseUrl }}/{{
+					getParticipantById(data.participants, message.senderId)?.profilePicture
+						?.path
+				}}"
+			/>
 			<div
 				class="conversation"
 				[class]="
@@ -37,13 +64,47 @@
 						: 'conversation-received'
 				"
 			>
-				<span *ngIf="message.senderId === data.currentUser.userId">{{
-					data.currentUser.name
-				}}</span>
+				<span
+					*ngIf="message.senderId !== data.currentUser.userId"
+					class="text-left ml-3"
+					>{{
+						getParticipantById(data.participants, message.senderId)?.fullName
+					}}</span
+				>
+				<span
+					*ngIf="message.senderId === data.currentUser.userId"
+					class="text-right mr-3"
+					>{{
+						getParticipantById(data.participants, message.senderId)?.fullName
+					}}</span
+				>
 				<span class="bubble">{{ message.content }}</span>
+				<span
+					class="dateTime text-xs"
+					[class]="
+						message.senderId === data.currentUser.userId
+							? 'text-right mr-3 pt-1'
+							: 'text-left ml-3 pt-1'
+					"
+					>{{ formatDate(message.dateTime, "d MMM · H:mm", "pl-PL", "+0400") }}</span
+				>
 			</div>
+			<img
+				*ngIf="message.senderId === data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center mr-3"
+				src="{{ baseUrl }}/{{ data.currentUser.profilePicture.path }}"
+			/>
 		</div>
 		<div *ngFor="let msg of messages; let index = index" class="flex">
+			<img
+				*ngIf="msg.user !== data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center ml-3"
+				src="{{ baseUrl }}/{{
+					getParticipantById(data.participants, msg.user)?.profilePicture?.path
+				}}"
+			/>
 			<div
 				class="conversation"
 				[class]="
@@ -52,11 +113,22 @@
 						: 'conversation-received'
 				"
 			>
-				<span *ngIf="msg.user === data.currentUser.userId">{{
-					data.currentUser.name
+				<span
+					*ngIf="msg.user === data.currentUser.userId"
+					class="text-right mr-3"
+					>{{ data.currentUser.name }}</span
+				>
+				<span *ngIf="msg.user !== data.currentUser.userId" class="text-left ml-3">{{
+					getParticipantById(data.participants, msg.user)?.fullName
 				}}</span>
 				<span class="bubble">{{ msg.message }}</span>
 			</div>
+			<img
+				*ngIf="msg.user === data.currentUser.userId"
+				alt="profile photo"
+				class="avatar self-center mr-3"
+				src="{{ baseUrl }}/{{ data.currentUser.profilePicture.path }}"
+			/>
 		</div>
 	</div>
 	<mat-form-field
