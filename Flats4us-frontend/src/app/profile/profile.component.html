@@ -209,11 +209,7 @@
 						class="profile-opinions__comments-comment mb-1"
 					>
 						<img
-							[src]="
-								actualUser?.profilePicture?.path
-									? baseUrl + '/' + actualUser?.profilePicture?.path
-									: avatarURL
-							"
+							src="{{ baseUrl }}/{{ opinion?.sourceUserProfilePicture?.path }}"
 							[alt]="opinion.sourceUserProfilePicture.name"
 						/>
 						<span> {{ opinion.sourceUserName }} {{ opinion.date | date }}: </span>
@@ -232,11 +228,7 @@
 							mat-card-avatar
 							alt="avatar"
 							class="profile-avatar__image"
-							[src]="
-								actualUser?.profilePicture?.path
-									? baseUrl + '/' + actualUser?.profilePicture?.path
-									: avatarURL
-							"
+							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
 						/>
 					</div>
 					<div class="text-2xl flex-col justify-center text-center mb-4">
@@ -344,11 +336,7 @@
 							mat-card-avatar
 							alt="avatar"
 							class="profile-avatar__image"
-							[src]="
-								actualUser?.profilePicture?.path
-									? baseUrl + '/' + actualUser?.profilePicture?.path
-									: avatarURL
-							"
+							src="{{ baseUrl }}/{{ actualUser?.profilePicture?.path }}"
 						/>
 					</div>
 					<div class="flex flex-col justify-center text-center mb-4">

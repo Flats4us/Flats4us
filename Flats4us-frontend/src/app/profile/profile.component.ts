@@ -28,7 +28,6 @@ export class ProfileComponent extends BaseComponent {
 		})
 	);
 	public authModel = AuthModels;
-	public avatarURL = './assets/avatar.png';
 
 	constructor(
 		private route: ActivatedRoute,
