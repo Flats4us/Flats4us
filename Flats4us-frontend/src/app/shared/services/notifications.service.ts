@@ -27,11 +27,15 @@ export class NotificationsService {
 		private translateService: TranslateService
 	) {
 		this.addReceiveNotificationHandler((_user, message) => {
-			this.snackbar.open(this.translateService.instant(message), 'Close', {
-				duration: 5000,
-				verticalPosition: 'top',
-				horizontalPosition: 'right',
-			});
+			this.snackbar.open(
+				`Notifications-content.${this.translateService.instant(message)}`,
+				'Close',
+				{
+					duration: 5000,
+					verticalPosition: 'top',
+					horizontalPosition: 'right',
+				}
+			);
 			const notification = this.notifications$.value;
 			this.notifications$.next([...notification, message]);
 		});
@@ -50,14 +54,14 @@ export class NotificationsService {
 
 	private registerEventHandlers() {
 		this.onReceiveNotificationCallbacks.forEach(callback => {
-			this.hubConnection.on('ReceiveNotification', (user, message, timestamp) => {
-				callback(user, message, timestamp);
+			this.hubConnection.on('ReceiveNotification', (title, body, timestamp) => {
+				callback(title, body, timestamp);
 			});
 		});
 	}
 
 	public addReceiveNotificationHandler(
-		callback: (user: number, message: string, timestamp: Date) => void
+		callback: (title: number, body: string, timestamp: Date) => void
 	) {
 		this.onReceiveNotificationCallbacks.push(callback);
 	}
