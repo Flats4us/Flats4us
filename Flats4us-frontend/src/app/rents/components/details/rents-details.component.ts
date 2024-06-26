@@ -106,7 +106,7 @@ export class RentsDetailsComponent extends BaseComponent {
 	}
 
 	public getAvgRatingDesc(desc: string, rating?: number): string {
-		return desc + ': ' + rating ?? 0;
+		return desc + ': ' + (rating ?? 0) + '/10';
 	}
 
 	public navigateToRent(id?: number) {
