@@ -23,6 +23,7 @@ import { StartService } from 'src/app/start/services/start.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { StarRatingComponent } from '@shared/components/star-rating/star-rating.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { OfferMapModule } from '../offer-map/offer-map.module';
 
 @NgModule({
 	declarations: [OfferDetailsComponent],
@@ -48,6 +49,7 @@ import { TranslateModule } from '@ngx-translate/core';
 		MatSnackBarModule,
 		StarRatingComponent,
 		TranslateModule,
+		OfferMapModule,
 	],
 	providers: [OfferService, RealEstateService, RentsService, StartService],
 	exports: [OfferDetailsComponent],
