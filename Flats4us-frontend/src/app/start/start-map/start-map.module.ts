@@ -21,6 +21,6 @@ import { TranslateModule } from '@ngx-translate/core';
 		TranslateModule,
 	],
 	exports: [StartMapComponent],
-	providers: [RealEstateService, StartService, OfferService],
+	providers: [RealEstateService, StartService, RealEstateService, OfferService],
 })
 export class StartMapModule {}

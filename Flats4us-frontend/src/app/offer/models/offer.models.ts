@@ -78,11 +78,3 @@ export interface IProfilePicture {
 	name: string;
 	path: string;
 }
-
-export interface IMapAddress {
-	city?: string;
-	postalCode?: string;
-	street?: string;
-	number?: string;
-	propertyType?: number;
-}

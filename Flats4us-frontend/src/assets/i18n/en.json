@@ -305,6 +305,7 @@
 		"rent-period": "Rent period",
 		"tenants": "Tenants",
 		"rent-proposal-info": "Do you accept the rental offer",
+
 		"watched-offers": "Watched offers",
 		"watched-offers-info": "No offers added to watchlist yet",
 		"deposit": "Deposit",
@@ -326,8 +327,7 @@
 		"cancel-dialog1": "The offer has ended.",
 		"cancel-dialog2": "Mistake. Try again!",
 		"offer-info-rating0": "View detailed rating",
-		"offer-info-rating1": "The property has not been rated yet",
-		"map": "Map"
+		"offer-info-rating1": "The property has not been rated yet"
 	},
 
 	"Property-rating": {
