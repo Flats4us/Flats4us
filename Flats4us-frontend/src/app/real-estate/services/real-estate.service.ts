@@ -85,89 +85,85 @@ export class RealEstateService {
 
 	public districtGroups: IGroup[] = [
 		{
-			whole: 'Warszawa',
-			parts: [
-				'Bemowo',
-				'Białołęka',
-				'Bielany',
-				'Mokotów',
-				'Ochota',
-				'Praga-Południe',
-				'Praga-Północ',
-				'Rembertów',
-				'Śródmieście',
-				'Targówek',
-				'Ursus',
-				'Ursynów',
-				'Wawer',
-				'Wesoła',
-				'Wilanów',
-				'Włochy',
-				'Wola',
-				'Żoliborz',
-			],
+			whole: 'Białystok',
+			parts: [],
+		},
+		{
+			whole: 'Bydgoszcz',
+			parts: [],
+		},
+		{
+			whole: 'Chełm',
+			parts: [],
+		},
+		{
+			whole: 'Częstochowa',
+			parts: [],
 		},
 		{
 			whole: 'Gdańsk',
-			parts: [
-				'Aniołki',
-				'Brętowo',
-				'Brzeźno',
-				'Chełm',
-				'Jasień',
-				'Kokoszki',
-				'Krakowiec-Górki Zachodnie',
-				'Letnica',
-				'Matarnia',
-				'Młyniska',
-				'Nowy Port',
-				'Oliwa',
-				'Olszynka',
-				'Orunia-Św. Wojciech-Lipce',
-				'Osowa',
-				'Piecki-Migowo',
-				'Przeróbka',
-				'Przymorze Małe',
-				'Przymorze Wielkie',
-				'Rudniki',
-				'Siedlce',
-				'Stogi',
-				'Strzyża',
-				'Suchanino',
-				'Śródmieście',
-				'Ujeścisko-Łostowice',
-				'VII Dwór',
-				'Wrzeszcz Dolny',
-				'Wrzeszcz Górny',
-				'Wyspa Sobieszewska',
-				'Wzgórze Mickiewicza',
-				'Zaspa-Młyniec',
-				'Zaspa-Rozstaje',
-				'Żabianka-Wejhera-Jelitkowo-Tysiąclecia',
-			],
+			parts: [],
+		},
+		{
+			whole: 'Gorzów Wielkopolski',
+			parts: [],
+		},
+		{
+			whole: 'Katowice',
+			parts: [],
+		},
+		{
+			whole: 'Kielce',
+			parts: [],
 		},
 		{
 			whole: 'Kraków',
-			parts: [
-				'Stare Miasto',
-				'Grzegórzki',
-				'Prądnik Czerwony',
-				'Prądnik Biały',
-				'Krowodrza',
-				'Bronowice',
-				'Zawierzyniec',
-				'Dębniki',
-				'Łagiewniki-Borek Fałęcki',
-				'Swoszowice',
-				'Podgórze Duchackie',
-				'Bieżanów-Prokocim',
-				'Podgórze',
-				'Czyżyny',
-				'Mistrzejowice',
-				'Bieńczyce',
-				'Wzgórze Krzesławickie',
-				'Nowa Huta',
-			],
+			parts: [],
+		},
+		{
+			whole: 'Lublin',
+			parts: [],
+		},
+
+		{
+			whole: 'Łódź',
+			parts: [],
+		},
+		{
+			whole: 'Olsztyn',
+			parts: [],
+		},
+		{
+			whole: 'Opole',
+			parts: [],
+		},
+		{
+			whole: 'Poznań',
+			parts: [],
+		},
+		{
+			whole: 'Rzeszów',
+			parts: [],
+		},
+		{
+			whole: 'Szczecin',
+			parts: [],
+		},
+		{
+			whole: 'Toruń',
+			parts: [],
+		},
+		{
+			whole: 'Warszawa',
+			parts: [],
+		},
+		{
+			whole: 'Wrocław',
+			parts: [],
+		},
+		{
+			whole: 'Zielona Góra',
+			parts: [],
 		},
 	];
 
@@ -303,7 +299,7 @@ export class RealEstateService {
 			.pipe(
 				map(data => {
 					const csvToRowArray = data.split('\n');
-					for (let index = 1; index < csvToRowArray.length - 2; index++) {
+					for (let index = 1; index < csvToRowArray.length; index++) {
 						const row = csvToRowArray[index].split(';');
 						const regionToLowerCase = row[2].trim().toLowerCase();
 						regionCityArray = [];
@@ -316,6 +312,26 @@ export class RealEstateService {
 							?.parts.push(row[1]);
 					}
 					return regionCityArray;
+				})
+			);
+	}
+
+	public readDistrictsForCities(): Observable<IGroup[]> {
+		return this.httpClient
+			.get('./assets/miasta_dzielnice.csv', { responseType: 'text' })
+			.pipe(
+				map(data => {
+					const csvToRowArray = data.split('\n');
+					for (let index = 1; index < csvToRowArray.length; index++) {
+						const row = csvToRowArray[index].split(';');
+						const city = row[0].trim().toLowerCase();
+						for (let j = 1; j < row.length; j++) {
+							this.districtGroups
+								.find(group => group.whole.trim().toLowerCase() === city)
+								?.parts.push(row[j]);
+						}
+					}
+					return this.districtGroups;
 				})
 			);
 	}
@@ -366,16 +382,18 @@ export class RealEstateService {
 		});
 	}
 
-	public getLatLon(address: string): IGeoLocation {
-		let geoLocation: IGeoLocation = { lat: 0, lon: 0 };
+	public getLocation(address: string): Observable<IGeoLocation[]> {
 		const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
 			address
-		)}&format=json`;
-		this.httpClient.get(url).subscribe((response: any) => {
-			if (response.length > 0) {
-				geoLocation = response[0];
-			}
-		});
-		return geoLocation;
+		)}&polygon_geojson=1&format=jsonv2`;
+		return this.httpClient.get<IGeoLocation[]>(url);
+	}
+	public getLocationStructured(
+		street: string,
+		postalCode: string,
+		city: string
+	): Observable<IGeoLocation[]> {
+		const url = `https://nominatim.openstreetmap.org/search.php?street=${street}&city=${city}&country=Polska&postalcode=${postalCode}&polygon_geojson=1&format=jsonv2`;
+		return this.httpClient.get<IGeoLocation[]>(url);
 	}
 }

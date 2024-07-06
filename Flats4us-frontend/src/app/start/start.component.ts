@@ -116,6 +116,10 @@ export class StartComponent
 			)
 			.pipe(this.untilDestroyed())
 			.subscribe();
+		this.realEstateService
+			.readDistrictsForCities()
+			.pipe(this.untilDestroyed())
+			.subscribe();
 		this.flatOptions$ = this.startService.getFilteredOffers(
 			this.startSiteForm.value,
 			this.pageIndex,

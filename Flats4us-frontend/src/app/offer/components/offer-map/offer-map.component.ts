@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -11,7 +10,10 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { Map, map, tileLayer } from 'leaflet';
 import * as L from 'leaflet';
 import { RealEstateService } from 'src/app/real-estate/services/real-estate.service';
-import { IMapAddress } from '../../models/offer.models';
+import {
+	IGeoLocation,
+	IProperty,
+} from 'src/app/real-estate/models/real-estate.models';
 
 @Component({
 	selector: 'app-offer-map',
@@ -24,14 +26,11 @@ export class OfferMapComponent
 	implements OnInit, OnChanges
 {
 	@Input()
-	public address: IMapAddress | undefined;
+	public property?: IProperty;
 
-	public map: Map | undefined;
+	public map?: Map;
 
-	constructor(
-		private http: HttpClient,
-		public realEstateService: RealEstateService
-	) {
+	constructor(public realEstateService: RealEstateService) {
 		super();
 		const container = L.DomUtil.get('map');
 		if (container) {
@@ -48,14 +47,14 @@ export class OfferMapComponent
 			this.getLocation();
 			this.setMapView([52, 20]);
 		}
-		if (this.address) {
-			this.addMarkersFromAddress(this.address);
+		if (this.property) {
+			this.addMarkersFromAddress(this.property);
 		}
 	}
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		if (this.map && this.address && changes['address']) {
-			this.addMarkersFromAddress(this.address);
+		if (this.map && this.property && changes['property']) {
+			this.addMarkersFromAddress(this.property);
 		}
 	}
 
@@ -71,28 +70,18 @@ export class OfferMapComponent
 		}
 	}
 
-	public addMarkersFromAddress(address: IMapAddress) {
-		const addressString =
-			address.street +
-			',' +
-			address.city +
-			',' +
-			address.postalCode +
-			',' +
-			'Polska';
-		const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-			addressString
-		)}&format=json`;
-
-		this.http
-			.get<{ lat: number; lon: number }[]>(url)
-			.subscribe((response: { lat: number; lon: number }[]) => {
+	public addMarkersFromAddress(property: IProperty) {
+		const addressString = `${property.street},${property.city},${property.postalCode},Polska`;
+		this.realEstateService
+			.getLocation(addressString)
+			.pipe(this.untilDestroyed())
+			.subscribe((response: IGeoLocation[]) => {
 				if (response.length > 0) {
 					const { lat, lon } = response[0];
 					const markerOptions = {
-						clickable: true,
+						clickable: false,
 						draggable: false,
-						icon: this.getPropertyIcon(address.propertyType ?? 0, false),
+						icon: this.getPropertyIcon(property.propertyType ?? 0, false),
 					};
 					L.marker([+lat, +lon], markerOptions).addTo(this.map as Map);
 					this.setMapView([lat, lon]);
@@ -104,8 +93,9 @@ export class OfferMapComponent
 		propertyType: number,
 		isClicked: boolean
 	): L.Icon<L.IconOptions> {
+		const baseUrl = '../../assets/';
 		let markerIcon = L.icon({
-			iconUrl: '../../assets/leafletIconShadow.svg',
+			iconUrl: `${baseUrl}leafletIconShadow.svg`,
 			iconSize: [50, 50],
 			iconAnchor: [25, 16],
 			popupAnchor: [-6, -16],
@@ -114,8 +104,8 @@ export class OfferMapComponent
 			case 0:
 				markerIcon = L.icon({
 					iconUrl: isClicked
-						? '../../assets/leafletIconClickedShadowFlat.svg'
-						: '../../assets/leafletIconShadowFlat.svg',
+						? `${baseUrl}leafletIconClickedShadowFlat.svg`
+						: `${baseUrl}leafletIconShadowFlat.svg`,
 					iconSize: [50, 50],
 					iconAnchor: [25, 16],
 					popupAnchor: [-6, -16],
@@ -124,8 +114,8 @@ export class OfferMapComponent
 			case 1:
 				markerIcon = L.icon({
 					iconUrl: isClicked
-						? '../../assets/leafletIconClickedShadowHouse.svg'
-						: '../../assets/leafletIconShadowHouse.svg',
+						? `${baseUrl}leafletIconClickedShadowHouse.svg`
+						: `${baseUrl}leafletIconShadowHouse.svg`,
 					iconSize: [50, 50],
 					iconAnchor: [25, 16],
 					popupAnchor: [-6, -16],
@@ -134,8 +124,8 @@ export class OfferMapComponent
 			case 2:
 				markerIcon = L.icon({
 					iconUrl: isClicked
-						? '../../assets/leafletIconClickedShadowRoom.svg'
-						: '../../assets/leafletIconShadowRoom.svg',
+						? `${baseUrl}leafletIconClickedShadowRoom.svg`
+						: `${baseUrl}leafletIconShadowRoom.svg`,
 					iconSize: [50, 50],
 					iconAnchor: [25, 16],
 					popupAnchor: [-6, -16],
@@ -144,8 +134,8 @@ export class OfferMapComponent
 			default:
 				markerIcon = L.icon({
 					iconUrl: isClicked
-						? '../../assets/leafletIconClickedShadow.svg'
-						: '../../assets/leafletIconShadow.svg',
+						? `${baseUrl}leafletIconClickedShadow.svg`
+						: `${baseUrl}leafletIconShadow.svg`,
 					iconSize: [50, 50],
 					iconAnchor: [25, 16],
 					popupAnchor: [-6, -16],
