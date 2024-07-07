@@ -548,7 +548,9 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 					this.addRealEstateFormAddressData.controls['street'].setErrors({
 						incorrect: true,
 					});
-					this.stepper?.previous();
+					this.changeDetectorRef.markForCheck();
+				} else {
+					this.stepper?.next();
 				}
 			});
 	}
