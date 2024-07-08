@@ -120,7 +120,7 @@ namespace Flats4us.Controllers
 
 
         // TODO remove after test
-        [HttpPost("test/users/{userId}/connections")]
+        [HttpGet("test/users/{userId}/connections")]
         [SwaggerOperation(
             Summary = "For testing connections"
         )]
