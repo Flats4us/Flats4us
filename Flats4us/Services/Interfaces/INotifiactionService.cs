@@ -1,4 +1,5 @@
-﻿using Flats4us.Entities.Dto;
+﻿using Flats4us.Entities;
+using Flats4us.Entities.Dto;
 
 namespace Flats4us.Services.Interfaces
 {
@@ -8,5 +9,7 @@ namespace Flats4us.Services.Interfaces
         Task<List<NotificationDto>> GetAllAlertAsync(int userId);
         Task<List<NotificationDto>> GetUnreadAlertAsync(int userId);
         Task<bool> ReadAlertAsync(List<int> alertIds, int userId);
+
+        Task<List<Connection>> GetConnectionsByUserIdAsync(int userId);
     }
 }

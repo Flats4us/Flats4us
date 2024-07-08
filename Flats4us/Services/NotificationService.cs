@@ -167,5 +167,13 @@ namespace Flats4us.Services
 
             return true;
         }
+
+        // TODO remove after test
+        public async Task<List<Connection>> GetConnectionsByUserIdAsync(int userId)
+        {
+            var connections = await _context.Connections.Where(x => x.UserId == userId).ToListAsync();
+
+            return connections;
+        }
     }
 }

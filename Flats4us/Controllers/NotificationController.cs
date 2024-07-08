@@ -118,6 +118,26 @@ namespace Flats4us.Controllers
             }
         }
 
+
+        // TODO remove after test
+        [HttpPost("test/users/{userId}/connections")]
+        [SwaggerOperation(
+            Summary = "For testing connections"
+        )]
+        public async Task<IActionResult> TestConnections(int userId)
+        {
+            try
+            {
+                
+                var connections = await _notificationService.GetConnectionsByUserIdAsync(userId);
+                return Ok(connections);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         public class NotificationRequest
         {
             public string Title { get; set; }
