@@ -24,15 +24,17 @@ namespace Flats4us.Services
 
         public async Task<CountedListDto<TechnicalProblemDto>> GetAllAsync(PaginatorDto input)
         {
+            var totalCount = _context.TechnicalProblems.Count();
+
             var problems = await _context.TechnicalProblems
                     .OrderBy(x => x.Solved)  
                     .ThenBy(x => x.Date)
                     .Skip((input.PageNumber - 1) * input.PageSize)
                     .Take(input.PageSize)
                     .Select(e => _mapper.Map<TechnicalProblemDto>(e))
-                    .ToListAsync();
+                    .ToListAsync(); 
 
-            var result = new CountedListDto<TechnicalProblemDto>(problems);
+            var result = new CountedListDto<TechnicalProblemDto>(problems, totalCount);
 
             return result;
         }
