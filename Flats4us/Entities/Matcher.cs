@@ -13,8 +13,8 @@ namespace Flats4us.Entities
 
         public  bool? IsStudent2Interested { get; set; }
 
-        public static double AgreementPercentage { get; } = 0.8;
-        public static  double ValuesAmount { get; } = 12;
+        public static double AgreementPercentage { get; } = 0.2;
+        public static  double ValuesAmount { get; } = 11;
 
         [Required]
         public int Student1Id { get; set; }
