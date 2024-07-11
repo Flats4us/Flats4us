@@ -95,7 +95,7 @@ namespace Flats4us.Services
                         ((requestingStudent.SurveyStudent.MaxRoommateAge >= (DateTime.Now.Year - potential.BirthDate.Year)) ? 1 : 0) +
                         (potential.SurveyStudent.City == requestingStudent.SurveyStudent.City ? 1 : 0)
                 })
-                .Where(result => result.ConditionsMet >= Matcher.AgreementPercentage * 12) 
+                .Where(result => result.ConditionsMet >= Matcher.AgreementPercentage * Matcher.ValuesAmount) 
                 .OrderByDescending(result => result.ConditionsMet)
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential.PotentialStudent))
                 .ToListAsync();
