@@ -6,16 +6,16 @@
 				<mat-form-field>
 					<mat-label>{{ "Report-problem.type" | translate }}</mat-label>
 					<mat-select formControlName="kind" type="number">
-						<mat-option [value]="1">{{
+						<mat-option [value]="0">{{
 							"Report-problem.app-service" | translate
 						}}</mat-option>
-						<mat-option [value]="2">{{
+						<mat-option [value]="1">{{
 							"Report-problem.payments" | translate
 						}}</mat-option>
-						<mat-option [value]="3">{{
+						<mat-option [value]="2">{{
 							"Report-problem.account-performance" | translate
 						}}</mat-option>
-						<mat-option [value]="4">Inne</mat-option>
+						<mat-option [value]="3">Inne</mat-option>
 					</mat-select>
 				</mat-form-field>
 			</div>

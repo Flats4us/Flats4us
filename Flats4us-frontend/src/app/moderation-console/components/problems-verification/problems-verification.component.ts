@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+} from '@angular/core';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Observable, switchMap } from 'rxjs';
 import { ITechnicalProblem } from '../../models/moderation-console.models';
@@ -13,6 +17,7 @@ import {
 	trigger,
 } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
 	selector: 'app-problems-verification',
@@ -31,6 +36,7 @@ import { TranslateService } from '@ngx-translate/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProblemsVerificationComponent extends BaseComponent {
+	public pageEvent = new PageEvent();
 	public pageSize = 4;
 	public pageIndex = 0;
 	public technicalProblems$: Observable<ITechnicalProblem[]> =
@@ -48,7 +54,8 @@ export class ProblemsVerificationComponent extends BaseComponent {
 	constructor(
 		private service: ModerationConsoleService,
 		private snackBar: MatSnackBar,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -67,6 +74,17 @@ export class ProblemsVerificationComponent extends BaseComponent {
 				return this.service.getTechnicalProblems(this.pageSize, this.pageIndex);
 			})
 		);
+	}
+
+	public changePage(e: PageEvent) {
+		this.pageEvent = e;
+		this.pageSize = e.pageSize;
+		this.pageIndex = e.pageIndex;
+		this.technicalProblems$ = this.service.getTechnicalProblems(
+			this.pageSize,
+			this.pageIndex
+		);
+		this.cdr.markForCheck();
 	}
 
 	protected readonly formatDate = formatDate;
