@@ -5,16 +5,16 @@
 				{{ "Report-problem.type" | translate }}
 			</th>
 			<td *matCellDef="let element" mat-cell>
-				<span *ngIf="element.kind === 1">{{
+				<span *ngIf="element.kind === 0">{{
 					"Report-problem.app-service" | translate
 				}}</span>
-				<span *ngIf="element.kind === 2">{{
+				<span *ngIf="element.kind === 1">{{
 					"Report-problem.payments" | translate
 				}}</span>
-				<span *ngIf="element.kind === 3">{{
+				<span *ngIf="element.kind === 2">{{
 					"Report-problem.account-performance" | translate
 				}}</span>
-				<span *ngIf="element.kind === 4">{{
+				<span *ngIf="element.kind === 3">{{
 					"Report-problem.other" | translate
 				}}</span>
 			</td>
@@ -107,6 +107,7 @@
 		[pageSize]="pageSize"
 		[pageIndex]="pageIndex"
 		[pageSizeOptions]="[6, 12, 18, 48]"
+		(page)="changePage($event)"
 	>
 	</mat-paginator>
 </div>
