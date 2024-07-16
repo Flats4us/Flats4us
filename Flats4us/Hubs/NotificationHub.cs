@@ -58,7 +58,7 @@ namespace Flats4us.Hubs
             if (userId != null)
             {
                 var connection = await _context.Connections
-                    .FirstOrDefaultAsync(c => c.ContextConnectionId == Context.ConnectionId && c.UserId == userId.Value && c.HubName == nameof(ChatHub));
+                    .FirstOrDefaultAsync(c => c.ContextConnectionId == Context.ConnectionId && c.UserId == userId.Value && c.HubName == nameof(NotificationHub));
 
                 if (connection != null)
                 {
