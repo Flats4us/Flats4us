@@ -26,6 +26,8 @@ namespace Flats4us.Entities.Dto
 
         [Required]
         public string PhoneNumber { get; set; }
+
+        public string? FcmToken { get; set; }
     }
 
     public class OwnerStudentRegisterDto : UserRegisterDto
