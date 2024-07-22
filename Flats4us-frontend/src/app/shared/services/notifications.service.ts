@@ -28,8 +28,8 @@ export class NotificationsService {
 	) {
 		this.addReceiveNotificationHandler((_user, message) => {
 			this.snackbar.open(
-				`Notifications-content.${this.translateService.instant(message)}`,
-				'Close',
+				this.translateService.instant('Notifications-content.' + message),
+				this.translateService.instant('close'),
 				{
 					duration: 5000,
 					verticalPosition: 'top',
