@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import {
@@ -50,7 +54,8 @@ export class CalendarComponent extends BaseComponent {
 	constructor(
 		private dateAdapter: DateAdapter<Date>,
 		public calendarService: CalendarService,
-		private dialog: MatDialog
+		private dialog: MatDialog,
+		private cdr: ChangeDetectorRef
 	) {
 		super();
 
@@ -74,6 +79,11 @@ export class CalendarComponent extends BaseComponent {
 			ref.componentInstance.events = calendar.filter(
 				e => new Date(e.date).toDateString() === new Date(event).toDateString()
 			);
+
+			ref.afterClosed().subscribe(() => {
+				this.calendarToAccept$ = this.calendarService.getEventsToAccept();
+				this.cdr.markForCheck();
+			});
 		}
 	}
 
@@ -81,5 +91,10 @@ export class CalendarComponent extends BaseComponent {
 		const ref = this.dialog.open(EventListComponent, { width: '400px' });
 		ref.componentInstance.date = event.date;
 		ref.componentInstance.events = [event];
+
+		ref.afterClosed().subscribe(() => {
+			this.calendarToAccept$ = this.calendarService.getEventsToAccept();
+			this.cdr.markForCheck();
+		});
 	}
 }
