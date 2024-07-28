@@ -531,9 +531,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		}
 	}
 	public checkAddress() {
-		const city = this.addRealEstateFormAddressData.get('city')?.value;
-		const postalCode = this.addRealEstateFormAddressData.get('postalCode')?.value;
-		const street = this.addRealEstateFormAddressData.get('street')?.value;
+		const { city, postalCode, street } = this.addRealEstateFormAddressData.value;
 		this.realEstateService
 			.getLocationStructured(street, postalCode, city)
 			.pipe(this.untilDestroyed())
