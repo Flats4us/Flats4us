@@ -81,6 +81,15 @@ export class CalendarComponent extends BaseComponent {
 			);
 
 			ref.afterClosed().subscribe(() => {
+				this.calendar$ = this.calendarService
+					.getEvents()
+					.pipe(
+						tap(events =>
+							events.forEach(
+								event => (this.hasEventsMap[new Date(event.date).toDateString()] = true)
+							)
+						)
+					);
 				this.calendarToAccept$ = this.calendarService.getEventsToAccept();
 				this.cdr.markForCheck();
 			});
@@ -93,6 +102,15 @@ export class CalendarComponent extends BaseComponent {
 		ref.componentInstance.events = [event];
 
 		ref.afterClosed().subscribe(() => {
+			this.calendar$ = this.calendarService
+				.getEvents()
+				.pipe(
+					tap(events =>
+						events.forEach(
+							event => (this.hasEventsMap[new Date(event.date).toDateString()] = true)
+						)
+					)
+				);
 			this.calendarToAccept$ = this.calendarService.getEventsToAccept();
 			this.cdr.markForCheck();
 		});
