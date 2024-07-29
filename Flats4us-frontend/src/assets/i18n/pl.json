@@ -323,7 +323,9 @@
 		"cancel-dialog2": "Błąd. Spróbuj ponownie!",
 		"months": "miesięce/y",
 		"offer-info-rating0": "Zobacz szczegółową ocenę",
-		"offer-info-rating1": "Nieruchomość nie została jeszcze oceniona"
+		"offer-info-rating1": "Nieruchomość nie została jeszcze oceniona",
+		"map": "Mapa",
+		"district": "Dzielnica"
 	},
 
 	"Property-rating": {
@@ -533,7 +535,8 @@
 		"change-info1": "Zmiany zostały pomyślnie zapisane!",
 		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.",
 		"add-info": "Klikając na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
-		"edit-info": "Klikając na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych."
+		"edit-info": "Klikając na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
+		"invalid-address": "Podany adres nie istnieje"
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",

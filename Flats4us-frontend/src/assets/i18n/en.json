@@ -305,7 +305,6 @@
 		"rent-period": "Rent period",
 		"tenants": "Tenants",
 		"rent-proposal-info": "Do you accept the rental offer",
-
 		"watched-offers": "Watched offers",
 		"watched-offers-info": "No offers added to watchlist yet",
 		"deposit": "Deposit",
@@ -327,7 +326,9 @@
 		"cancel-dialog1": "The offer has ended.",
 		"cancel-dialog2": "Mistake. Try again!",
 		"offer-info-rating0": "View detailed rating",
-		"offer-info-rating1": "The property has not been rated yet"
+		"offer-info-rating1": "The property has not been rated yet",
+		"map": "Map",
+		"district": "District"
 	},
 
 	"Property-rating": {
@@ -537,7 +538,8 @@
 		"change-info1": "The changes have been successfully saved!",
 		"change-info2": "Failed to modify the property.",
 		"add-info": "By clicking the 'Save property' button, you confirm that the entered data is correct.",
-		"edit-info": "By clicking the 'Edit property' button, you confirm that the entered data is correct."
+		"edit-info": "By clicking the 'Edit property' button, you confirm that the entered data is correct.",
+		"invalid-address": "The provided address does not exist"
 	},
 	"Real-estate-details": {
 		"property-status": "Property status",

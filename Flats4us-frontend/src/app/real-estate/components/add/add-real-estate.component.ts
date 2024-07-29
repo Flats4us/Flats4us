@@ -166,6 +166,11 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 			.pipe(this.untilDestroyed())
 			.subscribe();
 
+		this.realEstateService
+			.readDistrictsForCities()
+			.pipe(this.untilDestroyed())
+			.subscribe();
+
 		this.modificationType =
 			this.activatedRoute.snapshot.url[0].path.toUpperCase() as ModificationType;
 		this.actualRealEstate$ = this.activatedRoute.paramMap.pipe(
@@ -524,5 +529,27 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		if (this.modificationType === ModificationType.EDIT) {
 			this.saveOnEdit();
 		}
+	}
+	public checkAddress() {
+		const { city, postalCode, street } = this.addRealEstateFormAddressData.value;
+		this.realEstateService
+			.getLocationStructured(street, postalCode, city)
+			.pipe(this.untilDestroyed())
+			.subscribe(result => {
+				if (!result.length) {
+					this.addRealEstateFormAddressData.controls['city'].setErrors({
+						incorrect: true,
+					});
+					this.addRealEstateFormAddressData.controls['postalCode'].setErrors({
+						incorrect: true,
+					});
+					this.addRealEstateFormAddressData.controls['street'].setErrors({
+						incorrect: true,
+					});
+					this.changeDetectorRef.markForCheck();
+				} else {
+					this.stepper?.next();
+				}
+			});
 	}
 }
