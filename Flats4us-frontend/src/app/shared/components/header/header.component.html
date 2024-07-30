@@ -145,7 +145,12 @@
 					mat-menu-item
 					(click)="readNotification(notification)"
 				>
-					{{ "Notifications-content." + notification | translate }}
+					{{
+						("Notifications-content." + notification | translate).replace(
+							"Notifications-content.",
+							""
+						)
+					}}
 				</span>
 			</mat-menu>
 		</ng-container>
