@@ -1,5 +1,6 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -54,7 +55,8 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 		public conversationService: ConversationService,
 		public userService: UserService,
 		private authService: AuthService,
-		private router: Router
+		private router: Router,
+		private cdr: ChangeDetectorRef
 	) {}
 
 	public ngOnInit(): void {
@@ -63,6 +65,7 @@ export class MessagesConversationComponent implements OnInit, OnDestroy {
 		this.conversationService.addReceivePrivateMessageHandler(
 			(user, message, timestamp) => {
 				this.messages.push({ user, message, timestamp });
+				this.cdr.markForCheck();
 			}
 		);
 	}

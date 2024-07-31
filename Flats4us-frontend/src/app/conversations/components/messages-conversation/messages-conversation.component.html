@@ -68,12 +68,15 @@
 		</div>
 		<div *ngFor="let msg of messages; let index = index" class="flex">
 			<img
-				*ngIf="msg.user !== data.currentUser.userId"
+				*ngIf="msg.user === data.otherUser.userId"
 				alt="profile photo"
 				class="avatar self-center ml-3"
 				src="{{ baseUrl }}/{{ data.otherUser.profilePicture.path }}"
 			/>
 			<div
+				*ngIf="
+					msg.user === data.otherUser.userId || msg.user === data.currentUser.userId
+				"
 				class="conversation"
 				[class]="
 					msg.user === data.currentUser.userId
@@ -86,7 +89,7 @@
 					class="text-right mr-3"
 					>{{ data.currentUser.name }}</span
 				>
-				<span *ngIf="msg.user !== data.currentUser.userId" class="text-left ml-3">{{
+				<span *ngIf="msg.user === data.otherUser.userId" class="text-left ml-3">{{
 					data.otherUser.name
 				}}</span>
 				<span class="bubble">{{ msg.message }}</span>

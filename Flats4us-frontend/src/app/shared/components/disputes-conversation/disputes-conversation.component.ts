@@ -1,5 +1,6 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -31,7 +32,12 @@ export class DisputesConversationComponent
 	implements OnInit, OnDestroy
 {
 	public messageControl = new FormControl();
-	public messages: { groupId: number; user: number; message: string }[] = [];
+	public messages: {
+		groupId: number;
+		user: number;
+		message: string;
+		timestamp: Date;
+	}[] = [];
 	public groupChatId$: Observable<string> = this.route.paramMap.pipe(
 		map(params => params.get('conversationId') ?? '')
 	);
@@ -52,7 +58,8 @@ export class DisputesConversationComponent
 		protected authService: AuthService,
 		private disputesService: DisputesService,
 		private location: Location,
-		private snackBar: MatSnackBar
+		private snackBar: MatSnackBar,
+		private cdr: ChangeDetectorRef
 	) {
 		super();
 	}
@@ -61,8 +68,9 @@ export class DisputesConversationComponent
 		this.conversationService.startConnection(this.authService.getAuthToken());
 
 		this.conversationService.addReceiveGroupMessageHandler(
-			(groupId, user, message) => {
-				this.messages.push({ groupId, user, message });
+			(groupId, user, message, timestamp) => {
+				this.messages.push({ groupId, user, message, timestamp });
+				this.cdr.markForCheck();
 			}
 		);
 	}
@@ -84,6 +92,7 @@ export class DisputesConversationComponent
 			groupId: Number(groupId),
 			user: senderId,
 			message: this.messageControl.value,
+			timestamp: new Date(),
 		});
 
 		this.messageControl.reset();
@@ -137,4 +146,5 @@ export class DisputesConversationComponent
 	protected readonly formatDate = formatDate;
 	protected readonly authModels = AuthModels;
 	protected readonly Number = Number;
+	protected readonly parseInt = parseInt;
 }
