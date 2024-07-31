@@ -14,10 +14,11 @@ import { LocaleService } from '@shared/services/locale.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { AuthModels } from '@shared/models/auth.models';
 import { ProfileService } from 'src/app/profile/services/profile.service';
-import { Observable, filter, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, of, switchMap, takeUntil, map } from 'rxjs';
 import { IUserProfile } from 'src/app/profile/models/profile.models';
 import { NotificationsService } from '@shared/services/notifications.service';
 import { NotificationType } from '@shared/models/notifications.models';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-header',
@@ -29,7 +30,18 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 	@ViewChild('menuTrigger')
 	public menuTrigger: MatMenuTrigger | undefined;
 
-	public notifications$ = this.notificationsService.notifications$;
+	public notifications$ = this.notificationsService.notifications$.pipe(
+		map(notifications => {
+			for (let i = 0; i < notifications.length; i++) {
+				notifications[i] = this.isKnownNotificationType(notifications[i])
+					? this.translateService.instant(
+							'Notifications-content.' + notifications[i]
+					  )
+					: notifications[i];
+			}
+			return notifications;
+		})
+	);
 
 	public isDarkMode = this.themeService.isDarkMode();
 
@@ -53,7 +65,8 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		private localeService: LocaleService,
 		private themeService: ThemeService,
 		private profileService: ProfileService,
-		private notificationsService: NotificationsService
+		private notificationsService: NotificationsService,
+		private translateService: TranslateService
 	) {
 		super();
 		this.breakpointObserver
