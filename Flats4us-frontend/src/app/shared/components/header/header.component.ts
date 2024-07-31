@@ -36,6 +36,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 				notifications[i] = this.isKnownNotificationType(notifications[i])
 					? this.translateService.instant(
 							'Notifications-content.' + notifications[i]
+							// eslint-disable-next-line no-mixed-spaces-and-tabs
 					  )
 					: notifications[i];
 			}
