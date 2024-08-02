@@ -34,10 +34,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		map(notifications => {
 			for (let i = 0; i < notifications.length; i++) {
 				notifications[i] = this.isKnownNotificationType(notifications[i])
-					? this.translateService.instant(
-							'Notifications-content.' + notifications[i]
-							// eslint-disable-next-line no-mixed-spaces-and-tabs
-					  )
+					? 'Notifications-content.' + notifications[i]
 					: notifications[i];
 			}
 			return notifications;
