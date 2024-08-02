@@ -18,7 +18,6 @@ import { Observable, filter, of, switchMap, takeUntil, map } from 'rxjs';
 import { IUserProfile } from 'src/app/profile/models/profile.models';
 import { NotificationsService } from '@shared/services/notifications.service';
 import { NotificationType } from '@shared/models/notifications.models';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-header',
