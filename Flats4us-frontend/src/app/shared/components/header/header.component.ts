@@ -63,8 +63,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 		private localeService: LocaleService,
 		private themeService: ThemeService,
 		private profileService: ProfileService,
-		private notificationsService: NotificationsService,
-		private translateService: TranslateService
+		private notificationsService: NotificationsService
 	) {
 		super();
 		this.breakpointObserver
