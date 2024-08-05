@@ -3,6 +3,7 @@ import { IProfilePicture } from '@shared/models/user.models';
 
 export interface IDispute {
 	argumentId: number;
+	title: string;
 	description: string;
 	startDate: Date;
 	ownerAcceptanceDate: Date | null;
