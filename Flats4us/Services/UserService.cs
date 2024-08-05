@@ -220,6 +220,8 @@ namespace Flats4us.Services
 
             if (user.VerificationStatus == VerificationStatus.Verified) throw new ArgumentException($"User with ID {id} is already verified.");
 
+            if (user.Document is null) throw new Exception($"Cannot verify user without uploaded document");
+
             if (decision)
             {
                 user.VerificationStatus = VerificationStatus.Verified;
