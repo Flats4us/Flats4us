@@ -3021,270 +3021,270 @@ public static class DataSeeder
         var surveyStudent1 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 20,
-            MaxRoommateAge = 30,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student1
         };
         var surveyStudent2 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 30,
-            MaxRoommateAge = 50,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student2
         };
         var surveyStudent3 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 20,
-            MaxRoommateAge = 150,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student3
         };
         var surveyStudent4 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 70,
-            MaxRoommateAge = 100,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student4
         };
         var surveyStudent5 = new SurveyStudent
         {
-            Party = 3,
+            Party = 1,
             Smoking = false,
             Sociability = true,
             Animals = false,
-            Vegan = true,
+            Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
             MinRoommateAge = 25,
-            MaxRoommateAge = 50,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student5
         };
         var surveyStudent6 = new SurveyStudent
         {
-            Party = 2,
+            Party = 1,
             Smoking = false,
             Sociability = true,
-            Animals = true,
-            Vegan = true,
+            Animals = false,
+            Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 4,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 22,
+            MinRoommateAge = 25,
             MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student6
         };
         var surveyStudent7 = new SurveyStudent
         {
-            Party = 4,
-            Smoking = true,
-            Sociability = false,
-            Animals = true,
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 2,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 28,
-            MaxRoommateAge = 40,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student7
         };
         var surveyStudent8 = new SurveyStudent
         {
-            Party = 2,
+            Party = 1,
             Smoking = false,
             Sociability = true,
             Animals = false,
-            Vegan = true,
+            Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 3,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 24,
-            MaxRoommateAge = 32,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student8
         };
         var surveyStudent9 = new SurveyStudent
         {
-            Party = 3,
+            Party = 1,
             Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 2,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 26,
-            MaxRoommateAge = 36,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student9
         };
         var surveyStudent10 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
             Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 4,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 23,
-            MaxRoommateAge = 29,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student10
         };
         var surveyStudent11 = new SurveyStudent
         {
-            Party = 2,
+            Party = 1,
             Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
-            LookingForRoommate = false,
-            MaxNumberOfRoommates = 3,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 24,
-            MaxRoommateAge = 30,
-            City = "Kraków",
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
             Student = student11
         };
         var surveyStudent12 = new SurveyStudent
         {
-            Party = 3,
-            Smoking = true,
+            Party = 1,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
-            Vegan = true,
+            Animals = false,
+            Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 2,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
             MinRoommateAge = 25,
             MaxRoommateAge = 28,
-            City = "Gdańsk",
+            City = "Warszawa",
             Student = student12
         };
         var surveyStudent13 = new SurveyStudent
         {
             Party = 1,
             Smoking = false,
-            Sociability = false,
-            Animals = false,
-            Vegan = false,
-            LookingForRoommate = true,
-            MaxNumberOfRoommates = 1,
-            RoommateGender = 0,
-            MinRoommateAge = 26,
-            MaxRoommateAge = 27,
-            City = "Poznań",
-            Student = student13
-        };
-        var surveyStudent14 = new SurveyStudent
-        {
-            Party = 2,
-            Smoking = true,
             Sociability = true,
             Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 4,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 23,
-            MaxRoommateAge = 29,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student13
+        };
+        var surveyStudent14 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student14
         };
         var surveyStudent15 = new SurveyStudent
         {
-            Party = 3,
+            Party = 1,
             Smoking = false,
             Sociability = true,
-            Animals = true,
-            Vegan = true,
-            LookingForRoommate = false,
-            MaxNumberOfRoommates = 3,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 24,
-            MaxRoommateAge = 30,
-            City = "Kraków",
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
             Student = student15
         };
         var surveyStudent16 = new SurveyStudent
         {
             Party = 1,
-            Smoking = true,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
-            LookingForRoommate = false,
-            MaxNumberOfRoommates = 2,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
             MinRoommateAge = 25,
             MaxRoommateAge = 28,
-            City = "Gdańsk",
+            City = "Warszawa",
             Student = student16
         };
         var surveyStudent17 = new SurveyStudent
         {
-            Party = 2,
+            Party = 1,
             Smoking = false,
-            Sociability = false,
-            Animals = false,
-            Vegan = false,
-            LookingForRoommate = true,
-            MaxNumberOfRoommates = 1,
-            RoommateGender = 0,
-            MinRoommateAge = 26,
-            MaxRoommateAge = 27,
-            City = "Poznań",
-            Student = student17
-        };
-        var surveyStudent18 = new SurveyStudent
-        {
-            Party = 3,
-            Smoking = true,
             Sociability = true,
             Animals = false,
             Vegan = false,
             LookingForRoommate = true,
-            MaxNumberOfRoommates = 4,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 23,
-            MaxRoommateAge = 29,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student17
+        };
+        var surveyStudent18 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
             City = "Warszawa",
             Student = student18
         };
@@ -3293,14 +3293,14 @@ public static class DataSeeder
             Party = 1,
             Smoking = false,
             Sociability = true,
-            Animals = true,
-            Vegan = true,
-            LookingForRoommate = false,
-            MaxNumberOfRoommates = 3,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
-            MinRoommateAge = 24,
-            MaxRoommateAge = 30,
-            City = "Kraków",
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
             Student = student19
         };
         var surveyStudent20 = new SurveyStudent
