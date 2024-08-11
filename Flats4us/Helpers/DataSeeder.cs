@@ -858,8 +858,323 @@ public static class DataSeeder
             IsTenant = true,
             Interests = { interest4, interest11, interest20 }
         };
+        var student21 = new Student
+        {
+            Name = "Paweł",
+            Surname = "Mazur",
+            Address = "ul. Krucza 10, 00-528 Warszawa",
+            Email = "pmazur@gmail.com",
+            PhoneNumber = "135798642",
+            AccountCreationDate = new DateTime(2022, 2, 14),
+            VerificationOrRejectionDate = new DateTime(2022, 2, 19),
+            LastLoginDate = new DateTime(2024, 6, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pmazur123"),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2031, 9, 21),
+            BirthDate = new DateTime(2000, 3, 14),
+            StudentNumber = "s102944",
+            University = "Politechnika Warszawska",
+            Links = "https://www.facebook.com/pmazur|https://twitter.com/pmazur|https://www.linkedin.com/in/pmazur",
+            IsTenant = false,
+            Interests = { interest2, interest6, interest17 }
+        };
+        var student22 = new Student
+        {
+            Name = "Katarzyna",
+            Surname = "Więcław",
+            Address = "ul. Chmielna 12, 00-020 Warszawa",
+            Email = "kwieclaw@gmail.com",
+            PhoneNumber = "148937562",
+            AccountCreationDate = new DateTime(2023, 5, 19),
+            VerificationOrRejectionDate = new DateTime(2023, 5, 24),
+            LastLoginDate = new DateTime(2024, 7, 22),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kwieclaw123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2032, 10, 18),
+            BirthDate = new DateTime(1997, 9, 21),
+            StudentNumber = "s102945",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/kkaczmarek|https://twitter.com/kkaczmarek|https://www.linkedin.com/in/kkaczmarek",
+            IsTenant = true,
+            Interests = { interest3, interest9, interest13 }
+        };
+        var student23 = new Student
+        {
+            Name = "Tomasz",
+            Surname = "Zieliński",
+            Address = "ul. Grójecka 82, 02-001 Warszawa",
+            Email = "tzielinski@gmail.com",
+            PhoneNumber = "179823564",
+            AccountCreationDate = new DateTime(2022, 7, 11),
+            VerificationOrRejectionDate = new DateTime(2022, 7, 16),
+            LastLoginDate = new DateTime(2024, 8, 12),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Tzielinski123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2030, 2, 25),
+            BirthDate = new DateTime(2001, 12, 18),
+            StudentNumber = "s102946",
+            University = "Politechnika Warszawska",
+            Links = "https://www.facebook.com/tzielinski|https://twitter.com/tzielinski|https://www.linkedin.com/in/tzielinski",
+            IsTenant = false,
+            Interests = { interest1, interest8, interest19 }
+        };
+        var student24 = new Student
+        {
+            Name = "Anna",
+            Surname = "Kamińska",
+            Address = "ul. Rakowiecka 15, 02-519 Warszawa",
+            Email = "akaminska@gmail.com",
+            PhoneNumber = "187654231",
+            AccountCreationDate = new DateTime(2023, 10, 10),
+            VerificationOrRejectionDate = new DateTime(2023, 10, 15),
+            LastLoginDate = new DateTime(2024, 7, 28),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Akaminska123"),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2034, 1, 29),
+            BirthDate = new DateTime(1998, 4, 30),
+            StudentNumber = "s102947",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/akaminska|https://twitter.com/akaminska|https://www.linkedin.com/in/akaminska",
+            IsTenant = true,
+            Interests = { interest4, interest7, interest12 }
+        };
+        var student25 = new Student
+        {
+            Name = "Robert",
+            Surname = "Szymański",
+            Address = "ul. Świętokrzyska 35, 00-049 Warszawa",
+            Email = "rszymanski@gmail.com",
+            PhoneNumber = "158239764",
+            AccountCreationDate = new DateTime(2022, 11, 14),
+            VerificationOrRejectionDate = new DateTime(2022, 11, 19),
+            LastLoginDate = new DateTime(2024, 6, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rszymanski123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2035, 5, 6),
+            BirthDate = new DateTime(1999, 9, 2),
+            StudentNumber = "s102948",
+            University = "Szkoła Główna Handlowa",
+            Links = "https://www.facebook.com/rszymanski|https://twitter.com/rszymanski|https://www.linkedin.com/in/rszymanski",
+            IsTenant = false,
+            Interests = { interest5, interest11, interest14 }
+        };
+        var student26 = new Student
+        {
+            Name = "Agnieszka",
+            Surname = "Krawczyk",
+            Address = "ul. Francuska 2, 03-906 Warszawa",
+            Email = "akrawczyk@gmail.com",
+            PhoneNumber = "135672489",
+            AccountCreationDate = new DateTime(2021, 6, 11),
+            VerificationOrRejectionDate = new DateTime(2021, 6, 16),
+            LastLoginDate = new DateTime(2024, 8, 1),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Akrawczyk123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2029, 11, 22),
+            BirthDate = new DateTime(2002, 2, 11),
+            StudentNumber = "s102949",
+            University = "Politechnika Warszawska",
+            Links = "https://www.facebook.com/akrawczyk|https://twitter.com/akrawczyk|https://www.linkedin.com/in/akrawczyk",
+            IsTenant = true,
+            Interests = { interest2, interest9, interest16 }
+        };
+        var student27 = new Student
+        {
+            Name = "Grzegorz",
+            Surname = "Nowicki",
+            Address = "ul. Senatorska 7, 00-075 Warszawa",
+            Email = "gnowicki@gmail.com",
+            PhoneNumber = "126548793",
+            AccountCreationDate = new DateTime(2023, 7, 15),
+            VerificationOrRejectionDate = new DateTime(2023, 7, 20),
+            LastLoginDate = new DateTime(2024, 8, 5),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Gnowicki123"),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2033, 2, 14),
+            BirthDate = new DateTime(1995, 10, 13),
+            StudentNumber = "s102950",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/gnowicki|https://twitter.com/gnowicki|https://www.linkedin.com/in/gnowicki",
+            IsTenant = false,
+            Interests = { interest3, interest7, interest18 }
+        };
+        var student28 = new Student
+        {
+            Name = "Patrycja",
+            Surname = "Kowalczyk",
+            Address = "ul. Belwederska 15, 00-761 Warszawa",
+            Email = "pkowalczyk@gmail.com",
+            PhoneNumber = "134569782",
+            AccountCreationDate = new DateTime(2022, 9, 12),
+            VerificationOrRejectionDate = new DateTime(2022, 9, 17),
+            LastLoginDate = new DateTime(2024, 7, 29),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pkowalczyk123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2030, 6, 24),
+            BirthDate = new DateTime(1996, 8, 7),
+            StudentNumber = "s102951",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/pkowalczyk|https://twitter.com/pkowalczyk|https://www.linkedin.com/in/pkowalczyk",
+            IsTenant = true,
+            Interests = { interest1, interest6, interest20 }
+        };
+        var student29 = new Student
+        {
+            Name = "Rafał",
+            Surname = "Zawadzki",
+            Address = "ul. Targowa 84, 03-727 Warszawa",
+            Email = "rzawadzki@gmail.com",
+            PhoneNumber = "127894653",
+            AccountCreationDate = new DateTime(2023, 3, 14),
+            VerificationOrRejectionDate = new DateTime(2023, 3, 19),
+            LastLoginDate = new DateTime(2024, 8, 7),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Rzawadzki123"),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2034, 11, 3),
+            BirthDate = new DateTime(1999, 1, 15),
+            StudentNumber = "s102952",
+            University = "Politechnika Warszawska",
+            Links = "https://www.facebook.com/rzawadzki|https://twitter.com/rzawadzki|https://www.linkedin.com/in/rzawadzki",
+            IsTenant = false,
+            Interests = { interest4, interest10, interest15 }
+        };
+        var student30 = new Student
+        {
+            Name = "Monika",
+            Surname = "Piotrowska",
+            Address = "ul. Słoneczna 18, 00-789 Warszawa",
+            Email = "mpiotrowska@gmail.com",
+            PhoneNumber = "139876543",
+            AccountCreationDate = new DateTime(2022, 8, 5),
+            VerificationOrRejectionDate = new DateTime(2022, 8, 10),
+            LastLoginDate = new DateTime(2024, 7, 20),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mpiotrowska123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2035, 3, 10),
+            BirthDate = new DateTime(2000, 11, 5),
+            StudentNumber = "s102953",
+            University = "Szkoła Główna Handlowa",
+            Links = "https://www.facebook.com/mpiotrowska|https://twitter.com/mpiotrowska|https://www.linkedin.com/in/mpiotrowska",
+            IsTenant = true,
+            Interests = { interest3, interest8, interest14 }
+        };
+        var student31 = new Student
+        {
+            Name = "Jan",
+            Surname = "Kowalski",
+            Address = "ul. Marszałkowska 14, 00-001 Warszawa",
+            Email = "jkowalski@gmail.com",
+            PhoneNumber = "158749653",
+            AccountCreationDate = new DateTime(2022, 3, 15),
+            VerificationOrRejectionDate = new DateTime(2022, 3, 20),
+            LastLoginDate = new DateTime(2024, 7, 10),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Jkowalski123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2032, 5, 14),
+            BirthDate = new DateTime(1996, 4, 25),
+            StudentNumber = "s102939",
+            University = "Politechnika Warszawska",
+            Links = "https://www.facebook.com/jkowalski|https://twitter.com/jkowalski|https://www.linkedin.com/in/jkowalski",
+            IsTenant = false,
+            Interests = { interest2, interest9, interest15 }
+        };
+        var student32 = new Student
+        {
+            Name = "Marta",
+            Surname = "Kajkowska",
+            Address = "ul. Puławska 10, 00-950 Warszawa",
+            Email = "mkajkowska@gmail.com",
+            PhoneNumber = "168934563",
+            AccountCreationDate = new DateTime(2023, 1, 18),
+            VerificationOrRejectionDate = new DateTime(2023, 1, 23),
+            LastLoginDate = new DateTime(2024, 5, 14),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Mkajkowska123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2035, 8, 22),
+            BirthDate = new DateTime(1997, 7, 12),
+            StudentNumber = "s102940",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/mnowak|https://twitter.com/mnowak|https://www.linkedin.com/in/mnowak",
+            IsTenant = true,
+            Interests = { interest1, interest8, interest14 }
+        };
+        var student33 = new Student
+        {
+            Name = "Piotr",
+            Surname = "Lewandowski",
+            Address = "ul. Jana Pawła II 12, 00-857 Warszawa",
+            Email = "plewandowski@gmail.com",
+            PhoneNumber = "178395672",
+            AccountCreationDate = new DateTime(2022, 4, 11),
+            VerificationOrRejectionDate = new DateTime(2022, 4, 16),
+            LastLoginDate = new DateTime(2024, 6, 25),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Plewandowski123"),
+            DocumentType = DocumentType.StudentCard,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2031, 12, 29),
+            BirthDate = new DateTime(1995, 11, 5),
+            StudentNumber = "s102941",
+            University = "Szkoła Główna Handlowa",
+            Links = "https://www.facebook.com/plewandowski|https://twitter.com/plewandowski|https://www.linkedin.com/in/plewandowski",
+            IsTenant = false,
+            Interests = { interest3, interest7, interest16 }
+        };
+        var student34 = new Student
+        {
+            Name = "Zofia",
+            Surname = "Wiśniewska",
+            Address = "ul. Filtrowa 20, 02-032 Warszawa",
+            Email = "zwisniewska@gmail.com",
+            PhoneNumber = "123456789",
+            AccountCreationDate = new DateTime(2023, 8, 1),
+            VerificationOrRejectionDate = new DateTime(2023, 8, 6),
+            LastLoginDate = new DateTime(2024, 8, 8),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Zwisniewska123"),
+            DocumentType = DocumentType.Passport,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2033, 11, 15),
+            BirthDate = new DateTime(1999, 2, 28),
+            StudentNumber = "s102942",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/zwisniewska|https://twitter.com/zwisniewska|https://www.linkedin.com/in/zwisniewska",
+            IsTenant = true,
+            Interests = { interest5, interest10, interest18 }
+        };
+        var student35 = new Student
+        {
+            Name = "Krzysztof",
+            Surname = "Gołębiewski",
+            Address = "ul. Długa 5, 00-238 Warszawa",
+            Email = "Kgolebiewski@gmail.com",
+            PhoneNumber = "198765432",
+            AccountCreationDate = new DateTime(2021, 12, 20),
+            VerificationOrRejectionDate = new DateTime(2021, 12, 25),
+            LastLoginDate = new DateTime(2024, 4, 15),
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Kgolebiewski123"),
+            DocumentType = DocumentType.ID,
+            VerificationStatus = VerificationStatus.Verified,
+            DocumentExpireDate = new DateTime(2030, 7, 19),
+            BirthDate = new DateTime(1998, 1, 10),
+            StudentNumber = "s102943",
+            University = "Uniwersytet Warszawski",
+            Links = "https://www.facebook.com/kwojcik|https://twitter.com/kwojcik|https://www.linkedin.com/in/kwojcik",
+            IsTenant = true,
+            Interests = { interest4, interest11, interest20 }
+        };
 
-        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15, student16, student17, student18, student19, student20);
+        dbContext.Students.AddRange(student1, student2, student3, student4, student5, student6, student7, student8, student9, student10, student11, student12, student13, student14, student15, student16, student17, student18, student19, student20, student21, student22, student23, student24, student25, student26, student27, student28, student29, student30, student31, student32, student33, student34, student35);
 
         SeedUserFiles(student1, Gender.Male).Wait();
         SeedUserFiles(student2, Gender.Male).Wait();
@@ -881,6 +1196,22 @@ public static class DataSeeder
         SeedUserFiles(student18, Gender.Male).Wait();
         SeedUserFiles(student19, Gender.Female).Wait();
         SeedUserFiles(student20, Gender.Female).Wait();
+        SeedUserFiles(student21, Gender.Male).Wait();
+        SeedUserFiles(student22, Gender.Female).Wait();
+        SeedUserFiles(student23, Gender.Male).Wait();
+        SeedUserFiles(student24, Gender.Female).Wait();
+        SeedUserFiles(student25, Gender.Male).Wait();
+        SeedUserFiles(student26, Gender.Female).Wait();
+        SeedUserFiles(student27, Gender.Male).Wait();
+        SeedUserFiles(student28, Gender.Female).Wait();
+        SeedUserFiles(student29, Gender.Male).Wait();
+        SeedUserFiles(student30, Gender.Female).Wait();
+        SeedUserFiles(student31, Gender.Male).Wait();
+        SeedUserFiles(student32, Gender.Female).Wait();
+        SeedUserFiles(student33, Gender.Male).Wait();
+        SeedUserFiles(student34, Gender.Female).Wait();
+        SeedUserFiles(student35, Gender.Male).Wait();
+
 
         #endregion
 
@@ -2974,22 +3305,247 @@ public static class DataSeeder
         };
         var surveyStudent20 = new SurveyStudent
         {
-            Party = 2,
-            Smoking = true,
+            Party = 1,
+            Smoking = false,
             Sociability = true,
-            Animals = true,
+            Animals = false,
             Vegan = false,
-            LookingForRoommate = false,
-            MaxNumberOfRoommates = 2,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
             RoommateGender = 0,
             MinRoommateAge = 25,
             MaxRoommateAge = 28,
-            City = "Gdańsk",
+            City = "Warszawa",
             Student = student20
+        };
+        var surveyStudent21 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student21
+        };
+        var surveyStudent22 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student22
+        };
+        var surveyStudent23 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student23
+        };
+        var surveyStudent24 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student24
+        };
+        var surveyStudent25 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student25
+        };
+        var surveyStudent26 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student26
+        };
+        var surveyStudent27 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student27
+        };
+        var surveyStudent28 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student28
+        };
+        var surveyStudent29 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student29
+        };
+        var surveyStudent30 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student30
+        };
+        var surveyStudent31 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student31
+        };
+        var surveyStudent32 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student32
+        };
+        var surveyStudent33 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student33
+        };
+        var surveyStudent34 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student34
+        };
+        var surveyStudent35 = new SurveyStudent
+        {
+            Party = 1,
+            Smoking = false,
+            Sociability = true,
+            Animals = false,
+            Vegan = false,
+            LookingForRoommate = true,
+            MaxNumberOfRoommates = 5,
+            RoommateGender = 0,
+            MinRoommateAge = 25,
+            MaxRoommateAge = 28,
+            City = "Warszawa",
+            Student = student35
         };
 
 
-        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10, surveyStudent11, surveyStudent12, surveyStudent13, surveyStudent14, surveyStudent15, surveyStudent16, surveyStudent17, surveyStudent18, surveyStudent19, surveyStudent20);
+        dbContext.StudentSurveys.AddRange(surveyStudent1, surveyStudent2, surveyStudent3, surveyStudent4, surveyStudent5, surveyStudent6, surveyStudent7, surveyStudent8, surveyStudent9, surveyStudent10, surveyStudent11, surveyStudent12, surveyStudent13, surveyStudent14, surveyStudent15, surveyStudent16, surveyStudent17, surveyStudent18, surveyStudent19, surveyStudent20, surveyStudent21, surveyStudent22, surveyStudent23, surveyStudent24, surveyStudent25, surveyStudent26, surveyStudent27, surveyStudent28, surveyStudent29, surveyStudent30, surveyStudent31, surveyStudent32, surveyStudent33, surveyStudent34, surveyStudent35);
 
         #endregion
 
