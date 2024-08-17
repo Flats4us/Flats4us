@@ -110,7 +110,7 @@ namespace Flats4us.Entities
                 .HasOne(x => x.Offer)
                 .WithMany(x => x.OfferPromotions)
                 .HasForeignKey(x => x.OfferId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Matcher>()
                 .HasOne(x => x.Student1)
