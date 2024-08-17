@@ -37,13 +37,10 @@ export class LocaleService {
 			const newUrl = this.router.serializeUrl(
 				this.router.createUrlTree([currentUrl])
 			);
-
-			if (currentUrl !== newUrl) {
-				this.setRouteReuse(() => false);
-				this.router.navigated = false;
-				await this.router.navigateByUrl(newUrl).catch(noop);
-				this.setRouteReuse(shouldReuseRoute);
-			}
+			this.setRouteReuse(() => false);
+			this.router.navigated = false;
+			await this.router.navigateByUrl(newUrl).catch(noop);
+			this.setRouteReuse(shouldReuseRoute);
 		});
 	}
 
