@@ -16,14 +16,14 @@
 	gap: 16px;
 	padding: 0 16px;
 	cursor: pointer;
-
 	> div {
 		display: flex;
 		gap: 4px;
 	}
-
-	&.active {
-		background: #ecf3fe;
+	color: var(--textColor);
+	&:hover {
+		background-color: var(--headerBgColor);
+		color: var(--bgColor);
 	}
 }
 

@@ -538,6 +538,45 @@
 									<mat-icon>attach_file</mat-icon>
 								</button>
 							</div>
+							<span *ngIf="modificationType === mType.ADD" class="btn-upload-box">
+								<button
+									mat-icon-button
+									type="button"
+									aria-label="Upload"
+									matTooltip="{{
+										(!this.urlScan
+											? 'Real-estate-add.load-scan'
+											: 'Real-estate-add.change-scan'
+										) | translate
+									}}"
+									(click)="scanUpload.click()"
+								>
+									<mat-icon class="material-symbols-outlined">attach_file</mat-icon>
+								</button>
+								<span *ngIf="!urlScan" class="scan-url-box-desc"
+									>{{ "Real-estate-add.load-scan-actual" | translate }}!
+									{{ urlScan ? "|" : "" }}</span
+								>
+								<span *ngIf="urlScan" class="scan-url-box-desc">
+									{{ "Real-estate-add.edit-scan-info" | translate }}! |</span
+								>
+								<span *ngIf="urlScan" class="scan-url-box ml-4">{{
+									fileScanName
+								}}</span>
+								<input
+									#scanUpload
+									id="documentScan"
+									class="file-upload"
+									type="file"
+									accept="image/*,application/pdf"
+									aria-label="File"
+									(change)="onScanSelected($event, regexScan)"
+								/>
+								<mat-error *ngIf="!urlScan"
+									>{{ "Real-estate-add.load-scan-error" | translate }}!</mat-error
+								>
+							</span>
+
 							<div class="button-box">
 								<button mat-raised-button color="primary" matStepperPrevious>
 									{{ "previous" | translate }} <mat-icon>arrow_back_ios</mat-icon>
@@ -547,7 +586,11 @@
 									mat-raised-button
 									color="primary"
 									matStepperNext
-									[disabled]="!addRealEstateFormPhotos.valid"
+									[disabled]="
+										modificationType === mType.ADD
+											? !addRealEstateFormPhotos.valid || !scanFile
+											: !addRealEstateFormPhotos.valid
+									"
 								>
 									{{ "next" | translate }}
 									<mat-icon iconPositionEnd>arrow_forward_ios</mat-icon>

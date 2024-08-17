@@ -383,14 +383,7 @@
 							<mat-icon class="material-symbols-outlined">mail</mat-icon>
 							<span class="flex flex-row"
 								><p class="mr-2">E-mail:</p>
-								<p
-									*appAccessControl="
-										authService.getPermissions([
-											authModel.VERIFIED_STUDENT,
-											authModel.MODERATOR
-										])
-									"
-								>
+								<p>
 									{{ actualUser.email }}
 								</p></span
 							>
@@ -403,14 +396,7 @@
 							<mat-icon class="material-symbols-outlined">phone_iphone</mat-icon>
 							<span class="flex flex-row"
 								><p class="mr-2">Tel.:</p>
-								<p
-									*appAccessControl="
-										authService.getPermissions([
-											authModel.VERIFIED_STUDENT,
-											authModel.MODERATOR
-										])
-									"
-								>
+								<p>
 									{{ actualUser.phoneNumber }}
 								</p></span
 							>

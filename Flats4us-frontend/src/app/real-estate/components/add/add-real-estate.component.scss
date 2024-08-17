@@ -46,6 +46,31 @@ mat-form-field {
 	padding-right: 4px;
 }
 
+.btn-upload-box {
+	min-height: 80px;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+}
+
+.file-upload {
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}
+
+.scan-url-box {
+	display: inline-block;
+	max-width: 400px;
+	overflow: hidden;
+}
+
+.scan-url-box-desc {
+	display: inline-block;
+	max-width: 400px;
+	overflow: hidden;
+}
+
 .delete-icon {
 	color: red;
 	display: flex;

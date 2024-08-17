@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
@@ -70,7 +70,8 @@ export class AuthService {
 		private http: HttpClient,
 		private router: Router,
 		private notificationsService: NotificationsService,
-		private profileService: ProfileService
+		private profileService: ProfileService,
+		private ngZone: NgZone
 	) {
 		this.init();
 	}
@@ -125,7 +126,6 @@ export class AuthService {
 		localStorage.setItem('authStatus', verificationStatus.toString());
 		this.isLoggedIn.next(true);
 		this.setUserType(true, response.role, response.verificationStatus.toString());
-
 		this.getNotifications();
 	}
 
@@ -182,6 +182,14 @@ export class AuthService {
 			isLoggedIn: isLoggedIn,
 			user: userType?.toUpperCase() as LoggedUserType,
 			status: verificationStatus ?? '',
+		});
+	}
+
+	public setVerificationStatusToUnverified() {
+		this.ngZone.run(() => {
+			localStorage.removeItem('authStatus');
+			localStorage.setItem('authStatus', '1');
+			this.setUserType(true, this.getUserType(), this.getUserStatus());
 		});
 	}
 

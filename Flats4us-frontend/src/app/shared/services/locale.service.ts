@@ -33,11 +33,17 @@ export class LocaleService {
 	private subscribeToLangChange() {
 		this.translate.onLangChange.subscribe(async () => {
 			const { shouldReuseRoute } = this.router.routeReuseStrategy;
+			const currentUrl = this.router.url;
+			const newUrl = this.router.serializeUrl(
+				this.router.createUrlTree([currentUrl])
+			);
 
-			this.setRouteReuse(() => false);
-			this.router.navigated = false;
-			await this.router.navigateByUrl(this.router.url).catch(noop);
-			this.setRouteReuse(shouldReuseRoute);
+			if (currentUrl !== newUrl) {
+				this.setRouteReuse(() => false);
+				this.router.navigated = false;
+				await this.router.navigateByUrl(newUrl).catch(noop);
+				this.setRouteReuse(shouldReuseRoute);
+			}
 		});
 	}
 

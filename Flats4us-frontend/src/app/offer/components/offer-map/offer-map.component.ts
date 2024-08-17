@@ -54,6 +54,11 @@ export class OfferMapComponent
 
 	public ngOnChanges(changes: SimpleChanges): void {
 		if (this.map && this.property && changes['property']) {
+			this.map?.eachLayer(layer => {
+				if (layer instanceof L.Marker) {
+					layer.remove();
+				}
+			});
 			this.addMarkersFromAddress(this.property);
 		}
 	}

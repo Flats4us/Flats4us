@@ -120,7 +120,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 	public completed = false;
 	public fileName = '';
-	private filesArray: File[] = [];
+	public filesArray: File[] = [];
 	private formData = new FormData();
 	public modificationType: ModificationType;
 	public mType = ModificationType;
@@ -145,6 +145,10 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 		plotArea: new FormControl(null),
 		equipmentIds: new FormControl([]),
 	});
+	public scanFile: File | null = null;
+	public urlScan = '';
+	public fileScanName = '';
+	public regexScan = /image\/*/ || /application\/pdf/;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -195,6 +199,27 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 		return opt.filter(item => item.toLowerCase().includes(filterValue));
 	};
+
+	public onScanSelected(event: Event, regex: RegExp) {
+		const fileEvent = (event.target as HTMLInputElement).files;
+
+		if (!fileEvent) {
+			return;
+		}
+		const file: File = fileEvent[0];
+		const fileType = file.type;
+		if (fileType.match(regex) == null) {
+			return;
+		}
+		this.scanFile = file;
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => {
+			this.fileScanName = file.name;
+			this.urlScan = <string>reader.result;
+			this.changeDetectorRef.markForCheck();
+		};
+	}
 
 	public onFileSelected(event: Event) {
 		const fileEvent = (event.target as HTMLInputElement).files;
@@ -402,6 +427,8 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 
 	public formReset() {
 		this.photos = [];
+		this.scanFile = null;
+		this.fileScanName = '';
 		this.fileName = '';
 		this.addRealEstateFormAddressData.reset();
 		this.addRealEstateFormRemainingData.reset();
@@ -450,6 +477,9 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 						);
 					},
 				});
+		}
+		if (!this.photos.length) {
+			this.addRealEstateFormPhotos.setErrors({ noPhotoError: true });
 		}
 	}
 
@@ -517,7 +547,9 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	}
 
 	public onAdd(): void {
-		this.formData.append('TitleDeed', this.filesArray[0]);
+		if (this.scanFile) {
+			this.formData.append('TitleDeed', this.scanFile);
+		}
 		for (let i = 0; i < this.filesArray.length; i++) {
 			this.formData.append('Images', this.filesArray[i]);
 		}

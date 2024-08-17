@@ -60,7 +60,7 @@
 					*ngIf="element.verificationStatus === 1"
 					mat-button
 					target="_blank"
-					href="{{ baseUrl }}/{{ element.document.path }}"
+					href="{{ baseUrl }}/{{ element?.document?.path }}"
 				>
 					{{ "Moderation-console.view-document" | translate }}
 				</a>

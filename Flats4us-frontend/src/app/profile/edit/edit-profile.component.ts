@@ -31,6 +31,7 @@ import { IMenuOptions } from 'src/app/rents/models/rents.models';
 import { validityAgeValidator } from '@shared/utils/validators';
 import { setLocalDate } from '@shared/utils/functions';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '@shared/services/auth.service';
 
 @Component({
 	selector: 'app-profile-edit',
@@ -115,7 +116,8 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 		private changeDetectorRef: ChangeDetectorRef,
 		public profileService: ProfileService,
 		private snackBar: MatSnackBar,
-		private translate: TranslateService
+		private translate: TranslateService,
+		private authService: AuthService
 	) {
 		super();
 		this.dataFormGroupStudent = this.formBuilder.group({
@@ -361,6 +363,9 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 									this.profileService.setHeaderPhotoURL(user.profilePicture.path)
 								)
 							);
+							if (this.ifConfidentialData) {
+								this.authService.setVerificationStatusToUnverified();
+							}
 						},
 					});
 			}

@@ -22,7 +22,7 @@
 	<div class="flex flex-col gap-4">
 		<div
 			*ngFor="let event of toAccept"
-			class="p-4 border cursor-pointer rounded-lg shadow-sm bg-white flex gap-4 items-center"
+			class="p-4 border cursor-pointer rounded-lg shadow-sm flex gap-4 items-center calendar-info"
 			(click)="onEventClick(event)"
 		>
 			<span>{{ event.date | date }}</span>

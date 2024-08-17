@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DisputesConversationComponent } from '@shared/components/disputes-conversation/disputes-conversation.component';
 import { DisputesComponent } from './disputes.component';
+import { PermissionsGuard } from '@shared/services/permissions.guard';
+import { AuthModels } from '@shared/models/auth.models';
 
 const routes: Routes = [
 	{
@@ -14,6 +16,14 @@ const routes: Routes = [
 				component: DisputesConversationComponent,
 			},
 		],
+		canActivate: [PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 ];
 

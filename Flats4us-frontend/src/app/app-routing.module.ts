@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { AuthGuard } from '@shared/services/auth.guard';
+import { PermissionsGuard } from '@shared/services/permissions.guard';
+import { AuthModels } from '@shared/models/auth.models';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'start' },
@@ -31,18 +33,42 @@ const routes: Routes = [
 			import('./conversations/conversations.module').then(
 				m => m.ConversationsModule
 			),
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.UNVERIFIED_STUDENT,
+				AuthModels.UNVERIFIED_OWNER,
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 	{
 		path: 'disputes',
 		loadChildren: () =>
 			import('./disputes/disputes.module').then(m => m.DisputesModule),
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 	{
 		path: 'real-estate',
 		loadChildren: () =>
 			import('./real-estate/real-estate.module').then(m => m.RealEstateModule),
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 	{
 		path: 'find-roommate',
@@ -50,6 +76,10 @@ const routes: Routes = [
 			import('./find-roommate/find-roommate.module').then(
 				m => m.FindRoommateModule
 			),
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [AuthModels.VERIFIED_STUDENT],
+		},
 	},
 	{
 		path: 'offer',
@@ -58,11 +88,26 @@ const routes: Routes = [
 	{
 		path: 'rents',
 		loadChildren: () => import('./rents/rents.module').then(m => m.RentsModule),
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 	{
 		path: 'calendar',
 		loadComponent: () =>
 			import('./calendar/calendar.component').then(c => c.CalendarComponent),
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.VERIFIED_OWNER,
+			],
+		},
 	},
 	{
 		path: 'moderation-console',
@@ -70,6 +115,10 @@ const routes: Routes = [
 			import('./moderation-console/moderation-console.module').then(
 				m => m.ModerationConsoleModule
 			),
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [AuthModels.MODERATOR],
+		},
 	},
 	{
 		path: 'report-problem',
@@ -77,6 +126,7 @@ const routes: Routes = [
 			import('./report-problem/report-problem.component').then(
 				c => c.ReportProblemComponent
 			),
+		canActivate: [AuthGuard],
 	},
 	{ path: '**', component: NotFoundComponent },
 ];

@@ -536,7 +536,12 @@
 		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.",
 		"add-info": "Klikając na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
 		"edit-info": "Klikając na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
-		"invalid-address": "Podany adres nie istnieje"
+		"invalid-address": "Podany adres nie istnieje",
+		"load-scan": "Wczytaj skan aktu własności.",
+		"change-scan": "Zmień skan aktu własności.",
+		"load-scan-actual": "Kliknij, żeby wczytać skan aktu własności",
+		"edit-scan-info": "Kliknij, żeby zmienić skan aktu własności",
+		"load-scan-error": "Nie wczytano skanu aktu własności"
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",

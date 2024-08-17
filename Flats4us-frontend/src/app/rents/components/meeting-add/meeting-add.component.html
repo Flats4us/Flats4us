@@ -15,9 +15,7 @@
 						: './assets/avatar.png'
 				"
 			/>
-			<span class="text-black font-bold"
-				>{{ owner.name }} {{ owner.surname }}</span
-			>
+			<span class="font-bold">{{ owner.name }} {{ owner.surname }}</span>
 		</div>
 	</div>
 	<div *ngIf="tenant$ | async as tenant" class="mb-4 flex flex-col gap-3">
@@ -33,7 +31,7 @@
 						: './assets/avatar.png'
 				"
 			/>
-			<span class="text-black font-bold">{{ tenant.fullName }}</span>
+			<span class="font-bold">{{ tenant.fullName }}</span>
 		</div>
 	</div>
 	<form class="flex flex-col" [formGroup]="meetingForm" (ngSubmit)="onAdd()">
@@ -85,7 +83,7 @@
 	</form>
 </div>
 <div mat-dialog-actions class="button-box">
-	<button mat-button mat-dialog-close cdkFocusInitial type="button">
+	<button mat-raised-button mat-dialog-close cdkFocusInitial type="button">
 		{{ "cancel" | translate }}
 	</button>
 	<button mat-raised-button type="submit" color="primary" (click)="onAdd()">
