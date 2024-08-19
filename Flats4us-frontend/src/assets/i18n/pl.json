@@ -160,7 +160,8 @@
 		"title": "Tytuł sporu",
 		"description": "Opis problemu",
 		"cancel": "Anuluj",
-		"send": "Wyślij"
+		"send": "Wyślij",
+		"no-disputes": "Brak sporów do wyświetlenia."
 	},
 	"Find-roommates": {
 		"find-roommates": "Znajdź swojego współlokatora",
@@ -221,8 +222,8 @@
 
 	"Conversation": {
 		"conversation": "Konwersacje",
-		"no-conversation": "Brak konwersacji",
-		"conversation-info": "Nowe rozmowy pojawią się w tym miejscu",
+		"no-conversation": "Brak konwersacji.",
+		"conversation-info": "Nowe rozmowy pojawią się w tym miejscu.",
 		"message": "Wiadomość",
 		"id": "ID WYBRANEJ KONWERSACJI"
 	},

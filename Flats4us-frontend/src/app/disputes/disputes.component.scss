@@ -32,6 +32,12 @@
 	flex: 1;
 }
 
+.not-found {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 @media screen and (max-width: 992px) {
 	.disputes-wrapper {
 		display: flex;

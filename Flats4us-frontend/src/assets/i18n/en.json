@@ -161,7 +161,8 @@
 		"title": "Title of the dispute",
 		"description": "Description of the problem",
 		"cancel": "Cancel",
-		"send": "Send"
+		"send": "Send",
+		"no-disputes": "No disputes to show."
 	},
 	"Find-roommates": {
 		"find-roommates": "Find your roommate",
@@ -224,8 +225,8 @@
 
 	"Conversation": {
 		"conversation": "Conversation",
-		"no-conversation": "No conversation",
-		"conversation-info": "New conversations will appear here",
+		"no-conversation": "No conversation.",
+		"conversation-info": "New conversations will appear here.",
 		"message": "Message",
 		"id": "SELECTED CONVERSATION ID"
 	},
