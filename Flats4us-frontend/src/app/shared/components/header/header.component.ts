@@ -14,9 +14,10 @@ import { LocaleService } from '@shared/services/locale.service';
 import { ThemeService } from '@shared/services/theme.service';
 import { AuthModels } from '@shared/models/auth.models';
 import { ProfileService } from 'src/app/profile/services/profile.service';
-import { Observable, filter, of, switchMap, takeUntil } from 'rxjs';
+import { Observable, filter, of, switchMap, takeUntil, map } from 'rxjs';
 import { IUserProfile } from 'src/app/profile/models/profile.models';
 import { NotificationsService } from '@shared/services/notifications.service';
+import { NotificationType } from '@shared/models/notifications.models';
 
 @Component({
 	selector: 'app-header',
@@ -28,7 +29,16 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 	@ViewChild('menuTrigger')
 	public menuTrigger: MatMenuTrigger | undefined;
 
-	public notifications$ = this.notificationsService.notifications$;
+	public notifications$ = this.notificationsService.notifications$.pipe(
+		map(notifications => {
+			for (let i = 0; i < notifications.length; i++) {
+				notifications[i] = this.isKnownNotificationType(notifications[i])
+					? 'Notifications-content.' + notifications[i]
+					: notifications[i];
+			}
+			return notifications;
+		})
+	);
 
 	public isDarkMode = this.themeService.isDarkMode();
 
@@ -128,5 +138,11 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 	public changeTheme() {
 		this.isDarkMode = !this.isDarkMode;
 		this.themeService.setDarkMode(this.isDarkMode);
+	}
+
+	public isKnownNotificationType(notification: string): boolean {
+		return Object.values(NotificationType).includes(
+			notification as NotificationType
+		);
 	}
 }

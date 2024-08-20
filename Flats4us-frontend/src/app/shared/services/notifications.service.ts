@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+import { NotificationType } from '@shared/models/notifications.models';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationsService {
@@ -28,7 +29,9 @@ export class NotificationsService {
 	) {
 		this.addReceiveNotificationHandler((_user, message) => {
 			this.snackbar.open(
-				this.translateService.instant('Notifications-content.' + message),
+				Object.values(NotificationType).includes(message as NotificationType)
+					? this.translateService.instant('Notifications-content.' + message)
+					: message,
 				this.translateService.instant('close'),
 				{
 					duration: 5000,
