@@ -179,6 +179,37 @@ namespace Flats4us.Controllers
             }
         }
 
+        // PUT: api/offers/{id}/delete
+        [HttpDelete("{id}/delete")]
+        [Authorize(Policy = "VerifiedOwner")]
+        [SwaggerOperation(
+            Summary = "Deletes offer",
+            Description = "Requires verified owner privileges"
+        )]
+        public async Task<IActionResult> DelatelOffer(int id)
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _offerService.DeleteOfferAsync(id, requestUserId);
+                _logger.LogInformation($"Deleting offer with ID: {id}");
+                return Ok(new OutputDto<string>("Offer deleted successfully"));
+            }
+            catch (ForbiddenException ex)
+            {
+                return StatusCode(403, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"FAILED: Deleting offer");
+                return BadRequest($"An error occurred: {ex.Message} | {ex.InnerException?.Message}");
+            }
+        }
+
         // POST: api/offers/{id}/promotion
         [HttpPost("{id}/promotion")]
         [Authorize(Policy = "VerifiedOwner")]

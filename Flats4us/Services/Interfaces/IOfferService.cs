@@ -10,6 +10,7 @@ namespace Flats4us.Services.Interfaces
         Task<CountedListDto<OfferDto>> GetOffersForCurrentUserAsync(int ownerId);
         Task AddOfferAsync(AddEditOfferDto input, int ownerId);
         Task CancelOfferAsync(int id, int requestUserId);
+        Task DeleteOfferAsync(int id, int requestUserId);
         Task AddOfferPromotionAsync(int duration, int offerId, int userId);
         Task<CountedListDto<OfferDto>> GetOffersByInterestAsync(PaginatorDto input, int studentId);
         Task AddOfferInterestAsync(int offerId, int studentId);
