@@ -522,8 +522,6 @@ namespace Flats4us.Services
 
             if (offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this offer");
 
-            //if (offer.OfferStatus != OfferStatus.Old) throw new ArgumentException($"Cannot cancel this offer due to offerStatus");
-
             _context.Offers.Remove(offer);
 
             await _context.SaveChangesAsync();
