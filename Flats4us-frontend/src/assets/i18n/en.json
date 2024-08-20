@@ -161,7 +161,8 @@
 		"title": "Title of the dispute",
 		"description": "Description of the problem",
 		"cancel": "Cancel",
-		"send": "Send"
+		"send": "Send",
+		"no-disputes": "No disputes to show."
 	},
 	"Find-roommates": {
 		"find-roommates": "Find your roommate",
@@ -224,8 +225,8 @@
 
 	"Conversation": {
 		"conversation": "Conversation",
-		"no-conversation": "No conversation",
-		"conversation-info": "New conversations will appear here",
+		"no-conversation": "No conversation.",
+		"conversation-info": "New conversations will appear here.",
 		"message": "Message",
 		"id": "SELECTED CONVERSATION ID"
 	},
@@ -517,7 +518,7 @@
 		"equipment": "Equipment",
 		"photo": "Photo",
 		"delete-photo": "Delete photo",
-		"no-photo-info": "Photo is required.",
+		"no-photo-info": "Photo is required",
 		"add-photo": "Add photo (max 10)",
 		"ready": "Ready",
 		"form": "The form has been successfully completed",
@@ -539,7 +540,12 @@
 		"change-info2": "Failed to modify the property.",
 		"add-info": "By clicking the 'Save property' button, you confirm that the entered data is correct.",
 		"edit-info": "By clicking the 'Edit property' button, you confirm that the entered data is correct.",
-		"invalid-address": "The provided address does not exist"
+		"invalid-address": "The provided address does not exist",
+		"load-scan": "Load a scan of the property deed.",
+		"change-scan": "Change scan of the property deed.",
+		"load-scan-actual": "Click to load a scan of the property deed",
+		"edit-scan-info": "Click to change a scan of the property deed",
+		"load-scan-error": "The scan of the property deed has not been loaded"
 	},
 	"Real-estate-details": {
 		"property-status": "Property status",

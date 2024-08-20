@@ -299,17 +299,23 @@ export class RealEstateService {
 			.pipe(
 				map(data => {
 					const csvToRowArray = data.split('\n');
+					regionCityArray.length = 0;
 					for (let index = 1; index < csvToRowArray.length; index++) {
 						const row = csvToRowArray[index].split(';');
 						const regionToLowerCase = row[2].trim().toLowerCase();
-						regionCityArray = [];
+						const city = row[1].trim();
 						regionCityArray.push(<IRegionCity>{
 							region: regionToLowerCase,
-							city: row[1],
+							city: city,
 						});
-						citiesGroups
-							.find(group => group.whole == regionToLowerCase)
-							?.parts.push(row[1]);
+						let group = citiesGroups.find(group => group.whole === regionToLowerCase);
+						if (!group) {
+							group = { whole: regionToLowerCase, parts: [] };
+							citiesGroups.push(group);
+						}
+						if (!group.parts.includes(city)) {
+							group.parts.push(city);
+						}
 					}
 					return regionCityArray;
 				})
@@ -317,6 +323,9 @@ export class RealEstateService {
 	}
 
 	public readDistrictsForCities(): Observable<IGroup[]> {
+		if (!this.districtGroups) {
+			this.districtGroups = [];
+		}
 		return this.httpClient
 			.get('./assets/miasta_dzielnice.csv', { responseType: 'text' })
 			.pipe(
@@ -325,10 +334,19 @@ export class RealEstateService {
 					for (let index = 1; index < csvToRowArray.length; index++) {
 						const row = csvToRowArray[index].split(';');
 						const city = row[0].trim().toLowerCase();
+						let group = this.districtGroups.find(
+							group => group.whole.trim().toLowerCase() === city
+						);
+
+						if (!group) {
+							group = { whole: city, parts: [] };
+							this.districtGroups.push(group);
+						}
 						for (let j = 1; j < row.length; j++) {
-							this.districtGroups
-								.find(group => group.whole.trim().toLowerCase() === city)
-								?.parts.push(row[j]);
+							const district = row[j].trim();
+							if (!group.parts.includes(district)) {
+								group.parts.push(district);
+							}
 						}
 					}
 					return this.districtGroups;
@@ -390,10 +408,9 @@ export class RealEstateService {
 	}
 	public getLocationStructured(
 		street: string,
-		postalCode: string,
 		city: string
 	): Observable<IGeoLocation[]> {
-		const url = `https://nominatim.openstreetmap.org/search.php?street=${street}&city=${city}&country=Polska&postalcode=${postalCode}&polygon_geojson=1&format=jsonv2`;
+		const url = `https://nominatim.openstreetmap.org/search.php?street=${street}&city=${city}&country=Polska&polygon_geojson=1&format=jsonv2`;
 		return this.httpClient.get<IGeoLocation[]>(url);
 	}
 }

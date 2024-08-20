@@ -160,7 +160,8 @@
 		"title": "Tytuł sporu",
 		"description": "Opis problemu",
 		"cancel": "Anuluj",
-		"send": "Wyślij"
+		"send": "Wyślij",
+		"no-disputes": "Brak sporów do wyświetlenia."
 	},
 	"Find-roommates": {
 		"find-roommates": "Znajdź swojego współlokatora",
@@ -221,8 +222,8 @@
 
 	"Conversation": {
 		"conversation": "Konwersacje",
-		"no-conversation": "Brak konwersacji",
-		"conversation-info": "Nowe rozmowy pojawią się w tym miejscu",
+		"no-conversation": "Brak konwersacji.",
+		"conversation-info": "Nowe rozmowy pojawią się w tym miejscu.",
 		"message": "Wiadomość",
 		"id": "ID WYBRANEJ KONWERSACJI"
 	},
@@ -536,7 +537,12 @@
 		"change-info2": "Nie udało się zmodyfikować nieruchomości. Spróbuj ponownie.",
 		"add-info": "Klikając na przycisk 'Zapisz nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
 		"edit-info": "Klikając na przycisk 'Edytuj nieruchomość' potwierdzasz prawdziwość wprowadzonych danych.",
-		"invalid-address": "Podany adres nie istnieje"
+		"invalid-address": "Podany adres nie istnieje",
+		"load-scan": "Wczytaj skan aktu własności.",
+		"change-scan": "Zmień skan aktu własności.",
+		"load-scan-actual": "Kliknij, żeby wczytać skan aktu własności",
+		"edit-scan-info": "Kliknij, żeby zmienić skan aktu własności",
+		"load-scan-error": "Nie wczytano skanu aktu własności"
 	},
 	"Real-estate-details": {
 		"property-status": "Status nieruchomości",

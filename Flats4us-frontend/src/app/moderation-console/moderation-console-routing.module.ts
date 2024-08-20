@@ -6,6 +6,8 @@ import { UsersVerificationComponent } from './components/users-verification/user
 import { ProblemsVerificationComponent } from './components/problems-verification/problems-verification.component';
 import { DisputeComponent } from './components/dispute/dispute.component';
 import { DisputesConversationComponent } from '@shared/components/disputes-conversation/disputes-conversation.component';
+import { PermissionsGuard } from '@shared/services/permissions.guard';
+import { AuthModels } from '@shared/models/auth.models';
 
 const routes: Routes = [
 	{
@@ -29,6 +31,10 @@ const routes: Routes = [
 				component: DisputesConversationComponent,
 			},
 		],
+		canActivate: [PermissionsGuard],
+		data: {
+			requiredPermissions: [AuthModels.MODERATOR],
+		},
 	},
 ];
 

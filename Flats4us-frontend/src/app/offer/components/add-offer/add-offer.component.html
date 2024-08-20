@@ -104,11 +104,11 @@
 				<app-survey [offerForm]="offerForm"></app-survey>
 
 				<div class="flex justify-between">
-					<button mat-flat-button color="accent" type="button" routerLink="/start">
+					<button mat-raised-button type="button" routerLink="/start">
 						{{ "cancel" | translate }}
 					</button>
 					<button
-						mat-flat-button
+						mat-raised-button
 						color="primary"
 						type="submit"
 						[disabled]="!offerForm.valid"

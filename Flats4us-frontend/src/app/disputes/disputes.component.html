@@ -1,17 +1,29 @@
 <h1 class="text-4xl p-4 font-semibold">
 	{{ "Disputes.disputes" | translate }}
 </h1>
-<div class="disputes-wrapper">
-	<mat-card *ngIf="disputes$ | async as disputes" class="disputes-choice">
-		<div
-			*ngFor="let dispute of disputes"
-			class="disputes-choice__conversation"
-			[routerLink]="['conversation', dispute.argumentId]"
-		>
-			<span>{{ dispute.title }}</span>
-		</div>
+<ng-template #notFound>
+	<mat-card class="w-fit">
+		<mat-card-title class="text-3xl p-4">
+			{{ "Disputes.no-disputes" | translate }}
+		</mat-card-title>
 	</mat-card>
-	<div class="disputes-box">
-		<router-outlet></router-outlet>
+</ng-template>
+<div *ngIf="disputes$ | async as disputes">
+	<div
+		*ngIf="disputes.length > 0; else notFound"
+		[ngClass]="disputes.length > 0 ? 'disputes-wrapper' : 'not-found'"
+	>
+		<mat-card class="disputes-choice">
+			<div
+				*ngFor="let dispute of disputes"
+				class="disputes-choice__conversation"
+				[routerLink]="['conversation', dispute.argumentId]"
+			>
+				<span>{{ dispute.title }}</span>
+			</div>
+		</mat-card>
+		<div class="disputes-box">
+			<router-outlet></router-outlet>
+		</div>
 	</div>
 </div>

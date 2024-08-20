@@ -36,6 +36,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '@shared/services/user.service';
 import { EmailChangeModule } from 'src/app/settings/components/email-change/email-change.module';
+import { AuthService } from '@shared/services/auth.service';
 
 @NgModule({
 	declarations: [EditProfileComponent],
@@ -73,6 +74,6 @@ import { EmailChangeModule } from 'src/app/settings/components/email-change/emai
 		TranslateModule,
 	],
 	exports: [EditProfileComponent],
-	providers: [FormGroupDirective, SurveyService, UserService],
+	providers: [FormGroupDirective, SurveyService, UserService, AuthService],
 })
 export class EditProfileModule {}

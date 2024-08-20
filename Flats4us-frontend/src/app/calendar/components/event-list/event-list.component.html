@@ -1,13 +1,10 @@
-<h1 mat-dialog-title class="text-2xl font-semibold text-center">
+<h1 class="dialog-title text-2xl p-4 font-semibold">
 	{{ "Calendar.event" | translate }}
 </h1>
 <div mat-dialog-content class="p-4">
 	<div class="flex flex-col gap-6">
-		<div
-			*ngFor="let event of events"
-			class="p-4 border rounded-lg shadow-sm bg-white"
-		>
-			<div *ngIf="event?.user" class="mb-4 flex gap-4">
+		<div *ngFor="let event of events" class="p-4 border rounded-lg shadow-sm">
+			<div *ngIf="event?.user" class="mb-4 flex items-center gap-4">
 				<img
 					mat-card-avatar
 					alt="avatar"
@@ -18,29 +15,23 @@
 							: './assets/avatar.png'
 					"
 				/>
-				<span class="text-black font-bold">{{ event.user.fullName }}</span>
+				<span class="font-bold">{{ event.user.fullName }}</span>
 			</div>
 			<div class="mb-4">
-				<span class="text-black font-bold"
-					>{{ "Calendar.date" | translate }}:
-				</span>
+				<span class="font-bold">{{ "Calendar.date" | translate }}: </span>
 				<span>{{ event.date | date : "dd.MM.YYYY HH:mm" }}</span>
 			</div>
 			<div class="mb-4">
-				<span class="text-black font-bold"
-					>{{ "Calendar.place" | translate }}:
-				</span>
+				<span class="font-bold">{{ "Calendar.place" | translate }}: </span>
 				<span>{{ event.place }}</span>
 			</div>
 			<div class="mb-4">
-				<span class="text-black font-bold"
-					>{{ "Calendar.reason" | translate }}:
-				</span>
+				<span class="font-bold">{{ "Calendar.reason" | translate }}: </span>
 				<span>{{ event.reason }}</span>
 			</div>
 
 			<div class="mb-4">
-				<span class="text-black font-bold">
+				<span class="font-bold">
 					{{ "Calendar.student-accepted" | translate }}:
 				</span>
 				<span>
@@ -48,7 +39,7 @@
 				</span>
 			</div>
 			<div class="mb-4">
-				<span class="text-black font-bold">
+				<span class="font-bold">
 					{{ "Calendar.owner-accepted" | translate }}:
 				</span>
 				<span>
@@ -66,13 +57,17 @@
 			<div *ngIf="event.needsAction" class="actions flex gap-4">
 				<button
 					mat-raised-button
+					mat-dialog-close
+					(click)="onReject(event.meetingId)"
+				>
+					{{ "Calendar.reject" | translate }}
+				</button>
+				<button
+					mat-raised-button
 					color="primary"
 					(click)="onAccept(event.meetingId)"
 				>
 					{{ "Calendar.accept" | translate }}
-				</button>
-				<button mat-raised-button color="warn" (click)="onReject(event.meetingId)">
-					{{ "Calendar.reject" | translate }}
 				</button>
 			</div>
 		</div>
@@ -83,7 +78,7 @@
 		mat-button
 		mat-dialog-close
 		cdkFocusInitial
-		class="text-white px-4 py-2 rounded-lg"
+		class="px-4 py-2 rounded-lg"
 	>
 		{{ "close" | translate }}
 	</button>

@@ -4,7 +4,7 @@
 <div *ngIf="conversations$ | async as messages" class="messages-wrapper">
 	<mat-card>
 		<mat-card-header *ngIf="messages.length === 0">
-			<mat-card-title>{{
+			<mat-card-title class="text-3xl">{{
 				"Conversation.no-conversation" | translate
 			}}</mat-card-title>
 			<mat-card-subtitle>{{
