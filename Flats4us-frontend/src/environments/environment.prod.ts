@@ -5,4 +5,5 @@ export const environment = {
 	notificationSocket: 'notificationHub',
 	commitHash: '##COMMIT_HASH##',
 	commitDate: '##COMMIT_DATE##',
+	encryptionKey: 'Flats4Us1234@',
 };

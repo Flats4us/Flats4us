@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { IAddOwner, IAddStudent } from 'src/app/profile/models/profile.models';
 import { environment } from 'src/environments/environment';
+import * as CryptoJS from 'crypto-js';
 
 import {
 	AuthModels,
@@ -36,6 +37,8 @@ export class AuthService {
 		false
 	);
 	public isLoggedIn$ = this.isLoggedIn.asObservable();
+
+	private encryptionKey = environment.encryptionKey;
 
 	private accessControl: BehaviorSubject<{
 		user: string;
@@ -122,8 +125,14 @@ export class AuthService {
 		localStorage.setItem('authToken', token);
 		const expirationTime = expiresAt * 1000;
 		localStorage.setItem('authTokenExpirationTime', expirationTime.toString());
-		localStorage.setItem('authRole', role.toUpperCase());
-		localStorage.setItem('authStatus', verificationStatus.toString());
+		localStorage.setItem(
+			'authRole',
+			this.encryptData(role.toUpperCase(), this.encryptionKey)
+		);
+		localStorage.setItem(
+			'authStatus',
+			this.encryptData(verificationStatus.toString(), this.encryptionKey)
+		);
 		this.isLoggedIn.next(true);
 		this.setUserType(true, response.role, response.verificationStatus.toString());
 		this.getNotifications();
@@ -134,11 +143,17 @@ export class AuthService {
 	}
 
 	public getUserType(): string {
-		return localStorage.getItem('authRole')?.toUpperCase() as string;
+		return this.decryptData(
+			localStorage.getItem('authRole') ?? '',
+			this.encryptionKey
+		)?.toUpperCase() as string;
 	}
 
 	public getUserStatus(): string {
-		return localStorage.getItem('authStatus') as string;
+		return this.decryptData(
+			localStorage.getItem('authStatus') ?? '',
+			this.encryptionKey
+		) as string;
 	}
 
 	public isValidToken(): boolean {
@@ -217,5 +232,14 @@ export class AuthService {
 
 	private getNotifications() {
 		this.notificationsService.startConnection(this.getAuthToken());
+	}
+
+	private encryptData(data: string, key: string): string {
+		return CryptoJS.AES.encrypt(data, key).toString();
+	}
+
+	private decryptData(encryptedData: string, key: string): string {
+		const bytes = CryptoJS.AES.decrypt(encryptedData, key);
+		return bytes.toString(CryptoJS.enc.Utf8);
 	}
 }

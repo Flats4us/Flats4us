@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { AuthModels } from '@shared/models/auth.models';
+import { AuthService } from './auth.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class PermissionsGuard implements CanActivate {
-	constructor(private router: Router) {}
+	constructor(private router: Router, private authService: AuthService) {}
 
 	public canActivate(next: ActivatedRouteSnapshot): boolean {
 		const { requiredPermissions } = next.data;
@@ -23,8 +24,8 @@ export class PermissionsGuard implements CanActivate {
 		route: ActivatedRouteSnapshot,
 		routes: string[]
 	): boolean {
-		const role = localStorage.getItem('authRole') ?? '';
-		const status = localStorage.getItem('authStatus') ?? '';
+		const role = this.authService.getUserType() ?? '';
+		const status = this.authService.getUserStatus() ?? '';
 		const actualUserPermission = this.getPermission(role, status);
 		const checkPermissions = permissionsArray.some(
 			permission => permission === actualUserPermission
