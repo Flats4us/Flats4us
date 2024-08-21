@@ -1,6 +1,6 @@
 <mat-card *ngIf="matches$ | async as students">
 	<mat-card-header>
-		<mat-card-title>
+		<mat-card-title class="text-3xl">
 			{{ "Find-roommates.your-match" | translate }}
 		</mat-card-title>
 		<mat-card-subtitle *ngIf="students.length === 0">{{
