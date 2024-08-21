@@ -31,7 +31,7 @@ export class PermissionsGuard implements CanActivate {
 			permission => permission === actualUserPermission
 		);
 		if (checkPermissions && !role) {
-			return true;
+			return this.checkParams(params, role, route, routes);
 		} else if (
 			checkPermissions &&
 			this.checkParams(params, role, route, routes)
