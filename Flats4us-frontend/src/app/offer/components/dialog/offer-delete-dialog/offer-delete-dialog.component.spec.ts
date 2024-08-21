@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OfferCancelDialogComponent } from './offer-cancel-dialog.component';
+import { OfferDeleteDialogComponent } from './offer-delete-dialog.component';
 
 describe('OfferCancelDialogComponent', () => {
-	let component: OfferCancelDialogComponent;
-	let fixture: ComponentFixture<OfferCancelDialogComponent>;
+	let component: OfferDeleteDialogComponent;
+	let fixture: ComponentFixture<OfferDeleteDialogComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [OfferCancelDialogComponent],
+			imports: [OfferDeleteDialogComponent],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(OfferCancelDialogComponent);
+		fixture = TestBed.createComponent(OfferDeleteDialogComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
