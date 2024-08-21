@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
-	selector: 'app-offer-cancel-dialog',
+	selector: 'app-offer-delete-dialog',
 	standalone: true,
 	imports: [
 		CommonModule,
@@ -29,11 +29,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 		TranslateModule,
 	],
 	providers: [OfferService],
-	templateUrl: './offer-cancel-dialog.component.html',
-	styleUrls: ['./offer-cancel-dialog.component.scss'],
+	templateUrl: './offer-delete-dialog.component.html',
+	styleUrls: ['./offer-delete-dialog.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferCancelDialogComponent extends BaseComponent {
+export class OfferDeleteDialogComponent extends BaseComponent {
 	constructor(
 		public offerService: OfferService,
 		private snackBar: MatSnackBar,
@@ -47,12 +47,12 @@ export class OfferCancelDialogComponent extends BaseComponent {
 
 	public onYesClick() {
 		this.offerService
-			.cancelOffer(this.data)
+			.deleteOffer(this.data)
 			.pipe(this.untilDestroyed())
 			.subscribe({
 				next: () => {
 					this.snackBar.open(
-						this.translate.instant('Offer.cancel-dialog1'),
+						this.translate.instant('Offer.delete-dialog1'),
 						this.translate.instant('close'),
 						{
 							duration: 10000,
@@ -63,7 +63,7 @@ export class OfferCancelDialogComponent extends BaseComponent {
 				},
 				error: () => {
 					this.snackBar.open(
-						this.translate.instant('Offer.cancel-dialog2'),
+						this.translate.instant('Offer.delete-dialog2'),
 						this.translate.instant('close'),
 						{
 							duration: 10000,

@@ -14,7 +14,7 @@ import { OfferPromotionDialogComponent } from '../dialog/offer-promotion-dialog/
 import { OfferService } from '../../services/offer.service';
 import { RentPropositionDialogComponent } from '../dialog/rent-proposition-dialog/rent-proposition-dialog.component';
 import { RentApprovalDialogComponent } from '../dialog/rent-approval-dialog/rent-approval-dialog.component';
-import { OfferCancelDialogComponent } from '../dialog/offer-cancel-dialog/offer-cancel-dialog.component';
+import { OfferDeleteDialogComponent } from '../dialog/offer-delete-dialog/offer-delete-dialog.component';
 import { AuthService } from '@shared/services/auth.service';
 import { RentsService } from 'src/app/rents/services/rents.service';
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -68,7 +68,7 @@ export class OfferDetailsComponent extends BaseComponent {
 		{ option: 'offerDetails', description: 'Offer.offer-details' },
 		{ option: 'promoteOffer', description: 'Offer.promote-offer' },
 		{ option: 'property', description: 'Offer.related-property' },
-		{ option: 'closeOffer', description: 'Offer.close-offer' },
+		{ option: 'deleteOffer', description: 'Offer.delete-offer' },
 	];
 
 	constructor(
@@ -109,15 +109,15 @@ export class OfferDetailsComponent extends BaseComponent {
 		this.router.navigate(['start']);
 	}
 
-	public openCancelDialog(id: number): void {
-		const cancelDialog = this.dialog.open(OfferCancelDialogComponent, {
+	public openDeleteDialog(id: number): void {
+		const deleteDialog = this.dialog.open(OfferDeleteDialogComponent, {
 			disableClose: true,
 			data: id,
 		});
-		this.actualOffer$ = cancelDialog
+		this.actualOffer$ = deleteDialog
 			.afterClosed()
 			.pipe(switchMap(value => this.offerService.getOfferById(value)));
-		cancelDialog
+		deleteDialog
 			.afterClosed()
 			.pipe(this.untilDestroyed())
 			.subscribe(
@@ -165,8 +165,8 @@ export class OfferDetailsComponent extends BaseComponent {
 				this.navigateToOffer(offerId ?? 0);
 				break;
 			}
-			case 'closeOffer': {
-				this.openCancelDialog(offerId ?? 0);
+			case 'deleteOffer': {
+				this.openDeleteDialog(offerId ?? 0);
 				break;
 			}
 			case 'promoteOffer': {

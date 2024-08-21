@@ -99,8 +99,8 @@
 													data.offer?.offerStatus === 2 ||
 													data.offer?.isPromoted) &&
 													menuOption.option === 'promoteOffer') ||
-												((data.offer?.offerStatus === 3 || data.offer?.offerStatus === 2) &&
-													menuOption.option === 'closeOffer')
+												(data.offer?.offerStatus === 2 &&
+													menuOption.option === 'deleteOffer')
 											"
 											(click)="
 												onSelect(
@@ -113,7 +113,7 @@
 											<div
 												class="flex items-center justify-center"
 												[ngSwitch]="menuOption.option"
-												[class.close-offer]="menuOption.option === 'closeOffer'"
+												[class.delete-offer]="menuOption.option === 'deleteOffer'"
 											>
 												<mat-icon
 													*ngSwitchCase="'offerDetails'"
@@ -129,9 +129,9 @@
 													>real_estate_agent</mat-icon
 												>
 												<mat-icon
-													*ngSwitchCase="'closeOffer'"
+													*ngSwitchCase="'deleteOffer'"
 													class="material-icons-outlined"
-													>close</mat-icon
+													>delete</mat-icon
 												>
 												<span>{{ menuOption.description | translate }}</span>
 											</div>
