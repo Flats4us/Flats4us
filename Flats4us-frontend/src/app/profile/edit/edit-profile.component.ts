@@ -84,7 +84,7 @@ export class EditProfileComponent extends BaseComponent implements OnInit {
 	public urlScan = '';
 	public urlNewScan = '';
 	public regexImage = /image\/*/;
-	public regexScan = /image\/*/ || /application\/pdf/;
+	public regexScan = /^image\/(jpeg|png|gif|bmp|webp)$|^application\/pdf$/;
 	public isValidDocument = true;
 
 	public editedPhotoFile: File | undefined;

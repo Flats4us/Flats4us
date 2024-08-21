@@ -52,9 +52,7 @@ export class PermissionsGuard implements CanActivate {
 		const modificationType = route.paramMap.get('modificationType');
 		const surveyType = route.paramMap.get('survey-type');
 		if (routes.includes('profile') && modificationType?.includes('create')) {
-			let createProfileTest = false;
-			role ? (createProfileTest = false) : (createProfileTest = true);
-			return createProfileTest;
+			return true;
 		} else if (routes.includes('profile') && modificationType?.includes('edit')) {
 			let editProfileTest = false;
 			role ? (editProfileTest = true) : (editProfileTest = false);

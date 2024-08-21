@@ -148,7 +148,7 @@ export class AddRealEstateComponent extends BaseComponent implements OnInit {
 	public scanFile: File | null = null;
 	public urlScan = '';
 	public fileScanName = '';
-	public regexScan = /image\/*/ || /application\/pdf/;
+	public regexScan = /^image\/(jpeg|png|gif|bmp|webp)$|^application\/pdf$/;
 
 	constructor(
 		private formBuilder: FormBuilder,
