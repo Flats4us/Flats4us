@@ -59,7 +59,9 @@ const routes: Routes = [
 		canActivate: [PermissionsGuard],
 		data: {
 			requiredPermissions: [
+				AuthModels.UNVERIFIED_STUDENT,
 				AuthModels.VERIFIED_STUDENT,
+				AuthModels.UNVERIFIED_OWNER,
 				AuthModels.VERIFIED_OWNER,
 				AuthModels.MODERATOR,
 				AuthModels.NOT_LOGGED_IN,

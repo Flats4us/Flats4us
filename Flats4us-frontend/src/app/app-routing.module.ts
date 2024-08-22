@@ -25,7 +25,16 @@ const routes: Routes = [
 		path: 'settings',
 		loadChildren: () =>
 			import('./settings/settings.module').then(m => m.SettingsModule),
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, PermissionsGuard],
+		data: {
+			requiredPermissions: [
+				AuthModels.UNVERIFIED_STUDENT,
+				AuthModels.UNVERIFIED_OWNER,
+				AuthModels.VERIFIED_OWNER,
+				AuthModels.VERIFIED_STUDENT,
+				AuthModels.MODERATOR,
+			],
+		},
 	},
 	{
 		path: 'conversations',
