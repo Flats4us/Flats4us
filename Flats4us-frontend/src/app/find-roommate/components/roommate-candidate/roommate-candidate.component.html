@@ -1,9 +1,9 @@
 <mat-card *ngIf="student$ | async as student" class="m-3 p-4">
 	<mat-card-header>
-		<mat-icon mat-card-avatar>check_circle</mat-icon>
-		<mat-card-title class="text-2xl"
-			>{{ student.name }}, {{ student.age }}</mat-card-title
-		>
+		<mat-card-title class="text-2xl inline-flex items-center pb-8">
+			<mat-icon class="mr-4">check_circle</mat-icon>
+			<span>{{ student.name }}, {{ student.age }}</span>
+		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
 		<img
@@ -13,16 +13,21 @@
 			src="{{ baseUrl }}/{{ student.profilePicture.path }}"
 		/>
 		<div>
-			<mat-icon>school</mat-icon> {{ "Profile.university" | translate }}:
+			<div class="text-2xl flex items-center mb-4 font-semibold">
+				<mat-icon class="mr-4">school</mat-icon>
+				<span>{{ "Profile.university" | translate }}:</span>
+			</div>
 			<div>{{ student.university }}</div>
 		</div>
 		<div>
-			<mat-icon>travel_explore</mat-icon>
-			{{ "Profile.interest" | translate }}:
+			<div class="text-2xl flex items-center mb-4 font-semibold">
+				<mat-icon class="mr-4">travel_explore</mat-icon>
+				<span>{{ "Profile.interest" | translate }}:</span>
+			</div>
 			<mat-chip-listbox class="justify-around" aria-label="Candidate interest">
 				<mat-chip *ngFor="let interest of student.interests">
 					<mat-icon matChipAvatar>check_circle</mat-icon>
-					{{ interest.name }}
+					{{ "Interest." + interest.name | translate }}
 				</mat-chip>
 			</mat-chip-listbox>
 		</div>

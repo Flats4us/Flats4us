@@ -12,6 +12,10 @@ mat-card-content {
 	gap: 12px;
 }
 
+mat-card-title {
+	display: flex;
+}
+
 .big-icon-button {
 	width: 96px !important;
 	height: 96px !important;
