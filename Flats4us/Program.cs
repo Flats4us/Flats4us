@@ -219,8 +219,9 @@ builder.Services.AddHangfireServer();
 
 var firebaseApp = FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile("onlyflats-410722-firebase-adminsdk-2t3aj-e8b09bb560.json")
+    Credential = GoogleCredential.FromFile(builder.Configuration.GetSection("Firebase:ServiceAccountKeyPath").Value)
 });
+
 builder.Services.AddSingleton(firebaseApp);
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
