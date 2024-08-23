@@ -85,7 +85,7 @@ export class AddOpinionComponent extends BaseComponent {
 	}
 
 	public countStar(star: number) {
-		this.opinionForm.controls['rating'].setValue(star * 2);
+		this.opinionForm.controls['rating'].setValue(star);
 	}
 
 	public resetForm() {
