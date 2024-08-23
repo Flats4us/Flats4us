@@ -54,18 +54,12 @@ export class PermissionsGuard implements CanActivate {
 		if (routes.includes('profile') && modificationType?.includes('create')) {
 			return true;
 		} else if (routes.includes('profile') && modificationType?.includes('edit')) {
-			let editProfileTest = false;
-			role ? (editProfileTest = true) : (editProfileTest = false);
-			return editProfileTest;
+			return role ? true : false;
 		} else if (routes.includes('profile') && surveyType) {
 			return role === surveyType?.toUpperCase();
 		} else if (params.includes('user')) {
 			const user = route.paramMap.get('user');
-			let paramsTest = false;
-			user === 'details'
-				? (paramsTest = true)
-				: (paramsTest = role === user?.toUpperCase());
-			return paramsTest;
+			return user === 'details' ? true : role === user?.toUpperCase();
 		} else {
 			return true;
 		}
