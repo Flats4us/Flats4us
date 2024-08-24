@@ -18,6 +18,7 @@ import { Observable, tap } from 'rxjs';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { IEvent } from './models/calendar.models';
 import { CalendarService } from './services/calendar.service';
+import { LocaleService } from '@shared/services/locale.service';
 
 @Component({
 	selector: 'app-calendar',
@@ -55,11 +56,13 @@ export class CalendarComponent extends BaseComponent {
 		private dateAdapter: DateAdapter<Date>,
 		public calendarService: CalendarService,
 		private dialog: MatDialog,
-		private cdr: ChangeDetectorRef
+		private cdr: ChangeDetectorRef,
+		private localeService: LocaleService
 	) {
 		super();
 
 		this.dateAdapter.getFirstDayOfWeek = () => 1;
+		this.dateAdapter.setLocale(this.localeService.getCurrentLocale());
 	}
 
 	public dateClass: MatCalendarCellClassFunction<Date> = (
