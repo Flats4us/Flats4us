@@ -129,7 +129,8 @@
 		"calendar": "Kalendarz",
 		"find-roommates": "Znajdź współlokatora",
 		"change-language-tooltip": "Zmień język",
-		"disputes": "Spory"
+		"disputes": "Spory",
+		"change-motive-tooltip": "Zmień motyw"
 	},
 	"Calendar": {
 		"add-event": "Dodaj wydarzenie",

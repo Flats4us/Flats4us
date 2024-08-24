@@ -130,7 +130,8 @@
 		"calendar": "Calendar",
 		"find-roommates": "Find Roommates",
 		"change-language-tooltip": "Change language",
-		"disputes": "Disputes"
+		"disputes": "Disputes",
+		"change-motive-tooltip": "Change motive"
 	},
 	"Calendar": {
 		"add-event": "Add event",

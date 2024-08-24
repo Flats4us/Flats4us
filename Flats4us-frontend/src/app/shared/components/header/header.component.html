@@ -251,7 +251,12 @@
 				{{ "Login.registration" | translate }}
 			</button>
 		</div>
-		<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+		<button
+			mat-icon-button
+			class="mode_btn"
+			[matTooltip]="'Header.change-motive-tooltip' | translate"
+			(click)="changeTheme()"
+		>
 			<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
 		</button>
 		<button
@@ -357,7 +362,12 @@
 </ng-template>
 
 <ng-template #darkLanguageButtons>
-	<button mat-icon-button class="mode_btn" (click)="changeTheme()">
+	<button
+		mat-icon-button
+		class="mode_btn"
+		[matTooltip]="'Header.change-motive-tooltip' | translate"
+		(click)="changeTheme()"
+	>
 		<mat-icon>{{ isDarkMode ? "wb_sunny" : "nights_stay" }}</mat-icon>
 	</button>
 	<button
