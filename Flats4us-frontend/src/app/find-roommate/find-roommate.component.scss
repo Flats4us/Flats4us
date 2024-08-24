@@ -4,3 +4,21 @@
 	justify-content: flex-start;
 	gap: 32px;
 }
+
+.conversation-card {
+	flex-basis: 33%;
+}
+
+.roommate-candidate-card {
+	flex-basis: 25%;
+}
+
+@media screen and (max-width: 992px) {
+	.conversation-card {
+		flex-basis: 100%;
+	}
+
+	.roommate-candidate-card {
+		flex-basis: 100%;
+	}
+}
