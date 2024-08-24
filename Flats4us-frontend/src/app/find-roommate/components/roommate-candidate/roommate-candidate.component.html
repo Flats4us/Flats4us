@@ -8,9 +8,11 @@
 	<mat-card-content>
 		<img
 			mat-card-image
-			class="m-auto mb-3 w-full"
+			class="m-auto mb-3 w-full cursor-pointer"
 			alt="Candidate image"
+			matTooltip="{{ 'Profile.show-profile' | translate }}"
 			src="{{ baseUrl }}/{{ student.profilePicture.path }}"
+			[routerLink]="['/profile', 'details', student.userId]"
 		/>
 		<div>
 			<div class="text-2xl flex items-center mb-4 font-semibold">
