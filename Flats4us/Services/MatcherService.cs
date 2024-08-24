@@ -31,11 +31,17 @@ namespace Flats4us.Services
         public async Task<List<StudentForMatcherDto>> GetMatchByStudentId(int requestUserId)
         {
             var matchingIds = await _context.Matcher
-                .Where(m => (m.Student1Id == requestUserId || m.Student2Id == requestUserId)
-                            && m.IsStudent1Interested == true && m.IsStudent2Interested == true)
+                .Where(m => ( m.Student1Id == requestUserId  || m.Student2Id == requestUserId  ) && 
+                              m.IsStudent1Interested == true && m.IsStudent2Interested == true )
                 .Select(m => m.Student1Id == requestUserId ? m.Student2Id : m.Student1Id)
                 .Distinct()
                 .ToListAsync();
+
+            var user1Id = matchingIds.
+
+            var chat = await _context.Chats
+                .FirstOrDefaultAsync(c =>   (c.User1Id == user1Id && c.User2Id == requestUserId) ||
+                                            (c.User1Id == requestUserId && c.User2Id == user1Id)  );
 
             var matchingStudents = await _context.Students
                 .Include(potential => potential.Interests)
