@@ -109,14 +109,11 @@ namespace Flats4us.Services
                     var fcmMessage = new Message()
                     {
                         Token = user.FcmToken,
-                        Notification = new FirebaseAdmin.Messaging.Notification
-                        {
-                            Title = keyTitle,
-                            Body = keyBody
-                        },
                         Data = new Dictionary<string, string>()
                         {
-                            { "isChat", isChat.ToString().ToLower() }
+                            { "isChat", isChat.ToString().ToLower() },
+                            { "title", keyTitle },
+                            { "body", keyBody }
                         }
                     };
 

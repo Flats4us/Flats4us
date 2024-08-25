@@ -87,7 +87,8 @@ namespace Flats4us.Entities
             modelBuilder.Entity<Offer>()
                 .HasOne(o => o.SurveyOwnerOffer)
                 .WithOne(soo => soo.Offer)
-                .HasForeignKey<SurveyOwnerOffer>(soo => soo.OfferId);
+                .HasForeignKey<SurveyOwnerOffer>(soo => soo.OfferId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Student>()
                 .HasOne(o => o.SurveyStudent)

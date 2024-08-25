@@ -149,36 +149,6 @@ namespace Flats4us.Controllers
             }
         }
 
-        // PUT: api/offers/{id}/cancel
-        [HttpPut("{id}/cancel")]
-        [Authorize(Policy = "VerifiedOwner")]
-        [SwaggerOperation(
-            Summary = "Cancels offer",
-            Description = "Requires verified owner privileges"
-        )]
-        public async Task<IActionResult> CancelOffer(int id)
-        {
-            try
-            {
-                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
-                {
-                    return BadRequest("Server error: Failed to get user id from request");
-                }
-
-                await _offerService.CancelOfferAsync(id, requestUserId);
-                _logger.LogInformation($"Cancelling offer with ID: {id}");
-                return Ok(new OutputDto<string>("Offer canceled successfully"));
-            }
-            catch (ForbiddenException ex)
-            {
-                return StatusCode(403, ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"An error occurred: {ex.Message}");
-            }
-        }
-
         // PUT: api/offers/{id}/delete
         [HttpDelete("{id}/delete")]
         [Authorize(Policy = "VerifiedOwner")]

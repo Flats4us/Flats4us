@@ -495,23 +495,6 @@ namespace Flats4us.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task CancelOfferAsync(int id, int requestUserId)
-        {
-            var offer = await _context.Offers
-                .Include(o => o.Property)
-                .FirstOrDefaultAsync(o => o.OfferId == id);
-
-            if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
-
-            if (offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this offer");
-
-            if (offer.OfferStatus != OfferStatus.Current) throw new ArgumentException($"Cannot cancel this offer due to offerStatus");
-
-            offer.OfferStatus = OfferStatus.Old;
-
-            await _context.SaveChangesAsync();
-        }
-
         public async Task DeleteOfferAsync(int id, int requestUserId)
         {
             var offer = await _context.Offers
