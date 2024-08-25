@@ -51,7 +51,7 @@ namespace Flats4us.Services
 
             foreach (var student in matchingStudents)
             {
-                var chat = chats.First(c => c.User1Id == student.UserId || c.User2Id == student.UserId);
+                var chat = chats.FirstOrDefault(c => c.User1Id == student.UserId || c.User2Id == student.UserId);
 
                 if (chat != null) student.ChatId = chat.ChatId;
             }
