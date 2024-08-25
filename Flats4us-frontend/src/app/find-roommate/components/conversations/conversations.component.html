@@ -10,9 +10,11 @@
 	<mat-card-content>
 		<mat-card *ngFor="let student of students" class="m-3">
 			<img
-				class="h-20"
+				class="h-20 cursor-pointer"
 				alt="Candidate image"
+				matTooltip="{{ 'Profile.show-profile' | translate }}"
 				src="{{ baseUrl }}/{{ student.profilePicture.path }}"
+				[routerLink]="['/profile', 'details', student.userId]"
 			/>
 			{{ student.name }}, {{ student.age }}
 			<button

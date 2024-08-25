@@ -99,7 +99,7 @@
 													data.offer?.offerStatus === 2 ||
 													data.offer?.isPromoted) &&
 													menuOption.option === 'promoteOffer') ||
-												(data.offer?.offerStatus === 2 &&
+												(data.offer?.offerStatus !== 0 &&
 													menuOption.option === 'deleteOffer')
 											"
 											(click)="
