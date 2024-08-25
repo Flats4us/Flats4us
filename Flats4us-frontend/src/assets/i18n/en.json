@@ -865,6 +865,8 @@
 		"rent-proposition-accepted-title": "Rent accepted!",
 		"rent-proposition-accepted-body": "Your rent proposition has been accepted.",
 		"rent-proposition-rejected-title": "Rent rejected",
-		"rent-proposition-rejected-body": "Your rent proposition has been rejected."
+		"rent-proposition-rejected-body": "Your rent proposition has been rejected.",
+		"meeting-canceled-title": "Meeting canceled",
+		"meeting-canceled-body": "Owner deleted an offer"
 	}
 }

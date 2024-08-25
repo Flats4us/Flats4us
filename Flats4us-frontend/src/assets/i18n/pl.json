@@ -860,6 +860,8 @@
 		"rent-proposition-accepted-title": "Wynajem zaakceptowany!",
 		"rent-proposition-accepted-body": "Twoja propozycja wynajmu została zaakceptowana.",
 		"rent-proposition-rejected-title": "Wynajem odrzucony",
-		"rent-proposition-rejected-body": "Twoja propozycja wynajmu została odrzucona."
+		"rent-proposition-rejected-body": "Twoja propozycja wynajmu została odrzucona.",
+		"meeting-canceled-title": "Spotkanie anulowane",
+		"meeting-canceled-body": "Wlaściciel usunął oferte"
 	}
 }

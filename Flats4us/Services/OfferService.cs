@@ -515,7 +515,7 @@ namespace Flats4us.Services
 
             foreach ( var meeting in offer.Meetings )
             {
-                if ( meeting.OwnerAcceptDate != null && meeting.Date < DateTime.Now )
+                if ( meeting.OwnerAcceptDate != null && meeting.Date > DateTime.Now )
                 {
                     var emailBody = new StringBuilder();
                     emailBody.AppendLine(EmailHelper.HtmlHTag($"Spotkanie anulowane!", 1))
