@@ -20,13 +20,17 @@
 			<button
 				mat-mini-fab
 				color="primary"
-				[routerLink]="[
-					'/conversations',
-					'receiver',
-					student.userId,
-					'conversation',
-					'new'
-				]"
+				[routerLink]="
+					student.chatId === null
+						? ['/conversations', 'receiver', student.userId, 'conversation', 'new']
+						: [
+								'/conversations',
+								'receiver',
+								student.userId,
+								'conversation',
+								student.chatId
+						  ]
+				"
 			>
 				<mat-icon>chat</mat-icon>
 			</button>

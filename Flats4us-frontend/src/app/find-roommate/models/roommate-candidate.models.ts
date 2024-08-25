@@ -5,6 +5,7 @@ export interface IStudent {
 	interests: IInterest[];
 	university: string;
 	profilePicture: IProfilePicture;
+	chatId: number | null;
 }
 
 export interface IInterest {
