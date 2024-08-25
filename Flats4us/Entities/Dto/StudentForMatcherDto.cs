@@ -8,5 +8,6 @@
         public List<InterestDto> Interests { get; set; }
         public string University { get; set; }
         public FileDto ProfilePicture { get; set; }
+        public int? ChatId { get; set; }
     }
 }

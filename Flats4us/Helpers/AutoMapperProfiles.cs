@@ -166,7 +166,8 @@ namespace Flats4us.Helpers
             CreateMap<StudentRegisterDto, SurveyStudent>();
 
             CreateMap<Student, StudentForMatcherDto>()
-                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year));
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => DateTime.Now.Year - src.BirthDate.Year))
+                .ForMember(dest => dest.ChatId, opt => opt.MapFrom(src => (int?)null));
 
             CreateMap<TechnicalProblem, TechnicalProblemDto>();
 

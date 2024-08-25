@@ -44,6 +44,18 @@ namespace Flats4us.Services
                 .Select(potential => _mapper.Map<StudentForMatcherDto>(potential))
                 .ToListAsync();
 
+            var chats = await _context.Chats
+                .Where(c => c.User1Id == requestUserId || c.User2Id == requestUserId)
+                .Distinct()
+                .ToListAsync();
+
+            foreach (var student in matchingStudents)
+            {
+                var chat = chats.First(c => c.User1Id == student.UserId || c.User2Id == student.UserId);
+
+                if (chat != null) student.ChatId = chat.ChatId;
+            }
+
             return matchingStudents;
         }
 
