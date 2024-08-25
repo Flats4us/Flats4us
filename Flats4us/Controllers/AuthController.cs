@@ -145,5 +145,31 @@ namespace Flats4us.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPatch("logout")]
+        [Authorize(Policy = "RegisteredUser")]
+        [SwaggerOperation(
+            Summary = "Clears fcmtoken from database (used in mobile app)",
+            Description = "Requires registered user privileges"
+        )]
+        public async Task<ActionResult> Logout()
+        {
+            try
+            {
+                if (!int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int requestUserId))
+                {
+                    return BadRequest("Server error: Failed to get user id from request");
+                }
+
+                await _userService.LogoutAsync(requestUserId);
+
+                _logger.LogInformation($"User ID: {requestUserId} logged out");
+                return Ok(new OutputDto<string>("User logged out (fcmToken cleared)"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"An error occurred: {ex.Message}");
+            }
+        }
     }
 }

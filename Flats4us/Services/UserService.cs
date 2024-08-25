@@ -586,5 +586,16 @@ namespace Flats4us.Services
                 EmailOtherConsent = user.EmailOtherConsent
             };
         }
+
+        public async Task LogoutAsync(int requestUserId)
+        {
+            var user = await _context.Users.FindAsync(requestUserId);
+
+            if (user == null) throw new ArgumentException($"User with ID {requestUserId} not found.");
+
+            user.FcmToken = null;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

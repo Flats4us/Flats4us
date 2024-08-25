@@ -14,17 +14,14 @@ namespace Flats4us.Services.Interfaces
         Task ChangePasswordAsync(string oldPassword, string newPassword, int userId);
         Task<UserProfileFullDto> GetCurrentUserProfileAsync(int userId);
         Task<UserProfilePublicDto> GetUserProfileByIdAsync(int userId);
-
-
         Task SendPasswordResetLinkAsync(string email);
         Task ResetUserPasswordAsync(string newPassword, string passwordResetToken);
         Task<bool> CheckIfUserExistsByIdAsync(string email);
         Task AddUserOpinionAsync(AddUserOpinionDto input, int targetUserId, int requestUserId);
         Task<UserInfoDto> GetUserInfo(int userId);
-
         Task EditUser(EditUserDto input, int userId);
-
         Task UpdateConsentAsync(int userId, ConsentDto input);
         Task<ConsentDto> GetUserConsentAsync(int userId);
+        Task LogoutAsync(int requestUserId);
     }
 }
