@@ -13,5 +13,6 @@
         public const string NewRentProposition = "Nowa propozycja wynajmu";
         public const string RentAccepted = "Zaakceptowano twoja propozycje wynajmu!";
         public const string RentRejected = "Odrzucono twoja propozycje wynajmu";
+        public const string MeetingCanceled = "Odwołano twoje spotkanie";
     }
 }

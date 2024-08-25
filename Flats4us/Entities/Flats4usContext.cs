@@ -98,8 +98,7 @@ namespace Flats4us.Entities
             modelBuilder.Entity<Meeting>()
                 .HasOne(x => x.Offer)
                 .WithMany(x => x.Meetings)
-                .HasForeignKey(x => x.OfferId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(x => x.OfferId);
 
             modelBuilder.Entity<Meeting>()
                 .HasOne(x => x.Student)
@@ -216,7 +215,8 @@ namespace Flats4us.Entities
             modelBuilder.Entity<OfferInterest>()
                 .HasOne(oi => oi.Offer)
                 .WithMany(o => o.OfferInterests)
-                .HasForeignKey(oi => oi.OfferId);
+                .HasForeignKey(oi => oi.OfferId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<OfferInterest>()
                 .HasOne(oi => oi.Student)
@@ -234,12 +234,6 @@ namespace Flats4us.Entities
                 .WithMany(x => x.ArgumentInterventions)
                 .HasForeignKey(x => x.ModeratorId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            //modelBuilder.Entity<Argument>()
-            //.HasOne(a => a.GroupChat)
-            //.WithOne(g => g.Argument)
-            //.HasForeignKey<Argument>(a => a.GroupChatId)
-            //.OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -8,6 +8,8 @@ using System.Linq.Dynamic.Core;
 using Flats4us.Helpers.Exceptions;
 using AutoMapper;
 using System;
+using Flats4us.Helpers;
+using System.Text;
 
 namespace Flats4us.Services
 {
@@ -15,14 +17,17 @@ namespace Flats4us.Services
     {
         public readonly Flats4usContext _context;
         private readonly IOpenStreetMapService _openStreetMapService;
+        private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
 
         public OfferService(Flats4usContext context,
             IOpenStreetMapService openStreetMapService,
+            INotificationService notificationService,
             IMapper mapper)
         {
             _context = context;
             _openStreetMapService = openStreetMapService;
+            _notificationService = notificationService;
             _mapper = mapper;
         }
 
@@ -499,11 +504,28 @@ namespace Flats4us.Services
         {
             var offer = await _context.Offers
                 .Include(o => o.Property)
+                .Include(o => o.Meetings)
                 .FirstOrDefaultAsync(o => o.OfferId == id);
 
             if (offer is null) throw new ArgumentException($"Offer with ID {id} not found.");
 
             if (offer.Property.OwnerId != requestUserId) throw new ForbiddenException($"You do not own this offer");
+
+            if (offer.OfferStatus != OfferStatus.Current) throw new ArgumentException($"Cannot delete this offer due to offerStatus");
+
+            foreach ( var meeting in offer.Meetings )
+            {
+                if ( meeting.OwnerAcceptDate != null && meeting.Date < DateTime.Now )
+                {
+                    var emailBody = new StringBuilder();
+                    emailBody.AppendLine(EmailHelper.HtmlHTag($"Spotkanie anulowane!", 1))
+                        .AppendLine(EmailHelper.HtmlPTag($"Twoje spotkanie {meeting.Date} zostało anulowane, ponieważ właściciel usunął oferte. "));
+
+                    await _notificationService.SendNotificationAsync(EmailTitles.MeetingCanceled, emailBody.ToString(), TranslateKeys.MeetingCanceledTitle, TranslateKeys.MeetingCanceledBody, meeting.StudentId, false);
+                }
+
+                _context.Meetings.Remove(meeting);
+            }
 
             _context.Offers.Remove(offer);
 

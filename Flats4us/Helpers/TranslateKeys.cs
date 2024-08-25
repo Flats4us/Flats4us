@@ -25,5 +25,8 @@
 
         public const string RentPropositionRejectedTitle = "rent-proposition-rejected-title";
         public const string RentPropositionRejectedBody = "rent-proposition-rejected-body";
+
+        public const string MeetingCanceledTitle = "meeting-canceled-title";
+        public const string MeetingCanceledBody = "meeting-canceled-body";
     }
 }
