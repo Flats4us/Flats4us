@@ -179,7 +179,10 @@ namespace Flats4us.Services
             if (argument.Rent.Offer.Property.OwnerId != ownerId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
-            argument.OwnerAcceptanceDate = DateTime.Now;
+            if (argument.OwnerAcceptanceDate != null)
+                throw new ArgumentException($"You have alredy accepted decision");
+            else
+                argument.OwnerAcceptanceDate = DateTime.Now;
 
             if ((argument.OwnerAcceptanceDate != null) && (argument.StudentAccceptanceDate != null))
                 argument.ArgumentStatus = ArgumentStatus.Resolved;
@@ -196,7 +199,10 @@ namespace Flats4us.Services
             if (argument.StudentId != studentId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
-            argument.StudentAccceptanceDate = DateTime.Now;
+            if (argument.StudentAccceptanceDate != null) 
+                throw new ArgumentException($"You have already accepetd decision");
+            else
+                argument.StudentAccceptanceDate = DateTime.Now;
 
             if ((argument.OwnerAcceptanceDate != null) && (argument.StudentAccceptanceDate != null))
                 argument.ArgumentStatus = ArgumentStatus.Resolved;
@@ -217,8 +223,13 @@ namespace Flats4us.Services
             if (argument.Rent.Offer.Property.Owner.UserId != userId && argument.StudentId != userId)
                 throw new ArgumentException($"You are not the part of this Argument");
 
-            argument.InterventionNeed = true;
-            argument.InterventionNeedDate = DateTime.Now;
+            if (argument.InterventionNeedDate != null)
+                throw new ArgumentException($"You have already asked for intervention");
+            else
+            {
+                argument.InterventionNeed = true;
+                argument.InterventionNeedDate = DateTime.Now;
+            }
 
             await _context.SaveChangesAsync();
         }
