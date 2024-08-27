@@ -76,22 +76,29 @@ export class OfferMapComponent
 	}
 
 	public addMarkersFromAddress(property: IProperty) {
-		const addressString = `${property.street},${property.city},${property.postalCode},Polska`;
-		this.realEstateService
-			.getLocation(addressString)
-			.pipe(this.untilDestroyed())
-			.subscribe((response: IGeoLocation[]) => {
-				if (response.length > 0) {
-					const { lat, lon } = response[0];
-					const markerOptions = {
-						clickable: false,
-						draggable: false,
-						icon: this.getPropertyIcon(property.propertyType ?? 0, false),
-					};
-					L.marker([+lat, +lon], markerOptions).addTo(this.map as Map);
-					this.setMapView([lat, lon]);
-				}
-			});
+		const markerOptions = {
+			clickable: false,
+			draggable: false,
+			icon: this.getPropertyIcon(property.propertyType ?? 0, false),
+		};
+		if (property.geoLat && property.geoLon) {
+			const propertyLat = property.geoLat;
+			const propertyLon = property.geoLon;
+			L.marker([+propertyLat, +propertyLon], markerOptions).addTo(this.map as Map);
+			this.setMapView([propertyLat, propertyLon]);
+		} else {
+			const addressString = `${property.street},${property.city},${property.postalCode},Polska`;
+			this.realEstateService
+				.getLocation(addressString)
+				.pipe(this.untilDestroyed())
+				.subscribe((response: IGeoLocation[]) => {
+					if (response.length > 0) {
+						const { lat, lon } = response[0];
+						L.marker([+lat, +lon], markerOptions).addTo(this.map as Map);
+						this.setMapView([lat, lon]);
+					}
+				});
+		}
 	}
 
 	private getPropertyIcon(
