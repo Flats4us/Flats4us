@@ -3610,8 +3610,36 @@ public static class DataSeeder
             Student1 = student1,
             Student2 = student3
         };
+        var match7 = new Matcher
+        {
+            IsStudent1Interested = null,
+            IsStudent2Interested = false,
+            Student1 = student9,
+            Student2 = student10
+        };
+        var match8 = new Matcher
+        {
+            IsStudent1Interested = null,
+            IsStudent2Interested = true,
+            Student1 = student8,
+            Student2 = student10
+        };
+        var match9 = new Matcher
+        {
+            IsStudent1Interested = true,
+            IsStudent2Interested = null,
+            Student1 = student7,
+            Student2 = student10
+        };
+        var match10 = new Matcher
+        {
+            IsStudent1Interested = false,
+            IsStudent2Interested = null,
+            Student1 = student6,
+            Student2 = student10
+        };
 
-        dbContext.Matcher.AddRange(match1, match2, match3, match4, match5, match6);
+        dbContext.Matcher.AddRange(match1, match2, match3, match4, match5, match6, match7, match8, match9, match10);
 
         #endregion
 
